@@ -1,0 +1,262 @@
+unit Unit1;
+
+{$mode objfpc}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  umain,retro,sdl2;
+
+type
+
+  { TForm1 }
+
+  TForm1 = class(TForm)
+    Button1: TButton;
+    Button2: TButton;
+    CheckBox1: TCheckBox;
+    OpenDialog1: TOpenDialog;
+    RadioButton1: TRadioButton;
+    RadioButton2: TRadioButton;
+    RadioButton3: TRadioButton;
+    RadioButton4: TRadioButton;
+    procedure Button1Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+
+  private
+    { private declarations }
+  public
+    { public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.lfm}
+
+{ TForm1 }
+
+procedure TForm1.Button1Click(Sender: TObject);
+
+var s,currentdir,currentdir2:string;
+    sr:tsearchrec;
+    filenames:array[0..1000] of string;
+    directories:array[0..1000] of string;
+    l,i,j,ilf,ild,ild2,ild3:integer;
+    sel:integer=0;
+    selstart:integer=0;
+    buf:array[0..25] of  byte;
+
+
+begin
+ilf:=0;
+currentdir2:=getcurrentdir;
+currentdir:=currentdir2+'\dmp\*.dmp';
+currentdir2:=currentdir2+'\dmp\';
+if findfirst(currentdir,faAnyFile,sr)=0 then
+  repeat
+  filenames[ilf]:=sr.name;
+  ilf+=1;
+  until (findnext(sr)<>0) or (ilf=1000);
+findclose(sr);
+
+ild2:=0;
+currentdir:=currentdir2+'*.*';
+if findfirst(currentdir,fadirectory,sr)=0 then
+  repeat
+  if (sr.attr and faDirectory) = faDirectory then
+    begin
+    directories[ild2]:=sr.name;
+    ild2+=1;
+    end;
+  until (findnext(sr)<>0) or (ild2=1000);
+  findclose(sr);
+
+songtime:=0;
+pause:=false;
+siddelay:=20000;
+
+initmachine(1); //---------- Start the retromachine -------------------
+poke($70002,1);
+application.processmessages;
+
+main1;
+
+box(32,132,840,32,180);
+if ild2<14 then ild3:=ild2 else ild3:=14;
+for i:=0 to ild3 do
+  begin
+  l:=length(directories[i]);
+  s:=copy(directories[i],1,length(directories[i]));
+  for j:=1 to length(s) do if s[j]='_' then s[j]:=' ';
+  outtextxyz(448-8*l,132+32*i,s,188,2,2);
+  end;
+
+box(920,132,840,32,36);
+if ilf<26 then ild:=ilf else ild:=26;
+for i:=0 to ild do
+  begin
+  l:=length(filenames[i])-4;
+  s:=copy(filenames[i],1,length(filenames[i])-4);
+  for j:=1 to length(s) do if s[j]='_' then s[j]:=' ';
+  outtextxyz( 1344-8*l,132+32*i,s,44,2,2);
+  end;
+application.processmessages;
+poke($70003,1);
+poke($70004,1);
+poke($70005,1);
+poke ($70001,1);
+
+repeat
+  if not pause then main2 else begin timer1:=-1; for i:=$d400 to $d400+25 do poke(i,0); end;
+
+  if peek($60028)=ord('5') then begin poke ($60028,0); siddelay:=20000; songfreq:=50; skip:=0; end;
+  if peek($60028)=ord('1') then begin poke ($60028,0); siddelay:=10000; songfreq:=100; skip:=0; end;
+  if peek($60028)=ord('2') then begin poke ($60028,0); siddelay:=5000; songfreq:=200; skip:=0;end;
+  if peek($60028)=ord('3') then begin poke ($60028,0); siddelay:=6666; songfreq:=150; skip:=0; end;
+  if peek($60028)=ord('4') then begin poke ($60028,0); siddelay:=5000; songfreq:=400;skip:=1; end;
+  if peek($60028)=ord('p') then begin poke ($60028,0); pause:=not pause; end;
+  if dpeek($60028)=16442 then begin dpoke($60028,0); if peek($70003)=0 then poke ($70003,1) else poke ($70003,0); end;
+  if dpeek($60028)=16443 then begin dpoke($60028,0); if peek($70004)=0 then poke ($70004,1) else poke ($70004,0); end;
+  if dpeek($60028)=16444 then begin dpoke($60028,0); if peek($70005)=0 then poke ($70005,1) else poke ($70005,0); end;
+  if dpeek($60028)=16465 then
+    begin
+    dpoke($60028,0);
+    if sel<ild then
+      begin
+      box(920,132+32*sel,840,32,34);
+      l:=length(filenames[sel+selstart])-4;
+      s:=copy(filenames[sel+selstart],1,length(filenames[sel+selstart])-4);
+      for j:=1 to length(s) do if s[j]='_' then s[j]:=' ';
+      outtextxyz( 1344-8*l,132+32*sel,s,44,2,2);
+      sel+=1;
+      box(920,132+32*sel,840,32,36);
+      l:=length(filenames[sel+selstart])-4;
+      s:=copy(filenames[sel+selstart],1,length(filenames[sel+selstart])-4);
+      for j:=1 to length(s) do if s[j]='_' then s[j]:=' ';
+      outtextxyz( 1344-8*l,132+32*sel,s,44,2,2);
+      end
+    else if sel+selstart<ilf-1 then
+      begin
+      selstart+=1;
+      box2(897,118,1782,1008,34);
+      box(920,132+32*sel,840,32,36);
+      for i:=0 to ild do
+        begin
+        l:=length(filenames[i+selstart])-4;
+        s:=copy(filenames[i+selstart],1,length(filenames[i+selstart])-4);
+        for j:=1 to length(s) do if s[j]='_' then s[j]:=' ';
+        outtextxyz( 1344-8*l,132+32*i,s,44,2,2);
+        end;
+      end;
+    end;
+
+  if dpeek($60028)=16466 then
+    begin
+    dpoke($60028,0);
+    if sel>0 then
+      begin
+      box(920,132+32*sel,840,32,34);
+      l:=length(filenames[sel+selstart])-4;
+      s:=copy(filenames[sel+selstart],1,length(filenames[sel+selstart])-4);
+      for j:=1 to length(s) do if s[j]='_' then s[j]:=' ';
+      outtextxyz( 1344-8*l,132+32*sel,s,44,2,2);
+      sel-=1;
+      box(920,132+32*sel,840,32,36);
+      l:=length(filenames[sel+selstart])-4;
+      s:=copy(filenames[sel+selstart],1,length(filenames[sel+selstart])-4);
+      for j:=1 to length(s) do if s[j]='_' then s[j]:=' ';
+      outtextxyz( 1344-8*l,132+32*sel,s,44,2,2);
+      end
+    else if sel+selstart>0 then
+      begin
+      selstart-=1;
+      box2(897,118,1782,1008,34);
+      box(920,132+32*sel,840,32,36);
+      for i:=0 to ild do
+        begin
+        l:=length(filenames[i+selstart])-4;
+        s:=copy(filenames[i+selstart],1,length(filenames[i+selstart])-4);
+        for j:=1 to length(s) do if s[j]='_' then s[j]:=' ';
+        outtextxyz( 1344-8*l,132+32*i,s,44,2,2);
+        end;
+      end;
+    end;
+
+  if peek($60028)=13 then
+    begin
+    poke($60028,0);
+    fileclose(fh);
+    fh:=-1;
+    fh:=fileopen(currentdir2+filenames[sel+selstart],$40);
+    s:=copy(filenames[sel+selstart],1,length(filenames[sel+selstart])-4);
+    for j:=1 to length(s) do if s[j]='_' then s[j]:=' ';
+    fileread(fh,buf,25);
+    if (buf[0]=ord('S')) and (buf[1]=ord('D')) and (buf[2]=ord('M')) and (buf[3]=ord('P'))
+       then siddelay:=1000000 div buf[4]
+       else siddelay:=20000;
+    if siddelay<5000 then begin siddelay:=siddelay*2; skip:=1; end else skip:=0;
+    songname:=s;
+    songtime:=0;
+    timer1:=-1;
+    end;
+
+  if peek($60028)=ord('i') then begin poke ($60028,0); poke($70001, peek($70001) xor 1); end;
+
+  if (peek($60028)=ord('f')) and (peek($70002)=0) then
+    begin
+    poke($60028,0);
+    repeat until peek($70000)=1;
+    poke ($70000,2);
+    SDL_DestroyTexture( sdlTexture );
+    SDL_DestroyRenderer( sdlRenderer );
+    poke($70002,1);
+    sdl_setwindowfullscreen(scr,sdl_window_fullscreen_desktop);
+    sdlRenderer := SDL_CreateRenderer(scr, -1, 14);
+    sdlTexture := SDL_CreateTexture(sdlRenderer,SDL_PIXELFORMAT_ARGB8888,SDL_TEXTUREACCESS_STreaming,1920,1200);
+    SDL_RenderSetLogicalSize(sdlRenderer,1920,1200);
+    poke ($70000,1);
+    end;
+
+  if (peek($60028)=ord('f')) and (peek($70002)=1) then
+    begin
+    poke($60028,0);
+    repeat until peek($70000)=1;
+    poke ($70000,2);
+    SDL_DestroyTexture( sdlTexture );
+    SDL_DestroyRenderer( sdlRenderer );
+    poke($70002,0);
+    sdl_setwindowfullscreen(scr,0);
+    sdlRenderer := SDL_CreateRenderer(scr, -1, 14);
+    sdlTexture := SDL_CreateTexture(sdlRenderer,SDL_PIXELFORMAT_ARGB8888,SDL_TEXTUREACCESS_STreaming,1920,1200);
+    SDL_RenderSetLogicalSize(sdlRenderer,1920,1200);
+    poke ($70000,1);
+    end;
+
+  application.processmessages;
+until (peek($6002b)<>0) and (peek($60028)=27) ;
+timer1:=-1;
+fileclose(fh);
+stopmachine;
+halt;
+end;
+
+
+procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+ closeaction:=cafree;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  button1.click;
+end;
+
+
+
+end.
+

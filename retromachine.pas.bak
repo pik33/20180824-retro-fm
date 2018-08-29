@@ -1,0 +1,710 @@
+
+// Retromachine memory map @bytes
+
+//$   00000-$    0FFFF reserved
+//$   10000-$    2FFFF pallette banks;
+//$   30000-$    30FFF 8x16 font
+//$   31000-$    31FFF 8x8 fonts x2
+//    32000-     39FFF sprite defs 8x4k
+//    3A000-     3AFFF audio buffer 4k
+//    3B000-     3EFFF reserved
+//    3F000-     3FFFF hardware regs area
+//    40000-    FFFFFF low memory area    (16 MB)
+//  1000000-   EFFFFFF Basic area        (224 MB)
+//  F000000-   FFFFFFF framebuffer area   (16 MB)
+
+
+// $FC00 - hard regs area @long
+
+// FC00 - 3F000 - frame couner
+// FC01 - 3F004 - display start
+// FC02 - 3F008 - current graphics mode (@3F008 only)
+// FC03 - 3F00C - border color
+// FC04         - pallette bank
+// FC05         - horizontal pallette selector  bit 31 on, 30..20 add to $FC04, 11:0 pixel num.
+// FC06         - display list start addr
+//                DL entry: TODO
+// FC07         - horizontal scroll right register
+
+// FC10 -FC1F   - sprite control long 0 31..16 y pos  15..0 x pos
+//                               long 1 31..16 y zoom 15..0 x zoom
+
+
+unit retromachine;
+
+{$mode objfpc}{$H+}
+
+interface
+
+uses
+  cthreads,unixtype,pthreads,cmem,baseunix,unix,sdl,sysutils,crt,classes;
+
+
+Type
+  TRetro = class(TThread)
+  private
+  protected
+    procedure Execute; override;
+  public
+    Constructor Create(CreateSuspended : boolean);
+  end;
+
+
+  //Tretromachine = object
+//    public
+//      r1:pointer;
+//      constructor initmachine;
+//      destructor stopmachine;
+//    end;
+
+
+const waitvs=$40044620;
+      getvinfo=$4600;
+      setvinfo=$4601;
+      getfinfo=$4602;
+      pandisplay=$4606;
+      kdgraphics=1;
+      kdtest=0;
+
+type
+
+        tram=array[0..67108863] of integer;
+        tramw=array[0..134217727]of word;
+        tramb=array[0..268435455]of byte;
+
+var
+
+r1:pointer;
+raml:^tram absolute r1;
+ramb:^tramb absolute r1;
+tm:ttimeval;
+tt1,tt2,tt2min,tt2max,tt3:int64;
+
+
+function initmachine:pointer;
+procedure stopmachine(r1:pointer);
+procedure scrconvert58(screen:pointer);
+procedure setataripallette(bank:integer);
+procedure cls(c:integer);
+procedure putpixel(x,y,color:integer);
+procedure putchar(x,y:integer;ch:char;col:integer);
+procedure outtextxy(x,y:integer; t:string;c:integer);
+
+implementation
+
+
+
+type
+   TClassPriority = (cprOther, cprFIFO, cprRR);
+
+
+var
+  running:integer=0;
+  tabl,tabl2:array[0..63] of integer;
+  oldscreen:array[0..1440*910] of integer;
+
+  i,j,k,l,fh2,fh,lines:integer;
+  p,p3:pointer;
+  p2,p4:^integer;
+  b:byte;
+  scr: PSDL_Surface;
+
+
+//  tabl1a:array[0..2303999] of byte;
+//  tabl2a:array[0..2303999] of integer;
+//  tabl3a:array[0..255] of integer;
+  event:tsdl_event;
+  licznik:integer=0;
+
+  q1,q2,q3:extended;
+  thread:TRetro;
+
+  sprx,sprxd,spryd,spry:integer;
+  spr2x,spr2xd,spr2yd,spr2y:integer;
+  spr3x,spr3xd,spr3yd,spr3y:integer;
+  spr4x,spr4xd,spr4yd,spr4y:integer;
+  spr5x,spr5xd,spr5yd,spr5y:integer;
+  spr6x,spr6xd,spr6yd,spr6y:integer;
+  spr7x,spr7xd,spr7yd,spr7y:integer;
+  spr8x,spr8xd,spr8yd,spr8y:integer;
+
+
+
+  function SetThreadPriority( aThreadID : TThreadID; class_priority : TClassPriority; sched_priority: Integer ) : Boolean;
+var
+   param : sched_param;
+   ret : Integer;
+   aPriority : integer;
+begin
+     // 0-99
+     param.sched_priority:= sched_priority;
+     aPriority := Ord(class_priority);
+     ret := pthread_setschedparam( pthread_t(aThreadID), aPriority, @param);
+     result := (ret = 0);
+end;
+
+
+//constructor tretromachine.initmachine;
+
+//begin
+//end;
+
+//destructor tretromachine.stopmachine;
+
+//begin
+//end;
+
+
+
+  constructor TRetro.Create(CreateSuspended : boolean);
+  begin
+    FreeOnTerminate := True;
+    inherited Create(CreateSuspended);
+  end;
+
+
+
+
+function initmachine:pointer;
+
+var r1:pointer;
+  raml:^tram absolute r1;
+  ramb:^tramb absolute r1;
+  fh2:integer;
+
+begin
+
+p2:=nil;                               //pointer to framebuffer memory init
+thread:=tretro.create(true);           //create thread for screen mode refreshing
+//gmode:=58;                             // 448x560x256
+                                       // bit 1,0 vzoom; 3,2 hzoom (1-2-4-8), 5,4 colors (2,4,16,256),
+                                       // 6-hi/truecolor, 7 1920x1080 modes
+
+
+r1:=fpmmap (nil,268435456,prot_read or prot_write or prot_exec,map_shared or map_anonymous,-1,0);
+
+                                       // load 8x16 font
+
+fh2:=fileopen('./st4font.def',$40);
+fileread(fh2,ramb^[$30000],2048);
+fileclose(fh2);
+
+// get and save current screen resolution
+
+p:=@tabl[0];
+fh:=fileopen('/dev/fb0',fmopenreadwrite);
+fpioctl(fh,getvinfo,p);
+tabl2:=tabl;
+
+// init sdl @ current res and 32 bits
+
+SDL_Init(SDL_INIT_everything);
+scr:=SDL_SetVideoMode(tabl[0], tabl[1], 32, SDL_SWSURFACE or SDL_FULLSCREEN); // fullscreen at current res @32 bpp
+
+// hide sdl cursor
+
+sdl_showcursor(0);
+
+// set 1920x1200x32x2 for framebuffer with double buffering
+
+tabl[0]:=1920;
+tabl[1]:=1200;
+tabl[2]:=1920 ;
+tabl[3]:=2400 ;
+tabl[6]:=32;
+fpioctl(fh,setvinfo,p);
+
+// get the pointer to framebuffer RAM
+
+p2:=fpmmap(nil,1920*2400*4,prot_read or prot_write,map_shared,fh,0);
+
+// clear framebuffer
+
+for i:=0 to 1920*2400-1 do (p2+i)^:=$0000;
+
+
+// start frame refreshing thread
+
+thread.start;
+initmachine:=(r1);
+end;
+
+procedure stopmachine(r1:pointer);
+
+
+begin
+thread.terminate;
+repeat until running=0;
+
+// free framebuffer memory
+
+fpmunmap(p2,1920*2400*4);
+
+// restore old video mode
+// and close /dev/fb0
+
+tabl:=tabl2;
+fpioctl(fh,setvinfo,p);
+fileclose(fh);
+
+// free memory
+
+fpmunmap(r1,268435456);
+
+sdl_quit;
+end;
+
+
+procedure scrconvert58(screen:pointer);  //convert retro fb to raspberry fb @ graphics mode 58
+                                         //448x560x256
+var
+  a:pointer;
+  e:integer;
+  spritebase:integer;
+
+label p1,p0,p2,p10,p11,p12,p20,p21,p22,p100,p101,p102,p103,p104,p999;
+
+begin
+    a:=ramb;
+    e:=raml^[$FC03];
+    raml^[$FC00]+=1;
+    spritebase:=$3F040;
+
+    fpgettimeofday(@tm,nil) ;
+    tt1:=tm.tv_sec*int64(1000000)+tm.tv_usec;
+
+    asm
+    stmfd r13!,{r0-r12}   //Push registers
+    ldr r1,a
+    add r1,#0xF000000
+    mov r6,r1
+    add r6,#1
+    ldr r2,screen
+    mov r12,r2
+    add r12,#4
+    ldr r3,a
+    add r3,#0x10000
+    mov r5,r2
+
+//upper border
+
+   add r5,#307200
+   ldr r9,e
+   mov r10,r9
+p10: str r9,[r2],#8
+   str r10,[r12],#8
+   str r9,[r2],#8
+   str r10,[r12],#8
+   cmp r2,r5
+   blt p10
+
+   mov r0,#1120
+
+//left border
+
+p11: add r5,#256
+     ldr r9,e
+     mov r10,r9
+p0: str r9,[r2],#8
+    str r10,[r12],#8
+    str r9,[r2],#8
+    str r10,[r12],#8
+    cmp r2,r5
+    blt p0
+
+//active screen
+
+    add r5,#7168
+    add r12,#12
+p1: ldrb r7,[r1],#2
+    ldrb r8,[r6],#2
+    ldr r9,[r3,r7,lsl #2]
+    ldr r10,[r3,r8,lsl #2]
+    str r9,[r2],#4
+    str r10,[r12],#4
+    str r9,[r2],#4
+    str r10,[r12],#4
+    str r9,[r2],#4
+    str r10,[r12],#4
+    str r9,[r2],#20
+    str r10,[r12],#20
+
+    cmp r2,r5
+    blt p1
+    sub r12,#12
+
+    sub r1,#448
+    sub r6,#448
+
+
+
+//right border
+
+    add r5,#256
+    ldr r9,e
+    mov r10,r9
+p2: str r9,[r2],#8
+    str r10,[r12],#8
+    str r9,[r2],#8
+    str r10,[r12],#8
+    cmp r2,r5
+    blt p2
+
+
+
+//left border
+
+     add r5,#256
+     ldr r9,e
+     mov r10,r9
+p20: str r9,[r2],#8
+    str r10,[r12],#8
+    str r9,[r2],#8
+    str r10,[r12],#8
+    cmp r2,r5
+    blt p20
+
+//active screen
+
+    add r5,#7168
+    add r12,#12
+p21: ldrb r7,[r1],#2
+    ldrb r8,[r6],#2
+    ldr r9,[r3,r7,lsl #2]
+    ldr r10,[r3,r8,lsl #2]
+    str r9,[r2],#4
+    str r10,[r12],#4
+    str r9,[r2],#4
+    str r10,[r12],#4
+    str r9,[r2],#4
+    str r10,[r12],#4
+    str r9,[r2],#20
+    str r10,[r12],#20
+    cmp r2,r5
+    blt p21
+
+    sub r12,#12
+
+//right border
+
+    add r5,#256
+    ldr r9,e
+    mov r10,r9
+p22: str r9,[r2],#8
+    str r10,[r12],#8
+    str r9,[r2],#8
+    str r10,[r12],#8
+    cmp r2,r5
+    blt p22
+
+    subs r0,#2
+    bne p11
+
+
+
+//lower border
+
+    add r5,#307200
+    ldr r9,e
+    mov r10,r9
+p12:str r9,[r2],#8
+    str r10,[r12],#8
+    str r9,[r2],#8
+    str r10,[r12],#8
+    cmp r2,r5
+    blt p12
+
+    mov r12,#0
+//sprite
+
+    ldr r0,spritebase
+    ldr r1,a
+    add r0,r1
+p103:    ldr r1,[r0],#4
+    mov r2,r1      // sprite 0 position
+    mov r3,r1
+    ldr r5,p100
+    and r2,r5      // x pos
+    lsl r2,#2
+    ldr r4,p100+4
+    and r3,r4
+    lsr r3,#16     // y pos
+    cmp r2,#8192
+    ble p104
+
+    add r12,#1
+    add r0,#4
+    cmp r12,#8
+    bge p999
+    b p103
+
+p104:    ldr r4,p100+8
+    mul r3,r3,r4
+    add r3,r2      // sprite pos
+    ldr r4,screen
+    add r3,r4      // pointer to upper left sprite pixel in r3
+    ldr r4,p100+12
+    add r4,r4,r12,lsl #12
+    ldr r5,a
+    add r4,r5      //pointer to sprite 0 data
+
+    ldr r1,[r0],#4
+    mov r2,r1
+    ldr r5,p100
+    and r2,r5
+    lsr r1,#16
+    cmp r1,#8
+    movgt r1,#8
+    cmp r2,#8
+    movgt r2,#8
+    cmp r1,#1
+    movle r1,#1
+    cmp r2,#1
+    movle r2,#1
+    mov r7,r2
+    mov r8,#128
+    mul r8,r8,r2
+
+    mov r9,#32
+    mul r9,r9,r1 //y zoom
+    mov r10,r1
+    mov r6,#32
+
+
+p101:
+
+    ldr r5,[r4],#4
+p102:    cmp r5,#0
+
+    strne r5,[r3],#4
+    addeq r3,#4
+    subs r7,#1
+    bne p102
+
+
+    mov r7,r2
+    subs r6,#1
+    bne p101
+
+
+    add r3,#7680
+    sub r3,r8
+
+    subs r10,#1
+
+    subne r4,#128
+    addeq r10,r1
+
+    mov r6,#32
+    subs r9,#1
+    bne p101
+
+    add r12,#1
+    cmp r12,#8
+    bne p103
+
+    b p999
+
+p100: .long 0xFFFF
+      .long 0xFFFF0000
+      .long 7680
+      .long 0x32000
+
+p999:  ldmfd r13!,{r0-r12}
+
+  end;
+fpgettimeofday(@tm,nil)    ;
+tt2:=tm.tv_sec*int64(1000000)+tm.tv_usec-tt1-tt3;
+end;
+
+procedure TRetro.Execute;
+
+var id:integer;
+label p1;
+
+begin
+running:=1;
+id:=getcurrentthreadid  ;
+if not SetThreadPriority( id, cprfifo, 95) then goto p1;
+repeat
+if p2<>nil then
+  begin
+
+
+  scrconvert58(p2);
+
+
+
+  tabl[5]:=0;
+  fpioctl(fh,pandisplay,p);
+  fpioctl(fh,waitvs,nil);
+
+  scrconvert58(p2+2304000);
+  tabl[5]:=1200;
+  fpioctl(fh,pandisplay,p);
+  fpioctl(fh,waitvs,nil);
+
+  end;
+until terminated;
+p1: running:=0;
+end;
+
+
+procedure setataripallette(bank:integer);
+
+var i,j,r,g,b:integer;
+
+begin
+  for i := 1 to 15 do
+    for j := 0 to 15 do
+      begin
+      case i of
+         1:begin
+           r:=255;
+           g:=80;
+           b:=0;
+           end;
+         2:begin
+           r:=255;
+           g:=0;
+           b:=0;
+           end;
+         3:begin
+           r:=255;
+           g:=0;
+           b:=128;
+           end;
+         4:begin
+           r:=255;
+           g:=0;
+           b:=255;
+           end;
+         5:begin
+           r:=128;
+           g:=0;
+           b:=255;
+           end;
+         6:begin
+           r:=0;
+           g:=0;
+           b:=255;
+           end;
+         7:begin
+           r:=0;
+           g:=64;
+           b:=255;
+           end;
+         8:begin
+           r:=0;
+           g:=128;
+           b:=255;
+           end;
+         9:begin
+           r:=0;
+           g:=192;
+           b:=255;
+           end;
+         10:begin
+           r:=0;
+           g:=255;
+           b:=192;
+           end;
+         11:begin
+           r:=0;
+           g:=255;
+           b:=0;
+           end;
+         12:begin
+           r:=80;
+           g:=255;
+           b:=0;
+           end;
+         13:begin
+           r:=160;
+           g:=255;
+           b:=0;
+           end;
+         14:begin
+           r:=255;
+           g:=255;
+           b:=0;
+           end;
+         15:begin
+           r:=255;
+           g:=160;
+           b:=0;
+           end;
+        end;  //case
+
+        if j<8 then
+          begin
+          r:=round(r*(j+1)/8);
+          g:=round(g*(j+1)/8);
+          b:=round(b*(j+1)/8);
+          end
+        else
+          begin
+          r:=r+round((255-r)*(j-7)/9);
+          g:=g+round((255-g)*(j-7)/9);
+          b:=b+round((255-b)*(j-7)/9);
+          end;
+
+       if r>255 then r:=255;
+       if g>255 then g:=255;
+       if b>255 then b:=255;
+
+
+      ramb^[$10000+1024*bank+64*i+4*j]:=b;
+      ramb^[$10000+1024*bank+64*i+4*j+1]:=g;
+      ramb^[$10000+1024*bank+64*i+4*j+2]:=r;
+    end;
+
+  for i := 0 to 15 do
+     begin
+     ramb^[$10000+1024*bank+4*i]:=i*17;
+     ramb^[$10000+1024*bank+4*i+1]:=i*17;
+     ramb^[$10000+1024*bank+4*i+2]:=i*17;
+     end;
+ end;
+
+procedure cls(c:integer);
+
+begin
+for i:=0 to 62719 do raml^[$3C00000+i]:=c+(c shl 8) + (c shl 16) + (c shl 24);
+end;
+
+procedure putpixel(x,y,color:integer);
+
+begin
+ramb^[$F000000+x+448*y]:=color;
+end;
+
+procedure putchar(x,y:integer;ch:char;col:integer);
+
+var i,j,start:integer;
+  b:byte;
+
+begin
+start:=$30000+16*ord(ch);
+for i:=0 to 15 do
+  begin
+  b:=ramb^[start+i];
+  for k:=0 to 7 do
+    begin
+    if (b and (1 shl k))<>0 then
+      putpixel(x+k,y+i,col);
+    end;
+  end;
+end;
+
+procedure outtextxy(x,y:integer; t:string;c:integer);
+
+var i:integer;
+
+begin
+for i:=1 to length(t) do putchar(x+8*i-8,y,t[i],c);
+end;
+
+
+end.
+

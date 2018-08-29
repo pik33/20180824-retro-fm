@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Compiler Value="/usr/local/bin/fpc" Date="1445012995"/>
+  <Params Value=" -CpARMV7A -MObjFPC -Scghi -Os3 -g -gl -l -vewnhibq -Fi/home/pi/programowanie/20151013retro003/lib/arm-linux -Fu/home/pi/programowanie/20151013retro003 -FU/home/pi/programowanie/20151013retro003/lib/arm-linux/ project1.lpr"/>
+</CONFIG>
