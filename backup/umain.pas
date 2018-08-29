@@ -145,10 +145,11 @@ box2(897,67,1782,115,36);
 outtextxyz(1296,75,'Files',44,2,2);
 sdl_pauseaudio(1); sleep(1000);
 t:=gettime;
-for i:=1 to 1000 do
- testoperator.getsample;
+for i:=1 to 1000000 do
+ testvoice.getsample;
 t:=gettime-t;
-box(500,500,100,300,0); outtextxyz(500,500,inttostr(t),15,2,2);
+outtextxyz(100,100,inttostr(t),44,2,2);
+sdl_pauseaudio(0);
 end;
 
 
@@ -233,6 +234,8 @@ raml^[$18014]:=(spr3y shl 16)+spr3x+2048*(1-peek($70005));
 
 raml^[$1801e]:=raml^[$1800B];
 box(0,0,300,100,0); outtextxyz(0,0,floattostr(ftt),15,2,2) ;
+box(500,500,300,100,0); outtextxyz(500,500,floattostr(testoperator.adsrstate),15,2,2);        outtextxyz(500,532,floattostr(testoperator.adsrval),15,2,2);
+
 end;
 
 

@@ -50,7 +50,7 @@ unit retro;
 
 interface
 
-uses sdl2,sysutils,crt,classes,windows,unit6502,midi;
+uses sdl2,sysutils,crt,classes,windows,unit6502,midi,fmsynth;
 
 type tram=array[0..67108863] of integer;
      tramw=array[0..134217727] of word;
@@ -146,6 +146,7 @@ var fh,filetype:integer;
    be,bs:byte;
    keybuffer:array[0..255] of cardinal;
        testoperator:TFmOperator;
+       testvoice:TFmVoice;
 
     procedure initmachine(mode:integer);
     procedure stopmachine;
@@ -183,7 +184,7 @@ var fh,filetype:integer;
 
 implementation
 
- uses unit1,fmsynth;
+ uses unit1;
 
 var
   running:integer=0;
@@ -350,6 +351,8 @@ begin
 
 testoperator:=TFmOperator.create(0,@outputtable );
 testoperator.init;
+testvoice:=TFmVoice.create;
+
 for i:=0 to 15 do srtablei[i]:=round(1073741824*(1-attacktable[i]));
 for i:=0 to 15 do attacktablei[i]:=round(1073741824*attacktable[i]);
 initnotes;
@@ -1860,7 +1863,7 @@ for k:=0 to 3 do
 
 
   s:=sid(1);
-  s1:=round(32767*testoperator.getsample);
+  s1:=round(16384*testoperator.getsample);
   s[0]+=s1;
   if ereverb then s:=reverb1(s);
   if edelay then s:=delay1(s);
@@ -1873,7 +1876,7 @@ for k:=0 to 3 do
   for i:=480*k+1 to 480*k+479 do
     begin
     s:=sid(0);
-    s1:=round(32767*testoperator.getsample);
+    s1:=round(16384*testoperator.getsample);
     s[0]+=s1;
     if ereverb then s:=reverb1(s);
     if edelay then s:=delay1(s);

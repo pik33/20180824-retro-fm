@@ -84,12 +84,15 @@ var md,aa,aaa,aaaa,f:cardinal;
 
 begin
 for i:=0 to maxchannel-1 do channels[i]:=0;
-for i:=0 to 127 do notes[aaa]:=maxchannel;
+for i:=0 to 127 do notes[i]:=maxchannel;
 
 repeat
 
 key:=readkeybuffer;
-if key=32 then begin testoperator.adsrstate:=1;  sleep(200); TESTOPERATOR.adsrstate:=5; end;
+//if key=32 then testoperator.adsrstate:=1;
+//if key=32+$10000 then testoperator.adsrstate:=5;
+if key=32 then testvoice.operators[0].adsrstate:=1;
+if key=32+$10000 then testvoice.operators[0].adsrstate:=5;
 if key<>$FFFFFFFF then
   begin
   if key<$10000 then
@@ -150,7 +153,7 @@ if md<>$FFFFFFFF then
 
   end;
 
-sleep( 1)
+sleep(1)
 until terminated;
 end;
 

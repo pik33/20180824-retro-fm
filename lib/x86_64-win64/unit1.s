@@ -15,11 +15,11 @@ DEBUGSTART_$UNIT1:
 # End asmlist al_begin
 # Begin asmlist al_procedures
 
-.section .text.n_unit1$_$tform1_$_button1click$tobject_$$_fin$2,"x"
+.section .text.n_unit1$_$tform1_$_button1click$tobject_$$_fin$3,"x"
 	.balign 16,0x90
-UNIT1$_$TFORM1_$_BUTTON1CLICK$TOBJECT_$$_fin$2:
+UNIT1$_$TFORM1_$_BUTTON1CLICK$TOBJECT_$$_fin$3:
 .Lc1:
-.seh_proc UNIT1$_$TFORM1_$_BUTTON1CLICK$TOBJECT_$$_fin$2
+.seh_proc UNIT1$_$TFORM1_$_BUTTON1CLICK$TOBJECT_$$_fin$3
 .Ll1:
 # [unit1.pas]
 # [72] begin
@@ -3881,7 +3881,7 @@ UNIT1$_$TFORM1_$__$$_BUTTON1CLICK$TOBJECT:
 	nop
 .Lj8:
 	movq	%rbp,%rcx
-	call	UNIT1$_$TFORM1_$_BUTTON1CLICK$TOBJECT_$$_fin$2
+	call	UNIT1$_$TFORM1_$_BUTTON1CLICK$TOBJECT_$$_fin$3
 .Ll305:
 # [523] end;
 	movq	-24912(%rbp),%rbx
@@ -3900,7 +3900,7 @@ UNIT1$_$TFORM1_$__$$_BUTTON1CLICK$TOBJECT:
 	.long	0
 	.rva	.Lj7
 	.rva	.Lj8
-	.rva	UNIT1$_$TFORM1_$_BUTTON1CLICK$TOBJECT_$$_fin$2
+	.rva	UNIT1$_$TFORM1_$_BUTTON1CLICK$TOBJECT_$$_fin$3
 
 .section .text.n_unit1$_$tform1_$__$$_button1click$tobject,"x"
 .seh_endproc
@@ -3978,11 +3978,11 @@ UNIT1$_$TFORM1_$__$$_FORMCREATE$TOBJECT:
 .Lt7:
 .Ll318:
 
-.section .text.n_unit1$_$sidopen$longint_$$_fin$3,"x"
+.section .text.n_unit1$_$sidopen$longint_$$_fin$4,"x"
 	.balign 16,0x90
-UNIT1$_$SIDOPEN$LONGINT_$$_fin$3:
+UNIT1$_$SIDOPEN$LONGINT_$$_fin$4:
 .Lc18:
-.seh_proc UNIT1$_$SIDOPEN$LONGINT_$$_fin$3
+.seh_proc UNIT1$_$SIDOPEN$LONGINT_$$_fin$4
 .Ll319:
 # [552] begin
 	pushq	%rbp
@@ -4658,7 +4658,7 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	nop
 .Lj2312:
 	movq	%rbp,%rcx
-	call	UNIT1$_$SIDOPEN$LONGINT_$$_fin$3
+	call	UNIT1$_$SIDOPEN$LONGINT_$$_fin$4
 .Ll378:
 # [617] end;
 	movq	-104(%rbp),%rbx
@@ -4672,7 +4672,7 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	.long	0
 	.rva	.Lj2311
 	.rva	.Lj2312
-	.rva	UNIT1$_$SIDOPEN$LONGINT_$$_fin$3
+	.rva	UNIT1$_$SIDOPEN$LONGINT_$$_fin$4
 
 .section .text.n_unit1_$$_sidopen$longint,"x"
 .seh_endproc
@@ -4917,7 +4917,7 @@ VMT_$UNIT1_$$_TFORM1:
 	.quad	FORMS$_$TCUSTOMDESIGNCONTROL_$__$$_AUTOADJUSTLAYOUT$crc5F4A49A3
 	.quad	CONTROLS$_$TCONTROL_$__$$_SHOULDAUTOADJUST$BOOLEAN$BOOLEAN
 	.quad	CONTROLS$_$TCONTROL_$__$$_FIXDESIGNFONTSPPI$LONGINT
-	.quad	CONTROLS$_$TCONTROL_$__$$_SCALEFONTSPPI$LONGINT$DOUBLE
+	.quad	CONTROLS$_$TCONTROL_$__$$_SCALEFONTSPPI$DOUBLE
 	.quad	CONTROLS$_$TCONTROL_$__$$_EDITINGDONE
 	.quad	CONTROLS$_$TCONTROL_$__$$_EXECUTEDEFAULTACTION
 	.quad	CONTROLS$_$TCONTROL_$__$$_EXECUTECANCELACTION
@@ -5671,8 +5671,8 @@ RTTI_$UNIT1_$$_TFORM1:
 	.uleb128	1
 # [52] procedure sidopen (fh:integer);     forward;
 	.ascii	"unit1.pas\000"
-	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
-	.ascii	"D:/programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
+	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -5801,12 +5801,12 @@ RTTI_$UNIT1_$$_TFORM1:
 # Symbol UNIT1_$$_init$
 # Symbol SIDOPEN
 # Syms - End Staticsymtable
-# Procdef $fin$2(<^untyped>) is nested;
+# Procdef $fin$3(<^untyped>) is nested;
 	.uleb128	3
-	.ascii	"fin$2\000"
+	.ascii	"fin$3\000"
 	.byte	1
 	.byte	65
-	.quad	UNIT1$_$TFORM1_$_BUTTON1CLICK$TOBJECT_$$_fin$2
+	.quad	UNIT1$_$TFORM1_$_BUTTON1CLICK$TOBJECT_$$_fin$3
 	.quad	.Lt1
 # Symbol parentfp
 	.uleb128	4
@@ -5915,7 +5915,7 @@ RTTI_$UNIT1_$$_TFORM1:
 	.byte	118
 	.sleb128	-72
 	.long	.La21-.Ldebug_info0
-# Symbol fin$3
+# Symbol fin$4
 # Definition ShortString
 .La19:
 	.uleb128	7
@@ -5948,12 +5948,12 @@ RTTI_$UNIT1_$$_TFORM1:
 	.uleb128	11
 	.long	.La19-.Ldebug_info0
 	.byte	0
-# Procdef $fin$3(<^untyped>) is nested;
+# Procdef $fin$4(<^untyped>) is nested;
 	.uleb128	3
-	.ascii	"fin$3\000"
+	.ascii	"fin$4\000"
 	.byte	1
 	.byte	65
-	.quad	UNIT1$_$SIDOPEN$LONGINT_$$_fin$3
+	.quad	UNIT1$_$SIDOPEN$LONGINT_$$_fin$4
 	.quad	.Lt3
 # Symbol parentfp
 	.uleb128	4
@@ -6706,7 +6706,7 @@ RTTI_$UNIT1_$$_TFORM1:
 	.uleb128	0
 	.long	.La24-.Ldebug_info0
 # Symbol TESTT
-# Symbol fin$2
+# Symbol fin$3
 # Definition Array[0..1000] Of Array[0..1] Of AnsiString
 .La63:
 	.uleb128	21
@@ -17080,6 +17080,45 @@ RTTI_$UNIT1_$$_TFORM1:
 	.ascii	"ASCALED\000"
 	.long	.La38-.Ldebug_info0
 	.byte	0
+# Procdef AutoAdjustLayout(<TCustomDesignControl>;TLayoutAdjustmentPolicy;const LongInt;const LongInt;const LongInt;const LongInt);
+	.uleb128	18
+	.ascii	"AUTOADJUSTLAYOUT\000"
+	.byte	1
+	.byte	65
+	.byte	1
+	.byte	1
+	.byte	5
+	.byte	6
+	.byte	16
+	.uleb128	1456
+	.byte	34
+	.byte	2
+# Symbol this
+	.uleb128	26
+	.ascii	"this\000"
+	.byte	1
+	.long	.La233-.Ldebug_info0
+# Symbol AMODE
+	.uleb128	27
+	.ascii	"AMODE\000"
+	.long	.La457-.Ldebug_info0
+# Symbol AFROMPPI
+	.uleb128	27
+	.ascii	"AFROMPPI\000"
+	.long	.La6-.Ldebug_info0
+# Symbol ATOPPI
+	.uleb128	27
+	.ascii	"ATOPPI\000"
+	.long	.La6-.Ldebug_info0
+# Symbol AOLDFORMWIDTH
+	.uleb128	27
+	.ascii	"AOLDFORMWIDTH\000"
+	.long	.La6-.Ldebug_info0
+# Symbol ANEWFORMWIDTH
+	.uleb128	27
+	.ascii	"ANEWFORMWIDTH\000"
+	.long	.La6-.Ldebug_info0
+	.byte	0
 # Procdef DoAutoAdjustLayout(<TCustomDesignControl>;const TLayoutAdjustmentPolicy;const Double;const Double);
 	.uleb128	18
 	.ascii	"DOAUTOADJUSTLAYOUT\000"
@@ -17156,44 +17195,6 @@ RTTI_$UNIT1_$$_TFORM1:
 	.uleb128	27
 	.ascii	"THEOWNER\000"
 	.long	.La115-.Ldebug_info0
-	.byte	0
-# Procdef AutoAdjustLayout(<TCustomDesignControl>;TLayoutAdjustmentPolicy;const LongInt;const LongInt;const LongInt;const LongInt);
-	.uleb128	28
-	.ascii	"AUTOADJUSTLAYOUT\000"
-	.byte	1
-	.byte	65
-	.byte	1
-	.byte	1
-	.byte	5
-	.byte	6
-	.byte	16
-	.uleb128	1456
-	.byte	34
-# Symbol this
-	.uleb128	26
-	.ascii	"this\000"
-	.byte	1
-	.long	.La233-.Ldebug_info0
-# Symbol AMODE
-	.uleb128	27
-	.ascii	"AMODE\000"
-	.long	.La457-.Ldebug_info0
-# Symbol AFROMPPI
-	.uleb128	27
-	.ascii	"AFROMPPI\000"
-	.long	.La6-.Ldebug_info0
-# Symbol ATOPPI
-	.uleb128	27
-	.ascii	"ATOPPI\000"
-	.long	.La6-.Ldebug_info0
-# Symbol AOLDFORMWIDTH
-	.uleb128	27
-	.ascii	"AOLDFORMWIDTH\000"
-	.long	.La6-.Ldebug_info0
-# Symbol ANEWFORMWIDTH
-	.uleb128	27
-	.ascii	"ANEWFORMWIDTH\000"
-	.long	.La6-.Ldebug_info0
 	.byte	0
 	.byte	0
 .La234:
@@ -28236,7 +28237,7 @@ RTTI_$UNIT1_$$_TFORM1:
 	.ascii	"ADESIGNTIMEPPI\000"
 	.long	.La6-.Ldebug_info0
 	.byte	0
-# Procdef DoScaleFontPPI(<TControl>;const TFont;const LongInt;const Double);
+# Procdef DoScaleFontPPI(<TControl>;const TFont;const Double);
 	.uleb128	25
 	.ascii	"DOSCALEFONTPPI\000"
 	.byte	1
@@ -28252,10 +28253,6 @@ RTTI_$UNIT1_$$_TFORM1:
 	.uleb128	27
 	.ascii	"AFONT\000"
 	.long	.La583-.Ldebug_info0
-# Symbol ATOPPI
-	.uleb128	27
-	.ascii	"ATOPPI\000"
-	.long	.La6-.Ldebug_info0
 # Symbol APROPORTION
 	.uleb128	27
 	.ascii	"APROPORTION\000"
@@ -29424,7 +29421,7 @@ RTTI_$UNIT1_$$_TFORM1:
 	.ascii	"ADESIGNTIMEPPI\000"
 	.long	.La6-.Ldebug_info0
 	.byte	0
-# Procdef ScaleFontsPPI(<TControl>;const LongInt;const Double);
+# Procdef ScaleFontsPPI(<TControl>;const Double);
 	.uleb128	28
 	.ascii	"SCALEFONTSPPI\000"
 	.byte	1
@@ -29441,10 +29438,6 @@ RTTI_$UNIT1_$$_TFORM1:
 	.ascii	"this\000"
 	.byte	1
 	.long	.La239-.Ldebug_info0
-# Symbol ATOPPI
-	.uleb128	27
-	.ascii	"ATOPPI\000"
-	.long	.La6-.Ldebug_info0
 # Symbol APROPORTION
 	.uleb128	27
 	.ascii	"APROPORTION\000"
@@ -91091,7 +91084,7 @@ RTTI_$UNIT1_$$_TFORM1:
 	.byte	0
 .Lehdebug_line0:
 # === header end ===
-# function: UNIT1$_$TFORM1_$_BUTTON1CLICK$TOBJECT_$$_fin$2
+# function: UNIT1$_$TFORM1_$_BUTTON1CLICK$TOBJECT_$$_fin$3
 # [72:1]
 	.byte	0
 	.uleb128	9
@@ -92850,7 +92843,7 @@ RTTI_$UNIT1_$$_TFORM1:
 	.byte	1
 	.byte	1
 # ###################
-# function: UNIT1$_$SIDOPEN$LONGINT_$$_fin$3
+# function: UNIT1$_$SIDOPEN$LONGINT_$$_fin$4
 # [552:1]
 	.byte	0
 	.uleb128	9
