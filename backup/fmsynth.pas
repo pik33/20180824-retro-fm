@@ -20,7 +20,7 @@ type TFmOperator=class
      lfo1,lfo2,lfo3:double;
      mul0,mul1,mul2,mul3,mul4,mul5,mul6,mul7:double;
      wptr:PsingleSample;
-     wlength,wlstart,wlend:integer;  //?
+     wlength,wlstart,wlend:double;  //?
      adsrstate:integer;
      adsrval:double;
      ar1,av1,ar2,av2,ar3,av3,ar4,av4:double;
@@ -70,6 +70,7 @@ var i:integer;
 begin
 for i:=0 to 7 do operators[i]:=TFmOperator.create(0,@outputs);
 for i:=0 to 7 do operators[i].init;
+for i:=0 to 7 do operators[i].outputtable:=@outputs;
 outmuls[0]:=1;
 for i:=1 to 7 do outmuls[i]:=0;
 end;
@@ -81,7 +82,8 @@ var i,j:integer;
     output:double;
 
 begin
-for i:=0 to 7 do outputs[i]:=operators[i].getsample;
+for i:=0 to 7 do
+  outputs[i]:=operators[i].getsample;
 output:=0;
 for i:=0 to 7 do output+=outmuls[i]*outputs[i];
 result:=output;
@@ -150,7 +152,7 @@ if mode=0 then wptr:=@fsinetable;
   //  end;
   wlength:=65536;
 
-  end;
+//  end;
 end;
 
 destructor TFmOperator.destroy;
@@ -163,7 +165,7 @@ procedure TFmOperator.init; // test init @ 1 kHz
 
 begin
 
-freq:=1000*(65536/192000);    //341
+freq:=440*(65536/192000);    //341
 c3:=1;
 c4:=1;
 c5:=1;
@@ -188,7 +190,7 @@ ar3:=-1/192000;
 ar4:=-1/1920000;
 av1:=1;
 av2:=0.9;
-av3:=0.5;
+av3:=0.8;
 av4:=0;
 adsrbias:=0;
 vel:=1;
@@ -217,14 +219,14 @@ freq2:=(freq+(c3*lfo1))*c4*lfo2;
 // stage2: compute the modulator
 
 
-modulator:=foutputtable[0]*mul0
-+foutputtable[1]*mul1
-+foutputtable[2]*mul2
-+foutputtable[3]*mul3
-+foutputtable[4]*mul4
-+foutputtable[5]*mul5
-+foutputtable[6]*mul6
-+foutputtable[7]*mul7;
+modulator:=outputtable[0]*mul0
++outputtable[1]*mul1
++outputtable[2]*mul2
++outputtable[3]*mul3
++outputtable[4]*mul4
++outputtable[5]*mul5
++outputtable[6]*mul6
++outputtable[7]*mul7;
 
 pa:=pa+freq2;
 //pa2:=pa+modulator;
@@ -237,10 +239,14 @@ pa:=pa+freq2;
 
 if wavemode=0 then
   begin
-  if pa>wlength-0.5 then
-     pa:=pa-wlength;
+  if pa>=wlength then
+      pa:=pa-wlength;
+
   pa2:=pa+modulator;
-  if pa2>wlength-1 then repeat pa2:=pa2-wlength until pa2<=wlength-1;
+  if pa2>=wlength then
+    repeat pa2:=pa2-wlength until pa2<wlength;
+  if pa2<0 then
+    repeat pa2:=pa2+wlength until pa2>0;
   end
 else
   begin
@@ -250,12 +256,12 @@ else
     end
   else
     begin
-    if pa>=wlength-1 then pa:=wlength-1;
+    if pa>=wlength then pa:=wlength;
     end;
   pa2:=pa+modulator;
   if pa2>wlend-1 then repeat pa:=pa-wlend+wlstart until pa<=wlend-1;
   end;
-intpa:=round(pa2);
+intpa:=trunc(pa2);
 sample:=wptr[intpa];
 
  //        stage 4

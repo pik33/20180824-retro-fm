@@ -142,12 +142,13 @@ box2(10,67,894,115,180);
 outtextxyz(320,75,'File info',188,2,2);
 box2(897,118,1782,1008,34);
 box2(897,67,1782,115,36);
-outtextxyz(1296,75,'Files',44,2,2);
+outtextxyz(1296,75,'Files',47,2,2);
 sdl_pauseaudio(1); sleep(1000);
 t:=gettime;
 for i:=1 to 1000000 do
  testvoice.getsample;
 t:=gettime-t;
+//box(100,100,200,100,0);
 outtextxyz(100,100,inttostr(t),44,2,2);
 sdl_pauseaudio(0);
 end;

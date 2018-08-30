@@ -191,9 +191,9 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 # Var aaa located in register r14d
 # Var aaaa located in register r12d
 # Var f located in register eax
-# Var i located in register esi
+# Var i located in register ebx
 # Var ch located in register r13d
-# Var key located in register ebx
+# Var key located in register esi
 	movq	%rbx,-96(%rbp)
 	movq	%rdi,-88(%rbp)
 	movq	%rsi,-80(%rbp)
@@ -217,65 +217,83 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 .Lj52:
 .Ll18:
 # [86] for i:=0 to maxchannel-1 do channels[i]:=0;
-	movl	$0,%esi
-	subl	$1,%esi
+	movl	$0,%ebx
+	subl	$1,%ebx
 	.balign 8,0x90
 .Lj59:
-	addl	$1,%esi
+	addl	$1,%ebx
 # PeepHole Optimization,var2a
-	movl	%esi,%eax
+	movl	%ebx,%eax
 	leaq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%rdx
 	movq	$0,(%rdx,%rax,8)
-	cmpl	$2,%esi
+	cmpl	$2,%ebx
 	jl	.Lj59
 .Ll19:
 # [87] for i:=0 to 127 do notes[i]:=maxchannel;
-	movl	$0,%esi
-	subl	$1,%esi
+	movl	$0,%ebx
+	subl	$1,%ebx
 	.balign 8,0x90
 .Lj64:
-	addl	$1,%esi
+	addl	$1,%ebx
 # PeepHole Optimization,var2a
-	movl	%esi,%eax
+	movl	%ebx,%eax
 	leaq	U_$SYNTHCONTROL_$$_NOTES(%rip),%rdx
 	movl	$3,(%rdx,%rax,4)
-	cmpl	$127,%esi
+	cmpl	$127,%ebx
 	jl	.Lj64
 	.balign 8,0x90
 .Lj67:
 .Ll20:
 # [91] key:=readkeybuffer;
 	call	RETRO_$$_READKEYBUFFER$$LONGWORD
-	movl	%eax,%ebx
+	movl	%eax,%esi
 .Ll21:
-# [94] if key=32 then testvoice.operators[0].adsrstate:=1;
-	cmpl	$32,%ebx
+# [94] if key=32 then for i:=0 to 7 do testvoice.operators[i].adsrstate:=1;
+	cmpl	$32,%esi
 	jne	.Lj73
-	movq	U_$RETRO_$$_TESTVOICE(%rip),%rax
-	movq	8(%rax),%rax
-	movl	$1,284(%rax)
+	movl	$0,%ebx
+	subl	$1,%ebx
+	.balign 8,0x90
+.Lj76:
+	addl	$1,%ebx
+	movq	U_$RETRO_$$_TESTVOICE(%rip),%rdx
+# PeepHole Optimization,var2a
+	movl	%ebx,%eax
+	movq	8(%rdx,%rax,8),%rax
+	movl	$1,296(%rax)
+	cmpl	$7,%ebx
+	jl	.Lj76
 .Lj73:
 .Ll22:
-# [95] if key=32+$10000 then testvoice.operators[0].adsrstate:=5;
-	cmpl	$65568,%ebx
-	jne	.Lj77
-	movq	U_$RETRO_$$_TESTVOICE(%rip),%rax
-	movq	8(%rax),%rax
-	movl	$5,284(%rax)
-.Lj77:
+# [95] if key=32+$10000 then for i:=0 to 7 do testvoice.operators[i].adsrstate:=5;
+	cmpl	$65568,%esi
+	jne	.Lj80
+	movl	$0,%ebx
+	subl	$1,%ebx
+	.balign 8,0x90
+.Lj83:
+	addl	$1,%ebx
+	movq	U_$RETRO_$$_TESTVOICE(%rip),%rdx
+# PeepHole Optimization,var2a
+	movl	%ebx,%eax
+	movq	8(%rdx,%rax,8),%rax
+	movl	$5,296(%rax)
+	cmpl	$7,%ebx
+	jl	.Lj83
+.Lj80:
 .Ll23:
 # [96] if key<>$FFFFFFFF then
-	cmpl	$4294967295,%ebx
-	je	.Lj81
+	cmpl	$4294967295,%esi
+	je	.Lj87
 .Ll24:
 # [98] if key<$10000 then
-	cmpl	$65536,%ebx
-	jnb	.Lj83
+	cmpl	$65536,%esi
+	jnb	.Lj89
 .Ll25:
 # [100] key:=key and 255;
-	movl	%ebx,%eax
+	movl	%esi,%eax
 	andl	$255,%eax
-	movl	%eax,%ebx
+	movl	%eax,%esi
 .Ll26:
 # [101] blit($F000000,100,432,$F000000,100,400,100,160,1792,1792);
 	movl	$1792,72(%rsp)
@@ -304,7 +322,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 # PeepHole Optimization,var2a
-	movl	%ebx,%edx
+	movl	%esi,%edx
 	leaq	-8(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$QWORD$$ANSISTRING
 	movq	-8(%rbp),%rax
@@ -317,24 +335,24 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 # PeepHole Optimization,var2a
 .Ll29:
 # [104] key:=keymap2[key];
-	movl	%ebx,%edx
+	movl	%esi,%edx
 	leaq	TC_$SYNTHCONTROL_$$_KEYMAP2(%rip),%rax
 	movzbl	(%rax,%rdx,1),%eax
-	movl	%eax,%ebx
+	movl	%eax,%esi
 .Ll30:
 # [105] if key>0 then md:=144+key shl 8+$700000 else md:=$FFFFFFFF;
-	cmpl	$0,%ebx
-	jna	.Lj135
-	movl	%ebx,%eax
+	cmpl	$0,%esi
+	jna	.Lj141
+	movl	%esi,%eax
 	shll	$8,%eax
 	leal	144(%eax),%eax
 	leal	7340032(%eax),%eax
 	movl	%eax,%edi
-	jmp	.Lj199
-.Lj135:
+	jmp	.Lj205
+.Lj141:
 	movl	$4294967295,%edi
-	jmp	.Lj199
-.Lj83:
+	jmp	.Lj205
+.Lj89:
 .Ll31:
 # [109] blit($F000000,100,432,$F000000,100,400,100,160,1792,1792);
 	movl	$1792,72(%rsp)
@@ -363,7 +381,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 # PeepHole Optimization,var2a
-	movl	%ebx,%edx
+	movl	%esi,%edx
 	leaq	-8(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$QWORD$$ANSISTRING
 	movq	-8(%rbp),%rax
@@ -375,40 +393,40 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
 .Ll34:
 # [112] key:=key and 255;
-	movl	%ebx,%eax
+	movl	%esi,%eax
 	andl	$255,%eax
 # PeepHole Optimization,MovMov2Mov1
-	movl	%eax,%ebx
+	movl	%eax,%esi
 .Ll35:
 # [113] key:=keymap2[key];
 	andl	$4294967295,%eax
 	leaq	TC_$SYNTHCONTROL_$$_KEYMAP2(%rip),%rdx
 	movzbl	(%rdx,%rax,1),%eax
-	movl	%eax,%ebx
+	movl	%eax,%esi
 .Ll36:
 # [114] if key>0 then md:=144+key shl 8 else md:=$FFFFFFFF;
-	cmpl	$0,%ebx
-	jna	.Lj193
-	movl	%ebx,%eax
+	cmpl	$0,%esi
+	jna	.Lj199
+	movl	%esi,%eax
 	shll	$8,%eax
 	leal	144(%eax),%eax
 	movl	%eax,%edi
-	jmp	.Lj199
-.Lj193:
+	jmp	.Lj205
+.Lj199:
 	movl	$4294967295,%edi
 .Ll37:
 # [116] goto p101;
-	jmp	.Lj199
-.Lj81:
+	jmp	.Lj205
+.Lj87:
 .Ll38:
 # [119] md:=readbuffer;
 	call	MIDI_$$_READBUFFER$$LONGWORD
 	movl	%eax,%edi
-.Lj199:
+.Lj205:
 .Ll39:
 # [122] if md<>$FFFFFFFF then
 	cmpl	$4294967295,%edi
-	je	.Lj203
+	je	.Lj209
 .Ll40:
 # [124] aa:=md and $FF;
 	movl	%edi,%eax
@@ -445,9 +463,9 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 .Ll45:
 # [129] if (aa=144) and (aaaa>0) then
 	cmpl	$144,%r15d
-	jne	.Lj219
+	jne	.Lj225
 	cmpl	$0,%r12d
-	jna	.Lj219
+	jna	.Lj225
 .Ll46:
 # [131] ch:=allocatechannel(1);
 	movl	$1,%ecx
@@ -456,33 +474,33 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 .Ll47:
 # [132] if ch<maxchannel then
 	cmpl	$3,%r13d
-	jnl	.Lj226
+	jnl	.Lj232
 .Ll48:
 # [134] for i:=0 to 127 do if notes[i]=ch then notes[i]:=maxchannel;
-	movl	$0,%esi
-	subl	$1,%esi
+	movl	$0,%ebx
+	subl	$1,%ebx
 	.balign 8,0x90
-.Lj229:
-	addl	$1,%esi
+.Lj235:
+	addl	$1,%ebx
 # PeepHole Optimization,var2a
-	movl	%esi,%eax
+	movl	%ebx,%eax
 	leaq	U_$SYNTHCONTROL_$$_NOTES(%rip),%rdx
 	movl	(%rdx,%rax,4),%eax
 	cmpl	%r13d,%eax
-	jne	.Lj231
+	jne	.Lj237
 # PeepHole Optimization,var2a
-	movl	%esi,%eax
+	movl	%ebx,%eax
 	leaq	U_$SYNTHCONTROL_$$_NOTES(%rip),%rdx
 	movl	$3,(%rdx,%rax,4)
-.Lj231:
-	cmpl	$127,%esi
-	jl	.Lj229
+.Lj237:
+	cmpl	$127,%ebx
+	jl	.Lj235
 # PeepHole Optimization,var2a
 .Ll49:
 # [135] notes[aaa]:=ch;
-	movl	%r14d,%edx
-	leaq	U_$SYNTHCONTROL_$$_NOTES(%rip),%rax
-	movl	%r13d,(%rax,%rdx,4)
+	movl	%r14d,%eax
+	leaq	U_$SYNTHCONTROL_$$_NOTES(%rip),%rdx
+	movl	%r13d,(%rdx,%rax,4)
 .Ll50:
 # [136] noteon(ch,aaa,aaaa,0);
 	movl	%r12d,%eax
@@ -491,17 +509,17 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	movl	$0,%r9d
 	movl	%eax,%r8d
 	call	SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT
-.Lj226:
-.Lj219:
+.Lj232:
+.Lj225:
 .Ll51:
 # [139] if (aa=144) and (aaaa=0) then
 	cmpl	$144,%r15d
-	jne	.Lj245
+	jne	.Lj251
 	testl	%r12d,%r12d
-	jne	.Lj245
+	jne	.Lj251
 .Ll52:
 # [141] i:=-1;
-	movl	$-1,%esi
+	movl	$-1,%ebx
 # PeepHole Optimization,var2a
 .Ll53:
 # [142] ch:=notes[aaa];
@@ -520,10 +538,10 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 # PeepHole Optimization,var2a
 .Ll56:
 # [145] notes[aaa]:=maxchannel;
-	movl	%r14d,%eax
-	leaq	U_$SYNTHCONTROL_$$_NOTES(%rip),%rdx
-	movl	$3,(%rdx,%rax,4)
-.Lj245:
+	movl	%r14d,%edx
+	leaq	U_$SYNTHCONTROL_$$_NOTES(%rip),%rax
+	movl	$3,(%rax,%rdx,4)
+.Lj251:
 .Ll57:
 # [148] blit($F000000,300,396,$F000000,300,300,300,96,1792,1792);
 	movl	$1792,72(%rsp)
@@ -592,7 +610,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	movl	%r8d,%r9d
 	movq	%rax,%r8
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Lj203:
+.Lj209:
 .Ll62:
 # [156] sleep(1)
 	movl	$1,%ecx
@@ -602,7 +620,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	movq	-24(%rbp),%rax
 	cmpb	$0,16(%rax)
 	je	.Lj67
-.Lj339:
+.Lj345:
 .Ll64:
 	nop
 .Lj53:
@@ -668,39 +686,39 @@ SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT:
 	movl	$0,%esi
 .Ll69:
 # [174] while i<maxchannel do if channels[i]=0 then goto p101 else i+=1;
-	jmp	.Lj347
+	jmp	.Lj353
 	.balign 8,0x90
-.Lj346:
+.Lj352:
 # PeepHole Optimization,var2a
 	movl	%esi,%eax
 	leaq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%rdx
 	cmpq	$0,(%rdx,%rax,8)
-	je	.Lj351
+	je	.Lj357
 	leal	1(%esi),%eax
 	movl	%eax,%esi
-.Lj347:
+.Lj353:
 	cmpl	$3,%esi
-	jl	.Lj346
+	jl	.Lj352
 .Ll70:
 # [175] while i<maxchannel do if channels[i]<0 then goto p101 else i+=1;
-	jmp	.Lj356
+	jmp	.Lj362
 	.balign 8,0x90
-.Lj355:
+.Lj361:
 # PeepHole Optimization,var2a
 	movl	%esi,%eax
 	leaq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%rdx
 	cmpq	$0,(%rdx,%rax,8)
-	jl	.Lj351
+	jl	.Lj357
 	leal	1(%esi),%eax
 	movl	%eax,%esi
-.Lj356:
+.Lj362:
 	cmpl	$3,%esi
-	jl	.Lj355
-.Lj351:
+	jl	.Lj361
+.Lj357:
 .Ll71:
 # [178] if i<maxchannel then
 	cmpl	$3,%esi
-	jnl	.Lj364
+	jnl	.Lj370
 .Ll72:
 # [180] result:=i;
 	movl	%esi,%r13d
@@ -711,19 +729,19 @@ SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT:
 	movl	%esi,%edx
 	leaq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%rcx
 	movq	%rax,(%rcx,%rdx,8)
-	jmp	.Lj369
-.Lj364:
+	jmp	.Lj375
+.Lj370:
 .Ll74:
 # [183] else if (i=maxchannel) and (mode=0) then
 	cmpl	$3,%esi
-	jne	.Lj371
+	jne	.Lj377
 	testl	%ebx,%ebx
-	jne	.Lj371
+	jne	.Lj377
 .Ll75:
 # [185] result:=maxchannel;
 	movl	$3,%r13d
-	jmp	.Lj375
-.Lj371:
+	jmp	.Lj381
+.Lj377:
 .Ll76:
 # [189] i:=0;
 	movl	$0,%esi
@@ -735,9 +753,9 @@ SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT:
 	movl	$0,%edi
 .Ll79:
 # [192] while i<maxchannel do
-	jmp	.Lj383
+	jmp	.Lj389
 	.balign 8,0x90
-.Lj382:
+.Lj388:
 # PeepHole Optimization,var2a
 .Ll80:
 # [194] if channels[i]<f then
@@ -745,7 +763,7 @@ SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT:
 	leaq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
 	cmpq	%r12,%rax
-	jnl	.Lj386
+	jnl	.Lj392
 # PeepHole Optimization,var2a
 .Ll81:
 # [196] f:=channels[i];
@@ -755,15 +773,15 @@ SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT:
 .Ll82:
 # [197] q:=i;
 	movl	%esi,%edi
-.Lj386:
+.Lj392:
 .Ll83:
 # [199] i+=1;
 	leal	1(%esi),%eax
 	movl	%eax,%esi
-.Lj383:
+.Lj389:
 .Ll84:
 	cmpl	$3,%esi
-	jl	.Lj382
+	jl	.Lj388
 .Ll85:
 # [201] result:=q;
 	movl	%edi,%r13d
@@ -774,8 +792,8 @@ SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT:
 	movl	%edi,%edx
 	leaq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%rcx
 	movq	%rax,(%rcx,%rdx,8)
+.Lj381:
 .Lj375:
-.Lj369:
 .Ll87:
 # [204] end;
 	movl	%r13d,%eax
@@ -829,9 +847,9 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 .Ll90:
 # [214] if (channel>=maxchannel) or (channel<0) then goto p999;
 	cmpl	$3,%ebx
-	jge	.Lj402
+	jge	.Lj408
 	cmpl	$0,%ebx
-	jl	.Lj402
+	jl	.Lj408
 .Ll91:
 # [215] base:=channel*7;
 	imull	$7,%ebx,%eax
@@ -898,7 +916,7 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	leal	54276(%r13d),%ecx
 	movl	$65,%edx
 	call	RETRO_$$_POKE$LONGINT$BYTE
-.Lj402:
+.Lj408:
 .Ll101:
 # [227] end;
 	nop
@@ -941,9 +959,9 @@ SYNTHCONTROL_$$_NOTEOFF$LONGINT$LONGINT:
 .Ll104:
 # [235] if (channel>=maxchannel) or (channel<0) then goto p999;
 	cmpl	$3,%ebx
-	jge	.Lj448
+	jge	.Lj454
 	cmpl	$0,%ebx
-	jl	.Lj448
+	jl	.Lj454
 .Ll105:
 # [236] base:=channel*7;
 	imull	$7,%ebx,%eax
@@ -953,7 +971,7 @@ SYNTHCONTROL_$$_NOTEOFF$LONGINT$LONGINT:
 	leal	54276(%edi),%ecx
 	movl	$64,%edx
 	call	RETRO_$$_POKE$LONGINT$BYTE
-.Lj448:
+.Lj454:
 .Ll107:
 # [239] end;
 	nop
@@ -1945,7 +1963,7 @@ RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.ascii	"I\000"
 	.byte	2
 	.byte	144
-	.uleb128	4
+	.uleb128	3
 	.long	.La14-.Ldebug_info0
 # Symbol CH
 	.uleb128	7
@@ -1959,7 +1977,7 @@ RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.ascii	"KEY\000"
 	.byte	2
 	.byte	144
-	.uleb128	3
+	.uleb128	4
 	.long	.La26-.Ldebug_info0
 # Symbol fin$2
 	.byte	0

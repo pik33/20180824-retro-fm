@@ -352,7 +352,8 @@ begin
 testoperator:=TFmOperator.create(0,@outputtable );
 testoperator.init;
 testvoice:=TFmVoice.create;
-
+testvoice.operators[0].mul1:=65536;
+testvoice.operators[1].freq:=440*(65536/192000);  ;
 for i:=0 to 15 do srtablei[i]:=round(1073741824*(1-attacktable[i]));
 for i:=0 to 15 do attacktablei[i]:=round(1073741824*attacktable[i]);
 initnotes;
@@ -1863,8 +1864,9 @@ for k:=0 to 3 do
 
 
   s:=sid(1);
-  s1:=round(16384*testoperator.getsample);
+  s1:=round(16384*testvoice.getsample);
   s[0]+=s1;
+  s[1]+=s1;
   if ereverb then s:=reverb1(s);
   if edelay then s:=delay1(s);
   audio2[960*k]:=s[0];
@@ -1876,8 +1878,9 @@ for k:=0 to 3 do
   for i:=480*k+1 to 480*k+479 do
     begin
     s:=sid(0);
-    s1:=round(16384*testoperator.getsample);
+    s1:=round(16384*testvoice.getsample);
     s[0]+=s1;
+    s[1]:=s1;
     if ereverb then s:=reverb1(s);
     if edelay then s:=delay1(s);
     audio2[2*i]:=s[0];

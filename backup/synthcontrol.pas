@@ -89,8 +89,10 @@ for i:=0 to 127 do notes[i]:=maxchannel;
 repeat
 
 key:=readkeybuffer;
-if key=32 then testoperator.adsrstate:=1;
-if key=32+$10000 then testoperator.adsrstate:=5;
+//if key=32 then testoperator.adsrstate:=1;
+//if key=32+$10000 then testoperator.adsrstate:=5;
+if key=32 then for i:=0 to 7 do testvoice.operators[i].adsrstate:=1;
+if key=32+$10000 then for i:=0 to 7 do testvoice.operators[0].adsrstate:=5;
 if key<>$FFFFFFFF then
   begin
   if key<$10000 then

@@ -148,6 +148,7 @@ t:=gettime;
 for i:=1 to 1000000 do
  testvoice.getsample;
 t:=gettime-t;
+box(100,100,200,100,0);
 outtextxyz(100,100,inttostr(t),44,2,2);
 sdl_pauseaudio(0);
 end;
