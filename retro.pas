@@ -352,7 +352,7 @@ begin
 testoperator:=TFmOperator.create(0,@outputtable );
 testoperator.init;
 testvoice:=TFmVoice.create;
-testvoice.operators[0].mul1:=65536;
+testvoice.operators[0].mul1:=10000;
 testvoice.operators[1].mul1:=10000;
 testvoice.operators[1].freq:=440*(65536/192000);  ;
 for i:=0 to 15 do srtablei[i]:=round(1073741824*(1-attacktable[i]));
