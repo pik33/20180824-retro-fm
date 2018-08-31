@@ -521,6 +521,7 @@ RETRO_$$_INITMACHINE$LONGINT:
 # PeepHole Optimization,MovMov2Mov1
 	movq	%rax,U_$RETRO_$$_TESTVOICE(%rip)
 .Ll75:
+<<<<<<< HEAD
 # [355] testvoice.operators[0].mul1:=16384;
 	movq	8(%rax),%rdx
 	movq	_$RETRO$_Ld1(%rip),%rax
@@ -531,11 +532,28 @@ RETRO_$$_INITMACHINE$LONGINT:
 	movq	16(%rax),%rax
 	movq	_$RETRO$_Ld2(%rip),%rdx
 	movq	%rdx,80(%rax)
+=======
+# [355] testvoice.operators[0].mul1:=10000;
+	movq	8(%rax),%rax
+	movq	_$RETRO$_Ld1(%rip),%rdx
+	movq	%rdx,80(%rax)
+.Ll76:
+# [356] testvoice.operators[1].mul1:=10000;
+	movq	U_$RETRO_$$_TESTVOICE(%rip),%rax
+	movq	16(%rax),%rdx
+	movq	_$RETRO$_Ld1(%rip),%rax
+	movq	%rax,80(%rdx)
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 .Ll77:
 # [358] testvoice.operators[0].freq:=150; //440*(65536/192000);  ;
 	movq	U_$RETRO_$$_TESTVOICE(%rip),%rax
+<<<<<<< HEAD
 	movq	8(%rax),%rax
 	movq	_$RETRO$_Ld3(%rip),%rdx
+=======
+	movq	16(%rax),%rax
+	movq	_$RETRO$_Ld2(%rip),%rdx
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	movq	%rdx,8(%rax)
 .Ll78:
 # [359] testvoice.operators[1].freq:=300; //2*testvoice.operators[0].freq  ;
@@ -553,10 +571,17 @@ RETRO_$$_INITMACHINE$LONGINT:
 	addl	$1,%edx
 # PeepHole Optimization,var2a
 	movl	%edx,%eax
+<<<<<<< HEAD
 	movsd	_$RETRO$_Ld6(%rip),%xmm0
 	leaq	TC_$RETRO_$$_ATTACKTABLE(%rip),%rcx
 	subsd	(%rcx,%rax,8),%xmm0
 	mulsd	_$RETRO$_Ld5(%rip),%xmm0
+=======
+	movsd	_$RETRO$_Ld4(%rip),%xmm0
+	leaq	TC_$RETRO_$$_ATTACKTABLE(%rip),%rcx
+	subsd	(%rcx,%rax,8),%xmm0
+	mulsd	_$RETRO$_Ld3(%rip),%xmm0
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	cvtsd2siq	%xmm0,%r8
 # PeepHole Optimization,var2a
 	movl	%edx,%eax
@@ -574,7 +599,11 @@ RETRO_$$_INITMACHINE$LONGINT:
 	addl	$1,%edx
 # PeepHole Optimization,var2a
 	movl	%edx,%eax
+<<<<<<< HEAD
 	movsd	_$RETRO$_Ld5(%rip),%xmm0
+=======
+	movsd	_$RETRO$_Ld3(%rip),%xmm0
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	leaq	TC_$RETRO_$$_ATTACKTABLE(%rip),%rcx
 	mulsd	(%rcx,%rax,8),%xmm0
 	cvtsd2siq	%xmm0,%r8
@@ -609,9 +638,15 @@ RETRO_$$_INITMACHINE$LONGINT:
 	movq	$0,%rcx
 	call	_$dll$kernel32$VirtualAlloc
 	movq	%rax,U_$RETRO_$$_P2(%rip)
+<<<<<<< HEAD
 .Ll86:
 # [368] fh2:=fileopen('./st4font.def',$40);              // load 8x16 font
 	leaq	_$RETRO$_Ld7(%rip),%rcx
+=======
+.Ll85:
+# [366] fh2:=fileopen('./st4font.def',$40);              // load 8x16 font
+	leaq	_$RETRO$_Ld5(%rip),%rcx
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	movl	$64,%edx
 	call	SYSUTILS_$$_FILEOPEN$RAWBYTESTRING$LONGINT$$QWORD
 	movl	%eax,U_$RETRO_$$_FH2(%rip)
@@ -626,9 +661,15 @@ RETRO_$$_INITMACHINE$LONGINT:
 # [370] fileclose(fh2);
 	movslq	U_$RETRO_$$_FH2(%rip),%rcx
 	call	SYSUTILS_$$_FILECLOSE$QWORD
+<<<<<<< HEAD
 .Ll89:
 # [372] fh2:=fileopen('./combinedwaveforms.bin',$40);   // load combined waveforms for SID
 	leaq	_$RETRO$_Ld8(%rip),%rcx
+=======
+.Ll88:
+# [370] fh2:=fileopen('./combinedwaveforms.bin',$40);   // load combined waveforms for SID
+	leaq	_$RETRO$_Ld6(%rip),%rcx
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	movl	$64,%edx
 	call	SYSUTILS_$$_FILEOPEN$RAWBYTESTRING$LONGINT$$QWORD
 	movl	%eax,U_$RETRO_$$_FH2(%rip)
@@ -642,9 +683,15 @@ RETRO_$$_INITMACHINE$LONGINT:
 # [374] fileclose(fh2);
 	movslq	U_$RETRO_$$_FH2(%rip),%rcx
 	call	SYSUTILS_$$_FILECLOSE$QWORD
+<<<<<<< HEAD
 .Ll92:
 # [376] fh2:=fileopen('./mysz.def',$40);                // load mouse cursor definition at sprite 8
 	leaq	_$RETRO$_Ld9(%rip),%rcx
+=======
+.Ll91:
+# [374] fh2:=fileopen('./mysz.def',$40);                // load mouse cursor definition at sprite 8
+	leaq	_$RETRO$_Ld7(%rip),%rcx
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	movl	$64,%edx
 	call	SYSUTILS_$$_FILEOPEN$RAWBYTESTRING$LONGINT$$QWORD
 	movl	%eax,U_$RETRO_$$_FH2(%rip)
@@ -691,8 +738,18 @@ RETRO_$$_INITMACHINE$LONGINT:
 # [388] SDL_Init(SDL_INIT_everything);
 	movl	$12849,%ecx
 	call	_$dll$sdl2$SDL_Init
+<<<<<<< HEAD
 .Ll101:
 # [390] SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 'best'); // make the scaled rendering look smoother.
+=======
+.Ll100:
+# [388] SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 'best'); // make the scaled rendering look smoother.
+	leaq	_$RETRO$_Ld8(%rip),%rdx
+	leaq	_$RETRO$_Ld9(%rip),%rcx
+	call	_$dll$sdl2$SDL_SetHint
+.Ll101:
+# [389] SDL_SetHint(SDL_HINT_RENDER_DIRECT3D_THREADSAFE, '1');
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	leaq	_$RETRO$_Ld10(%rip),%rdx
 	leaq	_$RETRO$_Ld11(%rip),%rcx
 	call	_$dll$sdl2$SDL_SetHint
@@ -707,7 +764,11 @@ RETRO_$$_INITMACHINE$LONGINT:
 	jne	.Lj413
 	movl	$4,40(%rsp)
 	movl	$600,32(%rsp)
+<<<<<<< HEAD
 	leaq	_$RETRO$_Ld14(%rip),%rcx
+=======
+	leaq	_$RETRO$_Ld12(%rip),%rcx
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	movl	$960,%r9d
 	movl	$536805376,%r8d
 	movl	$536805376,%edx
@@ -720,7 +781,11 @@ RETRO_$$_INITMACHINE$LONGINT:
 	jne	.Lj429
 	movl	$4097,40(%rsp)
 	movl	$600,32(%rsp)
+<<<<<<< HEAD
 	leaq	_$RETRO$_Ld14(%rip),%rcx
+=======
+	leaq	_$RETRO$_Ld12(%rip),%rcx
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	movl	$960,%r9d
 	movl	$536805376,%r8d
 	movl	$536805376,%edx
@@ -2415,9 +2480,15 @@ RETRO_$$_SETATARIPALLETTE$LONGINT:
 # Var fh located in register esi
 .seh_endprologue
 	movl	%ecx,%ebx
+<<<<<<< HEAD
 .Ll318:
 # [780] fh:=fileopen('./ataripalette.def',$40);
 	leaq	_$RETRO$_Ld15(%rip),%rcx
+=======
+.Ll317:
+# [778] fh:=fileopen('./ataripalette.def',$40);
+	leaq	_$RETRO$_Ld13(%rip),%rcx
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	movl	$64,%edx
 	call	SYSUTILS_$$_FILEOPEN$RAWBYTESTRING$LONGINT$$QWORD
 	movq	%rax,%rsi
@@ -4245,10 +4316,17 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	andl	$4294967295,%eax
 	leaq	1(%rax),%rax
 	cvtsi2ss	%rax,%xmm1
+<<<<<<< HEAD
 	movss	_$RETRO$_Ld17(%rip),%xmm0
 	divss	%xmm1,%xmm0
 	addss	_$RETRO$_Ld17(%rip),%xmm0
 	mulss	_$RETRO$_Ld16(%rip),%xmm0
+=======
+	movss	_$RETRO$_Ld15(%rip),%xmm0
+	divss	%xmm1,%xmm0
+	addss	_$RETRO$_Ld15(%rip),%xmm0
+	mulss	_$RETRO$_Ld14(%rip),%xmm0
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	cvtss2sd	%xmm0,%xmm0
 	cvtsd2siq	%xmm0,%rax
 	movl	%eax,TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FILTER_RESONANCE2I(%rip)
@@ -4480,7 +4558,11 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	ja	.Lj1510
 # PeepHole Optimization,var11
 	andl	$65535,%eax
+<<<<<<< HEAD
 	leaq	.Ld18(%rip),%rdx
+=======
+	leaq	.Ld16(%rip),%rdx
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	movslq	(%rdx,%rax,4),%rax
 	leaq	(%rdx,%rax,1),%rax
 	jmp	*%rax
@@ -4507,8 +4589,13 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	movl	%eax,TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_WV1I(%rip)
 .Lj1527:
 	cmpb	$0,TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_RING1(%rip)
+<<<<<<< HEAD
 	jna	.Lj1509
 	movsd	_$RETRO$_Ld19(%rip),%xmm0
+=======
+	jna	.Lj1507
+	movsd	_$RETRO$_Ld17(%rip),%xmm0
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	comisd	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_PA3(%rip),%xmm0
 	jp	.Lj1509
 	jnb	.Lj1509
@@ -4639,7 +4726,11 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	ja	.Lj1576
 # PeepHole Optimization,var11
 	andl	$65535,%eax
+<<<<<<< HEAD
 	leaq	.Ld20(%rip),%rdx
+=======
+	leaq	.Ld18(%rip),%rdx
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	movslq	(%rdx,%rax,4),%rax
 	leaq	(%rdx,%rax,1),%rax
 	jmp	*%rax
@@ -4666,8 +4757,13 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	movl	%eax,TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_WV2I(%rip)
 .Lj1593:
 	cmpb	$0,TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_RING2(%rip)
+<<<<<<< HEAD
 	jna	.Lj1575
 	movsd	_$RETRO$_Ld19(%rip),%xmm0
+=======
+	jna	.Lj1573
+	movsd	_$RETRO$_Ld17(%rip),%xmm0
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	comisd	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_PA1(%rip),%xmm0
 	jp	.Lj1575
 	jnb	.Lj1575
@@ -4795,7 +4891,11 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	ja	.Lj1642
 # PeepHole Optimization,var11
 	andl	$65535,%eax
+<<<<<<< HEAD
 	leaq	.Ld21(%rip),%rdx
+=======
+	leaq	.Ld19(%rip),%rdx
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	movslq	(%rdx,%rax,4),%rax
 	leaq	(%rdx,%rax,1),%rax
 	jmp	*%rax
@@ -4822,8 +4922,13 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	movl	%eax,TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_WV3I(%rip)
 .Lj1659:
 	cmpb	$0,TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_RING3(%rip)
+<<<<<<< HEAD
 	jna	.Lj1641
 	movsd	_$RETRO$_Ld19(%rip),%xmm0
+=======
+	jna	.Lj1639
+	movsd	_$RETRO$_Ld17(%rip),%xmm0
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	comisd	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_PA2(%rip),%xmm0
 	jp	.Lj1641
 	jnb	.Lj1641
@@ -5633,6 +5738,7 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 
 .section .data.n_RETRO_$$_SID$LONGINT$$TSAMPLE,"d"
 	.balign 4
+<<<<<<< HEAD
 .Ld18:
 	.long	.Lj1511-.Ld18
 	.long	.Lj1512-.Ld18
@@ -5690,6 +5796,65 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	.long	.Lj1654-.Ld21
 	.long	.Lj1654-.Ld21
 	.long	.Lj1654-.Ld21
+=======
+.Ld16:
+	.long	.Lj1509-.Ld16
+	.long	.Lj1510-.Ld16
+	.long	.Lj1511-.Ld16
+	.long	.Lj1512-.Ld16
+	.long	.Lj1513-.Ld16
+	.long	.Lj1514-.Ld16
+	.long	.Lj1515-.Ld16
+	.long	.Lj1516-.Ld16
+	.long	.Lj1517-.Ld16
+	.long	.Lj1518-.Ld16
+	.long	.Lj1519-.Ld16
+	.long	.Lj1520-.Ld16
+	.long	.Lj1520-.Ld16
+	.long	.Lj1520-.Ld16
+	.long	.Lj1520-.Ld16
+	.long	.Lj1520-.Ld16
+
+.section .data.n_RETRO_$$_SID$LONGINT$$TSAMPLE,"d"
+	.balign 4
+.Ld18:
+	.long	.Lj1575-.Ld18
+	.long	.Lj1576-.Ld18
+	.long	.Lj1577-.Ld18
+	.long	.Lj1578-.Ld18
+	.long	.Lj1579-.Ld18
+	.long	.Lj1580-.Ld18
+	.long	.Lj1581-.Ld18
+	.long	.Lj1582-.Ld18
+	.long	.Lj1583-.Ld18
+	.long	.Lj1584-.Ld18
+	.long	.Lj1585-.Ld18
+	.long	.Lj1586-.Ld18
+	.long	.Lj1586-.Ld18
+	.long	.Lj1586-.Ld18
+	.long	.Lj1586-.Ld18
+	.long	.Lj1586-.Ld18
+
+.section .data.n_RETRO_$$_SID$LONGINT$$TSAMPLE,"d"
+	.balign 4
+.Ld19:
+	.long	.Lj1641-.Ld19
+	.long	.Lj1642-.Ld19
+	.long	.Lj1643-.Ld19
+	.long	.Lj1644-.Ld19
+	.long	.Lj1645-.Ld19
+	.long	.Lj1646-.Ld19
+	.long	.Lj1647-.Ld19
+	.long	.Lj1648-.Ld19
+	.long	.Lj1649-.Ld19
+	.long	.Lj1650-.Ld19
+	.long	.Lj1651-.Ld19
+	.long	.Lj1652-.Ld19
+	.long	.Lj1652-.Ld19
+	.long	.Lj1652-.Ld19
+	.long	.Lj1652-.Ld19
+	.long	.Lj1652-.Ld19
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 
 .section .text.n_retro_$$_initnotes,"x"
 	.balign 16,0x90
@@ -5700,6 +5865,13 @@ RETRO_$$_INITNOTES:
 # Var q located in register xmm1
 # [1529] begin
 # Var q located in register xmm1
+<<<<<<< HEAD
+=======
+.Ll653:
+# [1528] q:=c03;
+	movsd	_$RETRO$_Ld20(%rip),%xmm1
+# Var i located in register edx
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 .Ll654:
 # [1530] q:=c03;
 	movsd	_$RETRO$_Ld22(%rip),%xmm1
@@ -5716,8 +5888,13 @@ RETRO_$$_INITNOTES:
 # [1533] notes[i]:=round(q*norm960*65536);
 	movl	%edx,%eax
 	movapd	%xmm1,%xmm0
+<<<<<<< HEAD
 	mulsd	_$RETRO$_Ld23(%rip),%xmm0
 	mulsd	_$RETRO$_Ld24(%rip),%xmm0
+=======
+	mulsd	_$RETRO$_Ld21(%rip),%xmm0
+	mulsd	_$RETRO$_Ld22(%rip),%xmm0
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	cvtsd2siq	%xmm0,%rcx
 	leaq	U_$RETRO_$$_NOTES(%rip),%r8
 	movl	%ecx,(%r8,%rax,4)
@@ -7921,34 +8098,53 @@ TC_$RETRO_$$_NEEDRESTART:
 	.balign 8
 .globl	_$RETRO$_Ld1
 _$RETRO$_Ld1:
+<<<<<<< HEAD
 # value: 0d+1.6384000000000000E+004
 	.byte	0,0,0,0,0,0,208,64
+=======
+# value: 0d+1.0000000000000000E+004
+	.byte	0,0,0,0,0,136,195,64
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 
 .section .rodata.n__$RETRO$_Ld2,"d"
 	.balign 8
 .globl	_$RETRO$_Ld2
 _$RETRO$_Ld2:
-# value: 0d+1.0000000000000000E+004
-	.byte	0,0,0,0,0,136,195,64
+# value: 0d+1.5018666666666667E+002
+	.byte	198,146,95,44,249,197,98,64
 
 .section .rodata.n__$RETRO$_Ld3,"d"
 	.balign 8
 .globl	_$RETRO$_Ld3
 _$RETRO$_Ld3:
+<<<<<<< HEAD
 # value: 0d+1.5000000000000000E+002
 	.byte	0,0,0,0,0,192,98,64
+=======
+# value: 0d+1.0737418240000000E+009
+	.byte	0,0,0,0,0,0,208,65
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 
 .section .rodata.n__$RETRO$_Ld4,"d"
 	.balign 8
 .globl	_$RETRO$_Ld4
 _$RETRO$_Ld4:
+<<<<<<< HEAD
 # value: 0d+3.0000000000000000E+002
 	.byte	0,0,0,0,0,192,114,64
+=======
+# value: 0d+1.0000000000000000E+000
+	.byte	0,0,0,0,0,0,240,63
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 
 .section .rodata.n__$RETRO$_Ld5,"d"
 	.balign 8
+	.short	0,1
+	.long	0
+	.quad	-1,13
 .globl	_$RETRO$_Ld5
 _$RETRO$_Ld5:
+<<<<<<< HEAD
 # value: 0d+1.0737418240000000E+009
 	.byte	0,0,0,0,0,0,208,65
 
@@ -7958,11 +8154,24 @@ _$RETRO$_Ld5:
 _$RETRO$_Ld6:
 # value: 0d+1.0000000000000000E+000
 	.byte	0,0,0,0,0,0,240,63
+=======
+	.ascii	"./st4font.def\000"
+
+.section .rodata.n__$RETRO$_Ld6,"d"
+	.balign 8
+	.short	0,1
+	.long	0
+	.quad	-1,23
+.globl	_$RETRO$_Ld6
+_$RETRO$_Ld6:
+	.ascii	"./combinedwaveforms.bin\000"
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 
 .section .rodata.n__$RETRO$_Ld7,"d"
 	.balign 8
 	.short	0,1
 	.long	0
+<<<<<<< HEAD
 	.quad	-1,13
 .globl	_$RETRO$_Ld7
 _$RETRO$_Ld7:
@@ -7976,6 +8185,18 @@ _$RETRO$_Ld7:
 .globl	_$RETRO$_Ld8
 _$RETRO$_Ld8:
 	.ascii	"./combinedwaveforms.bin\000"
+=======
+	.quad	-1,10
+.globl	_$RETRO$_Ld7
+_$RETRO$_Ld7:
+	.ascii	"./mysz.def\000"
+
+.section .rodata.n__$RETRO$_Ld8,"d"
+	.balign 8
+.globl	_$RETRO$_Ld8
+_$RETRO$_Ld8:
+	.ascii	"best\000"
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 
 .section .rodata.n__$RETRO$_Ld9,"d"
 	.balign 8
@@ -7984,19 +8205,34 @@ _$RETRO$_Ld8:
 	.quad	-1,10
 .globl	_$RETRO$_Ld9
 _$RETRO$_Ld9:
+<<<<<<< HEAD
 	.ascii	"./mysz.def\000"
+=======
+	.ascii	"SDL_RENDER_SCALE_QUALITY\000"
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 
 .section .rodata.n__$RETRO$_Ld10,"d"
 	.balign 8
+	.short	0,1
+	.long	0
+	.quad	-1,1
 .globl	_$RETRO$_Ld10
 _$RETRO$_Ld10:
+<<<<<<< HEAD
 	.ascii	"best\000"
+=======
+	.ascii	"1\000"
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 
 .section .rodata.n__$RETRO$_Ld11,"d"
 	.balign 8
 .globl	_$RETRO$_Ld11
 _$RETRO$_Ld11:
+<<<<<<< HEAD
 	.ascii	"SDL_RENDER_SCALE_QUALITY\000"
+=======
+	.ascii	"SDL_RENDER_DIRECT3D_THREADSAFE\000"
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 
 .section .rodata.n__$RETRO$_Ld12,"d"
 	.balign 8
@@ -8005,6 +8241,7 @@ _$RETRO$_Ld11:
 	.quad	-1,1
 .globl	_$RETRO$_Ld12
 _$RETRO$_Ld12:
+<<<<<<< HEAD
 	.ascii	"1\000"
 
 .section .rodata.n__$RETRO$_Ld13,"d"
@@ -8017,6 +8254,8 @@ _$RETRO$_Ld13:
 	.balign 8
 .globl	_$RETRO$_Ld14
 _$RETRO$_Ld14:
+=======
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	.ascii	"The Retromachine\000"
 
 .section .data.n_tc_$retro$_$sdlevents_$$_x,"d"
@@ -8030,13 +8269,22 @@ TC_$RETRO$_$SDLEVENTS_$$_X:
 TC_$RETRO$_$SDLEVENTS_$$_Y:
 	.long	0
 
+<<<<<<< HEAD
 .section .rodata.n__$RETRO$_Ld15,"d"
+=======
+.section .rodata.n__$RETRO$_Ld13,"d"
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	.balign 8
 	.short	0,1
 	.long	0
 	.quad	-1,18
+<<<<<<< HEAD
 .globl	_$RETRO$_Ld15
 _$RETRO$_Ld15:
+=======
+.globl	_$RETRO$_Ld13
+_$RETRO$_Ld13:
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 	.ascii	"./ataripalette.def\000"
 
 .section .data.n_tc_$retro$_$noise1$$byte_$$_a,"d"
@@ -8801,6 +9049,7 @@ TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_WV3I:
 	.long	0
 # [1208] var i,sid1,sid1l,ind:integer;
 
+<<<<<<< HEAD
 .section .rodata.n__$RETRO$_Ld16,"d"
 	.balign 4
 .globl	_$RETRO$_Ld16
@@ -8822,12 +9071,54 @@ _$RETRO$_Ld19:
 # value: 0d+0.0000000000000000E+000
 	.byte	0,0,0,0,0,0,0,0
 
+=======
+.section .rodata.n__$RETRO$_Ld14,"d"
+	.balign 4
+.globl	_$RETRO$_Ld14
+_$RETRO$_Ld14:
+# value: 0d+2.560000000E+02
+	.byte	0,0,128,67
+
+.section .rodata.n__$RETRO$_Ld15,"d"
+	.balign 4
+.globl	_$RETRO$_Ld15
+_$RETRO$_Ld15:
+# value: 0d+5.000000000E-01
+	.byte	0,0,0,63
+
+.section .rodata.n__$RETRO$_Ld17,"d"
+	.balign 8
+.globl	_$RETRO$_Ld17
+_$RETRO$_Ld17:
+# value: 0d+0.0000000000000000E+000
+	.byte	0,0,0,0,0,0,0,0
+
+.section .rodata.n__$RETRO$_Ld20,"d"
+	.balign 8
+.globl	_$RETRO$_Ld20
+_$RETRO$_Ld20:
+# value: 0d+1.6351597831287418E+001
+	.byte	87,185,194,80,2,90,48,64
+
+.section .rodata.n__$RETRO$_Ld21,"d"
+	.balign 8
+.globl	_$RETRO$_Ld21
+_$RETRO$_Ld21:
+# value: 0d+6.8157440000000000E-002
+	.byte	239,113,199,23,196,114,177,63
+
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 .section .rodata.n__$RETRO$_Ld22,"d"
 	.balign 8
 .globl	_$RETRO$_Ld22
 _$RETRO$_Ld22:
+<<<<<<< HEAD
 # value: 0d+1.6351597831287418E+001
 	.byte	87,185,194,80,2,90,48,64
+=======
+# value: 0d+6.5536000000000000E+004
+	.byte	0,0,0,0,0,0,240,64
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 
 .section .rodata.n__$RETRO$_Ld23,"d"
 	.balign 8
@@ -9604,8 +9895,8 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.uleb128	1
 # [189] var
 	.ascii	"retro.pas\000"
-	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
-	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
+	.ascii	"D:/programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0

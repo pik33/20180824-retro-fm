@@ -352,7 +352,11 @@ begin
 testoperator:=TFmOperator.create(0,@outputtable );
 testoperator.init;
 testvoice:=TFmVoice.create;
+<<<<<<< HEAD
 testvoice.operators[0].mul1:=16384;
+=======
+testvoice.operators[0].mul1:=10000;
+>>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
 testvoice.operators[1].mul1:=10000;
 //testvoice.outmuls[1]:=1;
 testvoice.operators[0].freq:=150; //440*(65536/192000);  ;
