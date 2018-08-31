@@ -581,8 +581,8 @@ FMSYNTH$_$TFMOPERATOR_$__$$_INIT:
 	movq	_$FMSYNTH$_Ld9(%rip),%rdx
 	movq	%rdx,8(%rax)
 .Ll59:
-# [169] c3:=1;
-	movq	_$FMSYNTH$_Ld4(%rip),%rdx
+# [169] c3:=0;
+	movq	_$FMSYNTH$_Ld3(%rip),%rdx
 	movq	%rdx,16(%rax)
 .Ll60:
 # [170] c4:=1;

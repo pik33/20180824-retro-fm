@@ -185,12 +185,12 @@ wlength:=65536;
 adsrstate:=0;
 adsrval:=0;
 ar1:=1/1920;
-ar2:=-1/1920000;
-ar3:=-1/192000;
+ar2:=-1/192000;
+ar3:=-1/1920000;
 ar4:=-1/1920000;
 av1:=1;
-av2:=0.9;
-av3:=0.8;
+av2:=0.95;
+av3:=0.9;
 av4:=0;
 adsrbias:=0;
 vel:=1;
@@ -214,7 +214,7 @@ begin
 //ft:=gettime;
 //for i:=1 to 1000 do begin
 
-freq2:=(freq+(c3*lfo1))*c4*lfo2;
+freq2:=freq; //(freq+(c3*lfo1))*c4*lfo2;
 
 // stage2: compute the modulator
 

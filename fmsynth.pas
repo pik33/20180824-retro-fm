@@ -166,7 +166,7 @@ procedure TFmOperator.init; // test init @ 1 kHz
 begin
 
 freq:=440*(65536/192000);    //341
-c3:=1;
+c3:=0;
 c4:=1;
 c5:=1;
 c6:=1;
