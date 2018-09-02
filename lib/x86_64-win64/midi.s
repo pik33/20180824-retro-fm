@@ -93,7 +93,6 @@ MIDI_$$_WRITEBUFFER$LONGINT:
 .globl	MIDI_$$_MIDIINCALLBACK$LPHMIDIIN$LONGINT$LONGINT$LONGINT$LONGINT
 MIDI_$$_MIDIINCALLBACK$LPHMIDIIN$LONGINT$LONGINT$LONGINT$LONGINT:
 .Lc5:
-# Temps allocated between rbp-8 and rbp+0
 .seh_proc MIDI_$$_MIDIINCALLBACK$LPHMIDIIN$LONGINT$LONGINT$LONGINT$LONGINT
 .Ll15:
 # [66] begin
@@ -103,18 +102,16 @@ MIDI_$$_MIDIINCALLBACK$LPHMIDIIN$LONGINT$LONGINT$LONGINT$LONGINT:
 .Lc8:
 	movq	%rsp,%rbp
 .Lc9:
-	leaq	-64(%rsp),%rsp
-.seh_stackalloc 64
+	leaq	-32(%rsp),%rsp
+.seh_stackalloc 32
 # Var aMidiInHandle located in register rax
 # Var aMsg located in register edx
 # Var aInstance located in register r8d
-# Var aMidiData located in register ebx
+# Var aMidiData located in register ecx
 # Var aTimeStamp located in register eax
-	movq	%rbx,-8(%rbp)
-.seh_savereg %rbx, 56
 .seh_endprologue
 	movq	%rcx,%rax
-	movl	%r9d,%ebx
+	movl	%r9d,%ecx
 	movl	48(%rbp),%eax
 # Var aMsg located in register edx
 .Ll16:
@@ -135,36 +132,27 @@ MIDI_$$_MIDIINCALLBACK$LPHMIDIIN$LONGINT$LONGINT$LONGINT$LONGINT:
 	jmp	.Lj27
 .Lj28:
 .Ll18:
-# [72] box(500,500,100,100,40);
-	movl	$40,32(%rsp)
-	movl	$100,%r9d
-	movl	$100,%r8d
-	movl	$500,%edx
-	movl	$500,%ecx
-	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll19:
 # [73] writebuffer(amididata);
-	movl	%ebx,%ecx
 	call	MIDI_$$_WRITEBUFFER$LONGINT
 .Lj27:
 .Lj26:
-.Ll20:
+.Ll19:
 # [92] end;
-	movq	-8(%rbp),%rbx
+	nop
 	leaq	(%rbp),%rsp
 	popq	%rbp
 	ret
 .seh_endproc
 .Lc6:
 .Lt5:
-.Ll21:
+.Ll20:
 
 .section .text.n_midi$_$openmidi_$$_fin$8,"x"
 	.balign 16,0x90
 MIDI$_$OPENMIDI_$$_fin$8:
 .Lc10:
 .seh_proc MIDI$_$OPENMIDI_$$_fin$8
-.Ll22:
+.Ll21:
 # [102] begin
 	pushq	%rbp
 .seh_pushreg %rbp
@@ -176,7 +164,7 @@ MIDI$_$OPENMIDI_$$_fin$8:
 .seh_stackalloc 32
 # Var $parentfp located in register rbp
 .seh_endprologue
-.Ll23:
+.Ll22:
 	leaq	-88(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 	nop
@@ -186,7 +174,7 @@ MIDI$_$OPENMIDI_$$_fin$8:
 .seh_endproc
 .Lc11:
 .Lt4:
-.Ll24:
+.Ll23:
 
 .section .text.n_midi_$$_openmidi,"x"
 	.balign 16,0x90
@@ -195,7 +183,7 @@ MIDI_$$_OPENMIDI:
 .Lc15:
 # Temps allocated between rbp-96 and rbp-80
 .seh_proc MIDI_$$_OPENMIDI
-.Ll25:
+.Ll24:
 	pushq	%rbp
 .seh_pushreg %rbp
 .Lc17:
@@ -212,43 +200,43 @@ MIDI_$$_OPENMIDI:
 # Var result located at rbp-24, size=OS_32
 # Var caps located at rbp-72, size=OS_NO
 # Var handle located at rbp-80, size=OS_64
-.Ll26:
+.Ll25:
 	movq	$0,-88(%rbp)
-.Lj52:
+.Lj42:
 	nop
+.Lj38:
 .Lj48:
-.Lj58:
-.Ll27:
+.Ll26:
 # [103] try
 	nop
-.Lj57:
-.Ll28:
+.Lj47:
+.Ll27:
 # [104] inputs:= MidiInGetNumDevs;
 	call	_$dll$winmm$midiInGetNumDevs
 	movl	%eax,-16(%rbp)
+.Ll28:
+	jmp	.Lj45
+.Lj44:
 .Ll29:
-	jmp	.Lj55
-.Lj54:
-.Ll30:
 # [106] inputs:= 0;
 	movl	$0,-16(%rbp)
-.Ll31:
+.Ll30:
 	call	FPC_DONEEXCEPTION
-.Lj63:
+.Lj53:
 	nop
-.Lj55:
-.Ll32:
+.Lj45:
+.Ll31:
 # [109] if inputs>maxmidi then inputs:=maxmidi;
 	cmpl	$16,-16(%rbp)
-	jng	.Lj65
+	jng	.Lj55
 	movl	$16,-16(%rbp)
-.Lj65:
-.Ll33:
+.Lj55:
+.Ll32:
 # [110] for i:=0 to maxmidi-1 do devicenames[i]:='';
 	movl	$0,-8(%rbp)
 	subl	$1,-8(%rbp)
 	.balign 8,0x90
-.Lj70:
+.Lj60:
 	addl	$1,-8(%rbp)
 	movl	-8(%rbp),%edx
 	leaq	U_$MIDI_$$_DEVICENAMES(%rip),%rax
@@ -256,33 +244,33 @@ MIDI_$$_OPENMIDI:
 	movq	$0,%rdx
 	call	fpc_ansistr_assign
 	cmpl	$15,-8(%rbp)
-	jl	.Lj70
-.Ll34:
+	jl	.Lj60
+.Ll33:
 # [111] if inputs>0 then
 	cmpl	$0,-16(%rbp)
-	jng	.Lj76
-.Ll35:
+	jng	.Lj66
+.Ll34:
 # [113] for i:=0 to inputs-1 do
 	movl	-16(%rbp),%eax
 	leal	-1(%eax),%ebx
 	movl	$0,-8(%rbp)
 	cmpl	-8(%rbp),%ebx
-	jl	.Lj80
+	jl	.Lj70
 	subl	$1,-8(%rbp)
 	.balign 8,0x90
-.Lj81:
+.Lj71:
 	addl	$1,-8(%rbp)
-.Ll36:
+.Ll35:
 # [115] result := midiInGetDevCaps(i, @caps, SizeOf(TMidiInCaps));
 	leaq	-72(%rbp),%rdx
 	movl	-8(%rbp),%ecx
 	movl	$44,%r8d
 	call	_$dll$winmm$midiInGetDevCapsA
 	movl	%eax,-24(%rbp)
-.Ll37:
+.Ll36:
 # [116] if result = MMSYSERR_NOERROR then devicenames[i]:=(StrPas(caps.szPname));
 	cmpl	$0,-24(%rbp)
-	jne	.Lj91
+	jne	.Lj81
 	leaq	-64(%rbp),%rdx
 	leaq	-88(%rbp),%rcx
 	call	SYSUTILS_$$_STRPAS$PCHAR$$ANSISTRING
@@ -291,13 +279,13 @@ MIDI_$$_OPENMIDI:
 	leaq	U_$MIDI_$$_DEVICENAMES(%rip),%rcx
 	leaq	(%rcx,%rax,8),%rcx
 	call	fpc_ansistr_assign
-.Lj91:
-.Ll38:
+.Lj81:
+.Ll37:
 	cmpl	-8(%rbp),%ebx
-	jg	.Lj81
-.Lj80:
-.Lj76:
-.Ll39:
+	jg	.Lj71
+.Lj70:
+.Lj66:
+.Ll38:
 # [120] result := midiInOpen( @handle, 0 {devindex}, cardinal(@midiInCallback),
 	movl	$196608,32(%rsp)
 	leaq	MIDI_$$_MIDIINCALLBACK$LPHMIDIIN$LONGINT$LONGINT$LONGINT$LONGINT(%rip),%r8
@@ -306,32 +294,32 @@ MIDI_$$_OPENMIDI:
 	movl	$0,%edx
 	call	_$dll$winmm$midiInOpen
 	movl	%eax,-24(%rbp)
-.Ll40:
+.Ll39:
 # [127] Result := midiInPrepareHeader(Handle, @SysExHeader, SizeOf(TMidiHdr));
 	leaq	U_$MIDI_$$_SYSEXHEADER(%rip),%rdx
 	movq	-80(%rbp),%rcx
 	movl	$108,%r8d
 	call	_$dll$winmm$midiInPrepareHeader
 	movl	%eax,-24(%rbp)
-.Ll41:
+.Ll40:
 # [128] Result := midiInAddBuffer( Handle, @SysExHeader, SizeOf(TMidiHdr));
 	leaq	U_$MIDI_$$_SYSEXHEADER(%rip),%rdx
 	movq	-80(%rbp),%rcx
 	movl	$108,%r8d
 	call	_$dll$winmm$midiInAddBuffer
 	movl	%eax,-24(%rbp)
-.Ll42:
+.Ll41:
 # [129] Result := midiInStart( Handle);
 	movq	-80(%rbp),%rcx
 	call	_$dll$winmm$midiInStart
 	movl	%eax,-24(%rbp)
-.Lj132:
-.Ll43:
+.Lj122:
+.Ll42:
 	nop
-.Lj49:
+.Lj39:
 	movq	%rbp,%rcx
 	call	MIDI$_$OPENMIDI_$$_fin$8
-.Ll44:
+.Ll43:
 # [131] end;
 	movq	-96(%rbp),%rbx
 	leaq	(%rbp),%rsp
@@ -341,19 +329,19 @@ MIDI_$$_OPENMIDI:
 .seh_handlerdata
 	.long	2
 	.long	1
-	.rva	.Lj57
-	.rva	.Lj54
-	.rva	.Lj55
+	.rva	.Lj47
+	.rva	.Lj44
+	.rva	.Lj45
 	.long	0
-	.rva	.Lj48
-	.rva	.Lj49
+	.rva	.Lj38
+	.rva	.Lj39
 	.rva	MIDI$_$OPENMIDI_$$_fin$8
 
 .section .text.n_midi_$$_openmidi,"x"
 .seh_endproc
 .Lc16:
 .Lt3:
-.Ll45:
+.Ll44:
 
 .section .text.n_midi_$$_init_implicit$,"x"
 	.balign 16,0x90
@@ -373,7 +361,7 @@ MIDI_$$_init_implicit$:
 .seh_endproc
 .Lc21:
 .Lt6:
-.Ll46:
+.Ll45:
 
 .section .text.n_midi_$$_finalize_implicit$,"x"
 	.balign 16,0x90
@@ -397,7 +385,7 @@ MIDI_$$_finalize_implicit$:
 .seh_endproc
 .Lc24:
 .Lt7:
-.Ll47:
+.Ll46:
 # End asmlist al_procedures
 # Begin asmlist al_globals
 
@@ -849,7 +837,7 @@ RTTI_$MIDI_$$_DEF0:
 	.ascii	"AMIDIDATA\000"
 	.byte	2
 	.byte	144
-	.uleb128	3
+	.uleb128	2
 	.long	.La7-.Ldebug_info0
 # Symbol ATIMESTAMP
 	.uleb128	7
@@ -1990,26 +1978,22 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	2
 	.uleb128	.Ll17-.Ll16
 	.byte	13
-# [72:5]
+# [73:5]
 	.byte	2
 	.uleb128	.Ll18-.Ll17
 	.byte	5
 	.uleb128	5
-	.byte	15
-# [73:5]
-	.byte	2
-	.uleb128	.Ll19-.Ll18
-	.byte	13
+	.byte	16
 # [92:1]
 	.byte	2
-	.uleb128	.Ll20-.Ll19
+	.uleb128	.Ll19-.Ll18
 	.byte	5
 	.uleb128	1
 	.byte	31
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll21
+	.quad	.Ll20
 	.byte	0
 	.byte	1
 	.byte	1
@@ -2019,18 +2003,18 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll22
+	.quad	.Ll21
 	.byte	5
 	.uleb128	1
 	.byte	113
 # [102:1]
 	.byte	2
-	.uleb128	.Ll23-.Ll22
+	.uleb128	.Ll22-.Ll21
 	.byte	1
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll24
+	.quad	.Ll23
 	.byte	0
 	.byte	1
 	.byte	1
@@ -2040,29 +2024,29 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll25
+	.quad	.Ll24
 	.byte	5
 	.uleb128	1
 	.byte	113
 # [102:1]
 	.byte	2
-	.uleb128	.Ll26-.Ll25
+	.uleb128	.Ll25-.Ll24
 	.byte	1
 # [103:3]
 	.byte	2
-	.uleb128	.Ll27-.Ll26
+	.uleb128	.Ll26-.Ll25
 	.byte	5
 	.uleb128	3
 	.byte	13
 # [104:14]
 	.byte	2
-	.uleb128	.Ll28-.Ll27
+	.uleb128	.Ll27-.Ll26
 	.byte	5
 	.uleb128	14
 	.byte	13
 # [103:3]
 	.byte	2
-	.uleb128	.Ll29-.Ll28
+	.uleb128	.Ll28-.Ll27
 	.byte	5
 	.uleb128	3
 	.byte	3
@@ -2070,13 +2054,13 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	1
 # [106:5]
 	.byte	2
-	.uleb128	.Ll30-.Ll29
+	.uleb128	.Ll29-.Ll28
 	.byte	5
 	.uleb128	5
 	.byte	15
 # [103:3]
 	.byte	2
-	.uleb128	.Ll31-.Ll30
+	.uleb128	.Ll30-.Ll29
 	.byte	5
 	.uleb128	3
 	.byte	3
@@ -2084,43 +2068,43 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	1
 # [109:10]
 	.byte	2
-	.uleb128	.Ll32-.Ll31
+	.uleb128	.Ll31-.Ll30
 	.byte	5
 	.uleb128	10
 	.byte	18
 # [110:1]
 	.byte	2
-	.uleb128	.Ll33-.Ll32
+	.uleb128	.Ll32-.Ll31
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [111:10]
 	.byte	2
-	.uleb128	.Ll34-.Ll33
+	.uleb128	.Ll33-.Ll32
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [113:21]
 	.byte	2
-	.uleb128	.Ll35-.Ll34
+	.uleb128	.Ll34-.Ll33
 	.byte	5
 	.uleb128	21
 	.byte	14
 # [115:40]
 	.byte	2
-	.uleb128	.Ll36-.Ll35
+	.uleb128	.Ll35-.Ll34
 	.byte	5
 	.uleb128	40
 	.byte	14
 # [116:15]
 	.byte	2
-	.uleb128	.Ll37-.Ll36
+	.uleb128	.Ll36-.Ll35
 	.byte	5
 	.uleb128	15
 	.byte	13
 # [113:7]
 	.byte	2
-	.uleb128	.Ll38-.Ll37
+	.uleb128	.Ll37-.Ll36
 	.byte	5
 	.uleb128	7
 	.byte	3
@@ -2128,31 +2112,31 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	1
 # [120:11]
 	.byte	2
-	.uleb128	.Ll39-.Ll38
+	.uleb128	.Ll38-.Ll37
 	.byte	5
 	.uleb128	11
 	.byte	19
 # [127:51]
 	.byte	2
-	.uleb128	.Ll40-.Ll39
+	.uleb128	.Ll39-.Ll38
 	.byte	5
 	.uleb128	51
 	.byte	19
 # [128:48]
 	.byte	2
-	.uleb128	.Ll41-.Ll40
+	.uleb128	.Ll40-.Ll39
 	.byte	5
 	.uleb128	48
 	.byte	13
 # [129:11]
 	.byte	2
-	.uleb128	.Ll42-.Ll41
+	.uleb128	.Ll41-.Ll40
 	.byte	5
 	.uleb128	11
 	.byte	13
 # [102:1]
 	.byte	2
-	.uleb128	.Ll43-.Ll42
+	.uleb128	.Ll42-.Ll41
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -2160,12 +2144,12 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	1
 # [131:1]
 	.byte	2
-	.uleb128	.Ll44-.Ll43
+	.uleb128	.Ll43-.Ll42
 	.byte	41
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll45
+	.quad	.Ll44
 	.byte	0
 	.byte	1
 	.byte	1
@@ -2175,7 +2159,7 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll46
+	.quad	.Ll45
 	.byte	0
 	.byte	1
 	.byte	1
@@ -2185,7 +2169,7 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll47
+	.quad	.Ll46
 	.byte	0
 	.byte	1
 	.byte	1

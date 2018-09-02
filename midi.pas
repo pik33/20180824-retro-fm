@@ -69,7 +69,7 @@ callback:=integer(amsg);
 case aMsg of
   MIM_DATA:
     begin
-    box(500,500,100,100,40);
+
     writebuffer(amididata);
        // midi data
        //mididata:=amididata;

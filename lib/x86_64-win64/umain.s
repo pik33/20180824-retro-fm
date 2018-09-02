@@ -22,7 +22,7 @@ UMAIN$_$MAIN1_$$_fin$0:
 .seh_proc UMAIN$_$MAIN1_$$_fin$0
 .Ll1:
 # [umain.pas]
-# [51] begin
+# [52] begin
 	pushq	%rbp
 .seh_pushreg %rbp
 .Lc3:
@@ -59,14 +59,14 @@ UMAIN_$$_MAIN1:
 .Lc9:
 	movq	%rsp,%rbp
 .Lc10:
-	leaq	-128(%rsp),%rsp
-.seh_stackalloc 128
+	leaq	-96(%rsp),%rsp
+.seh_stackalloc 96
 # Var t located in register rbx
 # Var i located in register esi
 	movq	%rbx,-40(%rbp)
 	movq	%rsi,-32(%rbp)
-.seh_savereg %rbx, 88
-.seh_savereg %rsi, 96
+.seh_savereg %rbx, 56
+.seh_savereg %rsi, 64
 .seh_endprologue
 .Ll5:
 	movq	$0,-8(%rbp)
@@ -74,69 +74,69 @@ UMAIN_$$_MAIN1:
 	nop
 .Lj7:
 .Ll6:
-# [55] raml^[$18010]:=$01001100;    raml^[$18011]:=$80040004;
+# [56] raml^[$18010]:=$01001100;    raml^[$18011]:=$80040004;
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	$16781568,393280(%rax)
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	$-2147221500,393284(%rax)
 .Ll7:
-# [56] raml^[$18012]:=$01001100;    raml^[$18013]:=$00040004;
+# [57] raml^[$18012]:=$01001100;    raml^[$18013]:=$00040004;
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	$16781568,393288(%rax)
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	$262148,393292(%rax)
 .Ll8:
-# [57] raml^[$18014]:=$01001100;    raml^[$18015]:=$00040004;
+# [58] raml^[$18014]:=$01001100;    raml^[$18015]:=$00040004;
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	$16781568,393296(%rax)
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	$262148,393300(%rax)
 .Ll9:
-# [58] raml^[$18016]:=$01001100;    raml^[$18017]:=$00040004;
+# [59] raml^[$18016]:=$01001100;    raml^[$18017]:=$00040004;
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	$16781568,393304(%rax)
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	$262148,393308(%rax)
 .Ll10:
-# [59] raml^[$18018]:=$01001100;    raml^[$18019]:=$00040004;
+# [60] raml^[$18018]:=$01001100;    raml^[$18019]:=$00040004;
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	$16781568,393312(%rax)
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	$262148,393316(%rax)
 .Ll11:
-# [60] raml^[$1801a]:=$01001100;    raml^[$1801b]:=$00040004;
+# [61] raml^[$1801a]:=$01001100;    raml^[$1801b]:=$00040004;
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	$16781568,393320(%rax)
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	$262148,393324(%rax)
 .Ll12:
-# [61] raml^[$1801c]:=$01001100;    raml^[$1801d]:=$00040004;
+# [62] raml^[$1801c]:=$01001100;    raml^[$1801d]:=$00040004;
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	$16781568,393328(%rax)
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	$262148,393332(%rax)
 .Ll13:
-# [62] raml^[$1801e]:=$01001100;    raml^[$1801f]:=$00020002;
+# [63] raml^[$1801e]:=$01001100;    raml^[$1801f]:=$00020002;
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	$16781568,393336(%rax)
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	$131074,393340(%rax)
 .Ll14:
-# [66] for i:=0 to 31 do
+# [67] for i:=0 to 31 do
 	movl	$0,%esi
 	subl	$1,%esi
 	.balign 8,0x90
 .Lj46:
 	addl	$1,%esi
 .Ll15:
-# [67] for j:=0 to 31 do  begin
+# [68] for j:=0 to 31 do  begin
 	movl	$0,U_$UMAIN_$$_J(%rip)
 	subl	$1,U_$UMAIN_$$_J(%rip)
 	.balign 8,0x90
 .Lj49:
 	addl	$1,U_$UMAIN_$$_J(%rip)
 .Ll16:
-# [68] if j<16 then k:=j*16 else k:=(31-j)*16 ;
+# [69] if j<16 then k:=j*16 else k:=(31-j)*16 ;
 	cmpl	$16,U_$UMAIN_$$_J(%rip)
 	jnl	.Lj51
 	movl	U_$UMAIN_$$_J(%rip),%eax
@@ -151,7 +151,7 @@ UMAIN_$$_MAIN1:
 	movl	%eax,U_$UMAIN_$$_K(%rip)
 .Lj54:
 .Ll17:
-# [69] if (i<11) or (i>21) or (j<11) or (j>21) then raml^[$14800+i+32*j]:=k else  raml^[$14800+i+32*j]:=$0;
+# [70] if (i<11) or (i>21) or (j<11) or (j>21) then raml^[$14800+i+32*j]:=k else  raml^[$14800+i+32*j]:=$0;
 	cmpl	$11,%esi
 	jl	.Lj57
 	cmpl	$21,%esi
@@ -189,21 +189,21 @@ UMAIN_$$_MAIN1:
 	cmpl	$31,%esi
 	jl	.Lj46
 .Ll22:
-# [72] for i:=0 to 31 do
+# [73] for i:=0 to 31 do
 	movl	$0,%esi
 	subl	$1,%esi
 	.balign 8,0x90
 .Lj71:
 	addl	$1,%esi
 .Ll23:
-# [73] for j:=0 to 31 do  begin
+# [74] for j:=0 to 31 do  begin
 	movl	$0,U_$UMAIN_$$_J(%rip)
 	subl	$1,U_$UMAIN_$$_J(%rip)
 	.balign 8,0x90
 .Lj74:
 	addl	$1,U_$UMAIN_$$_J(%rip)
 .Ll24:
-# [74] if j<16 then k:=j*16 else k:=(31-j)*16 ;
+# [75] if j<16 then k:=j*16 else k:=(31-j)*16 ;
 	cmpl	$16,U_$UMAIN_$$_J(%rip)
 	jnl	.Lj76
 	movl	U_$UMAIN_$$_J(%rip),%eax
@@ -223,10 +223,10 @@ UMAIN_$$_MAIN1:
 # HP2=movl
 # PeepHole Optimization,var2
 .Ll25:
-# [75] k:=k shl 8;
+# [76] k:=k shl 8;
 	shll	$8,U_$UMAIN_$$_K(%rip)
 .Ll26:
-# [76] if (i<11) or (i>21) or (j<11) or (j>21) then raml^[$14C00+i+32*j]:=k else  raml^[$14C00+i+32*j]:=$0;
+# [77] if (i<11) or (i>21) or (j<11) or (j>21) then raml^[$14C00+i+32*j]:=k else  raml^[$14C00+i+32*j]:=$0;
 	cmpl	$11,%esi
 	jl	.Lj84
 	cmpl	$21,%esi
@@ -264,21 +264,21 @@ UMAIN_$$_MAIN1:
 	cmpl	$31,%esi
 	jl	.Lj71
 .Ll31:
-# [79] for i:=0 to 31 do
+# [80] for i:=0 to 31 do
 	movl	$0,%esi
 	subl	$1,%esi
 	.balign 8,0x90
 .Lj98:
 	addl	$1,%esi
 .Ll32:
-# [80] for j:=0 to 31 do  begin
+# [81] for j:=0 to 31 do  begin
 	movl	$0,U_$UMAIN_$$_J(%rip)
 	subl	$1,U_$UMAIN_$$_J(%rip)
 	.balign 8,0x90
 .Lj101:
 	addl	$1,U_$UMAIN_$$_J(%rip)
 .Ll33:
-# [81] if j<16 then k:=j*16 else k:=(31-j)*16 ;
+# [82] if j<16 then k:=j*16 else k:=(31-j)*16 ;
 	cmpl	$16,U_$UMAIN_$$_J(%rip)
 	jnl	.Lj103
 	movl	U_$UMAIN_$$_J(%rip),%eax
@@ -298,10 +298,10 @@ UMAIN_$$_MAIN1:
 # HP2=movl
 # PeepHole Optimization,var2
 .Ll34:
-# [82] k:=k shl 16;
+# [83] k:=k shl 16;
 	shll	$16,U_$UMAIN_$$_K(%rip)
 .Ll35:
-# [83] if (i<11) or (i>21) or (j<11) or (j>21) then raml^[$15000+i+32*j]:=k else  raml^[$15000+i+32*j]:=$0;
+# [84] if (i<11) or (i>21) or (j<11) or (j>21) then raml^[$15000+i+32*j]:=k else  raml^[$15000+i+32*j]:=$0;
 	cmpl	$11,%esi
 	jl	.Lj111
 	cmpl	$21,%esi
@@ -339,19 +339,19 @@ UMAIN_$$_MAIN1:
 	cmpl	$31,%esi
 	jl	.Lj98
 .Ll40:
-# [90] graphics(16);
+# [91] graphics(16);
 	movl	$16,%ecx
 	call	RETRO_$$_GRAPHICS$LONGINT
 .Ll41:
-# [91] cls(146);
+# [92] cls(146);
 	movl	$146,%ecx
 	call	RETRO_$$_CLS$LONGINT
 .Ll42:
-# [92] ttt:=gettime;
+# [93] ttt:=gettime;
 	call	RETRO_$$_GETTIME$$INT64
 	movq	%rax,U_$UMAIN_$$_TTT(%rip)
 .Ll43:
-# [93] outtextxyz(96,16,'The retromachine SID player v. 0.04 --- 2016.04.28',154,4,2);
+# [94] outtextxyz(96,16,'The retromachine FM Synth v. 0.01 --- 2016.09.02',154,4,2);
 	movl	$2,40(%rsp)
 	movl	$4,32(%rsp)
 	leaq	_$UMAIN$_Ld1(%rip),%r8
@@ -360,7 +360,7 @@ UMAIN_$$_MAIN1:
 	movl	$96,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
 .Ll44:
-# [94] box2(8,64,1784,1112,0);
+# [95] box2(8,64,1784,1112,0);
 	movl	$0,32(%rsp)
 	movl	$1112,%r9d
 	movl	$1784,%r8d
@@ -368,7 +368,7 @@ UMAIN_$$_MAIN1:
 	movl	$8,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 .Ll45:
-# [95] box2(10,1062,1782,1110,120);
+# [96] box2(10,1062,1782,1110,120);
 	movl	$120,32(%rsp)
 	movl	$1110,%r9d
 	movl	$1782,%r8d
@@ -376,7 +376,7 @@ UMAIN_$$_MAIN1:
 	movl	$10,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 .Ll46:
-# [96] outtextxyz(32,1070,'Screen time:',124,2,2);
+# [97] outtextxyz(32,1070,'Screen time:',124,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	_$UMAIN$_Ld2(%rip),%r8
@@ -385,393 +385,104 @@ UMAIN_$$_MAIN1:
 	movl	$32,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
 .Ll47:
-# [97] k:=raml^[$18000];
+# [98] k:=raml^[$18000];
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	393216(%rax),%eax
 	movl	%eax,U_$UMAIN_$$_K(%rip)
 .Ll48:
-# [98] raml^[$18003]:=$002040;
+# [99] raml^[$18003]:=$002040;
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	$8256,393228(%rax)
 .Ll49:
-# [99] setataripallette(1);
+# [100] setataripallette(1);
 	movl	$1,%ecx
 	call	RETRO_$$_SETATARIPALLETTE$LONGINT
 .Ll50:
-# [100] setataripallette(2);
+# [101] setataripallette(2);
 	movl	$2,%ecx
 	call	RETRO_$$_SETATARIPALLETTE$LONGINT
 .Ll51:
-# [101] setataripallette(3);
+# [102] setataripallette(3);
 	movl	$3,%ecx
 	call	RETRO_$$_SETATARIPALLETTE$LONGINT
 .Ll52:
-# [102] sethidecolor(250,0,$FF);
+# [103] sethidecolor(250,0,$FF);
 	movl	$255,%r8d
 	movl	$0,%edx
 	movl	$250,%ecx
 	call	RETRO_$$_SETHIDECOLOR$LONGINT$LONGINT$LONGINT
 .Ll53:
-# [103] sethidecolor(44,0,$FF);
+# [104] sethidecolor(44,0,$FF);
 	movl	$255,%r8d
 	movl	$0,%edx
 	movl	$44,%ecx
 	call	RETRO_$$_SETHIDECOLOR$LONGINT$LONGINT$LONGINT
 .Ll54:
-# [104] sethidecolor(190,0,$FF);
+# [105] sethidecolor(190,0,$FF);
 	movl	$255,%r8d
 	movl	$0,%edx
 	movl	$190,%ecx
 	call	RETRO_$$_SETHIDECOLOR$LONGINT$LONGINT$LONGINT
 .Ll55:
-# [105] sethidecolor(188,0,$FF);
+# [106] sethidecolor(188,0,$FF);
 	movl	$255,%r8d
 	movl	$0,%edx
 	movl	$188,%ecx
 	call	RETRO_$$_SETHIDECOLOR$LONGINT$LONGINT$LONGINT
 .Ll56:
-# [106] c:=0;
+# [107] c:=0;
 	movq	$0,TC_$UMAIN_$$_C(%rip)
 .Ll57:
-# [107] avsct:=0;
+# [108] avsct:=0;
 	movq	$0,TC_$UMAIN_$$_AVSCT(%rip)
 .Ll58:
-# [108] avspt:=0;
+# [109] avspt:=0;
 	movq	$0,TC_$UMAIN_$$_AVSPT(%rip)
 .Ll59:
-# [109] avall:=0;
+# [110] avall:=0;
 	movq	$0,TC_$UMAIN_$$_AVALL(%rip)
 .Ll60:
-# [110] avsid:=0;
+# [111] avsid:=0;
 	movq	$0,TC_$UMAIN_$$_AVSID(%rip)
 .Ll61:
-# [111] box2(10,1011,1782,1012,256+16);
-	movl	$272,32(%rsp)
-	movl	$1012,%r9d
-	movl	$1782,%r8d
-	movl	$1011,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll62:
-# [112] box2(10,1013,1782,1014,256+17);
-	movl	$273,32(%rsp)
-	movl	$1014,%r9d
-	movl	$1782,%r8d
-	movl	$1013,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll63:
-# [113] box2(10,1015,1782,1016,256+18);
-	movl	$274,32(%rsp)
-	movl	$1016,%r9d
-	movl	$1782,%r8d
-	movl	$1015,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll64:
-# [114] box2(10,1017,1782,1018,256+19);
-	movl	$275,32(%rsp)
-	movl	$1018,%r9d
-	movl	$1782,%r8d
-	movl	$1017,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll65:
-# [115] box2(10,1019,1782,1020,256+20);
-	movl	$276,32(%rsp)
-	movl	$1020,%r9d
-	movl	$1782,%r8d
-	movl	$1019,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll66:
-# [116] box2(10,1021,1782,1022,256+21);
-	movl	$277,32(%rsp)
-	movl	$1022,%r9d
-	movl	$1782,%r8d
-	movl	$1021,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll67:
-# [117] box2(10,1023,1782,1024,256+22);
-	movl	$278,32(%rsp)
-	movl	$1024,%r9d
-	movl	$1782,%r8d
-	movl	$1023,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll68:
-# [118] box2(10,1025,1782,1026,256+23);
-	movl	$279,32(%rsp)
-	movl	$1026,%r9d
-	movl	$1782,%r8d
-	movl	$1025,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll69:
-# [119] box2(10,1027,1782,1028,256+24);
-	movl	$280,32(%rsp)
-	movl	$1028,%r9d
-	movl	$1782,%r8d
-	movl	$1027,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll70:
-# [120] box2(10,1029,1782,1030,256+25);
-	movl	$281,32(%rsp)
-	movl	$1030,%r9d
-	movl	$1782,%r8d
-	movl	$1029,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll71:
-# [121] box2(10,1031,1782,1032,256+26);
-	movl	$282,32(%rsp)
-	movl	$1032,%r9d
-	movl	$1782,%r8d
-	movl	$1031,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll72:
-# [122] box2(10,1033,1782,1034,256+27);
-	movl	$283,32(%rsp)
-	movl	$1034,%r9d
-	movl	$1782,%r8d
-	movl	$1033,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll73:
-# [123] box2(10,1035,1782,1036,256+28);
-	movl	$284,32(%rsp)
-	movl	$1036,%r9d
-	movl	$1782,%r8d
-	movl	$1035,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll74:
-# [124] box2(10,1037,1782,1038,256+29);
-	movl	$285,32(%rsp)
-	movl	$1038,%r9d
-	movl	$1782,%r8d
-	movl	$1037,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll75:
-# [125] box2(10,1039,1782,1040,256+30);
-	movl	$286,32(%rsp)
-	movl	$1040,%r9d
-	movl	$1782,%r8d
-	movl	$1039,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll76:
-# [126] box2(10,1041,1782,1042,256+31);
-	movl	$287,32(%rsp)
-	movl	$1042,%r9d
-	movl	$1782,%r8d
-	movl	$1041,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll77:
-# [127] box2(10,1043,1782,1044,256+32);
-	movl	$288,32(%rsp)
-	movl	$1044,%r9d
-	movl	$1782,%r8d
-	movl	$1043,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll78:
-# [128] box2(10,1045,1782,1046,256+33);
-	movl	$289,32(%rsp)
-	movl	$1046,%r9d
-	movl	$1782,%r8d
-	movl	$1045,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll79:
-# [129] box2(10,1047,1782,1048,256+34);
-	movl	$290,32(%rsp)
-	movl	$1048,%r9d
-	movl	$1782,%r8d
-	movl	$1047,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll80:
-# [130] box2(10,1049,1782,1050,256+35);
-	movl	$291,32(%rsp)
-	movl	$1050,%r9d
-	movl	$1782,%r8d
-	movl	$1049,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll81:
-# [131] box2(10,1051,1782,1052,256+36);
-	movl	$292,32(%rsp)
-	movl	$1052,%r9d
-	movl	$1782,%r8d
-	movl	$1051,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll82:
-# [132] box2(10,1053,1782,1054,256+37);
-	movl	$293,32(%rsp)
-	movl	$1054,%r9d
-	movl	$1782,%r8d
-	movl	$1053,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll83:
-# [133] box2(10,1055,1782,1056,256+38);
-	movl	$294,32(%rsp)
-	movl	$1056,%r9d
-	movl	$1782,%r8d
-	movl	$1055,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll84:
-# [134] box2(10,1057,1782,1058,256+39);
-	movl	$295,32(%rsp)
-	movl	$1058,%r9d
-	movl	$1782,%r8d
-	movl	$1057,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll85:
-# [135] outtextxyz(24,1019,'A retromachine SID player by pik33 --- inspired by Johannes Ahlebrand''s Parallax Propeller SIDCog',256+135,2,2);
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld3(%rip),%r8
-	movl	$391,%r9d
-	movl	$1019,%edx
-	movl	$24,%ecx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll86:
-# [136] blit($F000000,10,1011,$F800000,10,1011,1771,48,1792,1792);
-	movl	$1792,72(%rsp)
-	movl	$1792,64(%rsp)
-	movl	$48,56(%rsp)
-	movl	$1771,48(%rsp)
-	movl	$1011,40(%rsp)
-	movl	$10,32(%rsp)
-	movl	$260046848,%r9d
-	movl	$1011,%r8d
-	movl	$10,%edx
-	movl	$251658240,%ecx
-	call	RETRO_$$_BLIT$crc5A667533
-.Ll87:
-# [137] box2(10,800,894,848,246);
-	movl	$246,32(%rsp)
-	movl	$848,%r9d
-	movl	$894,%r8d
-	movl	$800,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll88:
-# [138] box2(10,851,894,1008,244);
-	movl	$244,32(%rsp)
-	movl	$1008,%r9d
-	movl	$894,%r8d
-	movl	$851,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll89:
-# [139] outtextxyz(320,808,'Now playing',250,2,2);
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld4(%rip),%r8
-	movl	$250,%r9d
-	movl	$808,%edx
-	movl	$320,%ecx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll90:
-# [140] box2(10,118,894,797,178);
-	movl	$178,32(%rsp)
-	movl	$797,%r9d
-	movl	$894,%r8d
-	movl	$118,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll91:
-# [141] box2(10,67,894,115,180);
-	movl	$180,32(%rsp)
-	movl	$115,%r9d
-	movl	$894,%r8d
-	movl	$67,%edx
-	movl	$10,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll92:
-# [142] outtextxyz(320,75,'File info',188,2,2);
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld5(%rip),%r8
-	movl	$188,%r9d
-	movl	$75,%edx
-	movl	$320,%ecx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll93:
-# [143] box2(897,118,1782,1008,34);
-	movl	$34,32(%rsp)
-	movl	$1008,%r9d
-	movl	$1782,%r8d
-	movl	$118,%edx
-	movl	$897,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll94:
-# [144] box2(897,67,1782,115,36);
-	movl	$36,32(%rsp)
-	movl	$115,%r9d
-	movl	$1782,%r8d
-	movl	$67,%edx
-	movl	$897,%ecx
-	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll95:
-# [145] outtextxyz(1296,75,'Files',47,2,2);
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld6(%rip),%r8
-	movl	$47,%r9d
-	movl	$75,%edx
-	movl	$1296,%ecx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll96:
-# [146] sdl_pauseaudio(1); sleep(1000);
+# [113] sdl_pauseaudio(1); sleep(10);
 	movl	$1,%ecx
 	call	_$dll$sdl2$SDL_PauseAudio
-	movl	$1000,%ecx
+	movl	$10,%ecx
 	call	SYSUTILS_$$_SLEEP$LONGWORD
-.Ll97:
-# [147] t:=gettime;
+.Ll62:
+# [114] t:=gettime;
 	call	RETRO_$$_GETTIME$$INT64
 	movq	%rax,%rbx
-.Ll98:
-# [148] for i:=1 to 1000000 do
+.Ll63:
+# [115] for i:=1 to 1000000 do
 	movl	$1,%esi
 	subl	$1,%esi
 	.balign 8,0x90
-.Lj593:
+.Lj225:
 	addl	$1,%esi
-.Ll99:
-# [149] testvoice.getsample;
-	movq	U_$RETRO_$$_TESTVOICE(%rip),%rcx
+.Ll64:
+# [116] voices[0].getsample;
+	movq	U_$FMSYNTH_$$_VOICES(%rip),%rcx
 	call	FMSYNTH$_$TFMVOICE_$__$$_GETSAMPLE$$DOUBLE
-.Ll100:
+.Ll65:
 	cmpl	$1000000,%esi
-	jl	.Lj593
-.Ll101:
-# [150] t:=gettime-t;
+	jl	.Lj225
+.Ll66:
+# [117] t:=gettime-t;
 	call	RETRO_$$_GETTIME$$INT64
 	subq	%rbx,%rax
 	movq	%rax,%rbx
-.Ll102:
-# [151] box(100,100,200,100,0);
+.Ll67:
+# [118] box(100,100,200,100,0);
 	movl	$0,32(%rsp)
 	movl	$100,%r9d
 	movl	$200,%r8d
 	movl	$100,%edx
 	movl	$100,%ecx
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll103:
-# [152] outtextxyz(100,100,inttostr(t),44,2,2);
+.Ll68:
+# [119] outtextxyz(100,100,inttostr(t),44,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	movq	%rbx,%rdx
@@ -782,18 +493,18 @@ UMAIN_$$_MAIN1:
 	movl	$100,%edx
 	movl	$100,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll104:
-# [153] sdl_pauseaudio(0);
+.Ll69:
+# [120] sdl_pauseaudio(0);
 	movl	$0,%ecx
 	call	_$dll$sdl2$SDL_PauseAudio
-.Lj626:
-.Ll105:
+.Lj258:
+.Ll70:
 	nop
 .Lj8:
 	movq	%rbp,%rcx
 	call	UMAIN$_$MAIN1_$$_fin$0
-.Ll106:
-# [154] end;
+.Ll71:
+# [121] end;
 	movq	-40(%rbp),%rbx
 	movq	-32(%rbp),%rsi
 	leaq	(%rbp),%rsp
@@ -811,15 +522,15 @@ UMAIN_$$_MAIN1:
 .seh_endproc
 .Lc7:
 .Lt1:
-.Ll107:
+.Ll72:
 
 .section .text.n_umain$_$main2_$$_fin$1,"x"
 	.balign 16,0x90
 UMAIN$_$MAIN2_$$_fin$1:
 .Lc11:
 .seh_proc UMAIN$_$MAIN2_$$_fin$1
-.Ll108:
-# [167] begin
+.Ll73:
+# [136] begin
 	pushq	%rbp
 .seh_pushreg %rbp
 .Lc13:
@@ -830,7 +541,7 @@ UMAIN$_$MAIN2_$$_fin$1:
 .seh_stackalloc 32
 # Var $parentfp located in register rbp
 .seh_endprologue
-.Ll109:
+.Ll74:
 	leaq	-136(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 	leaq	-88(%rbp),%rcx
@@ -849,7 +560,7 @@ UMAIN$_$MAIN2_$$_fin$1:
 .seh_endproc
 .Lc12:
 .Lt4:
-.Ll110:
+.Ll75:
 
 .section .text.n_umain_$$_main2,"x"
 	.balign 16,0x90
@@ -858,7 +569,7 @@ UMAIN_$$_MAIN2:
 .Lc16:
 # Temps allocated between rbp-176 and rbp-80
 .seh_proc UMAIN_$$_MAIN2
-.Ll111:
+.Ll76:
 	pushq	%rbp
 .seh_pushreg %rbp
 .Lc18:
@@ -892,43 +603,43 @@ UMAIN_$$_MAIN2:
 # Var sss located at rbp-56, size=OS_64
 # Var kwas located at rbp-64, size=OS_64
 # Var rect located at rbp-80, size=OS_128
-.Ll112:
+.Ll77:
 	movq	$0,-40(%rbp)
 	movq	$0,-48(%rbp)
 	movq	$0,-56(%rbp)
 	movq	$0,-136(%rbp)
 	movq	$0,-88(%rbp)
-.Lj637:
+.Lj269:
 	nop
-.Lj633:
-.Ll113:
-# [170] k:=raml^[$18000];
+.Lj265:
+.Ll78:
+# [139] k:=raml^[$18000];
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	393216(%rax),%eax
 	movl	%eax,U_$UMAIN_$$_K(%rip)
 	.balign 8,0x90
-.Lj640:
-.Ll114:
-# [172] until raml^[$18000]>k;
+.Lj272:
+.Ll79:
+# [141] until raml^[$18000]>k;
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	393216(%rax),%eax
 	cmpl	U_$UMAIN_$$_K(%rip),%eax
-	jng	.Lj640
-.Ll115:
-# [177] c:=c+1;
+	jng	.Lj272
+.Ll80:
+# [146] c:=c+1;
 	movq	TC_$UMAIN_$$_C(%rip),%rax
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UMAIN_$$_C(%rip)
-.Ll116:
-# [178] if time6502>0 then c6+=1;
+.Ll81:
+# [147] if time6502>0 then c6+=1;
 	cmpq	$0,U_$RETRO_$$_TIME6502(%rip)
-	jng	.Lj646
+	jng	.Lj278
 	movq	TC_$UMAIN_$$_C6(%rip),%rax
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UMAIN_$$_C6(%rip)
-.Lj646:
-.Ll117:
-# [179] ss:=(songtime div 1000000) mod 60;
+.Lj278:
+.Ll82:
+# [148] ss:=(songtime div 1000000) mod 60;
 	movq	U_$RETRO_$$_SONGTIME(%rip),%rcx
 	movq	$4835703278458516699,%rax
 	imulq	%rcx
@@ -940,8 +651,8 @@ UMAIN_$$_MAIN2:
 	movq	$60,%rcx
 	idivq	%rcx
 	movq	%rdx,%rbx
-.Ll118:
-# [180] mm:=(songtime div 60000000) mod 60;
+.Ll83:
+# [149] mm:=(songtime div 60000000) mod 60;
 	movq	U_$RETRO_$$_SONGTIME(%rip),%rcx
 	movq	$-8130577079664715991,%rax
 	imulq	%rcx
@@ -954,8 +665,8 @@ UMAIN_$$_MAIN2:
 	movq	$60,%rcx
 	idivq	%rcx
 	movq	%rdx,%rsi
-.Ll119:
-# [181] hh:=(songtime div 3600000000);
+.Ll84:
+# [150] hh:=(songtime div 3600000000);
 	movq	U_$RETRO_$$_SONGTIME(%rip),%rcx
 	movq	$-7442832613395060283,%rax
 	imulq	%rcx
@@ -964,69 +675,69 @@ UMAIN_$$_MAIN2:
 	shrq	$63,%rcx
 	addq	%rcx,%rdx
 	movq	%rdx,%rdi
-.Ll120:
-# [182] sss:=inttostr(ss); if ss<10 then sss:='0'+sss;
+.Ll85:
+# [151] sss:=inttostr(ss); if ss<10 then sss:='0'+sss;
 	movq	%rbx,%rdx
 	leaq	-56(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$INT64$$ANSISTRING
 	cmpq	$10,%rbx
-	jnl	.Lj660
+	jnl	.Lj292
 	movq	-56(%rbp),%r8
-	leaq	_$UMAIN$_Ld7(%rip),%rdx
+	leaq	_$UMAIN$_Ld3(%rip),%rdx
 	leaq	-56(%rbp),%rcx
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
-.Lj660:
-.Ll121:
-# [183] mms:=inttostr(mm); if mm<10 then mms:='0'+mms;
+.Lj292:
+.Ll86:
+# [152] mms:=inttostr(mm); if mm<10 then mms:='0'+mms;
 	movq	%rsi,%rdx
 	leaq	-40(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$INT64$$ANSISTRING
 	cmpq	$10,%rsi
-	jnl	.Lj674
+	jnl	.Lj306
 	movq	-40(%rbp),%r8
-	leaq	_$UMAIN$_Ld7(%rip),%rdx
+	leaq	_$UMAIN$_Ld3(%rip),%rdx
 	leaq	-40(%rbp),%rcx
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
-.Lj674:
-.Ll122:
-# [184] hhs:=inttostr(hh); if hh<10 then hhs:='0'+hhs;
+.Lj306:
+.Ll87:
+# [153] hhs:=inttostr(hh); if hh<10 then hhs:='0'+hhs;
 	movq	%rdi,%rdx
 	leaq	-48(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$INT64$$ANSISTRING
 	cmpq	$10,%rdi
-	jnl	.Lj688
+	jnl	.Lj320
 	movq	-48(%rbp),%r8
-	leaq	_$UMAIN$_Ld7(%rip),%rdx
+	leaq	_$UMAIN$_Ld3(%rip),%rdx
 	leaq	-48(%rbp),%rcx
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
-.Lj688:
-.Ll123:
-# [185] songfreq:=1000000 div siddelay;
+.Lj320:
+.Ll88:
+# [154] songfreq:=1000000 div siddelay;
 	movq	$1000000,%rax
 	cqto
 	idivq	TC_$RETRO_$$_SIDDELAY(%rip)
 	movq	%rax,U_$RETRO_$$_SONGFREQ(%rip)
-.Ll124:
-# [187] box(18,864,512,32,244);
+.Ll89:
+# [156] box(18,864,512,32,244);
 	movl	$244,32(%rsp)
 	movl	$32,%r9d
 	movl	$512,%r8d
 	movl	$864,%edx
 	movl	$18,%ecx
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll125:
-# [188] box(18,960,512,32,244);
+.Ll90:
+# [157] box(18,960,512,32,244);
 	movl	$244,32(%rsp)
 	movl	$32,%r9d
 	movl	$512,%r8d
 	movl	$960,%edx
 	movl	$18,%ecx
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll126:
-# [189] outtextxyz(18,864,songname,250,2,2);
+.Ll91:
+# [158] outtextxyz(18,864,songname,250,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	movq	U_$UMAIN_$$_SONGNAME(%rip),%r8
@@ -1034,17 +745,17 @@ UMAIN_$$_MAIN2:
 	movl	$864,%edx
 	movl	$18,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll127:
-# [195] outtextxyz(18,960,hhs+':'+mms+':'+sss,190,4,2);
+.Ll92:
+# [164] outtextxyz(18,960,hhs+':'+mms+':'+sss,190,4,2);
 	leaq	-88(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 	movq	-48(%rbp),%rax
 	movq	%rax,-128(%rbp)
-	leaq	_$UMAIN$_Ld8(%rip),%rax
+	leaq	_$UMAIN$_Ld4(%rip),%rax
 	movq	%rax,-120(%rbp)
 	movq	-40(%rbp),%rax
 	movq	%rax,-112(%rbp)
-	leaq	_$UMAIN$_Ld8(%rip),%rax
+	leaq	_$UMAIN$_Ld4(%rip),%rax
 	movq	%rax,-104(%rbp)
 	movq	-56(%rbp),%rax
 	movq	%rax,-96(%rbp)
@@ -1060,49 +771,86 @@ UMAIN_$$_MAIN2:
 	movl	$960,%edx
 	movl	$18,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll128:
-# [196] avsid+=sidtime;
-	movq	TC_$UMAIN_$$_AVSID(%rip),%rdx
-	movq	U_$RETRO_$$_SIDTIME(%rip),%rax
+.Ll93:
+# [166] avsid:=0;
+	movq	$0,TC_$UMAIN_$$_AVSID(%rip)
+.Ll94:
+# [167] sidbuf[sidptr]:=sidtime;
+	movl	TC_$UMAIN$_$MAIN2_$$_SIDPTR(%rip),%edx
+	movq	U_$RETRO_$$_SIDTIME(%rip),%rcx
+	leaq	U_$UMAIN_$$_SIDBUF(%rip),%rax
+	movq	%rcx,(%rax,%rdx,8)
+.Ll95:
+# [168] sidptr:=(sidptr+1) mod 60;
+	movslq	TC_$UMAIN$_$MAIN2_$$_SIDPTR(%rip),%rax
+	leaq	1(%rax),%rax
+	cqto
+	movq	$60,%rcx
+	idivq	%rcx
+	movl	%edx,TC_$UMAIN$_$MAIN2_$$_SIDPTR(%rip)
+.Ll96:
+# [169] for i:=0 to 59 do avsid+=sidbuf[i];
+	movl	$0,%ebx
+	subl	$1,%ebx
+	.balign 8,0x90
+.Lj391:
+	addl	$1,%ebx
+# PeepHole Optimization,var2a
+	movl	%ebx,%eax
+	leaq	U_$UMAIN_$$_SIDBUF(%rip),%rdx
+	movq	(%rdx,%rax,8),%rdx
+	movq	TC_$UMAIN_$$_AVSID(%rip),%rax
 	leaq	(%rdx,%rax),%rax
 	movq	%rax,TC_$UMAIN_$$_AVSID(%rip)
-.Ll129:
-# [197] avsct:=avsct+tim;
+	cmpl	$59,%ebx
+	jl	.Lj391
+.Ll97:
+# [170] avsid:=avsid div 60;
+	movq	TC_$UMAIN_$$_AVSID(%rip),%rcx
+	movq	$-8608480567731124087,%rax
+	imulq	%rcx
+	addq	%rcx,%rdx
+	sarq	$5,%rdx
+	shrq	$63,%rcx
+	addq	%rcx,%rdx
+	movq	%rdx,TC_$UMAIN_$$_AVSID(%rip)
+.Ll98:
+# [171] avsct:=avsct+tim;
 	movq	TC_$UMAIN_$$_AVSCT(%rip),%rax
 	movq	U_$RETRO_$$_TIM(%rip),%rdx
 	leaq	(%rax,%rdx),%rax
 	movq	%rax,TC_$UMAIN_$$_AVSCT(%rip)
-.Ll130:
-# [198] avspt:=avspt+ts;
-	movq	TC_$UMAIN_$$_AVSPT(%rip),%rax
-	movq	U_$RETRO_$$_TS(%rip),%rdx
-	leaq	(%rax,%rdx),%rax
+.Ll99:
+# [172] avspt:=avspt+ts;
+	movq	TC_$UMAIN_$$_AVSPT(%rip),%rdx
+	movq	U_$RETRO_$$_TS(%rip),%rax
+	leaq	(%rdx,%rax),%rax
 	movq	%rax,TC_$UMAIN_$$_AVSPT(%rip)
-.Ll131:
-# [199] avall:=avall+t3;
-	movq	TC_$UMAIN_$$_AVALL(%rip),%rax
-	movq	U_$RETRO_$$_T3(%rip),%rdx
-	leaq	(%rax,%rdx),%rax
+.Ll100:
+# [173] avall:=avall+t3;
+	movq	TC_$UMAIN_$$_AVALL(%rip),%rdx
+	movq	U_$RETRO_$$_T3(%rip),%rax
+	leaq	(%rdx,%rax),%rax
 	movq	%rax,TC_$UMAIN_$$_AVALL(%rip)
-.Ll132:
-# [200] av6502:=av6502+time6502;
+.Ll101:
+# [174] av6502:=av6502+time6502;
 	movq	TC_$UMAIN_$$_AV6502(%rip),%rax
 	movq	U_$RETRO_$$_TIME6502(%rip),%rdx
 	leaq	(%rax,%rdx),%rax
 	movq	%rax,TC_$UMAIN_$$_AV6502(%rip)
-.Ll133:
-# [201] box2(10,1062,1782,1110,118);
+.Ll102:
+# [175] box2(10,1062,1782,1110,118);
 	movl	$118,32(%rsp)
 	movl	$1110,%r9d
 	movl	$1782,%r8d
 	movl	$1062,%edx
 	movl	$10,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll134:
-# [202] outtextxyz(32,1070,'Avg screen time: '+inttostr(round(avsct/c))+' us',76,2,2);
+.Ll103:
+# [176] outtextxyz(32,1070,'Avg screen time: '+inttostr(round(avsct/c))+' us',76,2,2);
 	leaq	-88(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
-	leaq	_$UMAIN$_Ld9(%rip),%rax
+	leaq	_$UMAIN$_Ld5(%rip),%rax
 	movq	%rax,-112(%rbp)
 	cvtsi2sdq	TC_$UMAIN_$$_AVSCT(%rip),%xmm0
 	cvtsi2sdq	TC_$UMAIN_$$_C(%rip),%xmm1
@@ -1112,7 +860,7 @@ UMAIN_$$_MAIN2:
 	call	SYSUTILS_$$_INTTOSTR$INT64$$ANSISTRING
 	movq	-136(%rbp),%rax
 	movq	%rax,-104(%rbp)
-	leaq	_$UMAIN$_Ld10(%rip),%rax
+	leaq	_$UMAIN$_Ld6(%rip),%rax
 	movq	%rax,-96(%rbp)
 	leaq	-112(%rbp),%rdx
 	leaq	-88(%rbp),%rcx
@@ -1126,11 +874,11 @@ UMAIN_$$_MAIN2:
 	movl	$1070,%edx
 	movl	$32,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll135:
-# [203] outtextxyz(438,1070,'Avg sprite time: '+inttostr(round(avspt/c))+' us',186,2,2);
+.Ll104:
+# [177] outtextxyz(438,1070,'Avg sprite time: '+inttostr(round(avspt/c))+' us',186,2,2);
 	leaq	-88(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
-	leaq	_$UMAIN$_Ld11(%rip),%rax
+	leaq	_$UMAIN$_Ld7(%rip),%rax
 	movq	%rax,-112(%rbp)
 	cvtsi2sdq	TC_$UMAIN_$$_AVSPT(%rip),%xmm0
 	cvtsi2sdq	TC_$UMAIN_$$_C(%rip),%xmm1
@@ -1140,7 +888,7 @@ UMAIN_$$_MAIN2:
 	call	SYSUTILS_$$_INTTOSTR$INT64$$ANSISTRING
 	movq	-136(%rbp),%rax
 	movq	%rax,-104(%rbp)
-	leaq	_$UMAIN$_Ld10(%rip),%rax
+	leaq	_$UMAIN$_Ld6(%rip),%rax
 	movq	%rax,-96(%rbp)
 	leaq	-112(%rbp),%rdx
 	leaq	-88(%rbp),%rcx
@@ -1154,21 +902,18 @@ UMAIN_$$_MAIN2:
 	movl	$1070,%edx
 	movl	$438,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll136:
-# [204] outtextxyz(828,1070,'Avg SID time: '+inttostr(round(avsid/c))+' us',233,2,2);
+.Ll105:
+# [178] outtextxyz(828,1070,'Avg SID time: '+inttostr(avsid)+' us',233,2,2);
 	leaq	-88(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
-	leaq	_$UMAIN$_Ld12(%rip),%rax
+	leaq	_$UMAIN$_Ld8(%rip),%rax
 	movq	%rax,-112(%rbp)
-	cvtsi2sdq	TC_$UMAIN_$$_AVSID(%rip),%xmm0
-	cvtsi2sdq	TC_$UMAIN_$$_C(%rip),%xmm1
-	divsd	%xmm1,%xmm0
-	cvtsd2siq	%xmm0,%rdx
+	movq	TC_$UMAIN_$$_AVSID(%rip),%rdx
 	leaq	-136(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$INT64$$ANSISTRING
 	movq	-136(%rbp),%rax
 	movq	%rax,-104(%rbp)
-	leaq	_$UMAIN$_Ld10(%rip),%rax
+	leaq	_$UMAIN$_Ld6(%rip),%rax
 	movq	%rax,-96(%rbp)
 	leaq	-112(%rbp),%rdx
 	leaq	-88(%rbp),%rcx
@@ -1182,22 +927,22 @@ UMAIN_$$_MAIN2:
 	movl	$1070,%edx
 	movl	$828,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll137:
-# [205] outtextxyz(1190,1070,'6502 time: '+floattostrf((time6502/16),fffixed,4,1)+' us',124,2,2);
+.Ll106:
+# [179] outtextxyz(1190,1070,'6502 time: '+floattostrf((time6502/16),fffixed,4,1)+' us',124,2,2);
 	leaq	-88(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
-	leaq	_$UMAIN$_Ld13(%rip),%rax
+	leaq	_$UMAIN$_Ld9(%rip),%rax
 	movq	%rax,-112(%rbp)
 	movl	$1,32(%rsp)
 	cvtsi2sdq	U_$RETRO_$$_TIME6502(%rip),%xmm1
-	mulsd	_$UMAIN$_Ld14(%rip),%xmm1
+	mulsd	_$UMAIN$_Ld10(%rip),%xmm1
 	leaq	-136(%rbp),%rcx
 	movl	$4,%r9d
 	movl	$2,%r8d
 	call	SYSUTILS_$$_FLOATTOSTRF$DOUBLE$TFLOATFORMAT$LONGINT$LONGINT$$ANSISTRING
 	movq	-136(%rbp),%rax
 	movq	%rax,-104(%rbp)
-	leaq	_$UMAIN$_Ld10(%rip),%rax
+	leaq	_$UMAIN$_Ld6(%rip),%rax
 	movq	%rax,-96(%rbp)
 	leaq	-112(%rbp),%rdx
 	leaq	-88(%rbp),%rcx
@@ -1211,12 +956,12 @@ UMAIN_$$_MAIN2:
 	movl	$1070,%edx
 	movl	$1190,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll138:
-# [206] if peek($70003)=1 then outtextxyz(1500,1070,inttostr(peek($d404)shr 4),108,2,2);
+.Ll107:
+# [180] if peek($70003)=1 then outtextxyz(1500,1070,inttostr(peek($d404)shr 4),108,2,2);
 	movl	$458755,%ecx
 	call	RETRO_$$_PEEK$LONGINT$$BYTE
 	cmpb	$1,%al
-	jne	.Lj874
+	jne	.Lj517
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	movl	$54276,%ecx
@@ -1233,13 +978,13 @@ UMAIN_$$_MAIN2:
 	movl	$1070,%edx
 	movl	$1500,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Lj874:
-.Ll139:
-# [207] if peek($70004)=1 then outtextxyz(1540,1070,inttostr(peek($d40b)shr 4),200,2,2);
+.Lj517:
+.Ll108:
+# [181] if peek($70004)=1 then outtextxyz(1540,1070,inttostr(peek($d40b)shr 4),200,2,2);
 	movl	$458756,%ecx
 	call	RETRO_$$_PEEK$LONGINT$$BYTE
 	cmpb	$1,%al
-	jne	.Lj896
+	jne	.Lj539
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	movl	$54283,%ecx
@@ -1256,13 +1001,13 @@ UMAIN_$$_MAIN2:
 	movl	$1070,%edx
 	movl	$1540,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Lj896:
-.Ll140:
-# [208] if peek($70005)=1 then outtextxyz(1580,1070,inttostr(peek($d412)shr 4),40,2,2);
+.Lj539:
+.Ll109:
+# [182] if peek($70005)=1 then outtextxyz(1580,1070,inttostr(peek($d412)shr 4),40,2,2);
 	movl	$458757,%ecx
 	call	RETRO_$$_PEEK$LONGINT$$BYTE
 	cmpb	$1,%al
-	jne	.Lj918
+	jne	.Lj561
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	movl	$54290,%ecx
@@ -1279,9 +1024,9 @@ UMAIN_$$_MAIN2:
 	movl	$1070,%edx
 	movl	$1580,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Lj918:
-.Ll141:
-# [209] outtextxyz(1650,1070,inttostr(dpeek($60028)),44,2,2);
+.Lj561:
+.Ll110:
+# [183] outtextxyz(1650,1070,inttostr(dpeek($60028)),44,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	movl	$393256,%ecx
@@ -1296,12 +1041,12 @@ UMAIN_$$_MAIN2:
 	movl	$1070,%edx
 	movl	$1650,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll142:
-# [211] for i:=16 to 39 do lpoke($10000+1024+4*i,lpeek($10000+2048+4*((c div 2) mod 256)+4*i));
+.Ll111:
+# [185] for i:=16 to 39 do lpoke($10000+1024+4*i,lpeek($10000+2048+4*((c div 2) mod 256)+4*i));
 	movl	$16,%ebx
 	subl	$1,%ebx
 	.balign 8,0x90
-.Lj959:
+.Lj602:
 	addl	$1,%ebx
 	movq	TC_$UMAIN_$$_C(%rip),%rax
 	movq	%rax,%rdx
@@ -1324,15 +1069,15 @@ UMAIN_$$_MAIN2:
 	leal	66560(%eax),%ecx
 	call	RETRO_$$_LPOKE$LONGINT$LONGWORD
 	cmpl	$39,%ebx
-	jl	.Lj959
-.Ll143:
-# [212] if (c mod 64)=0 then lpoke($10000+1024+4*135,lpeek($10000+2048+(4*(c div 64) mod 256)))   ;
+	jl	.Lj602
+.Ll112:
+# [186] if (c mod 64)=0 then lpoke($10000+1024+4*135,lpeek($10000+2048+(4*(c div 64) mod 256)))   ;
 	movq	TC_$UMAIN_$$_C(%rip),%rax
 	cqto
 	movq	$64,%rcx
 	idivq	%rcx
 	testq	%rdx,%rdx
-	jne	.Lj967
+	jne	.Lj610
 	movq	TC_$UMAIN_$$_C(%rip),%rax
 	movq	%rax,%rdx
 	sarq	$63,%rdx
@@ -1348,9 +1093,9 @@ UMAIN_$$_MAIN2:
 	movl	%eax,%edx
 	movl	$67100,%ecx
 	call	RETRO_$$_LPOKE$LONGINT$LONGWORD
-.Lj967:
-.Ll144:
-# [213] blit($F800000,10+(c mod 1772),1011,$F000000,12,1011,1771-(c mod 1772),48,1792,1792);
+.Lj610:
+.Ll113:
+# [187] blit($F800000,10+(c mod 1772),1011,$F000000,12,1011,1771-(c mod 1772),48,1792,1792);
 	movl	$1792,72(%rsp)
 	movl	$1792,64(%rsp)
 	movl	$48,56(%rsp)
@@ -1372,8 +1117,8 @@ UMAIN_$$_MAIN2:
 	movl	$1011,%r8d
 	movl	$260046848,%ecx
 	call	RETRO_$$_BLIT$crc5A667533
-.Ll145:
-# [214] blit($F800000,10,1011,$F000000,11+1771-(c mod 1772),1011,(c mod 1772),48,1792,1792);
+.Ll114:
+# [188] blit($F800000,10,1011,$F000000,11+1771-(c mod 1772),1011,(c mod 1772),48,1792,1792);
 	movl	$1792,72(%rsp)
 	movl	$1792,64(%rsp)
 	movl	$48,56(%rsp)
@@ -1395,53 +1140,53 @@ UMAIN_$$_MAIN2:
 	movl	$10,%edx
 	movl	$260046848,%ecx
 	call	RETRO_$$_BLIT$crc5A667533
-.Ll146:
-# [215] box2(10,610,894,797,178);
+.Ll115:
+# [189] box2(10,610,894,797,178);
 	movl	$178,32(%rsp)
 	movl	$797,%r9d
 	movl	$894,%r8d
 	movl	$610,%edx
 	movl	$10,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll147:
-# [216] box2(10,700,890,701,40);
+.Ll116:
+# [190] box2(10,700,890,701,40);
 	movl	$40,32(%rsp)
 	movl	$701,%r9d
 	movl	$890,%r8d
 	movl	$700,%edx
 	movl	$10,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll148:
-# [217] box2(10,764,890,765,40);
+.Ll117:
+# [191] box2(10,764,890,765,40);
 	movl	$40,32(%rsp)
 	movl	$765,%r9d
 	movl	$890,%r8d
 	movl	$764,%edx
 	movl	$10,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll149:
-# [218] box2(10,636,890,637,40);
+.Ll118:
+# [192] box2(10,636,890,637,40);
 	movl	$40,32(%rsp)
 	movl	$637,%r9d
 	movl	$890,%r8d
 	movl	$636,%edx
 	movl	$10,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll150:
-# [219] for j:=20 to 840 do if abs(scope[j])<46000 then box(20+j,700-scope[j] div 512,2,2,190);
+.Ll119:
+# [193] for j:=20 to 840 do if abs(scope[j])<46000 then box(20+j,700-scope[j] div 512,2,2,190);
 	movl	$20,U_$UMAIN_$$_J(%rip)
 	subl	$1,U_$UMAIN_$$_J(%rip)
 	.balign 8,0x90
-.Lj1056:
+.Lj699:
 	addl	$1,U_$UMAIN_$$_J(%rip)
-	movl	U_$UMAIN_$$_J(%rip),%edx
-	leaq	U_$RETRO_$$_SCOPE(%rip),%rax
-	movl	(%rax,%rdx,4),%edx
+	movl	U_$UMAIN_$$_J(%rip),%eax
+	leaq	U_$RETRO_$$_SCOPE(%rip),%rdx
+	movl	(%rdx,%rax,4),%edx
 	movl	%edx,%eax
 	negl	%eax
 	cmovnsl	%eax,%edx
 	cmpl	$46000,%edx
-	jnl	.Lj1058
+	jnl	.Lj701
 	movl	$190,32(%rsp)
 	movl	U_$UMAIN_$$_J(%rip),%edx
 	leaq	U_$RETRO_$$_SCOPE(%rip),%rax
@@ -1458,22 +1203,22 @@ UMAIN_$$_MAIN2:
 	movl	$2,%r9d
 	movl	$2,%r8d
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Lj1058:
+.Lj701:
 	cmpl	$840,U_$UMAIN_$$_J(%rip)
-	jl	.Lj1056
-.Ll151:
-# [222] sprx:=round(dpeek($d400)/40+74);
+	jl	.Lj699
+.Ll120:
+# [196] sprx:=round(dpeek($d400)/40+74);
 	movl	$54272,%ecx
 	call	RETRO_$$_DPEEK$LONGINT$$WORD
 # PeepHole Optimization,var11
 	andl	$65535,%eax
 	cvtsi2sd	%eax,%xmm0
-	mulsd	_$UMAIN$_Ld15(%rip),%xmm0
-	addsd	_$UMAIN$_Ld16(%rip),%xmm0
+	divsd	_$UMAIN$_Ld11(%rip),%xmm0
+	addsd	_$UMAIN$_Ld12(%rip),%xmm0
 	cvtsd2siq	%xmm0,%rax
 	movl	%eax,U_$UMAIN_$$_SPRX(%rip)
-.Ll152:
-# [223] spry:=920-3*(peek($d406) and $F0);
+.Ll121:
+# [197] spry:=920-3*(peek($d406) and $F0);
 	movl	$54278,%ecx
 	call	RETRO_$$_PEEK$LONGINT$$BYTE
 # PeepHole Optimization,var1
@@ -1484,8 +1229,8 @@ UMAIN_$$_MAIN2:
 	subl	%edx,%eax
 # PeepHole Optimization,MovMov2Mov1
 	movl	%eax,U_$UMAIN_$$_SPRY(%rip)
-.Ll153:
-# [224] raml^[$18010]:=(spry shl 16)+sprx+2048*(1-peek($70003));
+.Ll122:
+# [198] raml^[$18010]:=(spry shl 16)+sprx+2048*(1-peek($70003));
 	shll	$16,%eax
 	movl	U_$UMAIN_$$_SPRX(%rip),%edx
 	leal	(%eax,%edx),%ebx
@@ -1499,19 +1244,19 @@ UMAIN_$$_MAIN2:
 	leal	(%ebx,%edx),%eax
 	movq	U_$RETRO_$$_R1(%rip),%rdx
 	movl	%eax,393280(%rdx)
-.Ll154:
-# [226] spr2x:=round(dpeek($d407)/40+74);
+.Ll123:
+# [200] spr2x:=round(dpeek($d407)/40+74);
 	movl	$54279,%ecx
 	call	RETRO_$$_DPEEK$LONGINT$$WORD
 # PeepHole Optimization,var11
 	andl	$65535,%eax
 	cvtsi2sd	%eax,%xmm0
-	mulsd	_$UMAIN$_Ld15(%rip),%xmm0
-	addsd	_$UMAIN$_Ld16(%rip),%xmm0
+	divsd	_$UMAIN$_Ld11(%rip),%xmm0
+	addsd	_$UMAIN$_Ld12(%rip),%xmm0
 	cvtsd2siq	%xmm0,%rax
 	movl	%eax,U_$UMAIN_$$_SPR2X(%rip)
-.Ll155:
-# [227] spr2y:=920-3*(peek($d40d) and $F0);
+.Ll124:
+# [201] spr2y:=920-3*(peek($d40d) and $F0);
 	movl	$54285,%ecx
 	call	RETRO_$$_PEEK$LONGINT$$BYTE
 # PeepHole Optimization,var1
@@ -1522,8 +1267,8 @@ UMAIN_$$_MAIN2:
 	subl	%edx,%eax
 # PeepHole Optimization,MovMov2Mov1
 	movl	%eax,U_$UMAIN_$$_SPR2Y(%rip)
-.Ll156:
-# [229] raml^[$18012]:=(spr2y shl 16)+spr2x+2048*(1-peek($70004));
+.Ll125:
+# [203] raml^[$18012]:=(spr2y shl 16)+spr2x+2048*(1-peek($70004));
 	shll	$16,%eax
 	movl	U_$UMAIN_$$_SPR2X(%rip),%edx
 	leal	(%eax,%edx),%ebx
@@ -1534,22 +1279,22 @@ UMAIN_$$_MAIN2:
 	movl	$1,%edx
 	subl	%eax,%edx
 	shll	$11,%edx
-	leal	(%ebx,%edx),%eax
-	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movl	%eax,393288(%rdx)
-.Ll157:
-# [231] spr3x:=round(dpeek($d40e)/40+74);
+	leal	(%ebx,%edx),%edx
+	movq	U_$RETRO_$$_R1(%rip),%rax
+	movl	%edx,393288(%rax)
+.Ll126:
+# [205] spr3x:=round(dpeek($d40e)/40+74);
 	movl	$54286,%ecx
 	call	RETRO_$$_DPEEK$LONGINT$$WORD
 # PeepHole Optimization,var11
 	andl	$65535,%eax
 	cvtsi2sd	%eax,%xmm0
-	mulsd	_$UMAIN$_Ld15(%rip),%xmm0
-	addsd	_$UMAIN$_Ld16(%rip),%xmm0
+	divsd	_$UMAIN$_Ld11(%rip),%xmm0
+	addsd	_$UMAIN$_Ld12(%rip),%xmm0
 	cvtsd2siq	%xmm0,%rax
 	movl	%eax,U_$UMAIN_$$_SPR3X(%rip)
-.Ll158:
-# [232] spr3y:=920-3*(peek($d414) and $F0);
+.Ll127:
+# [206] spr3y:=920-3*(peek($d414) and $F0);
 	movl	$54292,%ecx
 	call	RETRO_$$_PEEK$LONGINT$$BYTE
 # PeepHole Optimization,var1
@@ -1560,8 +1305,8 @@ UMAIN_$$_MAIN2:
 	subl	%edx,%eax
 # PeepHole Optimization,MovMov2Mov1
 	movl	%eax,U_$UMAIN_$$_SPR3Y(%rip)
-.Ll159:
-# [234] raml^[$18014]:=(spr3y shl 16)+spr3x+2048*(1-peek($70005));
+.Ll128:
+# [208] raml^[$18014]:=(spr3y shl 16)+spr3x+2048*(1-peek($70005));
 	shll	$16,%eax
 	movl	U_$UMAIN_$$_SPR3X(%rip),%edx
 	leal	(%eax,%edx),%ebx
@@ -1572,35 +1317,17 @@ UMAIN_$$_MAIN2:
 	movl	$1,%edx
 	subl	%eax,%edx
 	shll	$11,%edx
-	leal	(%ebx,%edx),%eax
-	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movl	%eax,393296(%rdx)
-.Ll160:
-# [236] raml^[$1801e]:=raml^[$1800B];
+	leal	(%ebx,%edx),%edx
+	movq	U_$RETRO_$$_R1(%rip),%rax
+	movl	%edx,393296(%rax)
+.Ll129:
+# [210] raml^[$1801e]:=raml^[$1800B];
 	movq	U_$RETRO_$$_R1(%rip),%rdx
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	393260(%rax),%eax
 	movl	%eax,393336(%rdx)
-.Ll161:
-# [237] box(0,0,300,100,0); outtextxyz(0,0,floattostr(ftt),15,2,2) ;
-	movl	$0,32(%rsp)
-	movl	$100,%r9d
-	movl	$300,%r8d
-	movl	$0,%edx
-	movl	$0,%ecx
-	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-	movq	U_$RETRO_$$_FTT(%rip),%rdx
-	leaq	-88(%rbp),%rcx
-	call	SYSUTILS_$$_FLOATTOSTR$INT64$$ANSISTRING
-	movq	-88(%rbp),%r8
-	movl	$15,%r9d
-	movl	$0,%edx
-	movl	$0,%ecx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll162:
-# [238] box(500,500,300,100,0); outtextxyz(500,500,floattostr(testoperator.adsrstate),15,2,2);        outtextxyz(500,532,floattostr(testoperator.adsrval),15,2,2);
+.Ll130:
+# [212] box(500,500,300,100,0); outtextxyz(500,500,floattostr(gain),42,2,2);  outtextxyz(500,550,floattostr(fnotes[69]),42,2,2);
 	movl	$0,32(%rsp)
 	movl	$100,%r9d
 	movl	$300,%r8d
@@ -1609,34 +1336,32 @@ UMAIN_$$_MAIN2:
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	movq	U_$RETRO_$$_TESTOPERATOR(%rip),%rax
-	movslq	296(%rax),%rdx
-	leaq	-88(%rbp),%rcx
-	call	SYSUTILS_$$_FLOATTOSTR$INT64$$ANSISTRING
-	movq	-88(%rbp),%r8
-	movl	$15,%r9d
-	movl	$500,%edx
-	movl	$500,%ecx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-	movq	U_$RETRO_$$_TESTOPERATOR(%rip),%rax
-	movsd	168(%rax),%xmm1
+	movsd	TC_$RETRO_$$_GAIN(%rip),%xmm1
 	leaq	-88(%rbp),%rcx
 	call	SYSUTILS_$$_FLOATTOSTR$DOUBLE$$ANSISTRING
 	movq	-88(%rbp),%r8
-	movl	$15,%r9d
-	movl	$532,%edx
+	movl	$42,%r9d
+	movl	$500,%edx
 	movl	$500,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Lj1175:
-.Ll163:
+	movl	$2,40(%rsp)
+	movl	$2,32(%rsp)
+	movsd	U_$FMSYNTH_$$_FNOTES+552(%rip),%xmm1
+	leaq	-88(%rbp),%rcx
+	call	SYSUTILS_$$_FLOATTOSTR$DOUBLE$$ANSISTRING
+	movq	-88(%rbp),%r8
+	movl	$42,%r9d
+	movl	$550,%edx
+	movl	$500,%ecx
+	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
+.Lj792:
+.Ll131:
 	nop
-.Lj634:
+.Lj266:
 	movq	%rbp,%rcx
 	call	UMAIN$_$MAIN2_$$_fin$1
-.Ll164:
-# [240] end;
+.Ll132:
+# [214] end;
 	movq	-176(%rbp),%rbx
 	movq	-168(%rbp),%rdi
 	movq	-160(%rbp),%rsi
@@ -1647,15 +1372,15 @@ UMAIN_$$_MAIN2:
 .seh_handlerdata
 	.long	1
 	.long	0
-	.rva	.Lj633
-	.rva	.Lj634
+	.rva	.Lj265
+	.rva	.Lj266
 	.rva	UMAIN$_$MAIN2_$$_fin$1
 
 .section .text.n_umain_$$_main2,"x"
 .seh_endproc
 .Lc17:
 .Lt3:
-.Ll165:
+.Ll133:
 
 .section .text.n_umain_$$_init_implicit$,"x"
 	.balign 16,0x90
@@ -1675,7 +1400,7 @@ UMAIN_$$_init_implicit$:
 .seh_endproc
 .Lc22:
 .Lt5:
-.Ll166:
+.Ll134:
 
 .section .text.n_umain_$$_finalize_implicit$,"x"
 	.balign 16,0x90
@@ -1698,7 +1423,7 @@ UMAIN_$$_finalize_implicit$:
 .seh_endproc
 .Lc25:
 .Lt6:
-.Ll167:
+.Ll135:
 # End asmlist al_procedures
 # Begin asmlist al_globals
 
@@ -2012,6 +1737,13 @@ U_$UMAIN_$$_TTT:
 	.globl U_$UMAIN_$$_QQ
 U_$UMAIN_$$_QQ:
 	.zero 4
+
+.section .bss
+	.balign 8
+# [39] sidbuf:array[0..599] of int64;
+	.globl U_$UMAIN_$$_SIDBUF
+U_$UMAIN_$$_SIDBUF:
+	.zero 4800
 # End asmlist al_globals
 # Begin asmlist al_typedconsts
 
@@ -2073,16 +1805,15 @@ TC_$UMAIN_$$_AV6502:
 .globl	TC_$UMAIN_$$_PAUSE
 TC_$UMAIN_$$_PAUSE:
 	.byte	0
-# [40] procedure main1;
 
 .section .rodata.n__$UMAIN$_Ld1,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,50
+	.quad	-1,48
 .globl	_$UMAIN$_Ld1
 _$UMAIN$_Ld1:
-	.ascii	"The retromachine SID player v. 0.04 --- 2016.04.28\000"
+	.ascii	"The retromachine FM Synth v. 0.01 --- 2016.09.02\000"
 
 .section .rodata.n__$UMAIN$_Ld2,"d"
 	.balign 8
@@ -2093,148 +1824,105 @@ _$UMAIN$_Ld1:
 _$UMAIN$_Ld2:
 	.ascii	"Screen time:\000"
 
+.section .data.n_tc_$umain$_$main2_$$_sidptr,"d"
+	.balign 4
+TC_$UMAIN$_$MAIN2_$$_SIDPTR:
+	.long	0
+
 .section .rodata.n__$UMAIN$_Ld3,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,97
+	.quad	-1,1
 .globl	_$UMAIN$_Ld3
 _$UMAIN$_Ld3:
-	.ascii	"A retromachine SID player by pik33 --- inspired by "
-	.ascii	"Johannes Ahlebrand's Parallax Propeller SIDCog\000"
+	.ascii	"0\000"
 
 .section .rodata.n__$UMAIN$_Ld4,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,11
+	.quad	-1,1
 .globl	_$UMAIN$_Ld4
 _$UMAIN$_Ld4:
-	.ascii	"Now playing\000"
+	.ascii	":\000"
 
 .section .rodata.n__$UMAIN$_Ld5,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,9
+	.quad	-1,17
 .globl	_$UMAIN$_Ld5
 _$UMAIN$_Ld5:
-	.ascii	"File info\000"
+	.ascii	"Avg screen time: \000"
 
 .section .rodata.n__$UMAIN$_Ld6,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,5
+	.quad	-1,3
 .globl	_$UMAIN$_Ld6
 _$UMAIN$_Ld6:
-	.ascii	"Files\000"
+	.ascii	" us\000"
 
 .section .rodata.n__$UMAIN$_Ld7,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,1
+	.quad	-1,17
 .globl	_$UMAIN$_Ld7
 _$UMAIN$_Ld7:
-	.ascii	"0\000"
+	.ascii	"Avg sprite time: \000"
 
 .section .rodata.n__$UMAIN$_Ld8,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,1
+	.quad	-1,14
 .globl	_$UMAIN$_Ld8
 _$UMAIN$_Ld8:
-	.ascii	":\000"
+	.ascii	"Avg SID time: \000"
 
 .section .rodata.n__$UMAIN$_Ld9,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,17
+	.quad	-1,11
 .globl	_$UMAIN$_Ld9
 _$UMAIN$_Ld9:
-	.ascii	"Avg screen time: \000"
+	.ascii	"6502 time: \000"
 
 .section .rodata.n__$UMAIN$_Ld10,"d"
 	.balign 8
-	.short	0,1
-	.long	0
-	.quad	-1,3
 .globl	_$UMAIN$_Ld10
 _$UMAIN$_Ld10:
-	.ascii	" us\000"
-
-.section .rodata.n__$UMAIN$_Ld11,"d"
-	.balign 8
-	.short	0,1
-	.long	0
-	.quad	-1,17
-.globl	_$UMAIN$_Ld11
-_$UMAIN$_Ld11:
-	.ascii	"Avg sprite time: \000"
-
-.section .rodata.n__$UMAIN$_Ld12,"d"
-	.balign 8
-	.short	0,1
-	.long	0
-	.quad	-1,14
-.globl	_$UMAIN$_Ld12
-_$UMAIN$_Ld12:
-	.ascii	"Avg SID time: \000"
-
-.section .rodata.n__$UMAIN$_Ld13,"d"
-	.balign 8
-	.short	0,1
-	.long	0
-	.quad	-1,11
-.globl	_$UMAIN$_Ld13
-_$UMAIN$_Ld13:
-	.ascii	"6502 time: \000"
-
-.section .rodata.n__$UMAIN$_Ld14,"d"
-	.balign 8
-.globl	_$UMAIN$_Ld14
-_$UMAIN$_Ld14:
 # value: 0d+6.2500000000000000E-002
 	.byte	0,0,0,0,0,0,176,63
 
-.section .rodata.n__$UMAIN$_Ld15,"d"
+.section .rodata.n__$UMAIN$_Ld11,"d"
 	.balign 8
-.globl	_$UMAIN$_Ld15
-_$UMAIN$_Ld15:
-# value: 0d+2.5000000000000001E-002
-	.byte	154,153,153,153,153,153,153,63
+.globl	_$UMAIN$_Ld11
+_$UMAIN$_Ld11:
+# value: 0d+4.0000000000000000E+001
+	.byte	0,0,0,0,0,0,68,64
 
-.section .rodata.n__$UMAIN$_Ld16,"d"
+.section .rodata.n__$UMAIN$_Ld12,"d"
 	.balign 8
-.globl	_$UMAIN$_Ld16
-_$UMAIN$_Ld16:
+.globl	_$UMAIN$_Ld12
+_$UMAIN$_Ld12:
 # value: 0d+7.4000000000000000E+001
 	.byte	0,0,0,0,0,128,82,64
 # End asmlist al_typedconsts
 # Begin asmlist al_rtti
 
-.section .data.n_RTTI_$UMAIN_$$_DEF57,"d"
+.section .data.n_RTTI_$UMAIN_$$_DEF58,"d"
 	.balign 8
-.globl	RTTI_$UMAIN_$$_DEF57
-RTTI_$UMAIN_$$_DEF57:
+.globl	RTTI_$UMAIN_$$_DEF58
+RTTI_$UMAIN_$$_DEF58:
 	.byte	12
-# [245] 
+# [219] 
 	.ascii	"\000"
 	.quad	40,5
-	.quad	RTTI_$SYSTEM_$$_RAWBYTESTRING
-	.byte	1
-	.quad	RTTI_$SYSTEM_$$_LONGINT
-
-.section .data.n_RTTI_$UMAIN_$$_DEF59,"d"
-	.balign 8
-.globl	RTTI_$UMAIN_$$_DEF59
-RTTI_$UMAIN_$$_DEF59:
-	.byte	12
-	.ascii	"\000"
-	.quad	24,3
 	.quad	RTTI_$SYSTEM_$$_RAWBYTESTRING
 	.byte	1
 	.quad	RTTI_$SYSTEM_$$_LONGINT
@@ -2265,6 +1953,17 @@ RTTI_$UMAIN_$$_DEF61:
 	.balign 8
 .globl	RTTI_$UMAIN_$$_DEF62
 RTTI_$UMAIN_$$_DEF62:
+	.byte	12
+	.ascii	"\000"
+	.quad	24,3
+	.quad	RTTI_$SYSTEM_$$_RAWBYTESTRING
+	.byte	1
+	.quad	RTTI_$SYSTEM_$$_LONGINT
+
+.section .data.n_RTTI_$UMAIN_$$_DEF63,"d"
+	.balign 8
+.globl	RTTI_$UMAIN_$$_DEF63
+RTTI_$UMAIN_$$_DEF63:
 	.byte	12
 	.ascii	"\000"
 	.quad	24,3
@@ -2405,7 +2104,7 @@ RTTI_$UMAIN_$$_DEF62:
 	.secrel32	.Ldebug_abbrev0
 	.byte	8
 	.uleb128	1
-# [47] procedure main1 ;
+# [48] procedure main1 ;
 	.ascii	"umain.pas\000"
 	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
 	.ascii	"D:/programowanie/20180824 retro-fm/\000"
@@ -2888,10 +2587,19 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	3
 	.quad	TC_$UMAIN_$$_PAUSE
 	.long	.La14-.Ldebug_info0
+# Symbol SIDBUF
+	.uleb128	2
+	.ascii	"SIDBUF\000"
+	.byte	1
+	.byte	9
+	.byte	3
+	.quad	U_$UMAIN_$$_SIDBUF
+	.long	.La16-.Ldebug_info0
 # Symbol MAIN1
 # Symbol MAIN2
 # Syms - End unit UMAIN has index 11
 # Syms - Begin Staticsymtable
+# Symbol FMSYNTH
 # Symbol UMAIN_$$_init$
 # Symbol UMAIN_$$_init_implicit$
 # Symbol UMAIN_$$_finalize_implicit$
@@ -2933,7 +2641,7 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	144
 	.uleb128	6
-	.long	.La16-.Ldebug_info0
+	.long	.La18-.Ldebug_info0
 	.byte	0
 # Procdef main2;
 	.uleb128	3
@@ -3003,6 +2711,13 @@ RTTI_$UMAIN_$$_DEF62:
 # Symbol AAA
 # Symbol AAAA
 # Symbol MD
+# Symbol SIDPTR
+	.uleb128	4
+	.ascii	"SIDPTR\000"
+	.byte	9
+	.byte	3
+	.quad	TC_$UMAIN$_$MAIN2_$$_SIDPTR
+	.long	.La1-.Ldebug_info0
 # Symbol fin$1
 	.byte	0
 # Procdef $fin$1(<^untyped>) is nested;
@@ -3018,7 +2733,7 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	144
 	.uleb128	6
-	.long	.La16-.Ldebug_info0
+	.long	.La18-.Ldebug_info0
 	.byte	0
 # Procdef $UMAIN_$$_init_implicit$; Register;
 	.uleb128	3
@@ -3043,8 +2758,8 @@ RTTI_$UMAIN_$$_DEF62:
 .La1:
 	.uleb128	7
 	.ascii	"LONGINT\000"
-	.long	.La18-.Ldebug_info0
-.La18:
+	.long	.La20-.Ldebug_info0
+.La20:
 	.uleb128	8
 	.ascii	"LONGINT\000"
 	.byte	5
@@ -3056,8 +2771,8 @@ RTTI_$UMAIN_$$_DEF62:
 .La12:
 	.uleb128	7
 	.ascii	"INT64\000"
-	.long	.La19-.Ldebug_info0
-.La19:
+	.long	.La21-.Ldebug_info0
+.La21:
 	.uleb128	8
 	.ascii	"Int64\000"
 	.byte	5
@@ -3069,8 +2784,8 @@ RTTI_$UMAIN_$$_DEF62:
 .La14:
 	.uleb128	7
 	.ascii	"BOOLEAN\000"
-	.long	.La20-.Ldebug_info0
-.La20:
+	.long	.La22-.Ldebug_info0
+.La22:
 	.uleb128	8
 	.ascii	"Boolean\000"
 	.byte	2
@@ -3082,10 +2797,10 @@ RTTI_$UMAIN_$$_DEF62:
 .La5:
 	.uleb128	7
 	.ascii	"ANSISTRING\000"
-	.long	.La21-.Ldebug_info0
-.La21:
+	.long	.La23-.Ldebug_info0
+.La23:
 	.uleb128	10
-	.long	.La22-.Ldebug_info0
+	.long	.La24-.Ldebug_info0
 .La6:
 	.uleb128	9
 	.long	.La5-.Ldebug_info0
@@ -3093,8 +2808,8 @@ RTTI_$UMAIN_$$_DEF62:
 .La7:
 	.uleb128	7
 	.ascii	"DOUBLE\000"
-	.long	.La24-.Ldebug_info0
-.La24:
+	.long	.La26-.Ldebug_info0
+.La26:
 	.uleb128	8
 	.ascii	"DOUBLE\000"
 	.byte	4
@@ -3103,28 +2818,28 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	9
 	.long	.La7-.Ldebug_info0
 # Definition ^untyped
-.La16:
+.La18:
 	.uleb128	7
 	.ascii	"parentfp_void_pointer\000"
-	.long	.La25-.Ldebug_info0
-.La25:
+	.long	.La27-.Ldebug_info0
+.La27:
 	.uleb128	11
-.La17:
+.La19:
 	.uleb128	9
-	.long	.La16-.Ldebug_info0
+	.long	.La18-.Ldebug_info0
 # Definition Char
-.La22:
+.La24:
 	.uleb128	7
 	.ascii	"CHAR\000"
-	.long	.La26-.Ldebug_info0
-.La26:
+	.long	.La28-.Ldebug_info0
+.La28:
 	.uleb128	8
 	.ascii	"Char\000"
 	.byte	8
 	.byte	1
-.La23:
+.La25:
 	.uleb128	9
-	.long	.La22-.Ldebug_info0
+	.long	.La24-.Ldebug_info0
 # Defs - End unit SYSTEM has index 1
 # Defs - Begin unit OBJPAS has index 6
 # Defs - End unit OBJPAS has index 6
@@ -3133,8 +2848,8 @@ RTTI_$UMAIN_$$_DEF62:
 .La3:
 	.uleb128	7
 	.ascii	"TSDL_EVENT\000"
-	.long	.La27-.Ldebug_info0
-.La27:
+	.long	.La29-.Ldebug_info0
+.La29:
 	.uleb128	12
 	.ascii	"TSDL_EVENT\000"
 	.uleb128	56
@@ -3143,161 +2858,161 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"COMMON\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La30-.Ldebug_info0
+	.long	.La32-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WINDOW\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La32-.Ldebug_info0
+	.long	.La34-.Ldebug_info0
 	.uleb128	13
 	.ascii	"KEY\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La34-.Ldebug_info0
+	.long	.La36-.Ldebug_info0
 	.uleb128	13
 	.ascii	"EDIT\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La36-.Ldebug_info0
+	.long	.La38-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TEXT\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La38-.Ldebug_info0
+	.long	.La40-.Ldebug_info0
 	.uleb128	13
 	.ascii	"MOTION\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La40-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 	.uleb128	13
 	.ascii	"BUTTON\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La42-.Ldebug_info0
+	.long	.La44-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WHEEL\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La44-.Ldebug_info0
+	.long	.La46-.Ldebug_info0
 	.uleb128	13
 	.ascii	"JAXIS\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La46-.Ldebug_info0
+	.long	.La48-.Ldebug_info0
 	.uleb128	13
 	.ascii	"JBALL\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La48-.Ldebug_info0
+	.long	.La50-.Ldebug_info0
 	.uleb128	13
 	.ascii	"JHAT\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La50-.Ldebug_info0
+	.long	.La52-.Ldebug_info0
 	.uleb128	13
 	.ascii	"JBUTTON\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La52-.Ldebug_info0
+	.long	.La54-.Ldebug_info0
 	.uleb128	13
 	.ascii	"JDEVICE\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La54-.Ldebug_info0
+	.long	.La56-.Ldebug_info0
 	.uleb128	13
 	.ascii	"CAXIS\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La56-.Ldebug_info0
+	.long	.La58-.Ldebug_info0
 	.uleb128	13
 	.ascii	"CBUTTON\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La58-.Ldebug_info0
+	.long	.La60-.Ldebug_info0
 	.uleb128	13
 	.ascii	"CDEVICE\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La60-.Ldebug_info0
+	.long	.La62-.Ldebug_info0
 	.uleb128	13
 	.ascii	"QUIT\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La62-.Ldebug_info0
+	.long	.La64-.Ldebug_info0
 	.uleb128	13
 	.ascii	"USER\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La64-.Ldebug_info0
+	.long	.La66-.Ldebug_info0
 	.uleb128	13
 	.ascii	"SYSWM\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La66-.Ldebug_info0
+	.long	.La68-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TFINGER\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La68-.Ldebug_info0
+	.long	.La70-.Ldebug_info0
 	.uleb128	13
 	.ascii	"MGESTURE\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La70-.Ldebug_info0
+	.long	.La72-.Ldebug_info0
 	.uleb128	13
 	.ascii	"DGESTURE\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La72-.Ldebug_info0
+	.long	.La74-.Ldebug_info0
 	.uleb128	13
 	.ascii	"DROP\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La74-.Ldebug_info0
+	.long	.La76-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La76-.Ldebug_info0
+	.long	.La78-.Ldebug_info0
 	.byte	0
 .La4:
 	.uleb128	9
 	.long	.La3-.Ldebug_info0
 # Definition TSDL_CommonEvent
-.La30:
+.La32:
 	.uleb128	7
 	.ascii	"TSDL_COMMONEVENT\000"
-	.long	.La78-.Ldebug_info0
-.La78:
+	.long	.La80-.Ldebug_info0
+.La80:
 	.uleb128	12
 	.ascii	"TSDL_COMMONEVENT\000"
 	.uleb128	8
@@ -3306,23 +3021,23 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
-	.byte	0
-.La31:
-	.uleb128	9
 	.long	.La30-.Ldebug_info0
+	.byte	0
+.La33:
+	.uleb128	9
+	.long	.La32-.Ldebug_info0
 # Definition TSDL_WindowEvent
-.La32:
+.La34:
 	.uleb128	7
 	.ascii	"TSDL_WINDOWEVENT\000"
-	.long	.La79-.Ldebug_info0
-.La79:
+	.long	.La81-.Ldebug_info0
+.La81:
 	.uleb128	12
 	.ascii	"TSDL_WINDOWEVENT\000"
 	.uleb128	24
@@ -3331,43 +3046,43 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WINDOWID\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"EVENT\000"
 	.byte	2
 	.byte	35
 	.uleb128	12
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING1\000"
 	.byte	2
 	.byte	35
 	.uleb128	13
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING2\000"
 	.byte	2
 	.byte	35
 	.uleb128	14
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING3\000"
 	.byte	2
 	.byte	35
 	.uleb128	15
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"DATA1\000"
 	.byte	2
@@ -3381,15 +3096,15 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	20
 	.long	.La1-.Ldebug_info0
 	.byte	0
-.La33:
+.La35:
 	.uleb128	9
-	.long	.La32-.Ldebug_info0
+	.long	.La34-.Ldebug_info0
 # Definition TSDL_KeyboardEvent
-.La34:
+.La36:
 	.uleb128	7
 	.ascii	"TSDL_KEYBOARDEVENT\000"
-	.long	.La82-.Ldebug_info0
-.La82:
+	.long	.La84-.Ldebug_info0
+.La84:
 	.uleb128	12
 	.ascii	"TSDL_KEYBOARDEVENT\000"
 	.uleb128	32
@@ -3398,59 +3113,59 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WINDOWID\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"STATE\000"
 	.byte	2
 	.byte	35
 	.uleb128	12
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"REPEAT_\000"
 	.byte	2
 	.byte	35
 	.uleb128	13
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING2\000"
 	.byte	2
 	.byte	35
 	.uleb128	14
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING3\000"
 	.byte	2
 	.byte	35
 	.uleb128	15
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"KEYSYM\000"
 	.byte	2
 	.byte	35
 	.uleb128	16
-	.long	.La83-.Ldebug_info0
+	.long	.La85-.Ldebug_info0
 	.byte	0
-.La35:
+.La37:
 	.uleb128	9
-	.long	.La34-.Ldebug_info0
+	.long	.La36-.Ldebug_info0
 # Definition TSDL_TextEditingEvent
-.La36:
+.La38:
 	.uleb128	7
 	.ascii	"TSDL_TEXTEDITINGEVENT\000"
-	.long	.La85-.Ldebug_info0
-.La85:
+	.long	.La87-.Ldebug_info0
+.La87:
 	.uleb128	12
 	.ascii	"TSDL_TEXTEDITINGEVENT\000"
 	.uleb128	52
@@ -3459,25 +3174,25 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WINDOWID\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TEXT\000"
 	.byte	2
 	.byte	35
 	.uleb128	12
-	.long	.La86-.Ldebug_info0
+	.long	.La88-.Ldebug_info0
 	.uleb128	13
 	.ascii	"START\000"
 	.byte	2
@@ -3491,15 +3206,15 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	48
 	.long	.La1-.Ldebug_info0
 	.byte	0
-.La37:
+.La39:
 	.uleb128	9
-	.long	.La36-.Ldebug_info0
+	.long	.La38-.Ldebug_info0
 # Definition TSDL_TextInputEvent
-.La38:
+.La40:
 	.uleb128	7
 	.ascii	"TSDL_TEXTINPUTEVENT\000"
-	.long	.La88-.Ldebug_info0
-.La88:
+	.long	.La90-.Ldebug_info0
+.La90:
 	.uleb128	12
 	.ascii	"TSDL_TEXTINPUTEVENT\000"
 	.uleb128	44
@@ -3508,35 +3223,35 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WINDOWID\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TEXT\000"
 	.byte	2
 	.byte	35
 	.uleb128	12
-	.long	.La89-.Ldebug_info0
+	.long	.La91-.Ldebug_info0
 	.byte	0
-.La39:
+.La41:
 	.uleb128	9
-	.long	.La38-.Ldebug_info0
+	.long	.La40-.Ldebug_info0
 # Definition TSDL_MouseMotionEvent
-.La40:
+.La42:
 	.uleb128	7
 	.ascii	"TSDL_MOUSEMOTIONEVENT\000"
-	.long	.La91-.Ldebug_info0
-.La91:
+	.long	.La93-.Ldebug_info0
+.La93:
 	.uleb128	12
 	.ascii	"TSDL_MOUSEMOTIONEVENT\000"
 	.uleb128	36
@@ -3545,31 +3260,31 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WINDOWID\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WHICH\000"
 	.byte	2
 	.byte	35
 	.uleb128	12
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"STATE\000"
 	.byte	2
 	.byte	35
 	.uleb128	16
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"X\000"
 	.byte	2
@@ -3595,15 +3310,15 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	32
 	.long	.La1-.Ldebug_info0
 	.byte	0
-.La41:
+.La43:
 	.uleb128	9
-	.long	.La40-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 # Definition TSDL_MouseButtonEvent
-.La42:
+.La44:
 	.uleb128	7
 	.ascii	"TSDL_MOUSEBUTTONEVENT\000"
-	.long	.La92-.Ldebug_info0
-.La92:
+	.long	.La94-.Ldebug_info0
+.La94:
 	.uleb128	12
 	.ascii	"TSDL_MOUSEBUTTONEVENT\000"
 	.uleb128	28
@@ -3612,49 +3327,49 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WINDOWID\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WHICH\000"
 	.byte	2
 	.byte	35
 	.uleb128	12
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"BUTTON\000"
 	.byte	2
 	.byte	35
 	.uleb128	16
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"STATE\000"
 	.byte	2
 	.byte	35
 	.uleb128	17
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"CLICKS\000"
 	.byte	2
 	.byte	35
 	.uleb128	18
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING1\000"
 	.byte	2
 	.byte	35
 	.uleb128	19
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"X\000"
 	.byte	2
@@ -3668,15 +3383,15 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	24
 	.long	.La1-.Ldebug_info0
 	.byte	0
-.La43:
+.La45:
 	.uleb128	9
-	.long	.La42-.Ldebug_info0
+	.long	.La44-.Ldebug_info0
 # Definition TSDL_MouseWheelEvent
-.La44:
+.La46:
 	.uleb128	7
 	.ascii	"TSDL_MOUSEWHEELEVENT\000"
-	.long	.La93-.Ldebug_info0
-.La93:
+	.long	.La95-.Ldebug_info0
+.La95:
 	.uleb128	12
 	.ascii	"TSDL_MOUSEWHEELEVENT\000"
 	.uleb128	24
@@ -3685,25 +3400,25 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WINDOWID\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WHICH\000"
 	.byte	2
 	.byte	35
 	.uleb128	12
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"X\000"
 	.byte	2
@@ -3717,15 +3432,15 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	20
 	.long	.La1-.Ldebug_info0
 	.byte	0
-.La45:
+.La47:
 	.uleb128	9
-	.long	.La44-.Ldebug_info0
+	.long	.La46-.Ldebug_info0
 # Definition TSDL_JoyAxisEvent
-.La46:
+.La48:
 	.uleb128	7
 	.ascii	"TSDL_JOYAXISEVENT\000"
-	.long	.La94-.Ldebug_info0
-.La94:
+	.long	.La96-.Ldebug_info0
+.La96:
 	.uleb128	12
 	.ascii	"TSDL_JOYAXISEVENT\000"
 	.uleb128	20
@@ -3734,13 +3449,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WHICH\000"
 	.byte	2
@@ -3752,47 +3467,47 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	12
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING1\000"
 	.byte	2
 	.byte	35
 	.uleb128	13
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING2\000"
 	.byte	2
 	.byte	35
 	.uleb128	14
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING3\000"
 	.byte	2
 	.byte	35
 	.uleb128	15
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VALUE\000"
 	.byte	2
 	.byte	35
 	.uleb128	16
-	.long	.La95-.Ldebug_info0
+	.long	.La97-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING4\000"
 	.byte	2
 	.byte	35
 	.uleb128	18
-	.long	.La97-.Ldebug_info0
+	.long	.La99-.Ldebug_info0
 	.byte	0
-.La47:
+.La49:
 	.uleb128	9
-	.long	.La46-.Ldebug_info0
+	.long	.La48-.Ldebug_info0
 # Definition TSDL_JoyBallEvent
-.La48:
+.La50:
 	.uleb128	7
 	.ascii	"TSDL_JOYBALLEVENT\000"
-	.long	.La99-.Ldebug_info0
-.La99:
+	.long	.La101-.Ldebug_info0
+.La101:
 	.uleb128	12
 	.ascii	"TSDL_JOYBALLEVENT\000"
 	.uleb128	20
@@ -3801,13 +3516,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WHICH\000"
 	.byte	2
@@ -3819,47 +3534,47 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	12
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING1\000"
 	.byte	2
 	.byte	35
 	.uleb128	13
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING2\000"
 	.byte	2
 	.byte	35
 	.uleb128	14
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING3\000"
 	.byte	2
 	.byte	35
 	.uleb128	15
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"XREL\000"
 	.byte	2
 	.byte	35
 	.uleb128	16
-	.long	.La95-.Ldebug_info0
+	.long	.La97-.Ldebug_info0
 	.uleb128	13
 	.ascii	"YREL\000"
 	.byte	2
 	.byte	35
 	.uleb128	18
-	.long	.La95-.Ldebug_info0
+	.long	.La97-.Ldebug_info0
 	.byte	0
-.La49:
+.La51:
 	.uleb128	9
-	.long	.La48-.Ldebug_info0
+	.long	.La50-.Ldebug_info0
 # Definition TSDL_JoyHatEvent
-.La50:
+.La52:
 	.uleb128	7
 	.ascii	"TSDL_JOYHATEVENT\000"
-	.long	.La100-.Ldebug_info0
-.La100:
+	.long	.La102-.Ldebug_info0
+.La102:
 	.uleb128	12
 	.ascii	"TSDL_JOYHATEVENT\000"
 	.uleb128	16
@@ -3868,13 +3583,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WHICH\000"
 	.byte	2
@@ -3886,35 +3601,35 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	12
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VALUE\000"
 	.byte	2
 	.byte	35
 	.uleb128	13
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING1\000"
 	.byte	2
 	.byte	35
 	.uleb128	14
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING2\000"
 	.byte	2
 	.byte	35
 	.uleb128	15
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.byte	0
-.La51:
+.La53:
 	.uleb128	9
-	.long	.La50-.Ldebug_info0
+	.long	.La52-.Ldebug_info0
 # Definition TSDL_JoyButtonEvent
-.La52:
+.La54:
 	.uleb128	7
 	.ascii	"TSDL_JOYBUTTONEVENT\000"
-	.long	.La101-.Ldebug_info0
-.La101:
+	.long	.La103-.Ldebug_info0
+.La103:
 	.uleb128	12
 	.ascii	"TSDL_JOYBUTTONEVENT\000"
 	.uleb128	16
@@ -3923,13 +3638,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WHICH\000"
 	.byte	2
@@ -3941,35 +3656,35 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	12
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"STATE\000"
 	.byte	2
 	.byte	35
 	.uleb128	13
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING1\000"
 	.byte	2
 	.byte	35
 	.uleb128	14
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING2\000"
 	.byte	2
 	.byte	35
 	.uleb128	15
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.byte	0
-.La53:
+.La55:
 	.uleb128	9
-	.long	.La52-.Ldebug_info0
+	.long	.La54-.Ldebug_info0
 # Definition TSDL_JoyDeviceEvent
-.La54:
+.La56:
 	.uleb128	7
 	.ascii	"TSDL_JOYDEVICEEVENT\000"
-	.long	.La102-.Ldebug_info0
-.La102:
+	.long	.La104-.Ldebug_info0
+.La104:
 	.uleb128	12
 	.ascii	"TSDL_JOYDEVICEEVENT\000"
 	.uleb128	12
@@ -3978,13 +3693,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WHICH\000"
 	.byte	2
@@ -3992,15 +3707,15 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	8
 	.long	.La1-.Ldebug_info0
 	.byte	0
-.La55:
+.La57:
 	.uleb128	9
-	.long	.La54-.Ldebug_info0
+	.long	.La56-.Ldebug_info0
 # Definition TSDL_ControllerAxisEvent
-.La56:
+.La58:
 	.uleb128	7
 	.ascii	"TSDL_CONTROLLERAXISEVENT\000"
-	.long	.La103-.Ldebug_info0
-.La103:
+	.long	.La105-.Ldebug_info0
+.La105:
 	.uleb128	12
 	.ascii	"TSDL_CONTROLLERAXISEVENT\000"
 	.uleb128	20
@@ -4009,13 +3724,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WHICH\000"
 	.byte	2
@@ -4027,47 +3742,47 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	12
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING1\000"
 	.byte	2
 	.byte	35
 	.uleb128	13
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING2\000"
 	.byte	2
 	.byte	35
 	.uleb128	14
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING3\000"
 	.byte	2
 	.byte	35
 	.uleb128	15
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VALUE\000"
 	.byte	2
 	.byte	35
 	.uleb128	16
-	.long	.La95-.Ldebug_info0
+	.long	.La97-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING4\000"
 	.byte	2
 	.byte	35
 	.uleb128	18
-	.long	.La97-.Ldebug_info0
+	.long	.La99-.Ldebug_info0
 	.byte	0
-.La57:
+.La59:
 	.uleb128	9
-	.long	.La56-.Ldebug_info0
+	.long	.La58-.Ldebug_info0
 # Definition TSDL_ControllerButtonEvent
-.La58:
+.La60:
 	.uleb128	7
 	.ascii	"TSDL_CONTROLLERBUTTONEVENT\000"
-	.long	.La104-.Ldebug_info0
-.La104:
+	.long	.La106-.Ldebug_info0
+.La106:
 	.uleb128	12
 	.ascii	"TSDL_CONTROLLERBUTTONEVENT\000"
 	.uleb128	16
@@ -4076,13 +3791,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WHICH\000"
 	.byte	2
@@ -4094,35 +3809,35 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	12
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"STATE\000"
 	.byte	2
 	.byte	35
 	.uleb128	13
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING1\000"
 	.byte	2
 	.byte	35
 	.uleb128	14
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING2\000"
 	.byte	2
 	.byte	35
 	.uleb128	15
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.byte	0
-.La59:
+.La61:
 	.uleb128	9
-	.long	.La58-.Ldebug_info0
+	.long	.La60-.Ldebug_info0
 # Definition TSDL_ControllerDeviceEvent
-.La60:
+.La62:
 	.uleb128	7
 	.ascii	"TSDL_CONTROLLERDEVICEEVENT\000"
-	.long	.La105-.Ldebug_info0
-.La105:
+	.long	.La107-.Ldebug_info0
+.La107:
 	.uleb128	12
 	.ascii	"TSDL_CONTROLLERDEVICEEVENT\000"
 	.uleb128	12
@@ -4131,13 +3846,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WHICH\000"
 	.byte	2
@@ -4145,15 +3860,15 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	8
 	.long	.La1-.Ldebug_info0
 	.byte	0
-.La61:
+.La63:
 	.uleb128	9
-	.long	.La60-.Ldebug_info0
+	.long	.La62-.Ldebug_info0
 # Definition TSDL_TouchFingerEvent
-.La68:
+.La70:
 	.uleb128	7
 	.ascii	"TSDL_TOUCHFINGEREVENT\000"
-	.long	.La106-.Ldebug_info0
-.La106:
+	.long	.La108-.Ldebug_info0
+.La108:
 	.uleb128	12
 	.ascii	"TSDL_TOUCHFINGEREVENT\000"
 	.uleb128	48
@@ -4162,13 +3877,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TOUCHID\000"
 	.byte	2
@@ -4186,41 +3901,41 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	24
-	.long	.La107-.Ldebug_info0
+	.long	.La109-.Ldebug_info0
 	.uleb128	13
 	.ascii	"Y\000"
 	.byte	2
 	.byte	35
 	.uleb128	28
-	.long	.La107-.Ldebug_info0
+	.long	.La109-.Ldebug_info0
 	.uleb128	13
 	.ascii	"DX\000"
 	.byte	2
 	.byte	35
 	.uleb128	32
-	.long	.La107-.Ldebug_info0
+	.long	.La109-.Ldebug_info0
 	.uleb128	13
 	.ascii	"DY\000"
 	.byte	2
 	.byte	35
 	.uleb128	36
-	.long	.La107-.Ldebug_info0
+	.long	.La109-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PRESSURE\000"
 	.byte	2
 	.byte	35
 	.uleb128	40
-	.long	.La107-.Ldebug_info0
+	.long	.La109-.Ldebug_info0
 	.byte	0
-.La69:
+.La71:
 	.uleb128	9
-	.long	.La68-.Ldebug_info0
+	.long	.La70-.Ldebug_info0
 # Definition TSDL_MultiGestureEvent
-.La70:
+.La72:
 	.uleb128	7
 	.ascii	"TSDL_MULTIGESTUREEVENT\000"
-	.long	.La109-.Ldebug_info0
-.La109:
+	.long	.La111-.Ldebug_info0
+.La111:
 	.uleb128	12
 	.ascii	"TSDL_MULTIGESTUREEVENT\000"
 	.uleb128	40
@@ -4229,13 +3944,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TOUCHID\000"
 	.byte	2
@@ -4247,47 +3962,47 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	16
-	.long	.La107-.Ldebug_info0
+	.long	.La109-.Ldebug_info0
 	.uleb128	13
 	.ascii	"DDIST\000"
 	.byte	2
 	.byte	35
 	.uleb128	20
-	.long	.La107-.Ldebug_info0
+	.long	.La109-.Ldebug_info0
 	.uleb128	13
 	.ascii	"X\000"
 	.byte	2
 	.byte	35
 	.uleb128	24
-	.long	.La107-.Ldebug_info0
+	.long	.La109-.Ldebug_info0
 	.uleb128	13
 	.ascii	"Y\000"
 	.byte	2
 	.byte	35
 	.uleb128	28
-	.long	.La107-.Ldebug_info0
+	.long	.La109-.Ldebug_info0
 	.uleb128	13
 	.ascii	"NUMFINGERS\000"
 	.byte	2
 	.byte	35
 	.uleb128	32
-	.long	.La97-.Ldebug_info0
+	.long	.La99-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PADDING\000"
 	.byte	2
 	.byte	35
 	.uleb128	34
-	.long	.La97-.Ldebug_info0
+	.long	.La99-.Ldebug_info0
 	.byte	0
-.La71:
+.La73:
 	.uleb128	9
-	.long	.La70-.Ldebug_info0
+	.long	.La72-.Ldebug_info0
 # Definition TSDL_DollarGestureEvent
-.La72:
+.La74:
 	.uleb128	7
 	.ascii	"TSDL_DOLLARGESTUREEVENT\000"
-	.long	.La110-.Ldebug_info0
-.La110:
+	.long	.La112-.Ldebug_info0
+.La112:
 	.uleb128	12
 	.ascii	"TSDL_DOLLARGESTUREEVENT\000"
 	.uleb128	40
@@ -4296,13 +4011,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TOUCHID\000"
 	.byte	2
@@ -4320,35 +4035,35 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	24
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"ERROR\000"
 	.byte	2
 	.byte	35
 	.uleb128	28
-	.long	.La107-.Ldebug_info0
+	.long	.La109-.Ldebug_info0
 	.uleb128	13
 	.ascii	"X\000"
 	.byte	2
 	.byte	35
 	.uleb128	32
-	.long	.La107-.Ldebug_info0
+	.long	.La109-.Ldebug_info0
 	.uleb128	13
 	.ascii	"Y\000"
 	.byte	2
 	.byte	35
 	.uleb128	36
-	.long	.La107-.Ldebug_info0
+	.long	.La109-.Ldebug_info0
 	.byte	0
-.La73:
+.La75:
 	.uleb128	9
-	.long	.La72-.Ldebug_info0
+	.long	.La74-.Ldebug_info0
 # Definition TSDL_DropEvent
-.La74:
+.La76:
 	.uleb128	7
 	.ascii	"TSDL_DROPEVENT\000"
-	.long	.La111-.Ldebug_info0
-.La111:
+	.long	.La113-.Ldebug_info0
+.La113:
 	.uleb128	12
 	.ascii	"TSDL_DROPEVENT\000"
 	.uleb128	16
@@ -4357,29 +4072,29 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"FILE_\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La112-.Ldebug_info0
+	.long	.La114-.Ldebug_info0
 	.byte	0
-.La75:
+.La77:
 	.uleb128	9
-	.long	.La74-.Ldebug_info0
+	.long	.La76-.Ldebug_info0
 # Definition TSDL_QuitEvent
-.La62:
+.La64:
 	.uleb128	7
 	.ascii	"TSDL_QUITEVENT\000"
-	.long	.La114-.Ldebug_info0
-.La114:
+	.long	.La116-.Ldebug_info0
+.La116:
 	.uleb128	12
 	.ascii	"TSDL_QUITEVENT\000"
 	.uleb128	8
@@ -4388,23 +4103,23 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.byte	0
-.La63:
+.La65:
 	.uleb128	9
-	.long	.La62-.Ldebug_info0
+	.long	.La64-.Ldebug_info0
 # Definition TSDL_UserEvent
-.La64:
+.La66:
 	.uleb128	7
 	.ascii	"TSDL_USEREVENT\000"
-	.long	.La115-.Ldebug_info0
-.La115:
+	.long	.La117-.Ldebug_info0
+.La117:
 	.uleb128	12
 	.ascii	"TSDL_USEREVENT\000"
 	.uleb128	32
@@ -4413,19 +4128,19 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"WINDOWID\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"CODE\000"
 	.byte	2
@@ -4437,23 +4152,23 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	16
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.uleb128	13
 	.ascii	"DATA2\000"
 	.byte	2
 	.byte	35
 	.uleb128	24
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.byte	0
-.La65:
+.La67:
 	.uleb128	9
-	.long	.La64-.Ldebug_info0
+	.long	.La66-.Ldebug_info0
 # Definition TSDL_SysWMEvent
-.La66:
+.La68:
 	.uleb128	7
 	.ascii	"TSDL_SYSWMEVENT\000"
-	.long	.La118-.Ldebug_info0
-.La118:
+	.long	.La120-.Ldebug_info0
+.La120:
 	.uleb128	12
 	.ascii	"TSDL_SYSWMEVENT\000"
 	.uleb128	16
@@ -4462,29 +4177,29 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIMESTAMP\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"MSG\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.byte	0
-.La67:
+.La69:
 	.uleb128	9
-	.long	.La66-.Ldebug_info0
+	.long	.La68-.Ldebug_info0
 # Definition TSDL_Keysym
-.La83:
+.La85:
 	.uleb128	7
 	.ascii	"TSDL_KEYSYM\000"
-	.long	.La119-.Ldebug_info0
-.La119:
+	.long	.La121-.Ldebug_info0
+.La121:
 	.uleb128	12
 	.ascii	"TSDL_KEYSYM\000"
 	.uleb128	16
@@ -4493,7 +4208,7 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"SYM\000"
 	.byte	2
@@ -4505,17 +4220,17 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La97-.Ldebug_info0
+	.long	.La99-.Ldebug_info0
 	.uleb128	13
 	.ascii	"UNUSED\000"
 	.byte	2
 	.byte	35
 	.uleb128	12
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.byte	0
-.La84:
+.La86:
 	.uleb128	9
-	.long	.La83-.Ldebug_info0
+	.long	.La85-.Ldebug_info0
 # Defs - End unit SDL2 has index 254
 # Defs - Begin unit WINDOWS has index 5
 # Defs - End unit WINDOWS has index 5
@@ -4886,28 +4601,42 @@ RTTI_$UMAIN_$$_DEF62:
 # Defs - Begin unit DIALOGS has index 165
 # Defs - End unit DIALOGS has index 165
 # Defs - Begin unit UMAIN has index 11
+# Definition Array[0..599] Of Int64
+.La16:
+	.uleb128	14
+	.uleb128	4800
+	.long	.La12-.Ldebug_info0
+	.uleb128	15
+	.sleb128	0
+	.sleb128	599
+	.uleb128	8
+	.long	.La97-.Ldebug_info0
+	.byte	0
+.La17:
+	.uleb128	9
+	.long	.La16-.Ldebug_info0
 # Defs - End unit UMAIN has index 11
 # Defs - Begin unit RETRO has index 12
 # Definition TRetro
 .La9:
 	.uleb128	7
 	.ascii	"TRETRO\000"
-	.long	.La120-.Ldebug_info0
-.La120:
+	.long	.La122-.Ldebug_info0
+.La122:
 	.uleb128	10
 	.long	.La11-.Ldebug_info0
 .La11:
-	.uleb128	14
+	.uleb128	16
 	.ascii	"TRETRO\000"
 	.uleb128	88
-	.uleb128	15
+	.uleb128	17
 	.byte	1
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La123-.Ldebug_info0
+	.long	.La125-.Ldebug_info0
 # Procdef Execute(<TRetro>);
-	.uleb128	16
+	.uleb128	18
 	.ascii	"EXECUTE\000"
 	.byte	1
 	.byte	65
@@ -4920,29 +4649,29 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	34
 	.byte	2
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
 	.long	.La9-.Ldebug_info0
 	.byte	0
 # Procdef constructor Create(<TRetro>;<Pointer>;Boolean);
-	.uleb128	18
+	.uleb128	20
 	.ascii	"CREATE\000"
 	.byte	1
 	.byte	65
 	.byte	1
 	.long	.La9-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
 	.long	.La9-.Ldebug_info0
 # Symbol vmt
-	.uleb128	19
+	.uleb128	21
 	.ascii	"vmt\000"
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 # Symbol CREATESUSPENDED
-	.uleb128	19
+	.uleb128	21
 	.ascii	"CREATESUSPENDED\000"
 	.long	.La14-.Ldebug_info0
 	.byte	0
@@ -4956,158 +4685,158 @@ RTTI_$UMAIN_$$_DEF62:
 # Defs - Begin Staticsymtable
 # Defs - End Staticsymtable
 # Definition LongWord
-.La28:
+.La30:
 	.uleb128	7
 	.ascii	"LONGWORD\000"
-	.long	.La124-.Ldebug_info0
-.La124:
+	.long	.La126-.Ldebug_info0
+.La126:
 	.uleb128	8
 	.ascii	"LONGWORD\000"
 	.byte	7
 	.byte	4
-.La29:
+.La31:
 	.uleb128	9
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 # Definition TSDL_Event.Array[0..55] Of Byte
-.La76:
-	.uleb128	20
+.La78:
+	.uleb128	14
 	.uleb128	56
-	.long	.La80-.Ldebug_info0
-	.uleb128	21
+	.long	.La82-.Ldebug_info0
+	.uleb128	15
 	.sleb128	0
 	.sleb128	55
 	.uleb128	1
-	.long	.La125-.Ldebug_info0
+	.long	.La127-.Ldebug_info0
 	.byte	0
-.La77:
+.La79:
 	.uleb128	9
-	.long	.La76-.Ldebug_info0
+	.long	.La78-.Ldebug_info0
 # Definition Byte
-.La80:
+.La82:
 	.uleb128	7
 	.ascii	"BYTE\000"
-	.long	.La127-.Ldebug_info0
-.La127:
+	.long	.La129-.Ldebug_info0
+.La129:
 	.uleb128	8
 	.ascii	"BYTE\000"
 	.byte	7
 	.byte	1
-.La81:
+.La83:
 	.uleb128	9
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 # Definition TSDL_TextEditingEvent.Array[0..31] Of Char
-.La86:
-	.uleb128	20
+.La88:
+	.uleb128	14
 	.uleb128	32
-	.long	.La22-.Ldebug_info0
-	.uleb128	21
+	.long	.La24-.Ldebug_info0
+	.uleb128	15
 	.sleb128	0
 	.sleb128	31
 	.uleb128	1
-	.long	.La125-.Ldebug_info0
+	.long	.La127-.Ldebug_info0
 	.byte	0
-.La87:
-	.uleb128	9
-	.long	.La86-.Ldebug_info0
-# Definition TSDL_TextInputEvent.Array[0..31] Of Char
 .La89:
-	.uleb128	20
+	.uleb128	9
+	.long	.La88-.Ldebug_info0
+# Definition TSDL_TextInputEvent.Array[0..31] Of Char
+.La91:
+	.uleb128	14
 	.uleb128	32
-	.long	.La22-.Ldebug_info0
-	.uleb128	21
+	.long	.La24-.Ldebug_info0
+	.uleb128	15
 	.sleb128	0
 	.sleb128	31
 	.uleb128	1
-	.long	.La125-.Ldebug_info0
+	.long	.La127-.Ldebug_info0
 	.byte	0
-.La90:
+.La92:
 	.uleb128	9
-	.long	.La89-.Ldebug_info0
+	.long	.La91-.Ldebug_info0
 # Definition SmallInt
-.La95:
+.La97:
 	.uleb128	7
 	.ascii	"SMALLINT\000"
-	.long	.La128-.Ldebug_info0
-.La128:
+	.long	.La130-.Ldebug_info0
+.La130:
 	.uleb128	8
 	.ascii	"SMALLINT\000"
 	.byte	5
 	.byte	2
-.La96:
+.La98:
 	.uleb128	9
-	.long	.La95-.Ldebug_info0
+	.long	.La97-.Ldebug_info0
 # Definition Word
-.La97:
+.La99:
 	.uleb128	7
 	.ascii	"WORD\000"
-	.long	.La129-.Ldebug_info0
-.La129:
+	.long	.La131-.Ldebug_info0
+.La131:
 	.uleb128	8
 	.ascii	"WORD\000"
 	.byte	7
 	.byte	2
-.La98:
+.La100:
 	.uleb128	9
-	.long	.La97-.Ldebug_info0
+	.long	.La99-.Ldebug_info0
 # Definition Single
-.La107:
+.La109:
 	.uleb128	7
 	.ascii	"SINGLE\000"
-	.long	.La130-.Ldebug_info0
-.La130:
+	.long	.La132-.Ldebug_info0
+.La132:
 	.uleb128	8
 	.ascii	"SINGLE\000"
 	.byte	4
 	.byte	4
-.La108:
+.La110:
 	.uleb128	9
-	.long	.La107-.Ldebug_info0
+	.long	.La109-.Ldebug_info0
 # Definition PChar
-.La112:
+.La114:
 	.uleb128	7
 	.ascii	"PCHAR\000"
-	.long	.La131-.Ldebug_info0
-.La131:
-	.uleb128	10
-	.long	.La22-.Ldebug_info0
-.La113:
-	.uleb128	9
-	.long	.La112-.Ldebug_info0
-# Definition Pointer
-.La116:
-	.uleb128	7
-	.ascii	"POINTER\000"
-	.long	.La132-.Ldebug_info0
-.La132:
-	.uleb128	11
-.La117:
-	.uleb128	9
-	.long	.La116-.Ldebug_info0
-# Definition TThread
-.La121:
-	.uleb128	7
-	.ascii	"TTHREAD\000"
 	.long	.La133-.Ldebug_info0
 .La133:
 	.uleb128	10
-	.long	.La123-.Ldebug_info0
+	.long	.La24-.Ldebug_info0
+.La115:
+	.uleb128	9
+	.long	.La114-.Ldebug_info0
+# Definition Pointer
+.La118:
+	.uleb128	7
+	.ascii	"POINTER\000"
+	.long	.La134-.Ldebug_info0
+.La134:
+	.uleb128	11
+.La119:
+	.uleb128	9
+	.long	.La118-.Ldebug_info0
+# Definition TThread
 .La123:
-	.uleb128	14
+	.uleb128	7
+	.ascii	"TTHREAD\000"
+	.long	.La135-.Ldebug_info0
+.La135:
+	.uleb128	10
+	.long	.La125-.Ldebug_info0
+.La125:
+	.uleb128	16
 	.ascii	"TTHREAD\000"
 	.uleb128	88
-	.uleb128	15
+	.uleb128	17
 	.byte	1
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La136-.Ldebug_info0
+	.long	.La138-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FHANDLE\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
 	.byte	3
-	.long	.La137-.Ldebug_info0
+	.long	.La139-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FTERMINATED\000"
 	.byte	2
@@ -5135,7 +4864,7 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	35
 	.uleb128	20
 	.byte	3
-	.long	.La139-.Ldebug_info0
+	.long	.La141-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FRETURNVALUE\000"
 	.byte	2
@@ -5149,14 +4878,14 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	35
 	.uleb128	32
 	.byte	3
-	.long	.La141-.Ldebug_info0
+	.long	.La143-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FFATALEXCEPTION\000"
 	.byte	2
 	.byte	35
 	.uleb128	48
 	.byte	3
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FEXTERNALTHREAD\000"
 	.byte	2
@@ -5170,14 +4899,14 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	35
 	.uleb128	64
 	.byte	3
-	.long	.La143-.Ldebug_info0
+	.long	.La145-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FTHREADID\000"
 	.byte	2
 	.byte	35
 	.uleb128	72
 	.byte	2
-	.long	.La137-.Ldebug_info0
+	.long	.La139-.Ldebug_info0
 	.uleb128	22
 	.ascii	"RETURNVALUE\000"
 	.byte	2
@@ -5212,7 +4941,7 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	35
 	.uleb128	8
 	.byte	3
-	.long	.La137-.Ldebug_info0
+	.long	.La139-.Ldebug_info0
 	.uleb128	22
 	.ascii	"EXTERNALTHREAD\000"
 	.byte	2
@@ -5233,21 +4962,21 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	35
 	.uleb128	72
 	.byte	2
-	.long	.La137-.Ldebug_info0
+	.long	.La139-.Ldebug_info0
 	.uleb128	22
 	.ascii	"ONTERMINATE\000"
 	.byte	2
 	.byte	35
 	.uleb128	32
 	.byte	3
-	.long	.La141-.Ldebug_info0
+	.long	.La143-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FATALEXCEPTION\000"
 	.byte	2
 	.byte	35
 	.uleb128	48
 	.byte	3
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 # Procdef class GetCurrentThread:TThread; Static;
 	.uleb128	23
 	.ascii	"GETCURRENTTHREAD\000"
@@ -5255,7 +4984,7 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	65
 	.byte	1
 	.byte	3
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 	.byte	0
 # Procdef class GetIsSingleProcessor:Boolean; Static;
 	.uleb128	23
@@ -5274,10 +5003,10 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	1
 	.byte	3
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 	.byte	0
 # Procdef GetPriority(<TThread>):<enumeration type>;
 	.uleb128	23
@@ -5286,12 +5015,12 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	65
 	.byte	1
 	.byte	3
-	.long	.La145-.Ldebug_info0
+	.long	.La147-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 	.byte	0
 # Procdef SetPriority(<TThread>;TThreadPriority);
 	.uleb128	24
@@ -5301,14 +5030,14 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	1
 	.byte	3
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 # Symbol VALUE
-	.uleb128	19
+	.uleb128	21
 	.ascii	"VALUE\000"
-	.long	.La145-.Ldebug_info0
+	.long	.La147-.Ldebug_info0
 	.byte	0
 # Procdef SetSuspended(<TThread>;Boolean);
 	.uleb128	24
@@ -5318,12 +5047,12 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	1
 	.byte	3
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 # Symbol VALUE
-	.uleb128	19
+	.uleb128	21
 	.ascii	"VALUE\000"
 	.long	.La14-.Ldebug_info0
 	.byte	0
@@ -5336,10 +5065,10 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	3
 	.long	.La14-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 	.byte	0
 # Procdef InitSynchronizeEvent(<TThread>);
 	.uleb128	24
@@ -5349,10 +5078,10 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	1
 	.byte	3
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 	.byte	0
 # Procdef DoneSynchronizeEvent(<TThread>);
 	.uleb128	24
@@ -5362,10 +5091,10 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	1
 	.byte	3
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 	.byte	0
 # Procdef SysCreate(<TThread>;Boolean;const QWord);
 	.uleb128	24
@@ -5375,18 +5104,18 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	1
 	.byte	3
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 # Symbol CREATESUSPENDED
-	.uleb128	19
+	.uleb128	21
 	.ascii	"CREATESUSPENDED\000"
 	.long	.La14-.Ldebug_info0
 # Symbol STACKSIZE
-	.uleb128	19
+	.uleb128	21
 	.ascii	"STACKSIZE\000"
-	.long	.La137-.Ldebug_info0
+	.long	.La139-.Ldebug_info0
 	.byte	0
 # Procdef SysDestroy(<TThread>);
 	.uleb128	24
@@ -5396,13 +5125,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	1
 	.byte	3
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 	.byte	0
 # Procdef DoTerminate(<TThread>);
-	.uleb128	16
+	.uleb128	18
 	.ascii	"DOTERMINATE\000"
 	.byte	1
 	.byte	65
@@ -5415,13 +5144,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	34
 	.byte	2
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 	.byte	0
 # Procdef Execute(<TThread>);
-	.uleb128	16
+	.uleb128	18
 	.ascii	"EXECUTE\000"
 	.byte	1
 	.byte	65
@@ -5434,10 +5163,10 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	34
 	.byte	2
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 	.byte	0
 # Procdef Synchronize(<TThread>;TThreadMethod);
 	.uleb128	24
@@ -5447,14 +5176,14 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	1
 	.byte	2
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 # Symbol AMETHOD
-	.uleb128	19
+	.uleb128	21
 	.ascii	"AMETHOD\000"
-	.long	.La147-.Ldebug_info0
+	.long	.La149-.Ldebug_info0
 	.byte	0
 # Procdef Queue(<TThread>;TThreadMethod);
 	.uleb128	24
@@ -5464,39 +5193,39 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	1
 	.byte	2
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 # Symbol AMETHOD
-	.uleb128	19
+	.uleb128	21
 	.ascii	"AMETHOD\000"
-	.long	.La147-.Ldebug_info0
+	.long	.La149-.Ldebug_info0
 	.byte	0
 # Procdef constructor Create(<TThread>;<Pointer>;Boolean;const QWord="4194304");
-	.uleb128	18
+	.uleb128	20
 	.ascii	"CREATE\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 # Symbol vmt
-	.uleb128	19
+	.uleb128	21
 	.ascii	"vmt\000"
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 # Symbol CREATESUSPENDED
-	.uleb128	19
+	.uleb128	21
 	.ascii	"CREATESUSPENDED\000"
 	.long	.La14-.Ldebug_info0
 # Symbol STACKSIZE
-	.uleb128	19
+	.uleb128	21
 	.ascii	"STACKSIZE\000"
-	.long	.La137-.Ldebug_info0
+	.long	.La139-.Ldebug_info0
 	.byte	0
 # Procdef destructor Destroy(<TThread>;<Pointer>);
 	.uleb128	25
@@ -5511,26 +5240,26 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	96
 	.byte	34
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 # Symbol vmt
-	.uleb128	19
+	.uleb128	21
 	.ascii	"vmt\000"
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.byte	0
 # Procdef class CreateAnonymousThread(TProcedure):TThread; Static;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"CREATEANONYMOUSTHREAD\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 # Symbol APROC
-	.uleb128	19
+	.uleb128	21
 	.ascii	"APROC\000"
-	.long	.La149-.Ldebug_info0
+	.long	.La151-.Ldebug_info0
 	.byte	0
 # Procdef class NameThreadForDebugging(UnicodeString;QWord="18446744073709551615"); Static;
 	.uleb128	26
@@ -5539,13 +5268,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	65
 	.byte	1
 # Symbol ATHREADNAME
-	.uleb128	19
+	.uleb128	21
 	.ascii	"ATHREADNAME\000"
-	.long	.La151-.Ldebug_info0
+	.long	.La153-.Ldebug_info0
 # Symbol ATHREADID
-	.uleb128	19
+	.uleb128	21
 	.ascii	"ATHREADID\000"
-	.long	.La137-.Ldebug_info0
+	.long	.La139-.Ldebug_info0
 	.byte	0
 # Procdef class NameThreadForDebugging(AnsiString;QWord="18446744073709551615"); Static;
 	.uleb128	26
@@ -5554,13 +5283,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	65
 	.byte	1
 # Symbol ATHREADNAME
-	.uleb128	19
+	.uleb128	21
 	.ascii	"ATHREADNAME\000"
 	.long	.La5-.Ldebug_info0
 # Symbol ATHREADID
-	.uleb128	19
+	.uleb128	21
 	.ascii	"ATHREADID\000"
-	.long	.La137-.Ldebug_info0
+	.long	.La139-.Ldebug_info0
 	.byte	0
 # Procdef class SetReturnValue(LongInt); Static;
 	.uleb128	26
@@ -5569,12 +5298,12 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	65
 	.byte	1
 # Symbol AVALUE
-	.uleb128	19
+	.uleb128	21
 	.ascii	"AVALUE\000"
 	.long	.La1-.Ldebug_info0
 	.byte	0
 # Procdef class CheckTerminated:Boolean; Static;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"CHECKTERMINATED\000"
 	.byte	1
 	.byte	65
@@ -5588,18 +5317,18 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	65
 	.byte	1
 # Symbol self
-	.uleb128	17
+	.uleb128	19
 	.ascii	"self\000"
 	.byte	1
-	.long	.La153-.Ldebug_info0
+	.long	.La155-.Ldebug_info0
 # Symbol ATHREAD
-	.uleb128	19
+	.uleb128	21
 	.ascii	"ATHREAD\000"
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 # Symbol AMETHOD
-	.uleb128	19
+	.uleb128	21
 	.ascii	"AMETHOD\000"
-	.long	.La147-.Ldebug_info0
+	.long	.La149-.Ldebug_info0
 	.byte	0
 # Procdef class Queue(TThread;TThreadMethod); Static;
 	.uleb128	26
@@ -5608,13 +5337,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	65
 	.byte	1
 # Symbol ATHREAD
-	.uleb128	19
+	.uleb128	21
 	.ascii	"ATHREAD\000"
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 # Symbol AMETHOD
-	.uleb128	19
+	.uleb128	21
 	.ascii	"AMETHOD\000"
-	.long	.La147-.Ldebug_info0
+	.long	.La149-.Ldebug_info0
 	.byte	0
 # Procdef class RemoveQueuedEvents(TThread;TThreadMethod); Static;
 	.uleb128	26
@@ -5623,13 +5352,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	65
 	.byte	1
 # Symbol ATHREAD
-	.uleb128	19
+	.uleb128	21
 	.ascii	"ATHREAD\000"
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 # Symbol AMETHOD
-	.uleb128	19
+	.uleb128	21
 	.ascii	"AMETHOD\000"
-	.long	.La147-.Ldebug_info0
+	.long	.La149-.Ldebug_info0
 	.byte	0
 # Procdef class RemoveQueuedEvents(TThreadMethod); Static;
 	.uleb128	26
@@ -5638,9 +5367,9 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	65
 	.byte	1
 # Symbol AMETHOD
-	.uleb128	19
+	.uleb128	21
 	.ascii	"AMETHOD\000"
-	.long	.La147-.Ldebug_info0
+	.long	.La149-.Ldebug_info0
 	.byte	0
 # Procdef class RemoveQueuedEvents(TThread); Static;
 	.uleb128	26
@@ -5649,9 +5378,9 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	65
 	.byte	1
 # Symbol ATHREAD
-	.uleb128	19
+	.uleb128	21
 	.ascii	"ATHREAD\000"
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 	.byte	0
 # Procdef class SpinWait(LongWord); Static;
 	.uleb128	26
@@ -5660,9 +5389,9 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	65
 	.byte	1
 # Symbol AITERATIONS
-	.uleb128	19
+	.uleb128	21
 	.ascii	"AITERATIONS\000"
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.byte	0
 # Procdef class Sleep(LongWord); Static;
 	.uleb128	26
@@ -5671,9 +5400,9 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	65
 	.byte	1
 # Symbol AMILLISECONDS
-	.uleb128	19
+	.uleb128	21
 	.ascii	"AMILLISECONDS\000"
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.byte	0
 # Procdef class Yield; Static;
 	.uleb128	26
@@ -5689,105 +5418,105 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	65
 	.byte	1
 # Symbol ASYSTEMTIMES
-	.uleb128	19
+	.uleb128	21
 	.ascii	"ASYSTEMTIMES\000"
-	.long	.La155-.Ldebug_info0
+	.long	.La157-.Ldebug_info0
 	.byte	0
 # Procdef class GetTickCount:DWord; Static;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"GETTICKCOUNT\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.byte	0
 # Procdef class GetTickCount64:QWord; Static;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"GETTICKCOUNT64\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La137-.Ldebug_info0
+	.long	.La139-.Ldebug_info0
 	.byte	0
 # Procdef class ExecuteInThread(TThreadMethod;TNotifyEvent="nil"):TThread; Static;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"EXECUTEINTHREAD\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 # Symbol AMETHOD
-	.uleb128	19
+	.uleb128	21
 	.ascii	"AMETHOD\000"
-	.long	.La147-.Ldebug_info0
+	.long	.La149-.Ldebug_info0
 # Symbol AONTERMINATE
-	.uleb128	19
+	.uleb128	21
 	.ascii	"AONTERMINATE\000"
-	.long	.La141-.Ldebug_info0
+	.long	.La143-.Ldebug_info0
 	.byte	0
 # Procdef class ExecuteInThread(TThreadExecuteStatusHandler;TThreadStatusNotifyEvent;TNotifyEvent="nil"):TThread; Static;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"EXECUTEINTHREAD\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 # Symbol AMETHOD
-	.uleb128	19
+	.uleb128	21
 	.ascii	"AMETHOD\000"
-	.long	.La157-.Ldebug_info0
-# Symbol AONSTATUS
-	.uleb128	19
-	.ascii	"AONSTATUS\000"
 	.long	.La159-.Ldebug_info0
+# Symbol AONSTATUS
+	.uleb128	21
+	.ascii	"AONSTATUS\000"
+	.long	.La161-.Ldebug_info0
 # Symbol AONTERMINATE
-	.uleb128	19
+	.uleb128	21
 	.ascii	"AONTERMINATE\000"
-	.long	.La141-.Ldebug_info0
+	.long	.La143-.Ldebug_info0
 	.byte	0
 # Procdef class ExecuteInThread(TThreadExecuteCallBack;Pointer="nil";TNotifyCallBack="nil"):TThread; Static;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"EXECUTEINTHREAD\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 # Symbol AMETHOD
-	.uleb128	19
+	.uleb128	21
 	.ascii	"AMETHOD\000"
-	.long	.La161-.Ldebug_info0
-# Symbol ADATA
-	.uleb128	19
-	.ascii	"ADATA\000"
-	.long	.La116-.Ldebug_info0
-# Symbol AONTERMINATE
-	.uleb128	19
-	.ascii	"AONTERMINATE\000"
 	.long	.La163-.Ldebug_info0
+# Symbol ADATA
+	.uleb128	21
+	.ascii	"ADATA\000"
+	.long	.La118-.Ldebug_info0
+# Symbol AONTERMINATE
+	.uleb128	21
+	.ascii	"AONTERMINATE\000"
+	.long	.La165-.Ldebug_info0
 	.byte	0
 # Procdef class ExecuteInThread(TThreadExecuteStatusCallBack;TThreadStatusNotifyCallBack;Pointer="nil";TNotifyCallBack="nil"):TThread; Static;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"EXECUTEINTHREAD\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 # Symbol AMETHOD
-	.uleb128	19
+	.uleb128	21
 	.ascii	"AMETHOD\000"
-	.long	.La165-.Ldebug_info0
-# Symbol AONSTATUS
-	.uleb128	19
-	.ascii	"AONSTATUS\000"
 	.long	.La167-.Ldebug_info0
+# Symbol AONSTATUS
+	.uleb128	21
+	.ascii	"AONSTATUS\000"
+	.long	.La169-.Ldebug_info0
 # Symbol ADATA
-	.uleb128	19
+	.uleb128	21
 	.ascii	"ADATA\000"
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 # Symbol AONTERMINATE
-	.uleb128	19
+	.uleb128	21
 	.ascii	"AONTERMINATE\000"
-	.long	.La163-.Ldebug_info0
+	.long	.La165-.Ldebug_info0
 	.byte	0
 # Procdef AfterConstruction(<TThread>);
 	.uleb128	25
@@ -5802,10 +5531,10 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	136
 	.byte	34
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 	.byte	0
 # Procdef Start(<TThread>);
 	.uleb128	26
@@ -5814,10 +5543,10 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	65
 	.byte	1
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 	.byte	0
 # Procdef Resume(<TThread>);
 	.uleb128	26
@@ -5826,10 +5555,10 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	65
 	.byte	1
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 	.byte	0
 # Procdef Suspend(<TThread>);
 	.uleb128	26
@@ -5838,10 +5567,10 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	65
 	.byte	1
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 	.byte	0
 # Procdef Terminate(<TThread>);
 	.uleb128	26
@@ -5850,51 +5579,51 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	65
 	.byte	1
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 	.byte	0
 # Procdef WaitFor(<TThread>):LongInt;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"WAITFOR\000"
 	.byte	1
 	.byte	65
 	.byte	1
 	.long	.La1-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 	.byte	0
 	.byte	0
-.La122:
+.La124:
 	.uleb128	9
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 # Definition ShortInt
-.La125:
+.La127:
 	.uleb128	7
 	.ascii	"SHORTINT\000"
-	.long	.La169-.Ldebug_info0
-.La169:
+	.long	.La171-.Ldebug_info0
+.La171:
 	.uleb128	8
 	.ascii	"SHORTINT\000"
 	.byte	5
 	.byte	1
-.La126:
+.La128:
 	.uleb128	9
-	.long	.La125-.Ldebug_info0
+	.long	.La127-.Ldebug_info0
 # Definition TObject
-.La134:
+.La136:
 	.uleb128	7
 	.ascii	"TOBJECT\000"
-	.long	.La170-.Ldebug_info0
-.La170:
+	.long	.La172-.Ldebug_info0
+.La172:
 	.uleb128	10
-	.long	.La136-.Ldebug_info0
-.La136:
-	.uleb128	14
+	.long	.La138-.Ldebug_info0
+.La138:
+	.uleb128	16
 	.ascii	"TOBJECT\000"
 	.uleb128	8
 	.uleb128	27
@@ -5903,23 +5632,23 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 # Procdef constructor Create(<TObject>;<Pointer>);
-	.uleb128	18
+	.uleb128	20
 	.ascii	"CREATE\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 # Symbol vmt
-	.uleb128	19
+	.uleb128	21
 	.ascii	"vmt\000"
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.byte	0
 # Procdef destructor Destroy(<TObject>;<Pointer>);
 	.uleb128	25
@@ -5934,14 +5663,14 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	96
 	.byte	34
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 # Symbol vmt
-	.uleb128	19
+	.uleb128	21
 	.ascii	"vmt\000"
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.byte	0
 # Procdef class newinstance(<Class Of TObject>):TObject;
 	.uleb128	28
@@ -5955,12 +5684,12 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	16
 	.uleb128	104
 	.byte	34
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 # Symbol self
-	.uleb128	17
+	.uleb128	19
 	.ascii	"self\000"
 	.byte	1
-	.long	.La171-.Ldebug_info0
+	.long	.La173-.Ldebug_info0
 	.byte	0
 # Procdef FreeInstance(<TObject>);
 	.uleb128	25
@@ -5975,10 +5704,10 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	112
 	.byte	34
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 	.byte	0
 # Procdef SafeCallException(<TObject>;TObject;Pointer):LongInt;
 	.uleb128	28
@@ -5992,20 +5721,20 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	16
 	.uleb128	120
 	.byte	34
-	.long	.La173-.Ldebug_info0
+	.long	.La175-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 # Symbol EXCEPTOBJECT
-	.uleb128	19
+	.uleb128	21
 	.ascii	"EXCEPTOBJECT\000"
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 # Symbol EXCEPTADDR
-	.uleb128	19
+	.uleb128	21
 	.ascii	"EXCEPTADDR\000"
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.byte	0
 # Procdef DefaultHandler(<TObject>;var <Formal type>);
 	.uleb128	25
@@ -6020,14 +5749,14 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	128
 	.byte	34
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 # Symbol MESSAGE
-	.uleb128	19
+	.uleb128	21
 	.ascii	"MESSAGE\000"
-	.long	.La175-.Ldebug_info0
+	.long	.La177-.Ldebug_info0
 	.byte	0
 # Procdef Free(<TObject>);
 	.uleb128	26
@@ -6036,27 +5765,27 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	65
 	.byte	1
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 	.byte	0
 # Procdef class InitInstance(<Class Of TObject>;Pointer):TObject;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"INITINSTANCE\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 # Symbol self
-	.uleb128	17
+	.uleb128	19
 	.ascii	"self\000"
 	.byte	1
-	.long	.La177-.Ldebug_info0
+	.long	.La179-.Ldebug_info0
 # Symbol INSTANCE
-	.uleb128	19
+	.uleb128	21
 	.ascii	"INSTANCE\000"
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.byte	0
 # Procdef CleanupInstance(<TObject>);
 	.uleb128	26
@@ -6065,181 +5794,181 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	65
 	.byte	1
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 	.byte	0
 # Procdef class ClassType(<Class Of TObject>):Class Of TObject;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"CLASSTYPE\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La179-.Ldebug_info0
-# Symbol self
-	.uleb128	17
-	.ascii	"self\000"
-	.byte	1
 	.long	.La181-.Ldebug_info0
-	.byte	0
-# Procdef class ClassInfo(<Class Of TObject>):^untyped;
-	.uleb128	18
-	.ascii	"CLASSINFO\000"
-	.byte	1
-	.byte	65
-	.byte	1
-	.long	.La116-.Ldebug_info0
 # Symbol self
-	.uleb128	17
+	.uleb128	19
 	.ascii	"self\000"
 	.byte	1
 	.long	.La183-.Ldebug_info0
 	.byte	0
+# Procdef class ClassInfo(<Class Of TObject>):^untyped;
+	.uleb128	20
+	.ascii	"CLASSINFO\000"
+	.byte	1
+	.byte	65
+	.byte	1
+	.long	.La118-.Ldebug_info0
+# Symbol self
+	.uleb128	19
+	.ascii	"self\000"
+	.byte	1
+	.long	.La185-.Ldebug_info0
+	.byte	0
 # Procdef class ClassName(<Class Of TObject>;<var ShortString>):ShortString;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"CLASSNAME\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La185-.Ldebug_info0
+	.long	.La187-.Ldebug_info0
 # Symbol self
-	.uleb128	17
+	.uleb128	19
 	.ascii	"self\000"
 	.byte	1
-	.long	.La187-.Ldebug_info0
+	.long	.La189-.Ldebug_info0
 # Symbol result
 	.uleb128	29
 	.ascii	"result\000"
-	.long	.La185-.Ldebug_info0
+	.long	.La187-.Ldebug_info0
 	.byte	0
 # Procdef class ClassNameIs(<Class Of TObject>;const ShortString):Boolean;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"CLASSNAMEIS\000"
 	.byte	1
 	.byte	65
 	.byte	1
 	.long	.La14-.Ldebug_info0
 # Symbol self
-	.uleb128	17
+	.uleb128	19
 	.ascii	"self\000"
 	.byte	1
-	.long	.La189-.Ldebug_info0
+	.long	.La191-.Ldebug_info0
 # Symbol NAME
-	.uleb128	19
+	.uleb128	21
 	.ascii	"NAME\000"
-	.long	.La185-.Ldebug_info0
+	.long	.La187-.Ldebug_info0
 	.byte	0
 # Procdef class ClassParent(<Class Of TObject>):Class Of TObject;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"CLASSPARENT\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La179-.Ldebug_info0
+	.long	.La181-.Ldebug_info0
 # Symbol self
-	.uleb128	17
+	.uleb128	19
 	.ascii	"self\000"
 	.byte	1
-	.long	.La191-.Ldebug_info0
+	.long	.La193-.Ldebug_info0
 	.byte	0
 # Procdef class InstanceSize(<Class Of TObject>):Int64;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"INSTANCESIZE\000"
 	.byte	1
 	.byte	65
 	.byte	1
 	.long	.La12-.Ldebug_info0
 # Symbol self
-	.uleb128	17
+	.uleb128	19
 	.ascii	"self\000"
 	.byte	1
-	.long	.La193-.Ldebug_info0
+	.long	.La195-.Ldebug_info0
 	.byte	0
 # Procdef class InheritsFrom(<Class Of TObject>;TClass):Boolean;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"INHERITSFROM\000"
 	.byte	1
 	.byte	65
 	.byte	1
 	.long	.La14-.Ldebug_info0
 # Symbol self
-	.uleb128	17
+	.uleb128	19
 	.ascii	"self\000"
 	.byte	1
-	.long	.La195-.Ldebug_info0
+	.long	.La197-.Ldebug_info0
 # Symbol ACLASS
-	.uleb128	19
+	.uleb128	21
 	.ascii	"ACLASS\000"
-	.long	.La179-.Ldebug_info0
+	.long	.La181-.Ldebug_info0
 	.byte	0
 # Procdef class StringMessageTable(<Class Of TObject>):^TStringMessageTable;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"STRINGMESSAGETABLE\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La197-.Ldebug_info0
+	.long	.La199-.Ldebug_info0
 # Symbol self
-	.uleb128	17
+	.uleb128	19
 	.ascii	"self\000"
 	.byte	1
-	.long	.La199-.Ldebug_info0
+	.long	.La201-.Ldebug_info0
 	.byte	0
 # Procdef class MethodAddress(<Class Of TObject>;const ShortString):^untyped;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"METHODADDRESS\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 # Symbol self
-	.uleb128	17
+	.uleb128	19
 	.ascii	"self\000"
 	.byte	1
-	.long	.La201-.Ldebug_info0
+	.long	.La203-.Ldebug_info0
 # Symbol NAME
-	.uleb128	19
+	.uleb128	21
 	.ascii	"NAME\000"
-	.long	.La185-.Ldebug_info0
+	.long	.La187-.Ldebug_info0
 	.byte	0
 # Procdef class MethodName(<Class Of TObject>;<var ShortString>;Pointer):ShortString;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"METHODNAME\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La185-.Ldebug_info0
+	.long	.La187-.Ldebug_info0
 # Symbol self
-	.uleb128	17
+	.uleb128	19
 	.ascii	"self\000"
 	.byte	1
-	.long	.La203-.Ldebug_info0
+	.long	.La205-.Ldebug_info0
 # Symbol result
 	.uleb128	29
 	.ascii	"result\000"
-	.long	.La185-.Ldebug_info0
+	.long	.La187-.Ldebug_info0
 # Symbol ADDRESS
-	.uleb128	19
+	.uleb128	21
 	.ascii	"ADDRESS\000"
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.byte	0
 # Procdef FieldAddress(<TObject>;const ShortString):^untyped;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"FIELDADDRESS\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 # Symbol NAME
-	.uleb128	19
+	.uleb128	21
 	.ascii	"NAME\000"
-	.long	.La185-.Ldebug_info0
+	.long	.La187-.Ldebug_info0
 	.byte	0
 # Procdef AfterConstruction(<TObject>);
 	.uleb128	25
@@ -6254,10 +5983,10 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	136
 	.byte	34
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 	.byte	0
 # Procdef BeforeDestruction(<TObject>);
 	.uleb128	25
@@ -6272,10 +6001,10 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	144
 	.byte	34
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 	.byte	0
 # Procdef DefaultHandlerStr(<TObject>;var <Formal type>);
 	.uleb128	25
@@ -6290,14 +6019,14 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	152
 	.byte	34
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 # Symbol MESSAGE
-	.uleb128	19
+	.uleb128	21
 	.ascii	"MESSAGE\000"
-	.long	.La175-.Ldebug_info0
+	.long	.La177-.Ldebug_info0
 	.byte	0
 # Procdef Dispatch(<TObject>;var <Formal type>);
 	.uleb128	25
@@ -6312,14 +6041,14 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	160
 	.byte	34
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 # Symbol MESSAGE
-	.uleb128	19
+	.uleb128	21
 	.ascii	"MESSAGE\000"
-	.long	.La175-.Ldebug_info0
+	.long	.La177-.Ldebug_info0
 	.byte	0
 # Procdef DispatchStr(<TObject>;var <Formal type>);
 	.uleb128	25
@@ -6334,158 +6063,158 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	168
 	.byte	34
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 # Symbol MESSAGE
-	.uleb128	19
+	.uleb128	21
 	.ascii	"MESSAGE\000"
-	.long	.La175-.Ldebug_info0
+	.long	.La177-.Ldebug_info0
 	.byte	0
 # Procdef GetInterface(<TObject>;const TGuid;out <Formal type>):Boolean;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"GETINTERFACE\000"
 	.byte	1
 	.byte	65
 	.byte	1
 	.long	.La14-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 # Symbol IID
-	.uleb128	19
+	.uleb128	21
 	.ascii	"IID\000"
-	.long	.La205-.Ldebug_info0
+	.long	.La207-.Ldebug_info0
 # Symbol OBJ
-	.uleb128	19
+	.uleb128	21
 	.ascii	"OBJ\000"
-	.long	.La175-.Ldebug_info0
+	.long	.La177-.Ldebug_info0
 	.byte	0
 # Procdef GetInterface(<TObject>;const ShortString;out <Formal type>):Boolean;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"GETINTERFACE\000"
 	.byte	1
 	.byte	65
 	.byte	1
 	.long	.La14-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 # Symbol IIDSTR
-	.uleb128	19
+	.uleb128	21
 	.ascii	"IIDSTR\000"
-	.long	.La185-.Ldebug_info0
+	.long	.La187-.Ldebug_info0
 # Symbol OBJ
-	.uleb128	19
+	.uleb128	21
 	.ascii	"OBJ\000"
-	.long	.La175-.Ldebug_info0
+	.long	.La177-.Ldebug_info0
 	.byte	0
 # Procdef GetInterfaceByStr(<TObject>;const ShortString;out <Formal type>):Boolean;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"GETINTERFACEBYSTR\000"
 	.byte	1
 	.byte	65
 	.byte	1
 	.long	.La14-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 # Symbol IIDSTR
-	.uleb128	19
+	.uleb128	21
 	.ascii	"IIDSTR\000"
-	.long	.La185-.Ldebug_info0
+	.long	.La187-.Ldebug_info0
 # Symbol OBJ
-	.uleb128	19
+	.uleb128	21
 	.ascii	"OBJ\000"
-	.long	.La175-.Ldebug_info0
+	.long	.La177-.Ldebug_info0
 	.byte	0
 # Procdef GetInterfaceWeak(<TObject>;const TGuid;out <Formal type>):Boolean;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"GETINTERFACEWEAK\000"
 	.byte	1
 	.byte	65
 	.byte	1
 	.long	.La14-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 # Symbol IID
-	.uleb128	19
+	.uleb128	21
 	.ascii	"IID\000"
-	.long	.La205-.Ldebug_info0
+	.long	.La207-.Ldebug_info0
 # Symbol OBJ
-	.uleb128	19
+	.uleb128	21
 	.ascii	"OBJ\000"
-	.long	.La175-.Ldebug_info0
+	.long	.La177-.Ldebug_info0
 	.byte	0
 # Procdef class GetInterfaceEntry(<Class Of TObject>;const TGuid):^tinterfaceentry;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"GETINTERFACEENTRY\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La207-.Ldebug_info0
+	.long	.La209-.Ldebug_info0
 # Symbol self
-	.uleb128	17
+	.uleb128	19
 	.ascii	"self\000"
 	.byte	1
-	.long	.La209-.Ldebug_info0
+	.long	.La211-.Ldebug_info0
 # Symbol IID
-	.uleb128	19
+	.uleb128	21
 	.ascii	"IID\000"
-	.long	.La205-.Ldebug_info0
+	.long	.La207-.Ldebug_info0
 	.byte	0
 # Procdef class GetInterfaceEntryByStr(<Class Of TObject>;const ShortString):^tinterfaceentry;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"GETINTERFACEENTRYBYSTR\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La207-.Ldebug_info0
+	.long	.La209-.Ldebug_info0
 # Symbol self
-	.uleb128	17
+	.uleb128	19
 	.ascii	"self\000"
 	.byte	1
-	.long	.La211-.Ldebug_info0
+	.long	.La213-.Ldebug_info0
 # Symbol IIDSTR
-	.uleb128	19
+	.uleb128	21
 	.ascii	"IIDSTR\000"
-	.long	.La185-.Ldebug_info0
+	.long	.La187-.Ldebug_info0
 	.byte	0
 # Procdef class GetInterfaceTable(<Class Of TObject>):^tinterfacetable;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"GETINTERFACETABLE\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La213-.Ldebug_info0
+	.long	.La215-.Ldebug_info0
 # Symbol self
-	.uleb128	17
+	.uleb128	19
 	.ascii	"self\000"
 	.byte	1
-	.long	.La215-.Ldebug_info0
+	.long	.La217-.Ldebug_info0
 	.byte	0
 # Procdef class UnitName(<Class Of TObject>;<var AnsiString>):AnsiString;
-	.uleb128	18
+	.uleb128	20
 	.ascii	"UNITNAME\000"
 	.byte	1
 	.byte	65
 	.byte	1
 	.long	.La5-.Ldebug_info0
 # Symbol self
-	.uleb128	17
+	.uleb128	19
 	.ascii	"self\000"
 	.byte	1
-	.long	.La217-.Ldebug_info0
+	.long	.La219-.Ldebug_info0
 # Symbol result
 	.uleb128	29
 	.ascii	"result\000"
@@ -6505,14 +6234,14 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	34
 	.long	.La14-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 # Symbol OBJ
-	.uleb128	19
+	.uleb128	21
 	.ascii	"OBJ\000"
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 	.byte	0
 # Procdef GetHashCode(<TObject>):Int64;
 	.uleb128	28
@@ -6528,10 +6257,10 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	34
 	.long	.La12-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 	.byte	0
 # Procdef ToString(<TObject>;<var AnsiString>):AnsiString;
 	.uleb128	28
@@ -6547,51 +6276,51 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	34
 	.long	.La5-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 # Symbol result
 	.uleb128	29
 	.ascii	"result\000"
 	.long	.La5-.Ldebug_info0
 	.byte	0
 	.byte	0
-.La135:
-	.uleb128	9
-	.long	.La134-.Ldebug_info0
-# Definition QWord
 .La137:
+	.uleb128	9
+	.long	.La136-.Ldebug_info0
+# Definition QWord
+.La139:
 	.uleb128	7
 	.ascii	"QWORD\000"
-	.long	.La219-.Ldebug_info0
-.La219:
+	.long	.La221-.Ldebug_info0
+.La221:
 	.uleb128	8
 	.ascii	"QWord\000"
 	.byte	7
 	.byte	8
-.La138:
+.La140:
 	.uleb128	9
-	.long	.La137-.Ldebug_info0
+	.long	.La139-.Ldebug_info0
 # Definition LongBool
-.La139:
+.La141:
 	.uleb128	7
 	.ascii	"LONGBOOL\000"
-	.long	.La220-.Ldebug_info0
-.La220:
+	.long	.La222-.Ldebug_info0
+.La222:
 	.uleb128	8
 	.ascii	"LongBool\000"
 	.byte	2
 	.byte	4
-.La140:
+.La142:
 	.uleb128	9
-	.long	.La139-.Ldebug_info0
+	.long	.La141-.Ldebug_info0
 # Definition <procedure variable type of procedure(TObject) of object;Register>
-.La141:
+.La143:
 	.uleb128	7
 	.ascii	"TNOTIFYEVENT\000"
-	.long	.La221-.Ldebug_info0
-.La221:
+	.long	.La223-.Ldebug_info0
+.La223:
 	.uleb128	30
 	.byte	16
 	.uleb128	13
@@ -6599,45 +6328,45 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La222-.Ldebug_info0
+	.long	.La224-.Ldebug_info0
 	.uleb128	13
 	.ascii	"Self\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 	.byte	0
-.La222:
+.La224:
 	.uleb128	31
 	.ascii	"TNOTIFYEVENT\000"
 	.byte	1
-	.uleb128	19
+	.uleb128	21
 	.ascii	"this\000"
-	.long	.La116-.Ldebug_info0
-	.uleb128	19
+	.long	.La118-.Ldebug_info0
+	.uleb128	21
 	.ascii	"SENDER\000"
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 	.byte	0
-.La142:
-	.uleb128	9
-	.long	.La141-.Ldebug_info0
-# Definition TThread.PThreadQueueEntry
-.La143:
-	.uleb128	7
-	.ascii	"PTHREADQUEUEENTRY\000"
-	.long	.La223-.Ldebug_info0
-.La223:
-	.uleb128	10
-	.long	.La224-.Ldebug_info0
 .La144:
 	.uleb128	9
 	.long	.La143-.Ldebug_info0
-# Definition TThreadPriority
+# Definition TThread.PThreadQueueEntry
 .La145:
 	.uleb128	7
-	.ascii	"TTHREADPRIORITY\000"
+	.ascii	"PTHREADQUEUEENTRY\000"
+	.long	.La225-.Ldebug_info0
+.La225:
+	.uleb128	10
 	.long	.La226-.Ldebug_info0
-.La226:
+.La146:
+	.uleb128	9
+	.long	.La145-.Ldebug_info0
+# Definition TThreadPriority
+.La147:
+	.uleb128	7
+	.ascii	"TTHREADPRIORITY\000"
+	.long	.La228-.Ldebug_info0
+.La228:
 	.uleb128	32
 	.ascii	"TTHREADPRIORITY\000"
 	.byte	4
@@ -6663,15 +6392,15 @@ RTTI_$UMAIN_$$_DEF62:
 	.ascii	"TPTIMECRITICAL\000"
 	.long	6
 	.byte	0
-.La146:
+.La148:
 	.uleb128	9
-	.long	.La145-.Ldebug_info0
+	.long	.La147-.Ldebug_info0
 # Definition <procedure variable type of procedure of object;Register>
-.La147:
+.La149:
 	.uleb128	7
 	.ascii	"TTHREADMETHOD\000"
-	.long	.La227-.Ldebug_info0
-.La227:
+	.long	.La229-.Ldebug_info0
+.La229:
 	.uleb128	30
 	.byte	16
 	.uleb128	13
@@ -6679,62 +6408,62 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La228-.Ldebug_info0
+	.long	.La230-.Ldebug_info0
 	.uleb128	13
 	.ascii	"Self\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 	.byte	0
-.La228:
+.La230:
 	.uleb128	31
 	.ascii	"TTHREADMETHOD\000"
 	.byte	1
-	.uleb128	19
+	.uleb128	21
 	.ascii	"this\000"
-	.long	.La116-.Ldebug_info0
-	.byte	0
-.La148:
-	.uleb128	9
-	.long	.La147-.Ldebug_info0
-# Definition <procedure variable type of procedure;Register>
-.La149:
-	.uleb128	7
-	.ascii	"TPROCEDURE\000"
-	.long	.La229-.Ldebug_info0
-.La229:
-	.uleb128	31
-	.ascii	"TPROCEDURE\000"
-	.byte	1
+	.long	.La118-.Ldebug_info0
 	.byte	0
 .La150:
 	.uleb128	9
 	.long	.La149-.Ldebug_info0
-# Definition UnicodeString
+# Definition <procedure variable type of procedure;Register>
 .La151:
 	.uleb128	7
-	.ascii	"UNICODESTRING\000"
-	.long	.La230-.Ldebug_info0
-.La230:
-	.uleb128	10
+	.ascii	"TPROCEDURE\000"
 	.long	.La231-.Ldebug_info0
+.La231:
+	.uleb128	31
+	.ascii	"TPROCEDURE\000"
+	.byte	1
+	.byte	0
 .La152:
 	.uleb128	9
 	.long	.La151-.Ldebug_info0
-# Definition TThread.Class Of TThread
+# Definition UnicodeString
 .La153:
+	.uleb128	7
+	.ascii	"UNICODESTRING\000"
+	.long	.La232-.Ldebug_info0
+.La232:
 	.uleb128	10
 	.long	.La233-.Ldebug_info0
 .La154:
 	.uleb128	9
 	.long	.La153-.Ldebug_info0
-# Definition TThread.TSystemTimes
+# Definition TThread.Class Of TThread
 .La155:
+	.uleb128	10
+	.long	.La235-.Ldebug_info0
+.La156:
+	.uleb128	9
+	.long	.La155-.Ldebug_info0
+# Definition TThread.TSystemTimes
+.La157:
 	.uleb128	7
 	.ascii	"TSYSTEMTIMES\000"
-	.long	.La235-.Ldebug_info0
-.La235:
+	.long	.La237-.Ldebug_info0
+.La237:
 	.uleb128	12
 	.ascii	"TSYSTEMTIMES\000"
 	.uleb128	32
@@ -6743,70 +6472,35 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La137-.Ldebug_info0
+	.long	.La139-.Ldebug_info0
 	.uleb128	13
 	.ascii	"USERTIME\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La137-.Ldebug_info0
+	.long	.La139-.Ldebug_info0
 	.uleb128	13
 	.ascii	"KERNELTIME\000"
 	.byte	2
 	.byte	35
 	.uleb128	16
-	.long	.La137-.Ldebug_info0
+	.long	.La139-.Ldebug_info0
 	.uleb128	13
 	.ascii	"NICETIME\000"
 	.byte	2
 	.byte	35
 	.uleb128	24
-	.long	.La137-.Ldebug_info0
-	.byte	0
-.La156:
-	.uleb128	9
-	.long	.La155-.Ldebug_info0
-# Definition <procedure variable type of procedure(TThreadReportStatus) of object;Register>
-.La157:
-	.uleb128	7
-	.ascii	"TTHREADEXECUTESTATUSHANDLER\000"
-	.long	.La236-.Ldebug_info0
-.La236:
-	.uleb128	30
-	.byte	16
-	.uleb128	13
-	.ascii	"Proc\000"
-	.byte	2
-	.byte	35
-	.uleb128	0
-	.long	.La237-.Ldebug_info0
-	.uleb128	13
-	.ascii	"Self\000"
-	.byte	2
-	.byte	35
-	.uleb128	8
-	.long	.La134-.Ldebug_info0
-	.byte	0
-.La237:
-	.uleb128	31
-	.ascii	"TTHREADEXECUTESTATUSHANDLER\000"
-	.byte	1
-	.uleb128	19
-	.ascii	"this\000"
-	.long	.La116-.Ldebug_info0
-	.uleb128	19
-	.ascii	"REPORTSTATUS\000"
-	.long	.La238-.Ldebug_info0
+	.long	.La139-.Ldebug_info0
 	.byte	0
 .La158:
 	.uleb128	9
 	.long	.La157-.Ldebug_info0
-# Definition <procedure variable type of procedure(TThread;const AnsiString) of object;Register>
+# Definition <procedure variable type of procedure(TThreadReportStatus) of object;Register>
 .La159:
 	.uleb128	7
-	.ascii	"TTHREADSTATUSNOTIFYEVENT\000"
-	.long	.La240-.Ldebug_info0
-.La240:
+	.ascii	"TTHREADEXECUTESTATUSHANDLER\000"
+	.long	.La238-.Ldebug_info0
+.La238:
 	.uleb128	30
 	.byte	16
 	.uleb128	13
@@ -6814,178 +6508,213 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La241-.Ldebug_info0
+	.long	.La239-.Ldebug_info0
 	.uleb128	13
 	.ascii	"Self\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 	.byte	0
-.La241:
+.La239:
 	.uleb128	31
-	.ascii	"TTHREADSTATUSNOTIFYEVENT\000"
+	.ascii	"TTHREADEXECUTESTATUSHANDLER\000"
 	.byte	1
-	.uleb128	19
+	.uleb128	21
 	.ascii	"this\000"
-	.long	.La116-.Ldebug_info0
-	.uleb128	19
-	.ascii	"SENDER\000"
-	.long	.La121-.Ldebug_info0
-	.uleb128	19
-	.ascii	"STATUS\000"
-	.long	.La5-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
+	.uleb128	21
+	.ascii	"REPORTSTATUS\000"
+	.long	.La240-.Ldebug_info0
 	.byte	0
 .La160:
 	.uleb128	9
 	.long	.La159-.Ldebug_info0
-# Definition <procedure variable type of procedure(Pointer);Register>
+# Definition <procedure variable type of procedure(TThread;const AnsiString) of object;Register>
 .La161:
 	.uleb128	7
-	.ascii	"TTHREADEXECUTECALLBACK\000"
+	.ascii	"TTHREADSTATUSNOTIFYEVENT\000"
 	.long	.La242-.Ldebug_info0
 .La242:
+	.uleb128	30
+	.byte	16
+	.uleb128	13
+	.ascii	"Proc\000"
+	.byte	2
+	.byte	35
+	.uleb128	0
+	.long	.La243-.Ldebug_info0
+	.uleb128	13
+	.ascii	"Self\000"
+	.byte	2
+	.byte	35
+	.uleb128	8
+	.long	.La136-.Ldebug_info0
+	.byte	0
+.La243:
 	.uleb128	31
-	.ascii	"TTHREADEXECUTECALLBACK\000"
+	.ascii	"TTHREADSTATUSNOTIFYEVENT\000"
 	.byte	1
-	.uleb128	19
-	.ascii	"ADATA\000"
-	.long	.La116-.Ldebug_info0
+	.uleb128	21
+	.ascii	"this\000"
+	.long	.La118-.Ldebug_info0
+	.uleb128	21
+	.ascii	"SENDER\000"
+	.long	.La123-.Ldebug_info0
+	.uleb128	21
+	.ascii	"STATUS\000"
+	.long	.La5-.Ldebug_info0
 	.byte	0
 .La162:
 	.uleb128	9
 	.long	.La161-.Ldebug_info0
-# Definition <procedure variable type of procedure(TObject;Pointer);Register>
+# Definition <procedure variable type of procedure(Pointer);Register>
 .La163:
 	.uleb128	7
-	.ascii	"TNOTIFYCALLBACK\000"
-	.long	.La243-.Ldebug_info0
-.La243:
+	.ascii	"TTHREADEXECUTECALLBACK\000"
+	.long	.La244-.Ldebug_info0
+.La244:
 	.uleb128	31
-	.ascii	"TNOTIFYCALLBACK\000"
+	.ascii	"TTHREADEXECUTECALLBACK\000"
 	.byte	1
-	.uleb128	19
-	.ascii	"SENDER\000"
-	.long	.La134-.Ldebug_info0
-	.uleb128	19
+	.uleb128	21
 	.ascii	"ADATA\000"
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.byte	0
 .La164:
 	.uleb128	9
 	.long	.La163-.Ldebug_info0
-# Definition <procedure variable type of procedure(Pointer;TThreadReportStatus);Register>
+# Definition <procedure variable type of procedure(TObject;Pointer);Register>
 .La165:
 	.uleb128	7
-	.ascii	"TTHREADEXECUTESTATUSCALLBACK\000"
-	.long	.La244-.Ldebug_info0
-.La244:
+	.ascii	"TNOTIFYCALLBACK\000"
+	.long	.La245-.Ldebug_info0
+.La245:
 	.uleb128	31
-	.ascii	"TTHREADEXECUTESTATUSCALLBACK\000"
+	.ascii	"TNOTIFYCALLBACK\000"
 	.byte	1
-	.uleb128	19
+	.uleb128	21
+	.ascii	"SENDER\000"
+	.long	.La136-.Ldebug_info0
+	.uleb128	21
 	.ascii	"ADATA\000"
-	.long	.La116-.Ldebug_info0
-	.uleb128	19
-	.ascii	"REPORTSTATUS\000"
-	.long	.La238-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.byte	0
 .La166:
 	.uleb128	9
 	.long	.La165-.Ldebug_info0
-# Definition <procedure variable type of procedure(TThread;Pointer;const AnsiString);Register>
+# Definition <procedure variable type of procedure(Pointer;TThreadReportStatus);Register>
 .La167:
 	.uleb128	7
-	.ascii	"TTHREADSTATUSNOTIFYCALLBACK\000"
-	.long	.La245-.Ldebug_info0
-.La245:
+	.ascii	"TTHREADEXECUTESTATUSCALLBACK\000"
+	.long	.La246-.Ldebug_info0
+.La246:
 	.uleb128	31
-	.ascii	"TTHREADSTATUSNOTIFYCALLBACK\000"
+	.ascii	"TTHREADEXECUTESTATUSCALLBACK\000"
 	.byte	1
-	.uleb128	19
-	.ascii	"SENDER\000"
-	.long	.La121-.Ldebug_info0
-	.uleb128	19
+	.uleb128	21
 	.ascii	"ADATA\000"
-	.long	.La116-.Ldebug_info0
-	.uleb128	19
-	.ascii	"STATUS\000"
-	.long	.La5-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
+	.uleb128	21
+	.ascii	"REPORTSTATUS\000"
+	.long	.La240-.Ldebug_info0
 	.byte	0
 .La168:
 	.uleb128	9
 	.long	.La167-.Ldebug_info0
-# Definition TObject.Class Of TObject
-.La171:
-	.uleb128	10
-	.long	.La233-.Ldebug_info0
-.La172:
+# Definition <procedure variable type of procedure(TThread;Pointer;const AnsiString);Register>
+.La169:
+	.uleb128	7
+	.ascii	"TTHREADSTATUSNOTIFYCALLBACK\000"
+	.long	.La247-.Ldebug_info0
+.La247:
+	.uleb128	31
+	.ascii	"TTHREADSTATUSNOTIFYCALLBACK\000"
+	.byte	1
+	.uleb128	21
+	.ascii	"SENDER\000"
+	.long	.La123-.Ldebug_info0
+	.uleb128	21
+	.ascii	"ADATA\000"
+	.long	.La118-.Ldebug_info0
+	.uleb128	21
+	.ascii	"STATUS\000"
+	.long	.La5-.Ldebug_info0
+	.byte	0
+.La170:
 	.uleb128	9
-	.long	.La171-.Ldebug_info0
-# Definition HRESULT
+	.long	.La169-.Ldebug_info0
+# Definition TObject.Class Of TObject
 .La173:
+	.uleb128	10
+	.long	.La235-.Ldebug_info0
+.La174:
+	.uleb128	9
+	.long	.La173-.Ldebug_info0
+# Definition HRESULT
+.La175:
 	.uleb128	7
 	.ascii	"HRESULT\000"
-	.long	.La246-.Ldebug_info0
-.La246:
+	.long	.La248-.Ldebug_info0
+.La248:
 	.uleb128	8
 	.ascii	"HRESULT\000"
 	.byte	5
 	.byte	4
-.La174:
+.La176:
 	.uleb128	9
-	.long	.La173-.Ldebug_info0
+	.long	.La175-.Ldebug_info0
 # Definition <Formal type>
-.La175:
+.La177:
 	.uleb128	7
 	.ascii	"formal\000"
-	.long	.La247-.Ldebug_info0
-.La247:
+	.long	.La249-.Ldebug_info0
+.La249:
 	.uleb128	8
 	.ascii	"FormalDef\000"
 	.byte	7
 	.byte	0
-.La176:
-	.uleb128	9
-	.long	.La175-.Ldebug_info0
-# Definition TObject.Class Of TObject
-.La177:
-	.uleb128	10
-	.long	.La233-.Ldebug_info0
 .La178:
 	.uleb128	9
 	.long	.La177-.Ldebug_info0
-# Definition TClass
+# Definition TObject.Class Of TObject
 .La179:
-	.uleb128	7
-	.ascii	"TCLASS\000"
-	.long	.La248-.Ldebug_info0
-.La248:
 	.uleb128	10
-	.long	.La233-.Ldebug_info0
+	.long	.La235-.Ldebug_info0
 .La180:
 	.uleb128	9
 	.long	.La179-.Ldebug_info0
-# Definition TObject.Class Of TObject
+# Definition TClass
 .La181:
+	.uleb128	7
+	.ascii	"TCLASS\000"
+	.long	.La250-.Ldebug_info0
+.La250:
 	.uleb128	10
-	.long	.La233-.Ldebug_info0
+	.long	.La235-.Ldebug_info0
 .La182:
 	.uleb128	9
 	.long	.La181-.Ldebug_info0
 # Definition TObject.Class Of TObject
 .La183:
 	.uleb128	10
-	.long	.La233-.Ldebug_info0
+	.long	.La235-.Ldebug_info0
 .La184:
 	.uleb128	9
 	.long	.La183-.Ldebug_info0
-# Definition ShortString
+# Definition TObject.Class Of TObject
 .La185:
+	.uleb128	10
+	.long	.La235-.Ldebug_info0
+.La186:
+	.uleb128	9
+	.long	.La185-.Ldebug_info0
+# Definition ShortString
+.La187:
 	.uleb128	7
 	.ascii	"SHORTSTRING\000"
-	.long	.La249-.Ldebug_info0
-.La249:
+	.long	.La251-.Ldebug_info0
+.La251:
 	.uleb128	12
 	.ascii	"ShortString\000"
 	.uleb128	256
@@ -6994,100 +6723,100 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"st\000"
 	.byte	2
 	.byte	35
 	.uleb128	1
-	.long	.La250-.Ldebug_info0
+	.long	.La252-.Ldebug_info0
 	.byte	0
-.La250:
+.La252:
 	.uleb128	34
 	.uleb128	256
 	.uleb128	1
-	.long	.La22-.Ldebug_info0
+	.long	.La24-.Ldebug_info0
 	.uleb128	35
 	.uleb128	1
 	.uleb128	255
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.byte	0
-.La186:
-	.uleb128	9
-	.long	.La185-.Ldebug_info0
-# Definition TObject.Class Of TObject
-.La187:
-	.uleb128	10
-	.long	.La233-.Ldebug_info0
 .La188:
 	.uleb128	9
 	.long	.La187-.Ldebug_info0
 # Definition TObject.Class Of TObject
 .La189:
 	.uleb128	10
-	.long	.La233-.Ldebug_info0
+	.long	.La235-.Ldebug_info0
 .La190:
 	.uleb128	9
 	.long	.La189-.Ldebug_info0
 # Definition TObject.Class Of TObject
 .La191:
 	.uleb128	10
-	.long	.La233-.Ldebug_info0
+	.long	.La235-.Ldebug_info0
 .La192:
 	.uleb128	9
 	.long	.La191-.Ldebug_info0
 # Definition TObject.Class Of TObject
 .La193:
 	.uleb128	10
-	.long	.La233-.Ldebug_info0
+	.long	.La235-.Ldebug_info0
 .La194:
 	.uleb128	9
 	.long	.La193-.Ldebug_info0
 # Definition TObject.Class Of TObject
 .La195:
 	.uleb128	10
-	.long	.La233-.Ldebug_info0
+	.long	.La235-.Ldebug_info0
 .La196:
 	.uleb128	9
 	.long	.La195-.Ldebug_info0
-# Definition pstringmessagetable
+# Definition TObject.Class Of TObject
 .La197:
-	.uleb128	7
-	.ascii	"PSTRINGMESSAGETABLE\000"
-	.long	.La251-.Ldebug_info0
-.La251:
 	.uleb128	10
-	.long	.La252-.Ldebug_info0
+	.long	.La235-.Ldebug_info0
 .La198:
 	.uleb128	9
 	.long	.La197-.Ldebug_info0
-# Definition TObject.Class Of TObject
+# Definition pstringmessagetable
 .La199:
+	.uleb128	7
+	.ascii	"PSTRINGMESSAGETABLE\000"
+	.long	.La253-.Ldebug_info0
+.La253:
 	.uleb128	10
-	.long	.La233-.Ldebug_info0
+	.long	.La254-.Ldebug_info0
 .La200:
 	.uleb128	9
 	.long	.La199-.Ldebug_info0
 # Definition TObject.Class Of TObject
 .La201:
 	.uleb128	10
-	.long	.La233-.Ldebug_info0
+	.long	.La235-.Ldebug_info0
 .La202:
 	.uleb128	9
 	.long	.La201-.Ldebug_info0
 # Definition TObject.Class Of TObject
 .La203:
 	.uleb128	10
-	.long	.La233-.Ldebug_info0
+	.long	.La235-.Ldebug_info0
 .La204:
 	.uleb128	9
 	.long	.La203-.Ldebug_info0
-# Definition TGuid
+# Definition TObject.Class Of TObject
 .La205:
+	.uleb128	10
+	.long	.La235-.Ldebug_info0
+.La206:
+	.uleb128	9
+	.long	.La205-.Ldebug_info0
+# Definition TGuid
+.La207:
 	.uleb128	7
 	.ascii	"TGUID\000"
-	.long	.La254-.Ldebug_info0
-.La254:
+	.long	.La256-.Ldebug_info0
+.La256:
 	.uleb128	12
 	.ascii	"TGUID\000"
 	.uleb128	16
@@ -7096,145 +6825,145 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"DATA2\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La97-.Ldebug_info0
+	.long	.La99-.Ldebug_info0
 	.uleb128	13
 	.ascii	"DATA3\000"
 	.byte	2
 	.byte	35
 	.uleb128	6
-	.long	.La97-.Ldebug_info0
+	.long	.La99-.Ldebug_info0
 	.uleb128	13
 	.ascii	"DATA4\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La255-.Ldebug_info0
+	.long	.La257-.Ldebug_info0
 	.uleb128	13
 	.ascii	"D1\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"D2\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La97-.Ldebug_info0
+	.long	.La99-.Ldebug_info0
 	.uleb128	13
 	.ascii	"D3\000"
 	.byte	2
 	.byte	35
 	.uleb128	6
-	.long	.La97-.Ldebug_info0
+	.long	.La99-.Ldebug_info0
 	.uleb128	13
 	.ascii	"D4\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La257-.Ldebug_info0
+	.long	.La259-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIME_LOW\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIME_MID\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La97-.Ldebug_info0
+	.long	.La99-.Ldebug_info0
 	.uleb128	13
 	.ascii	"TIME_HI_AND_VERSION\000"
 	.byte	2
 	.byte	35
 	.uleb128	6
-	.long	.La97-.Ldebug_info0
+	.long	.La99-.Ldebug_info0
 	.uleb128	13
 	.ascii	"CLOCK_SEQ_HI_AND_RESERVED\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"CLOCK_SEQ_LOW\000"
 	.byte	2
 	.byte	35
 	.uleb128	9
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"NODE\000"
 	.byte	2
 	.byte	35
 	.uleb128	10
-	.long	.La259-.Ldebug_info0
-	.byte	0
-.La206:
-	.uleb128	9
-	.long	.La205-.Ldebug_info0
-# Definition pinterfaceentry
-.La207:
-	.uleb128	7
-	.ascii	"PINTERFACEENTRY\000"
 	.long	.La261-.Ldebug_info0
-.La261:
-	.uleb128	10
-	.long	.La262-.Ldebug_info0
+	.byte	0
 .La208:
 	.uleb128	9
 	.long	.La207-.Ldebug_info0
-# Definition TObject.Class Of TObject
+# Definition pinterfaceentry
 .La209:
+	.uleb128	7
+	.ascii	"PINTERFACEENTRY\000"
+	.long	.La263-.Ldebug_info0
+.La263:
 	.uleb128	10
-	.long	.La233-.Ldebug_info0
+	.long	.La264-.Ldebug_info0
 .La210:
 	.uleb128	9
 	.long	.La209-.Ldebug_info0
 # Definition TObject.Class Of TObject
 .La211:
 	.uleb128	10
-	.long	.La233-.Ldebug_info0
+	.long	.La235-.Ldebug_info0
 .La212:
 	.uleb128	9
 	.long	.La211-.Ldebug_info0
-# Definition pinterfacetable
+# Definition TObject.Class Of TObject
 .La213:
-	.uleb128	7
-	.ascii	"PINTERFACETABLE\000"
-	.long	.La264-.Ldebug_info0
-.La264:
 	.uleb128	10
-	.long	.La265-.Ldebug_info0
+	.long	.La235-.Ldebug_info0
 .La214:
 	.uleb128	9
 	.long	.La213-.Ldebug_info0
-# Definition TObject.Class Of TObject
+# Definition pinterfacetable
 .La215:
+	.uleb128	7
+	.ascii	"PINTERFACETABLE\000"
+	.long	.La266-.Ldebug_info0
+.La266:
 	.uleb128	10
-	.long	.La233-.Ldebug_info0
+	.long	.La267-.Ldebug_info0
 .La216:
 	.uleb128	9
 	.long	.La215-.Ldebug_info0
 # Definition TObject.Class Of TObject
 .La217:
 	.uleb128	10
-	.long	.La233-.Ldebug_info0
+	.long	.La235-.Ldebug_info0
 .La218:
 	.uleb128	9
 	.long	.La217-.Ldebug_info0
+# Definition TObject.Class Of TObject
+.La219:
+	.uleb128	10
+	.long	.La235-.Ldebug_info0
+.La220:
+	.uleb128	9
+	.long	.La219-.Ldebug_info0
 # Definition TThread.TThreadQueueEntry
-.La224:
+.La226:
 	.uleb128	7
 	.ascii	"TTHREADQUEUEENTRY\000"
-	.long	.La267-.Ldebug_info0
-.La267:
+	.long	.La269-.Ldebug_info0
+.La269:
 	.uleb128	12
 	.ascii	"TTHREADQUEUEENTRY\000"
 	.uleb128	48
@@ -7243,66 +6972,66 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La147-.Ldebug_info0
+	.long	.La149-.Ldebug_info0
 	.uleb128	13
 	.ascii	"THREAD\000"
 	.byte	2
 	.byte	35
 	.uleb128	16
-	.long	.La121-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 	.uleb128	13
 	.ascii	"EXCEPTION\000"
 	.byte	2
 	.byte	35
 	.uleb128	24
-	.long	.La268-.Ldebug_info0
+	.long	.La270-.Ldebug_info0
 	.uleb128	13
 	.ascii	"SYNCEVENT\000"
 	.byte	2
 	.byte	35
 	.uleb128	32
-	.long	.La271-.Ldebug_info0
+	.long	.La273-.Ldebug_info0
 	.uleb128	13
 	.ascii	"NEXT\000"
 	.byte	2
 	.byte	35
 	.uleb128	40
-	.long	.La143-.Ldebug_info0
+	.long	.La145-.Ldebug_info0
 	.byte	0
-.La225:
+.La227:
 	.uleb128	9
-	.long	.La224-.Ldebug_info0
+	.long	.La226-.Ldebug_info0
 # Definition WideChar
-.La231:
+.La233:
 	.uleb128	7
 	.ascii	"WIDECHAR\000"
-	.long	.La273-.Ldebug_info0
-.La273:
+	.long	.La275-.Ldebug_info0
+.La275:
 	.uleb128	8
 	.ascii	"WideChar\000"
 	.byte	8
 	.byte	2
-.La232:
-	.uleb128	9
-	.long	.La231-.Ldebug_info0
-# Definition <record type>
-.La233:
-	.uleb128	7
-	.ascii	"__vtbl_ptr_type\000"
-	.long	.La274-.Ldebug_info0
-.La274:
-	.uleb128	36
-	.uleb128	40
-	.byte	0
 .La234:
 	.uleb128	9
 	.long	.La233-.Ldebug_info0
+# Definition <record type>
+.La235:
+	.uleb128	7
+	.ascii	"__vtbl_ptr_type\000"
+	.long	.La276-.Ldebug_info0
+.La276:
+	.uleb128	36
+	.uleb128	40
+	.byte	0
+.La236:
+	.uleb128	9
+	.long	.La235-.Ldebug_info0
 # Definition <procedure variable type of procedure(const AnsiString) of object;Register>
-.La238:
+.La240:
 	.uleb128	7
 	.ascii	"TTHREADREPORTSTATUS\000"
-	.long	.La275-.Ldebug_info0
-.La275:
+	.long	.La277-.Ldebug_info0
+.La277:
 	.uleb128	30
 	.byte	16
 	.uleb128	13
@@ -7310,34 +7039,34 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La276-.Ldebug_info0
+	.long	.La278-.Ldebug_info0
 	.uleb128	13
 	.ascii	"Self\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 	.byte	0
-.La276:
+.La278:
 	.uleb128	31
 	.ascii	"TTHREADREPORTSTATUS\000"
 	.byte	1
-	.uleb128	19
+	.uleb128	21
 	.ascii	"this\000"
-	.long	.La116-.Ldebug_info0
-	.uleb128	19
+	.long	.La118-.Ldebug_info0
+	.uleb128	21
 	.ascii	"STATUS\000"
 	.long	.La5-.Ldebug_info0
 	.byte	0
-.La239:
+.La241:
 	.uleb128	9
-	.long	.La238-.Ldebug_info0
+	.long	.La240-.Ldebug_info0
 # Definition TStringMessageTable
-.La252:
+.La254:
 	.uleb128	7
 	.ascii	"TSTRINGMESSAGETABLE\000"
-	.long	.La277-.Ldebug_info0
-.La277:
+	.long	.La279-.Ldebug_info0
+.La279:
 	.uleb128	12
 	.ascii	"TSTRINGMESSAGETABLE\000"
 	.uleb128	24
@@ -7352,59 +7081,59 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La278-.Ldebug_info0
+	.long	.La280-.Ldebug_info0
 	.byte	0
-.La253:
-	.uleb128	9
-	.long	.La252-.Ldebug_info0
-# Definition TGuid.Array[0..7] Of Byte
 .La255:
-	.uleb128	20
-	.uleb128	8
-	.long	.La80-.Ldebug_info0
-	.uleb128	21
-	.sleb128	0
-	.sleb128	7
-	.uleb128	1
-	.long	.La125-.Ldebug_info0
-	.byte	0
-.La256:
 	.uleb128	9
-	.long	.La255-.Ldebug_info0
+	.long	.La254-.Ldebug_info0
 # Definition TGuid.Array[0..7] Of Byte
 .La257:
-	.uleb128	20
+	.uleb128	14
 	.uleb128	8
-	.long	.La80-.Ldebug_info0
-	.uleb128	21
+	.long	.La82-.Ldebug_info0
+	.uleb128	15
 	.sleb128	0
 	.sleb128	7
 	.uleb128	1
-	.long	.La125-.Ldebug_info0
+	.long	.La127-.Ldebug_info0
 	.byte	0
 .La258:
 	.uleb128	9
 	.long	.La257-.Ldebug_info0
-# Definition TGuid.Array[0..5] Of Byte
+# Definition TGuid.Array[0..7] Of Byte
 .La259:
-	.uleb128	20
-	.uleb128	6
-	.long	.La80-.Ldebug_info0
-	.uleb128	21
+	.uleb128	14
+	.uleb128	8
+	.long	.La82-.Ldebug_info0
+	.uleb128	15
 	.sleb128	0
-	.sleb128	5
+	.sleb128	7
 	.uleb128	1
-	.long	.La125-.Ldebug_info0
+	.long	.La127-.Ldebug_info0
 	.byte	0
 .La260:
 	.uleb128	9
 	.long	.La259-.Ldebug_info0
-# Definition tinterfaceentry
+# Definition TGuid.Array[0..5] Of Byte
+.La261:
+	.uleb128	14
+	.uleb128	6
+	.long	.La82-.Ldebug_info0
+	.uleb128	15
+	.sleb128	0
+	.sleb128	5
+	.uleb128	1
+	.long	.La127-.Ldebug_info0
+	.byte	0
 .La262:
+	.uleb128	9
+	.long	.La261-.Ldebug_info0
+# Definition tinterfaceentry
+.La264:
 	.uleb128	7
 	.ascii	"TINTERFACEENTRY\000"
-	.long	.La280-.Ldebug_info0
-.La280:
+	.long	.La282-.Ldebug_info0
+.La282:
 	.uleb128	12
 	.ascii	"TINTERFACEENTRY\000"
 	.uleb128	40
@@ -7413,31 +7142,31 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La281-.Ldebug_info0
+	.long	.La283-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VTABLE\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.uleb128	13
 	.ascii	"IOFFSET\000"
 	.byte	2
 	.byte	35
 	.uleb128	16
-	.long	.La137-.Ldebug_info0
+	.long	.La139-.Ldebug_info0
 	.uleb128	13
 	.ascii	"IIDSTR\000"
 	.byte	2
 	.byte	35
 	.uleb128	24
-	.long	.La283-.Ldebug_info0
+	.long	.La285-.Ldebug_info0
 	.uleb128	13
 	.ascii	"ITYPE\000"
 	.byte	2
 	.byte	35
 	.uleb128	32
-	.long	.La285-.Ldebug_info0
+	.long	.La287-.Ldebug_info0
 	.uleb128	13
 	.ascii	"__PAD_DUMMY\000"
 	.byte	2
@@ -7445,15 +7174,15 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	32
 	.long	.La12-.Ldebug_info0
 	.byte	0
-.La263:
-	.uleb128	9
-	.long	.La262-.Ldebug_info0
-# Definition tinterfacetable
 .La265:
+	.uleb128	9
+	.long	.La264-.Ldebug_info0
+# Definition tinterfacetable
+.La267:
 	.uleb128	7
 	.ascii	"TINTERFACETABLE\000"
-	.long	.La287-.Ldebug_info0
-.La287:
+	.long	.La289-.Ldebug_info0
+.La289:
 	.uleb128	12
 	.ascii	"TINTERFACETABLE\000"
 	.uleb128	48
@@ -7462,35 +7191,35 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La137-.Ldebug_info0
+	.long	.La139-.Ldebug_info0
 	.uleb128	13
 	.ascii	"ENTRIES\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La288-.Ldebug_info0
+	.long	.La290-.Ldebug_info0
 	.byte	0
-.La266:
-	.uleb128	9
-	.long	.La265-.Ldebug_info0
-# Definition Exception
 .La268:
+	.uleb128	9
+	.long	.La267-.Ldebug_info0
+# Definition Exception
+.La270:
 	.uleb128	7
 	.ascii	"EXCEPTION\000"
-	.long	.La290-.Ldebug_info0
-.La290:
+	.long	.La292-.Ldebug_info0
+.La292:
 	.uleb128	10
-	.long	.La270-.Ldebug_info0
-.La270:
-	.uleb128	14
+	.long	.La272-.Ldebug_info0
+.La272:
+	.uleb128	16
 	.ascii	"EXCEPTION\000"
 	.uleb128	24
-	.uleb128	15
+	.uleb128	17
 	.byte	1
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La136-.Ldebug_info0
+	.long	.La138-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FMESSAGE\000"
 	.byte	2
@@ -7520,190 +7249,120 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	3
 	.long	.La5-.Ldebug_info0
 # Procdef constructor Create(<Exception>;<Pointer>;const AnsiString);
-	.uleb128	18
+	.uleb128	20
 	.ascii	"CREATE\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La268-.Ldebug_info0
+	.long	.La270-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La268-.Ldebug_info0
+	.long	.La270-.Ldebug_info0
 # Symbol vmt
-	.uleb128	19
+	.uleb128	21
 	.ascii	"vmt\000"
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 # Symbol MSG
-	.uleb128	19
+	.uleb128	21
 	.ascii	"MSG\000"
 	.long	.La5-.Ldebug_info0
 	.byte	0
 # Procdef constructor CreateFmt(<Exception>;<Pointer>;const AnsiString;const Array Of Const;<const Int64>);
-	.uleb128	18
+	.uleb128	20
 	.ascii	"CREATEFMT\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La268-.Ldebug_info0
+	.long	.La270-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La268-.Ldebug_info0
+	.long	.La270-.Ldebug_info0
 # Symbol vmt
-	.uleb128	19
+	.uleb128	21
 	.ascii	"vmt\000"
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 # Symbol MSG
-	.uleb128	19
+	.uleb128	21
 	.ascii	"MSG\000"
 	.long	.La5-.Ldebug_info0
 # Symbol ARGS
-	.uleb128	19
+	.uleb128	21
 	.ascii	"ARGS\000"
-	.long	.La291-.Ldebug_info0
+	.long	.La293-.Ldebug_info0
 # Symbol highARGS
-	.uleb128	19
+	.uleb128	21
 	.ascii	"highARGS\000"
 	.long	.La12-.Ldebug_info0
 # Definition Array Of Const
-.La291:
+.La293:
 	.uleb128	37
-	.long	.La293-.Ldebug_info0
+	.long	.La295-.Ldebug_info0
 	.uleb128	38
 	.sleb128	0
 	.uleb128	16
 	.long	.La12-.Ldebug_info0
 	.byte	0
-.La292:
+.La294:
 	.uleb128	9
-	.long	.La291-.Ldebug_info0
+	.long	.La293-.Ldebug_info0
 	.byte	0
 # Procdef constructor CreateRes(<Exception>;<Pointer>;PAnsiString);
-	.uleb128	18
+	.uleb128	20
 	.ascii	"CREATERES\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La268-.Ldebug_info0
+	.long	.La270-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La268-.Ldebug_info0
+	.long	.La270-.Ldebug_info0
 # Symbol vmt
-	.uleb128	19
+	.uleb128	21
 	.ascii	"vmt\000"
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 # Symbol RESSTRING
-	.uleb128	19
+	.uleb128	21
 	.ascii	"RESSTRING\000"
-	.long	.La295-.Ldebug_info0
+	.long	.La297-.Ldebug_info0
 	.byte	0
 # Procdef constructor CreateResFmt(<Exception>;<Pointer>;PAnsiString;const Array Of Const;<const Int64>);
-	.uleb128	18
+	.uleb128	20
 	.ascii	"CREATERESFMT\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La268-.Ldebug_info0
+	.long	.La270-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La268-.Ldebug_info0
+	.long	.La270-.Ldebug_info0
 # Symbol vmt
-	.uleb128	19
+	.uleb128	21
 	.ascii	"vmt\000"
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 # Symbol RESSTRING
-	.uleb128	19
+	.uleb128	21
 	.ascii	"RESSTRING\000"
-	.long	.La295-.Ldebug_info0
-# Symbol ARGS
-	.uleb128	19
-	.ascii	"ARGS\000"
 	.long	.La297-.Ldebug_info0
-# Symbol highARGS
-	.uleb128	19
-	.ascii	"highARGS\000"
-	.long	.La12-.Ldebug_info0
-# Definition Array Of Const
-.La297:
-	.uleb128	37
-	.long	.La293-.Ldebug_info0
-	.uleb128	38
-	.sleb128	0
-	.uleb128	16
-	.long	.La12-.Ldebug_info0
-	.byte	0
-.La298:
-	.uleb128	9
-	.long	.La297-.Ldebug_info0
-	.byte	0
-# Procdef constructor CreateHelp(<Exception>;<Pointer>;const AnsiString;LongInt);
-	.uleb128	18
-	.ascii	"CREATEHELP\000"
-	.byte	1
-	.byte	65
-	.byte	1
-	.long	.La268-.Ldebug_info0
-# Symbol this
-	.uleb128	17
-	.ascii	"this\000"
-	.byte	1
-	.long	.La268-.Ldebug_info0
-# Symbol vmt
-	.uleb128	19
-	.ascii	"vmt\000"
-	.long	.La116-.Ldebug_info0
-# Symbol MSG
-	.uleb128	19
-	.ascii	"MSG\000"
-	.long	.La5-.Ldebug_info0
-# Symbol AHELPCONTEXT
-	.uleb128	19
-	.ascii	"AHELPCONTEXT\000"
-	.long	.La1-.Ldebug_info0
-	.byte	0
-# Procdef constructor CreateFmtHelp(<Exception>;<Pointer>;const AnsiString;const Array Of Const;<const Int64>;LongInt);
-	.uleb128	18
-	.ascii	"CREATEFMTHELP\000"
-	.byte	1
-	.byte	65
-	.byte	1
-	.long	.La268-.Ldebug_info0
-# Symbol this
-	.uleb128	17
-	.ascii	"this\000"
-	.byte	1
-	.long	.La268-.Ldebug_info0
-# Symbol vmt
-	.uleb128	19
-	.ascii	"vmt\000"
-	.long	.La116-.Ldebug_info0
-# Symbol MSG
-	.uleb128	19
-	.ascii	"MSG\000"
-	.long	.La5-.Ldebug_info0
 # Symbol ARGS
-	.uleb128	19
+	.uleb128	21
 	.ascii	"ARGS\000"
 	.long	.La299-.Ldebug_info0
 # Symbol highARGS
-	.uleb128	19
+	.uleb128	21
 	.ascii	"highARGS\000"
 	.long	.La12-.Ldebug_info0
-# Symbol AHELPCONTEXT
-	.uleb128	19
-	.ascii	"AHELPCONTEXT\000"
-	.long	.La1-.Ldebug_info0
 # Definition Array Of Const
 .La299:
 	.uleb128	37
-	.long	.La293-.Ldebug_info0
+	.long	.La295-.Ldebug_info0
 	.uleb128	38
 	.sleb128	0
 	.uleb128	16
@@ -7713,67 +7372,67 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	9
 	.long	.La299-.Ldebug_info0
 	.byte	0
-# Procdef constructor CreateResHelp(<Exception>;<Pointer>;PAnsiString;LongInt);
-	.uleb128	18
-	.ascii	"CREATERESHELP\000"
+# Procdef constructor CreateHelp(<Exception>;<Pointer>;const AnsiString;LongInt);
+	.uleb128	20
+	.ascii	"CREATEHELP\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La268-.Ldebug_info0
+	.long	.La270-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La268-.Ldebug_info0
+	.long	.La270-.Ldebug_info0
 # Symbol vmt
-	.uleb128	19
+	.uleb128	21
 	.ascii	"vmt\000"
-	.long	.La116-.Ldebug_info0
-# Symbol RESSTRING
-	.uleb128	19
-	.ascii	"RESSTRING\000"
-	.long	.La295-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
+# Symbol MSG
+	.uleb128	21
+	.ascii	"MSG\000"
+	.long	.La5-.Ldebug_info0
 # Symbol AHELPCONTEXT
-	.uleb128	19
+	.uleb128	21
 	.ascii	"AHELPCONTEXT\000"
 	.long	.La1-.Ldebug_info0
 	.byte	0
-# Procdef constructor CreateResFmtHelp(<Exception>;<Pointer>;PAnsiString;const Array Of Const;<const Int64>;LongInt);
-	.uleb128	18
-	.ascii	"CREATERESFMTHELP\000"
+# Procdef constructor CreateFmtHelp(<Exception>;<Pointer>;const AnsiString;const Array Of Const;<const Int64>;LongInt);
+	.uleb128	20
+	.ascii	"CREATEFMTHELP\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La268-.Ldebug_info0
+	.long	.La270-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La268-.Ldebug_info0
+	.long	.La270-.Ldebug_info0
 # Symbol vmt
-	.uleb128	19
+	.uleb128	21
 	.ascii	"vmt\000"
-	.long	.La116-.Ldebug_info0
-# Symbol RESSTRING
-	.uleb128	19
-	.ascii	"RESSTRING\000"
-	.long	.La295-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
+# Symbol MSG
+	.uleb128	21
+	.ascii	"MSG\000"
+	.long	.La5-.Ldebug_info0
 # Symbol ARGS
-	.uleb128	19
+	.uleb128	21
 	.ascii	"ARGS\000"
 	.long	.La301-.Ldebug_info0
 # Symbol highARGS
-	.uleb128	19
+	.uleb128	21
 	.ascii	"highARGS\000"
 	.long	.La12-.Ldebug_info0
 # Symbol AHELPCONTEXT
-	.uleb128	19
+	.uleb128	21
 	.ascii	"AHELPCONTEXT\000"
 	.long	.La1-.Ldebug_info0
 # Definition Array Of Const
 .La301:
 	.uleb128	37
-	.long	.La293-.Ldebug_info0
+	.long	.La295-.Ldebug_info0
 	.uleb128	38
 	.sleb128	0
 	.uleb128	16
@@ -7782,6 +7441,76 @@ RTTI_$UMAIN_$$_DEF62:
 .La302:
 	.uleb128	9
 	.long	.La301-.Ldebug_info0
+	.byte	0
+# Procdef constructor CreateResHelp(<Exception>;<Pointer>;PAnsiString;LongInt);
+	.uleb128	20
+	.ascii	"CREATERESHELP\000"
+	.byte	1
+	.byte	65
+	.byte	1
+	.long	.La270-.Ldebug_info0
+# Symbol this
+	.uleb128	19
+	.ascii	"this\000"
+	.byte	1
+	.long	.La270-.Ldebug_info0
+# Symbol vmt
+	.uleb128	21
+	.ascii	"vmt\000"
+	.long	.La118-.Ldebug_info0
+# Symbol RESSTRING
+	.uleb128	21
+	.ascii	"RESSTRING\000"
+	.long	.La297-.Ldebug_info0
+# Symbol AHELPCONTEXT
+	.uleb128	21
+	.ascii	"AHELPCONTEXT\000"
+	.long	.La1-.Ldebug_info0
+	.byte	0
+# Procdef constructor CreateResFmtHelp(<Exception>;<Pointer>;PAnsiString;const Array Of Const;<const Int64>;LongInt);
+	.uleb128	20
+	.ascii	"CREATERESFMTHELP\000"
+	.byte	1
+	.byte	65
+	.byte	1
+	.long	.La270-.Ldebug_info0
+# Symbol this
+	.uleb128	19
+	.ascii	"this\000"
+	.byte	1
+	.long	.La270-.Ldebug_info0
+# Symbol vmt
+	.uleb128	21
+	.ascii	"vmt\000"
+	.long	.La118-.Ldebug_info0
+# Symbol RESSTRING
+	.uleb128	21
+	.ascii	"RESSTRING\000"
+	.long	.La297-.Ldebug_info0
+# Symbol ARGS
+	.uleb128	21
+	.ascii	"ARGS\000"
+	.long	.La303-.Ldebug_info0
+# Symbol highARGS
+	.uleb128	21
+	.ascii	"highARGS\000"
+	.long	.La12-.Ldebug_info0
+# Symbol AHELPCONTEXT
+	.uleb128	21
+	.ascii	"AHELPCONTEXT\000"
+	.long	.La1-.Ldebug_info0
+# Definition Array Of Const
+.La303:
+	.uleb128	37
+	.long	.La295-.Ldebug_info0
+	.uleb128	38
+	.sleb128	0
+	.uleb128	16
+	.long	.La12-.Ldebug_info0
+	.byte	0
+.La304:
+	.uleb128	9
+	.long	.La303-.Ldebug_info0
 	.byte	0
 # Procdef ToString(<Exception>;<var AnsiString>):AnsiString;
 	.uleb128	28
@@ -7797,71 +7526,71 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	34
 	.long	.La5-.Ldebug_info0
 # Symbol this
-	.uleb128	17
+	.uleb128	19
 	.ascii	"this\000"
 	.byte	1
-	.long	.La268-.Ldebug_info0
+	.long	.La270-.Ldebug_info0
 # Symbol result
 	.uleb128	29
 	.ascii	"result\000"
 	.long	.La5-.Ldebug_info0
 	.byte	0
 	.byte	0
-.La269:
-	.uleb128	9
-	.long	.La268-.Ldebug_info0
-# Definition PRTLEvent
 .La271:
+	.uleb128	9
+	.long	.La270-.Ldebug_info0
+# Definition PRTLEvent
+.La273:
 	.uleb128	7
 	.ascii	"PRTLEVENT\000"
-	.long	.La303-.Ldebug_info0
-.La303:
+	.long	.La305-.Ldebug_info0
+.La305:
 	.uleb128	11
-.La272:
+.La274:
 	.uleb128	9
-	.long	.La271-.Ldebug_info0
+	.long	.La273-.Ldebug_info0
 # Definition TStringMessageTable.Array[0..0] Of TMsgStrTable
-.La278:
-	.uleb128	20
+.La280:
+	.uleb128	14
 	.uleb128	16
-	.long	.La304-.Ldebug_info0
-	.uleb128	21
-	.sleb128	0
-	.sleb128	0
-	.uleb128	16
-	.long	.La125-.Ldebug_info0
-	.byte	0
-.La279:
-	.uleb128	9
-	.long	.La278-.Ldebug_info0
-# Definition PGuid
-.La281:
-	.uleb128	7
-	.ascii	"PGUID\000"
 	.long	.La306-.Ldebug_info0
-.La306:
-	.uleb128	10
-	.long	.La205-.Ldebug_info0
-.La282:
+	.uleb128	15
+	.sleb128	0
+	.sleb128	0
+	.uleb128	16
+	.long	.La127-.Ldebug_info0
+	.byte	0
+.La281:
 	.uleb128	9
-	.long	.La281-.Ldebug_info0
-# Definition PShortString
+	.long	.La280-.Ldebug_info0
+# Definition PGuid
 .La283:
 	.uleb128	7
-	.ascii	"PSHORTSTRING\000"
-	.long	.La307-.Ldebug_info0
-.La307:
+	.ascii	"PGUID\000"
+	.long	.La308-.Ldebug_info0
+.La308:
 	.uleb128	10
-	.long	.La185-.Ldebug_info0
+	.long	.La207-.Ldebug_info0
 .La284:
 	.uleb128	9
 	.long	.La283-.Ldebug_info0
-# Definition tinterfaceentrytype
+# Definition PShortString
 .La285:
 	.uleb128	7
+	.ascii	"PSHORTSTRING\000"
+	.long	.La309-.Ldebug_info0
+.La309:
+	.uleb128	10
+	.long	.La187-.Ldebug_info0
+.La286:
+	.uleb128	9
+	.long	.La285-.Ldebug_info0
+# Definition tinterfaceentrytype
+.La287:
+	.uleb128	7
 	.ascii	"TINTERFACEENTRYTYPE\000"
-	.long	.La308-.Ldebug_info0
-.La308:
+	.long	.La310-.Ldebug_info0
+.La310:
 	.uleb128	32
 	.ascii	"TINTERFACEENTRYTYPE\000"
 	.byte	4
@@ -7887,29 +7616,29 @@ RTTI_$UMAIN_$$_DEF62:
 	.ascii	"ETFIELDVALUECLASS\000"
 	.long	6
 	.byte	0
-.La286:
-	.uleb128	9
-	.long	.La285-.Ldebug_info0
-# Definition tinterfacetable.Array[0..0] Of tinterfaceentry
 .La288:
-	.uleb128	20
-	.uleb128	40
-	.long	.La262-.Ldebug_info0
-	.uleb128	21
-	.sleb128	0
-	.sleb128	0
-	.uleb128	40
-	.long	.La125-.Ldebug_info0
-	.byte	0
-.La289:
 	.uleb128	9
-	.long	.La288-.Ldebug_info0
+	.long	.La287-.Ldebug_info0
+# Definition tinterfacetable.Array[0..0] Of tinterfaceentry
+.La290:
+	.uleb128	14
+	.uleb128	40
+	.long	.La264-.Ldebug_info0
+	.uleb128	15
+	.sleb128	0
+	.sleb128	0
+	.uleb128	40
+	.long	.La127-.Ldebug_info0
+	.byte	0
+.La291:
+	.uleb128	9
+	.long	.La290-.Ldebug_info0
 # Definition TVarRec
-.La293:
+.La295:
 	.uleb128	7
 	.ascii	"TVARREC\000"
-	.long	.La309-.Ldebug_info0
-.La309:
+	.long	.La311-.Ldebug_info0
+.La311:
 	.uleb128	12
 	.ascii	"TVARREC\000"
 	.uleb128	16
@@ -7936,124 +7665,124 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La22-.Ldebug_info0
+	.long	.La24-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VWIDECHAR\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La231-.Ldebug_info0
+	.long	.La233-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VEXTENDED\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La310-.Ldebug_info0
+	.long	.La312-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VSTRING\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La283-.Ldebug_info0
+	.long	.La285-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VPOINTER\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VPCHAR\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La112-.Ldebug_info0
+	.long	.La114-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VOBJECT\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La134-.Ldebug_info0
+	.long	.La136-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VCLASS\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La179-.Ldebug_info0
+	.long	.La181-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VPWIDECHAR\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La312-.Ldebug_info0
+	.long	.La314-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VANSISTRING\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VCURRENCY\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La314-.Ldebug_info0
+	.long	.La316-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VVARIANT\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La316-.Ldebug_info0
+	.long	.La318-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VINTERFACE\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VWIDESTRING\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VINT64\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La318-.Ldebug_info0
+	.long	.La320-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VUNICODESTRING\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VQWORD\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La320-.Ldebug_info0
-	.byte	0
-.La294:
-	.uleb128	9
-	.long	.La293-.Ldebug_info0
-# Definition PAnsiString
-.La295:
-	.uleb128	7
-	.ascii	"PANSISTRING\000"
 	.long	.La322-.Ldebug_info0
-.La322:
-	.uleb128	10
-	.long	.La5-.Ldebug_info0
+	.byte	0
 .La296:
 	.uleb128	9
 	.long	.La295-.Ldebug_info0
+# Definition PAnsiString
+.La297:
+	.uleb128	7
+	.ascii	"PANSISTRING\000"
+	.long	.La324-.Ldebug_info0
+.La324:
+	.uleb128	10
+	.long	.La5-.Ldebug_info0
+.La298:
+	.uleb128	9
+	.long	.La297-.Ldebug_info0
 # Definition TMsgStrTable
-.La304:
+.La306:
 	.uleb128	7
 	.ascii	"TMSGSTRTABLE\000"
-	.long	.La323-.Ldebug_info0
-.La323:
+	.long	.La325-.Ldebug_info0
+.La325:
 	.uleb128	12
 	.ascii	"TMSGSTRTABLE\000"
 	.uleb128	16
@@ -8062,102 +7791,102 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La283-.Ldebug_info0
+	.long	.La285-.Ldebug_info0
 	.uleb128	13
 	.ascii	"METHOD\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.byte	0
-.La305:
+.La307:
 	.uleb128	9
-	.long	.La304-.Ldebug_info0
+	.long	.La306-.Ldebug_info0
 # Definition PExtended
-.La310:
-	.uleb128	7
-	.ascii	"PEXTENDED\000"
-	.long	.La324-.Ldebug_info0
-.La324:
-	.uleb128	10
-	.long	.La7-.Ldebug_info0
-.La311:
-	.uleb128	9
-	.long	.La310-.Ldebug_info0
-# Definition PWideChar
 .La312:
 	.uleb128	7
-	.ascii	"PWIDECHAR\000"
-	.long	.La325-.Ldebug_info0
-.La325:
-	.uleb128	10
-	.long	.La231-.Ldebug_info0
-.La313:
-	.uleb128	9
-	.long	.La312-.Ldebug_info0
-# Definition PCurrency
-.La314:
-	.uleb128	7
-	.ascii	"PCURRENCY\000"
+	.ascii	"PEXTENDED\000"
 	.long	.La326-.Ldebug_info0
 .La326:
 	.uleb128	10
+	.long	.La7-.Ldebug_info0
+.La313:
+	.uleb128	9
+	.long	.La312-.Ldebug_info0
+# Definition PWideChar
+.La314:
+	.uleb128	7
+	.ascii	"PWIDECHAR\000"
 	.long	.La327-.Ldebug_info0
+.La327:
+	.uleb128	10
+	.long	.La233-.Ldebug_info0
 .La315:
 	.uleb128	9
 	.long	.La314-.Ldebug_info0
-# Definition PVariant
+# Definition PCurrency
 .La316:
 	.uleb128	7
-	.ascii	"PVARIANT\000"
-	.long	.La329-.Ldebug_info0
-.La329:
+	.ascii	"PCURRENCY\000"
+	.long	.La328-.Ldebug_info0
+.La328:
 	.uleb128	10
-	.long	.La330-.Ldebug_info0
+	.long	.La329-.Ldebug_info0
 .La317:
 	.uleb128	9
 	.long	.La316-.Ldebug_info0
-# Definition PInt64
+# Definition PVariant
 .La318:
 	.uleb128	7
-	.ascii	"PINT64\000"
-	.long	.La332-.Ldebug_info0
-.La332:
+	.ascii	"PVARIANT\000"
+	.long	.La331-.Ldebug_info0
+.La331:
 	.uleb128	10
-	.long	.La12-.Ldebug_info0
+	.long	.La332-.Ldebug_info0
 .La319:
 	.uleb128	9
 	.long	.La318-.Ldebug_info0
-# Definition PQWord
+# Definition PInt64
 .La320:
 	.uleb128	7
-	.ascii	"PQWORD\000"
-	.long	.La333-.Ldebug_info0
-.La333:
+	.ascii	"PINT64\000"
+	.long	.La334-.Ldebug_info0
+.La334:
 	.uleb128	10
-	.long	.La137-.Ldebug_info0
+	.long	.La12-.Ldebug_info0
 .La321:
 	.uleb128	9
 	.long	.La320-.Ldebug_info0
+# Definition PQWord
+.La322:
+	.uleb128	7
+	.ascii	"PQWORD\000"
+	.long	.La335-.Ldebug_info0
+.La335:
+	.uleb128	10
+	.long	.La139-.Ldebug_info0
+.La323:
+	.uleb128	9
+	.long	.La322-.Ldebug_info0
 # Definition Currency
-.La327:
+.La329:
 	.uleb128	7
 	.ascii	"CURRENCY\000"
-	.long	.La334-.Ldebug_info0
-.La334:
+	.long	.La336-.Ldebug_info0
+.La336:
 	.uleb128	8
 	.ascii	"Currency\000"
 	.byte	5
 	.byte	8
-.La328:
-	.uleb128	9
-	.long	.La327-.Ldebug_info0
-# Definition Variant
 .La330:
+	.uleb128	9
+	.long	.La329-.Ldebug_info0
+# Definition Variant
+.La332:
 	.uleb128	7
 	.ascii	"VARIANT\000"
-	.long	.La335-.Ldebug_info0
-.La335:
+	.long	.La337-.Ldebug_info0
+.La337:
 	.uleb128	12
 	.ascii	"Variant\000"
 	.uleb128	24
@@ -8166,31 +7895,31 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La97-.Ldebug_info0
+	.long	.La99-.Ldebug_info0
 	.uleb128	13
 	.ascii	"RES1\000"
 	.byte	2
 	.byte	35
 	.uleb128	2
-	.long	.La97-.Ldebug_info0
+	.long	.La99-.Ldebug_info0
 	.uleb128	13
 	.ascii	"RES2\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La97-.Ldebug_info0
+	.long	.La99-.Ldebug_info0
 	.uleb128	13
 	.ascii	"RES3\000"
 	.byte	2
 	.byte	35
 	.uleb128	6
-	.long	.La97-.Ldebug_info0
+	.long	.La99-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VSMALLINT\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La95-.Ldebug_info0
+	.long	.La97-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VINTEGER\000"
 	.byte	2
@@ -8202,7 +7931,7 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La107-.Ldebug_info0
+	.long	.La109-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VDOUBLE\000"
 	.byte	2
@@ -8214,67 +7943,67 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La336-.Ldebug_info0
+	.long	.La338-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VCURRENCY\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La327-.Ldebug_info0
+	.long	.La329-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VOLESTR\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La312-.Ldebug_info0
+	.long	.La314-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VDISPATCH\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VERROR\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La173-.Ldebug_info0
+	.long	.La175-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VBOOLEAN\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La338-.Ldebug_info0
+	.long	.La340-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VUNKNOWN\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VSHORTINT\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La125-.Ldebug_info0
+	.long	.La127-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VBYTE\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La80-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VWORD\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La97-.Ldebug_info0
+	.long	.La99-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VLONGWORD\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La28-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VINT64\000"
 	.byte	2
@@ -8286,156 +8015,156 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La137-.Ldebug_info0
+	.long	.La139-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VWORD64\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La137-.Ldebug_info0
+	.long	.La139-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VSTRING\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VANY\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VARRAY\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La340-.Ldebug_info0
+	.long	.La342-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VPOINTER\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VRECORD\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.uleb128	13
 	.ascii	"PRECINFO\000"
 	.byte	2
 	.byte	35
 	.uleb128	16
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VLONGS\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La342-.Ldebug_info0
+	.long	.La344-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VWORDS\000"
 	.byte	2
 	.byte	35
 	.uleb128	2
-	.long	.La344-.Ldebug_info0
+	.long	.La346-.Ldebug_info0
 	.uleb128	13
 	.ascii	"VBYTES\000"
 	.byte	2
 	.byte	35
 	.uleb128	2
-	.long	.La346-.Ldebug_info0
+	.long	.La348-.Ldebug_info0
 	.byte	0
-.La331:
+.La333:
 	.uleb128	9
-	.long	.La330-.Ldebug_info0
+	.long	.La332-.Ldebug_info0
 # Definition TDateTime
-.La336:
+.La338:
 	.uleb128	7
 	.ascii	"TDATETIME\000"
-	.long	.La348-.Ldebug_info0
-.La348:
+	.long	.La350-.Ldebug_info0
+.La350:
 	.uleb128	8
 	.ascii	"TDATETIME\000"
 	.byte	4
 	.byte	8
-.La337:
+.La339:
 	.uleb128	9
-	.long	.La336-.Ldebug_info0
+	.long	.La338-.Ldebug_info0
 # Definition WordBool
-.La338:
+.La340:
 	.uleb128	7
 	.ascii	"WORDBOOL\000"
-	.long	.La349-.Ldebug_info0
-.La349:
+	.long	.La351-.Ldebug_info0
+.La351:
 	.uleb128	8
 	.ascii	"WordBool\000"
 	.byte	2
 	.byte	2
-.La339:
-	.uleb128	9
-	.long	.La338-.Ldebug_info0
-# Definition pvararray
-.La340:
-	.uleb128	7
-	.ascii	"PVARARRAY\000"
-	.long	.La350-.Ldebug_info0
-.La350:
-	.uleb128	10
-	.long	.La351-.Ldebug_info0
 .La341:
 	.uleb128	9
 	.long	.La340-.Ldebug_info0
-# Definition tvardata.Array[0..2] Of LongInt
+# Definition pvararray
 .La342:
-	.uleb128	20
-	.uleb128	12
-	.long	.La1-.Ldebug_info0
-	.uleb128	21
-	.sleb128	0
-	.sleb128	2
-	.uleb128	4
-	.long	.La125-.Ldebug_info0
-	.byte	0
+	.uleb128	7
+	.ascii	"PVARARRAY\000"
+	.long	.La352-.Ldebug_info0
+.La352:
+	.uleb128	10
+	.long	.La353-.Ldebug_info0
 .La343:
 	.uleb128	9
 	.long	.La342-.Ldebug_info0
-# Definition tvardata.Array[0..6] Of Word
+# Definition tvardata.Array[0..2] Of LongInt
 .La344:
-	.uleb128	20
 	.uleb128	14
-	.long	.La97-.Ldebug_info0
-	.uleb128	21
+	.uleb128	12
+	.long	.La1-.Ldebug_info0
+	.uleb128	15
 	.sleb128	0
-	.sleb128	6
-	.uleb128	2
-	.long	.La125-.Ldebug_info0
+	.sleb128	2
+	.uleb128	4
+	.long	.La127-.Ldebug_info0
 	.byte	0
 .La345:
 	.uleb128	9
 	.long	.La344-.Ldebug_info0
-# Definition tvardata.Array[0..13] Of Byte
+# Definition tvardata.Array[0..6] Of Word
 .La346:
-	.uleb128	20
 	.uleb128	14
-	.long	.La80-.Ldebug_info0
-	.uleb128	21
+	.uleb128	14
+	.long	.La99-.Ldebug_info0
+	.uleb128	15
 	.sleb128	0
-	.sleb128	13
-	.uleb128	1
-	.long	.La125-.Ldebug_info0
+	.sleb128	6
+	.uleb128	2
+	.long	.La127-.Ldebug_info0
 	.byte	0
 .La347:
 	.uleb128	9
 	.long	.La346-.Ldebug_info0
+# Definition tvardata.Array[0..13] Of Byte
+.La348:
+	.uleb128	14
+	.uleb128	14
+	.long	.La82-.Ldebug_info0
+	.uleb128	15
+	.sleb128	0
+	.sleb128	13
+	.uleb128	1
+	.long	.La127-.Ldebug_info0
+	.byte	0
+.La349:
+	.uleb128	9
+	.long	.La348-.Ldebug_info0
 # Definition tvararray
-.La351:
+.La353:
 	.uleb128	7
 	.ascii	"TVARARRAY\000"
-	.long	.La353-.Ldebug_info0
-.La353:
+	.long	.La355-.Ldebug_info0
+.La355:
 	.uleb128	12
 	.ascii	"TVARARRAY\000"
 	.uleb128	32
@@ -8444,13 +8173,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La97-.Ldebug_info0
+	.long	.La99-.Ldebug_info0
 	.uleb128	13
 	.ascii	"FLAGS\000"
 	.byte	2
 	.byte	35
 	.uleb128	2
-	.long	.La97-.Ldebug_info0
+	.long	.La99-.Ldebug_info0
 	.uleb128	13
 	.ascii	"ELEMENTSIZE\000"
 	.byte	2
@@ -8468,42 +8197,42 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	2
 	.byte	35
 	.uleb128	16
-	.long	.La116-.Ldebug_info0
+	.long	.La118-.Ldebug_info0
 	.uleb128	13
 	.ascii	"BOUNDS\000"
 	.byte	2
 	.byte	35
 	.uleb128	24
-	.long	.La354-.Ldebug_info0
+	.long	.La356-.Ldebug_info0
 	.byte	0
-.La352:
-	.uleb128	9
-	.long	.La351-.Ldebug_info0
-# Definition tvararrayboundarray
 .La354:
+	.uleb128	9
+	.long	.La353-.Ldebug_info0
+# Definition tvararrayboundarray
+.La356:
 	.uleb128	7
 	.ascii	"TVARARRAYBOUNDARRAY\000"
-	.long	.La356-.Ldebug_info0
-.La356:
+	.long	.La358-.Ldebug_info0
+.La358:
 	.uleb128	39
 	.ascii	"TVARARRAYBOUNDARRAY\000"
 	.uleb128	8
-	.long	.La357-.Ldebug_info0
-	.uleb128	21
+	.long	.La359-.Ldebug_info0
+	.uleb128	15
 	.sleb128	0
 	.sleb128	0
 	.uleb128	8
-	.long	.La125-.Ldebug_info0
+	.long	.La127-.Ldebug_info0
 	.byte	0
-.La355:
-	.uleb128	9
-	.long	.La354-.Ldebug_info0
-# Definition tvararraybound
 .La357:
+	.uleb128	9
+	.long	.La356-.Ldebug_info0
+# Definition tvararraybound
+.La359:
 	.uleb128	7
 	.ascii	"TVARARRAYBOUND\000"
-	.long	.La359-.Ldebug_info0
-.La359:
+	.long	.La361-.Ldebug_info0
+.La361:
 	.uleb128	12
 	.ascii	"TVARARRAYBOUND\000"
 	.uleb128	8
@@ -8520,9 +8249,9 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	4
 	.long	.La1-.Ldebug_info0
 	.byte	0
-.La358:
+.La360:
 	.uleb128	9
-	.long	.La357-.Ldebug_info0
+	.long	.La359-.Ldebug_info0
 	.byte	0
 .Ledebug_info0:
 # End asmlist al_dwarf_info
@@ -8691,6 +8420,30 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	0
 # Abbrev 14
 	.uleb128	14
+	.uleb128	1
+	.byte	1
+	.uleb128	11
+	.uleb128	15
+	.uleb128	73
+	.uleb128	19
+	.byte	0
+	.byte	0
+# Abbrev 15
+	.uleb128	15
+	.uleb128	33
+	.byte	0
+	.uleb128	34
+	.uleb128	13
+	.uleb128	47
+	.uleb128	13
+	.uleb128	81
+	.uleb128	15
+	.uleb128	73
+	.uleb128	19
+	.byte	0
+	.byte	0
+# Abbrev 16
+	.uleb128	16
 	.uleb128	2
 	.byte	1
 	.uleb128	3
@@ -8699,8 +8452,8 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	15
 	.byte	0
 	.byte	0
-# Abbrev 15
-	.uleb128	15
+# Abbrev 17
+	.uleb128	17
 	.uleb128	28
 	.byte	0
 	.uleb128	50
@@ -8711,8 +8464,8 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	19
 	.byte	0
 	.byte	0
-# Abbrev 16
-	.uleb128	16
+# Abbrev 18
+	.uleb128	18
 	.uleb128	46
 	.byte	1
 	.uleb128	3
@@ -8731,8 +8484,8 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	11
 	.byte	0
 	.byte	0
-# Abbrev 17
-	.uleb128	17
+# Abbrev 19
+	.uleb128	19
 	.uleb128	5
 	.byte	0
 	.uleb128	3
@@ -8743,8 +8496,8 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	19
 	.byte	0
 	.byte	0
-# Abbrev 18
-	.uleb128	18
+# Abbrev 20
+	.uleb128	20
 	.uleb128	46
 	.byte	1
 	.uleb128	3
@@ -8759,36 +8512,12 @@ RTTI_$UMAIN_$$_DEF62:
 	.uleb128	19
 	.byte	0
 	.byte	0
-# Abbrev 19
-	.uleb128	19
+# Abbrev 21
+	.uleb128	21
 	.uleb128	5
 	.byte	0
 	.uleb128	3
 	.uleb128	8
-	.uleb128	73
-	.uleb128	19
-	.byte	0
-	.byte	0
-# Abbrev 20
-	.uleb128	20
-	.uleb128	1
-	.byte	1
-	.uleb128	11
-	.uleb128	15
-	.uleb128	73
-	.uleb128	19
-	.byte	0
-	.byte	0
-# Abbrev 21
-	.uleb128	21
-	.uleb128	33
-	.byte	0
-	.uleb128	34
-	.uleb128	13
-	.uleb128	47
-	.uleb128	13
-	.uleb128	81
-	.uleb128	15
 	.uleb128	73
 	.uleb128	19
 	.byte	0
@@ -9058,15 +8787,15 @@ RTTI_$UMAIN_$$_DEF62:
 .Lehdebug_line0:
 # === header end ===
 # function: UMAIN$_$MAIN1_$$_fin$0
-# [51:1]
+# [52:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll1
 	.byte	5
 	.uleb128	1
-	.byte	62
-# [51:1]
+	.byte	63
+# [52:1]
 	.byte	2
 	.uleb128	.Ll2-.Ll1
 	.byte	1
@@ -9079,77 +8808,77 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	1
 # ###################
 # function: UMAIN_$$_MAIN1
-# [51:1]
+# [52:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll4
 	.byte	5
 	.uleb128	1
-	.byte	62
-# [51:1]
+	.byte	63
+# [52:1]
 	.byte	2
 	.uleb128	.Ll5-.Ll4
 	.byte	1
-# [55:6]
+# [56:6]
 	.byte	2
 	.uleb128	.Ll6-.Ll5
 	.byte	5
 	.uleb128	6
 	.byte	16
-# [56:6]
+# [57:6]
 	.byte	2
 	.uleb128	.Ll7-.Ll6
 	.byte	13
-# [57:6]
+# [58:6]
 	.byte	2
 	.uleb128	.Ll8-.Ll7
 	.byte	13
-# [58:6]
+# [59:6]
 	.byte	2
 	.uleb128	.Ll9-.Ll8
 	.byte	13
-# [59:6]
+# [60:6]
 	.byte	2
 	.uleb128	.Ll10-.Ll9
 	.byte	13
-# [60:6]
+# [61:6]
 	.byte	2
 	.uleb128	.Ll11-.Ll10
 	.byte	13
-# [61:6]
+# [62:6]
 	.byte	2
 	.uleb128	.Ll12-.Ll11
 	.byte	13
-# [62:6]
+# [63:6]
 	.byte	2
 	.uleb128	.Ll13-.Ll12
 	.byte	13
-# [66:1]
+# [67:1]
 	.byte	2
 	.uleb128	.Ll14-.Ll13
 	.byte	5
 	.uleb128	1
 	.byte	16
-# [67:3]
+# [68:3]
 	.byte	2
 	.uleb128	.Ll15-.Ll14
 	.byte	5
 	.uleb128	3
 	.byte	13
-# [68:9]
+# [69:9]
 	.byte	2
 	.uleb128	.Ll16-.Ll15
 	.byte	5
 	.uleb128	9
 	.byte	13
-# [69:8]
+# [70:8]
 	.byte	2
 	.uleb128	.Ll17-.Ll16
 	.byte	5
 	.uleb128	8
 	.byte	13
-# [51:1]
+# [52:1]
 	.byte	2
 	.uleb128	.Ll18-.Ll17
 	.byte	5
@@ -9157,13 +8886,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	3
 	.sleb128	-18
 	.byte	1
-# [69:28]
+# [70:28]
 	.byte	2
 	.uleb128	.Ll19-.Ll18
 	.byte	5
 	.uleb128	28
 	.byte	30
-# [67:3]
+# [68:3]
 	.byte	2
 	.uleb128	.Ll20-.Ll19
 	.byte	5
@@ -9171,7 +8900,7 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	3
 	.sleb128	-2
 	.byte	1
-# [66:1]
+# [67:1]
 	.byte	2
 	.uleb128	.Ll21-.Ll20
 	.byte	5
@@ -9179,35 +8908,35 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	3
 	.sleb128	-1
 	.byte	1
-# [72:1]
+# [73:1]
 	.byte	2
 	.uleb128	.Ll22-.Ll21
 	.byte	18
-# [73:3]
+# [74:3]
 	.byte	2
 	.uleb128	.Ll23-.Ll22
 	.byte	5
 	.uleb128	3
 	.byte	13
-# [74:9]
+# [75:9]
 	.byte	2
 	.uleb128	.Ll24-.Ll23
 	.byte	5
 	.uleb128	9
 	.byte	13
-# [75:10]
+# [76:10]
 	.byte	2
 	.uleb128	.Ll25-.Ll24
 	.byte	5
 	.uleb128	10
 	.byte	13
-# [76:8]
+# [77:8]
 	.byte	2
 	.uleb128	.Ll26-.Ll25
 	.byte	5
 	.uleb128	8
 	.byte	13
-# [51:1]
+# [52:1]
 	.byte	2
 	.uleb128	.Ll27-.Ll26
 	.byte	5
@@ -9215,13 +8944,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	3
 	.sleb128	-25
 	.byte	1
-# [76:28]
+# [77:28]
 	.byte	2
 	.uleb128	.Ll28-.Ll27
 	.byte	5
 	.uleb128	28
 	.byte	37
-# [73:3]
+# [74:3]
 	.byte	2
 	.uleb128	.Ll29-.Ll28
 	.byte	5
@@ -9229,7 +8958,7 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	3
 	.sleb128	-3
 	.byte	1
-# [72:1]
+# [73:1]
 	.byte	2
 	.uleb128	.Ll30-.Ll29
 	.byte	5
@@ -9237,35 +8966,35 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	3
 	.sleb128	-1
 	.byte	1
-# [79:1]
+# [80:1]
 	.byte	2
 	.uleb128	.Ll31-.Ll30
 	.byte	19
-# [80:3]
+# [81:3]
 	.byte	2
 	.uleb128	.Ll32-.Ll31
 	.byte	5
 	.uleb128	3
 	.byte	13
-# [81:9]
+# [82:9]
 	.byte	2
 	.uleb128	.Ll33-.Ll32
 	.byte	5
 	.uleb128	9
 	.byte	13
-# [82:10]
+# [83:10]
 	.byte	2
 	.uleb128	.Ll34-.Ll33
 	.byte	5
 	.uleb128	10
 	.byte	13
-# [83:8]
+# [84:8]
 	.byte	2
 	.uleb128	.Ll35-.Ll34
 	.byte	5
 	.uleb128	8
 	.byte	13
-# [51:1]
+# [52:1]
 	.byte	2
 	.uleb128	.Ll36-.Ll35
 	.byte	5
@@ -9273,13 +9002,13 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	3
 	.sleb128	-32
 	.byte	1
-# [83:28]
+# [84:28]
 	.byte	2
 	.uleb128	.Ll37-.Ll36
 	.byte	5
 	.uleb128	28
 	.byte	44
-# [80:3]
+# [81:3]
 	.byte	2
 	.uleb128	.Ll38-.Ll37
 	.byte	5
@@ -9287,7 +9016,7 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	3
 	.sleb128	-3
 	.byte	1
-# [79:1]
+# [80:1]
 	.byte	2
 	.uleb128	.Ll39-.Ll38
 	.byte	5
@@ -9295,620 +9024,500 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	3
 	.sleb128	-1
 	.byte	1
-# [90:1]
+# [91:1]
 	.byte	2
 	.uleb128	.Ll40-.Ll39
 	.byte	23
-# [91:1]
+# [92:1]
 	.byte	2
 	.uleb128	.Ll41-.Ll40
 	.byte	13
-# [92:6]
+# [93:6]
 	.byte	2
 	.uleb128	.Ll42-.Ll41
 	.byte	5
 	.uleb128	6
 	.byte	13
-# [93:1]
+# [94:1]
 	.byte	2
 	.uleb128	.Ll43-.Ll42
 	.byte	5
 	.uleb128	1
 	.byte	13
-# [94:1]
+# [95:1]
 	.byte	2
 	.uleb128	.Ll44-.Ll43
 	.byte	13
-# [95:1]
+# [96:1]
 	.byte	2
 	.uleb128	.Ll45-.Ll44
 	.byte	13
-# [96:1]
+# [97:1]
 	.byte	2
 	.uleb128	.Ll46-.Ll45
 	.byte	13
-# [97:9]
+# [98:9]
 	.byte	2
 	.uleb128	.Ll47-.Ll46
 	.byte	5
 	.uleb128	9
 	.byte	13
-# [98:6]
+# [99:6]
 	.byte	2
 	.uleb128	.Ll48-.Ll47
 	.byte	5
 	.uleb128	6
 	.byte	13
-# [99:1]
+# [100:1]
 	.byte	2
 	.uleb128	.Ll49-.Ll48
 	.byte	5
 	.uleb128	1
 	.byte	13
-# [100:1]
+# [101:1]
 	.byte	2
 	.uleb128	.Ll50-.Ll49
 	.byte	13
-# [101:1]
+# [102:1]
 	.byte	2
 	.uleb128	.Ll51-.Ll50
 	.byte	13
-# [102:1]
+# [103:1]
 	.byte	2
 	.uleb128	.Ll52-.Ll51
 	.byte	13
-# [103:1]
+# [104:1]
 	.byte	2
 	.uleb128	.Ll53-.Ll52
 	.byte	13
-# [104:1]
+# [105:1]
 	.byte	2
 	.uleb128	.Ll54-.Ll53
 	.byte	13
-# [105:1]
+# [106:1]
 	.byte	2
 	.uleb128	.Ll55-.Ll54
 	.byte	13
-# [106:1]
+# [107:1]
 	.byte	2
 	.uleb128	.Ll56-.Ll55
 	.byte	13
-# [107:1]
+# [108:1]
 	.byte	2
 	.uleb128	.Ll57-.Ll56
 	.byte	13
-# [108:1]
+# [109:1]
 	.byte	2
 	.uleb128	.Ll58-.Ll57
 	.byte	13
-# [109:1]
+# [110:1]
 	.byte	2
 	.uleb128	.Ll59-.Ll58
 	.byte	13
-# [110:1]
+# [111:1]
 	.byte	2
 	.uleb128	.Ll60-.Ll59
 	.byte	13
-# [111:1]
-	.byte	2
-	.uleb128	.Ll61-.Ll60
-	.byte	13
-# [112:1]
-	.byte	2
-	.uleb128	.Ll62-.Ll61
-	.byte	13
 # [113:1]
 	.byte	2
-	.uleb128	.Ll63-.Ll62
+	.uleb128	.Ll61-.Ll60
+	.byte	14
+# [114:4]
+	.byte	2
+	.uleb128	.Ll62-.Ll61
+	.byte	5
+	.uleb128	4
 	.byte	13
-# [114:1]
+# [115:1]
+	.byte	2
+	.uleb128	.Ll63-.Ll62
+	.byte	5
+	.uleb128	1
+	.byte	13
+# [116:3]
 	.byte	2
 	.uleb128	.Ll64-.Ll63
+	.byte	5
+	.uleb128	3
 	.byte	13
 # [115:1]
 	.byte	2
 	.uleb128	.Ll65-.Ll64
-	.byte	13
-# [116:1]
-	.byte	2
-	.uleb128	.Ll66-.Ll65
-	.byte	13
-# [117:1]
-	.byte	2
-	.uleb128	.Ll67-.Ll66
-	.byte	13
-# [118:1]
-	.byte	2
-	.uleb128	.Ll68-.Ll67
-	.byte	13
-# [119:1]
-	.byte	2
-	.uleb128	.Ll69-.Ll68
-	.byte	13
-# [120:1]
-	.byte	2
-	.uleb128	.Ll70-.Ll69
-	.byte	13
-# [121:1]
-	.byte	2
-	.uleb128	.Ll71-.Ll70
-	.byte	13
-# [122:1]
-	.byte	2
-	.uleb128	.Ll72-.Ll71
-	.byte	13
-# [123:1]
-	.byte	2
-	.uleb128	.Ll73-.Ll72
-	.byte	13
-# [124:1]
-	.byte	2
-	.uleb128	.Ll74-.Ll73
-	.byte	13
-# [125:1]
-	.byte	2
-	.uleb128	.Ll75-.Ll74
-	.byte	13
-# [126:1]
-	.byte	2
-	.uleb128	.Ll76-.Ll75
-	.byte	13
-# [127:1]
-	.byte	2
-	.uleb128	.Ll77-.Ll76
-	.byte	13
-# [128:1]
-	.byte	2
-	.uleb128	.Ll78-.Ll77
-	.byte	13
-# [129:1]
-	.byte	2
-	.uleb128	.Ll79-.Ll78
-	.byte	13
-# [130:1]
-	.byte	2
-	.uleb128	.Ll80-.Ll79
-	.byte	13
-# [131:1]
-	.byte	2
-	.uleb128	.Ll81-.Ll80
-	.byte	13
-# [132:1]
-	.byte	2
-	.uleb128	.Ll82-.Ll81
-	.byte	13
-# [133:1]
-	.byte	2
-	.uleb128	.Ll83-.Ll82
-	.byte	13
-# [134:1]
-	.byte	2
-	.uleb128	.Ll84-.Ll83
-	.byte	13
-# [135:1]
-	.byte	2
-	.uleb128	.Ll85-.Ll84
-	.byte	13
-# [136:1]
-	.byte	2
-	.uleb128	.Ll86-.Ll85
-	.byte	13
-# [137:1]
-	.byte	2
-	.uleb128	.Ll87-.Ll86
-	.byte	13
-# [138:1]
-	.byte	2
-	.uleb128	.Ll88-.Ll87
-	.byte	13
-# [139:1]
-	.byte	2
-	.uleb128	.Ll89-.Ll88
-	.byte	13
-# [140:1]
-	.byte	2
-	.uleb128	.Ll90-.Ll89
-	.byte	13
-# [141:1]
-	.byte	2
-	.uleb128	.Ll91-.Ll90
-	.byte	13
-# [142:1]
-	.byte	2
-	.uleb128	.Ll92-.Ll91
-	.byte	13
-# [143:1]
-	.byte	2
-	.uleb128	.Ll93-.Ll92
-	.byte	13
-# [144:1]
-	.byte	2
-	.uleb128	.Ll94-.Ll93
-	.byte	13
-# [145:1]
-	.byte	2
-	.uleb128	.Ll95-.Ll94
-	.byte	13
-# [146:1]
-	.byte	2
-	.uleb128	.Ll96-.Ll95
-	.byte	13
-# [147:4]
-	.byte	2
-	.uleb128	.Ll97-.Ll96
-	.byte	5
-	.uleb128	4
-	.byte	13
-# [148:1]
-	.byte	2
-	.uleb128	.Ll98-.Ll97
-	.byte	5
-	.uleb128	1
-	.byte	13
-# [149:2]
-	.byte	2
-	.uleb128	.Ll99-.Ll98
-	.byte	5
-	.uleb128	2
-	.byte	13
-# [148:1]
-	.byte	2
-	.uleb128	.Ll100-.Ll99
 	.byte	5
 	.uleb128	1
 	.byte	3
 	.sleb128	-1
 	.byte	1
-# [150:4]
+# [117:4]
 	.byte	2
-	.uleb128	.Ll101-.Ll100
+	.uleb128	.Ll66-.Ll65
 	.byte	5
 	.uleb128	4
 	.byte	14
-# [151:1]
+# [118:1]
 	.byte	2
-	.uleb128	.Ll102-.Ll101
+	.uleb128	.Ll67-.Ll66
 	.byte	5
 	.uleb128	1
 	.byte	13
-# [152:1]
+# [119:1]
 	.byte	2
-	.uleb128	.Ll103-.Ll102
+	.uleb128	.Ll68-.Ll67
 	.byte	13
-# [153:1]
+# [120:1]
 	.byte	2
-	.uleb128	.Ll104-.Ll103
+	.uleb128	.Ll69-.Ll68
 	.byte	13
-# [51:1]
+# [52:1]
 	.byte	2
-	.uleb128	.Ll105-.Ll104
+	.uleb128	.Ll70-.Ll69
 	.byte	3
-	.sleb128	-102
+	.sleb128	-68
 	.byte	1
-# [154:1]
+# [121:1]
 	.byte	2
-	.uleb128	.Ll106-.Ll105
-	.byte	115
+	.uleb128	.Ll71-.Ll70
+	.byte	81
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll107
+	.quad	.Ll72
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UMAIN$_$MAIN2_$$_fin$1
-# [167:1]
+# [136:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll108
+	.quad	.Ll73
 	.byte	5
 	.uleb128	1
-	.byte	178
-# [167:1]
+	.byte	147
+# [136:1]
 	.byte	2
-	.uleb128	.Ll109-.Ll108
+	.uleb128	.Ll74-.Ll73
 	.byte	1
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll110
+	.quad	.Ll75
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UMAIN_$$_MAIN2
-# [167:1]
+# [136:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll111
+	.quad	.Ll76
 	.byte	5
 	.uleb128	1
-	.byte	178
-# [167:1]
+	.byte	147
+# [136:1]
 	.byte	2
-	.uleb128	.Ll112-.Ll111
+	.uleb128	.Ll77-.Ll76
 	.byte	1
-# [170:9]
+# [139:9]
 	.byte	2
-	.uleb128	.Ll113-.Ll112
+	.uleb128	.Ll78-.Ll77
 	.byte	5
 	.uleb128	9
 	.byte	15
-# [172:12]
+# [141:12]
 	.byte	2
-	.uleb128	.Ll114-.Ll113
+	.uleb128	.Ll79-.Ll78
 	.byte	5
 	.uleb128	12
 	.byte	14
-# [177:5]
+# [146:5]
 	.byte	2
-	.uleb128	.Ll115-.Ll114
+	.uleb128	.Ll80-.Ll79
 	.byte	5
 	.uleb128	5
 	.byte	17
-# [178:12]
+# [147:12]
 	.byte	2
-	.uleb128	.Ll116-.Ll115
+	.uleb128	.Ll81-.Ll80
 	.byte	5
 	.uleb128	12
 	.byte	13
-# [179:5]
+# [148:5]
 	.byte	2
-	.uleb128	.Ll117-.Ll116
+	.uleb128	.Ll82-.Ll81
 	.byte	5
 	.uleb128	5
 	.byte	13
-# [180:5]
+# [149:5]
 	.byte	2
-	.uleb128	.Ll118-.Ll117
+	.uleb128	.Ll83-.Ll82
 	.byte	13
-# [181:5]
+# [150:5]
 	.byte	2
-	.uleb128	.Ll119-.Ll118
+	.uleb128	.Ll84-.Ll83
 	.byte	13
-# [182:6]
+# [151:6]
 	.byte	2
-	.uleb128	.Ll120-.Ll119
+	.uleb128	.Ll85-.Ll84
 	.byte	5
 	.uleb128	6
 	.byte	13
-# [183:6]
+# [152:6]
 	.byte	2
-	.uleb128	.Ll121-.Ll120
+	.uleb128	.Ll86-.Ll85
 	.byte	13
-# [184:6]
+# [153:6]
 	.byte	2
-	.uleb128	.Ll122-.Ll121
+	.uleb128	.Ll87-.Ll86
 	.byte	13
-# [185:19]
+# [154:19]
 	.byte	2
-	.uleb128	.Ll123-.Ll122
+	.uleb128	.Ll88-.Ll87
 	.byte	5
 	.uleb128	19
 	.byte	13
-# [187:1]
+# [156:1]
 	.byte	2
-	.uleb128	.Ll124-.Ll123
+	.uleb128	.Ll89-.Ll88
 	.byte	5
 	.uleb128	1
 	.byte	14
-# [188:1]
+# [157:1]
 	.byte	2
-	.uleb128	.Ll125-.Ll124
+	.uleb128	.Ll90-.Ll89
 	.byte	13
-# [189:1]
+# [158:1]
 	.byte	2
-	.uleb128	.Ll126-.Ll125
+	.uleb128	.Ll91-.Ll90
 	.byte	13
-# [195:38]
+# [164:38]
 	.byte	2
-	.uleb128	.Ll127-.Ll126
+	.uleb128	.Ll92-.Ll91
 	.byte	5
 	.uleb128	38
 	.byte	18
-# [196:15]
+# [166:1]
 	.byte	2
-	.uleb128	.Ll128-.Ll127
+	.uleb128	.Ll93-.Ll92
 	.byte	5
-	.uleb128	15
-	.byte	13
-# [197:13]
+	.uleb128	1
+	.byte	14
+# [167:7]
 	.byte	2
-	.uleb128	.Ll129-.Ll128
+	.uleb128	.Ll94-.Ll93
 	.byte	5
-	.uleb128	13
+	.uleb128	7
 	.byte	13
-# [198:13]
+# [168:10]
 	.byte	2
-	.uleb128	.Ll130-.Ll129
-	.byte	13
-# [199:13]
-	.byte	2
-	.uleb128	.Ll131-.Ll130
-	.byte	13
-# [200:15]
-	.byte	2
-	.uleb128	.Ll132-.Ll131
+	.uleb128	.Ll95-.Ll94
 	.byte	5
-	.uleb128	15
+	.uleb128	10
 	.byte	13
-# [201:1]
+# [169:1]
 	.byte	2
-	.uleb128	.Ll133-.Ll132
+	.uleb128	.Ll96-.Ll95
 	.byte	5
 	.uleb128	1
 	.byte	13
-# [202:70]
+# [170:14]
 	.byte	2
-	.uleb128	.Ll134-.Ll133
+	.uleb128	.Ll97-.Ll96
+	.byte	5
+	.uleb128	14
+	.byte	13
+# [171:13]
+	.byte	2
+	.uleb128	.Ll98-.Ll97
+	.byte	5
+	.uleb128	13
+	.byte	13
+# [172:13]
+	.byte	2
+	.uleb128	.Ll99-.Ll98
+	.byte	13
+# [173:13]
+	.byte	2
+	.uleb128	.Ll100-.Ll99
+	.byte	13
+# [174:15]
+	.byte	2
+	.uleb128	.Ll101-.Ll100
+	.byte	5
+	.uleb128	15
+	.byte	13
+# [175:1]
+	.byte	2
+	.uleb128	.Ll102-.Ll101
+	.byte	5
+	.uleb128	1
+	.byte	13
+# [176:70]
+	.byte	2
+	.uleb128	.Ll103-.Ll102
 	.byte	5
 	.uleb128	70
 	.byte	13
-# [203:71]
+# [177:71]
 	.byte	2
-	.uleb128	.Ll135-.Ll134
+	.uleb128	.Ll104-.Ll103
 	.byte	5
 	.uleb128	71
 	.byte	13
-# [204:68]
+# [178:59]
 	.byte	2
-	.uleb128	.Ll136-.Ll135
+	.uleb128	.Ll105-.Ll104
 	.byte	5
-	.uleb128	68
+	.uleb128	59
 	.byte	13
-# [205:80]
+# [179:80]
 	.byte	2
-	.uleb128	.Ll137-.Ll136
+	.uleb128	.Ll106-.Ll105
 	.byte	5
 	.uleb128	80
 	.byte	13
-# [206:4]
+# [180:4]
 	.byte	2
-	.uleb128	.Ll138-.Ll137
+	.uleb128	.Ll107-.Ll106
 	.byte	5
 	.uleb128	4
 	.byte	13
-# [207:4]
+# [181:4]
 	.byte	2
-	.uleb128	.Ll139-.Ll138
+	.uleb128	.Ll108-.Ll107
 	.byte	13
-# [208:4]
+# [182:4]
 	.byte	2
-	.uleb128	.Ll140-.Ll139
+	.uleb128	.Ll109-.Ll108
 	.byte	13
-# [209:1]
+# [183:1]
 	.byte	2
-	.uleb128	.Ll141-.Ll140
+	.uleb128	.Ll110-.Ll109
 	.byte	5
 	.uleb128	1
 	.byte	13
-# [211:1]
+# [185:1]
 	.byte	2
-	.uleb128	.Ll142-.Ll141
+	.uleb128	.Ll111-.Ll110
 	.byte	14
-# [212:4]
+# [186:4]
 	.byte	2
-	.uleb128	.Ll143-.Ll142
+	.uleb128	.Ll112-.Ll111
 	.byte	5
 	.uleb128	4
 	.byte	13
-# [213:1]
+# [187:1]
 	.byte	2
-	.uleb128	.Ll144-.Ll143
+	.uleb128	.Ll113-.Ll112
 	.byte	5
 	.uleb128	1
 	.byte	13
-# [214:1]
+# [188:1]
 	.byte	2
-	.uleb128	.Ll145-.Ll144
+	.uleb128	.Ll114-.Ll113
 	.byte	13
-# [215:1]
+# [189:1]
 	.byte	2
-	.uleb128	.Ll146-.Ll145
+	.uleb128	.Ll115-.Ll114
 	.byte	13
-# [216:1]
+# [190:1]
 	.byte	2
-	.uleb128	.Ll147-.Ll146
+	.uleb128	.Ll116-.Ll115
 	.byte	13
-# [217:1]
+# [191:1]
 	.byte	2
-	.uleb128	.Ll148-.Ll147
+	.uleb128	.Ll117-.Ll116
 	.byte	13
-# [218:1]
+# [192:1]
 	.byte	2
-	.uleb128	.Ll149-.Ll148
+	.uleb128	.Ll118-.Ll117
 	.byte	13
-# [219:1]
+# [193:1]
 	.byte	2
-	.uleb128	.Ll150-.Ll149
+	.uleb128	.Ll119-.Ll118
 	.byte	13
-# [222:13]
+# [196:13]
 	.byte	2
-	.uleb128	.Ll151-.Ll150
+	.uleb128	.Ll120-.Ll119
 	.byte	5
 	.uleb128	13
 	.byte	15
-# [223:14]
+# [197:14]
 	.byte	2
-	.uleb128	.Ll152-.Ll151
+	.uleb128	.Ll121-.Ll120
 	.byte	5
 	.uleb128	14
 	.byte	13
-# [224:16]
+# [198:16]
 	.byte	2
-	.uleb128	.Ll153-.Ll152
+	.uleb128	.Ll122-.Ll121
 	.byte	5
 	.uleb128	16
 	.byte	13
-# [226:14]
+# [200:14]
 	.byte	2
-	.uleb128	.Ll154-.Ll153
+	.uleb128	.Ll123-.Ll122
 	.byte	5
 	.uleb128	14
 	.byte	14
-# [227:15]
+# [201:15]
 	.byte	2
-	.uleb128	.Ll155-.Ll154
+	.uleb128	.Ll124-.Ll123
 	.byte	5
 	.uleb128	15
 	.byte	13
-# [229:16]
+# [203:16]
 	.byte	2
-	.uleb128	.Ll156-.Ll155
+	.uleb128	.Ll125-.Ll124
 	.byte	5
 	.uleb128	16
 	.byte	14
-# [231:14]
+# [205:14]
 	.byte	2
-	.uleb128	.Ll157-.Ll156
+	.uleb128	.Ll126-.Ll125
 	.byte	5
 	.uleb128	14
 	.byte	14
-# [232:15]
+# [206:15]
 	.byte	2
-	.uleb128	.Ll158-.Ll157
+	.uleb128	.Ll127-.Ll126
 	.byte	5
 	.uleb128	15
 	.byte	13
-# [234:16]
+# [208:16]
 	.byte	2
-	.uleb128	.Ll159-.Ll158
+	.uleb128	.Ll128-.Ll127
 	.byte	5
 	.uleb128	16
 	.byte	14
-# [236:6]
+# [210:6]
 	.byte	2
-	.uleb128	.Ll160-.Ll159
+	.uleb128	.Ll129-.Ll128
 	.byte	5
 	.uleb128	6
 	.byte	14
-# [237:1]
+# [212:1]
 	.byte	2
-	.uleb128	.Ll161-.Ll160
+	.uleb128	.Ll130-.Ll129
 	.byte	5
 	.uleb128	1
-	.byte	13
-# [238:1]
+	.byte	14
+# [136:1]
 	.byte	2
-	.uleb128	.Ll162-.Ll161
-	.byte	13
-# [167:1]
-	.byte	2
-	.uleb128	.Ll163-.Ll162
+	.uleb128	.Ll131-.Ll130
 	.byte	3
-	.sleb128	-71
+	.sleb128	-76
 	.byte	1
-# [240:1]
+# [214:1]
 	.byte	2
-	.uleb128	.Ll164-.Ll163
-	.byte	85
+	.uleb128	.Ll132-.Ll131
+	.byte	90
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll165
+	.quad	.Ll133
 	.byte	0
 	.byte	1
 	.byte	1
@@ -9918,7 +9527,7 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll166
+	.quad	.Ll134
 	.byte	0
 	.byte	1
 	.byte	1
@@ -9928,7 +9537,7 @@ RTTI_$UMAIN_$$_DEF62:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll167
+	.quad	.Ll135
 	.byte	0
 	.byte	1
 	.byte	1

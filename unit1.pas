@@ -90,7 +90,7 @@ main1;
 currentdir2:='d:\sid\';
 //setcurrentdir('d:\sid');
 setcurrentdir(currentdir2);
-box2(897,67,1782,115,36);
+//box2(897,67,1782,115,36);
 s:=currentdir2;
 if length(s)>55 then s:=copy(s,1,55);
 l:=length(s);
@@ -154,7 +154,7 @@ sysutils.findclose(sr);
 //currentdir2:=currentdir2+'\dmp\';
 
 
-box(920,132,840,32,36);
+//box(920,132,840,32,36);
 if ilf<26 then ild:=ilf-1 else ild:=26;
 for i:=0 to ild do
   begin

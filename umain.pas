@@ -36,13 +36,14 @@ var
     qq:integer;
  //   songfreq:integer;
     pause:boolean=false;
+        sidbuf:array[0..599] of int64;
 
 procedure main1;
 procedure main2;
 
 implementation
 
-
+    uses fmsynth;
 
 procedure main1 ;
 var  t:int64;
@@ -90,7 +91,7 @@ for i:=0 to 31 do
 graphics(16);
 cls(146);
 ttt:=gettime;
-outtextxyz(96,16,'The retromachine SID player v. 0.04 --- 2016.04.28',154,4,2);
+outtextxyz(96,16,'The retromachine FM Synth v. 0.01 --- 2016.09.02',154,4,2);
 box2(8,64,1784,1112,0);
 box2(10,1062,1782,1110,120);
 outtextxyz(32,1070,'Screen time:',124,2,2);
@@ -108,45 +109,11 @@ avsct:=0;
 avspt:=0;
 avall:=0;
 avsid:=0;
-box2(10,1011,1782,1012,256+16);
-box2(10,1013,1782,1014,256+17);
-box2(10,1015,1782,1016,256+18);
-box2(10,1017,1782,1018,256+19);
-box2(10,1019,1782,1020,256+20);
-box2(10,1021,1782,1022,256+21);
-box2(10,1023,1782,1024,256+22);
-box2(10,1025,1782,1026,256+23);
-box2(10,1027,1782,1028,256+24);
-box2(10,1029,1782,1030,256+25);
-box2(10,1031,1782,1032,256+26);
-box2(10,1033,1782,1034,256+27);
-box2(10,1035,1782,1036,256+28);
-box2(10,1037,1782,1038,256+29);
-box2(10,1039,1782,1040,256+30);
-box2(10,1041,1782,1042,256+31);
-box2(10,1043,1782,1044,256+32);
-box2(10,1045,1782,1046,256+33);
-box2(10,1047,1782,1048,256+34);
-box2(10,1049,1782,1050,256+35);
-box2(10,1051,1782,1052,256+36);
-box2(10,1053,1782,1054,256+37);
-box2(10,1055,1782,1056,256+38);
-box2(10,1057,1782,1058,256+39);
-outtextxyz(24,1019,'A retromachine SID player by pik33 --- inspired by Johannes Ahlebrand''s Parallax Propeller SIDCog',256+135,2,2);
-blit($F000000,10,1011,$F800000,10,1011,1771,48,1792,1792);
-box2(10,800,894,848,246);
-box2(10,851,894,1008,244);
-outtextxyz(320,808,'Now playing',250,2,2);
-box2(10,118,894,797,178);
-box2(10,67,894,115,180);
-outtextxyz(320,75,'File info',188,2,2);
-box2(897,118,1782,1008,34);
-box2(897,67,1782,115,36);
-outtextxyz(1296,75,'Files',47,2,2);
-sdl_pauseaudio(1); sleep(1000);
+
+sdl_pauseaudio(1); sleep(10);
 t:=gettime;
 for i:=1 to 1000000 do
- testvoice.getsample;
+  voices[0].getsample;
 t:=gettime-t;
 box(100,100,200,100,0);
 outtextxyz(100,100,inttostr(t),44,2,2);
@@ -163,6 +130,8 @@ var ii,iii,il,i:integer;
     rect:tsdl_rect;
     f,aa,aaa,aaaa:integer;
     md:cardinal;
+
+    const sidptr:integer=0;
 
 begin
       // a=7493
@@ -193,7 +162,12 @@ outtextxyz(18,864,songname,250,2,2);
 //outtextxyz(500,350,inttostr(rect.h),40,3,3);
 //outtextxyz(18,912,'SIDCog DMP file, '+inttostr(songfreq)+' Hz',250,2,2);
 outtextxyz(18,960,hhs+':'+mms+':'+sss,190,4,2);
-avsid+=sidtime;
+//avsid:=sidtime;
+avsid:=0;
+sidbuf[sidptr]:=sidtime;
+sidptr:=(sidptr+1) mod 60;
+for i:=0 to 59 do avsid+=sidbuf[i];
+avsid:=avsid div 60;
 avsct:=avsct+tim;
 avspt:=avspt+ts;
 avall:=avall+t3;
@@ -201,7 +175,7 @@ av6502:=av6502+time6502;
 box2(10,1062,1782,1110,118);
 outtextxyz(32,1070,'Avg screen time: '+inttostr(round(avsct/c))+' us',76,2,2);
 outtextxyz(438,1070,'Avg sprite time: '+inttostr(round(avspt/c))+' us',186,2,2);
-outtextxyz(828,1070,'Avg SID time: '+inttostr(round(avsid/c))+' us',233,2,2);
+outtextxyz(828,1070,'Avg SID time: '+inttostr(avsid)+' us',233,2,2);
 outtextxyz(1190,1070,'6502 time: '+floattostrf((time6502/16),fffixed,4,1)+' us',124,2,2);
 if peek($70003)=1 then outtextxyz(1500,1070,inttostr(peek($d404)shr 4),108,2,2);
 if peek($70004)=1 then outtextxyz(1540,1070,inttostr(peek($d40b)shr 4),200,2,2);
@@ -234,8 +208,8 @@ spr3y:=920-3*(peek($d414) and $F0);
 raml^[$18014]:=(spr3y shl 16)+spr3x+2048*(1-peek($70005));
 
 raml^[$1801e]:=raml^[$1800B];
-box(0,0,300,100,0); outtextxyz(0,0,floattostr(ftt),15,2,2) ;
-box(500,500,300,100,0); outtextxyz(500,500,floattostr(testoperator.adsrstate),15,2,2);        outtextxyz(500,532,floattostr(testoperator.adsrval),15,2,2);
+//box(0,0,300,100,0); outtextxyz(0,0,floattostr(ftt),15,2,2) ;
+box(500,500,300,100,0); outtextxyz(500,500,floattostr(gain),42,2,2);  outtextxyz(500,550,floattostr(fnotes[69]),42,2,2);
 
 end;
 

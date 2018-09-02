@@ -1,20 +1,8 @@
 unit midi;
 
 // pik33@o2.pl
-// uses fragnments of code from midi.pas
-// original note for midi.pas below
 
-{*******************************************************************************
-*                                                                              *
-*                                MIDI.PAS                                      *
-*                                                                              *
-*     This file is based on the MIDI device classes by Adrian Meyer            *
-*     This file was taken from the ZIP archive 'demo_MidiDevices_D6.zip'       *
-*     and partly changed by me, some changes take over from  'DAV_MidiIO.pas'  *
-*                                                                              *
-*                       latest changes 2015-04-13                              *
-********************************************************************************
-}
+
 
 {$mode objfpc}{$H+}
 

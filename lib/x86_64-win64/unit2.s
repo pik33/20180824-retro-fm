@@ -44,11 +44,11 @@ UNIT2$_$TFORM2_$__$$_BUTTON1CLICK$TOBJECT:
 .Lt2:
 .Ll4:
 
-.section .text.n_unit2$_$tform2_$_timer1timer$tobject_$$_fin$3,"x"
+.section .text.n_unit2$_$tform2_$_timer1timer$tobject_$$_fin$4,"x"
 	.balign 16,0x90
-UNIT2$_$TFORM2_$_TIMER1TIMER$TOBJECT_$$_fin$3:
+UNIT2$_$TFORM2_$_TIMER1TIMER$TOBJECT_$$_fin$4:
 .Lc4:
-.seh_proc UNIT2$_$TFORM2_$_TIMER1TIMER$TOBJECT_$$_fin$3
+.seh_proc UNIT2$_$TFORM2_$_TIMER1TIMER$TOBJECT_$$_fin$4
 .Ll5:
 # [42] begin
 	pushq	%rbp
@@ -142,7 +142,7 @@ UNIT2$_$TFORM2_$__$$_TIMER1TIMER$TOBJECT:
 	nop
 .Lj10:
 	movq	%rbp,%rcx
-	call	UNIT2$_$TFORM2_$_TIMER1TIMER$TOBJECT_$$_fin$3
+	call	UNIT2$_$TFORM2_$_TIMER1TIMER$TOBJECT_$$_fin$4
 .Ll16:
 # [52] end;
 	nop
@@ -155,7 +155,7 @@ UNIT2$_$TFORM2_$__$$_TIMER1TIMER$TOBJECT:
 	.long	0
 	.rva	.Lj9
 	.rva	.Lj10
-	.rva	UNIT2$_$TFORM2_$_TIMER1TIMER$TOBJECT_$$_fin$3
+	.rva	UNIT2$_$TFORM2_$_TIMER1TIMER$TOBJECT_$$_fin$4
 
 .section .text.n_unit2$_$tform2_$__$$_timer1timer$tobject,"x"
 .seh_endproc
@@ -670,12 +670,12 @@ RTTI_$UNIT2_$$_TFORM2:
 # Syms - Begin Staticsymtable
 # Symbol UNIT2_$$_init$
 # Syms - End Staticsymtable
-# Procdef $fin$3(<^untyped>) is nested;
+# Procdef $fin$4(<^untyped>) is nested;
 	.uleb128	3
-	.ascii	"fin$3\000"
+	.ascii	"fin$4\000"
 	.byte	1
 	.byte	65
-	.quad	UNIT2$_$TFORM2_$_TIMER1TIMER$TOBJECT_$$_fin$3
+	.quad	UNIT2$_$TFORM2_$_TIMER1TIMER$TOBJECT_$$_fin$4
 	.quad	.Lt1
 # Symbol parentfp
 	.uleb128	4
@@ -1157,7 +1157,7 @@ RTTI_$UNIT2_$$_TFORM2:
 	.byte	144
 	.uleb128	1
 	.long	.La20-.Ldebug_info0
-# Symbol fin$3
+# Symbol fin$4
 	.byte	0
 	.byte	0
 .La2:
@@ -84175,7 +84175,7 @@ RTTI_$UNIT2_$$_TFORM2:
 	.byte	1
 	.byte	1
 # ###################
-# function: UNIT2$_$TFORM2_$_TIMER1TIMER$TOBJECT_$$_fin$3
+# function: UNIT2$_$TFORM2_$_TIMER1TIMER$TOBJECT_$$_fin$4
 # [42:1]
 	.byte	0
 	.uleb128	9

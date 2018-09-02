@@ -8,7 +8,7 @@ uses
   Classes, SysUtils,math;
 
 
-const maxchannel=3; // testing with SID
+const maxchannel=32; // testing with SID
 
 
 type TSynthCtrl = class(TThread)
@@ -20,7 +20,7 @@ type TSynthCtrl = class(TThread)
      end;
 
 var channels:array[0..maxchannel-1] of int64;
-    notes:array[0..127] of integer;
+    notes:array[0..127,0..4] of integer;
 
     keymap2:array[0..255] of byte=(
  //    0   1   2   3   4   5   6   7   8   9
@@ -79,20 +79,20 @@ procedure TSynthCtrl.execute;
 label p101;
 
 var md,aa,aaa,aaaa,f:cardinal;
-    i,ch:integer;
+    i,j,ch:integer;
     key:cardinal;
 
 begin
 for i:=0 to maxchannel-1 do channels[i]:=0;
-for i:=0 to 127 do notes[i]:=maxchannel;
+for j:=0 to 4 do for i:=0 to 127 do notes[i,j]:=maxchannel;
 
 repeat
 
 key:=readkeybuffer;
 //if key=32 then testoperator.adsrstate:=1;
 //if key=32+$10000 then testoperator.adsrstate:=5;
-if key=32 then for i:=0 to 7 do testvoice.operators[i].adsrstate:=1;
-if key=32+$10000 then for i:=0 to 7 do testvoice.operators[0].adsrstate:=5;
+if key=32 then for i:=0 to 7 do voices[0].operators[i].adsrstate:=1;
+if key=32+$10000 then for i:=0 to 7 do voices[0].operators[i].adsrstate:=5;
 if key<>$FFFFFFFF then
   begin
   if key<$10000 then
@@ -125,27 +125,27 @@ if md<>$FFFFFFFF then
   aaa:=(md and $FF00) shr 8;
   aaaa:=(md and $FF0000) shr 16 ;
   midireceived:=0;
-  f:=round(7493*power(2,(aaa-69)/12));
+  f:=round(7492*power(2,(aaa-69)/12));
   if (aa=144) and (aaaa>0) then
     begin
     ch:=allocatechannel(1);
     if ch<maxchannel then
       begin
-      for i:=0 to 127 do if notes[i]=ch then notes[i]:=maxchannel;
-      notes[aaa]:=ch;
+      for i:=0 to 127 do if notes[i,0]=ch then notes[i,0]:=maxchannel;
+      notes[aaa,0]:=ch;
       noteon(ch,aaa,aaaa,0);
       end;
     end;
   if (aa=144) and (aaaa=0) then
     begin
     i:=-1;
-    ch:=notes[aaa];
+    ch:=notes[aaa,0];
     noteoff(ch,aaa);
     deallocatechannel(ch);
-    notes[aaa]:=maxchannel;
+    notes[aaa,0]:=maxchannel;
     end;
 
-  blit($F000000,300,396,$F000000,300,300,300,96,1792,1792);
+  blit($F000000,300,300,$F000000,300,204,300,192,1792,1792);
   box(300,396,300,96,0);
   outtextxyz(300,396,inttostr(aa),15,2,2);
   outtextxyz(300,428,inttostr(aaa),15,2,2);
@@ -201,40 +201,54 @@ else
   result:=q;
   channels[q]:=gettime;
   end;
+    box(1000,200,200,100,0); outtextxyz(1000,200,inttostr(result),15,2,2);
 end;
-
 
 procedure noteon(channel,note,velocity,preset:integer);
 
-// experimental version for SID
+
 label p999;
-var base,f:integer;
+var i:integer;
+    f:double;
 
 begin
 if (channel>=maxchannel) or (channel<0) then goto p999;
-base:=channel*7;
-f:=round(7493*power(2,(note-69)/12));
+f:=fnotes[note] ;
+voices[channel].setfreq(f);
+for i:=0 to 7 do voices[channel].operators[i].vel:=flogtable[49152+128*velocity];
+{if note<60 then voices[channel].operators[0].mul1:=20000 else} voices[channel].operators[0].mul1:=16384;
+{if note<60 then voices[channel].operators[2].mul3:=20000 else }voices[channel].operators[2].mul3:=16384;
+{if note<60 then voices[channel].operators[4].mul5:=20000 else} voices[channel].operators[4].mul5:=16384;
+voices[channel].operators[1].mul1:=10500;
+voices[channel].operators[3].mul3:=10500;
+voices[channel].operators[5].mul5:=10500;
+{if note<60 then voices[channel].operators[1].adsrbias:=0.9 else } voices[channel].operators[1].adsrbias:=0;
+{if note<60 then voices[channel].operators[3].adsrbias:=0.9 else }voices[channel].operators[3].adsrbias:=0;
+{if note<60 then voices[channel].operators[5].adsrbias:=0.9 else} voices[channel].operators[5].adsrbias:=0;
+voices[channel].operators[1].keysense:=0.1;
+voices[channel].operators[3].keysense:=0.1;
+voices[channel].operators[5].keysense:=0.1;
+voices[channel].outmuls[1]:=1;
+voices[channel].outmuls[3]:=1;
+voices[channel].outmuls[5]:=1;
+voices[channel].outmuls[0]:=1;
+voices[channel].outmuls[2]:=1;
+voices[channel].outmuls[4]:=1;
 
-  poke(base+$d400,f and 255);
-  poke(base+$d401,f shr 8);
-  poke(base+$d402,0);
-  poke(base+$D403,8);
-  poke(base+$d405,$18);
-  poke(base+$d406,$8+(velocity shl 1) and $F0);
-  poke($d418,$0f);
-  poke(base+$d404,$41);
+for i:=0 to 7 do voices[channel].operators[i].adsrstate:=1;
 p999:
 end;
+
+
+
 
 procedure noteoff(channel, note:integer);
 
 label p999;
-var base:integer;
+var i:integer;
 
 begin
-if (channel>=maxchannel) or (channel<0) then goto p999;
-base:=channel*7;
-poke(base+$d404,$40);
+if channel<maxchannel then for i:=0 to 7 do voices[channel].operators[i].adsrstate:=5;
 p999:
 end;
 

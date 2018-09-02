@@ -114,17 +114,17 @@ var fh,filetype:integer;
 
 
     de:integer=0;
-    da:integer=64000;
-    dl:array[0..192000] of TSample;
+    da:integer=32000;
+    dl:array[0..192000] of myfloat;
     re:integer=0;
     ra:integer=731;
-    rl:array[0..192000] of TSample;
+    rl:array[0..192000] of myfloat;
 
         oldsc:integer=0;
    sc:integer=0;
    edelay:boolean=false;
    ereverb:boolean=false;
-
+   gain:myfloat=1.0;
 
    keymap2:array[0..127] of byte=(
 //    0   1   2   3   4   5   6   7   8   9
@@ -176,8 +176,8 @@ var fh,filetype:integer;
     function sid(mode:integer):tsample;
     function noise2:cardinal;
     function noise3:cardinal;
-    function delay1(s:TSample):TSample;
-    function reverb1(s:TSample):TSample;
+    function delay1(s:myfloat):myfloat;
+  //  function reverb1(s:TSample):TSample;
  
     function readkeybuffer:cardinal;
     procedure writekeybuffer(a:integer);
@@ -193,7 +193,6 @@ var
 var sinetable:array[0..65535] of integer;
     logtable:array[0..65535] of cardinal;
     outputtable:array[0..8191] of integer;
-    notes:array[0..127] of integer;
     opdata:array[0..65535] of cardinal;
 
 
@@ -209,9 +208,7 @@ procedure sdlevents; forward;
 procedure AudioCallback(userdata:pointer; audio:Pbyte; length:integer); cdecl;    forward;
 function sdl_sound_init:integer; forward;
 function antialias6(input:double;var ft:Tfiltertable):double; forward;
-procedure initnotes; forward;
-procedure initsinetable; forward;
-procedure initlogtable; forward;
+
 
 
 
@@ -349,25 +346,7 @@ var a,i:integer;
 
 begin
 
-testoperator:=TFmOperator.create(0,@outputtable );
-testoperator.init;
-testvoice:=TFmVoice.create;
-<<<<<<< HEAD
-testvoice.operators[0].mul1:=16384;
-testvoice.operators[1].mul1:=10000;
-//testvoice.outmuls[1]:=1;
-testvoice.operators[0].freq:=150; //440*(65536/192000);  ;
-testvoice.operators[1].freq:=300; //2*testvoice.operators[0].freq  ;
-=======
-testvoice.operators[0].mul0:=65536;
-testvoice.operators[1].mul1:=10000;
-testvoice.operators[1].freq:=440*(65536/192000);  ;
->>>>>>> 725a1108cb4e4a744725e3f58830ccb1a1bf67d0
-for i:=0 to 15 do srtablei[i]:=round(1073741824*(1-attacktable[i]));
-for i:=0 to 15 do attacktablei[i]:=round(1073741824*attacktable[i]);
-initnotes;
-initsinetable;
-initlogtable;
+initvoices;
 r1:=virtualalloc(nil,268435456, MEM_COMMIT or MEM_RESERVE,PAGE_EXECUTE_READWRITE);  // get 256 MB ram
 p2:=virtualalloc(nil,20971520, MEM_COMMIT or MEM_RESERVE,PAGE_READWRITE);  // get the RAM for the framebuffer
 
@@ -1223,11 +1202,11 @@ begin
 if mode=1 then  // get regs
 
   begin
-  freq1i:=(31928*(ramb^[$D400]+256*ramb^[$d401])) div 32768;
+  freq1i:=(32768* (ramb^[$D400]+256*ramb^[$d401])) div 31940;
   freq1ni:=freq1i*16;
-  freq2i:=(31928*(ramb^[$d407]+256*ramb^[$d408])) div 32768;
+  freq2i:=(32768*(ramb^[$d407]+256*ramb^[$d408])) div 31940;
   freq2ni:=freq2i*16;
-  freq3i:=(31928*(ramb^[$d40e]+256*ramb^[$d40f])) div 32768;
+  freq3i:=(32768*(ramb^[$d40e]+256*ramb^[$d40f])) div 31940;
   freq3ni:=freq3i*16;
 
   gate1:=ramb^[$d404] and 1;
@@ -1527,19 +1506,7 @@ end;
 
 
 
-procedure initnotes;
 
-var i:integer;
-    q:double;
-
-begin
-q:=c03;
-for i:=0 to 127 do
-  begin
-  notes[i]:=round(q*norm960*65536);
-  q:=q*a212;
-  end;
-end;
 
 procedure initsinetable ;
 
@@ -1788,9 +1755,9 @@ function sdl_sound_init:integer;
 
 begin
 Result:=0;
-desired.freq := 192000;                                     // sample rate
+desired.freq := 96000;                                     // sample rate
 desired.format := AUDIO_S16;                               // 16-bit samples
-desired.samples := 1920;                                    // samples for 1 callback
+desired.samples := 960;                                    // samples for 1 callback
 desired.channels := 2;                                     // stereo
 desired.callback := @AudioCallback;
 desired.userdata := nil;
@@ -1805,8 +1772,9 @@ procedure AudioCallback(userdata:pointer; audio:Pbyte; length:integer); cdecl;
 
 var audio2:psmallint;
     s:tsample;
+    fs:myfloat;
     t:int64;
-    k,i,il:integer;
+    k,i,il,j:integer;
     buf:array[0..25] of byte;
     s1:smallint;
 
@@ -1819,87 +1787,27 @@ begin
 audio2:=psmallint(audio);
 t:=gettime;
 
-for k:=0 to 3 do
+for i:=0 to 959 do
   begin
-  aa+=2500;
-  if (aa>=siddelay) then
-    begin
-    aa-=siddelay;
-    if fh>-1 then
-      begin
-      if filetype=0 then
-        begin
-        il:=fileread(fh,buf,25);
-        if skip=1 then  il:=fileread(fh,buf,25);
-        if il=25 then
-          begin
-          for i:=0 to 24 do ramb^[$d400+i]:=buf[i];
-          for i:=0 to 15 do times6502[i]:=times6502[i+1];
-          t6:=gettime;
-          times6502[15]:=0;
-          t6:=0; for i:=0 to 15 do t6+=times6502[i];
-          time6502:=t6;
-          timer1+=siddelay;
-          songtime+=siddelay;
-          end
-        else
-          begin
-          fileclose(fh);
-          fh:=-1;
-          songtime:=0;
-          timer1:=-1;
-          for i:=0 to 6 do raml^[$3500+i]:=0;
-          end;
-        end
-      else if filetype=1 then
-        begin
+ gain:=gain*1.0000002;
+if gain>1 then gain:=1;
 
-        for i:=0 to 15 do times6502[i]:=times6502[i+1];
-        t6:=gettime;
-        jsr6502(256, play);
-        times6502[15]:=gettime-t6;
-        t6:=0; for i:=0 to 15 do t6+=times6502[i];
-        time6502:=t6-15;
+  fs:=0.25*voices[0].getsample;
+  for j:=1 to 31 do
+     fs+=0.25*voices[j].getsample;
+  if edelay then fs:=delay1(fs);
+  if gain*abs(fs)>1 then gain:=1/abs(fs);
+  fs:=fs*gain;
+  s1:=round(32767*fs);
+  s[0]:=s1;
+  s[1]:=s1;
+ // if ereverb then s:=reverb1(s);
 
-        for i:=0 to 25 do buf[i]:= read6502($D400+i);
-        for i:=0 to 25 do ramb^[$d400+i]:= buf[i] ;
-
-
-        timer1+=siddelay;
-        songtime+=siddelay;
-        end;
-      end;
-    end;
-
-
-  s:=sid(1);
-  s1:=round(16384*testvoice.getsample);
-  s[0]+=s1;
-  s[1]+=s1;
-  if ereverb then s:=reverb1(s);
-  if edelay then s:=delay1(s);
-  audio2[960*k]:=s[0];
-  audio2[960*k+1]:=s[1];
+  audio2[2*i]:=s[0];
+  audio2[2*i+1]:=s[1];
   oldsc:=sc;
   sc:=s[0]+s[1];
   scope[scj div 1]:=sc; inc(scj); if scj>959 then if (oldsc<0) and (sc>0) then scj:=0 else scj:=959;
-
-  for i:=480*k+1 to 480*k+479 do
-    begin
-    s:=sid(0);
-    s1:=round(16384*testvoice.getsample);
-    s[0]+=s1;
-    s[1]:=s1;
-    if ereverb then s:=reverb1(s);
-    if edelay then s:=delay1(s);
-    audio2[2*i]:=s[0];
-    audio2[2*i+1]:=s[1];
-    oldsc:=sc;
-    sc:=s[0]+s[1];
-    scope[scj div 1]:=sc; inc(scj); if scj>959 then if (oldsc<0) and (sc>0) then scj:=0 else scj:=959;
-
-    end;
-
   end;
 
 sidtime:=gettime-t;
@@ -1927,24 +1835,24 @@ result[0]:=q1;
 result[1]:=q2;
 end;
 
-function delay1(s:TSample):TSample;
+function delay1(s:myfloat):myfloat;
 
 
 begin
-result:=(dl[de] div 2) +s;
-dl[de]:=(dl[de] div 2) +s;
+result:=(dl[de] / 2) +s;
+dl[de]:=(dl[de] / 2) +s;
 de:=(de+1) mod da;
 end;
 
 
-function reverb1(s:TSample):TSample;
+function reverb1(s:myfloat):myfloat;
 
 var a1,a2,a3,a4,a5,a6,a7,a8,a9,a10:integer;
 
 const sart:integer=1;
 
 begin
-if sart=1 then begin sart:=0; rl[0,0]:=32767; end;
+if sart=1 then begin sart:=0; rl[0]:=32767; end;
 ra:=657 ;
 a1:=(ra+re-160) mod ra;
 a2:=(ra+re-192) mod ra;

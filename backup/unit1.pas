@@ -188,7 +188,7 @@ repeat
   if peek($60028)=ord('2') then begin poke ($60028,0); siddelay:=5000; songfreq:=200; skip:=0;end;
   if peek($60028)=ord('3') then begin poke ($60028,0); siddelay:=6666; songfreq:=150; skip:=0; end;
   if peek($60028)=ord('4') then begin poke ($60028,0); siddelay:=2500; songfreq:=400; skip:=0; end;
-  if peek($60028)=ord('p') then begin poke ($60028,0); pause:=not pause; if pause then sdl_pauseaudio(1) else sdl_pauseaudio(0); end;
+//  if peek($60028)=ord('p') then begin poke ($60028,0); pause:=not pause; if pause then sdl_pauseaudio(1) else sdl_pauseaudio(0); end;
   if dpeek($60028)=16442 then begin dpoke($60028,0); if peek($70003)=0 then poke ($70003,1) else poke ($70003,0); end;
   if dpeek($60028)=16443 then begin dpoke($60028,0); if peek($70004)=0 then poke ($70004,1) else poke ($70004,0); end;
   if dpeek($60028)=16444 then begin dpoke($60028,0); if peek($70005)=0 then poke ($70005,1) else poke ($70005,0); end;
