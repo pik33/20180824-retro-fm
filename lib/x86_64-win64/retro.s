@@ -1672,7 +1672,6 @@ RETRO_$$_GRAPHICS$LONGINT:
 .globl	RETRO_$$_SCRCONVERT$POINTER$LONGINT
 RETRO_$$_SCRCONVERT$POINTER$LONGINT:
 .Lc49:
-# Temps allocated between rsp+32 and rsp+40
 .seh_proc RETRO_$$_SCRCONVERT$POINTER$LONGINT
 .Ll246:
 # [671] begin
@@ -1690,197 +1689,194 @@ RETRO_$$_SCRCONVERT$POINTER$LONGINT:
 .seh_pushreg %r14
 	pushq	%r15
 .seh_pushreg %r15
-	leaq	-48(%rsp),%rsp
+	pushq	%rbp
+.seh_pushreg %rbp
+	leaq	-40(%rsp),%rsp
 .Lc51:
-.seh_stackalloc 48
+.seh_stackalloc 40
 # Var screen located in register rcx
-# Var buf located in register r13d
-# Var b located in register r15d
-# Var pi located in register rax
-# Var i located in register ebx
-# Var j located in register r14d
-# Var k located in register ebx
-# Var l located in register r12d
+# Var buf located in register r15d
+# Var b located in register ebx
+# Var pi located in register rbp
+# Var i located in register r12d
+# Var j located in register edi
+# Var k located in register r12d
+# Var l located in register esi
 .seh_endprologue
 .Ll247:
 # [672] buf:=buf shr 1;
 	shrl	$1,%edx
-# Var buf located in register r13d
-	movl	%edx,%r13d
-# Var pi located in register rax
+# Var buf located in register r15d
+	movl	%edx,%r15d
+# Var pi located in register rbp
 # Var screen located in register rcx
 .Ll248:
 # [673] pi:=screen;
-	movq	%rcx,32(%rsp)
+	movq	%rcx,%rbp
 .Ll249:
 # [674] b:=raml^[$18003];
 	movq	U_$RETRO_$$_R1(%rip),%rax
-# Var b located in register r15d
-	movl	393228(%rax),%r15d
-# Var l located in register r12d
+# Var b located in register ebx
+	movl	393228(%rax),%ebx
+# Var l located in register esi
 .Ll250:
 # [675] l:=0;
-	movl	$0,%r12d
-# Var i located in register ebx
+	movl	$0,%esi
+# Var i located in register r12d
 .Ll251:
 # [676] for i:=0 to 39 do begin if peek($70001)=0 then b:=lpeek($10000+4*((i div 4)+lpeek($60000)  ) mod 1024); for j:=0 to 1919  do (pi+i*1920+j)^:=b; end;
-	movl	$0,%ebx
-	subl	$1,%ebx
+	movl	$0,%r12d
+	subl	$1,%r12d
 	.balign 8,0x90
 .Lj735:
-	addl	$1,%ebx
+	addl	$1,%r12d
 	movl	$458753,%ecx
 	call	RETRO_$$_PEEK$LONGINT$$BYTE
 	testb	%al,%al
 	jne	.Lj737
-	movslq	%ebx,%rax
-# PeepHole Optimization,MovMov2Mov1
-	movq	%rax,%rsi
+	movslq	%r12d,%r13
+	movq	%r13,%rax
 	sarq	$63,%rax
 	andq	$3,%rax
-	addq	%rax,%rsi
-	sarq	$2,%rsi
+	addq	%rax,%r13
+	sarq	$2,%r13
 	movl	$393216,%ecx
 	call	RETRO_$$_LPEEK$LONGINT$$LONGWORD
 	andl	$4294967295,%eax
-	leaq	(%rsi,%rax),%rax
+	leaq	(%r13,%rax),%rax
 	shlq	$2,%rax
 	cqto
 	movq	$1024,%rcx
 	idivq	%rcx
 	leaq	65536(%rdx),%rcx
 	call	RETRO_$$_LPEEK$LONGINT$$LONGWORD
-	movl	%eax,%r15d
+	movl	%eax,%ebx
 .Lj737:
-	movl	$0,%r14d
-	subl	$1,%r14d
+	movl	$0,%edi
+	subl	$1,%edi
 	.balign 8,0x90
 .Lj748:
-	addl	$1,%r14d
-	movslq	%ebx,%rax
+	addl	$1,%edi
+	movslq	%r12d,%rax
 	imulq	$1920,%rax,%rax
 	shlq	$2,%rax
-	movq	32(%rsp),%rdx
-	leaq	(%rax,%rdx),%rcx
-	movslq	%r14d,%rax
+	leaq	(%rax,%rbp),%rdx
+	movslq	%edi,%rax
 	shlq	$2,%rax
-	leaq	(%rcx,%rax),%rax
-	movl	%r15d,(%rax)
-	cmpl	$1919,%r14d
+	leaq	(%rdx,%rax),%rax
+	movl	%ebx,(%rax)
+	cmpl	$1919,%edi
 	jl	.Lj748
-	cmpl	$39,%ebx
+	cmpl	$39,%r12d
 	jl	.Lj735
-# Var k located in register ebx
+# Var k located in register r12d
 .Ll252:
 # [677] k:=76800;
-	movl	$76800,%ebx
-# Var i located in register esi
+	movl	$76800,%r12d
+# Var i located in register r13d
 .Ll253:
 # [678] for i:=40 to 1159 do
-	movl	$40,%esi
-	subl	$1,%esi
+	movl	$40,%r13d
+	subl	$1,%r13d
 	.balign 8,0x90
 .Lj755:
-	addl	$1,%esi
+	addl	$1,%r13d
 .Ll254:
 # [680] for j:=0 to 63 do begin if peek($70001)=0 then b:=lpeek($10000+4*((i div 4)+lpeek($60000) ) mod 1024); (pi+k)^:=b; k+=1; end;
-	movl	$0,%r14d
-	subl	$1,%r14d
+	movl	$0,%edi
+	subl	$1,%edi
 	.balign 8,0x90
 .Lj758:
-	addl	$1,%r14d
+	addl	$1,%edi
 	movl	$458753,%ecx
 	call	RETRO_$$_PEEK$LONGINT$$BYTE
 	testb	%al,%al
 	jne	.Lj760
-	movslq	%esi,%rax
+	movslq	%r13d,%rax
 # PeepHole Optimization,MovMov2Mov1
-	movq	%rax,%rdi
+	movq	%rax,%r14
 	sarq	$63,%rax
 	andq	$3,%rax
-	addq	%rax,%rdi
-	sarq	$2,%rdi
+	addq	%rax,%r14
+	sarq	$2,%r14
 	movl	$393216,%ecx
 	call	RETRO_$$_LPEEK$LONGINT$$LONGWORD
 	andl	$4294967295,%eax
-	leaq	(%rdi,%rax),%rax
+	leaq	(%r14,%rax),%rax
 	shlq	$2,%rax
 	cqto
 	movq	$1024,%rcx
 	idivq	%rcx
 	leaq	65536(%rdx),%rcx
 	call	RETRO_$$_LPEEK$LONGINT$$LONGWORD
-	movl	%eax,%r15d
-.Lj760:
-	movslq	%ebx,%rax
-	shlq	$2,%rax
-	movq	32(%rsp),%rdx
-	leaq	(%rax,%rdx),%rax
-	movl	%r15d,(%rax)
-	leal	1(%ebx),%eax
 	movl	%eax,%ebx
-	cmpl	$63,%r14d
+.Lj760:
+	movslq	%r12d,%rax
+	shlq	$2,%rax
+	leaq	(%rax,%rbp),%rax
+	movl	%ebx,(%rax)
+	leal	1(%r12d),%eax
+	movl	%eax,%r12d
+	cmpl	$63,%edi
 	jl	.Lj758
 .Ll255:
 # [681] for j:=0 to 1791 do begin
-	movl	$0,%r14d
-	subl	$1,%r14d
+	movl	$0,%edi
+	subl	$1,%edi
 	.balign 8,0x90
 .Lj775:
-	addl	$1,%r14d
+	addl	$1,%edi
 .Ll256:
 # [682] (pi+k)^:=raml^[$4000+ramw^[buf+l]]; k+=1; l+=1; end;
 	movq	U_$RETRO_$$_R1(%rip),%rcx
 	movq	U_$RETRO_$$_R1(%rip),%r8
-	movslq	%r13d,%rdx
+	movslq	%r15d,%rax
+	movslq	%esi,%rdx
+	leaq	(%rax,%rdx),%rax
+	movzwl	(%r8,%rax,2),%r8d
 	movslq	%r12d,%rax
-	leaq	(%rdx,%rax),%rax
-	movzwl	(%r8,%rax,2),%r9d
-	movslq	%ebx,%rax
 	shlq	$2,%rax
-	movq	32(%rsp),%r8
-	leaq	(%rax,%r8),%rdx
-	movl	65536(%rcx,%r9,4),%eax
+	leaq	(%rax,%rbp),%rdx
+	movl	65536(%rcx,%r8,4),%eax
 	movl	%eax,(%rdx)
-	leal	1(%ebx),%eax
-	movl	%eax,%ebx
 	leal	1(%r12d),%eax
 	movl	%eax,%r12d
+	leal	1(%esi),%eax
+	movl	%eax,%esi
 .Ll257:
-	cmpl	$1791,%r14d
+	cmpl	$1791,%edi
 	jl	.Lj775
 .Ll258:
 # [683] for j:=0 to 63 do begin (pi+k)^:=b; k+=1; end;
-	movl	$0,%r14d
-	subl	$1,%r14d
+	movl	$0,%edi
+	subl	$1,%edi
 	.balign 8,0x90
 .Lj784:
-	addl	$1,%r14d
-	movslq	%ebx,%rax
+	addl	$1,%edi
+	movslq	%r12d,%rax
 	shlq	$2,%rax
-	movq	32(%rsp),%rdx
-	leaq	(%rax,%rdx),%rax
-	movl	%r15d,(%rax)
-	leal	1(%ebx),%eax
-	movl	%eax,%ebx
-	cmpl	$63,%r14d
+	leaq	(%rax,%rbp),%rax
+	movl	%ebx,(%rax)
+	leal	1(%r12d),%eax
+	movl	%eax,%r12d
+	cmpl	$63,%edi
 	jl	.Lj784
 .Ll259:
-	cmpl	$1159,%esi
+	cmpl	$1159,%r13d
 	jl	.Lj755
-# Var i located in register ebx
+# Var i located in register r12d
 .Ll260:
 # [685] for i:=1160 to 1199 do begin if peek($70001)=0 then b:=lpeek($10000+4*((i div 4)+lpeek($60000) ) mod 1024); for j:=0 to 1919  do (pi+i*1920+j)^:=b; end;
-	movl	$1160,%ebx
-	subl	$1,%ebx
+	movl	$1160,%r12d
+	subl	$1,%r12d
 	.balign 8,0x90
 .Lj791:
-	addl	$1,%ebx
+	addl	$1,%r12d
 	movl	$458753,%ecx
 	call	RETRO_$$_PEEK$LONGINT$$BYTE
 	testb	%al,%al
 	jne	.Lj793
-	movslq	%ebx,%rsi
+	movslq	%r12d,%rsi
 	movq	%rsi,%rax
 	sarq	$63,%rax
 	andq	$3,%rax
@@ -1896,30 +1892,30 @@ RETRO_$$_SCRCONVERT$POINTER$LONGINT:
 	idivq	%rcx
 	leaq	65536(%rdx),%rcx
 	call	RETRO_$$_LPEEK$LONGINT$$LONGWORD
-	movl	%eax,%r15d
+	movl	%eax,%ebx
 .Lj793:
-	movl	$0,%r14d
-	subl	$1,%r14d
+	movl	$0,%edi
+	subl	$1,%edi
 	.balign 8,0x90
 .Lj804:
-	addl	$1,%r14d
-	movslq	%ebx,%rax
+	addl	$1,%edi
+	movslq	%r12d,%rax
 	imulq	$1920,%rax,%rax
 	shlq	$2,%rax
-	movq	32(%rsp),%rdx
-	leaq	(%rax,%rdx),%rcx
-	movslq	%r14d,%rax
+	leaq	(%rax,%rbp),%rdx
+	movslq	%edi,%rax
 	shlq	$2,%rax
-	leaq	(%rcx,%rax),%rax
-	movl	%r15d,(%rax)
-	cmpl	$1919,%r14d
+	leaq	(%rdx,%rax),%rax
+	movl	%ebx,(%rax)
+	cmpl	$1919,%edi
 	jl	.Lj804
-	cmpl	$1199,%ebx
+	cmpl	$1199,%r12d
 	jl	.Lj791
 .Ll261:
 # [687] end;
 	nop
-	leaq	48(%rsp),%rsp
+	leaq	40(%rsp),%rsp
+	popq	%rbp
 	popq	%r15
 	popq	%r14
 	popq	%r13
@@ -1938,7 +1934,7 @@ RETRO_$$_SCRCONVERT$POINTER$LONGINT:
 .globl	RETRO_$$_SPRITE$POINTER
 RETRO_$$_SPRITE$POINTER:
 .Lc52:
-# Temps allocated between rsp+32 and rsp+136
+# Temps allocated between rsp+32 and rsp+128
 .seh_proc RETRO_$$_SPRITE$POINTER
 .Ll263:
 # [707] begin
@@ -1956,14 +1952,16 @@ RETRO_$$_SPRITE$POINTER:
 .seh_pushreg %r14
 	pushq	%r15
 .seh_pushreg %r15
-	leaq	-144(%rsp),%rsp
+	pushq	%rbp
+.seh_pushreg %rbp
+	leaq	-136(%rsp),%rsp
 .Lc54:
-.seh_stackalloc 144
+.seh_stackalloc 136
 # Var screen located in register r15
 # Var offset located in register eax
 # Var pixel located in register eax
 # Var spritebase located in register r14d
-# Var spritedefs located in register r12d
+# Var spritedefs located in register esi
 # Var ctrl1 located in register eax
 # Var screenbase located in register rax
 # Var pi located in register r13
@@ -1976,7 +1974,7 @@ RETRO_$$_SPRITE$POINTER:
 # Var k located in register eax
 # Var l located in register eax
 # Var m located in register eax
-# Var mask located in register eax
+# Var mask located in register ebp
 .seh_endprologue
 # Var pi located in register r13
 .Ll264:
@@ -1988,10 +1986,10 @@ RETRO_$$_SPRITE$POINTER:
 .Ll265:
 # [709] spritebase:=$60040;
 	movl	$393280,%r14d
-# Var spritedefs located in register r12d
+# Var spritedefs located in register esi
 .Ll266:
 # [710] spritedefs:=$52000;
-	movl	$335872,%r12d
+	movl	$335872,%esi
 .Ll267:
 # [711] t:=gettime;
 	call	RETRO_$$_GETTIME$$INT64
@@ -2013,105 +2011,104 @@ RETRO_$$_SPRITE$POINTER:
 	movl	%edx,%eax
 	movslq	%ecx,%rcx
 	shll	%cl,%eax
-	movl	%eax,%edx
-	movq	%rdx,32(%rsp)
+	movl	%eax,%ebp
 .Ll270:
 # [715] ctrl1:=lpeek(spritebase);
 	movl	%r14d,%ecx
 	call	RETRO_$$_LPEEK$LONGINT$$LONGWORD
 	movl	%eax,%edx
-	movq	%rdx,112(%rsp)
+	movq	%rdx,104(%rsp)
 .Ll271:
 # [716] spritebase+=4;
 	leal	4(%r14d),%eax
 	movl	%eax,%r14d
 .Ll272:
 # [717] ypos:=ctrl1 shr 16;
-	movl	112(%rsp),%eax
+	movl	104(%rsp),%eax
 # PeepHole Optimization,var2
 # P=movl
 # HP1=shrl
 # HP2=movl
 # PeepHole Optimization,var2
 	shrl	$16,%eax
-	movq	%rax,88(%rsp)
+	movq	%rax,80(%rsp)
 .Ll273:
 # [718] xpos:=ctrl1 and $FFFF;
-	movl	112(%rsp),%eax
+	movl	104(%rsp),%eax
 	movl	%eax,%edx
 	andl	$65535,%edx
 	movl	%edx,%eax
-	movq	%rax,96(%rsp)
+	movq	%rax,88(%rsp)
 .Ll274:
 # [719] ctrl1:=lpeek(spritebase);
 	movl	%r14d,%ecx
 	call	RETRO_$$_LPEEK$LONGINT$$LONGWORD
 	movl	%eax,%edx
-	movq	%rdx,112(%rsp)
+	movq	%rdx,104(%rsp)
 .Ll275:
 # [720] spritebase+=4;
 	leal	4(%r14d),%eax
 	movl	%eax,%r14d
 .Ll276:
 # [721] yzoom:=(ctrl1 shr 16) and $7FFF ;
-	movl	112(%rsp),%eax
+	movl	104(%rsp),%eax
 	movl	%eax,%edx
 	shrl	$16,%edx
 	andl	$32767,%edx
 	movl	%edx,%eax
-	movq	%rax,80(%rsp)
+	movq	%rax,72(%rsp)
 .Ll277:
 # [722] if yzoom>8 then yzoom:=8;
-	movl	80(%rsp),%eax
+	movl	72(%rsp),%eax
 	cmpl	$8,%eax
 	jng	.Lj841
 	movl	$8,%eax
-	movq	%rax,80(%rsp)
+	movq	%rax,72(%rsp)
 .Lj841:
 .Ll278:
 # [723] if yzoom<1 then yzoom:=1;
-	movl	80(%rsp),%eax
+	movl	72(%rsp),%eax
 	cmpl	$1,%eax
 	jnl	.Lj845
 	movl	$1,%eax
-	movq	%rax,80(%rsp)
+	movq	%rax,72(%rsp)
 .Lj845:
 .Ll279:
 # [724] xzoom:=ctrl1 and $7FFF ;
-	movl	112(%rsp),%eax
+	movl	104(%rsp),%eax
 	movl	%eax,%edx
 	andl	$32767,%edx
 	movl	%edx,%eax
-	movq	%rax,72(%rsp)
+	movq	%rax,64(%rsp)
 .Ll280:
 # [725] if xzoom>8 then xzoom:=8;
-	movl	72(%rsp),%eax
+	movl	64(%rsp),%eax
 	cmpl	$8,%eax
 	jng	.Lj851
 	movl	$8,%eax
-	movq	%rax,72(%rsp)
+	movq	%rax,64(%rsp)
 .Lj851:
 .Ll281:
 # [726] if xzoom<1 then xzoom:=1;
-	movl	72(%rsp),%eax
+	movl	64(%rsp),%eax
 	cmpl	$1,%eax
 	jnl	.Lj855
 	movl	$1,%eax
-	movq	%rax,72(%rsp)
+	movq	%rax,64(%rsp)
 .Lj855:
 .Ll282:
 # [727] if (xpos>2048) or (ypos>2048) then
-	movl	96(%rsp),%eax
+	movl	88(%rsp),%eax
 	cmpl	$2048,%eax
 	jg	.Lj858
-	movl	88(%rsp),%eax
+	movl	80(%rsp),%eax
 	cmpl	$2048,%eax
 	jng	.Lj859
 .Lj858:
 .Ll283:
 # [729] spritedefs+=4096;
-	leal	4096(%r12d),%eax
-	movl	%eax,%r12d
+	leal	4096(%esi),%eax
+	movl	%eax,%esi
 .Ll284:
 # [730] goto p100;
 	jmp	.Lj863
@@ -2119,30 +2116,7 @@ RETRO_$$_SPRITE$POINTER:
 .Ll285:
 # [732] for l:=0 to 31 do
 	movl	$0,%eax
-	movq	%rax,64(%rsp)
-# PeepHole Optimization,var2
-# P=movl
-# HP1=subl
-# HP2=movq
-# PeepHole Optimization,var2
-	subl	$1,64(%rsp)
-	.balign 8,0x90
-.Lj866:
-# PeepHole Optimization,var2
-# P=movl
-# HP1=addl
-# HP2=movq
-# PeepHole Optimization,var2
-	addl	$1,64(%rsp)
-.Ll286:
-# [734] for m:=1 to yzoom do
-	movl	80(%rsp),%eax
-	movl	%eax,%esi
-	movl	$1,%eax
 	movq	%rax,56(%rsp)
-	movl	56(%rsp),%eax
-	cmpl	%eax,%esi
-	jl	.Lj870
 # PeepHole Optimization,var2
 # P=movl
 # HP1=subl
@@ -2150,39 +2124,22 @@ RETRO_$$_SPRITE$POINTER:
 # PeepHole Optimization,var2
 	subl	$1,56(%rsp)
 	.balign 8,0x90
-.Lj871:
+.Lj866:
 # PeepHole Optimization,var2
 # P=movl
 # HP1=addl
 # HP2=movq
 # PeepHole Optimization,var2
 	addl	$1,56(%rsp)
-.Ll287:
-# [736] offset:=xpos+1920*(ypos+yzoom*l+m-1);
-	movl	64(%rsp),%eax
-	movl	%eax,%edx
-	movl	80(%rsp),%eax
-	imull	%eax,%edx
-	movl	88(%rsp),%eax
-	leal	(%edx,%eax),%edx
-	movl	56(%rsp),%ecx
-	leal	(%edx,%ecx),%eax
-	leal	-1(%eax),%eax
-	imull	$1920,%eax,%eax
-	movl	96(%rsp),%edx
-	leal	(%eax,%edx),%ecx
-	movl	%ecx,%eax
-	movq	%rax,128(%rsp)
-.Ll288:
-# [737] screenbase:=pi+offset;
-	movslq	128(%rsp),%rax
-	shlq	$2,%rax
-	leaq	(%rax,%r13),%rax
-	movq	%rax,104(%rsp)
-.Ll289:
-# [738] for j:=0 to 31 do
-	movl	$0,%eax
+.Ll286:
+# [734] for m:=1 to yzoom do
+	movl	72(%rsp),%eax
+	movl	%eax,%r12d
+	movl	$1,%eax
 	movq	%rax,48(%rsp)
+	movl	48(%rsp),%eax
+	cmpl	%eax,%r12d
+	jl	.Lj870
 # PeepHole Optimization,var2
 # P=movl
 # HP1=subl
@@ -2190,22 +2147,39 @@ RETRO_$$_SPRITE$POINTER:
 # PeepHole Optimization,var2
 	subl	$1,48(%rsp)
 	.balign 8,0x90
-.Lj878:
+.Lj871:
 # PeepHole Optimization,var2
 # P=movl
 # HP1=addl
 # HP2=movq
 # PeepHole Optimization,var2
 	addl	$1,48(%rsp)
-.Ll290:
-# [740] for k:=1 to xzoom do
+.Ll287:
+# [736] offset:=xpos+1920*(ypos+yzoom*l+m-1);
+	movl	56(%rsp),%eax
+	movl	%eax,%ecx
 	movl	72(%rsp),%eax
-	movl	%eax,%edi
-	movl	$1,%eax
+	imull	%eax,%ecx
+	movl	80(%rsp),%edx
+	leal	(%ecx,%edx),%eax
+	movl	48(%rsp),%edx
+	leal	(%eax,%edx),%eax
+	leal	-1(%eax),%eax
+	imull	$1920,%eax,%eax
+	movl	88(%rsp),%edx
+	leal	(%eax,%edx),%ecx
+	movl	%ecx,%eax
+	movq	%rax,120(%rsp)
+.Ll288:
+# [737] screenbase:=pi+offset;
+	movslq	120(%rsp),%rax
+	shlq	$2,%rax
+	leaq	(%rax,%r13),%rax
+	movq	%rax,96(%rsp)
+.Ll289:
+# [738] for j:=0 to 31 do
+	movl	$0,%eax
 	movq	%rax,40(%rsp)
-	movl	40(%rsp),%eax
-	cmpl	%eax,%edi
-	jl	.Lj882
 # PeepHole Optimization,var2
 # P=movl
 # HP1=subl
@@ -2213,73 +2187,95 @@ RETRO_$$_SPRITE$POINTER:
 # PeepHole Optimization,var2
 	subl	$1,40(%rsp)
 	.balign 8,0x90
-.Lj883:
+.Lj878:
 # PeepHole Optimization,var2
 # P=movl
 # HP1=addl
 # HP2=movq
 # PeepHole Optimization,var2
 	addl	$1,40(%rsp)
+.Ll290:
+# [740] for k:=1 to xzoom do
+	movl	64(%rsp),%eax
+	movl	%eax,%edi
+	movl	$1,%eax
+	movq	%rax,32(%rsp)
+	movl	32(%rsp),%eax
+	cmpl	%eax,%edi
+	jl	.Lj882
+# PeepHole Optimization,var2
+# P=movl
+# HP1=subl
+# HP2=movq
+# PeepHole Optimization,var2
+	subl	$1,32(%rsp)
+	.balign 8,0x90
+.Lj883:
+# PeepHole Optimization,var2
+# P=movl
+# HP1=addl
+# HP2=movq
+# PeepHole Optimization,var2
+	addl	$1,32(%rsp)
 .Ll291:
 # [742] pixel:=lpeek(spritedefs);
-	movl	%r12d,%ecx
+	movl	%esi,%ecx
 	call	RETRO_$$_LPEEK$LONGINT$$LONGWORD
 	movl	%eax,%edx
-	movq	%rdx,120(%rsp)
+	movq	%rdx,112(%rsp)
 .Ll292:
 # [743] if ((screenbase^ and mask)=0) and (offset<2304000) and (pixel<>0) then screenbase^:=pixel;
-	movq	104(%rsp),%rax
-	movl	(%rax),%ecx
-	movl	32(%rsp),%eax
-	movl	%eax,%edx
-	andl	%ecx,%edx
-	testl	%edx,%edx
+	movq	96(%rsp),%rax
+	movl	(%rax),%edx
+	movl	%ebp,%eax
+	andl	%edx,%eax
+	testl	%eax,%eax
 	jne	.Lj889
-	movl	128(%rsp),%eax
+	movl	120(%rsp),%eax
 	cmpl	$2304000,%eax
 	jnl	.Lj889
-	movl	120(%rsp),%eax
+	movl	112(%rsp),%eax
 	testl	%eax,%eax
 	je	.Lj889
-	movl	120(%rsp),%eax
-	movq	104(%rsp),%rdx
+	movl	112(%rsp),%eax
+	movq	96(%rsp),%rdx
 	movl	%eax,(%rdx)
 .Lj889:
 .Ll293:
 # [744] screenbase+=1;
-	movq	104(%rsp),%rdx
+	movq	96(%rsp),%rdx
 	leaq	4(%rdx),%rax
-	movq	%rax,104(%rsp)
+	movq	%rax,96(%rsp)
 .Ll294:
-	movl	40(%rsp),%eax
+	movl	32(%rsp),%eax
 	cmpl	%eax,%edi
 	jg	.Lj883
 .Lj882:
 .Ll295:
 # [746] spritedefs+=4;
-	leal	4(%r12d),%eax
-	movl	%eax,%r12d
+	leal	4(%esi),%eax
+	movl	%eax,%esi
 .Ll296:
-	movl	48(%rsp),%eax
+	movl	40(%rsp),%eax
 	cmpl	$31,%eax
 	jl	.Lj878
 .Ll297:
 # [749] end;
-	leal	-128(%r12d),%eax
+	leal	-128(%esi),%eax
 .Ll298:
 # [748] spritedefs-=128
-	movl	%eax,%r12d
+	movl	%eax,%esi
 .Ll299:
-	movl	56(%rsp),%eax
-	cmpl	%eax,%esi
+	movl	48(%rsp),%eax
+	cmpl	%eax,%r12d
 	jg	.Lj871
 .Lj870:
 .Ll300:
 # [750] spritedefs+=128;
-	leal	128(%r12d),%eax
-	movl	%eax,%r12d
+	leal	128(%esi),%eax
+	movl	%eax,%esi
 .Ll301:
-	movl	64(%rsp),%eax
+	movl	56(%rsp),%eax
 	cmpl	$31,%eax
 	jl	.Lj866
 .Lj863:
@@ -2295,7 +2291,8 @@ RETRO_$$_SPRITE$POINTER:
 .Ll304:
 # [756] end;
 	nop
-	leaq	144(%rsp),%rsp
+	leaq	136(%rsp),%rsp
+	popq	%rbp
 	popq	%r15
 	popq	%r14
 	popq	%r13
@@ -2846,70 +2843,69 @@ RETRO_$$_PUTCHAR$LONGINT$LONGINT$CHAR$LONGINT:
 	leaq	-32(%rsp),%rsp
 .Lc76:
 .seh_stackalloc 32
-# Var x located in register r15d
-# Var y located in register r14d
+# Var x located in register ebx
+# Var y located in register esi
 # Var ch located in register r8b
-# Var col located in register ebx
-# Var i located in register edi
-# Var j located in register r13d
-# Var start located in register esi
-# Var b located in register r12b
+# Var col located in register edi
+# Var i located in register r15d
+# Var j located in register r14d
+# Var start located in register r12d
+# Var b located in register r13b
 .seh_endprologue
-	movl	%ecx,%r15d
-	movl	%edx,%r14d
-	movl	%r9d,%ebx
+	movl	%ecx,%ebx
+	movl	%edx,%esi
+	movl	%r9d,%edi
 # PeepHole Optimization,var9
 .Ll363:
 # [896] start:=$50000+16*ord(ch);
 	andl	$255,%r8d
 	shll	$4,%r8d
-	leal	327680(%r8d),%eax
-# Var start located in register esi
-	movl	%eax,%esi
-# Var i located in register edi
+	leal	327680(%r8d),%r12d
+# Var start located in register r12d
+# Var i located in register r15d
 .Ll364:
 # [897] for i:=0 to 15 do
-	movl	$0,%edi
-	subl	$1,%edi
+	movl	$0,%r15d
+	subl	$1,%r15d
 	.balign 8,0x90
 .Lj1068:
-	addl	$1,%edi
+	addl	$1,%r15d
 .Ll365:
 # [899] b:=ramb^[start+i];
 	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movslq	%esi,%rax
-	movslq	%edi,%rdx
+	movslq	%r12d,%rax
+	movslq	%r15d,%rdx
 	leaq	(%rax,%rdx),%rax
-	movb	(%rcx,%rax,1),%r12b
+	movb	(%rcx,%rax,1),%r13b
 .Ll366:
 # [900] for j:=0 to 7 do
-	movl	$0,%r13d
-	subl	$1,%r13d
+	movl	$0,%r14d
+	subl	$1,%r14d
 	.balign 8,0x90
 .Lj1073:
-	addl	$1,%r13d
+	addl	$1,%r14d
 .Ll367:
 # [902] if (b and (1 shl j))<>0 then
-	movslq	%r13d,%rcx
+	movslq	%r14d,%rcx
 	movl	$1,%eax
 	movslq	%ecx,%rcx
 	shll	%cl,%eax
-	movzbl	%r12b,%edx
+	movzbl	%r13b,%edx
 	andl	%eax,%edx
 	testl	%edx,%edx
 	je	.Lj1075
 .Ll368:
 # [903] putpixel(x+j,y+i,col);
-	leal	(%r14d,%edi),%edx
-	leal	(%r15d,%r13d),%ecx
-	movl	%ebx,%r8d
+	leal	(%esi,%r15d),%edx
+	leal	(%ebx,%r14d),%ecx
+	movl	%edi,%r8d
 	call	RETRO_$$_PUTPIXEL$LONGINT$LONGINT$LONGINT
 .Lj1075:
 .Ll369:
-	cmpl	$7,%r13d
+	cmpl	$7,%r14d
 	jl	.Lj1073
 .Ll370:
-	cmpl	$15,%edi
+	cmpl	$15,%r15d
 	jl	.Lj1068
 .Ll371:
 # [906] end;
@@ -3748,7 +3744,7 @@ RETRO_$$_NOISE3$$LONGWORD:
 .globl	RETRO_$$_SID$LONGINT$$TSAMPLE
 RETRO_$$_SID$LONGINT$$TSAMPLE:
 .Lc110:
-# Temps allocated between rsp+32 and rsp+96
+# Temps allocated between rsp+32 and rsp+88
 .seh_proc RETRO_$$_SID$LONGINT$$TSAMPLE
 .Ll448:
 # [1201] begin
@@ -3766,9 +3762,11 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 .seh_pushreg %r14
 	pushq	%r15
 .seh_pushreg %r15
-	leaq	-96(%rsp),%rsp
+	pushq	%rbp
+.seh_pushreg %rbp
+	leaq	-88(%rsp),%rsp
 .Lc112:
-.seh_stackalloc 96
+.seh_stackalloc 88
 # Var mode located in register edx
 # Var $result located in register rax
 # Var i located in register eax
@@ -3792,13 +3790,13 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 # Var wv2ii located in register r13
 # Var wv3ii located in register r12
 # Var fii located in register eax
-# Var fi2i located in register eax
+# Var fi2i located in register ebp
 # Var fi3i located in register eax
-# Var fouti located in register edi
-# Var fout2i located in register esi
-# Var fout3i located in register ebx
+# Var fouti located in register esi
+# Var fout2i located in register ebx
+# Var fout3i located in register edi
 .seh_endprologue
-	movq	%rcx,88(%rsp)
+	movq	%rcx,80(%rsp)
 .Ll449:
 # [1202] if mode=1 then  // get regs
 	cmpl	$1,%edx
@@ -3825,11 +3823,11 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 .Ll452:
 # [1207] freq2i:=(32768*(ramb^[$d407]+256*ramb^[$d408])) div 31940;
 	movq	U_$RETRO_$$_R1(%rip),%rax
-	movzbl	54280(%rax),%eax
-	shll	$8,%eax
-	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movzbl	54279(%rdx),%edx
-	leal	(%eax,%edx),%edx
+	movzbl	54280(%rax),%edx
+	shll	$8,%edx
+	movq	U_$RETRO_$$_R1(%rip),%rax
+	movzbl	54279(%rax),%eax
+	leal	(%edx,%eax),%edx
 	shll	$15,%edx
 	movl	$1101577085,%eax
 	mull	%edx
@@ -3844,11 +3842,11 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 .Ll454:
 # [1209] freq3i:=(32768*(ramb^[$d40e]+256*ramb^[$d40f])) div 31940;
 	movq	U_$RETRO_$$_R1(%rip),%rax
-	movzbl	54287(%rax),%edx
-	shll	$8,%edx
-	movq	U_$RETRO_$$_R1(%rip),%rax
-	movzbl	54286(%rax),%eax
-	leal	(%edx,%eax),%edx
+	movzbl	54287(%rax),%eax
+	shll	$8,%eax
+	movq	U_$RETRO_$$_R1(%rip),%rdx
+	movzbl	54286(%rdx),%edx
+	leal	(%eax,%edx),%edx
 	shll	$15,%edx
 	movl	$1101577085,%eax
 	mull	%edx
@@ -4054,11 +4052,11 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 .Ll482:
 # [1240] pw3i:=((ramb^[$d410]+256*ramb^[$d411]) and $FFF);
 	movq	U_$RETRO_$$_R1(%rip),%rax
-	movzbl	54289(%rax),%eax
-	shll	$8,%eax
-	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movzbl	54288(%rdx),%edx
-	leal	(%eax,%edx),%eax
+	movzbl	54289(%rax),%edx
+	shll	$8,%edx
+	movq	U_$RETRO_$$_R1(%rip),%rax
+	movzbl	54288(%rax),%eax
+	leal	(%edx,%eax),%eax
 	andl	$4095,%eax
 	movl	%eax,TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_PW3I(%rip)
 .Ll483:
@@ -4227,13 +4225,13 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 .Ll501:
 # [1264] for i:=1 to 5 do
 	movl	$1,%eax
-	movq	%rax,80(%rsp)
+	movq	%rax,72(%rsp)
 # PeepHole Optimization,var2
 # P=movl
 # HP1=subl
 # HP2=movq
 # PeepHole Optimization,var2
-	subl	$1,80(%rsp)
+	subl	$1,72(%rsp)
 	.balign 8,0x90
 .Lj1403:
 # PeepHole Optimization,var2
@@ -4241,7 +4239,7 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 # HP1=addl
 # HP2=movq
 # PeepHole Optimization,var2
-	addl	$1,80(%rsp)
+	addl	$1,72(%rsp)
 .Ll502:
 # [1267] pa1i:=pa1i+freq1i;
 	movl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_PA1I(%rip),%eax
@@ -4281,12 +4279,12 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	movl	%eax,TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_PA1NI(%rip)
 .Ll509:
 # [1277] pp1:=1;
-	movb	$1,72(%rsp)
+	movb	$1,64(%rsp)
 	jmp	.Lj1420
 .Lj1415:
 .Ll510:
 # [1279] else pp1:=0;
-	movb	$0,72(%rsp)
+	movb	$0,64(%rsp)
 .Lj1420:
 .Ll511:
 # [1281] pa2i:=pa2i+freq2i;
@@ -4327,12 +4325,12 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	movl	%eax,TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_PA2NI(%rip)
 .Ll518:
 # [1291] pp2:=1;
-	movb	$1,64(%rsp)
+	movb	$1,56(%rsp)
 	jmp	.Lj1439
 .Lj1434:
 .Ll519:
 # [1293] else pp2:=0;
-	movb	$0,64(%rsp)
+	movb	$0,56(%rsp)
 .Lj1439:
 .Ll520:
 # [1295] pa3i:=pa3i+freq3i;
@@ -4369,12 +4367,12 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	movl	%eax,TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_PA3NI(%rip)
 .Ll525:
 # [1301] pp3:=1;
-	movb	$1,56(%rsp)
+	movb	$1,48(%rsp)
 	jmp	.Lj1458
 .Lj1453:
 .Ll526:
 # [1303] else pp3:=0;
-	movb	$0,56(%rsp)
+	movb	$0,48(%rsp)
 .Lj1458:
 .Ll527:
 # [1307] if test1>0 then pa1i:=0;
@@ -4503,9 +4501,9 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	movl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_PA1I(%rip),%eax
 	shrl	$16,%eax
 	movl	%eax,%r15d
-	movslq	%r15d,%rax
-	leaq	U_$RETRO_$$_COMBINED(%rip),%rdx
-	movzbl	768(%rdx,%rax,1),%eax
+	movslq	%r15d,%rdx
+	leaq	U_$RETRO_$$_COMBINED(%rip),%rax
+	movzbl	768(%rax,%rdx,1),%eax
 	leaq	-128(%rax),%rax
 	shlq	$16,%rax
 	movl	%eax,TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_WV1I(%rip)
@@ -4513,7 +4511,7 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 .Lj1483:
 .Ll538:
 # [1322] 8: begin if pp1=1 then wv1i:=(noise1-128) shl 16; end;
-	cmpb	$1,72(%rsp)
+	cmpb	$1,64(%rsp)
 	jne	.Lj1473
 	call	RETRO_$$_NOISE1$$BYTE
 # PeepHole Optimization,var9
@@ -4543,7 +4541,7 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 .Lj1474:
 .Ll542:
 # [1326] else begin if pp1=1 then wv1i:=(noise1-128) shl 16; end;
-	cmpb	$1,72(%rsp)
+	cmpb	$1,64(%rsp)
 	jne	.Lj1536
 	call	RETRO_$$_NOISE1$$BYTE
 # PeepHole Optimization,var9
@@ -4671,7 +4669,7 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 .Lj1549:
 .Ll551:
 # [1340] 8: begin if pp2=1 then wv2i:=(noise2-128) shl 16; end;
-	cmpb	$1,64(%rsp)
+	cmpb	$1,56(%rsp)
 	jne	.Lj1539
 	call	RETRO_$$_NOISE2$$LONGWORD
 	andl	$4294967295,%eax
@@ -4700,7 +4698,7 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 .Lj1540:
 .Ll555:
 # [1344] else begin if pp2=1 then wv2i:=(noise2-128) shl 16; end;
-	cmpb	$1,64(%rsp)
+	cmpb	$1,56(%rsp)
 	jne	.Lj1602
 	call	RETRO_$$_NOISE2$$LONGWORD
 	andl	$4294967295,%eax
@@ -4828,7 +4826,7 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 .Lj1615:
 .Ll564:
 # [1357] 8: begin if pp3=1 then wv3i:=(noise3-128) shl 16; end;
-	cmpb	$1,56(%rsp)
+	cmpb	$1,48(%rsp)
 	jne	.Lj1605
 	call	RETRO_$$_NOISE3$$LONGWORD
 	andl	$4294967295,%eax
@@ -4845,7 +4843,7 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 .Lj1606:
 .Ll565:
 # [1361] else begin if pp3=1 then wv3i:=(noise3-128) shl 16; end;
-	cmpb	$1,56(%rsp)
+	cmpb	$1,48(%rsp)
 	jne	.Lj1662
 	call	RETRO_$$_NOISE3$$LONGWORD
 	andl	$4294967295,%eax
@@ -4884,11 +4882,11 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 # [1368] else if (adsrstate1=1) then begin adsrvol1i:=adsrvol1i+(attacktablei[sa1]); if adsrvol1i>=1073741824 then adsrstate1:=2; end
 	cmpb	$1,TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_ADSRSTATE1(%rip)
 	jne	.Lj1683
-	movzbl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_SA1(%rip),%eax
-	leaq	U_$RETRO_$$_ATTACKTABLEI(%rip),%rdx
-	movq	(%rdx,%rax,8),%rax
-	movq	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_ADSRVOL1I(%rip),%rdx
-	leaq	(%rax,%rdx),%rax
+	movzbl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_SA1(%rip),%edx
+	leaq	U_$RETRO_$$_ATTACKTABLEI(%rip),%rax
+	movq	(%rax,%rdx,8),%rdx
+	movq	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_ADSRVOL1I(%rip),%rax
+	leaq	(%rdx,%rax),%rax
 	movq	%rax,TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_ADSRVOL1I(%rip)
 	cmpq	$1073741824,TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_ADSRVOL1I(%rip)
 	jnge	.Lj1690
@@ -4968,9 +4966,9 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	jne	.Lj1731
 .Ll579:
 # [1377] adsrvol2i:=adsrvol2i+(attacktablei[sa2]); if adsrvol2i>=1073741824 then adsrstate2:=2; end
-	movzbl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_SA2(%rip),%edx
-	leaq	U_$RETRO_$$_ATTACKTABLEI(%rip),%rax
-	movq	(%rax,%rdx,8),%rdx
+	movzbl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_SA2(%rip),%eax
+	leaq	U_$RETRO_$$_ATTACKTABLEI(%rip),%rdx
+	movq	(%rdx,%rax,8),%rdx
 	movq	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_ADSRVOL2I(%rip),%rax
 	leaq	(%rdx,%rax),%rax
 	movq	%rax,TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_ADSRVOL2I(%rip)
@@ -5151,11 +5149,11 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 .Ll598:
 # [1405] wv2ii:=(wv2ii div 137438953472);
 	movq	%r13,%rax
-	movq	%rax,%rdx
-	sarq	$63,%rdx
-	movq	$137438953471,%rcx
-	andq	%rcx,%rdx
-	addq	%rdx,%rax
+	movq	%rax,%rcx
+	sarq	$63,%rcx
+	movq	$137438953471,%rdx
+	andq	%rdx,%rcx
+	addq	%rcx,%rax
 	sarq	$37,%rax
 	movq	%rax,%r13
 .Ll599:
@@ -5171,18 +5169,17 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 .Ll600:
 # [1408] fii:=1; fi2i:=1; fi3i:=1;
 	movl	$1,%eax
-	movq	%rax,48(%rsp)
+	movq	%rax,40(%rsp)
+	movl	$1,%ebp
 	movl	$1,%eax
 	movq	%rax,32(%rsp)
-	movl	$1,%eax
-	movq	%rax,40(%rsp)
 .Ll601:
 # [1409] if f1 then begin fii:=wv1ii; wv1ii:=0; end;
 	cmpb	$0,TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_F1(%rip)
 	je	.Lj1828
 	movl	%r14d,%eax
 	movl	%eax,%edx
-	movq	%rdx,48(%rsp)
+	movq	%rdx,40(%rsp)
 	movq	$0,%r14
 .Lj1828:
 .Ll602:
@@ -5190,8 +5187,7 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	cmpb	$0,TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_F2(%rip)
 	je	.Lj1834
 	movl	%r13d,%eax
-	movl	%eax,%edx
-	movq	%rdx,32(%rsp)
+	movl	%eax,%ebp
 	movq	$0,%r13
 .Lj1834:
 .Ll603:
@@ -5200,7 +5196,7 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	je	.Lj1840
 	movl	%r12d,%eax
 	movl	%eax,%edx
-	movq	%rdx,40(%rsp)
+	movq	%rdx,32(%rsp)
 	movq	$0,%r12
 .Lj1840:
 .Ll604:
@@ -5214,7 +5210,7 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	andq	$255,%rax
 	addq	%rax,%rdx
 	sarq	$8,%rdx
-	movslq	48(%rsp),%rax
+	movslq	40(%rsp),%rax
 	subq	%rdx,%rax
 	movslq	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FILTER_LI(%rip),%rdx
 	subq	%rdx,%rax
@@ -5230,7 +5226,7 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	andq	$255,%rax
 	addq	%rax,%rdx
 	sarq	$8,%rdx
-	movslq	32(%rsp),%rax
+	movslq	%ebp,%rax
 	subq	%rdx,%rax
 	movslq	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FILTER_L2I(%rip),%rdx
 	subq	%rdx,%rax
@@ -5246,7 +5242,7 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	andq	$255,%rax
 	addq	%rax,%rdx
 	sarq	$8,%rdx
-	movslq	40(%rsp),%rax
+	movslq	32(%rsp),%rax
 	subq	%rdx,%rax
 	movslq	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FILTER_L3I(%rip),%rdx
 	subq	%rdx,%rax
@@ -5338,88 +5334,88 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 .Ll613:
 # [1425] fouti:=wv1ii;
 	movl	%r14d,%eax
-	movl	%eax,%edi
+	movl	%eax,%esi
 .Ll614:
 # [1426] fouti+=filter_li and fl;
 	movl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FILTER_LI(%rip),%edx
 	movl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FL(%rip),%eax
 	andl	%edx,%eax
-	leal	(%eax,%edi),%eax
-	movl	%eax,%edi
+	leal	(%eax,%esi),%eax
+	movl	%eax,%esi
 .Ll615:
 # [1427] fouti+=filter_bi and fb;
 	movl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FILTER_BI(%rip),%edx
 	movl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FB(%rip),%eax
 	andl	%edx,%eax
-	leal	(%eax,%edi),%eax
-	movl	%eax,%edi
+	leal	(%eax,%esi),%eax
+	movl	%eax,%esi
 .Ll616:
 # [1428] fouti+=filter_hi and fu;
 	movl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FILTER_HI(%rip),%edx
 	movl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FU(%rip),%eax
 	andl	%edx,%eax
-	leal	(%eax,%edi),%eax
-	movl	%eax,%edi
+	leal	(%eax,%esi),%eax
+	movl	%eax,%esi
 .Ll617:
 # [1430] fout2i:=wv2ii;
 	movl	%r13d,%eax
-	movl	%eax,%esi
+	movl	%eax,%ebx
 .Ll618:
 # [1431] fout2i+=filter_l2i and fl;
 	movl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FILTER_L2I(%rip),%edx
 	movl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FL(%rip),%eax
 	andl	%edx,%eax
-	leal	(%eax,%esi),%eax
-	movl	%eax,%esi
+	leal	(%eax,%ebx),%eax
+	movl	%eax,%ebx
 .Ll619:
 # [1432] fout2i+=filter_b2i and fb;
 	movl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FILTER_B2I(%rip),%edx
 	movl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FB(%rip),%eax
 	andl	%edx,%eax
-	leal	(%eax,%esi),%eax
-	movl	%eax,%esi
+	leal	(%eax,%ebx),%eax
+	movl	%eax,%ebx
 .Ll620:
 # [1433] fout2i+=filter_h2i and fu;
 	movl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FILTER_H2I(%rip),%edx
 	movl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FU(%rip),%eax
 	andl	%edx,%eax
-	leal	(%eax,%esi),%eax
-	movl	%eax,%esi
+	leal	(%eax,%ebx),%eax
+	movl	%eax,%ebx
 .Ll621:
 # [1435] fout3i:=wv3ii;
 	movl	%r12d,%eax
-	movl	%eax,%ebx
+	movl	%eax,%edi
 .Ll622:
 # [1436] fout3i+=filter_l3i and fl;
 	movl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FILTER_L3I(%rip),%edx
 	movl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FL(%rip),%eax
 	andl	%edx,%eax
-	leal	(%eax,%ebx),%eax
-	movl	%eax,%ebx
+	leal	(%eax,%edi),%eax
+	movl	%eax,%edi
 .Ll623:
 # [1437] fout3i+=filter_b3i and fb;
 	movl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FILTER_B3I(%rip),%edx
 	movl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FB(%rip),%eax
 	andl	%edx,%eax
-	leal	(%eax,%ebx),%eax
-	movl	%eax,%ebx
+	leal	(%eax,%edi),%eax
+	movl	%eax,%edi
 .Ll624:
 # [1438] fout3i+=filter_h3i and fu;
 	movl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FILTER_H3I(%rip),%edx
 	movl	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_FU(%rip),%eax
 	andl	%edx,%eax
-	leal	(%eax,%ebx),%eax
-	movl	%eax,%ebx
+	leal	(%eax,%edi),%eax
+	movl	%eax,%edi
 .Ll625:
 # [1440] wv5i:=(volume*((fouti div 2)+(fout2i div 4)+ (fout2i div 2)+(fout3i)));
-	movslq	%edi,%rax
+	movslq	%esi,%rax
 # PeepHole Optimization,MovMov2Mov1
 	movq	%rax,%rcx
 	sarq	$63,%rax
 	andq	$1,%rax
 	addq	%rax,%rcx
 	sarq	$1,%rcx
-	movslq	%esi,%rax
+	movslq	%ebx,%rax
 .Ll626:
 	movq	%rax,%r8
 .Ll627:
@@ -5437,14 +5433,14 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	addq	%rdx,%rax
 	sarq	$1,%rax
 	leaq	(%rcx,%rax),%rdx
-	movslq	%ebx,%rax
+	movslq	%edi,%rax
 	leaq	(%rdx,%rax),%rdx
 	movslq	TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_VOLUME(%rip),%rax
 	imulq	%rdx,%rax
 	movl	%eax,TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_WV5I(%rip)
 .Ll628:
 # [1441] wv4i:=(volume*((fouti)+(fout2i div 4)+ (fout2i div 2)+(fout3i div 2)));
-	movslq	%esi,%rax
+	movslq	%ebx,%rax
 .Ll629:
 	movq	%rax,%r8
 .Ll630:
@@ -5454,16 +5450,16 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	andq	$3,%rax
 	addq	%rax,%rdx
 	sarq	$2,%rdx
-	movslq	%edi,%rax
+	movslq	%esi,%rax
 	leaq	(%rdx,%rax),%rcx
-	movq	%r8,%rdx
-	movq	%rdx,%rax
-	sarq	$63,%rax
-	andq	$1,%rax
-	addq	%rax,%rdx
-	sarq	$1,%rdx
-	leaq	(%rcx,%rdx),%rcx
-	movslq	%ebx,%rax
+	movq	%r8,%rax
+	movq	%rax,%rdx
+	sarq	$63,%rdx
+	andq	$1,%rdx
+	addq	%rdx,%rax
+	sarq	$1,%rax
+	leaq	(%rcx,%rax),%rcx
+	movslq	%edi,%rax
 # PeepHole Optimization,MovMov2Mov1
 	movq	%rax,%rdx
 	sarq	$63,%rax
@@ -5487,7 +5483,7 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 	leal	(%edx,%eax),%eax
 	movl	%eax,TC_$RETRO$_$SID$LONGINT$$TSAMPLE_$$_SLI(%rip)
 .Ll633:
-	movl	80(%rsp),%eax
+	movl	72(%rsp),%eax
 	cmpl	$5,%eax
 	jl	.Lj1403
 .Ll634:
@@ -5530,16 +5526,17 @@ RETRO_$$_SID$LONGINT$$TSAMPLE:
 .Lj1908:
 .Ll639:
 # [1454] sid[0]:=sid1;
-	movq	88(%rsp),%rax
+	movq	80(%rsp),%rax
 	movw	%si,(%rax)
 .Ll640:
 # [1455] sid[1]:=sid1l;
-	movq	88(%rsp),%rax
+	movq	80(%rsp),%rax
 	movw	%bx,2(%rax)
 .Ll641:
 # [1456] end;
 	nop
-	leaq	96(%rsp),%rsp
+	leaq	88(%rsp),%rsp
+	popq	%rbp
 	popq	%r15
 	popq	%r14
 	popq	%r13
@@ -6705,55 +6702,55 @@ RETRO_$$_REVERB1$DOUBLE$$DOUBLE:
 # [1871] + (rl[a2] / 6)
 	andl	$4294967295,%r8d
 	movsd	(%rax,%r8,8),%xmm0
-	divsd	_$RETRO$_Ld21(%rip),%xmm0
+	mulsd	_$RETRO$_Ld35(%rip),%xmm0
 	addsd	%xmm2,%xmm0
 .Ll810:
 # [1872] + (rl[a3] / 8)
 	andl	$4294967295,%r9d
 	movsd	(%rax,%r9,8),%xmm2
-	mulsd	_$RETRO$_Ld35(%rip),%xmm2
+	mulsd	_$RETRO$_Ld36(%rip),%xmm2
 	addsd	%xmm0,%xmm2
 .Ll811:
 # [1873] + (rl[a4] / 10)
 	andl	$4294967295,%r10d
 	movsd	(%rax,%r10,8),%xmm0
-	divsd	_$RETRO$_Ld36(%rip),%xmm0
+	mulsd	_$RETRO$_Ld37(%rip),%xmm0
 	addsd	%xmm2,%xmm0
 .Ll812:
 # [1874] + (rl[a5] / 12)
 	andl	$4294967295,%r11d
 	movsd	(%rax,%r11,8),%xmm2
-	divsd	_$RETRO$_Ld37(%rip),%xmm2
+	mulsd	_$RETRO$_Ld38(%rip),%xmm2
 	addsd	%xmm0,%xmm2
 .Ll813:
 # [1875] + (rl[a6] / 14)
 	andl	$4294967295,%ebx
 	movsd	(%rax,%rbx,8),%xmm0
-	divsd	_$RETRO$_Ld38(%rip),%xmm0
+	mulsd	_$RETRO$_Ld39(%rip),%xmm0
 	addsd	%xmm2,%xmm0
 .Ll814:
 # [1876] + (rl[a7] / 16)
 	andl	$4294967295,%esi
 	movsd	(%rax,%rsi,8),%xmm2
-	mulsd	_$RETRO$_Ld39(%rip),%xmm2
+	mulsd	_$RETRO$_Ld40(%rip),%xmm2
 	addsd	%xmm0,%xmm2
 .Ll815:
 # [1877] + (rl[a8]/ 18)
 	andl	$4294967295,%edi
 	movsd	(%rax,%rdi,8),%xmm0
-	divsd	_$RETRO$_Ld40(%rip),%xmm0
+	mulsd	_$RETRO$_Ld41(%rip),%xmm0
 	addsd	%xmm2,%xmm0
 .Ll816:
 # [1878] + (rl[a9] /20)
 	andl	$4294967295,%r12d
 	movsd	(%rax,%r12,8),%xmm2
-	divsd	_$RETRO$_Ld23(%rip),%xmm2
+	mulsd	_$RETRO$_Ld42(%rip),%xmm2
 	addsd	%xmm0,%xmm2
 .Ll817:
 # [1879] + (rl[a10] / 22)
 	andl	$4294967295,%edx
 	movsd	(%rax,%rdx,8),%xmm0
-	divsd	_$RETRO$_Ld41(%rip),%xmm0
+	mulsd	_$RETRO$_Ld43(%rip),%xmm0
 	addsd	%xmm2,%xmm0
 # Var $result located in register xmm0
 .Ll818:
@@ -7078,7 +7075,7 @@ U_$RETRO_$$_OPDATA:
 VMT_$RETRO_$$_TRETRO:
 	.quad	88,-88
 	.quad	VMT_$CLASSES_$$_TTHREAD
-	.quad	.Ld42
+	.quad	.Ld44
 	.quad	0,0,0
 	.quad	RTTI_$RETRO_$$_TRETRO
 	.quad	0,0
@@ -7102,7 +7099,7 @@ VMT_$RETRO_$$_TRETRO:
 	.quad	0
 # [1889] 
 	.balign 8
-.Ld42:
+.Ld44:
 	.byte	6
 	.ascii	"TRetro"
 # End asmlist al_globals
@@ -8330,50 +8327,64 @@ TC_$RETRO$_$REVERB1$DOUBLE$$DOUBLE_$$_SART:
 	.balign 8
 .globl	_$RETRO$_Ld35
 _$RETRO$_Ld35:
-# value: 0d+1.2500000000000000E-001
-	.byte	0,0,0,0,0,0,192,63
+# value: 0d+1.6666666666666666E-001
+	.byte	85,85,85,85,85,85,197,63
 
 .section .rodata.n__$RETRO$_Ld36,"d"
 	.balign 8
 .globl	_$RETRO$_Ld36
 _$RETRO$_Ld36:
-# value: 0d+1.0000000000000000E+001
-	.byte	0,0,0,0,0,0,36,64
+# value: 0d+1.2500000000000000E-001
+	.byte	0,0,0,0,0,0,192,63
 
 .section .rodata.n__$RETRO$_Ld37,"d"
 	.balign 8
 .globl	_$RETRO$_Ld37
 _$RETRO$_Ld37:
-# value: 0d+1.2000000000000000E+001
-	.byte	0,0,0,0,0,0,40,64
+# value: 0d+1.0000000000000001E-001
+	.byte	154,153,153,153,153,153,185,63
 
 .section .rodata.n__$RETRO$_Ld38,"d"
 	.balign 8
 .globl	_$RETRO$_Ld38
 _$RETRO$_Ld38:
-# value: 0d+1.4000000000000000E+001
-	.byte	0,0,0,0,0,0,44,64
+# value: 0d+8.3333333333333329E-002
+	.byte	85,85,85,85,85,85,181,63
 
 .section .rodata.n__$RETRO$_Ld39,"d"
 	.balign 8
 .globl	_$RETRO$_Ld39
 _$RETRO$_Ld39:
-# value: 0d+6.2500000000000000E-002
-	.byte	0,0,0,0,0,0,176,63
+# value: 0d+7.1428571428571425E-002
+	.byte	146,36,73,146,36,73,178,63
 
 .section .rodata.n__$RETRO$_Ld40,"d"
 	.balign 8
 .globl	_$RETRO$_Ld40
 _$RETRO$_Ld40:
-# value: 0d+1.8000000000000000E+001
-	.byte	0,0,0,0,0,0,50,64
+# value: 0d+6.2500000000000000E-002
+	.byte	0,0,0,0,0,0,176,63
 
 .section .rodata.n__$RETRO$_Ld41,"d"
 	.balign 8
 .globl	_$RETRO$_Ld41
 _$RETRO$_Ld41:
-# value: 0d+2.2000000000000000E+001
-	.byte	0,0,0,0,0,0,54,64
+# value: 0d+5.5555555555555552E-002
+	.byte	28,199,113,28,199,113,172,63
+
+.section .rodata.n__$RETRO$_Ld42,"d"
+	.balign 8
+.globl	_$RETRO$_Ld42
+_$RETRO$_Ld42:
+# value: 0d+5.0000000000000003E-002
+	.byte	154,153,153,153,153,153,169,63
+
+.section .rodata.n__$RETRO$_Ld43,"d"
+	.balign 8
+.globl	_$RETRO$_Ld43
+_$RETRO$_Ld43:
+# value: 0d+4.5454545454545456E-002
+	.byte	70,23,93,116,209,69,167,63
 # End asmlist al_typedconsts
 # Begin asmlist al_rtti
 
@@ -8657,7 +8668,7 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.byte	4
 	.long	.Lc51-.Lc49
 	.byte	14
-	.uleb128	56
+	.uleb128	48
 	.balign 4,0
 .Lc179:
 	.long	.Lc181-.Lc180
@@ -8668,7 +8679,7 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.byte	4
 	.long	.Lc54-.Lc52
 	.byte	14
-	.uleb128	152
+	.uleb128	144
 	.balign 4,0
 .Lc181:
 	.long	.Lc183-.Lc182
@@ -8890,7 +8901,7 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.byte	4
 	.long	.Lc112-.Lc110
 	.byte	14
-	.uleb128	104
+	.uleb128	96
 	.balign 4,0
 .Lc215:
 	.long	.Lc217-.Lc216
@@ -9000,8 +9011,8 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.uleb128	1
 # [189] var
 	.ascii	"retro.pas\000"
-	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
-	.ascii	"D:/programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
+	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -9709,49 +9720,49 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.ascii	"BUF\000"
 	.byte	2
 	.byte	144
-	.uleb128	13
+	.uleb128	15
 	.long	.La16-.Ldebug_info0
 # Symbol B
 	.uleb128	4
 	.ascii	"B\000"
 	.byte	2
 	.byte	144
-	.uleb128	15
+	.uleb128	3
 	.long	.La16-.Ldebug_info0
 # Symbol PI
 	.uleb128	4
 	.ascii	"PI\000"
 	.byte	2
 	.byte	144
-	.uleb128	0
+	.uleb128	6
 	.long	.La72-.Ldebug_info0
 # Symbol I
 	.uleb128	4
 	.ascii	"I\000"
 	.byte	2
 	.byte	144
-	.uleb128	3
+	.uleb128	12
 	.long	.La16-.Ldebug_info0
 # Symbol J
 	.uleb128	4
 	.ascii	"J\000"
 	.byte	2
 	.byte	144
-	.uleb128	14
+	.uleb128	5
 	.long	.La16-.Ldebug_info0
 # Symbol K
 	.uleb128	4
 	.ascii	"K\000"
 	.byte	2
 	.byte	144
-	.uleb128	3
+	.uleb128	12
 	.long	.La16-.Ldebug_info0
 # Symbol L
 	.uleb128	4
 	.ascii	"L\000"
 	.byte	2
 	.byte	144
-	.uleb128	12
+	.uleb128	4
 	.long	.La16-.Ldebug_info0
 # Definition ^LongInt
 .La72:
@@ -9865,14 +9876,14 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.ascii	"X\000"
 	.byte	2
 	.byte	144
-	.uleb128	15
+	.uleb128	3
 	.long	.La16-.Ldebug_info0
 # Symbol Y
 	.uleb128	6
 	.ascii	"Y\000"
 	.byte	2
 	.byte	144
-	.uleb128	14
+	.uleb128	4
 	.long	.La16-.Ldebug_info0
 # Symbol CH
 	.uleb128	6
@@ -9886,35 +9897,35 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.ascii	"COL\000"
 	.byte	2
 	.byte	144
-	.uleb128	3
+	.uleb128	5
 	.long	.La16-.Ldebug_info0
 # Symbol I
 	.uleb128	4
 	.ascii	"I\000"
 	.byte	2
 	.byte	144
-	.uleb128	5
+	.uleb128	15
 	.long	.La16-.Ldebug_info0
 # Symbol J
 	.uleb128	4
 	.ascii	"J\000"
 	.byte	2
 	.byte	144
-	.uleb128	13
+	.uleb128	14
 	.long	.La16-.Ldebug_info0
 # Symbol START
 	.uleb128	4
 	.ascii	"START\000"
 	.byte	2
 	.byte	144
-	.uleb128	4
+	.uleb128	12
 	.long	.La16-.Ldebug_info0
 # Symbol B
 	.uleb128	4
 	.ascii	"B\000"
 	.byte	2
 	.byte	144
-	.uleb128	12
+	.uleb128	13
 	.long	.La26-.Ldebug_info0
 	.byte	0
 # Procdef outtextxy(LongInt;LongInt;AnsiString;LongInt);
@@ -11436,7 +11447,7 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.ascii	"FI2I\000"
 	.byte	2
 	.byte	144
-	.uleb128	0
+	.uleb128	6
 	.long	.La16-.Ldebug_info0
 # Symbol FI3I
 	.uleb128	4
@@ -11450,21 +11461,21 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.ascii	"FOUTI\000"
 	.byte	2
 	.byte	144
-	.uleb128	5
+	.uleb128	4
 	.long	.La16-.Ldebug_info0
 # Symbol FOUT2I
 	.uleb128	4
 	.ascii	"FOUT2I\000"
 	.byte	2
 	.byte	144
-	.uleb128	4
+	.uleb128	3
 	.long	.La16-.Ldebug_info0
 # Symbol FOUT3I
 	.uleb128	4
 	.ascii	"FOUT3I\000"
 	.byte	2
 	.byte	144
-	.uleb128	3
+	.uleb128	5
 	.long	.La16-.Ldebug_info0
 	.byte	0
 # Procdef noise2:DWord;
@@ -11761,7 +11772,7 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.ascii	"SPRITEDEFS\000"
 	.byte	2
 	.byte	144
-	.uleb128	12
+	.uleb128	4
 	.long	.La16-.Ldebug_info0
 # Symbol CTRL1
 	.uleb128	4
@@ -11852,7 +11863,7 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.ascii	"MASK\000"
 	.byte	2
 	.byte	144
-	.uleb128	0
+	.uleb128	6
 	.long	.La80-.Ldebug_info0
 # Definition ^LongInt
 .La82:
@@ -14194,7 +14205,7 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 .La60:
 	.uleb128	19
 	.ascii	"TFMOPERATOR\000"
-	.uleb128	320
+	.uleb128	336
 	.uleb128	20
 	.byte	1
 	.byte	2
@@ -14325,109 +14336,121 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.ascii	"ADSRSTATE\000"
 	.byte	3
 	.byte	35
-	.uleb128	168
+	.uleb128	320
 	.long	.La16-.Ldebug_info0
 	.uleb128	16
 	.ascii	"ADSRVAL\000"
 	.byte	3
 	.byte	35
-	.uleb128	176
+	.uleb128	168
 	.long	.La14-.Ldebug_info0
 	.uleb128	16
 	.ascii	"AR1\000"
 	.byte	3
 	.byte	35
-	.uleb128	184
+	.uleb128	176
 	.long	.La14-.Ldebug_info0
 	.uleb128	16
 	.ascii	"AV1\000"
 	.byte	3
 	.byte	35
-	.uleb128	192
+	.uleb128	184
 	.long	.La14-.Ldebug_info0
 	.uleb128	16
 	.ascii	"AR2\000"
 	.byte	3
 	.byte	35
-	.uleb128	200
+	.uleb128	192
 	.long	.La14-.Ldebug_info0
 	.uleb128	16
 	.ascii	"AV2\000"
 	.byte	3
 	.byte	35
-	.uleb128	208
+	.uleb128	200
 	.long	.La14-.Ldebug_info0
 	.uleb128	16
 	.ascii	"AR3\000"
 	.byte	3
 	.byte	35
-	.uleb128	216
+	.uleb128	208
 	.long	.La14-.Ldebug_info0
 	.uleb128	16
 	.ascii	"AV3\000"
 	.byte	3
 	.byte	35
-	.uleb128	224
+	.uleb128	216
 	.long	.La14-.Ldebug_info0
 	.uleb128	16
 	.ascii	"AR4\000"
 	.byte	3
 	.byte	35
-	.uleb128	232
+	.uleb128	224
 	.long	.La14-.Ldebug_info0
 	.uleb128	16
 	.ascii	"AV4\000"
 	.byte	3
 	.byte	35
+	.uleb128	232
+	.long	.La14-.Ldebug_info0
+	.uleb128	16
+	.ascii	"AV\000"
+	.byte	3
+	.byte	35
 	.uleb128	240
 	.long	.La14-.Ldebug_info0
 	.uleb128	16
-	.ascii	"ADSRBIAS\000"
+	.ascii	"AR\000"
 	.byte	3
 	.byte	35
 	.uleb128	248
 	.long	.La14-.Ldebug_info0
 	.uleb128	16
-	.ascii	"VEL\000"
+	.ascii	"ADSRBIAS\000"
 	.byte	3
 	.byte	35
 	.uleb128	256
 	.long	.La14-.Ldebug_info0
 	.uleb128	16
-	.ascii	"KEYSENSE\000"
+	.ascii	"VEL\000"
 	.byte	3
 	.byte	35
 	.uleb128	264
 	.long	.La14-.Ldebug_info0
 	.uleb128	16
-	.ascii	"EXPR\000"
+	.ascii	"KEYSENSE\000"
 	.byte	3
 	.byte	35
 	.uleb128	272
 	.long	.La14-.Ldebug_info0
 	.uleb128	16
-	.ascii	"PA\000"
+	.ascii	"EXPR\000"
 	.byte	3
 	.byte	35
 	.uleb128	280
 	.long	.La14-.Ldebug_info0
 	.uleb128	16
-	.ascii	"PA2\000"
+	.ascii	"PA\000"
 	.byte	3
 	.byte	35
 	.uleb128	288
 	.long	.La14-.Ldebug_info0
 	.uleb128	16
-	.ascii	"WAVEMODE\000"
+	.ascii	"PA2\000"
 	.byte	3
 	.byte	35
 	.uleb128	296
+	.long	.La14-.Ldebug_info0
+	.uleb128	16
+	.ascii	"WAVEMODE\000"
+	.byte	3
+	.byte	35
+	.uleb128	324
 	.long	.La16-.Ldebug_info0
 	.uleb128	16
 	.ascii	"INTPA\000"
 	.byte	3
 	.byte	35
-	.uleb128	300
+	.uleb128	328
 	.long	.La16-.Ldebug_info0
 	.uleb128	16
 	.ascii	"FREQMOD\000"

@@ -26,6 +26,7 @@ type TFmOperator=class
      adsrstate:integer;
      adsrval:myfloat;
      ar1,av1,ar2,av2,ar3,av3,ar4,av4:myfloat;
+     av,ar:myfloat;
      adsrbias:myfloat;
      vel,keysense,expr:myfloat;
      pa,pa2:myfloat;
@@ -260,6 +261,7 @@ end;
 
 function TFmOperator.getsample:TSingleSample;
 
+label p101;
 
 var res64a:myfloat;
     modulator:myfloat;
@@ -276,7 +278,16 @@ begin
 freq2:=(freq+(c3*lfo1))*c4*lfo2;
 
 // stage2: compute the modulator
-
+           {
+h1:= outputtable[0]*mul0  ;
+h1+= outputtable[1]*mul1  ;
+h1+= outputtable[2]*mul2  ;
+h1+= outputtable[3]*mul3  ;
+h1+= outputtable[4]*mul4  ;
+h1+= outputtable[5]*mul5  ;
+h1+= outputtable[6]*mul6  ;
+h1+= outputtable[7]*mul7  ;
+       modulator:=h1;}
 
 modulator:=outputtable[0]*mul0
 +outputtable[1]*mul1
@@ -329,31 +340,33 @@ sample:=wptr[intpa];
 
 // adsrstates: 0-idle, 1 attack,2 decay1, 3 decay2, 4 sustain, 5 release
 
-   case adsrstate of
-    5:   // release
+if adsrstate = 5 then   // release
   begin
   adsrval:=adsrval+ar4;
   if ar4<0 then begin if adsrval<av4 then begin adsrval:=av4; adsrstate:=6; end; end
          else begin if adsrval>av4 then begin adsrval:=av4; adsrstate:=6; end; end;
+  goto p101;
   end;
-    3:   // release
+ if adsrstate =   3 then  // release
   begin
   adsrval:=adsrval+ar3;
   if ar3<0 then begin if adsrval<av3 then begin adsrval:=av3; adsrstate:=4; end; end
          else begin if adsrval>av3 then begin adsrval:=av3; adsrstate:=4; end; end;
+  goto p101;
   end;
-    2:  // release
+    if adsrstate= 2 then  // release
   begin
    adsrval:=adsrval+ar2;
   if ar2<0 then begin if adsrval<av2 then begin adsrval:=av2; adsrstate:=3; end; end
          else begin if adsrval>av2 then begin adsrval:=av2; adsrstate:=3; end; end;
+  goto p101;
   end;
-    1:   // release
+    if adsrstate=1 then    // release
   begin
   adsrval:=adsrval+ar1;
   if ar1<0 then begin if adsrval<av1 then begin adsrval:=av1; adsrstate:=2; end; end
-         else begin if adsrval>av1 then begin  adsrval:=av1; adsrstate:=2; end;  end;
-  end;
+          else begin if adsrval>av1 then begin  adsrval:=av1; adsrstate:=2; end;  end;
+p101:
  end;
 
 h1:=((1-adsrbias)*adsrval)+adsrbias;

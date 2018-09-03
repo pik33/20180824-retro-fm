@@ -140,11 +140,11 @@ SYNTHCONTROL_$$_DEALLOCATECHANNEL$LONGINT:
 .Lt4:
 .Ll12:
 
-.section .text.n_synthcontrol$_$tsynthctrl_$_execute_$$_fin$2,"x"
+.section .text.n_synthcontrol$_$tsynthctrl_$_execute_$$_fin$12,"x"
 	.balign 16,0x90
-SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$2:
+SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$12:
 .Lc8:
-.seh_proc SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$2
+.seh_proc SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$12
 .Ll13:
 # [85] begin
 	pushq	%rbp
@@ -272,7 +272,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
 	movq	8(%rdx,%rax,8),%rax
-	movl	$1,168(%rax)
+	movl	$1,320(%rax)
 	cmpl	$7,%ebx
 	jl	.Lj79
 .Lj76:
@@ -289,7 +289,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
 	movq	8(%rdx,%rax,8),%rax
-	movl	$5,168(%rax)
+	movl	$5,320(%rax)
 	cmpl	$7,%ebx
 	jl	.Lj86
 .Lj83:
@@ -464,7 +464,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	movl	%r15d,%eax
 	leaq	-69(%rax),%rax
 	cvtsi2sd	%rax,%xmm1
-	divsd	_$SYNTHCONTROL$_Ld2(%rip),%xmm1
+	mulsd	_$SYNTHCONTROL$_Ld2(%rip),%xmm1
 	movsd	_$SYNTHCONTROL$_Ld3(%rip),%xmm0
 	call	MATH_$$_POWER$DOUBLE$DOUBLE$$DOUBLE
 	mulsd	_$SYNTHCONTROL$_Ld1(%rip),%xmm0
@@ -643,7 +643,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	nop
 .Lj53:
 	movq	%rbp,%rcx
-	call	SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$2
+	call	SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$12
 .Ll65:
 # [158] end;
 	movq	-104(%rbp),%rbx
@@ -662,7 +662,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	.long	0
 	.rva	.Lj52
 	.rva	.Lj53
-	.rva	SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$2
+	.rva	SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$12
 
 .section .text.n_synthcontrol$_$tsynthctrl_$__$$_execute,"x"
 .seh_endproc
@@ -670,11 +670,11 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 .Lt7:
 .Ll66:
 
-.section .text.n_synthcontrol$_$allocatechannel$longint$$longint_$$_fin$3,"x"
+.section .text.n_synthcontrol$_$allocatechannel$longint$$longint_$$_fin$13,"x"
 	.balign 16,0x90
-SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$3:
+SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$13:
 .Lc18:
-.seh_proc SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$3
+.seh_proc SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$13
 .Ll67:
 # [172] begin
 	pushq	%rbp
@@ -873,7 +873,7 @@ SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT:
 	nop
 .Lj356:
 	movq	%rbp,%rcx
-	call	SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$3
+	call	SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$13
 .Ll93:
 # [205] end;
 	movl	%r13d,%eax
@@ -891,7 +891,7 @@ SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT:
 	.long	0
 	.rva	.Lj355
 	.rva	.Lj356
-	.rva	SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$3
+	.rva	SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$13
 
 .section .text.n_synthcontrol_$$_allocatechannel$longint$$longint,"x"
 .seh_endproc
@@ -971,7 +971,7 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	shlq	$7,%rax
 	leaq	U_$FMSYNTH_$$_FLOGTABLE(%rip),%rdx
 	movq	393216(%rdx,%rax,8),%rax
-	movq	%rax,256(%rcx)
+	movq	%rax,264(%rcx)
 	cmpl	$7,%r13d
 	jl	.Lj456
 # PeepHole Optimization,var2a
@@ -1036,7 +1036,7 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	(%rdx,%rax,8),%rax
 	movq	16(%rax),%rdx
 	movq	_$SYNTHCONTROL$_Ld6(%rip),%rax
-	movq	%rax,248(%rdx)
+	movq	%rax,256(%rdx)
 # PeepHole Optimization,var2a
 .Ll107:
 # [226] {if note<60 then voices[channel].operators[3].adsrbias:=0.9 else }voices[channel].operators[3].adsrbias:=0;
@@ -1045,7 +1045,7 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	(%rdx,%rax,8),%rax
 	movq	32(%rax),%rdx
 	movq	_$SYNTHCONTROL$_Ld6(%rip),%rax
-	movq	%rax,248(%rdx)
+	movq	%rax,256(%rdx)
 # PeepHole Optimization,var2a
 .Ll108:
 # [227] {if note<60 then voices[channel].operators[5].adsrbias:=0.9 else} voices[channel].operators[5].adsrbias:=0;
@@ -1054,7 +1054,7 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	(%rdx,%rax,8),%rax
 	movq	48(%rax),%rdx
 	movq	_$SYNTHCONTROL$_Ld6(%rip),%rax
-	movq	%rax,248(%rdx)
+	movq	%rax,256(%rdx)
 # PeepHole Optimization,var2a
 .Ll109:
 # [228] voices[channel].operators[1].keysense:=0.1;
@@ -1063,7 +1063,7 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	(%rdx,%rax,8),%rax
 	movq	16(%rax),%rdx
 	movq	_$SYNTHCONTROL$_Ld7(%rip),%rax
-	movq	%rax,264(%rdx)
+	movq	%rax,272(%rdx)
 # PeepHole Optimization,var2a
 .Ll110:
 # [229] voices[channel].operators[3].keysense:=0.1;
@@ -1072,7 +1072,7 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	(%rdx,%rax,8),%rax
 	movq	32(%rax),%rdx
 	movq	_$SYNTHCONTROL$_Ld7(%rip),%rax
-	movq	%rax,264(%rdx)
+	movq	%rax,272(%rdx)
 # PeepHole Optimization,var2a
 .Ll111:
 # [230] voices[channel].operators[5].keysense:=0.1;
@@ -1081,7 +1081,7 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	(%rdx,%rax,8),%rax
 	movq	48(%rax),%rax
 	movq	_$SYNTHCONTROL$_Ld7(%rip),%rdx
-	movq	%rdx,264(%rax)
+	movq	%rdx,272(%rax)
 # PeepHole Optimization,var2a
 .Ll112:
 # [231] voices[channel].outmuls[1]:=0.3;
@@ -1144,7 +1144,7 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 # PeepHole Optimization,var2a
 	movl	%r13d,%eax
 	movq	8(%rdx,%rax,8),%rax
-	movl	$1,168(%rax)
+	movl	$1,320(%rax)
 	cmpl	$7,%r13d
 	jl	.Lj497
 .Lj447:
@@ -1189,7 +1189,7 @@ SYNTHCONTROL_$$_NOTEOFF$LONGINT$LONGINT:
 # PeepHole Optimization,var2a
 	movl	%r8d,%eax
 	movq	8(%r9,%rax,8),%rax
-	movl	$5,168(%rax)
+	movl	$5,320(%rax)
 	cmpl	$7,%r8d
 	jl	.Lj506
 .Lj503:
@@ -1273,8 +1273,8 @@ _$SYNTHCONTROL$_Ld1:
 	.balign 8
 .globl	_$SYNTHCONTROL$_Ld2
 _$SYNTHCONTROL$_Ld2:
-# value: 0d+1.2000000000000000E+001
-	.byte	0,0,0,0,0,0,40,64
+# value: 0d+8.3333333333333329E-002
+	.byte	85,85,85,85,85,85,181,63
 
 .section .rodata.n__$SYNTHCONTROL$_Ld3,"d"
 	.balign 8
@@ -1499,8 +1499,8 @@ RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.uleb128	1
 # [63] constructor TSynthCtrl.Create(CreateSuspended : boolean);
 	.ascii	"synthcontrol.pas\000"
-	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
-	.ascii	"D:/programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
+	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -1554,12 +1554,12 @@ RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL:
 # Symbol FMSYNTH
 # Symbol SYNTHCONTROL_$$_init$
 # Syms - End Staticsymtable
-# Procdef $fin$2(<^untyped>) is nested;
+# Procdef $fin$12(<^untyped>) is nested;
 	.uleb128	4
-	.ascii	"fin$2\000"
+	.ascii	"fin$12\000"
 	.byte	1
 	.byte	65
-	.quad	SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$2
+	.quad	SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$12
 	.quad	.Lt1
 # Symbol parentfp
 	.uleb128	5
@@ -1628,14 +1628,14 @@ RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.byte	144
 	.uleb128	12
 	.long	.La16-.Ldebug_info0
-# Symbol fin$3
+# Symbol fin$13
 	.byte	0
-# Procdef $fin$3(<^untyped>) is nested;
+# Procdef $fin$13(<^untyped>) is nested;
 	.uleb128	4
-	.ascii	"fin$3\000"
+	.ascii	"fin$13\000"
 	.byte	1
 	.byte	65
-	.quad	SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$3
+	.quad	SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$13
 	.quad	.Lt3
 # Symbol parentfp
 	.uleb128	5
@@ -2290,7 +2290,7 @@ RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.byte	144
 	.uleb128	5
 	.long	.La29-.Ldebug_info0
-# Symbol fin$2
+# Symbol fin$12
 	.byte	0
 # Procdef constructor Create(<TSynthCtrl>;<Pointer>;Boolean);
 	.uleb128	6
@@ -2371,6 +2371,10 @@ RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.uleb128	11
 	.long	.La10-.Ldebug_info0
 # Defs - End unit SYNTHCONTROL has index 17
+# Defs - Begin unit UNIT2 has index 16
+# Defs - End unit UNIT2 has index 16
+# Defs - Begin unit UNIT1 has index 10
+# Defs - End unit UNIT1 has index 10
 # Defs - Begin unit RETRO has index 12
 # Defs - End unit RETRO has index 12
 # Defs - Begin unit SYNTHCONTROL has index 17
@@ -6623,7 +6627,7 @@ RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.byte	1
 	.byte	1
 # ###################
-# function: SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$2
+# function: SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$12
 # [85:1]
 	.byte	0
 	.uleb128	9
@@ -6929,7 +6933,7 @@ RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.byte	1
 	.byte	1
 # ###################
-# function: SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$3
+# function: SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$13
 # [172:1]
 	.byte	0
 	.uleb128	9

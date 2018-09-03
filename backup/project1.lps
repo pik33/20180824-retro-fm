@@ -8,7 +8,7 @@
       <Unit0>
         <Filename Value="project1.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UsageCount Value="43"/>
+        <UsageCount Value="59"/>
       </Unit0>
       <Unit1>
         <Filename Value="unit1.pas"/>
@@ -20,7 +20,7 @@
         <EditorIndex Value="1"/>
         <TopLine Value="172"/>
         <CursorPos X="10" Y="181"/>
-        <UsageCount Value="43"/>
+        <UsageCount Value="59"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
@@ -28,16 +28,16 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="5"/>
         <TopLine Value="68"/>
-        <CursorPos X="4" Y="96"/>
-        <UsageCount Value="43"/>
+        <CursorPos X="67" Y="94"/>
+        <UsageCount Value="59"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="retro.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="1878"/>
+        <TopLine Value="1856"/>
         <CursorPos X="18" Y="1883"/>
-        <UsageCount Value="43"/>
+        <UsageCount Value="59"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
@@ -46,7 +46,7 @@
         <EditorIndex Value="3"/>
         <TopLine Value="22"/>
         <CursorPos X="44" Y="37"/>
-        <UsageCount Value="43"/>
+        <UsageCount Value="59"/>
         <Loaded Value="True"/>
       </Unit4>
       <Unit5>
@@ -55,7 +55,7 @@
         <EditorIndex Value="2"/>
         <TopLine Value="72"/>
         <CursorPos Y="72"/>
-        <UsageCount Value="43"/>
+        <UsageCount Value="59"/>
         <Loaded Value="True"/>
       </Unit5>
       <Unit6>
@@ -64,25 +64,25 @@
         <ComponentName Value="Form2"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit2"/>
-        <UsageCount Value="43"/>
+        <UsageCount Value="59"/>
       </Unit6>
       <Unit7>
         <Filename Value="synthcontrol.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="6"/>
-        <TopLine Value="201"/>
+        <TopLine Value="159"/>
         <CursorPos X="33" Y="236"/>
-        <UsageCount Value="43"/>
+        <UsageCount Value="59"/>
         <Loaded Value="True"/>
       </Unit7>
       <Unit8>
         <Filename Value="fmsynth.pas"/>
         <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
-        <TopLine Value="94"/>
-        <CursorPos X="10" Y="56"/>
-        <UsageCount Value="43"/>
+        <TopLine Value="274"/>
+        <CursorPos X="24" Y="300"/>
+        <UsageCount Value="59"/>
         <Loaded Value="True"/>
       </Unit8>
     </Units>
