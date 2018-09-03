@@ -140,11 +140,11 @@ SYNTHCONTROL_$$_DEALLOCATECHANNEL$LONGINT:
 .Lt4:
 .Ll12:
 
-.section .text.n_synthcontrol$_$tsynthctrl_$_execute_$$_fin$12,"x"
+.section .text.n_synthcontrol$_$tsynthctrl_$_execute_$$_fin$2,"x"
 	.balign 16,0x90
-SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$12:
+SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$2:
 .Lc8:
-.seh_proc SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$12
+.seh_proc SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$2
 .Ll13:
 # [85] begin
 	pushq	%rbp
@@ -643,7 +643,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	nop
 .Lj53:
 	movq	%rbp,%rcx
-	call	SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$12
+	call	SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$2
 .Ll65:
 # [158] end;
 	movq	-104(%rbp),%rbx
@@ -662,7 +662,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	.long	0
 	.rva	.Lj52
 	.rva	.Lj53
-	.rva	SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$12
+	.rva	SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$2
 
 .section .text.n_synthcontrol$_$tsynthctrl_$__$$_execute,"x"
 .seh_endproc
@@ -670,11 +670,11 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 .Lt7:
 .Ll66:
 
-.section .text.n_synthcontrol$_$allocatechannel$longint$$longint_$$_fin$13,"x"
+.section .text.n_synthcontrol$_$allocatechannel$longint$$longint_$$_fin$3,"x"
 	.balign 16,0x90
-SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$13:
+SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$3:
 .Lc18:
-.seh_proc SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$13
+.seh_proc SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$3
 .Ll67:
 # [172] begin
 	pushq	%rbp
@@ -873,7 +873,7 @@ SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT:
 	nop
 .Lj356:
 	movq	%rbp,%rcx
-	call	SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$13
+	call	SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$3
 .Ll93:
 # [205] end;
 	movl	%r13d,%eax
@@ -891,7 +891,7 @@ SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT:
 	.long	0
 	.rva	.Lj355
 	.rva	.Lj356
-	.rva	SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$13
+	.rva	SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$3
 
 .section .text.n_synthcontrol_$$_allocatechannel$longint$$longint,"x"
 .seh_endproc
@@ -1499,8 +1499,8 @@ RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.uleb128	1
 # [63] constructor TSynthCtrl.Create(CreateSuspended : boolean);
 	.ascii	"synthcontrol.pas\000"
-	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
-	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
+	.ascii	"D:/programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -1554,12 +1554,12 @@ RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL:
 # Symbol FMSYNTH
 # Symbol SYNTHCONTROL_$$_init$
 # Syms - End Staticsymtable
-# Procdef $fin$12(<^untyped>) is nested;
+# Procdef $fin$2(<^untyped>) is nested;
 	.uleb128	4
-	.ascii	"fin$12\000"
+	.ascii	"fin$2\000"
 	.byte	1
 	.byte	65
-	.quad	SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$12
+	.quad	SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$2
 	.quad	.Lt1
 # Symbol parentfp
 	.uleb128	5
@@ -1628,14 +1628,14 @@ RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.byte	144
 	.uleb128	12
 	.long	.La16-.Ldebug_info0
-# Symbol fin$13
+# Symbol fin$3
 	.byte	0
-# Procdef $fin$13(<^untyped>) is nested;
+# Procdef $fin$3(<^untyped>) is nested;
 	.uleb128	4
-	.ascii	"fin$13\000"
+	.ascii	"fin$3\000"
 	.byte	1
 	.byte	65
-	.quad	SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$13
+	.quad	SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$3
 	.quad	.Lt3
 # Symbol parentfp
 	.uleb128	5
@@ -2290,7 +2290,7 @@ RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.byte	144
 	.uleb128	5
 	.long	.La29-.Ldebug_info0
-# Symbol fin$12
+# Symbol fin$2
 	.byte	0
 # Procdef constructor Create(<TSynthCtrl>;<Pointer>;Boolean);
 	.uleb128	6
@@ -2371,10 +2371,6 @@ RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.uleb128	11
 	.long	.La10-.Ldebug_info0
 # Defs - End unit SYNTHCONTROL has index 17
-# Defs - Begin unit UNIT2 has index 16
-# Defs - End unit UNIT2 has index 16
-# Defs - Begin unit UNIT1 has index 10
-# Defs - End unit UNIT1 has index 10
 # Defs - Begin unit RETRO has index 12
 # Defs - End unit RETRO has index 12
 # Defs - Begin unit SYNTHCONTROL has index 17
@@ -6627,7 +6623,7 @@ RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.byte	1
 	.byte	1
 # ###################
-# function: SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$12
+# function: SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$2
 # [85:1]
 	.byte	0
 	.uleb128	9
@@ -6933,7 +6929,7 @@ RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.byte	1
 	.byte	1
 # ###################
-# function: SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$13
+# function: SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$3
 # [172:1]
 	.byte	0
 	.uleb128	9

@@ -278,7 +278,7 @@ begin
 freq2:=(freq+(c3*lfo1))*c4*lfo2;
 
 // stage2: compute the modulator
-
+           {
 h1:= outputtable[0]*mul0  ;
 h1+= outputtable[1]*mul1  ;
 h1+= outputtable[2]*mul2  ;
@@ -287,8 +287,8 @@ h1+= outputtable[4]*mul4  ;
 h1+= outputtable[5]*mul5  ;
 h1+= outputtable[6]*mul6  ;
 h1+= outputtable[7]*mul7  ;
-       modulator:=h1;
-                     {
+       modulator:=h1;}
+
 modulator:=outputtable[0]*mul0
 +outputtable[1]*mul1
 +outputtable[2]*mul2
@@ -297,7 +297,7 @@ modulator:=outputtable[0]*mul0
 +outputtable[5]*mul5
 +outputtable[6]*mul6
 +outputtable[7]*mul7;
-                      }
+
 pa:=pa+freq2;
 pa2:=pa+modulator;
 
@@ -408,6 +408,33 @@ for i:=0 to 127 do
   fnotes[i]:=q;
   q:=q*a212;
   end;
+end;
+
+function loadxi(filename:string):integer;
+
+// returns number of samples loaded;
+// up to 16 samples can be loaded in this version
+
+type TSampleinfo=record
+     slen,sls,sle:cardinal;
+     vol,finetune,sampletype,pan:byte;
+     relnote:shortint;
+     samplename:array[0..21] of char;
+     end;
+
+var samplenum:word;
+    head1:array[0..63] of char;
+    head2:array[0..$e7] of byte;
+    sampleinfo:array[0..15] of TSampleInfo ;
+    i:integer;
+
+begin
+fh:=fileopen(filename,$40);
+fileread(fh,head1,$40);  //text header
+fileread(fh,head2,$e8);  //inst headers
+fileread(fh,samplenum,2);
+for i:=0 to samplenum-1 do fileread(fh,sampleinfo[i],40);
+//for i:=0 to samplenum do
 end;
 
 initialization

@@ -1363,22 +1363,22 @@ FMSYNTH_$$_init$:
 .Lc42:
 .seh_proc FMSYNTH_$$_init$
 .Ll180:
-# [413] initialization
+# [415] initialization
 	leaq	-40(%rsp),%rsp
 .Lc44:
 .seh_stackalloc 40
 .seh_endprologue
 .Ll181:
-# [415] initflogtable;
+# [417] initflogtable;
 	call	FMSYNTH_$$_INITFLOGTABLE
 .Ll182:
-# [416] initfsinetable;
+# [418] initfsinetable;
 	call	FMSYNTH_$$_INITFSINETABLE
 .Ll183:
-# [417] initnotes;
+# [419] initnotes;
 	call	FMSYNTH_$$_INITNOTES
 .Ll184:
-# [420] end.
+# [422] end.
 	nop
 	leaq	40(%rsp),%rsp
 	ret
@@ -1457,7 +1457,7 @@ VMT_$FMSYNTH_$$_TFMOPERATOR:
 	.quad	SYSTEM$_$TOBJECT_$__$$_GETHASHCODE$$INT64
 	.quad	SYSTEM$_$TOBJECT_$__$$_TOSTRING$$ANSISTRING
 	.quad	0
-# [422] 
+# [424] 
 	.balign 8
 .Ld29:
 	.byte	11
@@ -1984,8 +1984,8 @@ RTTI_$FMSYNTH_$$_TWAVESAMPLE:
 	.byte	8
 	.uleb128	1
 	.ascii	"fmsynth.pas\000"
-	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
-	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
+	.ascii	"D:/programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -6335,7 +6335,7 @@ RTTI_$FMSYNTH_$$_TWAVESAMPLE:
 # ###################
 # function: INIT$_$FMSYNTH
 # function: FMSYNTH_$$_init$
-# [413:1]
+# [415:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
@@ -6343,21 +6343,21 @@ RTTI_$FMSYNTH_$$_TWAVESAMPLE:
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	412
+	.sleb128	414
 	.byte	1
-# [415:1]
+# [417:1]
 	.byte	2
 	.uleb128	.Ll181-.Ll180
 	.byte	14
-# [416:1]
+# [418:1]
 	.byte	2
 	.uleb128	.Ll182-.Ll181
 	.byte	13
-# [417:1]
+# [419:1]
 	.byte	2
 	.uleb128	.Ll183-.Ll182
 	.byte	13
-# [420:1]
+# [422:1]
 	.byte	2
 	.uleb128	.Ll184-.Ll183
 	.byte	15

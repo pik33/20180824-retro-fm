@@ -16,6 +16,7 @@ type
     Button1: TButton;
     Button2: TButton;
     CheckBox1: TCheckBox;
+    Memo1: TMemo;
     OpenDialog1: TOpenDialog;
     RadioButton1: TRadioButton;
     RadioButton2: TRadioButton;
@@ -46,11 +47,12 @@ var
 
 implementation
 
+
 uses unit2;
 
 {$R *.lfm}
 procedure sidopen (fh:integer);     forward;
-
+function loadxi(filename:string):integer;   forward;
 { TForm1 }
 
 procedure TForm1.Button1Click(Sender: TObject);
@@ -524,7 +526,7 @@ end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
-  form2.show
+ if opendialog1.execute then loadxi(opendialog1.filename);
 end;
 
 
@@ -614,6 +616,51 @@ fuck:=0;
 
 //  fileclose(fh);
 
+end;
+
+function loadxi(filename:string):integer;
+
+// returns number of samples loaded;
+// up to 16 samples can be loaded in this version
+
+type TSampleinfo=record
+     slen,sls,sll:cardinal;
+     vol,finetune,sampletype,pan:byte;
+     relnote:shortint;
+     snl:byte;
+     samplename:array[0..21] of char;
+     end;
+
+var samplenum:word;
+    head1:array[0..63] of char;
+    head2:array[0..$e7] of byte;
+    sampleinfo:array[0..15] of TSampleInfo ;
+    i,j:integer;
+    s:string;
+
+begin
+fh:=fileopen(filename,$40);
+fileread(fh,head1,$40);  //text header
+fileread(fh,head2,$e8);  //inst headers
+fileread(fh,samplenum,2);
+for i:=0 to samplenum-1 do fileread(fh,sampleinfo[i],40);
+fileclose(fh);
+form1.memo1.lines.clear;
+form1.memo1.lines.add('Samples: '+inttostr(samplenum));
+form1.memo1.lines.add('');
+for i:=0 to samplenum-1 do
+  begin
+  s:='';
+  for j:=0 to 21 do s+=sampleinfo[i].samplename[j];
+
+  form1.memo1.lines.add('Sample name: '+s);
+  form1.memo1.lines.add('Sample length: '+inttostr(sampleinfo[i].slen));
+  form1.memo1.lines.add('Sample loop start: '+inttostr(sampleinfo[i].sls));
+  form1.memo1.lines.add('Sample loop length: '+inttostr(sampleinfo[i].sll));
+  form1.memo1.lines.add('Sample type :'+inttohex(sampleinfo[i].sampletype,2));
+  form1.memo1.lines.add('');
+    end;
+//for i:=0 to samplenum do
 end;
 
 end.

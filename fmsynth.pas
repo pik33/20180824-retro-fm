@@ -410,6 +410,8 @@ for i:=0 to 127 do
   end;
 end;
 
+
+
 initialization
 
 initflogtable;

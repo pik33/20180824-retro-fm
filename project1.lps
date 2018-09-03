@@ -8,7 +8,7 @@
       <Unit0>
         <Filename Value="project1.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UsageCount Value="59"/>
+        <UsageCount Value="67"/>
       </Unit0>
       <Unit1>
         <Filename Value="unit1.pas"/>
@@ -17,11 +17,13 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="172"/>
-        <CursorPos X="10" Y="181"/>
-        <UsageCount Value="59"/>
+        <TopLine Value="624"/>
+        <CursorPos X="15" Y="630"/>
+        <UsageCount Value="67"/>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="umain.pas"/>
@@ -29,15 +31,15 @@
         <EditorIndex Value="5"/>
         <TopLine Value="68"/>
         <CursorPos X="67" Y="94"/>
-        <UsageCount Value="59"/>
+        <UsageCount Value="67"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="retro.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="1856"/>
+        <TopLine Value="1878"/>
         <CursorPos X="18" Y="1883"/>
-        <UsageCount Value="59"/>
+        <UsageCount Value="67"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
@@ -46,7 +48,7 @@
         <EditorIndex Value="3"/>
         <TopLine Value="22"/>
         <CursorPos X="44" Y="37"/>
-        <UsageCount Value="59"/>
+        <UsageCount Value="67"/>
         <Loaded Value="True"/>
       </Unit4>
       <Unit5>
@@ -55,7 +57,7 @@
         <EditorIndex Value="2"/>
         <TopLine Value="72"/>
         <CursorPos Y="72"/>
-        <UsageCount Value="59"/>
+        <UsageCount Value="67"/>
         <Loaded Value="True"/>
       </Unit5>
       <Unit6>
@@ -64,7 +66,7 @@
         <ComponentName Value="Form2"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit2"/>
-        <UsageCount Value="59"/>
+        <UsageCount Value="67"/>
       </Unit6>
       <Unit7>
         <Filename Value="synthcontrol.pas"/>
@@ -72,139 +74,138 @@
         <EditorIndex Value="6"/>
         <TopLine Value="159"/>
         <CursorPos X="33" Y="236"/>
-        <UsageCount Value="59"/>
+        <UsageCount Value="67"/>
         <Loaded Value="True"/>
       </Unit7>
       <Unit8>
         <Filename Value="fmsynth.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
-        <TopLine Value="274"/>
-        <CursorPos X="19" Y="300"/>
-        <UsageCount Value="59"/>
+        <TopLine Value="380"/>
+        <CursorPos Y="413"/>
+        <UsageCount Value="67"/>
         <Loaded Value="True"/>
       </Unit8>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="umain.pas"/>
-        <Caret Line="190" Column="4" TopLine="163"/>
-      </Position1>
-      <Position2>
-        <Filename Value="umain.pas"/>
-        <Caret Line="191" Column="4" TopLine="163"/>
-      </Position2>
-      <Position3>
-        <Filename Value="umain.pas"/>
-        <Caret Line="192" Column="4" TopLine="163"/>
-      </Position3>
-      <Position4>
-        <Filename Value="umain.pas"/>
-        <Caret Line="193" Column="52" TopLine="163"/>
-      </Position4>
-      <Position5>
-        <Filename Value="umain.pas"/>
-        <Caret Line="211" Column="6" TopLine="164"/>
-      </Position5>
-      <Position6>
-        <Filename Value="umain.pas"/>
-        <Caret Line="212" Column="4" TopLine="164"/>
-      </Position6>
-      <Position7>
-        <Filename Value="umain.pas"/>
-        <Caret Line="95" Column="4" TopLine="68"/>
-      </Position7>
-      <Position8>
-        <Filename Value="retro.pas"/>
-        <Caret Line="93" Column="10" TopLine="85"/>
-      </Position8>
-      <Position9>
-        <Filename Value="retro.pas"/>
-        <Caret Line="161" Column="18" TopLine="113"/>
-      </Position9>
-      <Position10>
         <Filename Value="retro.pas"/>
         <Caret Line="162" Column="18" TopLine="114"/>
-      </Position10>
-      <Position11>
+      </Position1>
+      <Position2>
         <Filename Value="retro.pas"/>
         <Caret Line="813" Column="9" TopLine="765"/>
+      </Position2>
+      <Position3>
+        <Filename Value="retro.pas"/>
+        <Caret Line="819" Column="14" TopLine="771"/>
+      </Position3>
+      <Position4>
+        <Filename Value="retro.pas"/>
+        <Caret Line="862" Column="9" TopLine="814"/>
+      </Position4>
+      <Position5>
+        <Filename Value="retro.pas"/>
+        <Caret Line="865" Column="21" TopLine="817"/>
+      </Position5>
+      <Position6>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="18" Column="25"/>
+      </Position6>
+      <Position7>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="93" Column="6" TopLine="58"/>
+      </Position7>
+      <Position8>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="157" Column="6" TopLine="110"/>
+      </Position8>
+      <Position9>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="204" Column="10" TopLine="157"/>
+      </Position9>
+      <Position10>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="213" Column="10" TopLine="166"/>
+      </Position10>
+      <Position11>
+        <Filename Value="midi.pas"/>
       </Position11>
       <Position12>
         <Filename Value="retro.pas"/>
-        <Caret Line="819" Column="14" TopLine="771"/>
+        <Caret Line="1803" Column="25" TopLine="1776"/>
       </Position12>
       <Position13>
         <Filename Value="retro.pas"/>
-        <Caret Line="862" Column="9" TopLine="814"/>
+        <Caret Line="180" Column="17" TopLine="144"/>
       </Position13>
       <Position14>
         <Filename Value="retro.pas"/>
-        <Caret Line="865" Column="21" TopLine="817"/>
+        <Caret Line="119" Column="5" TopLine="91"/>
       </Position14>
       <Position15>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="18" Column="25"/>
+        <Filename Value="retro.pas"/>
+        <Caret Line="180" Column="21" TopLine="132"/>
       </Position15>
       <Position16>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="93" Column="6" TopLine="58"/>
+        <Filename Value="retro.pas"/>
+        <Caret Line="1803" Column="29" TopLine="1755"/>
       </Position16>
       <Position17>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="157" Column="6" TopLine="110"/>
+        <Filename Value="retro.pas"/>
+        <Caret Line="1796" Column="57" TopLine="1785"/>
       </Position17>
       <Position18>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="204" Column="10" TopLine="157"/>
+        <Filename Value="retro.pas"/>
+        <Caret Line="118" Column="35" TopLine="91"/>
       </Position18>
       <Position19>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="213" Column="10" TopLine="166"/>
+        <Filename Value="retro.pas"/>
+        <Caret Line="1798" Column="26" TopLine="1792"/>
       </Position19>
       <Position20>
-        <Filename Value="midi.pas"/>
+        <Filename Value="retro.pas"/>
+        <Caret Line="180" Column="5" TopLine="152"/>
       </Position20>
       <Position21>
         <Filename Value="retro.pas"/>
-        <Caret Line="1803" Column="25" TopLine="1776"/>
+        <Caret Line="1847" Column="4" TopLine="1833"/>
       </Position21>
       <Position22>
-        <Filename Value="retro.pas"/>
-        <Caret Line="180" Column="17" TopLine="144"/>
+        <Filename Value="fmsynth.pas"/>
+        <Caret Line="433" Column="5" TopLine="392"/>
       </Position22>
       <Position23>
-        <Filename Value="retro.pas"/>
-        <Caret Line="119" Column="5" TopLine="91"/>
+        <Filename Value="fmsynth.pas"/>
+        <Caret Line="428" Column="43" TopLine="400"/>
       </Position23>
       <Position24>
-        <Filename Value="retro.pas"/>
-        <Caret Line="180" Column="21" TopLine="132"/>
+        <Filename Value="fmsynth.pas"/>
+        <Caret Line="427" Column="24" TopLine="403"/>
       </Position24>
       <Position25>
-        <Filename Value="retro.pas"/>
-        <Caret Line="1803" Column="29" TopLine="1755"/>
+        <Filename Value="fmsynth.pas"/>
+        <Caret Line="428" Column="45" TopLine="403"/>
       </Position25>
       <Position26>
-        <Filename Value="retro.pas"/>
-        <Caret Line="1796" Column="57" TopLine="1785"/>
+        <Filename Value="fmsynth.pas"/>
+        <Caret Line="429" Column="15" TopLine="403"/>
       </Position26>
       <Position27>
-        <Filename Value="retro.pas"/>
-        <Caret Line="118" Column="35" TopLine="91"/>
+        <Filename Value="fmsynth.pas"/>
+        <Caret Line="437" Column="25" TopLine="404"/>
       </Position27>
       <Position28>
-        <Filename Value="retro.pas"/>
-        <Caret Line="1798" Column="26" TopLine="1792"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="181" Column="10" TopLine="172"/>
       </Position28>
       <Position29>
-        <Filename Value="retro.pas"/>
-        <Caret Line="180" Column="5" TopLine="152"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="661" Column="29" TopLine="620"/>
       </Position29>
       <Position30>
-        <Filename Value="retro.pas"/>
-        <Caret Line="1847" Column="4" TopLine="1833"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="529" Column="59" TopLine="527"/>
       </Position30>
     </JumpHistory>
   </ProjectSession>

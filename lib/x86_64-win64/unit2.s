@@ -357,7 +357,7 @@ VMT_$UNIT2_$$_TFORM2:
 	.quad	FORMS$_$TCUSTOMDESIGNCONTROL_$__$$_AUTOADJUSTLAYOUT$crc5F4A49A3
 	.quad	CONTROLS$_$TCONTROL_$__$$_SHOULDAUTOADJUST$BOOLEAN$BOOLEAN
 	.quad	CONTROLS$_$TCONTROL_$__$$_FIXDESIGNFONTSPPI$LONGINT
-	.quad	CONTROLS$_$TCONTROL_$__$$_SCALEFONTSPPI$DOUBLE
+	.quad	CONTROLS$_$TCONTROL_$__$$_SCALEFONTSPPI$LONGINT$DOUBLE
 	.quad	CONTROLS$_$TCONTROL_$__$$_EDITINGDONE
 	.quad	CONTROLS$_$TCONTROL_$__$$_EXECUTEDEFAULTACTION
 	.quad	CONTROLS$_$TCONTROL_$__$$_EXECUTECANCELACTION
@@ -636,8 +636,8 @@ RTTI_$UNIT2_$$_TFORM2:
 	.uleb128	1
 # [36] procedure TForm2.Button1Click(Sender: TObject);
 	.ascii	"unit2.pas\000"
-	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
-	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
+	.ascii	"D:/programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -9191,45 +9191,6 @@ RTTI_$UNIT2_$$_TFORM2:
 	.ascii	"ASCALED\000"
 	.long	.La29-.Ldebug_info0
 	.byte	0
-# Procdef AutoAdjustLayout(<TCustomDesignControl>;TLayoutAdjustmentPolicy;const LongInt;const LongInt;const LongInt;const LongInt);
-	.uleb128	17
-	.ascii	"AUTOADJUSTLAYOUT\000"
-	.byte	1
-	.byte	65
-	.byte	1
-	.byte	1
-	.byte	5
-	.byte	6
-	.byte	16
-	.uleb128	1456
-	.byte	34
-	.byte	2
-# Symbol this
-	.uleb128	16
-	.ascii	"this\000"
-	.byte	1
-	.long	.La100-.Ldebug_info0
-# Symbol AMODE
-	.uleb128	19
-	.ascii	"AMODE\000"
-	.long	.La323-.Ldebug_info0
-# Symbol AFROMPPI
-	.uleb128	19
-	.ascii	"AFROMPPI\000"
-	.long	.La120-.Ldebug_info0
-# Symbol ATOPPI
-	.uleb128	19
-	.ascii	"ATOPPI\000"
-	.long	.La120-.Ldebug_info0
-# Symbol AOLDFORMWIDTH
-	.uleb128	19
-	.ascii	"AOLDFORMWIDTH\000"
-	.long	.La120-.Ldebug_info0
-# Symbol ANEWFORMWIDTH
-	.uleb128	19
-	.ascii	"ANEWFORMWIDTH\000"
-	.long	.La120-.Ldebug_info0
-	.byte	0
 # Procdef DoAutoAdjustLayout(<TCustomDesignControl>;const TLayoutAdjustmentPolicy;const Double;const Double);
 	.uleb128	17
 	.ascii	"DOAUTOADJUSTLAYOUT\000"
@@ -9306,6 +9267,44 @@ RTTI_$UNIT2_$$_TFORM2:
 	.uleb128	19
 	.ascii	"THEOWNER\000"
 	.long	.La33-.Ldebug_info0
+	.byte	0
+# Procdef AutoAdjustLayout(<TCustomDesignControl>;TLayoutAdjustmentPolicy;const LongInt;const LongInt;const LongInt;const LongInt);
+	.uleb128	23
+	.ascii	"AUTOADJUSTLAYOUT\000"
+	.byte	1
+	.byte	65
+	.byte	1
+	.byte	1
+	.byte	5
+	.byte	6
+	.byte	16
+	.uleb128	1456
+	.byte	34
+# Symbol this
+	.uleb128	16
+	.ascii	"this\000"
+	.byte	1
+	.long	.La100-.Ldebug_info0
+# Symbol AMODE
+	.uleb128	19
+	.ascii	"AMODE\000"
+	.long	.La323-.Ldebug_info0
+# Symbol AFROMPPI
+	.uleb128	19
+	.ascii	"AFROMPPI\000"
+	.long	.La120-.Ldebug_info0
+# Symbol ATOPPI
+	.uleb128	19
+	.ascii	"ATOPPI\000"
+	.long	.La120-.Ldebug_info0
+# Symbol AOLDFORMWIDTH
+	.uleb128	19
+	.ascii	"AOLDFORMWIDTH\000"
+	.long	.La120-.Ldebug_info0
+# Symbol ANEWFORMWIDTH
+	.uleb128	19
+	.ascii	"ANEWFORMWIDTH\000"
+	.long	.La120-.Ldebug_info0
 	.byte	0
 	.byte	0
 .La101:
@@ -20348,7 +20347,7 @@ RTTI_$UNIT2_$$_TFORM2:
 	.ascii	"ADESIGNTIMEPPI\000"
 	.long	.La120-.Ldebug_info0
 	.byte	0
-# Procdef DoScaleFontPPI(<TControl>;const TFont;const Double);
+# Procdef DoScaleFontPPI(<TControl>;const TFont;const LongInt;const Double);
 	.uleb128	25
 	.ascii	"DOSCALEFONTPPI\000"
 	.byte	1
@@ -20364,6 +20363,10 @@ RTTI_$UNIT2_$$_TFORM2:
 	.uleb128	19
 	.ascii	"AFONT\000"
 	.long	.La445-.Ldebug_info0
+# Symbol ATOPPI
+	.uleb128	19
+	.ascii	"ATOPPI\000"
+	.long	.La120-.Ldebug_info0
 # Symbol APROPORTION
 	.uleb128	19
 	.ascii	"APROPORTION\000"
@@ -21532,7 +21535,7 @@ RTTI_$UNIT2_$$_TFORM2:
 	.ascii	"ADESIGNTIMEPPI\000"
 	.long	.La120-.Ldebug_info0
 	.byte	0
-# Procdef ScaleFontsPPI(<TControl>;const Double);
+# Procdef ScaleFontsPPI(<TControl>;const LongInt;const Double);
 	.uleb128	23
 	.ascii	"SCALEFONTSPPI\000"
 	.byte	1
@@ -21549,6 +21552,10 @@ RTTI_$UNIT2_$$_TFORM2:
 	.ascii	"this\000"
 	.byte	1
 	.long	.La106-.Ldebug_info0
+# Symbol ATOPPI
+	.uleb128	19
+	.ascii	"ATOPPI\000"
+	.long	.La120-.Ldebug_info0
 # Symbol APROPORTION
 	.uleb128	19
 	.ascii	"APROPORTION\000"
