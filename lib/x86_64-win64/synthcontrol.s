@@ -976,7 +976,7 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	jl	.Lj456
 # PeepHole Optimization,var2a
 .Ll100:
-# [219] {if note<60 then voices[channel].operators[0].mul1:=20000 else} voices[channel].operators[0].mul1:=16384/64;
+# [219] {if note<60 then voices[channel].operators[0].mul1:=20000 else} voices[channel].operators[0].mul1:=16384/16;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
@@ -985,7 +985,7 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	%rax,80(%rdx)
 # PeepHole Optimization,var2a
 .Ll101:
-# [220] {if note<60 then voices[channel].operators[2].mul3:=20000 else }voices[channel].operators[2].mul3:=16384/64;
+# [220] {if note<60 then voices[channel].operators[2].mul3:=20000 else }voices[channel].operators[2].mul3:=16384/16;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
@@ -994,7 +994,7 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	%rax,96(%rdx)
 # PeepHole Optimization,var2a
 .Ll102:
-# [221] {if note<60 then voices[channel].operators[4].mul5:=20000 else} voices[channel].operators[4].mul5:=16384/64;
+# [221] {if note<60 then voices[channel].operators[4].mul5:=20000 else} voices[channel].operators[4].mul5:=16384/16;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
@@ -1003,7 +1003,7 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	%rax,112(%rdx)
 # PeepHole Optimization,var2a
 .Ll103:
-# [222] voices[channel].operators[1].mul1:=10500/64;
+# [222] voices[channel].operators[1].mul1:=14000/64;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
@@ -1012,7 +1012,7 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	%rax,80(%rdx)
 # PeepHole Optimization,var2a
 .Ll104:
-# [223] voices[channel].operators[3].mul3:=10500/64;
+# [223] voices[channel].operators[3].mul3:=14000/64;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
@@ -1021,7 +1021,7 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	%rax,96(%rdx)
 # PeepHole Optimization,var2a
 .Ll105:
-# [224] voices[channel].operators[5].mul5:=10500/64;
+# [224] voices[channel].operators[5].mul5:=14000/64;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
@@ -1057,7 +1057,7 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	%rax,256(%rdx)
 # PeepHole Optimization,var2a
 .Ll109:
-# [228] voices[channel].operators[1].keysense:=0.1;
+# [228] voices[channel].operators[1].keysense:=1;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
@@ -1066,7 +1066,7 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	%rax,272(%rdx)
 # PeepHole Optimization,var2a
 .Ll110:
-# [229] voices[channel].operators[3].keysense:=0.1;
+# [229] voices[channel].operators[3].keysense:=1;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
@@ -1075,7 +1075,7 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	%rax,272(%rdx)
 # PeepHole Optimization,var2a
 .Ll111:
-# [230] voices[channel].operators[5].keysense:=0.1;
+# [230] voices[channel].operators[5].keysense:=1;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
@@ -1305,15 +1305,15 @@ _$SYNTHCONTROL$_Ld3:
 	.balign 8
 .globl	_$SYNTHCONTROL$_Ld4
 _$SYNTHCONTROL$_Ld4:
-# value: 0d+2.5600000000000000E+002
-	.byte	0,0,0,0,0,0,112,64
+# value: 0d+1.0240000000000000E+003
+	.byte	0,0,0,0,0,0,144,64
 
 .section .rodata.n__$SYNTHCONTROL$_Ld5,"d"
 	.balign 8
 .globl	_$SYNTHCONTROL$_Ld5
 _$SYNTHCONTROL$_Ld5:
-# value: 0d+1.6406250000000000E+002
-	.byte	0,0,0,0,0,130,100,64
+# value: 0d+2.1875000000000000E+002
+	.byte	0,0,0,0,0,88,107,64
 
 .section .rodata.n__$SYNTHCONTROL$_Ld6,"d"
 	.balign 8
@@ -1326,8 +1326,8 @@ _$SYNTHCONTROL$_Ld6:
 	.balign 8
 .globl	_$SYNTHCONTROL$_Ld7
 _$SYNTHCONTROL$_Ld7:
-# value: 0d+1.0000000000000001E-001
-	.byte	154,153,153,153,153,153,185,63
+# value: 0d+1.0000000000000000E+000
+	.byte	0,0,0,0,0,0,240,63
 
 .section .rodata.n__$SYNTHCONTROL$_Ld8,"d"
 	.balign 4
@@ -1517,8 +1517,8 @@ RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.uleb128	1
 # [63] constructor TSynthCtrl.Create(CreateSuspended : boolean);
 	.ascii	"synthcontrol.pas\000"
-	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
-	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
+	.ascii	"D:/programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0

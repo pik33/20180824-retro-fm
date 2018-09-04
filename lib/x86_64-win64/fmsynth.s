@@ -851,8 +851,8 @@ FMSYNTH$_$TFMOPERATOR_$__$$_INIT:
 	movq	_$FMSYNTH$_Ld22(%rip),%rdx
 	movq	%rdx,208(%rax)
 .Ll105:
-# [249] ar4:=-3/960000;
-	movq	_$FMSYNTH$_Ld23(%rip),%rdx
+# [249] ar4:=-1/960000;
+	movq	_$FMSYNTH$_Ld22(%rip),%rdx
 	movq	%rdx,224(%rax)
 .Ll106:
 # [250] av1:=1;
@@ -860,11 +860,11 @@ FMSYNTH$_$TFMOPERATOR_$__$$_INIT:
 	movq	%rdx,184(%rax)
 .Ll107:
 # [251] av2:=0.95;
-	movq	_$FMSYNTH$_Ld24(%rip),%rdx
+	movq	_$FMSYNTH$_Ld23(%rip),%rdx
 	movq	%rdx,200(%rax)
 .Ll108:
 # [252] av3:=0.9;
-	movq	_$FMSYNTH$_Ld25(%rip),%rdx
+	movq	_$FMSYNTH$_Ld24(%rip),%rdx
 	movq	%rdx,216(%rax)
 .Ll109:
 # [253] av4:=0.0;
@@ -1305,7 +1305,7 @@ FMSYNTH$_$TFMOPERATOR_$__$$_GETSAMPLE$$DOUBLE:
 # [382] if adsrstate<>0 then sample:=sample*flogtable[round(65535*h1)] else sample:=0;
 	cmpl	$0,320(%rcx)
 	je	.Lj473
-	movsd	_$FMSYNTH$_Ld26(%rip),%xmm6
+	movsd	_$FMSYNTH$_Ld25(%rip),%xmm6
 	mulsd	%xmm4,%xmm6
 	cvtsd2siq	%xmm6,%rax
 	movapd	%xmm8,%xmm6
@@ -1365,7 +1365,7 @@ FMSYNTH_$$_INITNOTES:
 # Var q located in register xmm1
 .Ll177:
 # [414] q:=c03;
-	movsd	_$FMSYNTH$_Ld27(%rip),%xmm1
+	movsd	_$FMSYNTH$_Ld26(%rip),%xmm1
 # Var i located in register edx
 .Ll178:
 # [415] for i:=0 to 127 do
@@ -1383,7 +1383,7 @@ FMSYNTH_$$_INITNOTES:
 .Ll180:
 # [418] q:=q*a212;
 	movapd	%xmm1,%xmm0
-	mulsd	_$FMSYNTH$_Ld28(%rip),%xmm0
+	mulsd	_$FMSYNTH$_Ld27(%rip),%xmm0
 	movapd	%xmm0,%xmm1
 .Ll181:
 	cmpl	$127,%edx
@@ -1478,7 +1478,7 @@ U_$FMSYNTH_$$_VOICES:
 VMT_$FMSYNTH_$$_TFMOPERATOR:
 	.quad	336,-336
 	.quad	VMT_$SYSTEM_$$_TOBJECT
-	.quad	.Ld29
+	.quad	.Ld28
 	.quad	0,0,0
 	.quad	RTTI_$FMSYNTH_$$_TFMOPERATOR
 	.quad	0,0
@@ -1500,7 +1500,7 @@ VMT_$FMSYNTH_$$_TFMOPERATOR:
 	.quad	0
 # [433] 
 	.balign 8
-.Ld29:
+.Ld28:
 	.byte	11
 	.ascii	"TFmOperator"
 
@@ -1510,7 +1510,7 @@ VMT_$FMSYNTH_$$_TFMOPERATOR:
 VMT_$FMSYNTH_$$_TFMVOICE:
 	.quad	168,-168
 	.quad	VMT_$SYSTEM_$$_TOBJECT
-	.quad	.Ld30
+	.quad	.Ld29
 	.quad	0,0,0
 	.quad	RTTI_$FMSYNTH_$$_TFMVOICE
 	.quad	0,0
@@ -1531,7 +1531,7 @@ VMT_$FMSYNTH_$$_TFMVOICE:
 	.quad	SYSTEM$_$TOBJECT_$__$$_TOSTRING$$ANSISTRING
 	.quad	0
 	.balign 8
-.Ld30:
+.Ld29:
 	.byte	8
 	.ascii	"TFmVoice"
 # End asmlist al_globals
@@ -1703,41 +1703,34 @@ _$FMSYNTH$_Ld22:
 	.balign 8
 .globl	_$FMSYNTH$_Ld23
 _$FMSYNTH$_Ld23:
-# value: 0d-3.1250000000000001E-006
-	.byte	45,67,28,235,226,54,202,190
+# value: 0d+9.4999999999999996E-001
+	.byte	102,102,102,102,102,102,238,63
 
 .section .rodata.n__$FMSYNTH$_Ld24,"d"
 	.balign 8
 .globl	_$FMSYNTH$_Ld24
 _$FMSYNTH$_Ld24:
-# value: 0d+9.4999999999999996E-001
-	.byte	102,102,102,102,102,102,238,63
+# value: 0d+9.0000000000000002E-001
+	.byte	205,204,204,204,204,204,236,63
 
 .section .rodata.n__$FMSYNTH$_Ld25,"d"
 	.balign 8
 .globl	_$FMSYNTH$_Ld25
 _$FMSYNTH$_Ld25:
-# value: 0d+9.0000000000000002E-001
-	.byte	205,204,204,204,204,204,236,63
+# value: 0d+6.5535000000000000E+004
+	.byte	0,0,0,0,224,255,239,64
 
 .section .rodata.n__$FMSYNTH$_Ld26,"d"
 	.balign 8
 .globl	_$FMSYNTH$_Ld26
 _$FMSYNTH$_Ld26:
-# value: 0d+6.5535000000000000E+004
-	.byte	0,0,0,0,224,255,239,64
+# value: 0d+8.1757989156437088E+000
+	.byte	87,185,194,80,2,90,32,64
 
 .section .rodata.n__$FMSYNTH$_Ld27,"d"
 	.balign 8
 .globl	_$FMSYNTH$_Ld27
 _$FMSYNTH$_Ld27:
-# value: 0d+8.1757989156437088E+000
-	.byte	87,185,194,80,2,90,32,64
-
-.section .rodata.n__$FMSYNTH$_Ld28,"d"
-	.balign 8
-.globl	_$FMSYNTH$_Ld28
-_$FMSYNTH$_Ld28:
 # value: 0d+1.0594630943592953E+000
 	.byte	99,121,217,146,143,243,240,63
 # End asmlist al_typedconsts
@@ -2033,8 +2026,8 @@ RTTI_$FMSYNTH_$$_TWAVESAMPLE:
 	.byte	8
 	.uleb128	1
 	.ascii	"fmsynth.pas\000"
-	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
-	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
+	.ascii	"D:/programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0

@@ -69,7 +69,7 @@ var flogtable:array[0..65540] of myfloat;
     fmoperator:TFmOperator;
     voices:array [0..31] of TFmVoice;
 
-       att:double=960;
+       att:double=1/960;
 
 procedure initvoices;
 
@@ -246,7 +246,7 @@ adsrval:=0;
 ar1:=1/96;
 ar2:=-1/96000;
 ar3:=-1/960000;
-ar4:=-3/960000;
+ar4:=-1/960000;
 av1:=1;
 av2:=0.95;
 av3:=0.9;

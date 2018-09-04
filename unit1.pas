@@ -75,104 +75,16 @@ var s,currentdir,currentdir2:string;
 
 begin
 
-
-songtime:=0;
-pause:=false;
-siddelay:=20000;
-//sleep(100000);
 initmachine(0); //---------- Start the retromachine -------------------
 poke($70002,0);
 application.processmessages;
-exec65032;
 main1;
-//testt:=gettime;
-//for i:=1 to 1000000000 do noise2;
-//testt:=gettime-testt;
-//outtextxyz(200,200,inttostr(testt),56,4,4);
-
 
 currentdir2:='d:\sid\';
-//setcurrentdir('d:\sid');
-setcurrentdir(currentdir2);
-//box2(897,67,1782,115,36);
-s:=currentdir2;
-if length(s)>55 then s:=copy(s,1,55);
-l:=length(s);
+//setcurrentdir(currentdir2);
 
-outtextxyz(1344-8*l,75,s,44,2,2);
-
-ilf:=0;
-if length(currentdir2)=3 then
-  begin
-  // Search all drive letters
-  for d := 'A' to 'Z' do
-    begin
-    s := d + ':\';
-    case GetDriveType(PChar(s)) of
-  {  DRIVE_REMOVABLE,}
-       DRIVE_FIXED,
-   {  DRIVE_REMOTE,      }
-       DRIVE_CDROM
-    { DRIVE_RAMDISK}:    begin
-                         filenames[ilf,0]:=s;
-                         filenames[ilf,1]:='[DIR]';
-                         ilf+=1;
-                        end;
-    end;
-  end;
-
-
-end;
-
-
-currentdir:=currentdir2+'*.*';
-if findfirst(currentdir,fadirectory,sr)=0 then
-  repeat
-  if (sr.attr and faDirectory) = faDirectory then
-    begin
-    filenames[ilf,0]:=sr.name;
-    filenames[ilf,1]:='[DIR]';
-    ilf+=1;
-    end;
-  until (findnext(sr)<>0) or (ilf=1000);
-  sysutils.findclose(sr);
-
-currentdir:=currentdir2+'*.sid';
-
-if findfirst(currentdir,faAnyFile,sr)=0 then
-  repeat
-  filenames[ilf,0]:=sr.name;
-  filenames[ilf,1]:='';
-  ilf+=1;
-  until (findnext(sr)<>0) or (ilf=1000);
-sysutils.findclose(sr);
-
-currentdir:=currentdir2+'*.dmp';
-if findfirst(currentdir,faAnyFile,sr)=0 then
-  repeat
-  filenames[ilf,0]:=sr.name;
-    filenames[ilf,1]:='';
-  ilf+=1;
-  until (findnext(sr)<>0) or (ilf=1000);
-sysutils.findclose(sr);
-//currentdir2:=currentdir2+'\dmp\';
-
-
-//box(920,132,840,32,36);
-if ilf<26 then ild:=ilf-1 else ild:=26;
-for i:=0 to ild do
-  begin
-  if filenames[i,1]='' then l:=length(filenames[i,0])-4 else  l:=length(filenames[i,0]);
-  if filenames[i,1]='' then  s:=copy(filenames[i,0],1,length(filenames[i,0])-4) else s:=filenames[i,0];
-  if length(s)>40 then begin s:=copy(s,1,40); l:=40; end;
-  for j:=1 to length(s) do if s[j]='_' then s[j]:=' ';
-  if filenames[i,1]='' then outtextxyz(1344-8*l,132+32*i,s,44,2,2);
-  if filenames[i,1]='[DIR]' then begin outtextxyz(1344-8*l,132+32*i,s,44,2,2);  outtextxyz(1672,132+32*i,'[DIR]',44,2,2);   end;
-  end;
 application.processmessages;
-poke($70003,1);
-poke($70004,1);
-poke($70005,1);
+
 poke ($70001,1);
 
 
@@ -183,316 +95,22 @@ sc.Start;
 
 
 
-
 repeat
-  if not pause then main2 else begin timer1:=-1; for i:=$d400 to $d400+25 do poke(i,0); end;
+  main2;
 
-  if peek($60028)=ord('5') then begin poke ($60028,0); siddelay:=20000; songfreq:=50; skip:=0; end;
-  if peek($60028)=ord('1') then begin poke ($60028,0); siddelay:=10000; songfreq:=100; skip:=0; end;
-  if peek($60028)=ord('2') then begin poke ($60028,0); siddelay:=5000; songfreq:=200; skip:=0;end;
-  if peek($60028)=ord('3') then begin poke ($60028,0); siddelay:=6666; songfreq:=150; skip:=0; end;
-  if peek($60028)=ord('4') then begin poke ($60028,0); siddelay:=2500; songfreq:=400; skip:=0; end;
 //  if peek($60028)=ord('p') then begin poke ($60028,0); pause:=not pause; if pause then sdl_pauseaudio(1) else sdl_pauseaudio(0); end;
-  if dpeek($60028)=16442 then begin dpoke($60028,0); if peek($70003)=0 then poke ($70003,1) else poke ($70003,0); end;
-  if dpeek($60028)=16443 then begin dpoke($60028,0); if peek($70004)=0 then poke ($70004,1) else poke ($70004,0); end;
-  if dpeek($60028)=16444 then begin dpoke($60028,0); if peek($70005)=0 then poke ($70005,1) else poke ($70005,0); end;
 
-  if dpeek($60028)=16445 then begin edelay:=not edelay;   dpoke($60028,0); end;  //f4=delay
-  if dpeek($60028)=16446 then begin ereverb:=not ereverb; dpoke($60028,0); end; //f5=reverb
-  if dpeek($60028)=16447 then begin att:=att*1.1; dpoke($60028,0); end; //f5=reverb
-  if dpeek($60028)=16448 then begin att:=att/1.1; ereverb:=not ereverb; dpoke($60028,0); end; //f5=reverb
-  box(100,800,500,100,0); outtextxyz(100,800,floattostr(1/(96000*att)),15,2,2);
-if dpeek($60028)=16465 then
+  if dpeek($60028)=16445 then begin edelay:=not edelay; dpoke($60028,0); end;  //f4=delay
+
+          // adsr test
+          if dpeek($60028)=16447 then begin att:=att*1.1; dpoke($60028,0); end; //f5=reverb
+          if dpeek($60028)=16448 then begin att:=att/1.1; ereverb:=not ereverb; dpoke($60028,0); end; //f5=reverb
+          box(100,700,500,50,0); outtextxyz(100,700,floattostr(1/(96000*att)),15,2,2);
+          // end adsr test
+
+  if (dpeek($60028)=16451) and (peek($70002)=0) then         // f10 toggles fullscreen
     begin
     dpoke($60028,0);
-    if sel<ild then
-      begin
-      box(920,132+32*sel,840,32,34);
-      if filenames[sel+selstart,1]='' then l:=length(filenames[sel+selstart,0])-4 else  l:=length(filenames[sel+selstart,0]);
-      if filenames[sel+selstart,1]='' then  s:=copy(filenames[sel+selstart,0],1,length(filenames[sel+selstart,0])-4) else s:=filenames[sel+selstart,0];
-      if length(s)>40 then begin s:=copy(s,1,40); l:=40; end;
-      for j:=1 to length(s) do if s[j]='_' then s[j]:=' ';
-      if filenames[sel+selstart,1]='' then outtextxyz(1344-8*l,132+32*(sel),s,44,2,2);
-      if filenames[sel+selstart,1]='[DIR]' then begin outtextxyz(1344-8*l,132+32*(sel),s,44,2,2);  outtextxyz(1672,132+32*(sel),'[DIR]',44,2,2);   end;
-
-      sel+=1;
-      box(920,132+32*sel,840,32,36);
-      if filenames[sel+selstart,1]='' then l:=length(filenames[sel+selstart,0])-4 else  l:=length(filenames[sel+selstart,0]);
-      if filenames[sel+selstart,1]='' then  s:=copy(filenames[sel+selstart,0],1,length(filenames[sel+selstart,0])-4) else s:=filenames[sel+selstart,0];
-       if length(s)>40 then begin s:=copy(s,1,40); l:=40; end;
-      for j:=1 to length(s) do if s[j]='_' then s[j]:=' ';
-      if filenames[sel+selstart,1]='' then outtextxyz(1344-8*l,132+32*(sel),s,44,2,2);
-      if filenames[sel+selstart,1]='[DIR]' then begin outtextxyz(1344-8*l,132+32*(sel),s,44,2,2);  outtextxyz(1672,132+32*(sel),'[DIR]',44,2,2);   end;
-
-      end
-    else if sel+selstart<ilf-1 then
-      begin
-      selstart+=1;
-      box2(897,118,1782,1008,34);
-      box(920,132+32*sel,840,32,36);
-      for i:=0 to ild do
-        begin
-        if filenames[i+selstart,1]='' then l:=length(filenames[i+selstart,0])-4 else  l:=length(filenames[i+selstart,0]);
-        if filenames[i+selstart,1]='' then  s:=copy(filenames[i+selstart,0],1,length(filenames[i+selstart,0])-4) else s:=filenames[i+selstart,0];
-          if length(s)>40 then begin s:=copy(s,1,40); l:=40; end;
-        for j:=1 to length(s) do if s[j]='_' then s[j]:=' ';
-        if filenames[i+selstart,1]='' then outtextxyz(1344-8*l,132+32*i,s,44,2,2);
-        if filenames[i+selstart,1]='[DIR]' then begin outtextxyz(1344-8*l,132+32*i,s,44,2,2);  outtextxyz(1672,132+32*i,'[DIR]',44,2,2);   end;
-        end;
-      end;
-    end;
-
-  if dpeek($60028)=16466 then
-    begin
-    dpoke($60028,0);
-    if sel>0 then
-      begin
-      box(920,132+32*sel,840,32,34);
-      if filenames[sel+selstart,1]='' then l:=length(filenames[sel+selstart,0])-4 else  l:=length(filenames[sel+selstart,0]);
-      if filenames[sel+selstart,1]='' then  s:=copy(filenames[sel+selstart,0],1,length(filenames[sel+selstart,0])-4) else s:=filenames[sel+selstart,0];
-      if length(s)>40 then begin s:=copy(s,1,40); l:=40; end;
-      for j:=1 to length(s) do if s[j]='_' then s[j]:=' ';
-      if filenames[sel+selstart,1]='' then outtextxyz(1344-8*l,132+32*(sel),s,44,2,2);
-      if filenames[sel+selstart,1]='[DIR]' then begin outtextxyz(1344-8*l,132+32*(sel),s,44,2,2);  outtextxyz(1672,132+32*(sel),'[DIR]',44,2,2);   end;
-
-      sel-=1;
-      box(920,132+32*sel,840,32,36);
-      if filenames[sel+selstart,1]='' then l:=length(filenames[sel+selstart,0])-4 else  l:=length(filenames[sel+selstart,0]);
-      if filenames[sel+selstart,1]='' then  s:=copy(filenames[sel+selstart,0],1,length(filenames[sel+selstart,0])-4) else s:=filenames[sel+selstart,0];
-      if length(s)>40 then begin s:=copy(s,1,40); l:=40; end;
-      for j:=1 to length(s) do if s[j]='_' then s[j]:=' ';
-      if filenames[sel+selstart,1]='' then outtextxyz(1344-8*l,132+32*(sel),s,44,2,2);
-      if filenames[sel+selstart,1]='[DIR]' then begin outtextxyz(1344-8*l,132+32*(sel),s,44,2,2);  outtextxyz(1672,132+32*(sel),'[DIR]',44,2,2);   end;
-
-      end
-    else if sel+selstart>0 then
-      begin
-      selstart-=1;
-      box2(897,118,1782,1008,34);
-      box(920,132+32*sel,840,32,36);
-      for i:=0 to ild do
-        begin
-        if filenames[i+selstart,1]='' then l:=length(filenames[i+selstart,0])-4 else  l:=length(filenames[i+selstart,0]);
-        if filenames[i+selstart,1]='' then s:=copy(filenames[i+selstart,0],1,length(filenames[i+selstart,0])-4) else s:=filenames[i+selstart,0];
-        if length(s)>40 then begin s:=copy(s,1,40); l:=40; end;
-        for j:=1 to length(s) do if s[j]='_' then s[j]:=' ';
-        if filenames[i+selstart,1]='' then outtextxyz(1344-8*l,132+32*i,s,44,2,2);
-        if filenames[i+selstart,1]='[DIR]' then begin outtextxyz(1344-8*l,132+32*i,s,44,2,2);  outtextxyz(1672,132+32*i,'[DIR]',44,2,2);   end;
-
-        end;
-      end;
-    end;
-
-  if dpeek($60028)=16471 then
-    begin
-    dpoke($60028,0);
-    if songs>0 then
-      begin
-      if song<songs then
-        begin
-        sdl_pauseaudio(1);
-        for i:=1 to 100000000 do;
-        song+=1;
-        jsr6502(song,init);
-        sdl_pauseaudio(0);
-        end;
-      end;
-    end;
-
-   if dpeek($60028)=16470 then
-    begin
-    dpoke($60028,0);
-    if songs>0 then
-      begin
-      if song>0 then
-        begin
-        sdl_pauseaudio(1);
-        for i:=1 to 100000000 do;
-        song-=1;
-        jsr6502(song,init);
-        sdl_pauseaudio(0);
-        end;
-      end;
-    end;
-
-  if peek($60028)=13 then
-    begin
-    if filenames[sel+selstart,1]='[DIR]' then
-      begin
-      box2(897,118,1782,1008,34);
-      s:=filenames[sel+selstart,0];
-      if copy(s,length(s),1)<>'\' then
-        begin
-        setcurrentdir(currentdir2+s);
-        currentdir2:=getcurrentdir+'\';
-        if copy(currentdir2,length(currentdir2)-1,2)='\\'then currentdir2:=copy(currentdir2,1,length(currentdir2)-1);
-        end
-      else
-        begin
-        setcurrentdir(s);
-        currentdir2:=getcurrentdir;
-        end;
-
- ilf:=0;
-if length(currentdir2)=3 then
-  begin
-  // Search all drive letters
-  for d := 'A' to 'Z' do
-    begin
-    s := d + ':\';
-    case GetDriveType(PChar(s)) of
-  {  DRIVE_REMOVABLE,}
-       DRIVE_FIXED,
-   {  DRIVE_REMOTE,      }
-       DRIVE_CDROM
-    { DRIVE_RAMDISK}:    begin
-                         filenames[ilf,0]:=s;
-                         filenames[ilf,1]:='[DIR]';
-                         ilf+=1;
-                        end;
-    end;
-  end;
-
-
-end;
-
-
-currentdir:=currentdir2+'*.*';
-if findfirst(currentdir,fadirectory,sr)=0 then
-  repeat
-  if (sr.attr and faDirectory) = faDirectory then
-    begin
-    filenames[ilf,0]:=sr.name;
-    filenames[ilf,1]:='[DIR]';
-    ilf+=1;
-    end;
-  until (findnext(sr)<>0) or (ilf=1000);
-  sysutils.findclose(sr);
-
-currentdir:=currentdir2+'*.sid';
-
-if findfirst(currentdir,faAnyFile,sr)=0 then
-  repeat
-  filenames[ilf,0]:=sr.name;
-  filenames[ilf,1]:='';
-  ilf+=1;
-  until (findnext(sr)<>0) or (ilf=1000);
-sysutils.findclose(sr);
-
-currentdir:=currentdir2+'*.dmp';
-if findfirst(currentdir,faAnyFile,sr)=0 then
-  repeat
-  filenames[ilf,0]:=sr.name;
-    filenames[ilf,1]:='';
-  ilf+=1;
-  until (findnext(sr)<>0) or (ilf=1000);
-sysutils.findclose(sr);
-//currentdir2:=currentdir2+'\dmp\';
-
-
-box(920,132,840,32,36);
-if ilf<26 then ild:=ilf-1 else ild:=26;
-for i:=0 to ild do
-  begin
-  if filenames[i,1]='' then l:=length(filenames[i,0])-4 else  l:=length(filenames[i,0]);
-  if filenames[i,1]='' then  s:=copy(filenames[i,0],1,length(filenames[i,0])-4) else s:=filenames[i,0];
-  if length(s)>40 then begin s:=copy(s,1,40); l:=40; end;
-  for j:=1 to length(s) do if s[j]='_' then s[j]:=' ';
-  if filenames[i,1]='' then outtextxyz(1344-8*l,132+32*i,s,44,2,2);
-  if filenames[i,1]='[DIR]' then begin outtextxyz(1344-8*l,132+32*i,s,44,2,2);  outtextxyz(1672,132+32*i,'[DIR]',44,2,2);   end;
-  end;
-application.processmessages;
-       sel:=0; selstart:=0;
-       box2(897,67,1782,115,36);
-       s:=currentdir2;
-       if length(s)>55 then s:=copy(s,1,55);
-       l:=length(s);
-
-       outtextxyz(1344-8*l,75,s,44,2,2);
-
-           poke($60028,0);
-      end
-  else begin
-    sdl_pauseaudio(1);
-    poke($60028,0);
-    fuck:=0;
-    repeat until fuck2=0;
-    if fh>=0 then fileclose(fh);
-    fh:=-1;
-    songtime:=0;
-    timer1:=-1;
-    for i:=0 to 6 do raml^[$3500+i]:=0;
-    fh:=-1;
-    fn:= currentdir2+filenames[sel+selstart,0];
-    fh:=fileopen(fn,$40);
-    s:=copy(filenames[sel+selstart,0],1,length(filenames[sel+selstart,0])-4);
-    for j:=1 to length(s) do if s[j]='_' then s[j]:=' ';
-    siddelay:=20000;
-    filetype:=0;
-    fileread(fh,buf,4);
-    if (buf[0]=ord('S')) and (buf[1]=ord('D')) and (buf[2]=ord('M')) and (buf[3]=ord('P')) then
-       begin
-       box(18,132,800,600,178);
-       outtextxyz(18,132,'type: SDMP',188,2,2);
-       songs:=0;
-       fileread(fh,buf,4);
-       siddelay:=1000000 div buf[0];
-       outtextxyz(18,196,'speed: '+inttostr(buf[0])+' Hz',188,2,2);
-       title:='                                ';
-       fileread(fh,title[1],16);
-       fileread(fh,buf,1);
-       outtextxyz(18,164,'title: '+title,188,2,2);
-        box(18,912,800,32,244);
-       outtextxyz(18,912,'SIDCog DMP file, '+inttostr(songfreq)+' Hz',250,2,2);
-       end
-    else if (buf[0]=ord('P')) and (buf[1]=ord('S')) and (buf[2]=ord('I')) and (buf[3]=ord('D')) then
-       begin
-       reset6502;
-       sidopen(fh);
-       if cia>0 then siddelay:={985248}1000000 div (50*round(19652/cia));
-       filetype:=1;
-       fuck:=1;
-       box(18,912,800,32,244);
-       outtextxyz(18,912,'PSID file, '+inttostr(1000000 div siddelay)+' Hz',250,2,2);
-
-       end
-    else if (buf[0]=ord('R')) and (buf[1]=ord('S')) and (buf[2]=ord('I')) and (buf[3]=ord('D')) then
-       begin
-//       reset6502;
-//       sidopen(fh);
-//       if cia>0 then siddelay:=1000000 div (50*round(19652/cia));
-//       filetype:=1;
-//       fuck:=1;
-//       box(18,912,800,32,244);
-         box(18,132,800,600,178);
-       outtextxyz(18,132,'type: RSID, not yet supported',44,2,2);
-       goto p101;
-       end
-
-    else
-     begin
-      fileread(fh,buf,21);
-      box(18,132,800,600,178);
-      outtextxyz(18,132,'type: unknown, 50 Hz SDMP assumed',188,2,2);
-       box(18,912,800,32,244);
-     outtextxyz(18,912,'SIDCog DMP file, 50 Hz',250,2,2);
-      end;
-
- //   if siddelay<5000 then begin siddelay:=siddelay*2; skip:=1; end else
-       skip:=0;
-    songname:=s;
-    songtime:=0;
-    timer1:=-1;
-    for i:=0 to 1000000 do;
-    sdl_pauseaudio(0);
-    end;
-    end;
-p101:
-  if peek($60028)=ord('i') then begin poke ($60028,0); poke($70001, peek($70001) xor 1); end;
-
-  if (peek($60028)=ord('f')) and (peek($70002)=0) then
-    begin
-    poke($60028,0);
     repeat until peek($70000)=1;
     poke ($70000,2);
     SDL_DestroyTexture( sdlTexture );
@@ -505,7 +123,7 @@ p101:
     poke ($70000,1);
     end;
 
-  if (peek($60028)=ord('f')) and (peek($70002)=1) then
+  if ((dpeek($60028)=16451)) and (peek($70002)=1) then
     begin
     poke($60028,0);
     repeat until peek($70000)=1;
