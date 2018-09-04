@@ -15,6 +15,7 @@ type
   TForm1 = class(TForm)
     Button1: TButton;
     Button2: TButton;
+    Button3: TButton;
     CheckBox1: TCheckBox;
     Memo1: TMemo;
     OpenDialog1: TOpenDialog;
@@ -24,6 +25,7 @@ type
     RadioButton4: TRadioButton;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
 
@@ -48,7 +50,7 @@ var
 implementation
 
 
-uses unit2;
+uses unit2,fmsynth;
 
 {$R *.lfm}
 procedure sidopen (fh:integer);     forward;
@@ -197,7 +199,9 @@ repeat
 
   if dpeek($60028)=16445 then begin edelay:=not edelay;   dpoke($60028,0); end;  //f4=delay
   if dpeek($60028)=16446 then begin ereverb:=not ereverb; dpoke($60028,0); end; //f5=reverb
-
+  if dpeek($60028)=16447 then begin att:=att*1.1; dpoke($60028,0); end; //f5=reverb
+  if dpeek($60028)=16448 then begin att:=att/1.1; ereverb:=not ereverb; dpoke($60028,0); end; //f5=reverb
+  box(100,800,200,100,0); outtextxyz(100,800,floattostr(96000/att),15,2,2);
 if dpeek($60028)=16465 then
     begin
     dpoke($60028,0);
@@ -529,6 +533,36 @@ begin
  if opendialog1.execute then loadxi(opendialog1.filename);
 end;
 
+procedure TForm1.Button3Click(Sender: TObject);
+
+var a:array[0..1023] of double;
+    i,i2,i3,i0:integer;
+    d,dd,dd0,q,q1,q2,q3:double;
+
+begin
+dd0:=0;
+for i:=0 to 1023 do a[i]:=sin(2*pi*i/512);
+for i:=0 to 65535 do
+  begin
+  q:=sin(2*pi*i/65536);
+  i2:=i div 128;
+  i3:=i2+1; if i3>512 then i3:=0;
+
+  q1:=a[i2];
+  q2:=a[i3];
+  d:=(i mod 128)/128;
+  q3:=d*q2+(1-d)*q1;
+  dd:=abs(q3-q);
+  if dd>dd0 then begin dd0:=dd; i0:=i; end;
+
+
+
+
+  end;
+memo1.lines.add(floattostr(1/dd0));
+memo1.lines.add(inttostr(i0));
+end;
+
 
 procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
@@ -617,7 +651,6 @@ fuck:=0;
 //  fileclose(fh);
 
 end;
-
 function loadxi(filename:string):integer;
 
 // returns number of samples loaded;
@@ -635,8 +668,10 @@ var samplenum:word;
     head1:array[0..63] of char;
     head2:array[0..$e7] of byte;
     sampleinfo:array[0..15] of TSampleInfo ;
-    i,j:integer;
+    i,j,spl:integer;
     s:string;
+    sampleptr:^double;
+    isampleptr:^smallint;
 
 begin
 fh:=fileopen(filename,$40);
@@ -659,9 +694,26 @@ for i:=0 to samplenum-1 do
   form1.memo1.lines.add('Sample loop length: '+inttostr(sampleinfo[i].sll));
   form1.memo1.lines.add('Sample type :'+inttohex(sampleinfo[i].sampletype,2));
   form1.memo1.lines.add('');
-    end;
+//  wavesamples[waveindex].wave:=getmem(4*sampleinfo[i].slen);
+ // fileread(fh,wavesamples[waveindex].wave^,sampleinfo[i].slen);
+//  sampleptr:= wavesamples[waveindex].wave;
+//  spl:=0;
+///  for j:=0 to (sampleinfo[i].slen div 2) - 1 do
+ //   begin
+//    spl:=spl+isampleptr[j];
+//    sampleptr[j]:=spl;
+//    end;
+//  for j:=   (sampleinfo[i].slen div 2) - 1 downto 0 do  sampleptr[j]:=isampleptr[j]/32768;
+
+  //todo: check bit depth
+//  wavesamples[waveindex].len:=sampleinfo[i].slen div 2;
+//  wavesamples[waveindex].lstart:=sampleinfo[i].sls div 2;
+//  wavesamples[waveindex].lend:=((sampleinfo[i].sls+sampleinfo[i].sll) div 2)-1;
+//  waveindex+=1;
+  end;
 //for i:=0 to samplenum do
 end;
+
 
 end.
 

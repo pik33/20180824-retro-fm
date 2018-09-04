@@ -102,7 +102,7 @@ if key<>$FFFFFFFF then
     box(100,560,100,32,0);
     outtextxyz (100,560,inttostr(key),15,2,2);
     key:=keymap2[key];
-    if key>0 then md:=144+key shl 8+$700000 else md:=$FFFFFFFF;
+    if key>0 then md:=144+key shl 8+$7F0000 else md:=$FFFFFFFF;
     end
   else
     begin
@@ -216,12 +216,12 @@ if (channel>=maxchannel) or (channel<0) then goto p999;
 f:=fnotes[note] ;
 voices[channel].setfreq(f);
 for i:=0 to 7 do voices[channel].operators[i].vel:=flogtable[49152+128*velocity];
-{if note<60 then voices[channel].operators[0].mul1:=20000 else} voices[channel].operators[0].mul1:=16384;
-{if note<60 then voices[channel].operators[2].mul3:=20000 else }voices[channel].operators[2].mul3:=16384;
-{if note<60 then voices[channel].operators[4].mul5:=20000 else} voices[channel].operators[4].mul5:=16384;
-voices[channel].operators[1].mul1:=10500;
-voices[channel].operators[3].mul3:=10500;
-voices[channel].operators[5].mul5:=10500;
+{if note<60 then voices[channel].operators[0].mul1:=20000 else} voices[channel].operators[0].mul1:=16384/64;
+{if note<60 then voices[channel].operators[2].mul3:=20000 else }voices[channel].operators[2].mul3:=16384/64;
+{if note<60 then voices[channel].operators[4].mul5:=20000 else} voices[channel].operators[4].mul5:=16384/64;
+voices[channel].operators[1].mul1:=10500/64;
+voices[channel].operators[3].mul3:=10500/64;
+voices[channel].operators[5].mul5:=10500/64;
 {if note<60 then voices[channel].operators[1].adsrbias:=0.9 else } voices[channel].operators[1].adsrbias:=0;
 {if note<60 then voices[channel].operators[3].adsrbias:=0.9 else }voices[channel].operators[3].adsrbias:=0;
 {if note<60 then voices[channel].operators[5].adsrbias:=0.9 else} voices[channel].operators[5].adsrbias:=0;
@@ -234,7 +234,7 @@ voices[channel].outmuls[5]:=0.3;
 voices[channel].outmuls[0]:=0.3;
 voices[channel].outmuls[2]:=0.3;
 voices[channel].outmuls[4]:=0.3;
-
+for i:=0 to 7 do  voices[channel].operators[i].ar1:=att;;
 for i:=0 to 7 do voices[channel].operators[i].adsrstate:=1;
 p999:
 end;

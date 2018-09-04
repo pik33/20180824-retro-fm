@@ -69,7 +69,7 @@ var flogtable:array[0..65540] of myfloat;
     fmoperator:TFmOperator;
     voices:array [0..31] of TFmVoice;
 
-
+       att:double=1/960;
 
 procedure initvoices;
 
@@ -150,7 +150,7 @@ var i:integer;
 
 
 begin
-for i:=-655360 to 655360 do fsinetable[i]:=sin(2*pi*i/65536);
+for i:=-655360 to 655360 do fsinetable[i]:=sin(2*pi*i/1024);
 end;
 
 operator := (b:integer):TSingleStereoSample;
@@ -182,7 +182,11 @@ if mode=0 then wptr:=@fsinetable;
   //  q:=sin(2*pi*i/65536);
   //  wptr[i]:=q;
   //  end;
-  wlength:=65536;
+
+
+
+ // wlength:=65536;
+  wlength:=1024;
 
 //  end;
 end;
@@ -236,10 +240,10 @@ mul4:=0;
 mul5:=0;
 mul6:=0;
 mul7:=0;
-wlength:=65536;
+wlength:=1024;//65536;
 adsrstate:=0;
 adsrval:=0;
-ar1:=1/960;
+ar1:=1/96;
 ar2:=-1/96000;
 ar3:=-1/960000;
 ar4:=-3/960000;
@@ -269,6 +273,8 @@ var res64a:myfloat;
     sample:TSingleSample;
     freq2:myfloat;
     h1:myfloat;
+    pa21:integer;
+    d,s2:double;
 
 begin
 
@@ -333,8 +339,11 @@ else
   if pa2>wlend-1 then repeat pa:=pa-wlend+wlstart until pa<=wlend-1;
   end;
 intpa:=trunc(pa2);
+pa21:=intpa; if pa21>wlength then pa21:=0;
 sample:=wptr[intpa];
-
+s2:=wptr[pa21];
+d:=pa2-intpa;
+sample:=(1-d)*sample+d*s2;
  //        stage 4
  //       Compute ADSR
 

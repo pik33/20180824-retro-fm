@@ -3095,11 +3095,11 @@ RETRO_$$_PUTCHARZ$LONGINT$LONGINT$CHAR$LONGINT$LONGINT$LONGINT:
 .Lt24:
 .Ll387:
 
-.section .text.n_retro$_$outtextxy$crc6744c382_$$_fin$10,"x"
+.section .text.n_retro$_$outtextxy$crc6744c382_$$_fin$8,"x"
 	.balign 16,0x90
-RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$10:
+RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$8:
 .Lc82:
-.seh_proc RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$10
+.seh_proc RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$8
 .Ll388:
 # [934] begin
 	pushq	%rbp
@@ -3196,7 +3196,7 @@ RETRO_$$_OUTTEXTXY$LONGINT$LONGINT$ANSISTRING$LONGINT:
 	nop
 .Lj1117:
 	movq	%rbp,%rcx
-	call	RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$10
+	call	RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$8
 .Ll393:
 # [936] end;
 	movq	-48(%rbp),%rbx
@@ -3213,7 +3213,7 @@ RETRO_$$_OUTTEXTXY$LONGINT$LONGINT$ANSISTRING$LONGINT:
 	.long	0
 	.rva	.Lj1116
 	.rva	.Lj1117
-	.rva	RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$10
+	.rva	RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$8
 
 .section .text.n_retro_$$_outtextxy$longint$longint$ansistring$longint,"x"
 .seh_endproc
@@ -3221,11 +3221,11 @@ RETRO_$$_OUTTEXTXY$LONGINT$LONGINT$ANSISTRING$LONGINT:
 .Lt9:
 .Ll394:
 
-.section .text.n_retro$_$outtextxyz$crcca10a6fc_$$_fin$11,"x"
+.section .text.n_retro$_$outtextxyz$crcca10a6fc_$$_fin$9,"x"
 	.balign 16,0x90
-RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$11:
+RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$9:
 .Lc92:
-.seh_proc RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$11
+.seh_proc RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$9
 .Ll395:
 # [942] begin
 	pushq	%rbp
@@ -3336,7 +3336,7 @@ RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT:
 	nop
 .Lj1143:
 	movq	%rbp,%rcx
-	call	RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$11
+	call	RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$9
 .Ll400:
 # [944] end;
 	movq	-64(%rbp),%rbx
@@ -3355,7 +3355,7 @@ RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT:
 	.long	0
 	.rva	.Lj1142
 	.rva	.Lj1143
-	.rva	RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$11
+	.rva	RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$9
 
 .section .text.n_retro_$$_outtextxyz$longint$longint$ansistring$longint$longint$longint,"x"
 .seh_endproc
@@ -6272,7 +6272,7 @@ RETRO_$$_AUDIOCALLBACK$POINTER$PBYTE$LONGINT:
 	movapd	%xmm0,%xmm6
 .Lj2105:
 .Ll755:
-# [1799] if gain*abs(fs)>1 then gain:=1/abs(fs);
+# [1799] if gain*abs(fs)>1 then gain:=1/(1.01*abs(fs));
 	movapd	%xmm6,%xmm0
 	andpd	FPC_ABSMASK_DOUBLE(%rip),%xmm0
 	mulsd	TC_$RETRO_$$_GAIN(%rip),%xmm0
@@ -6281,6 +6281,7 @@ RETRO_$$_AUDIOCALLBACK$POINTER$PBYTE$LONGINT:
 	jna	.Lj2111
 	movapd	%xmm6,%xmm0
 	andpd	FPC_ABSMASK_DOUBLE(%rip),%xmm0
+	mulsd	_$RETRO$_Ld33(%rip),%xmm0
 	movsd	_$RETRO$_Ld31(%rip),%xmm1
 	divsd	%xmm0,%xmm1
 	movsd	%xmm1,TC_$RETRO_$$_GAIN(%rip)
@@ -6292,7 +6293,7 @@ RETRO_$$_AUDIOCALLBACK$POINTER$PBYTE$LONGINT:
 	movapd	%xmm0,%xmm6
 .Ll757:
 # [1801] s1:=round(32767*fs);
-	movsd	_$RETRO$_Ld33(%rip),%xmm0
+	movsd	_$RETRO$_Ld34(%rip),%xmm0
 	mulsd	%xmm6,%xmm0
 	cvtsd2siq	%xmm0,%rax
 	movw	%ax,%r12w
@@ -6503,7 +6504,7 @@ RETRO_$$_DELAY1$DOUBLE$$DOUBLE:
 	movl	TC_$RETRO_$$_DE(%rip),%edx
 	leaq	U_$RETRO_$$_DL(%rip),%rax
 	movsd	(%rax,%rdx,8),%xmm0
-	mulsd	_$RETRO$_Ld34(%rip),%xmm0
+	mulsd	_$RETRO$_Ld35(%rip),%xmm0
 	addsd	%xmm1,%xmm0
 # Var $result located in register xmm0
 .Ll787:
@@ -6514,7 +6515,7 @@ RETRO_$$_DELAY1$DOUBLE$$DOUBLE:
 # [1843] dl[de]:=(dl[de] / 2) +s;
 	movl	%ecx,%edx
 	movsd	(%rax,%rdx,8),%xmm2
-	mulsd	_$RETRO$_Ld34(%rip),%xmm2
+	mulsd	_$RETRO$_Ld35(%rip),%xmm2
 	addsd	%xmm1,%xmm2
 	andl	$4294967295,%ecx
 	movsd	%xmm2,(%rax,%rcx,8)
@@ -6570,7 +6571,7 @@ RETRO_$$_REVERB1$DOUBLE$$DOUBLE:
 	cmpl	$1,TC_$RETRO$_$REVERB1$DOUBLE$$DOUBLE_$$_SART(%rip)
 	jne	.Lj2192
 	movl	$0,TC_$RETRO$_$REVERB1$DOUBLE$$DOUBLE_$$_SART(%rip)
-	movq	_$RETRO$_Ld33(%rip),%rax
+	movq	_$RETRO$_Ld34(%rip),%rax
 	movq	%rax,U_$RETRO_$$_RL(%rip)
 .Lj2192:
 .Ll794:
@@ -6690,7 +6691,7 @@ RETRO_$$_REVERB1$DOUBLE$$DOUBLE:
 # [1869] result:=(rl[re] / 2) +s
 	movl	TC_$RETRO_$$_RE(%rip),%r13d
 	movsd	(%rax,%r13,8),%xmm0
-	mulsd	_$RETRO$_Ld34(%rip),%xmm0
+	mulsd	_$RETRO$_Ld35(%rip),%xmm0
 	addsd	%xmm1,%xmm0
 .Ll808:
 # [1870] + (rl[a1] / 4)
@@ -6702,55 +6703,55 @@ RETRO_$$_REVERB1$DOUBLE$$DOUBLE:
 # [1871] + (rl[a2] / 6)
 	andl	$4294967295,%r8d
 	movsd	(%rax,%r8,8),%xmm0
-	mulsd	_$RETRO$_Ld35(%rip),%xmm0
+	mulsd	_$RETRO$_Ld36(%rip),%xmm0
 	addsd	%xmm2,%xmm0
 .Ll810:
 # [1872] + (rl[a3] / 8)
 	andl	$4294967295,%r9d
 	movsd	(%rax,%r9,8),%xmm2
-	mulsd	_$RETRO$_Ld36(%rip),%xmm2
+	mulsd	_$RETRO$_Ld37(%rip),%xmm2
 	addsd	%xmm0,%xmm2
 .Ll811:
 # [1873] + (rl[a4] / 10)
 	andl	$4294967295,%r10d
 	movsd	(%rax,%r10,8),%xmm0
-	mulsd	_$RETRO$_Ld37(%rip),%xmm0
+	mulsd	_$RETRO$_Ld38(%rip),%xmm0
 	addsd	%xmm2,%xmm0
 .Ll812:
 # [1874] + (rl[a5] / 12)
 	andl	$4294967295,%r11d
 	movsd	(%rax,%r11,8),%xmm2
-	mulsd	_$RETRO$_Ld38(%rip),%xmm2
+	mulsd	_$RETRO$_Ld39(%rip),%xmm2
 	addsd	%xmm0,%xmm2
 .Ll813:
 # [1875] + (rl[a6] / 14)
 	andl	$4294967295,%ebx
 	movsd	(%rax,%rbx,8),%xmm0
-	mulsd	_$RETRO$_Ld39(%rip),%xmm0
+	mulsd	_$RETRO$_Ld40(%rip),%xmm0
 	addsd	%xmm2,%xmm0
 .Ll814:
 # [1876] + (rl[a7] / 16)
 	andl	$4294967295,%esi
 	movsd	(%rax,%rsi,8),%xmm2
-	mulsd	_$RETRO$_Ld40(%rip),%xmm2
+	mulsd	_$RETRO$_Ld41(%rip),%xmm2
 	addsd	%xmm0,%xmm2
 .Ll815:
 # [1877] + (rl[a8]/ 18)
 	andl	$4294967295,%edi
 	movsd	(%rax,%rdi,8),%xmm0
-	mulsd	_$RETRO$_Ld41(%rip),%xmm0
+	mulsd	_$RETRO$_Ld42(%rip),%xmm0
 	addsd	%xmm2,%xmm0
 .Ll816:
 # [1878] + (rl[a9] /20)
 	andl	$4294967295,%r12d
 	movsd	(%rax,%r12,8),%xmm2
-	mulsd	_$RETRO$_Ld42(%rip),%xmm2
+	mulsd	_$RETRO$_Ld43(%rip),%xmm2
 	addsd	%xmm0,%xmm2
 .Ll817:
 # [1879] + (rl[a10] / 22)
 	andl	$4294967295,%edx
 	movsd	(%rax,%rdx,8),%xmm0
-	mulsd	_$RETRO$_Ld43(%rip),%xmm0
+	mulsd	_$RETRO$_Ld44(%rip),%xmm0
 	addsd	%xmm2,%xmm0
 # Var $result located in register xmm0
 .Ll818:
@@ -6761,7 +6762,7 @@ RETRO_$$_REVERB1$DOUBLE$$DOUBLE:
 # [1883] rl[re]:=(rl[re] / 2) +s;
 	movl	%ecx,%edx
 	movsd	(%rax,%rdx,8),%xmm2
-	mulsd	_$RETRO$_Ld34(%rip),%xmm2
+	mulsd	_$RETRO$_Ld35(%rip),%xmm2
 	addsd	%xmm1,%xmm2
 	andl	$4294967295,%ecx
 	movsd	%xmm2,(%rax,%rcx,8)
@@ -7075,7 +7076,7 @@ U_$RETRO_$$_OPDATA:
 VMT_$RETRO_$$_TRETRO:
 	.quad	88,-88
 	.quad	VMT_$CLASSES_$$_TTHREAD
-	.quad	.Ld44
+	.quad	.Ld45
 	.quad	0,0,0
 	.quad	RTTI_$RETRO_$$_TRETRO
 	.quad	0,0
@@ -7099,7 +7100,7 @@ VMT_$RETRO_$$_TRETRO:
 	.quad	0
 # [1889] 
 	.balign 8
-.Ld44:
+.Ld45:
 	.byte	6
 	.ascii	"TRetro"
 # End asmlist al_globals
@@ -8308,13 +8309,20 @@ _$RETRO$_Ld32:
 	.balign 8
 .globl	_$RETRO$_Ld33
 _$RETRO$_Ld33:
-# value: 0d+3.2767000000000000E+004
-	.byte	0,0,0,0,192,255,223,64
+# value: 0d+1.0100000000000000E+000
+	.byte	41,92,143,194,245,40,240,63
 
 .section .rodata.n__$RETRO$_Ld34,"d"
 	.balign 8
 .globl	_$RETRO$_Ld34
 _$RETRO$_Ld34:
+# value: 0d+3.2767000000000000E+004
+	.byte	0,0,0,0,192,255,223,64
+
+.section .rodata.n__$RETRO$_Ld35,"d"
+	.balign 8
+.globl	_$RETRO$_Ld35
+_$RETRO$_Ld35:
 # value: 0d+5.0000000000000000E-001
 	.byte	0,0,0,0,0,0,224,63
 
@@ -8323,66 +8331,66 @@ _$RETRO$_Ld34:
 TC_$RETRO$_$REVERB1$DOUBLE$$DOUBLE_$$_SART:
 	.long	1
 
-.section .rodata.n__$RETRO$_Ld35,"d"
-	.balign 8
-.globl	_$RETRO$_Ld35
-_$RETRO$_Ld35:
-# value: 0d+1.6666666666666666E-001
-	.byte	85,85,85,85,85,85,197,63
-
 .section .rodata.n__$RETRO$_Ld36,"d"
 	.balign 8
 .globl	_$RETRO$_Ld36
 _$RETRO$_Ld36:
-# value: 0d+1.2500000000000000E-001
-	.byte	0,0,0,0,0,0,192,63
+# value: 0d+1.6666666666666666E-001
+	.byte	85,85,85,85,85,85,197,63
 
 .section .rodata.n__$RETRO$_Ld37,"d"
 	.balign 8
 .globl	_$RETRO$_Ld37
 _$RETRO$_Ld37:
-# value: 0d+1.0000000000000001E-001
-	.byte	154,153,153,153,153,153,185,63
+# value: 0d+1.2500000000000000E-001
+	.byte	0,0,0,0,0,0,192,63
 
 .section .rodata.n__$RETRO$_Ld38,"d"
 	.balign 8
 .globl	_$RETRO$_Ld38
 _$RETRO$_Ld38:
-# value: 0d+8.3333333333333329E-002
-	.byte	85,85,85,85,85,85,181,63
+# value: 0d+1.0000000000000001E-001
+	.byte	154,153,153,153,153,153,185,63
 
 .section .rodata.n__$RETRO$_Ld39,"d"
 	.balign 8
 .globl	_$RETRO$_Ld39
 _$RETRO$_Ld39:
-# value: 0d+7.1428571428571425E-002
-	.byte	146,36,73,146,36,73,178,63
+# value: 0d+8.3333333333333329E-002
+	.byte	85,85,85,85,85,85,181,63
 
 .section .rodata.n__$RETRO$_Ld40,"d"
 	.balign 8
 .globl	_$RETRO$_Ld40
 _$RETRO$_Ld40:
-# value: 0d+6.2500000000000000E-002
-	.byte	0,0,0,0,0,0,176,63
+# value: 0d+7.1428571428571425E-002
+	.byte	146,36,73,146,36,73,178,63
 
 .section .rodata.n__$RETRO$_Ld41,"d"
 	.balign 8
 .globl	_$RETRO$_Ld41
 _$RETRO$_Ld41:
-# value: 0d+5.5555555555555552E-002
-	.byte	28,199,113,28,199,113,172,63
+# value: 0d+6.2500000000000000E-002
+	.byte	0,0,0,0,0,0,176,63
 
 .section .rodata.n__$RETRO$_Ld42,"d"
 	.balign 8
 .globl	_$RETRO$_Ld42
 _$RETRO$_Ld42:
-# value: 0d+5.0000000000000003E-002
-	.byte	154,153,153,153,153,153,169,63
+# value: 0d+5.5555555555555552E-002
+	.byte	28,199,113,28,199,113,172,63
 
 .section .rodata.n__$RETRO$_Ld43,"d"
 	.balign 8
 .globl	_$RETRO$_Ld43
 _$RETRO$_Ld43:
+# value: 0d+5.0000000000000003E-002
+	.byte	154,153,153,153,153,153,169,63
+
+.section .rodata.n__$RETRO$_Ld44,"d"
+	.balign 8
+.globl	_$RETRO$_Ld44
+_$RETRO$_Ld44:
 # value: 0d+4.5454545454545456E-002
 	.byte	70,23,93,116,209,69,167,63
 # End asmlist al_typedconsts
@@ -9011,8 +9019,8 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.uleb128	1
 # [189] var
 	.ascii	"retro.pas\000"
-	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
-	.ascii	"D:/programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
+	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -9971,14 +9979,14 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.byte	144
 	.uleb128	13
 	.long	.La16-.Ldebug_info0
-# Symbol fin$10
+# Symbol fin$8
 	.byte	0
-# Procdef $fin$10(<^untyped>) is nested;
+# Procdef $fin$8(<^untyped>) is nested;
 	.uleb128	9
-	.ascii	"fin$10\000"
+	.ascii	"fin$8\000"
 	.byte	1
 	.byte	65
-	.quad	RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$10
+	.quad	RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$8
 	.quad	.Lt10
 # Symbol parentfp
 	.uleb128	6
@@ -10684,14 +10692,14 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.byte	144
 	.uleb128	13
 	.long	.La16-.Ldebug_info0
-# Symbol fin$11
+# Symbol fin$9
 	.byte	0
-# Procdef $fin$11(<^untyped>) is nested;
+# Procdef $fin$9(<^untyped>) is nested;
 	.uleb128	9
-	.ascii	"fin$11\000"
+	.ascii	"fin$9\000"
 	.byte	1
 	.byte	65
-	.quad	RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$11
+	.quad	RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$9
 	.quad	.Lt26
 # Symbol parentfp
 	.uleb128	6
@@ -21991,7 +21999,7 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.byte	1
 	.byte	1
 # ###################
-# function: RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$10
+# function: RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$8
 # [934:1]
 	.byte	0
 	.uleb128	9
@@ -22041,7 +22049,7 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.byte	1
 	.byte	1
 # ###################
-# function: RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$11
+# function: RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$9
 # [942:1]
 	.byte	0
 	.uleb128	9

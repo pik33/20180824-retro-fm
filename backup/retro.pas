@@ -1866,21 +1866,21 @@ a8:=(ra+re-512) mod ra;
 a9:=(ra+re-576) mod ra;
 a10:=(ra+re-640) mod ra;
 
-result:=(rl[re] div 2) +s
- + (rl[a1] div 4)
-  + (rl[a2] div 6)
-   + (rl[a3] div 8)
-    + (rl[a4] div 10)
-     + (rl[a5] div 12)
-      + (rl[a6] div 14)
-       + (rl[a7] div 16)
-        + (rl[a8] div 18)
-         + (rl[a9] div 20)
-           + (rl[a10] div 22)
+result:=(rl[re] / 2) +s
+ + (rl[a1] / 4)
+  + (rl[a2] / 6)
+   + (rl[a3] / 8)
+    + (rl[a4] / 10)
+     + (rl[a5] / 12)
+      + (rl[a6] / 14)
+       + (rl[a7] / 16)
+        + (rl[a8]/ 18)
+         + (rl[a9] /20)
+           + (rl[a10] / 22)
 
 
  ;
-rl[re]:=(rl[re] div 2) +s;
+rl[re]:=(rl[re] / 2) +s;
 re:=(re+1) mod ra;
 end;
 
