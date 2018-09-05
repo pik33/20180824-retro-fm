@@ -72,8 +72,8 @@
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="6"/>
-        <TopLine Value="218"/>
-        <CursorPos X="54" Y="238"/>
+        <TopLine Value="212"/>
+        <CursorPos X="57" Y="242"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit7>
@@ -81,8 +81,8 @@
         <Filename Value="fmsynth.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="4"/>
-        <TopLine Value="402"/>
-        <CursorPos Y="453"/>
+        <TopLine Value="293"/>
+        <CursorPos X="79" Y="307"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit8>
@@ -90,15 +90,15 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="427" TopLine="390"/>
+        <Caret Line="424" TopLine="397"/>
       </Position1>
       <Position2>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="431" TopLine="396"/>
+        <Caret Line="425" TopLine="397"/>
       </Position2>
       <Position3>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="423" TopLine="397"/>
+        <Caret Line="427" TopLine="397"/>
       </Position3>
       <Position4>
         <Filename Value="fmsynth.pas"/>
@@ -106,107 +106,107 @@
       </Position4>
       <Position5>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="423" TopLine="397"/>
+        <Caret Line="425" TopLine="397"/>
       </Position5>
       <Position6>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="424" TopLine="397"/>
+        <Caret Line="426" TopLine="397"/>
       </Position6>
       <Position7>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="425" TopLine="397"/>
+        <Caret Line="428" TopLine="397"/>
       </Position7>
       <Position8>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="427" TopLine="397"/>
+        <Caret Line="432" TopLine="397"/>
       </Position8>
       <Position9>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="424" TopLine="397"/>
+        <Caret Line="433" TopLine="398"/>
       </Position9>
       <Position10>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="425" TopLine="397"/>
+        <Caret Line="434" TopLine="399"/>
       </Position10>
       <Position11>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="426" TopLine="397"/>
+        <Caret Line="435" TopLine="400"/>
       </Position11>
       <Position12>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="428" TopLine="397"/>
+        <Caret Line="424" TopLine="401"/>
       </Position12>
       <Position13>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="432" TopLine="397"/>
+        <Caret Line="437" TopLine="402"/>
       </Position13>
       <Position14>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="433" TopLine="398"/>
+        <Caret Line="453" TopLine="435"/>
       </Position14>
       <Position15>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="434" TopLine="399"/>
+        <Caret Line="455" TopLine="432"/>
       </Position15>
       <Position16>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="435" TopLine="400"/>
+        <Caret Line="453" TopLine="432"/>
       </Position16>
       <Position17>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="424" TopLine="401"/>
+        <Caret Line="372" TopLine="350"/>
       </Position17>
       <Position18>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="437" TopLine="402"/>
+        <Caret Line="472" TopLine="451"/>
       </Position18>
       <Position19>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="453" TopLine="435"/>
+        <Caret Line="473" TopLine="451"/>
       </Position19>
       <Position20>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="455" TopLine="432"/>
+        <Caret Line="476" TopLine="451"/>
       </Position20>
       <Position21>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="453" TopLine="432"/>
+        <Caret Line="477" TopLine="451"/>
       </Position21>
       <Position22>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="372" TopLine="350"/>
+        <Caret Line="478" TopLine="451"/>
       </Position22>
       <Position23>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="472" TopLine="451"/>
+        <Caret Line="479" TopLine="457"/>
       </Position23>
       <Position24>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="473" TopLine="451"/>
+        <Caret Line="494" TopLine="459"/>
       </Position24>
       <Position25>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="476" TopLine="451"/>
+        <Caret Line="496" TopLine="461"/>
       </Position25>
       <Position26>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="477" TopLine="451"/>
+        <Caret Line="400" TopLine="395"/>
       </Position26>
       <Position27>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="478" TopLine="451"/>
+        <Caret Line="422" Column="3" TopLine="351"/>
       </Position27>
       <Position28>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="479" TopLine="457"/>
+        <Caret Line="33" Column="14" TopLine="11"/>
       </Position28>
       <Position29>
         <Filename Value="fmsynth.pas"/>
-        <Caret Line="494" TopLine="459"/>
+        <Caret Line="312" Column="39" TopLine="288"/>
       </Position29>
       <Position30>
-        <Filename Value="fmsynth.pas"/>
-        <Caret Line="496" TopLine="461"/>
+        <Filename Value="synthcontrol.pas"/>
+        <Caret Line="244" Column="59" TopLine="212"/>
       </Position30>
     </JumpHistory>
   </ProjectSession>

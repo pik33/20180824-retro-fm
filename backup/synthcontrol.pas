@@ -235,17 +235,18 @@ voices[channel].outmuls[2]:=1;
 voices[channel].outmuls[4]:=1;
 voices[channel].outmuls[6]:=0;
 voices[channel].outmuls[7]:=0;
-for i:=0 to 7 do  voices[channel].operators[i].wptr:=waves1[waveidx].wave;
-//for i:=0 to 7 do  voices[channel].operators[i].wlend:=waves1[waveidx].lend ;
-//for i:=0 to 7 do  voices[channel].operators[i].wlstart:=waves1[waveidx].lstart;
+
+for i:=0 to 7 do  voices[channel].operators[i].wptr:=@waves0[waveidx].wave;
+//for i:=0 to 7 do  voices[channel].operators[i].wlend:=1024;//waves1[waveidx].lend ;
+//for i:=0 to 7 do  voices[channel].operators[i].wlstart:=0;//waves1[waveidx].lstart;
 for i:=0 to 7 do  voices[channel].operators[i].wlength:=1024; // waves1[waveidx].len;
 
-for i:=0 to 7 do  voices[channel].operators[i].wavemode:=0;
+for i:=0 to 7 do  voices[channel].operators[i].wavemode:=1;
 
 
-for i:=0 to 7 do  voices[channel].operators[i].ar1:=att;;
+for i:=0 to 7 do  voices[channel].operators[i].ar1:=att;
 for i:=0 to 7 do voices[channel].operators[i].adsrstate:=1;
-for i:=0 to 7 do voices[channel].operators[i].adsrstate:=1;
+//for i:=0 to 7 do voices[channel].operators[i].adsrstate:=1;
 for i:=0 to 7 do voices[channel].operators[i].adsrval:=0;
 p999:
 end;

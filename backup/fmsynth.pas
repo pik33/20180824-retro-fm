@@ -310,7 +310,7 @@ procedure TFmOperator.setfreq(afreq:myfloat);
 
 begin
 if wavemode=0 then freq:=afreq*wlength/96000
-else freq:=afreq*freqmod;
+else freq:=afreq*wlength/96000 ;// afreq*freqmod;
 end;
 
 procedure TFmOperator.init; // test init @ 1 kHz
@@ -419,15 +419,29 @@ if wavemode=0 then
   end
 
 else
+   begin
+  if pa>=wlength then
+      pa:=pa-wlength;
+
+  pa2:=pa+modulator;
+  if pa2>=wlength then
+    repeat pa2:=pa2-wlength until pa2<wlength
+  else if pa2<0 then
+    repeat pa2:=pa2+wlength until pa2>0;
+  end  ;
+
+{
   begin
-  if pa>wlend then pa:=pa-wlend+wlstart;
+  if pa>wlend then
+    pa:=pa-wlend+wlstart;
+
   pa2:=pa+modulator;
   if pa2>wlend then
     repeat pa2:=pa2-wlend+wlstart until pa2<wlend
   else if pa2<0 then
     repeat pa2:=pa2+wlength until pa2>0;
   end;
-
+ }
 intpa:=trunc(pa2);
 pa21:=intpa; if pa21>wlength then pa21:=0;
 sample:=wptr[intpa];
