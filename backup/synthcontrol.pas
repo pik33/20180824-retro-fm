@@ -227,15 +227,22 @@ voices[channel].operators[5].mul5:=0000/64;
 voices[channel].operators[1].keysense:=1;
 voices[channel].operators[3].keysense:=1;
 voices[channel].operators[5].keysense:=1;
-voices[channel].outmuls[1]:=1;
-voices[channel].outmuls[3]:=1;
-voices[channel].outmuls[5]:=1;
+voices[channel].outmuls[1]:=0;
+voices[channel].outmuls[3]:=0;
+voices[channel].outmuls[5]:=0;
 voices[channel].outmuls[0]:=1;
 voices[channel].outmuls[2]:=1;
 voices[channel].outmuls[4]:=1;
-voices[channel].outmuls[6]:=1;
-voices[channel].outmuls[7]:=1;
-for i:=0 to 7 do  voices[channel].operators[i].wptr:=@waves0[waveidx].wave;
+voices[channel].outmuls[6]:=0;
+voices[channel].outmuls[7]:=0;
+for i:=0 to 7 do  voices[channel].operators[i].wptr:=waves1[waveidx].wave;
+//for i:=0 to 7 do  voices[channel].operators[i].wlend:=waves1[waveidx].lend ;
+//for i:=0 to 7 do  voices[channel].operators[i].wlstart:=waves1[waveidx].lstart;
+for i:=0 to 7 do  voices[channel].operators[i].wlength:=1024; // waves1[waveidx].len;
+
+for i:=0 to 7 do  voices[channel].operators[i].wavemode:=0;
+
+
 for i:=0 to 7 do  voices[channel].operators[i].ar1:=att;;
 for i:=0 to 7 do voices[channel].operators[i].adsrstate:=1;
 for i:=0 to 7 do voices[channel].operators[i].adsrstate:=1;

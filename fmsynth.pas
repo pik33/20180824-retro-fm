@@ -6,7 +6,7 @@ interface
 
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, math;
 
 type myfloat=double;
 
@@ -54,7 +54,7 @@ type TWaveSample1=record
      name:string;
      len,lstart,lend:integer;
      speed:myfloat;
-     wave:pointer;
+     wave:^myfloat;
      end;
 
 type TWaveSample0=record
@@ -76,6 +76,7 @@ var flogtable:array[0..65540] of myfloat;
     fmoperator:TFmOperator;
     voices:array [0..31] of TFmVoice;
     waves0:array [0..127] of TWaveSample0;
+    waves1:array [0..16383] of TWaveSample1;
        att:double=1/960;
     sampleindex0:integer=0;
     sampleindex1:integer=0;
@@ -102,12 +103,66 @@ if findfirst(currentdir2+'*.s2',faAnyFile,sr)=0 then
   repeat
   fh:=fileopen(currentdir2+sr.name,$40);
   fileread(fh,dummy,16);
-  waves0[sampleindex0].name:=sr.name;
+  waves0[sampleindex0].name:=copy(sr.name,1,length(sr.name)-3); ;
   fileread(fh,intwave,2048);
   for i:=0 to 1023 do waves0[sampleindex0].wave[i]:=intwave[i]/32768;
   fileclose(fh);
   sampleindex0+=1;
   until (findnext(sr)<>0) or (sampleindex0=128);
+findclose(sr);
+end;
+
+
+procedure initsamples1;
+
+type TSampleinfo=record
+     slen,sls,sll:cardinal;
+     vol,finetune,sampletype,pan:byte;
+     relnote:shortint;
+     snl:byte;
+     samplename:array[0..21] of char;
+     end;
+
+var sr:tsearchrec;
+    j,i,fh:integer;
+    currentdir2:string;
+    dummy:array[0..255] of byte;
+    intwave:PSmallint;
+    samplenum:word;
+    sampleinfo:array[0..31] of TSampleInfo ;
+    integrator:double;
+
+begin
+currentdir2:='C:\xi\';
+if findfirst(currentdir2+'*.xi',faAnyFile,sr)=0 then
+  repeat
+  fh:=fileopen(currentdir2+sr.name,$40);
+  fileread(fh,dummy,$40);  //text header
+  fileread(fh,dummy,$e8);  //inst headers
+  fileread(fh,samplenum,2);
+  for i:=0 to samplenum-1 do fileread(fh,sampleinfo[i],40);
+  for i:=0 to samplenum-1 do
+    begin
+    waves1[sampleindex1].name:='';
+    for j:=0 to sampleinfo[i].snl-1 do waves1[sampleindex1].name+=sampleinfo[i].samplename[j];
+    intwave:=getmem(sampleinfo[i].slen);
+    waves1[sampleindex1].wave:=getmem(4*sampleinfo[i].slen);
+    fileread(fh,intwave^,sampleinfo[i].slen);
+    integrator:=0;
+    for j:=0 to (sampleinfo[i].slen div 2)-1 do
+      begin
+      integrator+=intwave[j]/32768;
+      waves1[sampleindex1].wave[j]:=integrator;
+      end;
+    freemem(intwave);
+    waves1[sampleindex1].len:=sampleinfo[i].slen div 2;
+    waves1[sampleindex1].lstart:=sampleinfo[i].sls div 2;
+    waves1[sampleindex1].lend:=((sampleinfo[i].sls+sampleinfo[i].sll) div 2)-1;
+    waves1[sampleindex1].speed:=126.278*power(a212,sampleinfo[i].relnote);
+    sampleindex1+=1;
+  end;
+  fileclose(fh);
+  until (findnext(sr)<>0) or (sampleindex1=16384);
 findclose(sr);
 end;
 
@@ -358,24 +413,22 @@ if wavemode=0 then
 
   pa2:=pa+modulator;
   if pa2>=wlength then
-    repeat pa2:=pa2-wlength until pa2<wlength;
-  if pa2<0 then
+    repeat pa2:=pa2-wlength until pa2<wlength
+  else if pa2<0 then
     repeat pa2:=pa2+wlength until pa2>0;
   end
 
 else
   begin
-  if adsrstate<5 then
-    begin
-    if pa>wlend-1 then repeat pa:=pa-wlend+wlstart until pa<=wlend;
-    end
-  else
-    begin
-    if pa>=wlength then pa:=wlength;
-    end;
+  if pa>wlend then
+    pa:=pa-wlend+wlstart;
   pa2:=pa+modulator;
-  if pa2>wlend-1 then repeat pa:=pa-wlend+wlstart until pa<=wlend-1;
+  if pa2>wlend then
+    repeat pa2:=pa2-wlend+wlstart until pa2<wlend
+  else if pa2<0 then
+    repeat pa2:=pa2+wlength until pa2>0;
   end;
+
 intpa:=trunc(pa2);
 pa21:=intpa; if pa21>wlength then pa21:=0;
 sample:=wptr[intpa];
@@ -465,6 +518,7 @@ initflogtable;
 initfsinetable;
 initnotes;
 initsamples0;
+initsamples1;
 //initvoices;
 
 end.

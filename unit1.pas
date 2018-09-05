@@ -271,6 +271,7 @@ fuck:=0;
 //  fileclose(fh);
 
 end;
+
 function loadxi(filename:string):integer;
 
 // returns number of samples loaded;
@@ -279,7 +280,7 @@ function loadxi(filename:string):integer;
 type TSampleinfo=record
      slen,sls,sll:cardinal;
      vol,finetune,sampletype,pan:byte;
-     relnote:shortint;
+     relnote:byte;
      snl:byte;
      samplename:array[0..21] of char;
      end;
@@ -313,6 +314,10 @@ for i:=0 to samplenum-1 do
   form1.memo1.lines.add('Sample loop start: '+inttostr(sampleinfo[i].sls));
   form1.memo1.lines.add('Sample loop length: '+inttostr(sampleinfo[i].sll));
   form1.memo1.lines.add('Sample type :'+inttohex(sampleinfo[i].sampletype,2));
+  form1.memo1.lines.add('finetune :'+inttohex(sampleinfo[i].finetune,2));
+  form1.memo1.lines.add('pan :'+inttohex(sampleinfo[i].pan,2));
+  form1.memo1.lines.add('relnote :'+inttohex(sampleinfo[i].relnote,2));
+  form1.memo1.lines.add('volume :'+inttohex(sampleinfo[i].vol,2));
   form1.memo1.lines.add('');
 //  wavesamples[waveindex].wave:=getmem(4*sampleinfo[i].slen);
  // fileread(fh,wavesamples[waveindex].wave^,sampleinfo[i].slen);

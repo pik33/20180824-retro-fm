@@ -101,7 +101,7 @@ repeat
 //  if peek($60028)=ord('p') then begin poke ($60028,0); pause:=not pause; if pause then sdl_pauseaudio(1) else sdl_pauseaudio(0); end;
 
   if dpeek($60028)=16445 then begin edelay:=not edelay; dpoke($60028,0); end;  //f4=delay
-  if dpeek($60028)=16442 then begin waveidx+=1; if waveidx>=sampleindex0 then waveidx:=sampleindex0;  dpoke($60028,0); end;  //f4=delay
+  if dpeek($60028)=16442 then begin waveidx+=1; if waveidx>=sampleindex0 then waveidx:=sampleindex0-1;  dpoke($60028,0); end;  //f4=delay
   if dpeek($60028)=16443 then begin waveidx-=1; if waveidx<0 then waveidx:=0;  dpoke($60028,0); end;  //f4=delay
   box(600,600,300,40,0); outtextxyz(600,600,waves0[waveidx].name,15,2,2);
           // adsr test
@@ -279,7 +279,7 @@ function loadxi(filename:string):integer;
 type TSampleinfo=record
      slen,sls,sll:cardinal;
      vol,finetune,sampletype,pan:byte;
-     relnote:shortint;
+     relnote:byte;
      snl:byte;
      samplename:array[0..21] of char;
      end;
@@ -313,6 +313,10 @@ for i:=0 to samplenum-1 do
   form1.memo1.lines.add('Sample loop start: '+inttostr(sampleinfo[i].sls));
   form1.memo1.lines.add('Sample loop length: '+inttostr(sampleinfo[i].sll));
   form1.memo1.lines.add('Sample type :'+inttohex(sampleinfo[i].sampletype,2));
+  form1.memo1.lines.add('finetune :'+inttohex(sampleinfo[i].finetune,2));
+  form1.memo1.lines.add('pan :'+inttohex(sampleinfo[i].pan,2));
+  form1.memo1.lines.add('relnote :'+inttohex(sampleinfo[i].relnote,2));
+  form1.memo1.lines.add('volume :'+inttohex(sampleinfo[i].vol,2));
   form1.memo1.lines.add('');
 //  wavesamples[waveindex].wave:=getmem(4*sampleinfo[i].slen);
  // fileread(fh,wavesamples[waveindex].wave^,sampleinfo[i].slen);

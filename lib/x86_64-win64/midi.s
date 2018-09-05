@@ -147,11 +147,11 @@ MIDI_$$_MIDIINCALLBACK$LPHMIDIIN$LONGINT$LONGINT$LONGINT$LONGINT:
 .Lt5:
 .Ll20:
 
-.section .text.n_midi$_$openmidi_$$_fin$11,"x"
+.section .text.n_midi$_$openmidi_$$_fin$2,"x"
 	.balign 16,0x90
-MIDI$_$OPENMIDI_$$_fin$11:
+MIDI$_$OPENMIDI_$$_fin$2:
 .Lc10:
-.seh_proc MIDI$_$OPENMIDI_$$_fin$11
+.seh_proc MIDI$_$OPENMIDI_$$_fin$2
 .Ll21:
 # [102] begin
 	pushq	%rbp
@@ -318,7 +318,7 @@ MIDI_$$_OPENMIDI:
 	nop
 .Lj39:
 	movq	%rbp,%rcx
-	call	MIDI$_$OPENMIDI_$$_fin$11
+	call	MIDI$_$OPENMIDI_$$_fin$2
 .Ll43:
 # [131] end;
 	movq	-96(%rbp),%rbx
@@ -335,7 +335,7 @@ MIDI_$$_OPENMIDI:
 	.long	0
 	.rva	.Lj38
 	.rva	.Lj39
-	.rva	MIDI$_$OPENMIDI_$$_fin$11
+	.rva	MIDI$_$OPENMIDI_$$_fin$2
 
 .section .text.n_midi_$$_openmidi,"x"
 .seh_endproc
@@ -595,8 +595,8 @@ RTTI_$MIDI_$$_DEF0:
 	.uleb128	1
 # [37] function readbuffer:cardinal;
 	.ascii	"midi.pas\000"
-	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
-	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
+	.ascii	"D:/programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -787,14 +787,14 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	118
 	.sleb128	-80
 	.long	.La19-.Ldebug_info0
-# Symbol fin$11
+# Symbol fin$2
 	.byte	0
-# Procdef $fin$11(<^untyped>) is nested;
+# Procdef $fin$2(<^untyped>) is nested;
 	.uleb128	8
-	.ascii	"fin$11\000"
+	.ascii	"fin$2\000"
 	.byte	1
 	.byte	65
-	.quad	MIDI$_$OPENMIDI_$$_fin$11
+	.quad	MIDI$_$OPENMIDI_$$_fin$2
 	.quad	.Lt4
 # Symbol parentfp
 	.uleb128	7
@@ -1998,7 +1998,7 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	1
 	.byte	1
 # ###################
-# function: MIDI$_$OPENMIDI_$$_fin$11
+# function: MIDI$_$OPENMIDI_$$_fin$2
 # [102:1]
 	.byte	0
 	.uleb128	9
