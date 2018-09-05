@@ -306,160 +306,86 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	movl	%edi,%eax
 	andl	$255,%eax
 	movl	%eax,%edi
+# PeepHole Optimization,var2a
 .Ll26:
-# [101] blit($F000000,100,432,$F000000,100,400,100,160,1792,1792);
-	movl	$1792,72(%rsp)
-	movl	$1792,64(%rsp)
-	movl	$160,56(%rsp)
-	movl	$100,48(%rsp)
-	movl	$400,40(%rsp)
-	movl	$100,32(%rsp)
-	movl	$251658240,%r9d
-	movl	$432,%r8d
-	movl	$100,%eax
-	movl	$251658240,%ecx
-	movl	%eax,%edx
-	call	RETRO_$$_BLIT$crc5A667533
-.Ll27:
-# [102] box(100,560,100,32,0);
-	movl	$0,32(%rsp)
-	movl	$32,%r9d
-	movl	$100,%r8d
-	movl	$560,%eax
-	movl	$100,%ecx
-	movl	%eax,%edx
-	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll28:
-# [103] outtextxyz (100,560,inttostr(key),15,2,2);
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-# PeepHole Optimization,var2a
-	movl	%edi,%edx
-	leaq	-8(%rbp),%rcx
-	call	SYSUTILS_$$_INTTOSTR$QWORD$$ANSISTRING
-	movq	-8(%rbp),%r8
-	movl	$15,%r9d
-	movl	$560,%eax
-	movl	$100,%ecx
-	movl	%eax,%edx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-# PeepHole Optimization,var2a
-.Ll29:
 # [104] key:=keymap2[key];
-	movl	%edi,%eax
-	leaq	TC_$SYNTHCONTROL_$$_KEYMAP2(%rip),%rdx
-	movzbl	(%rdx,%rax,1),%eax
+	movl	%edi,%edx
+	leaq	TC_$SYNTHCONTROL_$$_KEYMAP2(%rip),%rax
+	movzbl	(%rax,%rdx,1),%eax
 	movl	%eax,%edi
-.Ll30:
+.Ll27:
 # [105] if key>0 then md:=144+key shl 8+$7F0000 else md:=$FFFFFFFF;
 	cmpl	$0,%edi
-	jna	.Lj144
+	jna	.Lj98
 	movl	%edi,%eax
 	shll	$8,%eax
 	leal	144(%eax),%eax
 	leal	8323072(%eax),%eax
 	movl	%eax,%r12d
-	jmp	.Lj208
-.Lj144:
+	jmp	.Lj116
+.Lj98:
 	movl	$4294967295,%r12d
-	jmp	.Lj208
+	jmp	.Lj116
 .Lj92:
-.Ll31:
-# [109] blit($F000000,100,432,$F000000,100,400,100,160,1792,1792);
-	movl	$1792,72(%rsp)
-	movl	$1792,64(%rsp)
-	movl	$160,56(%rsp)
-	movl	$100,48(%rsp)
-	movl	$400,40(%rsp)
-	movl	$100,32(%rsp)
-	movl	$251658240,%r9d
-	movl	$432,%r8d
-	movl	$100,%eax
-	movl	$251658240,%ecx
-	movl	%eax,%edx
-	call	RETRO_$$_BLIT$crc5A667533
-.Ll32:
-# [110] box(100,560,100,32,0);
-	movl	$0,32(%rsp)
-	movl	$32,%r9d
-	movl	$100,%r8d
-	movl	$560,%eax
-	movl	$100,%ecx
-	movl	%eax,%edx
-	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll33:
-# [111] outtextxyz (100,560,inttostr(key),15,2,2);
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-# PeepHole Optimization,var2a
-	movl	%edi,%edx
-	leaq	-8(%rbp),%rcx
-	call	SYSUTILS_$$_INTTOSTR$QWORD$$ANSISTRING
-	movq	-8(%rbp),%r8
-	movl	$15,%r9d
-	movl	$560,%eax
-	movl	$100,%ecx
-	movl	%eax,%edx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll34:
+.Ll28:
 # [112] key:=key and 255;
 	movl	%edi,%eax
 	andl	$255,%eax
 	movl	%eax,%edi
 # PeepHole Optimization,var2a
-.Ll35:
+.Ll29:
 # [113] key:=keymap2[key];
 	movl	%edi,%edx
 	leaq	TC_$SYNTHCONTROL_$$_KEYMAP2(%rip),%rax
 	movzbl	(%rax,%rdx,1),%eax
 	movl	%eax,%edi
-.Ll36:
+.Ll30:
 # [114] if key>0 then md:=144+key shl 8 else md:=$FFFFFFFF;
 	cmpl	$0,%edi
-	jna	.Lj202
+	jna	.Lj110
 	movl	%edi,%eax
 	shll	$8,%eax
 	leal	144(%eax),%eax
 	movl	%eax,%r12d
-	jmp	.Lj208
-.Lj202:
+	jmp	.Lj116
+.Lj110:
 	movl	$4294967295,%r12d
-.Ll37:
+.Ll31:
 # [116] goto p101;
-	jmp	.Lj208
+	jmp	.Lj116
 .Lj90:
-.Ll38:
+.Ll32:
 # [119] md:=readbuffer;
 	call	MIDI_$$_READBUFFER$$LONGWORD
 	movl	%eax,%r12d
-.Lj208:
-.Ll39:
+.Lj116:
+.Ll33:
 # [122] if md<>$FFFFFFFF then
 	cmpl	$4294967295,%r12d
-	je	.Lj212
-.Ll40:
+	je	.Lj120
+.Ll34:
 # [124] aa:=md and $FF;
 	movl	%r12d,%eax
 	andl	$255,%eax
 	movl	%eax,%edx
 	movq	%rdx,-16(%rbp)
-.Ll41:
+.Ll35:
 # [125] aaa:=(md and $FF00) shr 8;
 	movl	%r12d,%eax
 	andl	$65280,%eax
 	shrl	$8,%eax
 	movl	%eax,%r15d
-.Ll42:
+.Ll36:
 # [126] aaaa:=(md and $FF0000) shr 16 ;
 	movl	%r12d,%eax
 	andl	$16711680,%eax
 	shrl	$16,%eax
 	movl	%eax,%r13d
-.Ll43:
+.Ll37:
 # [127] midireceived:=0;
 	movl	$0,U_$MIDI_$$_MIDIRECEIVED(%rip)
 # PeepHole Optimization,var2a
-.Ll44:
+.Ll38:
 # [128] f:=round(7492*power(2,(aaa-69)/12));
 	movl	%r15d,%eax
 	leaq	-69(%rax),%rax
@@ -471,52 +397,52 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	cvtsd2siq	%xmm0,%rax
 	movl	%eax,%edx
 	movq	%rdx,-24(%rbp)
-.Ll45:
+.Ll39:
 # [129] if (aa=144) and (aaaa>0) then
 	movl	-16(%rbp),%eax
 	cmpl	$144,%eax
-	jne	.Lj228
+	jne	.Lj136
 	cmpl	$0,%r13d
-	jna	.Lj228
-.Ll46:
+	jna	.Lj136
+.Ll40:
 # [131] ch:=allocatechannel(1);
 	movl	$1,%ecx
 	call	SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT
 	movl	%eax,%r14d
-.Ll47:
+.Ll41:
 # [132] if ch<maxchannel then
 	cmpl	$32,%r14d
-	jnl	.Lj235
-.Ll48:
+	jnl	.Lj143
+.Ll42:
 # [134] for i:=0 to 127 do if notes[i,0]=ch then notes[i,0]:=maxchannel;
 	movl	$0,%ebx
 	subl	$1,%ebx
 	.balign 8,0x90
-.Lj238:
+.Lj146:
 	addl	$1,%ebx
+# PeepHole Optimization,var2a
+	movl	%ebx,%eax
+	imulq	$20,%rax,%rdx
+	leaq	U_$SYNTHCONTROL_$$_NOTES(%rip),%rax
+	movl	(%rax,%rdx),%eax
+	cmpl	%r14d,%eax
+	jne	.Lj148
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
 	imulq	$20,%rax,%rax
 	leaq	U_$SYNTHCONTROL_$$_NOTES(%rip),%rdx
-	movl	(%rdx,%rax),%eax
-	cmpl	%r14d,%eax
-	jne	.Lj240
-# PeepHole Optimization,var2a
-	movl	%ebx,%eax
-	imulq	$20,%rax,%rdx
-	leaq	U_$SYNTHCONTROL_$$_NOTES(%rip),%rax
-	movl	$32,(%rax,%rdx)
-.Lj240:
+	movl	$32,(%rdx,%rax)
+.Lj148:
 	cmpl	$127,%ebx
-	jl	.Lj238
+	jl	.Lj146
 # PeepHole Optimization,var2a
-.Ll49:
+.Ll43:
 # [135] notes[aaa,0]:=ch;
 	movl	%r15d,%eax
-	imulq	$20,%rax,%rdx
-	leaq	U_$SYNTHCONTROL_$$_NOTES(%rip),%rax
-	movl	%r14d,(%rax,%rdx)
-.Ll50:
+	imulq	$20,%rax,%rax
+	leaq	U_$SYNTHCONTROL_$$_NOTES(%rip),%rdx
+	movl	%r14d,(%rdx,%rax)
+.Ll44:
 # [136] noteon(ch,aaa,aaaa,0);
 	movl	%r13d,%eax
 	movl	%eax,%r8d
@@ -526,69 +452,67 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	movl	$0,%r9d
 	movl	%eax,%ecx
 	call	SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT
-.Lj235:
-.Lj228:
-.Ll51:
+.Lj143:
+.Lj136:
+.Ll45:
 # [139] if (aa=144) and (aaaa=0) then
 	movl	-16(%rbp),%eax
 	cmpl	$144,%eax
-	jne	.Lj254
+	jne	.Lj162
 	testl	%r13d,%r13d
-	jne	.Lj254
-.Ll52:
+	jne	.Lj162
+.Ll46:
 # [141] i:=-1;
 	movl	$-1,%ebx
 # PeepHole Optimization,var2a
-.Ll53:
+.Ll47:
 # [142] ch:=notes[aaa,0];
 	movl	%r15d,%eax
 	imulq	$20,%rax,%rax
 	leaq	U_$SYNTHCONTROL_$$_NOTES(%rip),%rdx
 	movl	(%rdx,%rax),%r14d
-.Ll54:
+.Ll48:
 # [143] noteoff(ch,aaa);
 	movl	%r15d,%edx
 	movl	%r14d,%ecx
 	call	SYNTHCONTROL_$$_NOTEOFF$LONGINT$LONGINT
-.Ll55:
+.Ll49:
 # [144] deallocatechannel(ch);
 	movl	%r14d,%ecx
 	call	SYNTHCONTROL_$$_DEALLOCATECHANNEL$LONGINT
 # PeepHole Optimization,var2a
-.Ll56:
+.Ll50:
 # [145] notes[aaa,0]:=maxchannel;
 	movl	%r15d,%eax
 	imulq	$20,%rax,%rax
 	leaq	U_$SYNTHCONTROL_$$_NOTES(%rip),%rdx
 	movl	$32,(%rdx,%rax)
-.Lj254:
-.Ll57:
-# [148] blit($F000000,300,300,$F000000,300,204,300,192,1792,1792);
+.Lj162:
+.Ll51:
+# [148] blit($F000000,1000,948,$F000000,1000,900,150,96,1792,1792);
 	movl	$1792,72(%rsp)
 	movl	$1792,64(%rsp)
-	movl	$192,56(%rsp)
-	movl	$300,48(%rsp)
-	movl	$204,40(%rsp)
-	movl	$300,32(%rsp)
+	movl	$96,56(%rsp)
+	movl	$150,48(%rsp)
+	movl	$900,40(%rsp)
+	movl	$1000,32(%rsp)
 	movl	$251658240,%r9d
-	movl	$300,%r8d
-	movl	$300,%eax
+	movl	$948,%r8d
+	movl	$1000,%eax
 	movl	$251658240,%ecx
 	movl	%eax,%edx
 	call	RETRO_$$_BLIT$crc5A667533
-.Ll58:
-# [149] box(300,396,300,96,0);
-	movl	$0,32(%rsp)
-	movl	$96,%r9d
-	movl	$300,%r8d
-	movl	$396,%eax
-	movl	$300,%ecx
+.Ll52:
+# [149] box(1000,996,150,48,33);
+	movl	$33,32(%rsp)
+	movl	$48,%r9d
+	movl	$150,%r8d
+	movl	$996,%eax
+	movl	$1000,%ecx
 	movl	%eax,%edx
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll59:
-# [150] outtextxyz(300,396,inttostr(aa),15,2,2);
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
+.Ll53:
+# [150] outtextxy(1000,996,inttostr(aa),15);
 	movl	-16(%rbp),%eax
 # PeepHole Optimization,var2a
 	movl	%eax,%edx
@@ -596,56 +520,52 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	call	SYSUTILS_$$_INTTOSTR$QWORD$$ANSISTRING
 	movq	-8(%rbp),%r8
 	movl	$15,%r9d
-	movl	$396,%eax
-	movl	$300,%ecx
+	movl	$996,%eax
+	movl	$1000,%ecx
 	movl	%eax,%edx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll60:
-# [151] outtextxyz(300,428,inttostr(aaa),15,2,2);
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
+	call	RETRO_$$_OUTTEXTXY$LONGINT$LONGINT$ANSISTRING$LONGINT
 # PeepHole Optimization,var2a
+.Ll54:
+# [151] outtextxy(1000,1012,inttostr(aaa),15);
 	movl	%r15d,%edx
 	leaq	-8(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$QWORD$$ANSISTRING
 	movq	-8(%rbp),%r8
 	movl	$15,%r9d
-	movl	$428,%eax
-	movl	$300,%ecx
+	movl	$1012,%eax
+	movl	$1000,%ecx
 	movl	%eax,%edx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll61:
-# [152] outtextxyz(300,460,inttostr(aaaa),15,2,2);
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
+	call	RETRO_$$_OUTTEXTXY$LONGINT$LONGINT$ANSISTRING$LONGINT
 # PeepHole Optimization,var2a
+.Ll55:
+# [152] outtextxy(1000,1028,inttostr(aaaa),15);
 	movl	%r13d,%edx
 	leaq	-8(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$QWORD$$ANSISTRING
 	movq	-8(%rbp),%r8
 	movl	$15,%r9d
-	movl	$460,%eax
-	movl	$300,%ecx
+	movl	$1028,%eax
+	movl	$1000,%ecx
 	movl	%eax,%edx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Lj212:
-.Ll62:
-# [156] sleep(1)
+	call	RETRO_$$_OUTTEXTXY$LONGINT$LONGINT$ANSISTRING$LONGINT
+.Lj120:
+.Ll56:
+# [155] sleep(1)
 	movl	$1,%ecx
 	call	CLASSES$_$TTHREAD_$__$$_SLEEP$LONGWORD
-.Ll63:
-# [157] until terminated;
+.Ll57:
+# [156] until terminated;
 	movq	-32(%rbp),%rax
 	cmpb	$0,16(%rax)
 	je	.Lj70
-.Lj348:
-.Ll64:
+.Lj244:
+.Ll58:
 	nop
 .Lj53:
 	movq	%rbp,%rcx
 	call	SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$0
-.Ll65:
-# [158] end;
+.Ll59:
+# [157] end;
 	movq	-104(%rbp),%rbx
 	movq	-96(%rbp),%rdi
 	movq	-88(%rbp),%rsi
@@ -668,15 +588,15 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 .seh_endproc
 .Lc14:
 .Lt7:
-.Ll66:
+.Ll60:
 
 .section .text.n_synthcontrol$_$allocatechannel$longint$$longint_$$_fin$1,"x"
 	.balign 16,0x90
 SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$1:
 .Lc18:
 .seh_proc SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$1
-.Ll67:
-# [172] begin
+.Ll61:
+# [171] begin
 	pushq	%rbp
 .seh_pushreg %rbp
 .Lc20:
@@ -687,7 +607,7 @@ SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$1:
 .seh_stackalloc 32
 # Var $parentfp located in register rbp
 .seh_endprologue
-.Ll68:
+.Ll62:
 	leaq	-8(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 	nop
@@ -697,7 +617,7 @@ SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$1:
 .seh_endproc
 .Lc19:
 .Lt3:
-.Ll69:
+.Ll63:
 
 .section .text.n_synthcontrol_$$_allocatechannel$longint$$longint,"x"
 	.balign 16,0x90
@@ -706,7 +626,7 @@ SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT:
 .Lc23:
 # Temps allocated between rbp-48 and rbp+0
 .seh_proc SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT
-.Ll70:
+.Ll64:
 	pushq	%rbp
 .seh_pushreg %rbp
 .Lc25:
@@ -732,126 +652,126 @@ SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT:
 .seh_savereg %r13, 80
 .seh_endprologue
 	movl	%ecx,%ebx
-.Ll71:
+.Ll65:
 	movq	$0,-8(%rbp)
-.Lj359:
+.Lj255:
 	nop
-.Lj355:
-.Ll72:
-# [173] i:=0;
+.Lj251:
+.Ll66:
+# [172] i:=0;
 	movl	$0,%esi
-.Ll73:
-# [174] while i<maxchannel do if channels[i]=0 then goto p101 else i+=1;
-	jmp	.Lj363
+.Ll67:
+# [173] while i<maxchannel do if channels[i]=0 then goto p101 else i+=1;
+	jmp	.Lj259
 	.balign 8,0x90
-.Lj362:
+.Lj258:
 # PeepHole Optimization,var2a
 	movl	%esi,%eax
 	leaq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%rdx
 	cmpq	$0,(%rdx,%rax,8)
-	je	.Lj367
+	je	.Lj263
 	leal	1(%esi),%eax
 	movl	%eax,%esi
-.Lj363:
+.Lj259:
 	cmpl	$32,%esi
-	jl	.Lj362
-.Ll74:
-# [175] while i<maxchannel do if channels[i]<0 then goto p101 else i+=1;
-	jmp	.Lj372
+	jl	.Lj258
+.Ll68:
+# [174] while i<maxchannel do if channels[i]<0 then goto p101 else i+=1;
+	jmp	.Lj268
 	.balign 8,0x90
-.Lj371:
+.Lj267:
 # PeepHole Optimization,var2a
 	movl	%esi,%eax
 	leaq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%rdx
 	cmpq	$0,(%rdx,%rax,8)
-	jl	.Lj367
+	jl	.Lj263
 	leal	1(%esi),%eax
 	movl	%eax,%esi
-.Lj372:
+.Lj268:
 	cmpl	$32,%esi
-	jl	.Lj371
-.Lj367:
-.Ll75:
-# [178] if i<maxchannel then
+	jl	.Lj267
+.Lj263:
+.Ll69:
+# [177] if i<maxchannel then
 	cmpl	$32,%esi
-	jnl	.Lj380
-.Ll76:
-# [180] result:=i;
+	jnl	.Lj276
+.Ll70:
+# [179] result:=i;
 	movl	%esi,%r13d
-.Ll77:
-# [181] channels[i]:=gettime;
+.Ll71:
+# [180] channels[i]:=gettime;
 	call	RETRO_$$_GETTIME$$INT64
 # PeepHole Optimization,var2a
 	movl	%esi,%edx
 	leaq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%rcx
 	movq	%rax,(%rcx,%rdx,8)
-	jmp	.Lj385
-.Lj380:
-.Ll78:
-# [183] else if (i=maxchannel) and (mode=0) then
+	jmp	.Lj281
+.Lj276:
+.Ll72:
+# [182] else if (i=maxchannel) and (mode=0) then
 	cmpl	$32,%esi
-	jne	.Lj387
+	jne	.Lj283
 	testl	%ebx,%ebx
-	jne	.Lj387
-.Ll79:
-# [185] result:=maxchannel;
+	jne	.Lj283
+.Ll73:
+# [184] result:=maxchannel;
 	movl	$32,%r13d
-	jmp	.Lj391
-.Lj387:
-.Ll80:
-# [189] i:=0;
+	jmp	.Lj287
+.Lj283:
+.Ll74:
+# [188] i:=0;
 	movl	$0,%esi
-.Ll81:
-# [190] f:=channels[0];
+.Ll75:
+# [189] f:=channels[0];
 	movq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%r12
-.Ll82:
-# [191] q:=0;
+.Ll76:
+# [190] q:=0;
 	movl	$0,%edi
-.Ll83:
-# [192] while i<maxchannel do
-	jmp	.Lj399
+.Ll77:
+# [191] while i<maxchannel do
+	jmp	.Lj295
 	.balign 8,0x90
-.Lj398:
+.Lj294:
 # PeepHole Optimization,var2a
-.Ll84:
-# [194] if channels[i]<f then
+.Ll78:
+# [193] if channels[i]<f then
 	movl	%esi,%eax
 	leaq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
 	cmpq	%r12,%rax
-	jnl	.Lj402
+	jnl	.Lj298
 # PeepHole Optimization,var2a
-.Ll85:
-# [196] f:=channels[i];
+.Ll79:
+# [195] f:=channels[i];
 	movl	%esi,%eax
 	leaq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%rdx
 	movq	(%rdx,%rax,8),%r12
-.Ll86:
-# [197] q:=i;
+.Ll80:
+# [196] q:=i;
 	movl	%esi,%edi
-.Lj402:
-.Ll87:
-# [199] i+=1;
+.Lj298:
+.Ll81:
+# [198] i+=1;
 	leal	1(%esi),%eax
 	movl	%eax,%esi
-.Lj399:
-.Ll88:
+.Lj295:
+.Ll82:
 	cmpl	$32,%esi
-	jl	.Lj398
-.Ll89:
-# [201] result:=q;
+	jl	.Lj294
+.Ll83:
+# [200] result:=q;
 	movl	%edi,%r13d
-.Ll90:
-# [202] channels[q]:=gettime;
+.Ll84:
+# [201] channels[q]:=gettime;
 	call	RETRO_$$_GETTIME$$INT64
 # PeepHole Optimization,var2a
 	movl	%edi,%edx
 	leaq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%rcx
 	movq	%rax,(%rcx,%rdx,8)
-.Lj391:
-.Lj385:
-.Ll91:
-# [204] box(1000,200,200,100,0); outtextxyz(1000,200,inttostr(result),15,2,2);
+.Lj287:
+.Lj281:
+.Ll85:
+# [203] box(1000,200,200,100,0); outtextxyz(1000,200,inttostr(result),15,2,2);
 	movl	$0,32(%rsp)
 	movl	$100,%r9d
 	movl	$200,%r8d
@@ -868,14 +788,14 @@ SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT:
 	movl	$200,%edx
 	movl	$1000,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Lj439:
-.Ll92:
+.Lj335:
+.Ll86:
 	nop
-.Lj356:
+.Lj252:
 	movq	%rbp,%rcx
 	call	SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$1
-.Ll93:
-# [205] end;
+.Ll87:
+# [204] end;
 	movl	%r13d,%eax
 	movq	-48(%rbp),%rbx
 	movq	-40(%rbp),%rdi
@@ -889,15 +809,15 @@ SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT:
 .seh_handlerdata
 	.long	1
 	.long	0
-	.rva	.Lj355
-	.rva	.Lj356
+	.rva	.Lj251
+	.rva	.Lj252
 	.rva	SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$1
 
 .section .text.n_synthcontrol_$$_allocatechannel$longint$$longint,"x"
 .seh_endproc
 .Lc24:
 .Lt2:
-.Ll94:
+.Ll88:
 
 .section .text.n_synthcontrol_$$_noteon$longint$longint$longint$longint,"x"
 	.balign 16,0x90
@@ -905,8 +825,8 @@ SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT:
 SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 .Lc28:
 .seh_proc SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll95:
-# [214] begin
+.Ll89:
+# [213] begin
 	pushq	%rbx
 .seh_pushreg %rbx
 	pushq	%rdi
@@ -933,32 +853,32 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movl	%edx,%esi
 	movl	%r8d,%edi
 	movl	%r9d,%r12d
-.Ll96:
-# [215] if (channel>=maxchannel) or (channel<0) then goto p999;
+.Ll90:
+# [214] if (channel>=maxchannel) or (channel<0) then goto p999;
 	cmpl	$32,%ebx
-	jge	.Lj447
+	jge	.Lj343
 	cmpl	$0,%ebx
-	jl	.Lj447
+	jl	.Lj343
 # PeepHole Optimization,var2a
-.Ll97:
-# [216] f:=fnotes[note] ;
+.Ll91:
+# [215] f:=fnotes[note] ;
 	movl	%esi,%eax
 	leaq	U_$FMSYNTH_$$_FNOTES(%rip),%rdx
 	movsd	(%rdx,%rax,8),%xmm6
 # PeepHole Optimization,var2a
-.Ll98:
-# [217] voices[channel].setfreq(f);
+.Ll92:
+# [216] voices[channel].setfreq(f);
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rcx
 	movapd	%xmm6,%xmm1
 	call	FMSYNTH$_$TFMVOICE_$__$$_SETFREQ$DOUBLE
-.Ll99:
-# [218] for i:=0 to 7 do voices[channel].operators[i].vel:=flogtable[49152+128*velocity];
+.Ll93:
+# [217] for i:=0 to 7 do voices[channel].operators[i].vel:=flogtable[49152+128*velocity];
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj456:
+.Lj352:
 	addl	$1,%r13d
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
@@ -973,10 +893,10 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	393216(%rdx,%rax,8),%rax
 	movq	%rax,264(%rcx)
 	cmpl	$7,%r13d
-	jl	.Lj456
+	jl	.Lj352
 # PeepHole Optimization,var2a
-.Ll100:
-# [219] {if note<60 then voices[channel].operators[0].mul1:=20000 else} voices[channel].operators[0].mul1:=16384/16;
+.Ll94:
+# [218] {if note<60 then voices[channel].operators[0].mul1:=20000 else} voices[channel].operators[0].mul1:=0;//16384/64;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
@@ -984,8 +904,8 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	_$SYNTHCONTROL$_Ld4(%rip),%rax
 	movq	%rax,80(%rdx)
 # PeepHole Optimization,var2a
-.Ll101:
-# [220] {if note<60 then voices[channel].operators[2].mul3:=20000 else }voices[channel].operators[2].mul3:=16384/16;
+.Ll95:
+# [219] {if note<60 then voices[channel].operators[2].mul3:=20000 else }voices[channel].operators[2].mul3:=0;//16384/64;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
@@ -993,8 +913,8 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	_$SYNTHCONTROL$_Ld4(%rip),%rax
 	movq	%rax,96(%rdx)
 # PeepHole Optimization,var2a
-.Ll102:
-# [221] {if note<60 then voices[channel].operators[4].mul5:=20000 else} voices[channel].operators[4].mul5:=16384/16;
+.Ll96:
+# [220] {if note<60 then voices[channel].operators[4].mul5:=20000 else} voices[channel].operators[4].mul5:=0;//16384/64;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
@@ -1002,140 +922,177 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	_$SYNTHCONTROL$_Ld4(%rip),%rax
 	movq	%rax,112(%rdx)
 # PeepHole Optimization,var2a
-.Ll103:
-# [222] voices[channel].operators[1].mul1:=14000/64;
+.Ll97:
+# [221] voices[channel].operators[1].mul1:=0000/64;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
 	movq	16(%rax),%rdx
-	movq	_$SYNTHCONTROL$_Ld5(%rip),%rax
+	movq	_$SYNTHCONTROL$_Ld4(%rip),%rax
 	movq	%rax,80(%rdx)
 # PeepHole Optimization,var2a
-.Ll104:
-# [223] voices[channel].operators[3].mul3:=14000/64;
+.Ll98:
+# [222] voices[channel].operators[3].mul3:=0000/64;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
 	movq	32(%rax),%rdx
-	movq	_$SYNTHCONTROL$_Ld5(%rip),%rax
+	movq	_$SYNTHCONTROL$_Ld4(%rip),%rax
 	movq	%rax,96(%rdx)
 # PeepHole Optimization,var2a
-.Ll105:
-# [224] voices[channel].operators[5].mul5:=14000/64;
+.Ll99:
+# [223] voices[channel].operators[5].mul5:=0000/64;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
 	movq	48(%rax),%rdx
-	movq	_$SYNTHCONTROL$_Ld5(%rip),%rax
+	movq	_$SYNTHCONTROL$_Ld4(%rip),%rax
 	movq	%rax,112(%rdx)
 # PeepHole Optimization,var2a
-.Ll106:
-# [225] {if note<60 then voices[channel].operators[1].adsrbias:=0.9 else } voices[channel].operators[1].adsrbias:=0;
+.Ll100:
+# [224] {if note<60 then voices[channel].operators[1].adsrbias:=0.9 else } voices[channel].operators[1].adsrbias:=0;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
 	movq	16(%rax),%rdx
-	movq	_$SYNTHCONTROL$_Ld6(%rip),%rax
+	movq	_$SYNTHCONTROL$_Ld4(%rip),%rax
 	movq	%rax,256(%rdx)
 # PeepHole Optimization,var2a
-.Ll107:
-# [226] {if note<60 then voices[channel].operators[3].adsrbias:=0.9 else }voices[channel].operators[3].adsrbias:=0;
+.Ll101:
+# [225] {if note<60 then voices[channel].operators[3].adsrbias:=0.9 else }voices[channel].operators[3].adsrbias:=0;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
 	movq	32(%rax),%rdx
-	movq	_$SYNTHCONTROL$_Ld6(%rip),%rax
+	movq	_$SYNTHCONTROL$_Ld4(%rip),%rax
 	movq	%rax,256(%rdx)
 # PeepHole Optimization,var2a
-.Ll108:
-# [227] {if note<60 then voices[channel].operators[5].adsrbias:=0.9 else} voices[channel].operators[5].adsrbias:=0;
+.Ll102:
+# [226] {if note<60 then voices[channel].operators[5].adsrbias:=0.9 else} voices[channel].operators[5].adsrbias:=0;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
 	movq	48(%rax),%rdx
-	movq	_$SYNTHCONTROL$_Ld6(%rip),%rax
+	movq	_$SYNTHCONTROL$_Ld4(%rip),%rax
 	movq	%rax,256(%rdx)
 # PeepHole Optimization,var2a
-.Ll109:
-# [228] voices[channel].operators[1].keysense:=1;
+.Ll103:
+# [227] voices[channel].operators[1].keysense:=1;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
 	movq	16(%rax),%rdx
-	movq	_$SYNTHCONTROL$_Ld7(%rip),%rax
+	movq	_$SYNTHCONTROL$_Ld5(%rip),%rax
 	movq	%rax,272(%rdx)
 # PeepHole Optimization,var2a
-.Ll110:
-# [229] voices[channel].operators[3].keysense:=1;
+.Ll104:
+# [228] voices[channel].operators[3].keysense:=1;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
 	movq	32(%rax),%rdx
-	movq	_$SYNTHCONTROL$_Ld7(%rip),%rax
+	movq	_$SYNTHCONTROL$_Ld5(%rip),%rax
 	movq	%rax,272(%rdx)
 # PeepHole Optimization,var2a
-.Ll111:
-# [230] voices[channel].operators[5].keysense:=1;
+.Ll105:
+# [229] voices[channel].operators[5].keysense:=1;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
 	movq	48(%rax),%rax
-	movq	_$SYNTHCONTROL$_Ld7(%rip),%rdx
+	movq	_$SYNTHCONTROL$_Ld5(%rip),%rdx
 	movq	%rdx,272(%rax)
 # PeepHole Optimization,var2a
-.Ll112:
-# [231] voices[channel].outmuls[1]:=0.3;
+.Ll106:
+# [230] voices[channel].outmuls[1]:=0;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rdx
-	movl	_$SYNTHCONTROL$_Ld8(%rip),%eax
+	movl	_$SYNTHCONTROL$_Ld6(%rip),%eax
 	movl	%eax,140(%rdx)
 # PeepHole Optimization,var2a
-.Ll113:
-# [232] voices[channel].outmuls[3]:=0.3;
+.Ll107:
+# [231] voices[channel].outmuls[3]:=0;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
-	movl	_$SYNTHCONTROL$_Ld8(%rip),%edx
+	movl	_$SYNTHCONTROL$_Ld6(%rip),%edx
 	movl	%edx,148(%rax)
 # PeepHole Optimization,var2a
-.Ll114:
-# [233] voices[channel].outmuls[5]:=0.3;
+.Ll108:
+# [232] voices[channel].outmuls[5]:=0;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
-	movl	_$SYNTHCONTROL$_Ld8(%rip),%edx
+	movl	_$SYNTHCONTROL$_Ld6(%rip),%edx
 	movl	%edx,156(%rax)
 # PeepHole Optimization,var2a
-.Ll115:
-# [234] voices[channel].outmuls[0]:=0.3;
+.Ll109:
+# [233] voices[channel].outmuls[0]:=1;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rdx
-	movl	_$SYNTHCONTROL$_Ld8(%rip),%eax
+	movl	_$SYNTHCONTROL$_Ld7(%rip),%eax
 	movl	%eax,136(%rdx)
 # PeepHole Optimization,var2a
-.Ll116:
-# [235] voices[channel].outmuls[2]:=0.3;
+.Ll110:
+# [234] voices[channel].outmuls[2]:=1;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
-	movl	_$SYNTHCONTROL$_Ld8(%rip),%edx
+	movl	_$SYNTHCONTROL$_Ld7(%rip),%edx
 	movl	%edx,144(%rax)
 # PeepHole Optimization,var2a
-.Ll117:
-# [236] voices[channel].outmuls[4]:=0.3;
+.Ll111:
+# [235] voices[channel].outmuls[4]:=1;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
-	movl	_$SYNTHCONTROL$_Ld8(%rip),%edx
+	movl	_$SYNTHCONTROL$_Ld7(%rip),%edx
 	movl	%edx,152(%rax)
-.Ll118:
-# [237] for i:=0 to 7 do  voices[channel].operators[i].ar1:=att;;
+# PeepHole Optimization,var2a
+.Ll112:
+# [236] voices[channel].outmuls[6]:=0;
+	movl	%ebx,%eax
+	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
+	movq	(%rdx,%rax,8),%rax
+	movl	_$SYNTHCONTROL$_Ld6(%rip),%edx
+	movl	%edx,160(%rax)
+# PeepHole Optimization,var2a
+.Ll113:
+# [237] voices[channel].outmuls[7]:=0;
+	movl	%ebx,%eax
+	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
+	movq	(%rdx,%rax,8),%rdx
+	movl	_$SYNTHCONTROL$_Ld6(%rip),%eax
+	movl	%eax,164(%rdx)
+.Ll114:
+# [238] for i:=0 to 7 do  voices[channel].operators[i].wptr:=@waves0[waveidx].wave;
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj497:
+.Lj397:
+	addl	$1,%r13d
+# PeepHole Optimization,var2a
+	movl	%ebx,%eax
+	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
+	movq	(%rdx,%rax,8),%rdx
+# PeepHole Optimization,var2a
+	movl	%r13d,%eax
+	movq	8(%rdx,%rax,8),%rcx
+	movl	TC_$FMSYNTH_$$_WAVEIDX(%rip),%eax
+	imulq	$8200,%rax,%rdx
+	leaq	U_$FMSYNTH_$$_WAVES0(%rip),%rax
+	leaq	8(%rax,%rdx),%rax
+	movq	%rax,136(%rcx)
+	cmpl	$7,%r13d
+	jl	.Lj397
+.Ll115:
+# [239] for i:=0 to 7 do  voices[channel].operators[i].ar1:=att;;
+	movl	$0,%r13d
+	subl	$1,%r13d
+	.balign 8,0x90
+.Lj402:
 	addl	$1,%r13d
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
@@ -1147,13 +1104,13 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	TC_$FMSYNTH_$$_ATT(%rip),%rax
 	movq	%rax,176(%rdx)
 	cmpl	$7,%r13d
-	jl	.Lj497
-.Ll119:
-# [238] for i:=0 to 7 do voices[channel].operators[i].adsrstate:=1;
+	jl	.Lj402
+.Ll116:
+# [240] for i:=0 to 7 do voices[channel].operators[i].adsrstate:=1;
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj502:
+.Lj407:
 	addl	$1,%r13d
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
@@ -1164,10 +1121,45 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	8(%rdx,%rax,8),%rax
 	movl	$1,320(%rax)
 	cmpl	$7,%r13d
-	jl	.Lj502
-.Lj447:
-.Ll120:
-# [240] end;
+	jl	.Lj407
+.Ll117:
+# [241] for i:=0 to 7 do voices[channel].operators[i].adsrstate:=1;
+	movl	$0,%r13d
+	subl	$1,%r13d
+	.balign 8,0x90
+.Lj412:
+	addl	$1,%r13d
+# PeepHole Optimization,var2a
+	movl	%ebx,%eax
+	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
+	movq	(%rdx,%rax,8),%rdx
+# PeepHole Optimization,var2a
+	movl	%r13d,%eax
+	movq	8(%rdx,%rax,8),%rax
+	movl	$1,320(%rax)
+	cmpl	$7,%r13d
+	jl	.Lj412
+.Ll118:
+# [242] for i:=0 to 7 do voices[channel].operators[i].adsrval:=0;
+	movl	$0,%r13d
+	subl	$1,%r13d
+	.balign 8,0x90
+.Lj417:
+	addl	$1,%r13d
+# PeepHole Optimization,var2a
+	movl	%ebx,%eax
+	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
+	movq	(%rdx,%rax,8),%rdx
+# PeepHole Optimization,var2a
+	movl	%r13d,%eax
+	movq	8(%rdx,%rax,8),%rax
+	movq	_$SYNTHCONTROL$_Ld4(%rip),%rdx
+	movq	%rdx,168(%rax)
+	cmpl	$7,%r13d
+	jl	.Lj417
+.Lj343:
+.Ll119:
+# [244] end;
 	nop
 	movdqa	32(%rsp),%xmm6
 	leaq	48(%rsp),%rsp
@@ -1180,7 +1172,7 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 .seh_endproc
 .Lc29:
 .Lt5:
-.Ll121:
+.Ll120:
 
 .section .text.n_synthcontrol_$$_noteoff$longint$longint,"x"
 	.balign 16,0x90
@@ -1190,15 +1182,15 @@ SYNTHCONTROL_$$_NOTEOFF$LONGINT$LONGINT:
 # Var channel located in register ecx
 # Var note located in register edx
 # Var i located in register r8d
-# [250] begin
-.Ll122:
-# [251] if channel<maxchannel then for i:=0 to 7 do voices[channel].operators[i].adsrstate:=5;
+# [254] begin
+.Ll121:
+# [255] if channel<maxchannel then for i:=0 to 7 do voices[channel].operators[i].adsrstate:=5;
 	cmpl	$32,%ecx
-	jnl	.Lj508
+	jnl	.Lj423
 	movl	$0,%r8d
 	subl	$1,%r8d
 	.balign 8,0x90
-.Lj511:
+.Lj426:
 	addl	$1,%r8d
 # PeepHole Optimization,var2a
 	movl	%ecx,%eax
@@ -1209,14 +1201,14 @@ SYNTHCONTROL_$$_NOTEOFF$LONGINT$LONGINT:
 	movq	8(%r9,%rax,8),%rax
 	movl	$5,320(%rax)
 	cmpl	$7,%r8d
-	jl	.Lj511
-.Lj508:
-.Ll123:
-# [253] end;
+	jl	.Lj426
+.Lj423:
+.Ll122:
+# [257] end;
 	ret
 .Lc32:
 .Lt6:
-.Ll124:
+.Ll123:
 # End asmlist al_procedures
 # Begin asmlist al_globals
 
@@ -1240,7 +1232,7 @@ U_$SYNTHCONTROL_$$_NOTES:
 VMT_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.quad	88,-88
 	.quad	VMT_$CLASSES_$$_TTHREAD
-	.quad	.Ld9
+	.quad	.Ld8
 	.quad	0,0,0
 	.quad	RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL
 	.quad	0,0
@@ -1262,9 +1254,9 @@ VMT_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.quad	CLASSES$_$TTHREAD_$__$$_DOTERMINATE
 	.quad	SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE
 	.quad	0
-# [257] 
+# [261] 
 	.balign 8
-.Ld9:
+.Ld8:
 	.byte	10
 	.ascii	"TSynthCtrl"
 # End asmlist al_globals
@@ -1274,10 +1266,10 @@ VMT_$SYNTHCONTROL_$$_TSYNTHCTRL:
 .globl	TC_$SYNTHCONTROL_$$_KEYMAP2
 TC_$SYNTHCONTROL_$$_KEYMAP2:
 	.byte	0,0,0,0,49,57,53,0,0,54,56,58,79,0,61,63,60,59,81,83,67,72,51,74,77,55,69,52,76,50,66,68,0,0,73,75,0,78,80,0,0,0
-	.byte	87,0,72,94,74,76,92,0,78,80,82,0,85,87,0,90,88,75,0,0,0,0,0,0,0,0,0,0,100,101,102,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,95
-	.byte	0,96,0,0,0,0,67,64,63,81,0,66,68,89,70,0,73,71,69,91,93,77,83,61,84,88,65,79,62,86,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+	.byte	87,0,72,94,74,76,92,0,78,80,82,0,85,87,0,90,0,0,0,0,0,0,0,0,0,0,0,0,100,101,102,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,95,0,96
+	.byte	0,0,0,0,67,64,63,81,0,66,68,89,70,0,73,71,69,91,93,77,83,61,84,88,65,79,62,86,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 	.byte	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+	.byte	0,0,0,0,0,0,0,0,0,0,0,0,59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 # [55] function allocatechannel(mode:integer):integer;
 
 .section .rodata.n__$SYNTHCONTROL$_Ld1,"d"
@@ -1305,36 +1297,29 @@ _$SYNTHCONTROL$_Ld3:
 	.balign 8
 .globl	_$SYNTHCONTROL$_Ld4
 _$SYNTHCONTROL$_Ld4:
-# value: 0d+1.0240000000000000E+003
-	.byte	0,0,0,0,0,0,144,64
+# value: 0d+0.0000000000000000E+000
+	.byte	0,0,0,0,0,0,0,0
 
 .section .rodata.n__$SYNTHCONTROL$_Ld5,"d"
 	.balign 8
 .globl	_$SYNTHCONTROL$_Ld5
 _$SYNTHCONTROL$_Ld5:
-# value: 0d+2.1875000000000000E+002
-	.byte	0,0,0,0,0,88,107,64
-
-.section .rodata.n__$SYNTHCONTROL$_Ld6,"d"
-	.balign 8
-.globl	_$SYNTHCONTROL$_Ld6
-_$SYNTHCONTROL$_Ld6:
-# value: 0d+0.0000000000000000E+000
-	.byte	0,0,0,0,0,0,0,0
-
-.section .rodata.n__$SYNTHCONTROL$_Ld7,"d"
-	.balign 8
-.globl	_$SYNTHCONTROL$_Ld7
-_$SYNTHCONTROL$_Ld7:
 # value: 0d+1.0000000000000000E+000
 	.byte	0,0,0,0,0,0,240,63
 
-.section .rodata.n__$SYNTHCONTROL$_Ld8,"d"
+.section .rodata.n__$SYNTHCONTROL$_Ld6,"d"
 	.balign 4
-.globl	_$SYNTHCONTROL$_Ld8
-_$SYNTHCONTROL$_Ld8:
-# value: 0d+3.000000119E-01
-	.byte	154,153,153,62
+.globl	_$SYNTHCONTROL$_Ld6
+_$SYNTHCONTROL$_Ld6:
+# value: 0d+0.000000000E+00
+	.byte	0,0,0,0
+
+.section .rodata.n__$SYNTHCONTROL$_Ld7,"d"
+	.balign 4
+.globl	_$SYNTHCONTROL$_Ld7
+_$SYNTHCONTROL$_Ld7:
+# value: 0d+1.000000000E+00
+	.byte	0,0,128,63
 # End asmlist al_typedconsts
 # Begin asmlist al_rtti
 
@@ -1517,8 +1502,8 @@ RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.uleb128	1
 # [63] constructor TSynthCtrl.Create(CreateSuspended : boolean);
 	.ascii	"synthcontrol.pas\000"
-	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
-	.ascii	"D:/programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
+	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -6715,558 +6700,556 @@ RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.byte	5
 	.uleb128	14
 	.byte	14
-# [101:5]
+# [104:17]
 	.byte	2
 	.uleb128	.Ll26-.Ll25
 	.byte	5
-	.uleb128	5
-	.byte	13
-# [102:5]
+	.uleb128	17
+	.byte	16
+# [105:11]
 	.byte	2
 	.uleb128	.Ll27-.Ll26
+	.byte	5
+	.uleb128	11
 	.byte	13
-# [103:5]
+# [112:14]
 	.byte	2
 	.uleb128	.Ll28-.Ll27
-	.byte	13
-# [104:17]
+	.byte	5
+	.uleb128	14
+	.byte	19
+# [113:17]
 	.byte	2
 	.uleb128	.Ll29-.Ll28
 	.byte	5
 	.uleb128	17
 	.byte	13
-# [105:11]
+# [114:11]
 	.byte	2
 	.uleb128	.Ll30-.Ll29
 	.byte	5
 	.uleb128	11
 	.byte	13
-# [109:5]
-	.byte	2
-	.uleb128	.Ll31-.Ll30
-	.byte	5
-	.uleb128	5
-	.byte	16
-# [110:5]
-	.byte	2
-	.uleb128	.Ll32-.Ll31
-	.byte	13
-# [111:5]
-	.byte	2
-	.uleb128	.Ll33-.Ll32
-	.byte	13
-# [112:14]
-	.byte	2
-	.uleb128	.Ll34-.Ll33
-	.byte	5
-	.uleb128	14
-	.byte	13
-# [113:17]
-	.byte	2
-	.uleb128	.Ll35-.Ll34
-	.byte	5
-	.uleb128	17
-	.byte	13
-# [114:11]
-	.byte	2
-	.uleb128	.Ll36-.Ll35
-	.byte	5
-	.uleb128	11
-	.byte	13
 # [116:3]
 	.byte	2
-	.uleb128	.Ll37-.Ll36
+	.uleb128	.Ll31-.Ll30
 	.byte	5
 	.uleb128	3
 	.byte	14
 # [119:5]
 	.byte	2
-	.uleb128	.Ll38-.Ll37
+	.uleb128	.Ll32-.Ll31
 	.byte	5
 	.uleb128	5
 	.byte	15
 # [122:6]
 	.byte	2
-	.uleb128	.Ll39-.Ll38
+	.uleb128	.Ll33-.Ll32
 	.byte	5
 	.uleb128	6
 	.byte	15
 # [124:10]
 	.byte	2
-	.uleb128	.Ll40-.Ll39
+	.uleb128	.Ll34-.Ll33
 	.byte	5
 	.uleb128	10
 	.byte	14
 # [125:8]
 	.byte	2
-	.uleb128	.Ll41-.Ll40
+	.uleb128	.Ll35-.Ll34
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [126:9]
 	.byte	2
-	.uleb128	.Ll42-.Ll41
+	.uleb128	.Ll36-.Ll35
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [127:3]
 	.byte	2
-	.uleb128	.Ll43-.Ll42
+	.uleb128	.Ll37-.Ll36
 	.byte	5
 	.uleb128	3
 	.byte	13
 # [128:26]
 	.byte	2
-	.uleb128	.Ll44-.Ll43
+	.uleb128	.Ll38-.Ll37
 	.byte	5
 	.uleb128	26
 	.byte	13
 # [129:6]
 	.byte	2
-	.uleb128	.Ll45-.Ll44
+	.uleb128	.Ll39-.Ll38
 	.byte	5
 	.uleb128	6
 	.byte	13
 # [131:9]
 	.byte	2
-	.uleb128	.Ll46-.Ll45
+	.uleb128	.Ll40-.Ll39
 	.byte	5
 	.uleb128	9
 	.byte	14
 # [132:10]
 	.byte	2
-	.uleb128	.Ll47-.Ll46
+	.uleb128	.Ll41-.Ll40
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [134:7]
 	.byte	2
-	.uleb128	.Ll48-.Ll47
+	.uleb128	.Ll42-.Ll41
 	.byte	5
 	.uleb128	7
 	.byte	14
 # [135:16]
 	.byte	2
-	.uleb128	.Ll49-.Ll48
+	.uleb128	.Ll43-.Ll42
 	.byte	5
 	.uleb128	16
 	.byte	13
 # [136:25]
 	.byte	2
-	.uleb128	.Ll50-.Ll49
+	.uleb128	.Ll44-.Ll43
 	.byte	5
 	.uleb128	25
 	.byte	13
 # [139:6]
 	.byte	2
-	.uleb128	.Ll51-.Ll50
+	.uleb128	.Ll45-.Ll44
 	.byte	5
 	.uleb128	6
 	.byte	15
 # [141:5]
 	.byte	2
-	.uleb128	.Ll52-.Ll51
+	.uleb128	.Ll46-.Ll45
 	.byte	5
 	.uleb128	5
 	.byte	14
 # [142:18]
 	.byte	2
-	.uleb128	.Ll53-.Ll52
+	.uleb128	.Ll47-.Ll46
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [143:19]
 	.byte	2
-	.uleb128	.Ll54-.Ll53
+	.uleb128	.Ll48-.Ll47
 	.byte	5
 	.uleb128	19
 	.byte	13
 # [144:5]
 	.byte	2
-	.uleb128	.Ll55-.Ll54
+	.uleb128	.Ll49-.Ll48
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [145:14]
 	.byte	2
-	.uleb128	.Ll56-.Ll55
+	.uleb128	.Ll50-.Ll49
 	.byte	5
 	.uleb128	14
 	.byte	13
 # [148:3]
 	.byte	2
-	.uleb128	.Ll57-.Ll56
+	.uleb128	.Ll51-.Ll50
 	.byte	5
 	.uleb128	3
 	.byte	15
 # [149:3]
 	.byte	2
-	.uleb128	.Ll58-.Ll57
+	.uleb128	.Ll52-.Ll51
 	.byte	13
-# [150:3]
+# [150:33]
 	.byte	2
-	.uleb128	.Ll59-.Ll58
+	.uleb128	.Ll53-.Ll52
+	.byte	5
+	.uleb128	33
 	.byte	13
-# [151:3]
+# [151:35]
 	.byte	2
-	.uleb128	.Ll60-.Ll59
+	.uleb128	.Ll54-.Ll53
+	.byte	5
+	.uleb128	35
 	.byte	13
-# [152:3]
+# [152:36]
 	.byte	2
-	.uleb128	.Ll61-.Ll60
+	.uleb128	.Ll55-.Ll54
+	.byte	5
+	.uleb128	36
 	.byte	13
-# [156:1]
+# [155:1]
 	.byte	2
-	.uleb128	.Ll62-.Ll61
+	.uleb128	.Ll56-.Ll55
 	.byte	5
 	.uleb128	1
-	.byte	16
-# [157:7]
+	.byte	15
+# [156:7]
 	.byte	2
-	.uleb128	.Ll63-.Ll62
+	.uleb128	.Ll57-.Ll56
 	.byte	5
 	.uleb128	7
 	.byte	13
 # [85:1]
 	.byte	2
-	.uleb128	.Ll64-.Ll63
+	.uleb128	.Ll58-.Ll57
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	-72
+	.sleb128	-71
 	.byte	1
-# [158:1]
+# [157:1]
 	.byte	2
-	.uleb128	.Ll65-.Ll64
-	.byte	85
+	.uleb128	.Ll59-.Ll58
+	.byte	84
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll66
+	.quad	.Ll60
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$1
-# [172:1]
+# [171:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll67
+	.quad	.Ll61
 	.byte	5
 	.uleb128	1
-	.byte	183
-# [172:1]
+	.byte	182
+# [171:1]
 	.byte	2
-	.uleb128	.Ll68-.Ll67
+	.uleb128	.Ll62-.Ll61
 	.byte	1
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll69
+	.quad	.Ll63
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT
-# [172:1]
+# [171:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll70
+	.quad	.Ll64
 	.byte	5
 	.uleb128	1
-	.byte	183
+	.byte	182
+# [171:1]
+	.byte	2
+	.uleb128	.Ll65-.Ll64
+	.byte	1
 # [172:1]
 	.byte	2
-	.uleb128	.Ll71-.Ll70
-	.byte	1
+	.uleb128	.Ll66-.Ll65
+	.byte	13
 # [173:1]
 	.byte	2
-	.uleb128	.Ll72-.Ll71
+	.uleb128	.Ll67-.Ll66
 	.byte	13
 # [174:1]
 	.byte	2
-	.uleb128	.Ll73-.Ll72
+	.uleb128	.Ll68-.Ll67
 	.byte	13
-# [175:1]
+# [177:5]
 	.byte	2
-	.uleb128	.Ll74-.Ll73
-	.byte	13
-# [178:5]
-	.byte	2
-	.uleb128	.Ll75-.Ll74
+	.uleb128	.Ll69-.Ll68
 	.byte	5
 	.uleb128	5
 	.byte	15
-# [180:3]
+# [179:3]
 	.byte	2
-	.uleb128	.Ll76-.Ll75
+	.uleb128	.Ll70-.Ll69
 	.byte	5
 	.uleb128	3
 	.byte	14
-# [181:16]
+# [180:16]
 	.byte	2
-	.uleb128	.Ll77-.Ll76
+	.uleb128	.Ll71-.Ll70
 	.byte	5
 	.uleb128	16
 	.byte	13
-# [183:9]
+# [182:9]
 	.byte	2
-	.uleb128	.Ll78-.Ll77
+	.uleb128	.Ll72-.Ll71
 	.byte	5
 	.uleb128	9
 	.byte	14
-# [185:3]
+# [184:3]
 	.byte	2
-	.uleb128	.Ll79-.Ll78
+	.uleb128	.Ll73-.Ll72
 	.byte	5
 	.uleb128	3
 	.byte	14
+# [188:3]
+	.byte	2
+	.uleb128	.Ll74-.Ll73
+	.byte	16
 # [189:3]
 	.byte	2
-	.uleb128	.Ll80-.Ll79
-	.byte	16
+	.uleb128	.Ll75-.Ll74
+	.byte	13
 # [190:3]
 	.byte	2
-	.uleb128	.Ll81-.Ll80
+	.uleb128	.Ll76-.Ll75
 	.byte	13
 # [191:3]
 	.byte	2
-	.uleb128	.Ll82-.Ll81
+	.uleb128	.Ll77-.Ll76
 	.byte	13
-# [192:3]
+# [193:17]
 	.byte	2
-	.uleb128	.Ll83-.Ll82
-	.byte	13
-# [194:17]
-	.byte	2
-	.uleb128	.Ll84-.Ll83
+	.uleb128	.Ll78-.Ll77
 	.byte	5
 	.uleb128	17
 	.byte	14
-# [196:19]
+# [195:19]
 	.byte	2
-	.uleb128	.Ll85-.Ll84
+	.uleb128	.Ll79-.Ll78
 	.byte	5
 	.uleb128	19
 	.byte	14
-# [197:7]
+# [196:7]
 	.byte	2
-	.uleb128	.Ll86-.Ll85
+	.uleb128	.Ll80-.Ll79
 	.byte	5
 	.uleb128	7
 	.byte	13
-# [199:9]
+# [198:9]
 	.byte	2
-	.uleb128	.Ll87-.Ll86
+	.uleb128	.Ll81-.Ll80
 	.byte	5
 	.uleb128	9
 	.byte	14
-# [192:10]
+# [191:10]
 	.byte	2
-	.uleb128	.Ll88-.Ll87
+	.uleb128	.Ll82-.Ll81
 	.byte	5
 	.uleb128	10
 	.byte	3
 	.sleb128	-7
 	.byte	1
-# [201:3]
+# [200:3]
 	.byte	2
-	.uleb128	.Ll89-.Ll88
+	.uleb128	.Ll83-.Ll82
 	.byte	5
 	.uleb128	3
 	.byte	21
-# [202:16]
+# [201:16]
 	.byte	2
-	.uleb128	.Ll90-.Ll89
+	.uleb128	.Ll84-.Ll83
 	.byte	5
 	.uleb128	16
 	.byte	13
-# [204:5]
+# [203:5]
 	.byte	2
-	.uleb128	.Ll91-.Ll90
+	.uleb128	.Ll85-.Ll84
 	.byte	5
 	.uleb128	5
 	.byte	14
-# [172:1]
+# [171:1]
 	.byte	2
-	.uleb128	.Ll92-.Ll91
+	.uleb128	.Ll86-.Ll85
 	.byte	5
 	.uleb128	1
 	.byte	3
 	.sleb128	-32
 	.byte	1
-# [205:1]
+# [204:1]
 	.byte	2
-	.uleb128	.Ll93-.Ll92
+	.uleb128	.Ll87-.Ll86
 	.byte	45
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll94
+	.quad	.Ll88
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT
-# [214:1]
+# [213:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll95
+	.quad	.Ll89
 	.byte	5
 	.uleb128	1
-	.byte	225
-# [215:4]
+	.byte	224
+# [214:4]
 	.byte	2
-	.uleb128	.Ll96-.Ll95
+	.uleb128	.Ll90-.Ll89
 	.byte	5
 	.uleb128	4
 	.byte	13
-# [216:11]
+# [215:11]
 	.byte	2
-	.uleb128	.Ll97-.Ll96
+	.uleb128	.Ll91-.Ll90
 	.byte	5
 	.uleb128	11
 	.byte	13
-# [217:8]
+# [216:8]
 	.byte	2
-	.uleb128	.Ll98-.Ll97
+	.uleb128	.Ll92-.Ll91
 	.byte	5
 	.uleb128	8
 	.byte	13
-# [218:1]
+# [217:1]
 	.byte	2
-	.uleb128	.Ll99-.Ll98
+	.uleb128	.Ll93-.Ll92
 	.byte	5
 	.uleb128	1
 	.byte	13
-# [219:72]
+# [218:72]
 	.byte	2
-	.uleb128	.Ll100-.Ll99
+	.uleb128	.Ll94-.Ll93
 	.byte	5
 	.uleb128	72
 	.byte	13
+# [219:72]
+	.byte	2
+	.uleb128	.Ll95-.Ll94
+	.byte	13
 # [220:72]
 	.byte	2
-	.uleb128	.Ll101-.Ll100
+	.uleb128	.Ll96-.Ll95
 	.byte	13
-# [221:72]
+# [221:8]
+	.byte	2
+	.uleb128	.Ll97-.Ll96
+	.byte	5
+	.uleb128	8
+	.byte	13
+# [222:8]
+	.byte	2
+	.uleb128	.Ll98-.Ll97
+	.byte	13
+# [223:8]
+	.byte	2
+	.uleb128	.Ll99-.Ll98
+	.byte	13
+# [224:75]
+	.byte	2
+	.uleb128	.Ll100-.Ll99
+	.byte	5
+	.uleb128	75
+	.byte	13
+# [225:74]
+	.byte	2
+	.uleb128	.Ll101-.Ll100
+	.byte	5
+	.uleb128	74
+	.byte	13
+# [226:74]
 	.byte	2
 	.uleb128	.Ll102-.Ll101
 	.byte	13
-# [222:8]
+# [227:8]
 	.byte	2
 	.uleb128	.Ll103-.Ll102
 	.byte	5
 	.uleb128	8
 	.byte	13
-# [223:8]
+# [228:8]
 	.byte	2
 	.uleb128	.Ll104-.Ll103
 	.byte	13
-# [224:8]
+# [229:8]
 	.byte	2
 	.uleb128	.Ll105-.Ll104
 	.byte	13
-# [225:75]
-	.byte	2
-	.uleb128	.Ll106-.Ll105
-	.byte	5
-	.uleb128	75
-	.byte	13
-# [226:74]
-	.byte	2
-	.uleb128	.Ll107-.Ll106
-	.byte	5
-	.uleb128	74
-	.byte	13
-# [227:74]
-	.byte	2
-	.uleb128	.Ll108-.Ll107
-	.byte	13
-# [228:8]
-	.byte	2
-	.uleb128	.Ll109-.Ll108
-	.byte	5
-	.uleb128	8
-	.byte	13
-# [229:8]
-	.byte	2
-	.uleb128	.Ll110-.Ll109
-	.byte	13
 # [230:8]
 	.byte	2
-	.uleb128	.Ll111-.Ll110
+	.uleb128	.Ll106-.Ll105
 	.byte	13
 # [231:8]
 	.byte	2
-	.uleb128	.Ll112-.Ll111
+	.uleb128	.Ll107-.Ll106
 	.byte	13
 # [232:8]
 	.byte	2
-	.uleb128	.Ll113-.Ll112
+	.uleb128	.Ll108-.Ll107
 	.byte	13
 # [233:8]
 	.byte	2
-	.uleb128	.Ll114-.Ll113
+	.uleb128	.Ll109-.Ll108
 	.byte	13
 # [234:8]
 	.byte	2
-	.uleb128	.Ll115-.Ll114
+	.uleb128	.Ll110-.Ll109
 	.byte	13
 # [235:8]
 	.byte	2
-	.uleb128	.Ll116-.Ll115
+	.uleb128	.Ll111-.Ll110
 	.byte	13
 # [236:8]
 	.byte	2
-	.uleb128	.Ll117-.Ll116
+	.uleb128	.Ll112-.Ll111
 	.byte	13
-# [237:1]
+# [237:8]
 	.byte	2
-	.uleb128	.Ll118-.Ll117
-	.byte	5
-	.uleb128	1
+	.uleb128	.Ll113-.Ll112
 	.byte	13
 # [238:1]
 	.byte	2
-	.uleb128	.Ll119-.Ll118
+	.uleb128	.Ll114-.Ll113
+	.byte	5
+	.uleb128	1
+	.byte	13
+# [239:1]
+	.byte	2
+	.uleb128	.Ll115-.Ll114
 	.byte	13
 # [240:1]
 	.byte	2
-	.uleb128	.Ll120-.Ll119
+	.uleb128	.Ll116-.Ll115
+	.byte	13
+# [241:1]
+	.byte	2
+	.uleb128	.Ll117-.Ll116
+	.byte	13
+# [242:1]
+	.byte	2
+	.uleb128	.Ll118-.Ll117
+	.byte	13
+# [244:1]
+	.byte	2
+	.uleb128	.Ll119-.Ll118
 	.byte	14
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll121
+	.quad	.Ll120
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: SYNTHCONTROL_$$_NOTEOFF$LONGINT$LONGINT
-# [251:11]
+# [255:11]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll122
+	.quad	.Ll121
 	.byte	5
 	.uleb128	11
 	.byte	3
-	.sleb128	250
+	.sleb128	254
 	.byte	1
-# [253:1]
+# [257:1]
 	.byte	2
-	.uleb128	.Ll123-.Ll122
+	.uleb128	.Ll122-.Ll121
 	.byte	5
 	.uleb128	1
 	.byte	14
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll124
+	.quad	.Ll123
 	.byte	0
 	.byte	1
 	.byte	1

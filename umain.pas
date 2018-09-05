@@ -118,15 +118,45 @@ t:=gettime-t;
 box(100,100,200,100,0);
 outtextxyz(100,100,inttostr(t),44,2,2);
 sdl_pauseaudio(0);
-box(12,70,440,384,145-48); outtextxyz(12,70,'1',145-48+12,2,2);
-box(12+443,70,440,384,145-32);
-box(12+2*443,70,440,384,145-16);
-box(12+3*443,70,440,384,145);
-box(12,70+388,440,384,145+16);
-box(12+443,70+388,440,384,145+32);
-box(12+2*443,70+388,440,384,145+48);
-box(12+3*443,70+388,440,384,145+64);
+box(12,70,440,384,145-48);            outtextxyz(12+425,70,'0',145-48+12,2,2);
 
+outtextxyz(20,70,'Modulators',107,2,2);
+outtextxyz(20,110,'0',107,2,2);  box(40,110,64,32,101); outtextxyz(48,110,'127',110,2,2);
+outtextxyz(20,150,'1',107,2,2);  box(40,150,64,32,101); outtextxyz(48,150,'127',110,2,2);
+outtextxyz(20,190,'2',107,2,2);  box(40,190,64,32,101); outtextxyz(48,190,'127',110,2,2);
+outtextxyz(20,230,'3',107,2,2);  box(40,230,64,32,101); outtextxyz(48,230,'127',110,2,2);
+outtextxyz(20,270,'4',107,2,2);  box(40,270,64,32,101); outtextxyz(48,270,'127',110,2,2);
+outtextxyz(20,310,'5',107,2,2);  box(40,310,64,32,101); outtextxyz(48,310,'127',110,2,2);
+outtextxyz(20,350,'6',107,2,2);  box(40,350,64,32,101); outtextxyz(48,350,'127',110,2,2);
+outtextxyz(20,390,'7',107,2,2);  box(40,390,64,32,101); outtextxyz(48,390,'127',110,2,2);
+
+outtextxyz(220,70,'ADSR',107,2,2);
+outtextxyz(220,110,'R1',107,2,2);  box(260,110,64,32,101); outtextxyz(268,110,'127',110,2,2);
+outtextxyz(220,150,'R2',107,2,2);  box(260,150,64,32,101); outtextxyz(268,150,'127',110,2,2);
+outtextxyz(220,190,'R3',107,2,2);  box(260,190,64,32,101); outtextxyz(268,190,'127',110,2,2);
+outtextxyz(220,230,'R4',107,2,2);  box(260,230,64,32,101); outtextxyz(268,230,'127',110,2,2);
+outtextxyz(330,110,'L1',107,2,2);  box(370,110,64,32,101); outtextxyz(378,110,'127',110,2,2);
+outtextxyz(330,150,'L2',107,2,2);  box(370,150,64,32,101); outtextxyz(378,150,'127',110,2,2);
+outtextxyz(330,190,'L3',107,2,2);  box(370,190,64,32,101); outtextxyz(378,190,'127',110,2,2);
+outtextxyz(330,230,'L4',107,2,2);  box(370,230,64,32,101); outtextxyz(378,230,'127',110,2,2);
+//outtextxyz(220,270,'4',107,2,2);  box(240,270,64,32,101); outtextxyz(248,270,'127',110,2,2);
+//outtextxyz(220,310,'5',107,2,2);  box(240,310,64,32,101); outtextxyz(248,310,'127',110,2,2);
+//outtextxyz(220,350,'6',107,2,2);  box(240,350,64,32,101); outtextxyz(248,350,'127',110,2,2);
+//outtextxyz(220,390,'7',107,2,2);  box(240,390,64,32,101); outtextxyz(248,390,'127',110,2,2);
+//adsrbias:=0;
+// c1,c2,c3,c4,c5,c6
+//keysense:=1;
+//todo: adsr scaling i vol scaling
+
+
+box(12+443,70,440,384,145-32);        outtextxyz(12+443+425,70,'1',145-32+12,2,2);
+box(12+2*443,70,440,384,145-16);      outtextxyz(12+2*443+425,70,'2',145-16+12,2,2);
+box(12+3*443,70,440,384,145);         outtextxyz(12+3*443+425,70,'3',145+12,2,2);
+box(12,70+388,440,384,145+16);        outtextxyz(12+425,70+388,'4',145+16+12,2,2);
+box(12+443,70+388,440,384,145+32);    outtextxyz(12+443+425,70+388,'5',145+32+12,2,2);
+box(12+2*443,70+388,440,384,145+48);  outtextxyz(12+2*443+425,70+388,'6',145+48+12,2,2);
+box(12+3*443,70+388,440,384,145+64);  outtextxyz(12+3*443+425,70+388,'7',145+64+12,2,2);
+for i:=0 to 127 do outtextxy(8*i,800,chr(i),15);
 end;
 
 
@@ -161,16 +191,7 @@ sss:=inttostr(ss); if ss<10 then sss:='0'+sss;
 mms:=inttostr(mm); if mm<10 then mms:='0'+mms;
 hhs:=inttostr(hh); if hh<10 then hhs:='0'+hhs;
 songfreq:=1000000 div siddelay;
-//if skip=1 then songfreq*=2;
-box(18,864,512,32,244);
-box(18,960,512,32,244);
-outtextxyz(18,864,songname,250,2,2);
-//outtextxyz(500,200,inttostr(rect.x),40,3,3);
-//outtextxyz(500,250,inttostr(rect.y),40,3,3);
-//outtextxyz(500,300,inttostr(rect.w),40,3,3);
-//outtextxyz(500,350,inttostr(rect.h),40,3,3);
-//outtextxyz(18,912,'SIDCog DMP file, '+inttostr(songfreq)+' Hz',250,2,2);
-outtextxyz(18,960,hhs+':'+mms+':'+sss,190,4,2);
+
 //avsid:=sidtime;
 avsid:=0;
 sidbuf[sidptr]:=sidtime;
@@ -184,24 +205,16 @@ av6502:=av6502+time6502;
 box2(10,1062,1782,1110,118);
 outtextxyz(32,1070,'Avg screen time: '+inttostr(round(avsct/c))+' us',76,2,2);
 outtextxyz(438,1070,'Avg sprite time: '+inttostr(round(avspt/c))+' us',186,2,2);
-outtextxyz(828,1070,'Avg SID time: '+inttostr(avsid)+' us',233,2,2);
-outtextxyz(1190,1070,'6502 time: '+floattostrf((time6502/16),fffixed,4,1)+' us',124,2,2);
-if peek($70003)=1 then outtextxyz(1500,1070,inttostr(peek($d404)shr 4),108,2,2);
-if peek($70004)=1 then outtextxyz(1540,1070,inttostr(peek($d40b)shr 4),200,2,2);
-if peek($70005)=1 then outtextxyz(1580,1070,inttostr(peek($d412)shr 4),40,2,2);
-outtextxyz(1650,1070,inttostr(dpeek($60028)),44,2,2);
-
-for i:=16 to 39 do lpoke($10000+1024+4*i,lpeek($10000+2048+4*((c div 2) mod 256)+4*i));
-if (c mod 64)=0 then lpoke($10000+1024+4*135,lpeek($10000+2048+(4*(c div 64) mod 256)))   ;
-blit($F800000,10+(c mod 1772),1011,$F000000,12,1011,1771-(c mod 1772),48,1792,1792);
-blit($F800000,10,1011,$F000000,11+1771-(c mod 1772),1011,(c mod 1772),48,1792,1792);
+outtextxyz(828,1070,'Avg FM time: '+inttostr(avsid)+' us',233,2,2);
 
 
-box2(10,860,894,1047,178);
-box2(10,950,890,951,40);
-box2(10,1014,890,1015,40);
-box2(10,886,890,887,40);
-for j:=20 to 840 do if abs(scope[j])<46000 then box(20+j,950-scope[j] div 512,2,2,190);
+
+
+box2(12,860,896,1047,178);
+box2(14,950,894,951,40);
+box2(14,1014,894,1015,40);
+box2(14,886,894,887,40);
+for j:=20 to 840 do if abs(scope[j])<46000 then box(24+j,950-scope[j] div 512,2,2,190);
 //scj:=0;
 
 sprx:=round(dpeek($d400)/40+74);

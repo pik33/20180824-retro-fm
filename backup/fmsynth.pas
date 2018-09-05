@@ -50,11 +50,18 @@ type TFmVoice=class
      procedure setfreq(afreq:myfloat);
      end;
 
-type TWaveSample=record
+type TWaveSample1=record
+     name:string;
      len,lstart,lend:integer;
      speed:myfloat;
      wave:pointer;
      end;
+
+type TWaveSample0=record
+     name:string;
+     wave:array[0..1023] of double;
+     end;
+
 
 const
 
@@ -68,14 +75,43 @@ var flogtable:array[0..65540] of myfloat;
 //    fopdata:array[0..65535] of single;
     fmoperator:TFmOperator;
     voices:array [0..31] of TFmVoice;
-
+    waves0:array [0..127] of TWaveSample0;
        att:double=1/960;
+    sampleindex0:integer=0;
+    sampleindex1:integer=0;
+    waveidx:integer=0;
+
 
 procedure initvoices;
 
 
 implementation
     uses retro;
+
+procedure initsamples0;
+
+var sr:tsearchrec;
+    i,fh:integer;
+    currentdir2:string;
+    dummy:array[0..15] of byte;
+    intwave:array[0..1024] of smallint;
+
+begin
+currentdir2:='C:\s\';
+if findfirst(currentdir2+'*.s2',faAnyFile,sr)=0 then
+  repeat
+  fh:=fileopen(currentdir2+sr.name,$40);
+  fileread(fh,dummy,16);
+  waves0[sampleindex0].name:=sr.name;
+  fileread(fh,intwave,2048);
+  for i:=0 to 1023 do waves0[sampleindex0].wave[i]:=intwave[i]/32768;
+  fileclose(fh);
+  sampleindex0+=1;
+  until (findnext(sr)<>0) or (sampleindex0=128);
+findclose(sr);
+end;
+
+
 
 procedure initvoices;
 
@@ -246,7 +282,7 @@ adsrval:=0;
 ar1:=1/96;
 ar2:=-1/96000;
 ar3:=-1/960000;
-ar4:=-1/960000;
+ar4:=-3/960000;
 av1:=1;
 av2:=0.95;
 av3:=0.9;
@@ -426,6 +462,7 @@ initialization
 initflogtable;
 initfsinetable;
 initnotes;
+initsamples0;
 //initvoices;
 
 end.

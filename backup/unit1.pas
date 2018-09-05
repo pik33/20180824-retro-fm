@@ -101,11 +101,13 @@ repeat
 //  if peek($60028)=ord('p') then begin poke ($60028,0); pause:=not pause; if pause then sdl_pauseaudio(1) else sdl_pauseaudio(0); end;
 
   if dpeek($60028)=16445 then begin edelay:=not edelay; dpoke($60028,0); end;  //f4=delay
-
+  if dpeek($60028)=16442 then begin waveidx+=1; if waveidx>=sampleindex0 then waveidx:=sampleindex0;  dpoke($60028,0); end;  //f4=delay
+  if dpeek($60028)=16443 then begin waveidx-=1; if waveidx<0 then waveidx:=0;  dpoke($60028,0); end;  //f4=delay
+  box(600,600,300,40,0); outtextxyz(600,600,waves0[waveidx].name,15,2,2);
           // adsr test
           if dpeek($60028)=16447 then begin att:=att*1.1; dpoke($60028,0); end; //f5=reverb
           if dpeek($60028)=16448 then begin att:=att/1.1; ereverb:=not ereverb; dpoke($60028,0); end; //f5=reverb
-          box(100,800,500,100,0); outtextxyz(100,800,floattostr(1/(96000*att)),15,2,2);
+          box(100,700,500,50,0); outtextxyz(100,700,floattostr(1/(96000*att)),15,2,2);
           // end adsr test
 
   if (dpeek($60028)=16451) and (peek($70002)=0) then         // f10 toggles fullscreen

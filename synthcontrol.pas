@@ -29,7 +29,7 @@ var channels:array[0..maxchannel-1] of int64;
      067,072,051,074,077,055,069,052,076,050, // 020
      066,068,000,000,073,075,000,078,080,000, // 030
      000,000,087,000,072,094,074,076,092,000, // 040
-     078,080,082,000,085,087,000,090,088,075, // 050
+     078,080,082,000,085,087,000,090,000,000, // 050
      000,000,000,000,000,000,000,000,000,000, // 060
      100,101,102,000,000,000,000,000,000,000, // 070
      000,000,000,000,000,000,000,000,000,000, // 080
@@ -98,17 +98,17 @@ if key<>$FFFFFFFF then
   if key<$10000 then
     begin
     key:=key and 255;
-    blit($F000000,100,432,$F000000,100,400,100,160,1792,1792);
-    box(100,560,100,32,0);
-    outtextxyz (100,560,inttostr(key),15,2,2);
+//    blit($F000000,100,432,$F000000,100,400,100,160,1792,1792);
+//    box(100,560,100,32,0);
+//    outtextxyz (100,560,inttostr(key),15,2,2);
     key:=keymap2[key];
     if key>0 then md:=144+key shl 8+$7F0000 else md:=$FFFFFFFF;
     end
   else
     begin
-    blit($F000000,100,432,$F000000,100,400,100,160,1792,1792);
-    box(100,560,100,32,0);
-    outtextxyz (100,560,inttostr(key),15,2,2);
+//    blit($F000000,100,432,$F000000,100,400,100,160,1792,1792);
+//    box(100,560,100,32,0);
+//    outtextxyz (100,560,inttostr(key),15,2,2);
     key:=key and 255;
     key:=keymap2[key];
     if key>0 then md:=144+key shl 8 else md:=$FFFFFFFF;
@@ -145,12 +145,11 @@ if md<>$FFFFFFFF then
     notes[aaa,0]:=maxchannel;
     end;
 
-  blit($F000000,300,300,$F000000,300,204,300,192,1792,1792);
-  box(300,396,300,96,0);
-  outtextxyz(300,396,inttostr(aa),15,2,2);
-  outtextxyz(300,428,inttostr(aaa),15,2,2);
-  outtextxyz(300,460,inttostr(aaaa),15,2,2);
-
+  blit($F000000,1000,948,$F000000,1000,900,150,96,1792,1792);
+  box(1000,996,150,48,33);
+  outtextxy(1000,996,inttostr(aa),15);
+  outtextxy(1000,1012,inttostr(aaa),15);
+  outtextxy(1000,1028,inttostr(aaaa),15);
   end;
 
 sleep(1)
@@ -216,26 +215,31 @@ if (channel>=maxchannel) or (channel<0) then goto p999;
 f:=fnotes[note] ;
 voices[channel].setfreq(f);
 for i:=0 to 7 do voices[channel].operators[i].vel:=flogtable[49152+128*velocity];
-{if note<60 then voices[channel].operators[0].mul1:=20000 else} voices[channel].operators[0].mul1:=16384/16;
-{if note<60 then voices[channel].operators[2].mul3:=20000 else }voices[channel].operators[2].mul3:=16384/16;
-{if note<60 then voices[channel].operators[4].mul5:=20000 else} voices[channel].operators[4].mul5:=16384/16;
-voices[channel].operators[1].mul1:=14000/64;
-voices[channel].operators[3].mul3:=14000/64;
-voices[channel].operators[5].mul5:=14000/64;
+{if note<60 then voices[channel].operators[0].mul1:=20000 else} voices[channel].operators[0].mul1:=0;//16384/64;
+{if note<60 then voices[channel].operators[2].mul3:=20000 else }voices[channel].operators[2].mul3:=0;//16384/64;
+{if note<60 then voices[channel].operators[4].mul5:=20000 else} voices[channel].operators[4].mul5:=0;//16384/64;
+voices[channel].operators[1].mul1:=0000/64;
+voices[channel].operators[3].mul3:=0000/64;
+voices[channel].operators[5].mul5:=0000/64;
 {if note<60 then voices[channel].operators[1].adsrbias:=0.9 else } voices[channel].operators[1].adsrbias:=0;
 {if note<60 then voices[channel].operators[3].adsrbias:=0.9 else }voices[channel].operators[3].adsrbias:=0;
 {if note<60 then voices[channel].operators[5].adsrbias:=0.9 else} voices[channel].operators[5].adsrbias:=0;
 voices[channel].operators[1].keysense:=1;
 voices[channel].operators[3].keysense:=1;
 voices[channel].operators[5].keysense:=1;
-voices[channel].outmuls[1]:=0.3;
-voices[channel].outmuls[3]:=0.3;
-voices[channel].outmuls[5]:=0.3;
-voices[channel].outmuls[0]:=0.3;
-voices[channel].outmuls[2]:=0.3;
-voices[channel].outmuls[4]:=0.3;
+voices[channel].outmuls[1]:=0;
+voices[channel].outmuls[3]:=0;
+voices[channel].outmuls[5]:=0;
+voices[channel].outmuls[0]:=1;
+voices[channel].outmuls[2]:=1;
+voices[channel].outmuls[4]:=1;
+voices[channel].outmuls[6]:=0;
+voices[channel].outmuls[7]:=0;
+for i:=0 to 7 do  voices[channel].operators[i].wptr:=@waves0[waveidx].wave;
 for i:=0 to 7 do  voices[channel].operators[i].ar1:=att;;
 for i:=0 to 7 do voices[channel].operators[i].adsrstate:=1;
+for i:=0 to 7 do voices[channel].operators[i].adsrstate:=1;
+for i:=0 to 7 do voices[channel].operators[i].adsrval:=0;
 p999:
 end;
 
