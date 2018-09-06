@@ -184,7 +184,7 @@ var fh,filetype:integer;
 
 implementation
 
- uses unit1;
+ uses unit1,synthcontrol;
 
 var
   running:integer=0;
@@ -1793,10 +1793,11 @@ for i:=0 to 959 do
 if gain>1 then gain:=1;
 
   fs:=0.25*voices[0].getsample;
-  for j:=1 to 31 do
+  for j:=1 to maxchannel-1 do
      fs+=0.25*voices[j].getsample;
   if edelay then fs:=delay1(fs);
   if gain*abs(fs)>1 then gain:=1/(1.01*abs(fs));
+ // gain:=1;
   fs:=fs*gain;
   s1:=round(32767*fs);
   s[0]:=s1;

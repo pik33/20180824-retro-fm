@@ -184,7 +184,7 @@ var fh,filetype:integer;
 
 implementation
 
- uses unit1;
+ uses unit1,synthcontrol;
 
 var
   running:integer=0;
@@ -673,16 +673,16 @@ buf:=buf shr 1;
 pi:=screen;
 b:=raml^[$18003];
 l:=0;
-for i:=0 to 39 do begin if peek($70001)=0 then b:=lpeek($10000+4*((i div 4)+lpeek($60000)  ) mod 1024); for j:=0 to 1919  do (pi+i*1920+j)^:=b; end;
+for i:=0 to 39 do begin {if peek($70001)=0 then b:=lpeek($10000+4*((i div 4)+lpeek($60000)  ) mod 1024);} for j:=0 to 1919  do (pi+i*1920+j)^:=b; end;
 k:=76800;
 for i:=40 to 1159 do
   begin
-  for j:=0 to 63 do begin if peek($70001)=0 then b:=lpeek($10000+4*((i div 4)+lpeek($60000) ) mod 1024); (pi+k)^:=b; k+=1; end;
+  for j:=0 to 63 do begin {if peek($70001)=0 then b:=lpeek($10000+4*((i div 4)+lpeek($60000) ) mod 1024); } (pi+k)^:=b; k+=1; end;
   for j:=0 to 1791 do begin
   (pi+k)^:=raml^[$4000+ramw^[buf+l]]; k+=1; l+=1; end;
   for j:=0 to 63 do begin (pi+k)^:=b; k+=1; end;
   end;
-for i:=1160 to 1199 do begin if peek($70001)=0 then b:=lpeek($10000+4*((i div 4)+lpeek($60000) ) mod 1024); for j:=0 to 1919  do (pi+i*1920+j)^:=b; end;
+for i:=1160 to 1199 do begin {if peek($70001)=0 then b:=lpeek($10000+4*((i div 4)+lpeek($60000) ) mod 1024); }for j:=0 to 1919  do (pi+i*1920+j)^:=b; end;
 
 end;
 
@@ -1793,10 +1793,11 @@ for i:=0 to 959 do
 if gain>1 then gain:=1;
 
   fs:=0.25*voices[0].getsample;
-  for j:=1 to 31 do
+  for j:=1 to maxchannel-1 do
      fs+=0.25*voices[j].getsample;
   if edelay then fs:=delay1(fs);
   if gain*abs(fs)>1 then gain:=1/(1.01*abs(fs));
+  gain:=1;
   fs:=fs*gain;
   s1:=round(32767*fs);
   s[0]:=s1;

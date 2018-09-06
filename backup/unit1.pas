@@ -101,9 +101,9 @@ repeat
 //  if peek($60028)=ord('p') then begin poke ($60028,0); pause:=not pause; if pause then sdl_pauseaudio(1) else sdl_pauseaudio(0); end;
 
   if dpeek($60028)=16445 then begin edelay:=not edelay; dpoke($60028,0); end;  //f4=delay
-  if dpeek($60028)=16442 then begin waveidx+=1; if waveidx>=sampleindex0 then waveidx:=sampleindex0-1;  dpoke($60028,0); end;  //f4=delay
+  if dpeek($60028)=16442 then begin waveidx+=1; if waveidx>=sampleindex1 then waveidx:=sampleindex1-1;  dpoke($60028,0); end;  //f4=delay
   if dpeek($60028)=16443 then begin waveidx-=1; if waveidx<0 then waveidx:=0;  dpoke($60028,0); end;  //f4=delay
-  box(600,600,300,40,0); outtextxyz(600,600,waves0[waveidx].name,15,2,2);
+  box(600,600,400,40,0); outtextxyz(600,600,waves1[waveidx].name,15,2,2);
           // adsr test
           if dpeek($60028)=16447 then begin att:=att*1.1; dpoke($60028,0); end; //f5=reverb
           if dpeek($60028)=16448 then begin att:=att/1.1; ereverb:=not ereverb; dpoke($60028,0); end; //f5=reverb
@@ -271,6 +271,7 @@ fuck:=0;
 //  fileclose(fh);
 
 end;
+
 function loadxi(filename:string):integer;
 
 // returns number of samples loaded;

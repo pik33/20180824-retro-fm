@@ -8,7 +8,7 @@ uses
   Classes, SysUtils,math;
 
 
-const maxchannel=32; // testing with SID
+const maxchannel=30; //
 
 
 type TSynthCtrl = class(TThread)
@@ -213,41 +213,52 @@ var i:integer;
 begin
 if (channel>=maxchannel) or (channel<0) then goto p999;
 f:=fnotes[note] ;
-voices[channel].setfreq(f);
+
 for i:=0 to 7 do voices[channel].operators[i].vel:=flogtable[49152+128*velocity];
-{if note<60 then voices[channel].operators[0].mul1:=20000 else} voices[channel].operators[0].mul1:=0;//16384/64;
-{if note<60 then voices[channel].operators[2].mul3:=20000 else }voices[channel].operators[2].mul3:=0;//16384/64;
-{if note<60 then voices[channel].operators[4].mul5:=20000 else} voices[channel].operators[4].mul5:=0;//16384/64;
-voices[channel].operators[1].mul1:=0000/64;
-voices[channel].operators[3].mul3:=0000/64;
-voices[channel].operators[5].mul5:=0000/64;
-{if note<60 then voices[channel].operators[1].adsrbias:=0.9 else } voices[channel].operators[1].adsrbias:=0;
-{if note<60 then voices[channel].operators[3].adsrbias:=0.9 else }voices[channel].operators[3].adsrbias:=0;
-{if note<60 then voices[channel].operators[5].adsrbias:=0.9 else} voices[channel].operators[5].adsrbias:=0;
-voices[channel].operators[1].keysense:=1;
-voices[channel].operators[3].keysense:=1;
-voices[channel].operators[5].keysense:=1;
-voices[channel].outmuls[1]:=0;
-voices[channel].outmuls[3]:=0;
-voices[channel].outmuls[5]:=0;
+
 voices[channel].outmuls[0]:=1;
+voices[channel].outmuls[1]:=0;
 voices[channel].outmuls[2]:=1;
+voices[channel].outmuls[3]:=0;
 voices[channel].outmuls[4]:=1;
+voices[channel].outmuls[5]:=0;
 voices[channel].outmuls[6]:=0;
 voices[channel].outmuls[7]:=0;
 
-for i:=0 to 7 do  voices[channel].operators[i].wptr:=@waves0[waveidx].wave;
-//for i:=0 to 7 do  voices[channel].operators[i].wlend:=1024;//waves1[waveidx].lend ;
-//for i:=0 to 7 do  voices[channel].operators[i].wlstart:=0;//waves1[waveidx].lstart;
-for i:=0 to 7 do  voices[channel].operators[i].wlength:=1024; // waves1[waveidx].len;
+for i:=0 to 7 do  voices[channel].operators[i].init;
 
 for i:=0 to 7 do  voices[channel].operators[i].wavemode:=1;
+for i:=0 to 7 do  voices[channel].operators[i].wptr:=waves1[waveidx].wave;
+for i:=0 to 7 do  voices[channel].operators[i].wlend:=waves1[waveidx].lend ;
+for i:=0 to 7 do  voices[channel].operators[i].wlstart:=waves1[waveidx].lstart;
+for i:=0 to 7 do  voices[channel].operators[i].wlength:=waves1[waveidx].len;
+for i:=0 to 7 do  voices[channel].operators[i].freqmod:=waves1[waveidx].speed/4;
+voices[channel].operators[0].mul0:=waves1[waveidx].speed/8;
+//for i:=0 to 7 do  voices[channel].operators[i].mul0:=0;
+//for i:=0 to 7 do  voices[channel].operators[i].mul1:=0;
+//for i:=0 to 7 do  voices[channel].operators[i].mul2:=0;
+//for i:=0 to 7 do  voices[channel].operators[i].mul3:=0;
+//for i:=0 to 7 do  voices[channel].operators[i].mul4:=0;
+//for i:=0 to 7 do  voices[channel].operators[i].mul5:=0;
+//for i:=0 to 7 do  voices[channel].operators[i].mul6:=0;
+//for i:=0 to 7 do  voices[channel].operators[i].mul7:=0;
+//for i:=0 to 7 do  voices[channel].operators[i].ar1:=1;
+for i:=0 to 7 do  voices[channel].operators[i].ar2:=0;
+for i:=0 to 7 do  voices[channel].operators[i].ar3:=0;
+for i:=0 to 7 do  voices[channel].operators[i].av2:=1;
+for i:=0 to 7 do  voices[channel].operators[i].av3:=1;
+//for i:=0 to 7 do  voices[channel].operators[i].ar1:=1;
 
+voices[channel].setfreq(f);
+for i:=0 to 7 do  voices[channel].operators[i].pa:=0;
 
 for i:=0 to 7 do  voices[channel].operators[i].ar1:=att;
 for i:=0 to 7 do voices[channel].operators[i].adsrstate:=1;
-//for i:=0 to 7 do voices[channel].operators[i].adsrstate:=1;
 for i:=0 to 7 do voices[channel].operators[i].adsrval:=0;
+
+//box(200,200,600,600,0);
+//outtextxy(200,200,inttostr(voices[channel].operators[0].
+
 p999:
 end;
 

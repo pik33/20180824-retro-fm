@@ -146,7 +146,7 @@ if findfirst(currentdir2+'*.xi',faAnyFile,sr)=0 then
     waves1[sampleindex1].name:='';
     for j:=0 to sampleinfo[i].snl-1 do waves1[sampleindex1].name+=sampleinfo[i].samplename[j];
     intwave:=getmem(sampleinfo[i].slen);
-    waves1[sampleindex1].wave:=getmem(4*sampleinfo[i].slen);
+    waves1[sampleindex1].wave:=getmem(4*sampleinfo[i].slen+16);
     fileread(fh,intwave^,sampleinfo[i].slen);
     integrator:=0;
     for j:=0 to (sampleinfo[i].slen div 2)-1 do
@@ -157,7 +157,7 @@ if findfirst(currentdir2+'*.xi',faAnyFile,sr)=0 then
     freemem(intwave);
     waves1[sampleindex1].len:=sampleinfo[i].slen div 2;
     waves1[sampleindex1].lstart:=sampleinfo[i].sls div 2;
-    waves1[sampleindex1].lend:=((sampleinfo[i].sls+sampleinfo[i].sll) div 2)-1;
+    waves1[sampleindex1].lend:=((sampleinfo[i].sls+sampleinfo[i].sll) div 2);
     waves1[sampleindex1].speed:=126.278*power(a212,sampleinfo[i].relnote);
     sampleindex1+=1;
   end;
@@ -187,14 +187,6 @@ for i:=0 to 7 do operators[i].init;
 for i:=0 to 7 do operators[i].outputtable:=@outputs;
 outmuls[0]:=1;
 for i:=1 to 7 do outmuls[i]:=0;
-
-
-// test
-
-operators[0].mul1:=16384;
-operators[1].mul1:=10000;
-operators[0].freq:=150; //440*(65536/192000);  ;
-operators[1].freq:=300; //2*testvoice.operators[0].freq  ;
 end;
 
 
@@ -310,7 +302,7 @@ procedure TFmOperator.setfreq(afreq:myfloat);
 
 begin
 if wavemode=0 then freq:=afreq*wlength/96000
-else freq:=afreq*wlength/96000 ;// afreq*freqmod;
+else freq:=(afreq*freqmod)/96000 ;// afreq*freqmod;
 end;
 
 procedure TFmOperator.init; // test init @ 1 kHz
@@ -412,38 +404,30 @@ if wavemode=0 then
       pa:=pa-wlength;
 
   pa2:=pa+modulator;
+
   if pa2>=wlength then
-    repeat pa2:=pa2-wlength until pa2<wlength
-  else if pa2<0 then
+    repeat pa2:=pa2-wlength until pa2<wlength;
+  if pa2<0 then
     repeat pa2:=pa2+wlength until pa2>0;
   end
 
 else
-   begin
-  if pa>=wlength then
-      pa:=pa-wlength;
 
-  pa2:=pa+modulator;
-  if pa2>=wlength then
-    repeat pa2:=pa2-wlength until pa2<wlength
-  else if pa2<0 then
-    repeat pa2:=pa2+wlength until pa2>0;
-  end  ;
-
-{
   begin
-  if pa>wlend then
+  if pa>=wlend then
     pa:=pa-wlend+wlstart;
 
   pa2:=pa+modulator;
-  if pa2>wlend then
-    repeat pa2:=pa2-wlend+wlstart until pa2<wlend
-  else if pa2<0 then
+
+  if pa2>=wlend then
+    repeat pa2:=pa2-wlend+wlstart until pa2<wlend;
+  if pa2<0 then
     repeat pa2:=pa2+wlength until pa2>0;
   end;
- }
+
 intpa:=trunc(pa2);
-pa21:=intpa; if pa21>wlength then pa21:=0;
+pa21:=intpa+1; if pa21>wlength then
+       if wavemode=0 then pa21:=0 else pa21:=trunc(wlstart);
 sample:=wptr[intpa];
 s2:=wptr[pa21];
 d:=pa2-intpa;
@@ -503,7 +487,7 @@ sample:=sample*h1;
 // TODO: pan
 //                       end;
 //ftt:=gettime-ft;
-
+if abs(sample)>1 then begin box(200,200,200,200,0); outtextxy(200,200,floattostr(sample),15); outtextxy(200,220,floattostr(pa2),15); outtextxy(200,240,floattostr(pa21),15); end;
 result:=sample;
 
 end;

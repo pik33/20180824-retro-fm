@@ -565,7 +565,7 @@ FPC_RESSTRINITTABLES:
 
 .section .fpc.n_version
 	.balign 16
-	.ascii	"FPC 3.0.4 [2018/02/25] for x86_64 - Win64"
+	.ascii	"FPC 3.0.4 [2017/12/03] for x86_64 - Win64"
 
 .section .data.n___heapsize,"d"
 	.balign 8
@@ -621,8 +621,8 @@ __fpc_valgrind:
 	.byte	8
 	.uleb128	1
 	.ascii	"project1.lpr\000"
-	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
-	.ascii	"D:/programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
+	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -1156,14 +1156,14 @@ __fpc_valgrind:
 # Defs - End unit MIDI has index 15
 # Defs - Begin unit FMSYNTH has index 18
 # Defs - End unit FMSYNTH has index 18
+# Defs - Begin unit SYNTHCONTROL has index 17
+# Defs - End unit SYNTHCONTROL has index 17
 # Defs - Begin unit RETRO has index 12
 # Defs - End unit RETRO has index 12
 # Defs - Begin unit UMAIN has index 11
 # Defs - End unit UMAIN has index 11
 # Defs - Begin unit UNIT65032 has index 14
 # Defs - End unit UNIT65032 has index 14
-# Defs - Begin unit SYNTHCONTROL has index 17
-# Defs - End unit SYNTHCONTROL has index 17
 # Defs - Begin unit UNIT2 has index 16
 # Defs - End unit UNIT2 has index 16
 # Defs - Begin unit UNIT1 has index 10
