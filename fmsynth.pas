@@ -422,7 +422,7 @@ else
   if pa2>=wlend then
     repeat pa2:=pa2-wlend+wlstart until pa2<wlend;
   if pa2<0 then
-    repeat pa2:=pa2+wlength until pa2>0;
+    repeat pa2:=pa2+wlength until pa2>=0;
   end;
 
 intpa:=trunc(pa2);

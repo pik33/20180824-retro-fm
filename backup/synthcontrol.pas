@@ -213,7 +213,8 @@ var i:integer;
 begin
 if (channel>=maxchannel) or (channel<0) then goto p999;
 f:=fnotes[note] ;
-
+voices[channel].setfreq(0);
+for i:=0 to 7 do  voices[channel].operators[i].pa:=0;
 for i:=0 to 7 do voices[channel].operators[i].vel:=flogtable[49152+128*velocity];
 
 voices[channel].outmuls[0]:=1;
@@ -225,15 +226,15 @@ voices[channel].outmuls[5]:=0;
 voices[channel].outmuls[6]:=0;
 voices[channel].outmuls[7]:=0;
 
-for i:=0 to 7 do  voices[channel].operators[i].init;
+//for i:=0 to 7 do  voices[channel].operators[i].init;
 
 for i:=0 to 7 do  voices[channel].operators[i].wavemode:=1;
 for i:=0 to 7 do  voices[channel].operators[i].wptr:=waves1[waveidx].wave;
 for i:=0 to 7 do  voices[channel].operators[i].wlend:=waves1[waveidx].lend ;
 for i:=0 to 7 do  voices[channel].operators[i].wlstart:=waves1[waveidx].lstart;
 for i:=0 to 7 do  voices[channel].operators[i].wlength:=waves1[waveidx].len;
-for i:=0 to 7 do  voices[channel].operators[i].freqmod:=waves1[waveidx].speed/4;
-voices[channel].operators[0].mul0:=waves1[waveidx].speed/8;
+for i:=0 to 7 do  voices[channel].operators[i].freqmod:=waves1[waveidx].speed/2;
+//voices[channel].operators[0].mul0:=waves1[waveidx].speed/8;
 //for i:=0 to 7 do  voices[channel].operators[i].mul0:=0;
 //for i:=0 to 7 do  voices[channel].operators[i].mul1:=0;
 //for i:=0 to 7 do  voices[channel].operators[i].mul2:=0;

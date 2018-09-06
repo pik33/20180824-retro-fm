@@ -426,7 +426,7 @@ else
   end;
 
 intpa:=trunc(pa2);
-pa21:=intpa+1; if pa21>wlength then
+pa21:=intpa+1; if pa21>=wlength then
        if wavemode=0 then pa21:=0 else pa21:=trunc(wlstart);
 sample:=wptr[intpa];
 s2:=wptr[pa21];
@@ -487,7 +487,7 @@ sample:=sample*h1;
 // TODO: pan
 //                       end;
 //ftt:=gettime-ft;
-if abs(sample)>1 then begin box(200,200,200,200,0); outtextxy(200,200,floattostr(sample),15); outtextxy(200,220,floattostr(pa2),15); outtextxy(200,240,floattostr(pa21),15); end;
+//if abs(sample)>1 then begin box(200,200,200,200,0); outtextxy(200,200,floattostr(sample),15); outtextxy(200,220,floattostr(pa2),15); outtextxy(200,240,floattostr(pa21),15); end;
 result:=sample;
 
 end;

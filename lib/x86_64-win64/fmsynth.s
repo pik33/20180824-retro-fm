@@ -15,11 +15,11 @@ DEBUGSTART_$FMSYNTH:
 # End asmlist al_begin
 # Begin asmlist al_procedures
 
-.section .text.n_fmsynth$_$initsamples0_$$_fin$0,"x"
+.section .text.n_fmsynth$_$initsamples0_$$_fin$11,"x"
 	.balign 16,0x90
-FMSYNTH$_$INITSAMPLES0_$$_fin$0:
+FMSYNTH$_$INITSAMPLES0_$$_fin$11:
 .Lc1:
-.seh_proc FMSYNTH$_$INITSAMPLES0_$$_fin$0
+.seh_proc FMSYNTH$_$INITSAMPLES0_$$_fin$11
 .Ll1:
 # [fmsynth.pas]
 # [100] begin
@@ -208,7 +208,7 @@ FMSYNTH_$$_INITSAMPLES0:
 	nop
 .Lj8:
 	movq	%rbp,%rcx
-	call	FMSYNTH$_$INITSAMPLES0_$$_fin$0
+	call	FMSYNTH$_$INITSAMPLES0_$$_fin$11
 .Ll18:
 # [113] end;
 	movq	-2768(%rbp),%rbx
@@ -222,7 +222,7 @@ FMSYNTH_$$_INITSAMPLES0:
 	.long	0
 	.rva	.Lj7
 	.rva	.Lj8
-	.rva	FMSYNTH$_$INITSAMPLES0_$$_fin$0
+	.rva	FMSYNTH$_$INITSAMPLES0_$$_fin$11
 
 .section .text.n_fmsynth_$$_initsamples0,"x"
 .seh_endproc
@@ -230,11 +230,11 @@ FMSYNTH_$$_INITSAMPLES0:
 .Lt3:
 .Ll19:
 
-.section .text.n_fmsynth$_$initsamples1_$$_fin$1,"x"
+.section .text.n_fmsynth$_$initsamples1_$$_fin$12,"x"
 	.balign 16,0x90
-FMSYNTH$_$INITSAMPLES1_$$_fin$1:
+FMSYNTH$_$INITSAMPLES1_$$_fin$12:
 .Lc11:
-.seh_proc FMSYNTH$_$INITSAMPLES1_$$_fin$1
+.seh_proc FMSYNTH$_$INITSAMPLES1_$$_fin$12
 .Ll20:
 # [135] begin
 	pushq	%rbp
@@ -613,7 +613,7 @@ FMSYNTH_$$_INITSAMPLES1:
 	nop
 .Lj108:
 	movq	%rbp,%rcx
-	call	FMSYNTH$_$INITSAMPLES1_$$_fin$1
+	call	FMSYNTH$_$INITSAMPLES1_$$_fin$12
 .Ll54:
 # [167] end;
 	movq	-2288(%rbp),%rbx
@@ -632,7 +632,7 @@ FMSYNTH_$$_INITSAMPLES1:
 	.long	0
 	.rva	.Lj107
 	.rva	.Lj108
-	.rva	FMSYNTH$_$INITSAMPLES1_$$_fin$1
+	.rva	FMSYNTH$_$INITSAMPLES1_$$_fin$12
 
 .section .text.n_fmsynth_$$_initsamples1,"x"
 .seh_endproc
@@ -1702,14 +1702,14 @@ FMSYNTH$_$TFMOPERATOR_$__$$_GETSAMPLE$$DOUBLE:
 	.balign 8,0x90
 .Lj619:
 .Ll196:
-# [425] repeat pa2:=pa2+wlength until pa2>0;
+# [425] repeat pa2:=pa2+wlength until pa2>=0;
 	movsd	296(%rcx),%xmm3
 	addsd	144(%rcx),%xmm3
 	movsd	%xmm3,296(%rcx)
 	movsd	296(%rcx),%xmm3
 	comisd	_$FMSYNTH$_Ld6(%rip),%xmm3
 	jp	.Lj619
-	jna	.Lj619
+	jnae	.Lj619
 .Lj617:
 .Lj599:
 .Ll197:
@@ -2917,8 +2917,8 @@ INIT_$FMSYNTH_$$_DEF26:
 	.byte	8
 	.uleb128	1
 	.ascii	"fmsynth.pas\000"
-	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
-	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
+	.ascii	"D:/programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -3139,7 +3139,7 @@ INIT_$FMSYNTH_$$_DEF26:
 	.byte	118
 	.sleb128	-2720
 	.long	.La41-.Ldebug_info0
-# Symbol fin$0
+# Symbol fin$11
 # Definition Array[0..15] Of Byte
 .La39:
 	.uleb128	6
@@ -3169,12 +3169,12 @@ INIT_$FMSYNTH_$$_DEF26:
 	.uleb128	8
 	.long	.La41-.Ldebug_info0
 	.byte	0
-# Procdef $fin$0(<^untyped>) is nested;
+# Procdef $fin$11(<^untyped>) is nested;
 	.uleb128	9
-	.ascii	"fin$0\000"
+	.ascii	"fin$11\000"
 	.byte	1
 	.byte	65
-	.quad	FMSYNTH$_$INITSAMPLES0_$$_fin$0
+	.quad	FMSYNTH$_$INITSAMPLES0_$$_fin$11
 	.quad	.Lt4
 # Symbol parentfp
 	.uleb128	10
@@ -3263,7 +3263,7 @@ INIT_$FMSYNTH_$$_DEF26:
 	.byte	144
 	.uleb128	23
 	.long	.La1-.Ldebug_info0
-# Symbol fin$1
+# Symbol fin$12
 # Definition TSampleinfo
 .La51:
 	.uleb128	11
@@ -3366,12 +3366,12 @@ INIT_$FMSYNTH_$$_DEF26:
 	.uleb128	8
 	.long	.La59-.Ldebug_info0
 	.byte	0
-# Procdef $fin$1(<^untyped>) is nested;
+# Procdef $fin$12(<^untyped>) is nested;
 	.uleb128	9
-	.ascii	"fin$1\000"
+	.ascii	"fin$12\000"
 	.byte	1
 	.byte	65
-	.quad	FMSYNTH$_$INITSAMPLES1_$$_fin$1
+	.quad	FMSYNTH$_$INITSAMPLES1_$$_fin$12
 	.quad	.Lt6
 # Symbol parentfp
 	.uleb128	10
@@ -6969,7 +6969,7 @@ INIT_$FMSYNTH_$$_DEF26:
 	.byte	0
 .Lehdebug_line0:
 # === header end ===
-# function: FMSYNTH$_$INITSAMPLES0_$$_fin$0
+# function: FMSYNTH$_$INITSAMPLES0_$$_fin$11
 # [100:1]
 	.byte	0
 	.uleb128	9
@@ -7087,7 +7087,7 @@ INIT_$FMSYNTH_$$_DEF26:
 	.byte	1
 	.byte	1
 # ###################
-# function: FMSYNTH$_$INITSAMPLES1_$$_fin$1
+# function: FMSYNTH$_$INITSAMPLES1_$$_fin$12
 # [135:1]
 	.byte	0
 	.uleb128	9
