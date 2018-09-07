@@ -25,10 +25,13 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="1">
+    <RequiredPackages Count="2">
       <Item1>
-        <PackageName Value="LCL"/>
+        <PackageName Value="fft1"/>
       </Item1>
+      <Item2>
+        <PackageName Value="LCL"/>
+      </Item2>
     </RequiredPackages>
     <Units Count="9">
       <Unit0>
@@ -89,11 +92,6 @@
     <Parsing>
       <Style Value="1"/>
     </Parsing>
-    <CodeGeneration>
-      <Optimizations>
-        <OptimizationLevel Value="4"/>
-      </Optimizations>
-    </CodeGeneration>
     <Linking>
       <Debugging>
         <StripSymbols Value="True"/>

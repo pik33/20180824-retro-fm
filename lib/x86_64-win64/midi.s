@@ -20,151 +20,186 @@ DEBUGSTART_$MIDI:
 .globl	MIDI_$$_READBUFFER$$LONGWORD
 MIDI_$$_READBUFFER$$LONGWORD:
 .Lc1:
-# Var $result located in register eax
+.seh_proc MIDI_$$_READBUFFER$$LONGWORD
+.Ll1:
 # [midi.pas]
 # [39] begin
-.Ll1:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc3:
+.Lc4:
+	movq	%rsp,%rbp
+.Lc5:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var $result located at rbp-8, size=OS_32
+.Ll2:
 # [40] if be<>bs then
 	movb	TC_$MIDI_$$_BE(%rip),%al
 	cmpb	TC_$MIDI_$$_BS(%rip),%al
 	je	.Lj6
-.Ll2:
+.Ll3:
 # [42] result:=buffer[bs];
 	movzbl	TC_$MIDI_$$_BS(%rip),%eax
 	leaq	U_$MIDI_$$_BUFFER(%rip),%rdx
 	movl	(%rdx,%rax,4),%eax
-.Ll3:
-# [43] bs+=1
-	movzbl	TC_$MIDI_$$_BS(%rip),%edx
+	movl	%eax,-8(%rbp)
 .Ll4:
-# [44] end
-	leal	1(%edx),%edx
+# [43] bs+=1
+	movzbl	TC_$MIDI_$$_BS(%rip),%eax
 .Ll5:
-	movb	%dl,TC_$MIDI_$$_BS(%rip)
+# [44] end
+	leal	1(%eax),%eax
+.Ll6:
+	movb	%al,TC_$MIDI_$$_BS(%rip)
 	jmp	.Lj11
 .Lj6:
-.Ll6:
-# [45] else result:=$FFFFFFFF;
-	movl	$4294967295,%eax
-.Lj11:
 .Ll7:
+# [45] else result:=$FFFFFFFF;
+	movl	$4294967295,-8(%rbp)
+.Lj11:
+.Ll8:
 # [46] end;
+	movl	-8(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
+.seh_endproc
 .Lc2:
 .Lt1:
-.Ll8:
+.Ll9:
 
 .section .text.n_midi_$$_writebuffer$longint,"x"
 	.balign 16,0x90
 .globl	MIDI_$$_WRITEBUFFER$LONGINT
 MIDI_$$_WRITEBUFFER$LONGINT:
-.Lc3:
-# Var a located in register eax
-.Ll9:
-# [50] begin
-	movl	%ecx,%eax
+.Lc6:
+.seh_proc MIDI_$$_WRITEBUFFER$LONGINT
 .Ll10:
-# [51] if be<>bs-1 then
-	movzbl	TC_$MIDI_$$_BS(%rip),%edx
-	leaq	-1(%rdx),%rcx
-	movzbl	TC_$MIDI_$$_BE(%rip),%edx
-	cmpq	%rdx,%rcx
-	je	.Lj17
+# [50] begin
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc8:
+.Lc9:
+	movq	%rsp,%rbp
+.Lc10:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var a located at rbp-8, size=OS_S32
+	movl	%ecx,-8(%rbp)
 .Ll11:
-# [53] buffer[be]:=a;
-	movzbl	TC_$MIDI_$$_BE(%rip),%ecx
-	leaq	U_$MIDI_$$_BUFFER(%rip),%rdx
-	movl	%eax,(%rdx,%rcx,4)
+# [51] if be<>bs-1 then
+	movzbl	TC_$MIDI_$$_BS(%rip),%eax
+	leaq	-1(%rax),%rax
+	movzbl	TC_$MIDI_$$_BE(%rip),%edx
+	cmpq	%rdx,%rax
+	je	.Lj17
 .Ll12:
+# [53] buffer[be]:=a;
+	movzbl	TC_$MIDI_$$_BE(%rip),%eax
+	movl	-8(%rbp),%ecx
+	leaq	U_$MIDI_$$_BUFFER(%rip),%rdx
+	movl	%ecx,(%rdx,%rax,4)
+.Ll13:
 # [54] be+=1;
 	movzbl	TC_$MIDI_$$_BE(%rip),%eax
 	leal	1(%eax),%eax
 	movb	%al,TC_$MIDI_$$_BE(%rip)
 .Lj17:
-.Ll13:
-# [56] end;
-	ret
-.Lc4:
-.Lt2:
 .Ll14:
+# [56] end;
+	leaq	(%rbp),%rsp
+	popq	%rbp
+	ret
+.seh_endproc
+.Lc7:
+.Lt2:
+.Ll15:
 
 .section .text.n_midi_$$_midiincallback$lphmidiin$longint$longint$longint$longint,"x"
 	.balign 16,0x90
 .globl	MIDI_$$_MIDIINCALLBACK$LPHMIDIIN$LONGINT$LONGINT$LONGINT$LONGINT
 MIDI_$$_MIDIINCALLBACK$LPHMIDIIN$LONGINT$LONGINT$LONGINT$LONGINT:
-.Lc5:
+.Lc11:
 .seh_proc MIDI_$$_MIDIINCALLBACK$LPHMIDIIN$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll15:
+.Ll16:
 # [66] begin
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc7:
-.Lc8:
+.Lc13:
+.Lc14:
 	movq	%rsp,%rbp
-.Lc9:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
-# Var aMidiInHandle located in register rax
-# Var aMsg located in register edx
-# Var aInstance located in register r8d
-# Var aMidiData located in register ecx
-# Var aTimeStamp located in register eax
+.Lc15:
+	leaq	-64(%rsp),%rsp
+.seh_stackalloc 64
 .seh_endprologue
-	movq	%rcx,%rax
-	movl	%r9d,%ecx
-	movl	48(%rbp),%eax
-# Var aMsg located in register edx
-.Ll16:
-# [68] callback:=integer(amsg);
-	movl	%edx,U_$MIDI_$$_CALLBACK(%rip)
+# Var aMidiInHandle located at rbp-8, size=OS_64
+# Var aMsg located at rbp-16, size=OS_S32
+# Var aInstance located at rbp-24, size=OS_S32
+# Var aMidiData located at rbp-32, size=OS_S32
+# Var aTimeStamp located at rbp+48, size=OS_S32
+	movq	%rcx,-8(%rbp)
+	movl	%edx,-16(%rbp)
+	movl	%r8d,-24(%rbp)
+	movl	%r9d,-32(%rbp)
 .Ll17:
+# [68] callback:=integer(amsg);
+	movl	-16(%rbp),%eax
+	movl	%eax,U_$MIDI_$$_CALLBACK(%rip)
+.Ll18:
 # [69] case aMsg of
-	cmpl	$963,%edx
+	movl	-16(%rbp),%eax
+	cmpl	$963,%eax
 	jl	.Lj27
-	subl	$963,%edx
+	subl	$963,%eax
 	je	.Lj28
-	subl	$1,%edx
+	subl	$1,%eax
 	je	.Lj26
-	subl	$1,%edx
+	subl	$1,%eax
 	je	.Lj26
-	subl	$1,%edx
+	subl	$1,%eax
 	je	.Lj26
 	jmp	.Lj27
 .Lj28:
-.Ll18:
+.Ll19:
 # [73] writebuffer(amididata);
+	movl	-32(%rbp),%ecx
 	call	MIDI_$$_WRITEBUFFER$LONGINT
+	jmp	.Lj26
+	jmp	.Lj26
 .Lj27:
 .Lj26:
-.Ll19:
+.Ll20:
 # [92] end;
 	nop
 	leaq	(%rbp),%rsp
 	popq	%rbp
 	ret
 .seh_endproc
-.Lc6:
+.Lc12:
 .Lt5:
-.Ll20:
+.Ll21:
 
 .section .text.n_midi$_$openmidi_$$_fin$13,"x"
 	.balign 16,0x90
 MIDI$_$OPENMIDI_$$_fin$13:
-.Lc10:
+.Lc16:
 .seh_proc MIDI$_$OPENMIDI_$$_fin$13
-.Ll21:
+.Ll22:
 # [102] begin
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc12:
-.Lc13:
+.Lc18:
+.Lc19:
 	movq	%rcx,%rbp
-.Lc14:
+.Lc20:
 	leaq	-32(%rsp),%rsp
 .seh_stackalloc 32
 # Var $parentfp located in register rbp
 .seh_endprologue
-.Ll22:
+.Ll23:
 	leaq	-88(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 	nop
@@ -172,24 +207,24 @@ MIDI$_$OPENMIDI_$$_fin$13:
 	popq	%rbp
 	ret
 .seh_endproc
-.Lc11:
+.Lc17:
 .Lt4:
-.Ll23:
+.Ll24:
 
 .section .text.n_midi_$$_openmidi,"x"
 	.balign 16,0x90
 .globl	MIDI_$$_OPENMIDI
 MIDI_$$_OPENMIDI:
-.Lc15:
+.Lc21:
 # Temps allocated between rbp-96 and rbp-80
 .seh_proc MIDI_$$_OPENMIDI
-.Ll24:
+.Ll25:
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc17:
-.Lc18:
+.Lc23:
+.Lc24:
 	movq	%rsp,%rbp
-.Lc19:
+.Lc25:
 	leaq	-144(%rsp),%rsp
 .seh_stackalloc 144
 	movq	%rbx,-96(%rbp)
@@ -200,38 +235,38 @@ MIDI_$$_OPENMIDI:
 # Var result located at rbp-24, size=OS_32
 # Var caps located at rbp-72, size=OS_NO
 # Var handle located at rbp-80, size=OS_64
-.Ll25:
+.Ll26:
 	movq	$0,-88(%rbp)
 .Lj42:
 	nop
 .Lj38:
 .Lj48:
-.Ll26:
+.Ll27:
 # [103] try
 	nop
 .Lj47:
-.Ll27:
+.Ll28:
 # [104] inputs:= MidiInGetNumDevs;
 	call	_$dll$winmm$midiInGetNumDevs
 	movl	%eax,-16(%rbp)
-.Ll28:
+.Ll29:
 	jmp	.Lj45
 .Lj44:
-.Ll29:
+.Ll30:
 # [106] inputs:= 0;
 	movl	$0,-16(%rbp)
-.Ll30:
+.Ll31:
 	call	FPC_DONEEXCEPTION
 .Lj53:
 	nop
 .Lj45:
-.Ll31:
+.Ll32:
 # [109] if inputs>maxmidi then inputs:=maxmidi;
 	cmpl	$16,-16(%rbp)
 	jng	.Lj55
 	movl	$16,-16(%rbp)
 .Lj55:
-.Ll32:
+.Ll33:
 # [110] for i:=0 to maxmidi-1 do devicenames[i]:='';
 	movl	$0,-8(%rbp)
 	subl	$1,-8(%rbp)
@@ -245,11 +280,11 @@ MIDI_$$_OPENMIDI:
 	call	fpc_ansistr_assign
 	cmpl	$15,-8(%rbp)
 	jl	.Lj60
-.Ll33:
+.Ll34:
 # [111] if inputs>0 then
 	cmpl	$0,-16(%rbp)
 	jng	.Lj66
-.Ll34:
+.Ll35:
 # [113] for i:=0 to inputs-1 do
 	movl	-16(%rbp),%eax
 	leal	-1(%eax),%ebx
@@ -260,14 +295,14 @@ MIDI_$$_OPENMIDI:
 	.balign 8,0x90
 .Lj71:
 	addl	$1,-8(%rbp)
-.Ll35:
+.Ll36:
 # [115] result := midiInGetDevCaps(i, @caps, SizeOf(TMidiInCaps));
 	leaq	-72(%rbp),%rdx
 	movl	-8(%rbp),%ecx
 	movl	$44,%r8d
 	call	_$dll$winmm$midiInGetDevCapsA
 	movl	%eax,-24(%rbp)
-.Ll36:
+.Ll37:
 # [116] if result = MMSYSERR_NOERROR then devicenames[i]:=(StrPas(caps.szPname));
 	cmpl	$0,-24(%rbp)
 	jne	.Lj81
@@ -280,12 +315,12 @@ MIDI_$$_OPENMIDI:
 	leaq	(%rcx,%rax,8),%rcx
 	call	fpc_ansistr_assign
 .Lj81:
-.Ll37:
+.Ll38:
 	cmpl	-8(%rbp),%ebx
 	jg	.Lj71
 .Lj70:
 .Lj66:
-.Ll38:
+.Ll39:
 # [120] result := midiInOpen( @handle, 0 {devindex}, cardinal(@midiInCallback),
 	movl	$196608,32(%rsp)
 	leaq	MIDI_$$_MIDIINCALLBACK$LPHMIDIIN$LONGINT$LONGINT$LONGINT$LONGINT(%rip),%r8
@@ -294,32 +329,32 @@ MIDI_$$_OPENMIDI:
 	movl	$0,%edx
 	call	_$dll$winmm$midiInOpen
 	movl	%eax,-24(%rbp)
-.Ll39:
+.Ll40:
 # [127] Result := midiInPrepareHeader(Handle, @SysExHeader, SizeOf(TMidiHdr));
 	leaq	U_$MIDI_$$_SYSEXHEADER(%rip),%rdx
 	movq	-80(%rbp),%rcx
 	movl	$108,%r8d
 	call	_$dll$winmm$midiInPrepareHeader
 	movl	%eax,-24(%rbp)
-.Ll40:
+.Ll41:
 # [128] Result := midiInAddBuffer( Handle, @SysExHeader, SizeOf(TMidiHdr));
 	leaq	U_$MIDI_$$_SYSEXHEADER(%rip),%rdx
 	movq	-80(%rbp),%rcx
 	movl	$108,%r8d
 	call	_$dll$winmm$midiInAddBuffer
 	movl	%eax,-24(%rbp)
-.Ll41:
+.Ll42:
 # [129] Result := midiInStart( Handle);
 	movq	-80(%rbp),%rcx
 	call	_$dll$winmm$midiInStart
 	movl	%eax,-24(%rbp)
 .Lj122:
-.Ll42:
+.Ll43:
 	nop
 .Lj39:
 	movq	%rbp,%rcx
 	call	MIDI$_$OPENMIDI_$$_fin$13
-.Ll43:
+.Ll44:
 # [131] end;
 	movq	-96(%rbp),%rbx
 	leaq	(%rbp),%rsp
@@ -339,9 +374,9 @@ MIDI_$$_OPENMIDI:
 
 .section .text.n_midi_$$_openmidi,"x"
 .seh_endproc
-.Lc16:
+.Lc22:
 .Lt3:
-.Ll44:
+.Ll45:
 
 .section .text.n_midi_$$_init_implicit$,"x"
 	.balign 16,0x90
@@ -349,19 +384,25 @@ MIDI_$$_OPENMIDI:
 INIT$_$MIDI:
 .globl	MIDI_$$_init_implicit$
 MIDI_$$_init_implicit$:
-.Lc20:
+.Lc26:
 .seh_proc MIDI_$$_init_implicit$
-	leaq	-40(%rsp),%rsp
-.Lc22:
-.seh_stackalloc 40
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc28:
+.Lc29:
+	movq	%rsp,%rbp
+.Lc30:
+	leaq	-32(%rsp),%rsp
+.seh_stackalloc 32
 .seh_endprologue
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc21:
+.Lc27:
 .Lt6:
-.Ll45:
+.Ll46:
 
 .section .text.n_midi_$$_finalize_implicit$,"x"
 	.balign 16,0x90
@@ -369,23 +410,29 @@ MIDI_$$_init_implicit$:
 FINALIZE$_$MIDI:
 .globl	MIDI_$$_finalize_implicit$
 MIDI_$$_finalize_implicit$:
-.Lc23:
+.Lc31:
 .seh_proc MIDI_$$_finalize_implicit$
-	leaq	-40(%rsp),%rsp
-.Lc25:
-.seh_stackalloc 40
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc33:
+.Lc34:
+	movq	%rsp,%rbp
+.Lc35:
+	leaq	-32(%rsp),%rsp
+.seh_stackalloc 32
 .seh_endprologue
 	leaq	RTTI_$MIDI_$$_DEF0(%rip),%rax
 	movq	%rax,%rdx
 	leaq	U_$MIDI_$$_DEVICENAMES(%rip),%rcx
 	call	fpc_finalize
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc24:
+.Lc32:
 .Lt7:
-.Ll46:
+.Ll47:
 # End asmlist al_procedures
 # Begin asmlist al_globals
 
@@ -469,9 +516,9 @@ RTTI_$MIDI_$$_DEF0:
 # Begin asmlist al_dwarf_frame
 
 .section .debug_frame
-.Lc26:
-	.long	.Lc28-.Lc27
-.Lc27:
+.Lc36:
+	.long	.Lc38-.Lc37
+.Lc37:
 	.long	-1
 	.byte	1
 	.byte	0
@@ -485,103 +532,147 @@ RTTI_$MIDI_$$_DEF0:
 	.uleb128	16
 	.uleb128	2
 	.balign 4,0
-.Lc28:
-	.long	.Lc30-.Lc29
-.Lc29:
-	.secrel32	.Lc26
-	.quad	.Lc1
-	.quad	.Lc2-.Lc1
-	.balign 4,0
-.Lc30:
-	.long	.Lc32-.Lc31
-.Lc31:
-	.secrel32	.Lc26
-	.quad	.Lc3
-	.quad	.Lc4-.Lc3
-	.balign 4,0
-.Lc32:
-	.long	.Lc34-.Lc33
-.Lc33:
-	.secrel32	.Lc26
-	.quad	.Lc5
-	.quad	.Lc6-.Lc5
-	.byte	4
-	.long	.Lc7-.Lc5
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc8-.Lc7
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc9-.Lc8
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc34:
-	.long	.Lc36-.Lc35
-.Lc35:
-	.secrel32	.Lc26
-	.quad	.Lc10
-	.quad	.Lc11-.Lc10
-	.byte	4
-	.long	.Lc12-.Lc10
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc13-.Lc12
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc14-.Lc13
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc36:
-	.long	.Lc38-.Lc37
-.Lc37:
-	.secrel32	.Lc26
-	.quad	.Lc15
-	.quad	.Lc16-.Lc15
-	.byte	4
-	.long	.Lc17-.Lc15
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc18-.Lc17
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc19-.Lc18
-	.byte	13
-	.uleb128	6
-	.balign 4,0
 .Lc38:
 	.long	.Lc40-.Lc39
 .Lc39:
-	.secrel32	.Lc26
-	.quad	.Lc20
-	.quad	.Lc21-.Lc20
+	.secrel32	.Lc36
+	.quad	.Lc1
+	.quad	.Lc2-.Lc1
 	.byte	4
-	.long	.Lc22-.Lc20
+	.long	.Lc3-.Lc1
 	.byte	14
-	.uleb128	48
+	.uleb128	16
+	.byte	4
+	.long	.Lc4-.Lc3
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc5-.Lc4
+	.byte	13
+	.uleb128	6
 	.balign 4,0
 .Lc40:
 	.long	.Lc42-.Lc41
 .Lc41:
-	.secrel32	.Lc26
-	.quad	.Lc23
-	.quad	.Lc24-.Lc23
+	.secrel32	.Lc36
+	.quad	.Lc6
+	.quad	.Lc7-.Lc6
 	.byte	4
-	.long	.Lc25-.Lc23
+	.long	.Lc8-.Lc6
 	.byte	14
-	.uleb128	48
+	.uleb128	16
+	.byte	4
+	.long	.Lc9-.Lc8
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc10-.Lc9
+	.byte	13
+	.uleb128	6
 	.balign 4,0
 .Lc42:
+	.long	.Lc44-.Lc43
+.Lc43:
+	.secrel32	.Lc36
+	.quad	.Lc11
+	.quad	.Lc12-.Lc11
+	.byte	4
+	.long	.Lc13-.Lc11
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc14-.Lc13
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc15-.Lc14
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc44:
+	.long	.Lc46-.Lc45
+.Lc45:
+	.secrel32	.Lc36
+	.quad	.Lc16
+	.quad	.Lc17-.Lc16
+	.byte	4
+	.long	.Lc18-.Lc16
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc19-.Lc18
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc20-.Lc19
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc46:
+	.long	.Lc48-.Lc47
+.Lc47:
+	.secrel32	.Lc36
+	.quad	.Lc21
+	.quad	.Lc22-.Lc21
+	.byte	4
+	.long	.Lc23-.Lc21
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc24-.Lc23
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc25-.Lc24
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc48:
+	.long	.Lc50-.Lc49
+.Lc49:
+	.secrel32	.Lc36
+	.quad	.Lc26
+	.quad	.Lc27-.Lc26
+	.byte	4
+	.long	.Lc28-.Lc26
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc29-.Lc28
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc30-.Lc29
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc50:
+	.long	.Lc52-.Lc51
+.Lc51:
+	.secrel32	.Lc36
+	.quad	.Lc31
+	.quad	.Lc32-.Lc31
+	.byte	4
+	.long	.Lc33-.Lc31
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc34-.Lc33
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc35-.Lc34
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc52:
 # End asmlist al_dwarf_frame
 # Begin asmlist al_dwarf_info
 
@@ -595,8 +686,8 @@ RTTI_$MIDI_$$_DEF0:
 	.uleb128	1
 # [37] function readbuffer:cardinal;
 	.ascii	"midi.pas\000"
-	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
-	.ascii	"D:/programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
+	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -710,22 +801,22 @@ RTTI_$MIDI_$$_DEF0:
 	.uleb128	5
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La5-.Ldebug_info0
 # Symbol READBUFFER
 	.uleb128	5
 	.ascii	"READBUFFER\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La5-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	5
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La5-.Ldebug_info0
 	.byte	0
 # Procdef writebuffer(LongInt);
@@ -740,8 +831,8 @@ RTTI_$MIDI_$$_DEF0:
 	.uleb128	7
 	.ascii	"A\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La7-.Ldebug_info0
 	.byte	0
 # Procdef openmidi;
@@ -815,36 +906,36 @@ RTTI_$MIDI_$$_DEF0:
 	.uleb128	7
 	.ascii	"AMIDIINHANDLE\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La23-.Ldebug_info0
 # Symbol AMSG
 	.uleb128	7
 	.ascii	"AMSG\000"
 	.byte	2
-	.byte	144
-	.uleb128	1
+	.byte	118
+	.sleb128	-16
 	.long	.La7-.Ldebug_info0
 # Symbol AINSTANCE
 	.uleb128	7
 	.ascii	"AINSTANCE\000"
 	.byte	2
-	.byte	144
-	.uleb128	8
+	.byte	118
+	.sleb128	-24
 	.long	.La7-.Ldebug_info0
 # Symbol AMIDIDATA
 	.uleb128	7
 	.ascii	"AMIDIDATA\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-32
 	.long	.La7-.Ldebug_info0
 # Symbol ATIMESTAMP
 	.uleb128	7
 	.ascii	"ATIMESTAMP\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	48
 	.long	.La7-.Ldebug_info0
 	.byte	0
 # Procdef $MIDI_$$_init_implicit$; Register;
@@ -944,25 +1035,25 @@ RTTI_$MIDI_$$_DEF0:
 # Defs - End unit SYSTEM has index 1
 # Defs - Begin unit OBJPAS has index 6
 # Defs - End unit OBJPAS has index 6
-# Defs - Begin unit RTLCONSTS has index 24
-# Defs - End unit RTLCONSTS has index 24
+# Defs - Begin unit RTLCONSTS has index 25
+# Defs - End unit RTLCONSTS has index 25
 # Defs - Begin unit WINDOWS has index 5
 # Defs - End unit WINDOWS has index 5
-# Defs - Begin unit SYSCONST has index 27
-# Defs - End unit SYSCONST has index 27
-# Defs - Begin unit WINDIRS has index 28
-# Defs - End unit WINDIRS has index 28
-# Defs - Begin unit SYSUTILS has index 23
-# Defs - End unit SYSUTILS has index 23
-# Defs - Begin unit MATH has index 29
-# Defs - End unit MATH has index 29
-# Defs - Begin unit TYPES has index 25
-# Defs - End unit TYPES has index 25
-# Defs - Begin unit TYPINFO has index 26
-# Defs - End unit TYPINFO has index 26
-# Defs - Begin unit CLASSES has index 22
-# Defs - End unit CLASSES has index 22
-# Defs - Begin unit MMSYSTEM has index 256
+# Defs - Begin unit SYSCONST has index 28
+# Defs - End unit SYSCONST has index 28
+# Defs - Begin unit WINDIRS has index 29
+# Defs - End unit WINDIRS has index 29
+# Defs - Begin unit SYSUTILS has index 24
+# Defs - End unit SYSUTILS has index 24
+# Defs - Begin unit MATH has index 30
+# Defs - End unit MATH has index 30
+# Defs - Begin unit TYPES has index 26
+# Defs - End unit TYPES has index 26
+# Defs - Begin unit TYPINFO has index 27
+# Defs - End unit TYPINFO has index 27
+# Defs - Begin unit CLASSES has index 23
+# Defs - End unit CLASSES has index 23
+# Defs - Begin unit MMSYSTEM has index 258
 # Definition LPHMIDIIN
 .La23:
 	.uleb128	10
@@ -1095,11 +1186,11 @@ RTTI_$MIDI_$$_DEF0:
 .La41:
 	.uleb128	12
 	.long	.La40-.Ldebug_info0
-# Defs - End unit MMSYSTEM has index 256
-# Defs - Begin unit SDL2 has index 254
-# Defs - End unit SDL2 has index 254
-# Defs - Begin unit CRT has index 255
-# Defs - End unit CRT has index 255
+# Defs - End unit MMSYSTEM has index 258
+# Defs - Begin unit SDL2 has index 255
+# Defs - End unit SDL2 has index 255
+# Defs - Begin unit CRT has index 257
+# Defs - End unit CRT has index 257
 # Defs - Begin unit UNIT6502 has index 13
 # Defs - End unit UNIT6502 has index 13
 # Defs - Begin unit MIDI has index 15
@@ -1146,358 +1237,360 @@ RTTI_$MIDI_$$_DEF0:
 	.uleb128	12
 	.long	.La13-.Ldebug_info0
 # Defs - End unit MIDI has index 15
-# Defs - Begin unit FMSYNTH has index 18
-# Defs - End unit FMSYNTH has index 18
-# Defs - Begin unit CONTNRS has index 85
-# Defs - End unit CONTNRS has index 85
-# Defs - Begin unit LAZUTILSSTRCONSTS has index 46
-# Defs - End unit LAZUTILSSTRCONSTS has index 46
-# Defs - Begin unit FPCADDS has index 21
-# Defs - End unit FPCADDS has index 21
-# Defs - Begin unit GETTEXT has index 30
-# Defs - End unit GETTEXT has index 30
-# Defs - Begin unit LAZUTF8 has index 19
-# Defs - End unit LAZUTF8 has index 19
-# Defs - Begin unit MASKS has index 156
-# Defs - End unit MASKS has index 156
-# Defs - Begin unit VARUTILS has index 53
-# Defs - End unit VARUTILS has index 53
-# Defs - Begin unit VARIANTS has index 51
-# Defs - End unit VARIANTS has index 51
-# Defs - Begin unit CTYPES has index 52
-# Defs - End unit CTYPES has index 52
-# Defs - Begin unit ACTIVEX has index 48
-# Defs - End unit ACTIVEX has index 48
-# Defs - Begin unit SHELLAPI has index 49
-# Defs - End unit SHELLAPI has index 49
-# Defs - Begin unit COMMCTRL has index 50
-# Defs - End unit COMMCTRL has index 50
-# Defs - Begin unit SHLOBJ has index 47
-# Defs - End unit SHLOBJ has index 47
-# Defs - Begin unit LAZFILEUTILS has index 41
-# Defs - End unit LAZFILEUTILS has index 41
-# Defs - Begin unit STRUTILS has index 157
-# Defs - End unit STRUTILS has index 157
-# Defs - Begin unit FILEUTIL has index 151
-# Defs - End unit FILEUTIL has index 151
-# Defs - Begin unit SINGLEINSTANCE has index 188
-# Defs - End unit SINGLEINSTANCE has index 188
-# Defs - Begin unit CUSTAPP has index 184
-# Defs - End unit CUSTAPP has index 184
-# Defs - Begin unit LCLSTRCONSTS has index 45
-# Defs - End unit LCLSTRCONSTS has index 45
-# Defs - Begin unit LCLTYPE has index 32
-# Defs - End unit LCLTYPE has index 32
-# Defs - Begin unit LAZ_AVL_TREE has index 40
-# Defs - End unit LAZ_AVL_TREE has index 40
-# Defs - Begin unit LAZMETHODLIST has index 42
-# Defs - End unit LAZMETHODLIST has index 42
-# Defs - Begin unit LAZUTF8CLASSES has index 43
-# Defs - End unit LAZUTF8CLASSES has index 43
-# Defs - Begin unit LAZCLASSES has index 55
-# Defs - End unit LAZCLASSES has index 55
-# Defs - Begin unit LAZLOGGERBASE has index 54
-# Defs - End unit LAZLOGGERBASE has index 54
-# Defs - Begin unit LAZLOGGER has index 44
-# Defs - End unit LAZLOGGER has index 44
-# Defs - Begin unit LCLPROC has index 33
-# Defs - End unit LCLPROC has index 33
-# Defs - Begin unit LAZUTF16 has index 150
-# Defs - End unit LAZUTF16 has index 150
-# Defs - Begin unit GRAPHTYPE has index 36
-# Defs - End unit GRAPHTYPE has index 36
-# Defs - Begin unit MESSAGES has index 56
-# Defs - End unit MESSAGES has index 56
-# Defs - Begin unit LMESSAGES has index 34
-# Defs - End unit LMESSAGES has index 34
-# Defs - Begin unit FPIMAGE has index 31
-# Defs - End unit FPIMAGE has index 31
-# Defs - Begin unit LCLPLATFORMDEF has index 35
-# Defs - End unit LCLPLATFORMDEF has index 35
-# Defs - Begin unit GRAPHMATH has index 37
-# Defs - End unit GRAPHMATH has index 37
-# Defs - Begin unit FPIMGCMN has index 67
-# Defs - End unit FPIMGCMN has index 67
-# Defs - Begin unit BMPCOMN has index 59
-# Defs - End unit BMPCOMN has index 59
-# Defs - Begin unit FPREADBMP has index 57
-# Defs - End unit FPREADBMP has index 57
-# Defs - Begin unit FPWRITEBMP has index 58
-# Defs - End unit FPWRITEBMP has index 58
-# Defs - Begin unit PNGCOMN has index 68
-# Defs - End unit PNGCOMN has index 68
-# Defs - Begin unit ZBASE has index 70
-# Defs - End unit ZBASE has index 70
+# Defs - Begin unit CONTNRS has index 86
+# Defs - End unit CONTNRS has index 86
+# Defs - Begin unit LAZUTILSSTRCONSTS has index 47
+# Defs - End unit LAZUTILSSTRCONSTS has index 47
+# Defs - Begin unit FPCADDS has index 22
+# Defs - End unit FPCADDS has index 22
+# Defs - Begin unit GETTEXT has index 31
+# Defs - End unit GETTEXT has index 31
+# Defs - Begin unit LAZUTF8 has index 20
+# Defs - End unit LAZUTF8 has index 20
+# Defs - Begin unit MASKS has index 157
+# Defs - End unit MASKS has index 157
+# Defs - Begin unit VARUTILS has index 54
+# Defs - End unit VARUTILS has index 54
+# Defs - Begin unit VARIANTS has index 52
+# Defs - End unit VARIANTS has index 52
+# Defs - Begin unit CTYPES has index 53
+# Defs - End unit CTYPES has index 53
+# Defs - Begin unit ACTIVEX has index 49
+# Defs - End unit ACTIVEX has index 49
+# Defs - Begin unit SHELLAPI has index 50
+# Defs - End unit SHELLAPI has index 50
+# Defs - Begin unit COMMCTRL has index 51
+# Defs - End unit COMMCTRL has index 51
+# Defs - Begin unit SHLOBJ has index 48
+# Defs - End unit SHLOBJ has index 48
+# Defs - Begin unit LAZFILEUTILS has index 42
+# Defs - End unit LAZFILEUTILS has index 42
+# Defs - Begin unit STRUTILS has index 158
+# Defs - End unit STRUTILS has index 158
+# Defs - Begin unit FILEUTIL has index 152
+# Defs - End unit FILEUTIL has index 152
+# Defs - Begin unit SINGLEINSTANCE has index 189
+# Defs - End unit SINGLEINSTANCE has index 189
+# Defs - Begin unit CUSTAPP has index 185
+# Defs - End unit CUSTAPP has index 185
+# Defs - Begin unit LCLSTRCONSTS has index 46
+# Defs - End unit LCLSTRCONSTS has index 46
+# Defs - Begin unit LCLTYPE has index 33
+# Defs - End unit LCLTYPE has index 33
+# Defs - Begin unit LAZ_AVL_TREE has index 41
+# Defs - End unit LAZ_AVL_TREE has index 41
+# Defs - Begin unit LAZMETHODLIST has index 43
+# Defs - End unit LAZMETHODLIST has index 43
+# Defs - Begin unit LAZUTF8CLASSES has index 44
+# Defs - End unit LAZUTF8CLASSES has index 44
+# Defs - Begin unit LAZCLASSES has index 56
+# Defs - End unit LAZCLASSES has index 56
+# Defs - Begin unit LAZLOGGERBASE has index 55
+# Defs - End unit LAZLOGGERBASE has index 55
+# Defs - Begin unit LAZLOGGER has index 45
+# Defs - End unit LAZLOGGER has index 45
+# Defs - Begin unit LCLPROC has index 34
+# Defs - End unit LCLPROC has index 34
+# Defs - Begin unit LAZUTF16 has index 151
+# Defs - End unit LAZUTF16 has index 151
+# Defs - Begin unit GRAPHTYPE has index 37
+# Defs - End unit GRAPHTYPE has index 37
+# Defs - Begin unit MESSAGES has index 57
+# Defs - End unit MESSAGES has index 57
+# Defs - Begin unit LMESSAGES has index 35
+# Defs - End unit LMESSAGES has index 35
+# Defs - Begin unit FPIMAGE has index 32
+# Defs - End unit FPIMAGE has index 32
+# Defs - Begin unit LCLPLATFORMDEF has index 36
+# Defs - End unit LCLPLATFORMDEF has index 36
+# Defs - Begin unit GRAPHMATH has index 38
+# Defs - End unit GRAPHMATH has index 38
+# Defs - Begin unit FPIMGCMN has index 68
+# Defs - End unit FPIMGCMN has index 68
+# Defs - Begin unit BMPCOMN has index 60
+# Defs - End unit BMPCOMN has index 60
+# Defs - Begin unit FPREADBMP has index 58
+# Defs - End unit FPREADBMP has index 58
+# Defs - Begin unit FPWRITEBMP has index 59
+# Defs - End unit FPWRITEBMP has index 59
+# Defs - Begin unit PNGCOMN has index 69
+# Defs - End unit PNGCOMN has index 69
+# Defs - Begin unit ZBASE has index 71
+# Defs - End unit ZBASE has index 71
 # Defs - Begin unit STRINGS has index 4
 # Defs - End unit STRINGS has index 4
-# Defs - Begin unit DOS has index 72
-# Defs - End unit DOS has index 72
-# Defs - Begin unit CRC has index 73
-# Defs - End unit CRC has index 73
-# Defs - Begin unit TREES has index 76
-# Defs - End unit TREES has index 76
-# Defs - Begin unit ADLER has index 77
-# Defs - End unit ADLER has index 77
-# Defs - Begin unit ZDEFLATE has index 74
-# Defs - End unit ZDEFLATE has index 74
-# Defs - Begin unit INFUTIL has index 79
-# Defs - End unit INFUTIL has index 79
-# Defs - Begin unit INFFAST has index 82
-# Defs - End unit INFFAST has index 82
-# Defs - Begin unit INFCODES has index 80
-# Defs - End unit INFCODES has index 80
-# Defs - Begin unit INFTREES has index 81
-# Defs - End unit INFTREES has index 81
-# Defs - Begin unit INFBLOCK has index 78
-# Defs - End unit INFBLOCK has index 78
-# Defs - Begin unit ZINFLATE has index 75
-# Defs - End unit ZINFLATE has index 75
-# Defs - Begin unit GZIO has index 71
-# Defs - End unit GZIO has index 71
-# Defs - Begin unit ZSTREAM has index 69
-# Defs - End unit ZSTREAM has index 69
-# Defs - Begin unit FPREADPNG has index 60
-# Defs - End unit FPREADPNG has index 60
-# Defs - Begin unit FPWRITEPNG has index 61
-# Defs - End unit FPWRITEPNG has index 61
-# Defs - Begin unit FPTIFFCMN has index 64
-# Defs - End unit FPTIFFCMN has index 64
-# Defs - Begin unit FPREADTIFF has index 62
-# Defs - End unit FPREADTIFF has index 62
-# Defs - Begin unit FPWRITETIFF has index 63
-# Defs - End unit FPWRITETIFF has index 63
-# Defs - Begin unit LCLVERSION has index 65
-# Defs - End unit LCLVERSION has index 65
-# Defs - Begin unit ICNSTYPES has index 66
-# Defs - End unit ICNSTYPES has index 66
-# Defs - Begin unit CLIPPING has index 95
-# Defs - End unit CLIPPING has index 95
-# Defs - Begin unit FPCANVAS has index 86
-# Defs - End unit FPCANVAS has index 86
-# Defs - Begin unit FPREADPNM has index 87
-# Defs - End unit FPREADPNM has index 87
-# Defs - Begin unit FPWRITEPNM has index 88
-# Defs - End unit FPWRITEPNM has index 88
-# Defs - Begin unit JDEFERR has index 101
-# Defs - End unit JDEFERR has index 101
-# Defs - Begin unit JMORECFG has index 100
-# Defs - End unit JMORECFG has index 100
-# Defs - Begin unit JPEGLIB has index 96
-# Defs - End unit JPEGLIB has index 96
-# Defs - Begin unit JINCLUDE has index 102
-# Defs - End unit JINCLUDE has index 102
-# Defs - Begin unit JCOMAPI has index 107
-# Defs - End unit JCOMAPI has index 107
-# Defs - Begin unit JERROR has index 103
-# Defs - End unit JERROR has index 103
-# Defs - Begin unit JUTILS has index 108
-# Defs - End unit JUTILS has index 108
-# Defs - Begin unit JMEMNOBS has index 109
-# Defs - End unit JMEMNOBS has index 109
-# Defs - Begin unit JMEMMGR has index 104
-# Defs - End unit JMEMMGR has index 104
-# Defs - Begin unit JDMARKER has index 105
-# Defs - End unit JDMARKER has index 105
-# Defs - Begin unit JDINPUT has index 106
-# Defs - End unit JDINPUT has index 106
-# Defs - Begin unit JDAPIMIN has index 97
-# Defs - End unit JDAPIMIN has index 97
-# Defs - Begin unit JDATASRC has index 98
-# Defs - End unit JDATASRC has index 98
-# Defs - Begin unit JDCOLOR has index 111
-# Defs - End unit JDCOLOR has index 111
-# Defs - Begin unit JDSAMPLE has index 112
-# Defs - End unit JDSAMPLE has index 112
-# Defs - Begin unit JDPOSTCT has index 113
-# Defs - End unit JDPOSTCT has index 113
-# Defs - Begin unit JDCT has index 122
-# Defs - End unit JDCT has index 122
-# Defs - Begin unit JIDCTFST has index 123
-# Defs - End unit JIDCTFST has index 123
-# Defs - Begin unit JIDCTINT has index 124
-# Defs - End unit JIDCTINT has index 124
-# Defs - Begin unit JIDCTFLT has index 125
-# Defs - End unit JIDCTFLT has index 125
-# Defs - Begin unit JIDCTRED has index 126
-# Defs - End unit JIDCTRED has index 126
-# Defs - Begin unit JDDCTMGR has index 114
-# Defs - End unit JDDCTMGR has index 114
-# Defs - Begin unit JDHUFF has index 116
-# Defs - End unit JDHUFF has index 116
-# Defs - Begin unit JDPHUFF has index 115
-# Defs - End unit JDPHUFF has index 115
-# Defs - Begin unit JDCOEFCT has index 117
-# Defs - End unit JDCOEFCT has index 117
-# Defs - Begin unit JQUANT2 has index 120
-# Defs - End unit JQUANT2 has index 120
-# Defs - Begin unit JDMAINCT has index 118
-# Defs - End unit JDMAINCT has index 118
-# Defs - Begin unit JQUANT1 has index 119
-# Defs - End unit JQUANT1 has index 119
-# Defs - Begin unit JDMERGE has index 121
-# Defs - End unit JDMERGE has index 121
-# Defs - Begin unit JDMASTER has index 110
-# Defs - End unit JDMASTER has index 110
-# Defs - Begin unit JDAPISTD has index 99
-# Defs - End unit JDAPISTD has index 99
-# Defs - Begin unit FPREADJPEG has index 89
-# Defs - End unit FPREADJPEG has index 89
-# Defs - Begin unit JCMARKER has index 132
-# Defs - End unit JCMARKER has index 132
-# Defs - Begin unit JCAPIMIN has index 128
-# Defs - End unit JCAPIMIN has index 128
-# Defs - Begin unit JCHUFF has index 134
-# Defs - End unit JCHUFF has index 134
-# Defs - Begin unit JCPHUFF has index 133
-# Defs - End unit JCPHUFF has index 133
-# Defs - Begin unit JCMASTER has index 135
-# Defs - End unit JCMASTER has index 135
-# Defs - Begin unit JCCOLOR has index 136
-# Defs - End unit JCCOLOR has index 136
-# Defs - Begin unit JCSAMPLE has index 137
-# Defs - End unit JCSAMPLE has index 137
-# Defs - Begin unit JCPREPCT has index 138
-# Defs - End unit JCPREPCT has index 138
-# Defs - Begin unit JFDCTINT has index 142
-# Defs - End unit JFDCTINT has index 142
-# Defs - Begin unit JFDCTFST has index 143
-# Defs - End unit JFDCTFST has index 143
-# Defs - Begin unit JFDCTFLT has index 144
-# Defs - End unit JFDCTFLT has index 144
-# Defs - Begin unit JCDCTMGR has index 139
-# Defs - End unit JCDCTMGR has index 139
-# Defs - Begin unit JCCOEFCT has index 140
-# Defs - End unit JCCOEFCT has index 140
-# Defs - Begin unit JCMAINCT has index 141
-# Defs - End unit JCMAINCT has index 141
-# Defs - Begin unit JCINIT has index 131
-# Defs - End unit JCINIT has index 131
-# Defs - Begin unit JCAPISTD has index 127
-# Defs - End unit JCAPISTD has index 127
-# Defs - Begin unit JDATADST has index 129
-# Defs - End unit JDATADST has index 129
-# Defs - Begin unit JCPARAM has index 130
-# Defs - End unit JCPARAM has index 130
-# Defs - Begin unit FPWRITEJPEG has index 90
-# Defs - End unit FPWRITEJPEG has index 90
-# Defs - Begin unit FPREADGIF has index 91
-# Defs - End unit FPREADGIF has index 91
-# Defs - Begin unit LAZDBGLOG has index 148
-# Defs - End unit LAZDBGLOG has index 148
-# Defs - Begin unit AVGLVLTREE has index 147
-# Defs - End unit AVGLVLTREE has index 147
-# Defs - Begin unit LAZCONFIGSTORAGE has index 145
-# Defs - End unit LAZCONFIGSTORAGE has index 145
-# Defs - Begin unit DYNQUEUE has index 146
-# Defs - End unit DYNQUEUE has index 146
-# Defs - Begin unit LRESOURCES has index 92
-# Defs - End unit LRESOURCES has index 92
-# Defs - Begin unit WSREFERENCES has index 94
-# Defs - End unit WSREFERENCES has index 94
-# Defs - Begin unit SYNCOBJS has index 149
-# Defs - End unit SYNCOBJS has index 149
-# Defs - Begin unit LCLRESCACHE has index 93
-# Defs - End unit LCLRESCACHE has index 93
-# Defs - Begin unit GRAPHICS has index 83
-# Defs - End unit GRAPHICS has index 83
-# Defs - Begin unit INTFGRAPHICS has index 38
-# Defs - End unit INTFGRAPHICS has index 38
-# Defs - Begin unit TMSCHEMA has index 155
-# Defs - End unit TMSCHEMA has index 155
-# Defs - Begin unit THEMES has index 39
-# Defs - End unit THEMES has index 39
-# Defs - Begin unit INTERFACEBASE has index 20
-# Defs - End unit INTERFACEBASE has index 20
-# Defs - Begin unit PIPES has index 159
-# Defs - End unit PIPES has index 159
-# Defs - Begin unit PROCESS has index 158
-# Defs - End unit PROCESS has index 158
-# Defs - Begin unit UTF8PROCESS has index 152
-# Defs - End unit UTF8PROCESS has index 152
-# Defs - Begin unit LAZUTF8SYSUTILS has index 153
-# Defs - End unit LAZUTF8SYSUTILS has index 153
-# Defs - Begin unit MAPS has index 154
-# Defs - End unit MAPS has index 154
-# Defs - Begin unit LCLINTF has index 84
-# Defs - End unit LCLINTF has index 84
-# Defs - Begin unit WSLCLCLASSES has index 178
-# Defs - End unit WSLCLCLASSES has index 178
-# Defs - Begin unit LCLCLASSES has index 177
-# Defs - End unit LCLCLASSES has index 177
-# Defs - Begin unit RTTIUTILS has index 182
-# Defs - End unit RTTIUTILS has index 182
-# Defs - Begin unit PROPERTYSTORAGE has index 175
-# Defs - End unit PROPERTYSTORAGE has index 175
-# Defs - Begin unit WSFACTORY has index 181
-# Defs - End unit WSFACTORY has index 181
-# Defs - Begin unit WSCONTROLS has index 190
-# Defs - End unit WSCONTROLS has index 190
-# Defs - Begin unit CONTROLS has index 163
-# Defs - End unit CONTROLS has index 163
-# Defs - Begin unit WSPROC has index 180
-# Defs - End unit WSPROC has index 180
-# Defs - Begin unit WSIMGLIST has index 179
-# Defs - End unit WSIMGLIST has index 179
-# Defs - Begin unit IMGLIST has index 174
-# Defs - End unit IMGLIST has index 174
-# Defs - Begin unit ACTNLIST has index 176
-# Defs - End unit ACTNLIST has index 176
-# Defs - Begin unit WSMENUS has index 183
-# Defs - End unit WSMENUS has index 183
-# Defs - Begin unit MENUS has index 167
-# Defs - End unit MENUS has index 167
-# Defs - Begin unit CUSTOMTIMER has index 185
-# Defs - End unit CUSTOMTIMER has index 185
-# Defs - Begin unit FASTHTMLPARSER has index 189
-# Defs - End unit FASTHTMLPARSER has index 189
-# Defs - Begin unit CLIPBRD has index 186
-# Defs - End unit CLIPBRD has index 186
-# Defs - Begin unit HELPINTFS has index 187
-# Defs - End unit HELPINTFS has index 187
-# Defs - Begin unit WSFORMS has index 191
-# Defs - End unit WSFORMS has index 191
+# Defs - Begin unit DOS has index 73
+# Defs - End unit DOS has index 73
+# Defs - Begin unit CRC has index 74
+# Defs - End unit CRC has index 74
+# Defs - Begin unit TREES has index 77
+# Defs - End unit TREES has index 77
+# Defs - Begin unit ADLER has index 78
+# Defs - End unit ADLER has index 78
+# Defs - Begin unit ZDEFLATE has index 75
+# Defs - End unit ZDEFLATE has index 75
+# Defs - Begin unit INFUTIL has index 80
+# Defs - End unit INFUTIL has index 80
+# Defs - Begin unit INFFAST has index 83
+# Defs - End unit INFFAST has index 83
+# Defs - Begin unit INFCODES has index 81
+# Defs - End unit INFCODES has index 81
+# Defs - Begin unit INFTREES has index 82
+# Defs - End unit INFTREES has index 82
+# Defs - Begin unit INFBLOCK has index 79
+# Defs - End unit INFBLOCK has index 79
+# Defs - Begin unit ZINFLATE has index 76
+# Defs - End unit ZINFLATE has index 76
+# Defs - Begin unit GZIO has index 72
+# Defs - End unit GZIO has index 72
+# Defs - Begin unit ZSTREAM has index 70
+# Defs - End unit ZSTREAM has index 70
+# Defs - Begin unit FPREADPNG has index 61
+# Defs - End unit FPREADPNG has index 61
+# Defs - Begin unit FPWRITEPNG has index 62
+# Defs - End unit FPWRITEPNG has index 62
+# Defs - Begin unit FPTIFFCMN has index 65
+# Defs - End unit FPTIFFCMN has index 65
+# Defs - Begin unit FPREADTIFF has index 63
+# Defs - End unit FPREADTIFF has index 63
+# Defs - Begin unit FPWRITETIFF has index 64
+# Defs - End unit FPWRITETIFF has index 64
+# Defs - Begin unit LCLVERSION has index 66
+# Defs - End unit LCLVERSION has index 66
+# Defs - Begin unit ICNSTYPES has index 67
+# Defs - End unit ICNSTYPES has index 67
+# Defs - Begin unit CLIPPING has index 96
+# Defs - End unit CLIPPING has index 96
+# Defs - Begin unit FPCANVAS has index 87
+# Defs - End unit FPCANVAS has index 87
+# Defs - Begin unit FPREADPNM has index 88
+# Defs - End unit FPREADPNM has index 88
+# Defs - Begin unit FPWRITEPNM has index 89
+# Defs - End unit FPWRITEPNM has index 89
+# Defs - Begin unit JDEFERR has index 102
+# Defs - End unit JDEFERR has index 102
+# Defs - Begin unit JMORECFG has index 101
+# Defs - End unit JMORECFG has index 101
+# Defs - Begin unit JPEGLIB has index 97
+# Defs - End unit JPEGLIB has index 97
+# Defs - Begin unit JINCLUDE has index 103
+# Defs - End unit JINCLUDE has index 103
+# Defs - Begin unit JCOMAPI has index 108
+# Defs - End unit JCOMAPI has index 108
+# Defs - Begin unit JERROR has index 104
+# Defs - End unit JERROR has index 104
+# Defs - Begin unit JUTILS has index 109
+# Defs - End unit JUTILS has index 109
+# Defs - Begin unit JMEMNOBS has index 110
+# Defs - End unit JMEMNOBS has index 110
+# Defs - Begin unit JMEMMGR has index 105
+# Defs - End unit JMEMMGR has index 105
+# Defs - Begin unit JDMARKER has index 106
+# Defs - End unit JDMARKER has index 106
+# Defs - Begin unit JDINPUT has index 107
+# Defs - End unit JDINPUT has index 107
+# Defs - Begin unit JDAPIMIN has index 98
+# Defs - End unit JDAPIMIN has index 98
+# Defs - Begin unit JDATASRC has index 99
+# Defs - End unit JDATASRC has index 99
+# Defs - Begin unit JDCOLOR has index 112
+# Defs - End unit JDCOLOR has index 112
+# Defs - Begin unit JDSAMPLE has index 113
+# Defs - End unit JDSAMPLE has index 113
+# Defs - Begin unit JDPOSTCT has index 114
+# Defs - End unit JDPOSTCT has index 114
+# Defs - Begin unit JDCT has index 123
+# Defs - End unit JDCT has index 123
+# Defs - Begin unit JIDCTFST has index 124
+# Defs - End unit JIDCTFST has index 124
+# Defs - Begin unit JIDCTINT has index 125
+# Defs - End unit JIDCTINT has index 125
+# Defs - Begin unit JIDCTFLT has index 126
+# Defs - End unit JIDCTFLT has index 126
+# Defs - Begin unit JIDCTRED has index 127
+# Defs - End unit JIDCTRED has index 127
+# Defs - Begin unit JDDCTMGR has index 115
+# Defs - End unit JDDCTMGR has index 115
+# Defs - Begin unit JDHUFF has index 117
+# Defs - End unit JDHUFF has index 117
+# Defs - Begin unit JDPHUFF has index 116
+# Defs - End unit JDPHUFF has index 116
+# Defs - Begin unit JDCOEFCT has index 118
+# Defs - End unit JDCOEFCT has index 118
+# Defs - Begin unit JQUANT2 has index 121
+# Defs - End unit JQUANT2 has index 121
+# Defs - Begin unit JDMAINCT has index 119
+# Defs - End unit JDMAINCT has index 119
+# Defs - Begin unit JQUANT1 has index 120
+# Defs - End unit JQUANT1 has index 120
+# Defs - Begin unit JDMERGE has index 122
+# Defs - End unit JDMERGE has index 122
+# Defs - Begin unit JDMASTER has index 111
+# Defs - End unit JDMASTER has index 111
+# Defs - Begin unit JDAPISTD has index 100
+# Defs - End unit JDAPISTD has index 100
+# Defs - Begin unit FPREADJPEG has index 90
+# Defs - End unit FPREADJPEG has index 90
+# Defs - Begin unit JCMARKER has index 133
+# Defs - End unit JCMARKER has index 133
+# Defs - Begin unit JCAPIMIN has index 129
+# Defs - End unit JCAPIMIN has index 129
+# Defs - Begin unit JCHUFF has index 135
+# Defs - End unit JCHUFF has index 135
+# Defs - Begin unit JCPHUFF has index 134
+# Defs - End unit JCPHUFF has index 134
+# Defs - Begin unit JCMASTER has index 136
+# Defs - End unit JCMASTER has index 136
+# Defs - Begin unit JCCOLOR has index 137
+# Defs - End unit JCCOLOR has index 137
+# Defs - Begin unit JCSAMPLE has index 138
+# Defs - End unit JCSAMPLE has index 138
+# Defs - Begin unit JCPREPCT has index 139
+# Defs - End unit JCPREPCT has index 139
+# Defs - Begin unit JFDCTINT has index 143
+# Defs - End unit JFDCTINT has index 143
+# Defs - Begin unit JFDCTFST has index 144
+# Defs - End unit JFDCTFST has index 144
+# Defs - Begin unit JFDCTFLT has index 145
+# Defs - End unit JFDCTFLT has index 145
+# Defs - Begin unit JCDCTMGR has index 140
+# Defs - End unit JCDCTMGR has index 140
+# Defs - Begin unit JCCOEFCT has index 141
+# Defs - End unit JCCOEFCT has index 141
+# Defs - Begin unit JCMAINCT has index 142
+# Defs - End unit JCMAINCT has index 142
+# Defs - Begin unit JCINIT has index 132
+# Defs - End unit JCINIT has index 132
+# Defs - Begin unit JCAPISTD has index 128
+# Defs - End unit JCAPISTD has index 128
+# Defs - Begin unit JDATADST has index 130
+# Defs - End unit JDATADST has index 130
+# Defs - Begin unit JCPARAM has index 131
+# Defs - End unit JCPARAM has index 131
+# Defs - Begin unit FPWRITEJPEG has index 91
+# Defs - End unit FPWRITEJPEG has index 91
+# Defs - Begin unit FPREADGIF has index 92
+# Defs - End unit FPREADGIF has index 92
+# Defs - Begin unit LAZDBGLOG has index 149
+# Defs - End unit LAZDBGLOG has index 149
+# Defs - Begin unit AVGLVLTREE has index 148
+# Defs - End unit AVGLVLTREE has index 148
+# Defs - Begin unit LAZCONFIGSTORAGE has index 146
+# Defs - End unit LAZCONFIGSTORAGE has index 146
+# Defs - Begin unit DYNQUEUE has index 147
+# Defs - End unit DYNQUEUE has index 147
+# Defs - Begin unit LRESOURCES has index 93
+# Defs - End unit LRESOURCES has index 93
+# Defs - Begin unit WSREFERENCES has index 95
+# Defs - End unit WSREFERENCES has index 95
+# Defs - Begin unit SYNCOBJS has index 150
+# Defs - End unit SYNCOBJS has index 150
+# Defs - Begin unit LCLRESCACHE has index 94
+# Defs - End unit LCLRESCACHE has index 94
+# Defs - Begin unit GRAPHICS has index 84
+# Defs - End unit GRAPHICS has index 84
+# Defs - Begin unit INTFGRAPHICS has index 39
+# Defs - End unit INTFGRAPHICS has index 39
+# Defs - Begin unit TMSCHEMA has index 156
+# Defs - End unit TMSCHEMA has index 156
+# Defs - Begin unit THEMES has index 40
+# Defs - End unit THEMES has index 40
+# Defs - Begin unit INTERFACEBASE has index 21
+# Defs - End unit INTERFACEBASE has index 21
+# Defs - Begin unit PIPES has index 160
+# Defs - End unit PIPES has index 160
+# Defs - Begin unit PROCESS has index 159
+# Defs - End unit PROCESS has index 159
+# Defs - Begin unit UTF8PROCESS has index 153
+# Defs - End unit UTF8PROCESS has index 153
+# Defs - Begin unit LAZUTF8SYSUTILS has index 154
+# Defs - End unit LAZUTF8SYSUTILS has index 154
+# Defs - Begin unit MAPS has index 155
+# Defs - End unit MAPS has index 155
+# Defs - Begin unit LCLINTF has index 85
+# Defs - End unit LCLINTF has index 85
+# Defs - Begin unit WSLCLCLASSES has index 179
+# Defs - End unit WSLCLCLASSES has index 179
+# Defs - Begin unit LCLCLASSES has index 178
+# Defs - End unit LCLCLASSES has index 178
+# Defs - Begin unit RTTIUTILS has index 183
+# Defs - End unit RTTIUTILS has index 183
+# Defs - Begin unit PROPERTYSTORAGE has index 176
+# Defs - End unit PROPERTYSTORAGE has index 176
+# Defs - Begin unit WSFACTORY has index 182
+# Defs - End unit WSFACTORY has index 182
+# Defs - Begin unit WSCONTROLS has index 191
+# Defs - End unit WSCONTROLS has index 191
+# Defs - Begin unit CONTROLS has index 164
+# Defs - End unit CONTROLS has index 164
+# Defs - Begin unit WSPROC has index 181
+# Defs - End unit WSPROC has index 181
+# Defs - Begin unit WSIMGLIST has index 180
+# Defs - End unit WSIMGLIST has index 180
+# Defs - Begin unit IMGLIST has index 175
+# Defs - End unit IMGLIST has index 175
+# Defs - Begin unit ACTNLIST has index 177
+# Defs - End unit ACTNLIST has index 177
+# Defs - Begin unit WSMENUS has index 184
+# Defs - End unit WSMENUS has index 184
+# Defs - Begin unit MENUS has index 168
+# Defs - End unit MENUS has index 168
+# Defs - Begin unit CUSTOMTIMER has index 186
+# Defs - End unit CUSTOMTIMER has index 186
+# Defs - Begin unit FASTHTMLPARSER has index 190
+# Defs - End unit FASTHTMLPARSER has index 190
+# Defs - Begin unit CLIPBRD has index 187
+# Defs - End unit CLIPBRD has index 187
+# Defs - Begin unit HELPINTFS has index 188
+# Defs - End unit HELPINTFS has index 188
+# Defs - Begin unit WSFORMS has index 192
+# Defs - End unit WSFORMS has index 192
 # Defs - Begin unit FORMS has index 9
 # Defs - End unit FORMS has index 9
-# Defs - Begin unit TEXTSTRINGS has index 193
-# Defs - End unit TEXTSTRINGS has index 193
-# Defs - Begin unit EXTENDEDSTRINGS has index 194
-# Defs - End unit EXTENDEDSTRINGS has index 194
-# Defs - Begin unit WSSTDCTRLS has index 195
-# Defs - End unit WSSTDCTRLS has index 195
-# Defs - Begin unit STDCTRLS has index 166
-# Defs - End unit STDCTRLS has index 166
-# Defs - Begin unit IMAGELISTCACHE has index 192
-# Defs - End unit IMAGELISTCACHE has index 192
-# Defs - Begin unit WSBUTTONS has index 196
-# Defs - End unit WSBUTTONS has index 196
-# Defs - Begin unit BUTTONS has index 164
-# Defs - End unit BUTTONS has index 164
-# Defs - Begin unit POPUPNOTIFIER has index 200
-# Defs - End unit POPUPNOTIFIER has index 200
-# Defs - Begin unit FGL has index 201
-# Defs - End unit FGL has index 201
-# Defs - Begin unit WSEXTCTRLS has index 202
-# Defs - End unit WSEXTCTRLS has index 202
-# Defs - Begin unit EXTCTRLS has index 198
-# Defs - End unit EXTCTRLS has index 198
-# Defs - Begin unit BUTTONPANEL has index 197
-# Defs - End unit BUTTONPANEL has index 197
-# Defs - Begin unit LCLTASKDIALOG has index 199
-# Defs - End unit LCLTASKDIALOG has index 199
-# Defs - Begin unit WSDIALOGS has index 203
-# Defs - End unit WSDIALOGS has index 203
-# Defs - Begin unit DIALOGS has index 165
-# Defs - End unit DIALOGS has index 165
+# Defs - Begin unit TEXTSTRINGS has index 194
+# Defs - End unit TEXTSTRINGS has index 194
+# Defs - Begin unit EXTENDEDSTRINGS has index 195
+# Defs - End unit EXTENDEDSTRINGS has index 195
+# Defs - Begin unit WSSTDCTRLS has index 196
+# Defs - End unit WSSTDCTRLS has index 196
+# Defs - Begin unit STDCTRLS has index 167
+# Defs - End unit STDCTRLS has index 167
+# Defs - Begin unit IMAGELISTCACHE has index 193
+# Defs - End unit IMAGELISTCACHE has index 193
+# Defs - Begin unit WSBUTTONS has index 197
+# Defs - End unit WSBUTTONS has index 197
+# Defs - Begin unit BUTTONS has index 165
+# Defs - End unit BUTTONS has index 165
+# Defs - Begin unit POPUPNOTIFIER has index 201
+# Defs - End unit POPUPNOTIFIER has index 201
+# Defs - Begin unit FGL has index 202
+# Defs - End unit FGL has index 202
+# Defs - Begin unit WSEXTCTRLS has index 203
+# Defs - End unit WSEXTCTRLS has index 203
+# Defs - Begin unit EXTCTRLS has index 199
+# Defs - End unit EXTCTRLS has index 199
+# Defs - Begin unit BUTTONPANEL has index 198
+# Defs - End unit BUTTONPANEL has index 198
+# Defs - Begin unit LCLTASKDIALOG has index 200
+# Defs - End unit LCLTASKDIALOG has index 200
+# Defs - Begin unit WSDIALOGS has index 204
+# Defs - End unit WSDIALOGS has index 204
+# Defs - Begin unit DIALOGS has index 166
+# Defs - End unit DIALOGS has index 166
 # Defs - Begin unit UMAIN has index 11
 # Defs - End unit UMAIN has index 11
 # Defs - Begin unit UNIT65032 has index 14
 # Defs - End unit UNIT65032 has index 14
 # Defs - Begin unit SYNTHCONTROL has index 17
 # Defs - End unit SYNTHCONTROL has index 17
+# Defs - Begin unit FFT has index 256
+# Defs - End unit FFT has index 256
 # Defs - Begin unit UNIT2 has index 16
 # Defs - End unit UNIT2 has index 16
 # Defs - Begin unit UNIT1 has index 10
 # Defs - End unit UNIT1 has index 10
+# Defs - Begin unit FMSYNTH has index 18
+# Defs - End unit FMSYNTH has index 18
 # Defs - Begin unit RETRO has index 12
 # Defs - End unit RETRO has index 12
 # Defs - Begin unit MIDI has index 15
@@ -1870,52 +1963,58 @@ RTTI_$MIDI_$$_DEF0:
 .Lehdebug_line0:
 # === header end ===
 # function: MIDI_$$_READBUFFER$$LONGWORD
-# [40:6]
+# [39:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll1
 	.byte	5
-	.uleb128	6
-	.byte	51
-# [42:17]
+	.uleb128	1
+	.byte	50
+# [40:6]
 	.byte	2
 	.uleb128	.Ll2-.Ll1
+	.byte	5
+	.uleb128	6
+	.byte	13
+# [42:17]
+	.byte	2
+	.uleb128	.Ll3-.Ll2
 	.byte	5
 	.uleb128	17
 	.byte	14
 # [43:3]
 	.byte	2
-	.uleb128	.Ll3-.Ll2
+	.uleb128	.Ll4-.Ll3
 	.byte	5
 	.uleb128	3
 	.byte	13
 # [44:3]
 	.byte	2
-	.uleb128	.Ll4-.Ll3
+	.uleb128	.Ll5-.Ll4
 	.byte	13
 # [43:3]
 	.byte	2
-	.uleb128	.Ll5-.Ll4
+	.uleb128	.Ll6-.Ll5
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [45:6]
 	.byte	2
-	.uleb128	.Ll6-.Ll5
+	.uleb128	.Ll7-.Ll6
 	.byte	5
 	.uleb128	6
 	.byte	14
 # [46:1]
 	.byte	2
-	.uleb128	.Ll7-.Ll6
+	.uleb128	.Ll8-.Ll7
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll8
+	.quad	.Ll9
 	.byte	0
 	.byte	1
 	.byte	1
@@ -1925,38 +2024,38 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll9
+	.quad	.Ll10
 	.byte	5
 	.uleb128	1
 	.byte	61
 # [51:8]
 	.byte	2
-	.uleb128	.Ll10-.Ll9
+	.uleb128	.Ll11-.Ll10
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [53:9]
 	.byte	2
-	.uleb128	.Ll11-.Ll10
+	.uleb128	.Ll12-.Ll11
 	.byte	5
 	.uleb128	9
 	.byte	14
 # [54:3]
 	.byte	2
-	.uleb128	.Ll12-.Ll11
+	.uleb128	.Ll13-.Ll12
 	.byte	5
 	.uleb128	3
 	.byte	13
 # [56:1]
 	.byte	2
-	.uleb128	.Ll13-.Ll12
+	.uleb128	.Ll14-.Ll13
 	.byte	5
 	.uleb128	1
 	.byte	14
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll14
+	.quad	.Ll15
 	.byte	0
 	.byte	1
 	.byte	1
@@ -1966,34 +2065,34 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll15
+	.quad	.Ll16
 	.byte	5
 	.uleb128	1
 	.byte	77
 # [68:1]
 	.byte	2
-	.uleb128	.Ll16-.Ll15
+	.uleb128	.Ll17-.Ll16
 	.byte	14
 # [69:1]
 	.byte	2
-	.uleb128	.Ll17-.Ll16
+	.uleb128	.Ll18-.Ll17
 	.byte	13
 # [73:5]
 	.byte	2
-	.uleb128	.Ll18-.Ll17
+	.uleb128	.Ll19-.Ll18
 	.byte	5
 	.uleb128	5
 	.byte	16
 # [92:1]
 	.byte	2
-	.uleb128	.Ll19-.Ll18
+	.uleb128	.Ll20-.Ll19
 	.byte	5
 	.uleb128	1
 	.byte	31
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll20
+	.quad	.Ll21
 	.byte	0
 	.byte	1
 	.byte	1
@@ -2003,18 +2102,18 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll21
+	.quad	.Ll22
 	.byte	5
 	.uleb128	1
 	.byte	113
 # [102:1]
 	.byte	2
-	.uleb128	.Ll22-.Ll21
+	.uleb128	.Ll23-.Ll22
 	.byte	1
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll23
+	.quad	.Ll24
 	.byte	0
 	.byte	1
 	.byte	1
@@ -2024,29 +2123,29 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll24
+	.quad	.Ll25
 	.byte	5
 	.uleb128	1
 	.byte	113
 # [102:1]
 	.byte	2
-	.uleb128	.Ll25-.Ll24
+	.uleb128	.Ll26-.Ll25
 	.byte	1
 # [103:3]
 	.byte	2
-	.uleb128	.Ll26-.Ll25
+	.uleb128	.Ll27-.Ll26
 	.byte	5
 	.uleb128	3
 	.byte	13
 # [104:14]
 	.byte	2
-	.uleb128	.Ll27-.Ll26
+	.uleb128	.Ll28-.Ll27
 	.byte	5
 	.uleb128	14
 	.byte	13
 # [103:3]
 	.byte	2
-	.uleb128	.Ll28-.Ll27
+	.uleb128	.Ll29-.Ll28
 	.byte	5
 	.uleb128	3
 	.byte	3
@@ -2054,13 +2153,13 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	1
 # [106:5]
 	.byte	2
-	.uleb128	.Ll29-.Ll28
+	.uleb128	.Ll30-.Ll29
 	.byte	5
 	.uleb128	5
 	.byte	15
 # [103:3]
 	.byte	2
-	.uleb128	.Ll30-.Ll29
+	.uleb128	.Ll31-.Ll30
 	.byte	5
 	.uleb128	3
 	.byte	3
@@ -2068,43 +2167,43 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	1
 # [109:10]
 	.byte	2
-	.uleb128	.Ll31-.Ll30
+	.uleb128	.Ll32-.Ll31
 	.byte	5
 	.uleb128	10
 	.byte	18
 # [110:1]
 	.byte	2
-	.uleb128	.Ll32-.Ll31
+	.uleb128	.Ll33-.Ll32
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [111:10]
 	.byte	2
-	.uleb128	.Ll33-.Ll32
+	.uleb128	.Ll34-.Ll33
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [113:21]
 	.byte	2
-	.uleb128	.Ll34-.Ll33
+	.uleb128	.Ll35-.Ll34
 	.byte	5
 	.uleb128	21
 	.byte	14
 # [115:40]
 	.byte	2
-	.uleb128	.Ll35-.Ll34
+	.uleb128	.Ll36-.Ll35
 	.byte	5
 	.uleb128	40
 	.byte	14
 # [116:15]
 	.byte	2
-	.uleb128	.Ll36-.Ll35
+	.uleb128	.Ll37-.Ll36
 	.byte	5
 	.uleb128	15
 	.byte	13
 # [113:7]
 	.byte	2
-	.uleb128	.Ll37-.Ll36
+	.uleb128	.Ll38-.Ll37
 	.byte	5
 	.uleb128	7
 	.byte	3
@@ -2112,31 +2211,31 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	1
 # [120:11]
 	.byte	2
-	.uleb128	.Ll38-.Ll37
+	.uleb128	.Ll39-.Ll38
 	.byte	5
 	.uleb128	11
 	.byte	19
 # [127:51]
 	.byte	2
-	.uleb128	.Ll39-.Ll38
+	.uleb128	.Ll40-.Ll39
 	.byte	5
 	.uleb128	51
 	.byte	19
 # [128:48]
 	.byte	2
-	.uleb128	.Ll40-.Ll39
+	.uleb128	.Ll41-.Ll40
 	.byte	5
 	.uleb128	48
 	.byte	13
 # [129:11]
 	.byte	2
-	.uleb128	.Ll41-.Ll40
+	.uleb128	.Ll42-.Ll41
 	.byte	5
 	.uleb128	11
 	.byte	13
 # [102:1]
 	.byte	2
-	.uleb128	.Ll42-.Ll41
+	.uleb128	.Ll43-.Ll42
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -2144,12 +2243,12 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	1
 # [131:1]
 	.byte	2
-	.uleb128	.Ll43-.Ll42
+	.uleb128	.Ll44-.Ll43
 	.byte	41
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll44
+	.quad	.Ll45
 	.byte	0
 	.byte	1
 	.byte	1
@@ -2159,7 +2258,7 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll45
+	.quad	.Ll46
 	.byte	0
 	.byte	1
 	.byte	1
@@ -2169,7 +2268,7 @@ RTTI_$MIDI_$$_DEF0:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll46
+	.quad	.Ll47
 	.byte	0
 	.byte	1
 	.byte	1

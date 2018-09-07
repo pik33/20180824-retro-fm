@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  umain,retro,sdl2,unit6502,windows, unit65032,midi,synthcontrol;
+  umain,retro,sdl2,unit6502,windows, unit65032,midi,synthcontrol, fft;
 
 type
 
@@ -17,6 +17,7 @@ type
     Button2: TButton;
     Button3: TButton;
     CheckBox1: TCheckBox;
+    fft1: TDSXFastFourier;
     Memo1: TMemo;
     OpenDialog1: TOpenDialog;
     RadioButton1: TRadioButton;
@@ -26,6 +27,7 @@ type
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
+    procedure fft1GetData(index: integer; var Value: TComplex);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
 
@@ -100,10 +102,12 @@ repeat
 
 //  if peek($60028)=ord('p') then begin poke ($60028,0); pause:=not pause; if pause then sdl_pauseaudio(1) else sdl_pauseaudio(0); end;
 
-  if dpeek($60028)=16445 then begin edelay:=not edelay; dpoke($60028,0); end;  //f4=delay
+  if dpeek($60028)=16446 then begin edelay:=not edelay; dpoke($60028,0); end;  //f4=delay
   if dpeek($60028)=16442 then begin waveidx+=1; if waveidx>=sampleindex1 then waveidx:=sampleindex1-1;  dpoke($60028,0); end;  //f4=delay
   if dpeek($60028)=16443 then begin waveidx-=1; if waveidx<0 then waveidx:=0;  dpoke($60028,0); end;  //f4=delay
-  box(600,600,400,40,0); outtextxyz(600,600,waves1[waveidx].name,15,2,2);
+  if dpeek($60028)=16444 then begin transpose+=1; dpoke($60028,0); end;  //f4=delay
+  if dpeek($60028)=16445 then begin transpose-=1; dpoke($60028,0); end;  //f4=delay
+  box(600,600,400,120,0); outtextxyz(600,600,waves1[waveidx].name,15,2,2);    outtextxyz(600,640,floattostr(44100/waves1[waveidx].speed),15,2,2);   outtextxyz(600,680,floattostr(transpose),15,2,2);
           // adsr test
           if dpeek($60028)=16447 then begin att:=att*1.1; dpoke($60028,0); end; //f5=reverb
           if dpeek($60028)=16448 then begin att:=att/1.1; ereverb:=not ereverb; dpoke($60028,0); end; //f5=reverb
@@ -181,6 +185,12 @@ for i:=0 to 65535 do
   end;
 memo1.lines.add(floattostr(1/dd0));
 memo1.lines.add(inttostr(i0));
+end;
+
+procedure TForm1.fft1GetData(index: integer; var Value: TComplex);
+begin
+   if index<waves1[sampleindex1].len then value.real:=fftwave[index] else value.real:=0;
+  value.imag:=0;
 end;
 
 

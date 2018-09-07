@@ -8,7 +8,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, Unit1, umain, retro, unit6502, unit65032, midi, Unit2, synthcontrol,
-  fmsynth;
+  fmsynth, fft1;
   { you can add units after this }
 
 {$R *.res}

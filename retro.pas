@@ -347,6 +347,8 @@ var a,i:integer;
 begin
 
 initvoices;
+initsamples0;
+initsamples1;
 r1:=virtualalloc(nil,268435456, MEM_COMMIT or MEM_RESERVE,PAGE_EXECUTE_READWRITE);  // get 256 MB ram
 p2:=virtualalloc(nil,20971520, MEM_COMMIT or MEM_RESERVE,PAGE_READWRITE);  // get the RAM for the framebuffer
 

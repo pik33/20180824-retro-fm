@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 1144
+  Left = 893
   Height = 577
-  Top = 384
+  Top = 619
   Width = 727
   Caption = 'Form1'
   ClientHeight = 577
@@ -93,5 +93,11 @@ object Form1: TForm1
     InitialDir = 'd:\dmp\'
     left = 112
     top = 144
+  end
+  object fft1: TDSXFastFourier
+    OnGetData = fft1GetData
+    NumSamples = 524288
+    left = 96
+    top = 296
   end
 end

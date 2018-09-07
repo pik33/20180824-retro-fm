@@ -184,7 +184,7 @@ var fh,filetype:integer;
 
 implementation
 
- uses unit1,synthcontrol;
+ uses unit1,synthcontrol,fmsynth;
 
 var
   running:integer=0;
@@ -347,6 +347,8 @@ var a,i:integer;
 begin
 
 initvoices;
+initsamples0;
+initsamples1;
 r1:=virtualalloc(nil,268435456, MEM_COMMIT or MEM_RESERVE,PAGE_EXECUTE_READWRITE);  // get 256 MB ram
 p2:=virtualalloc(nil,20971520, MEM_COMMIT or MEM_RESERVE,PAGE_READWRITE);  // get the RAM for the framebuffer
 
@@ -1797,7 +1799,7 @@ if gain>1 then gain:=1;
      fs+=0.25*voices[j].getsample;
   if edelay then fs:=delay1(fs);
   if gain*abs(fs)>1 then gain:=1/(1.01*abs(fs));
-  gain:=1;
+ // gain:=1;
   fs:=fs*gain;
   s1:=round(32767*fs);
   s[0]:=s1;

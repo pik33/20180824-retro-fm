@@ -217,7 +217,7 @@ voices[channel].setfreq(0);
 for i:=0 to 7 do  voices[channel].operators[i].pa:=0;
 for i:=0 to 7 do voices[channel].operators[i].vel:=flogtable[49152+128*velocity];
 
-voices[channel].outmuls[0]:=4;
+voices[channel].outmuls[0]:=2;
 voices[channel].outmuls[1]:=0;
 voices[channel].outmuls[2]:=0;
 voices[channel].outmuls[3]:=0;
@@ -233,7 +233,7 @@ for i:=0 to 7 do  voices[channel].operators[i].wptr:=waves1[waveidx].wave;
 for i:=0 to 7 do  voices[channel].operators[i].wlend:=waves1[waveidx].lend ;
 for i:=0 to 7 do  voices[channel].operators[i].wlstart:=waves1[waveidx].lstart;
 for i:=0 to 7 do  voices[channel].operators[i].wlength:=waves1[waveidx].len;
-for i:=0 to 7 do  voices[channel].operators[i].freqmod:=waves1[waveidx].speed/2;
+for i:=0 to 7 do  voices[channel].operators[i].freqmod:=waves1[waveidx].speed*power(2,transpose);
 //voices[channel].operators[0].mul0:=waves1[waveidx].speed/8;
 //for i:=0 to 7 do  voices[channel].operators[i].mul0:=0;
 //for i:=0 to 7 do  voices[channel].operators[i].mul1:=0;
@@ -254,8 +254,8 @@ voices[channel].setfreq(f);
 for i:=0 to 7 do  voices[channel].operators[i].pa:=0;
 
 for i:=0 to 7 do  voices[channel].operators[i].ar1:=att;
-for i:=0 to 7 do voices[channel].operators[i].adsrstate:=1;
-for i:=0 to 7 do voices[channel].operators[i].adsrval:=0;
+for i:=0 to 0 do voices[channel].operators[i].adsrstate:=1;
+for i:=0 to 0 do voices[channel].operators[i].adsrval:=0;
 
 //box(200,200,600,600,0);
 //outtextxy(200,200,inttostr(voices[channel].operators[0].

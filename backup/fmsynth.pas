@@ -63,6 +63,16 @@ type TWaveSample0=record
      end;
 
 
+type TSampleinfo=record
+     slen,sls,sll:cardinal;
+     vol:byte;
+     finetune:shortint;
+     sampletype,pan:byte;
+     relnote:shortint;
+     snl:byte;
+     samplename:array[0..21] of char;
+     end;
+
 const
 
      a212=1.0594630943592953098431053149397484958; //2^1/12
@@ -81,13 +91,16 @@ var flogtable:array[0..65540] of myfloat;
     sampleindex0:integer=0;
     sampleindex1:integer=0;
     waveidx:integer=0;
-
+    fftwave:^double;
+    transpose:integer=0;
 
 procedure initvoices;
+procedure initsamples0;
+procedure initsamples1;
 
 
 implementation
-    uses retro;
+    uses retro,unit1;
 
 procedure initsamples0;
 
@@ -115,22 +128,18 @@ end;
 
 procedure initsamples1;
 
-type TSampleinfo=record
-     slen,sls,sll:cardinal;
-     vol,finetune,sampletype,pan:byte;
-     relnote:shortint;
-     snl:byte;
-     samplename:array[0..21] of char;
-     end;
 
 var sr:tsearchrec;
-    j,i,fh:integer;
+    k,j,i,fh:integer;
     currentdir2:string;
     dummy:array[0..255] of byte;
     intwave:PSmallint;
     samplenum:word;
     sampleinfo:array[0..31] of TSampleInfo ;
     integrator:double;
+    maxval:double;
+    ffti: integer;
+    fftv: double;
 
 begin
 currentdir2:='C:\xi\';
@@ -143,22 +152,49 @@ if findfirst(currentdir2+'*.xi',faAnyFile,sr)=0 then
   for i:=0 to samplenum-1 do fileread(fh,sampleinfo[i],40);
   for i:=0 to samplenum-1 do
     begin
+    waves1[sampleindex1].len:=sampleinfo[i].slen div 2;
     waves1[sampleindex1].name:='';
-    for j:=0 to sampleinfo[i].snl-1 do waves1[sampleindex1].name+=sampleinfo[i].samplename[j];
+    for j:=0 to sampleinfo[i].snl do waves1[sampleindex1].name+=sampleinfo[i].samplename[j];
     intwave:=getmem(sampleinfo[i].slen);
     waves1[sampleindex1].wave:=getmem(4*sampleinfo[i].slen+16);
     fileread(fh,intwave^,sampleinfo[i].slen);
     integrator:=0;
+    maxval:=0;
+
     for j:=0 to (sampleinfo[i].slen div 2)-1 do
       begin
       integrator+=intwave[j]/32768;
+      if abs(integrator)>maxval then maxval:=abs(integrator);
       waves1[sampleindex1].wave[j]:=integrator;
       end;
-    freemem(intwave);
-    waves1[sampleindex1].len:=sampleinfo[i].slen div 2;
-    waves1[sampleindex1].lstart:=sampleinfo[i].sls div 2;
-    waves1[sampleindex1].lend:=((sampleinfo[i].sls+sampleinfo[i].sll) div 2);
-    waves1[sampleindex1].speed:=126.278*power(a212,sampleinfo[i].relnote);
+//    fftwave:=getmem(4*sampleinfo[i].slen+16);
+//    integrator:=0;
+//    for j:=0 to (sampleinfo[i].slen div 2)-1 do
+//      begin
+//      integrator+=waves1[sampleindex1].wave[j];
+//      fftwave[j]:=integrator;
+//      end;
+ // normalize
+    for j:=0 to (sampleinfo[i].slen div 2)-1 do waves1[sampleindex1].wave[j]*=1/maxval;
+ //   form1.fft1.fft;
+//    maxval:=0;
+//    for j:=600 to 65535 do
+  //    begin
+   //   if j>400 then k:=j else k:=800-j;
+//      fftv:= sqr(form1.fft1.transformeddata[j].real)+sqr(form1.fft1.transformeddata[j].imag);
+//      if (fftv/j)>maxval then begin maxval:=fftv/j; ffti:=j;end;
+//      end;
+
+
+    // 1 period=ffti
+  //  waves1[sampleindex1].speed:= (524288/ffti); //836; //(ffti*96000/524288)*
+                               //power(a212,sampleinfo[i].relnote);
+   freemem(intwave);
+//   freemem(fftwave);
+    if (sampleinfo[i].sampletype and 1) =0 then begin waves1[sampleindex1].lstart:=waves1[sampleindex1].len-1 ; waves1[sampleindex1].lend:=waves1[sampleindex1].len ;  end else
+    begin waves1[sampleindex1].lstart:=sampleinfo[i].sls div 2;
+    waves1[sampleindex1].lend:=((sampleinfo[i].sls+sampleinfo[i].sll) div 2); end;
+    waves1[sampleindex1].speed:=31.569678791045951421351411329291*power(a212,sampleinfo[i].relnote+sampleinfo[i].finetune/128);
     sampleindex1+=1;
   end;
   fileclose(fh);
@@ -350,7 +386,7 @@ end;
 
 function TFmOperator.getsample:TSingleSample;
 
-label p101;
+label p101,p999;
 
 var res64a:myfloat;
     modulator:myfloat;
@@ -363,6 +399,7 @@ var res64a:myfloat;
 
 begin
 
+if (adsrstate=0) or ((adsrstate=6) and (adsrval=0)) then begin sample:=0; goto p999; end;
 //ft:=gettime;
 //for i:=1 to 1000 do begin
 
@@ -422,7 +459,7 @@ else
   if pa2>=wlend then
     repeat pa2:=pa2-wlend+wlstart until pa2<wlend;
   if pa2<0 then
-    repeat pa2:=pa2+wlength until pa2>0;
+    repeat pa2:=pa2+wlength until pa2>=0;
   end;
 
 intpa:=trunc(pa2);
@@ -488,6 +525,7 @@ sample:=sample*h1;
 //                       end;
 //ftt:=gettime-ft;
 //if abs(sample)>1 then begin box(200,200,200,200,0); outtextxy(200,200,floattostr(sample),15); outtextxy(200,220,floattostr(pa2),15); outtextxy(200,240,floattostr(pa21),15); end;
+p999:
 result:=sample;
 
 end;
@@ -514,8 +552,7 @@ initialization
 initflogtable;
 initfsinetable;
 initnotes;
-initsamples0;
-initsamples1;
+
 //initvoices;
 
 end.

@@ -34,7 +34,7 @@ UMAIN$_$MAIN1_$$_fin$0:
 # Var $parentfp located in register rbp
 .seh_endprologue
 .Ll2:
-	leaq	-8(%rbp),%rcx
+	leaq	-24(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 	nop
 	leaq	32(%rsp),%rsp
@@ -50,7 +50,7 @@ UMAIN$_$MAIN1_$$_fin$0:
 .globl	UMAIN_$$_MAIN1
 UMAIN_$$_MAIN1:
 .Lc6:
-# Temps allocated between rbp-40 and rbp+0
+# Temps allocated between rbp-40 and rbp-16
 .seh_proc UMAIN_$$_MAIN1
 .Ll4:
 	pushq	%rbp
@@ -61,15 +61,11 @@ UMAIN_$$_MAIN1:
 .Lc10:
 	leaq	-96(%rsp),%rsp
 .seh_stackalloc 96
-# Var t located in register rbx
-# Var i located in register esi
-	movq	%rbx,-40(%rbp)
-	movq	%rsi,-32(%rbp)
-.seh_savereg %rbx, 56
-.seh_savereg %rsi, 64
 .seh_endprologue
+# Var t located at rbp-8, size=OS_S64
+# Var i located at rbp-16, size=OS_S32
 .Ll5:
-	movq	$0,-8(%rbp)
+	movq	$0,-24(%rbp)
 .Lj11:
 	nop
 .Lj7:
@@ -123,11 +119,11 @@ UMAIN_$$_MAIN1:
 	movl	$131074,393340(%rax)
 .Ll14:
 # [67] for i:=0 to 31 do
-	movl	$0,%esi
-	subl	$1,%esi
+	movl	$0,-16(%rbp)
+	subl	$1,-16(%rbp)
 	.balign 8,0x90
 .Lj46:
-	addl	$1,%esi
+	addl	$1,-16(%rbp)
 .Ll15:
 # [68] for j:=0 to 31 do  begin
 	movl	$0,U_$UMAIN_$$_J(%rip)
@@ -152,205 +148,190 @@ UMAIN_$$_MAIN1:
 .Lj54:
 .Ll17:
 # [70] if (i<11) or (i>21) or (j<11) or (j>21) then raml^[$14800+i+32*j]:=k else  raml^[$14800+i+32*j]:=$0;
-	cmpl	$11,%esi
+	cmpl	$11,-16(%rbp)
 	jl	.Lj57
-	cmpl	$21,%esi
+	cmpl	$21,-16(%rbp)
 	jg	.Lj57
-.Ll18:
-	movl	U_$UMAIN_$$_J(%rip),%eax
-.Ll19:
-	cmpl	$11,%eax
+	cmpl	$11,U_$UMAIN_$$_J(%rip)
 	jl	.Lj57
-	cmpl	$21,%eax
+	cmpl	$21,U_$UMAIN_$$_J(%rip)
 	jng	.Lj58
 .Lj57:
 	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movslq	%esi,%rax
+	movslq	-16(%rbp),%rax
 	leaq	83968(%rax),%rdx
 	movslq	U_$UMAIN_$$_J(%rip),%rax
 	shlq	$5,%rax
 	leaq	(%rdx,%rax),%rax
 	movl	U_$UMAIN_$$_K(%rip),%edx
 	movl	%edx,(%rcx,%rax,4)
-	jmp	.Lj66
+	jmp	.Lj64
 .Lj58:
 	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movslq	%esi,%rax
+	movslq	-16(%rbp),%rax
 	leaq	83968(%rax),%rdx
 	movslq	U_$UMAIN_$$_J(%rip),%rax
 	shlq	$5,%rax
 	leaq	(%rdx,%rax),%rax
 	movl	$0,(%rcx,%rax,4)
-.Lj66:
-.Ll20:
+.Lj64:
+.Ll18:
 	cmpl	$31,U_$UMAIN_$$_J(%rip)
 	jl	.Lj49
-.Ll21:
-	cmpl	$31,%esi
+.Ll19:
+	cmpl	$31,-16(%rbp)
 	jl	.Lj46
-.Ll22:
+.Ll20:
 # [73] for i:=0 to 31 do
-	movl	$0,%esi
-	subl	$1,%esi
+	movl	$0,-16(%rbp)
+	subl	$1,-16(%rbp)
 	.balign 8,0x90
-.Lj71:
-	addl	$1,%esi
-.Ll23:
+.Lj69:
+	addl	$1,-16(%rbp)
+.Ll21:
 # [74] for j:=0 to 31 do  begin
 	movl	$0,U_$UMAIN_$$_J(%rip)
 	subl	$1,U_$UMAIN_$$_J(%rip)
 	.balign 8,0x90
-.Lj74:
+.Lj72:
 	addl	$1,U_$UMAIN_$$_J(%rip)
-.Ll24:
+.Ll22:
 # [75] if j<16 then k:=j*16 else k:=(31-j)*16 ;
 	cmpl	$16,U_$UMAIN_$$_J(%rip)
-	jnl	.Lj76
+	jnl	.Lj74
 	movl	U_$UMAIN_$$_J(%rip),%eax
 	shll	$4,%eax
 	movl	%eax,U_$UMAIN_$$_K(%rip)
-	jmp	.Lj79
-.Lj76:
+	jmp	.Lj77
+.Lj74:
 	movl	U_$UMAIN_$$_J(%rip),%edx
 	movl	$31,%eax
 	subl	%edx,%eax
 	shll	$4,%eax
 	movl	%eax,U_$UMAIN_$$_K(%rip)
-.Lj79:
-# PeepHole Optimization,var2
-# P=movl
-# HP1=shll
-# HP2=movl
-# PeepHole Optimization,var2
-.Ll25:
+.Lj77:
+.Ll23:
 # [76] k:=k shl 8;
-	shll	$8,U_$UMAIN_$$_K(%rip)
-.Ll26:
+	movl	U_$UMAIN_$$_K(%rip),%eax
+	shll	$8,%eax
+	movl	%eax,U_$UMAIN_$$_K(%rip)
+.Ll24:
 # [77] if (i<11) or (i>21) or (j<11) or (j>21) then raml^[$14C00+i+32*j]:=k else  raml^[$14C00+i+32*j]:=$0;
-	cmpl	$11,%esi
-	jl	.Lj84
-	cmpl	$21,%esi
-	jg	.Lj84
-.Ll27:
-	movl	U_$UMAIN_$$_J(%rip),%eax
-.Ll28:
-	cmpl	$11,%eax
-	jl	.Lj84
-	cmpl	$21,%eax
-	jng	.Lj85
-.Lj84:
+	cmpl	$11,-16(%rbp)
+	jl	.Lj82
+	cmpl	$21,-16(%rbp)
+	jg	.Lj82
+	cmpl	$11,U_$UMAIN_$$_J(%rip)
+	jl	.Lj82
+	cmpl	$21,U_$UMAIN_$$_J(%rip)
+	jng	.Lj83
+.Lj82:
 	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movslq	%esi,%rax
+	movslq	-16(%rbp),%rax
 	leaq	84992(%rax),%rdx
 	movslq	U_$UMAIN_$$_J(%rip),%rax
 	shlq	$5,%rax
-	leaq	(%rdx,%rax),%rdx
-	movl	U_$UMAIN_$$_K(%rip),%eax
-	movl	%eax,(%rcx,%rdx,4)
-	jmp	.Lj93
-.Lj85:
+	leaq	(%rdx,%rax),%rax
+	movl	U_$UMAIN_$$_K(%rip),%edx
+	movl	%edx,(%rcx,%rax,4)
+	jmp	.Lj89
+.Lj83:
 	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movslq	%esi,%rax
+	movslq	-16(%rbp),%rax
 	leaq	84992(%rax),%rdx
 	movslq	U_$UMAIN_$$_J(%rip),%rax
 	shlq	$5,%rax
 	leaq	(%rdx,%rax),%rax
 	movl	$0,(%rcx,%rax,4)
-.Lj93:
-.Ll29:
+.Lj89:
+.Ll25:
 	cmpl	$31,U_$UMAIN_$$_J(%rip)
-	jl	.Lj74
-.Ll30:
-	cmpl	$31,%esi
-	jl	.Lj71
-.Ll31:
+	jl	.Lj72
+.Ll26:
+	cmpl	$31,-16(%rbp)
+	jl	.Lj69
+.Ll27:
 # [80] for i:=0 to 31 do
-	movl	$0,%esi
-	subl	$1,%esi
+	movl	$0,-16(%rbp)
+	subl	$1,-16(%rbp)
 	.balign 8,0x90
-.Lj98:
-	addl	$1,%esi
-.Ll32:
+.Lj94:
+	addl	$1,-16(%rbp)
+.Ll28:
 # [81] for j:=0 to 31 do  begin
 	movl	$0,U_$UMAIN_$$_J(%rip)
 	subl	$1,U_$UMAIN_$$_J(%rip)
 	.balign 8,0x90
-.Lj101:
+.Lj97:
 	addl	$1,U_$UMAIN_$$_J(%rip)
-.Ll33:
+.Ll29:
 # [82] if j<16 then k:=j*16 else k:=(31-j)*16 ;
 	cmpl	$16,U_$UMAIN_$$_J(%rip)
-	jnl	.Lj103
+	jnl	.Lj99
 	movl	U_$UMAIN_$$_J(%rip),%eax
 	shll	$4,%eax
 	movl	%eax,U_$UMAIN_$$_K(%rip)
-	jmp	.Lj106
-.Lj103:
+	jmp	.Lj102
+.Lj99:
 	movl	U_$UMAIN_$$_J(%rip),%edx
 	movl	$31,%eax
 	subl	%edx,%eax
 	shll	$4,%eax
 	movl	%eax,U_$UMAIN_$$_K(%rip)
-.Lj106:
-# PeepHole Optimization,var2
-# P=movl
-# HP1=shll
-# HP2=movl
-# PeepHole Optimization,var2
-.Ll34:
+.Lj102:
+.Ll30:
 # [83] k:=k shl 16;
-	shll	$16,U_$UMAIN_$$_K(%rip)
-.Ll35:
+	movl	U_$UMAIN_$$_K(%rip),%eax
+	shll	$16,%eax
+	movl	%eax,U_$UMAIN_$$_K(%rip)
+.Ll31:
 # [84] if (i<11) or (i>21) or (j<11) or (j>21) then raml^[$15000+i+32*j]:=k else  raml^[$15000+i+32*j]:=$0;
-	cmpl	$11,%esi
-	jl	.Lj111
-	cmpl	$21,%esi
-	jg	.Lj111
-.Ll36:
-	movl	U_$UMAIN_$$_J(%rip),%eax
-.Ll37:
-	cmpl	$11,%eax
-	jl	.Lj111
-	cmpl	$21,%eax
-	jng	.Lj112
-.Lj111:
+	cmpl	$11,-16(%rbp)
+	jl	.Lj107
+	cmpl	$21,-16(%rbp)
+	jg	.Lj107
+	cmpl	$11,U_$UMAIN_$$_J(%rip)
+	jl	.Lj107
+	cmpl	$21,U_$UMAIN_$$_J(%rip)
+	jng	.Lj108
+.Lj107:
 	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movslq	%esi,%rax
+	movslq	-16(%rbp),%rax
 	leaq	86016(%rax),%rdx
 	movslq	U_$UMAIN_$$_J(%rip),%rax
 	shlq	$5,%rax
 	leaq	(%rdx,%rax),%rax
 	movl	U_$UMAIN_$$_K(%rip),%edx
 	movl	%edx,(%rcx,%rax,4)
-	jmp	.Lj120
-.Lj112:
+	jmp	.Lj114
+.Lj108:
 	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movslq	%esi,%rax
+	movslq	-16(%rbp),%rax
 	leaq	86016(%rax),%rdx
 	movslq	U_$UMAIN_$$_J(%rip),%rax
 	shlq	$5,%rax
 	leaq	(%rdx,%rax),%rax
 	movl	$0,(%rcx,%rax,4)
-.Lj120:
-.Ll38:
+.Lj114:
+.Ll32:
 	cmpl	$31,U_$UMAIN_$$_J(%rip)
-	jl	.Lj101
-.Ll39:
-	cmpl	$31,%esi
-	jl	.Lj98
-.Ll40:
+	jl	.Lj97
+.Ll33:
+	cmpl	$31,-16(%rbp)
+	jl	.Lj94
+.Ll34:
 # [91] graphics(16);
 	movl	$16,%ecx
 	call	RETRO_$$_GRAPHICS$LONGINT
-.Ll41:
+.Ll35:
 # [92] cls(146);
 	movl	$146,%ecx
 	call	RETRO_$$_CLS$LONGINT
-.Ll42:
+.Ll36:
 # [93] ttt:=gettime;
 	call	RETRO_$$_GETTIME$$INT64
 	movq	%rax,U_$UMAIN_$$_TTT(%rip)
-.Ll43:
+.Ll37:
 # [94] outtextxyz(96,16,'The retromachine FM Synth v. 0.01 --- 2016.09.02',154,4,2);
 	movl	$2,40(%rsp)
 	movl	$4,32(%rsp)
@@ -359,7 +340,7 @@ UMAIN_$$_MAIN1:
 	movl	$16,%edx
 	movl	$96,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll44:
+.Ll38:
 # [95] box2(8,64,1784,1112,0);
 	movl	$0,32(%rsp)
 	movl	$1112,%r9d
@@ -367,7 +348,7 @@ UMAIN_$$_MAIN1:
 	movl	$64,%edx
 	movl	$8,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll45:
+.Ll39:
 # [96] box2(10,1062,1782,1110,120);
 	movl	$120,32(%rsp)
 	movl	$1110,%r9d
@@ -375,7 +356,7 @@ UMAIN_$$_MAIN1:
 	movl	$1062,%edx
 	movl	$10,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll46:
+.Ll40:
 # [97] outtextxyz(32,1070,'Screen time:',124,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
@@ -384,96 +365,97 @@ UMAIN_$$_MAIN1:
 	movl	$1070,%edx
 	movl	$32,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll47:
+.Ll41:
 # [98] k:=raml^[$18000];
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	393216(%rax),%eax
 	movl	%eax,U_$UMAIN_$$_K(%rip)
-.Ll48:
+.Ll42:
 # [99] raml^[$18003]:=$002040;
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	$8256,393228(%rax)
-.Ll49:
+.Ll43:
 # [100] setataripallette(1);
 	movl	$1,%ecx
 	call	RETRO_$$_SETATARIPALLETTE$LONGINT
-.Ll50:
+.Ll44:
 # [101] setataripallette(2);
 	movl	$2,%ecx
 	call	RETRO_$$_SETATARIPALLETTE$LONGINT
-.Ll51:
+.Ll45:
 # [102] setataripallette(3);
 	movl	$3,%ecx
 	call	RETRO_$$_SETATARIPALLETTE$LONGINT
-.Ll52:
+.Ll46:
 # [103] sethidecolor(250,0,$FF);
 	movl	$255,%r8d
 	movl	$0,%edx
 	movl	$250,%ecx
 	call	RETRO_$$_SETHIDECOLOR$LONGINT$LONGINT$LONGINT
-.Ll53:
+.Ll47:
 # [104] sethidecolor(44,0,$FF);
 	movl	$255,%r8d
 	movl	$0,%edx
 	movl	$44,%ecx
 	call	RETRO_$$_SETHIDECOLOR$LONGINT$LONGINT$LONGINT
-.Ll54:
+.Ll48:
 # [105] sethidecolor(190,0,$FF);
 	movl	$255,%r8d
 	movl	$0,%edx
 	movl	$190,%ecx
 	call	RETRO_$$_SETHIDECOLOR$LONGINT$LONGINT$LONGINT
-.Ll55:
+.Ll49:
 # [106] sethidecolor(188,0,$FF);
 	movl	$255,%r8d
 	movl	$0,%edx
 	movl	$188,%ecx
 	call	RETRO_$$_SETHIDECOLOR$LONGINT$LONGINT$LONGINT
-.Ll56:
+.Ll50:
 # [107] c:=0;
 	movq	$0,TC_$UMAIN_$$_C(%rip)
-.Ll57:
+.Ll51:
 # [108] avsct:=0;
 	movq	$0,TC_$UMAIN_$$_AVSCT(%rip)
-.Ll58:
+.Ll52:
 # [109] avspt:=0;
 	movq	$0,TC_$UMAIN_$$_AVSPT(%rip)
-.Ll59:
+.Ll53:
 # [110] avall:=0;
 	movq	$0,TC_$UMAIN_$$_AVALL(%rip)
-.Ll60:
+.Ll54:
 # [111] avsid:=0;
 	movq	$0,TC_$UMAIN_$$_AVSID(%rip)
-.Ll61:
+.Ll55:
 # [113] sdl_pauseaudio(1); sleep(10);
 	movl	$1,%ecx
 	call	_$dll$sdl2$SDL_PauseAudio
 	movl	$10,%ecx
 	call	SYSUTILS_$$_SLEEP$LONGWORD
-.Ll62:
+.Ll56:
 # [114] t:=gettime;
 	call	RETRO_$$_GETTIME$$INT64
-	movq	%rax,%rbx
-.Ll63:
+	movq	%rax,-8(%rbp)
+.Ll57:
 # [115] for i:=1 to 1000000 do
-	movl	$1,%esi
-	subl	$1,%esi
+	movl	$1,-16(%rbp)
+	subl	$1,-16(%rbp)
 	.balign 8,0x90
-.Lj225:
-	addl	$1,%esi
-.Ll64:
+.Lj219:
+	addl	$1,-16(%rbp)
+.Ll58:
 # [116] voices[0].getsample;
 	movq	U_$FMSYNTH_$$_VOICES(%rip),%rcx
 	call	FMSYNTH$_$TFMVOICE_$__$$_GETSAMPLE$$DOUBLE
-.Ll65:
-	cmpl	$1000000,%esi
-	jl	.Lj225
-.Ll66:
+.Ll59:
+	cmpl	$1000000,-16(%rbp)
+	jl	.Lj219
+.Ll60:
 # [117] t:=gettime-t;
 	call	RETRO_$$_GETTIME$$INT64
-	subq	%rbx,%rax
-	movq	%rax,%rbx
-.Ll67:
+	movq	-8(%rbp),%rdx
+	subq	%rdx,%rax
+	movq	%rax,-8(%rbp)
+.Ll61:
 # [118] box(100,100,200,100,0);
 	movl	$0,32(%rsp)
 	movl	$100,%r9d
@@ -481,23 +463,23 @@ UMAIN_$$_MAIN1:
 	movl	$100,%edx
 	movl	$100,%ecx
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll68:
+.Ll62:
 # [119] outtextxyz(100,100,inttostr(t),44,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	movq	%rbx,%rdx
-	leaq	-8(%rbp),%rcx
+	movq	-8(%rbp),%rdx
+	leaq	-24(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$INT64$$ANSISTRING
-	movq	-8(%rbp),%r8
+	movq	-24(%rbp),%r8
 	movl	$44,%r9d
 	movl	$100,%edx
 	movl	$100,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll69:
+.Ll63:
 # [120] sdl_pauseaudio(0);
 	movl	$0,%ecx
 	call	_$dll$sdl2$SDL_PauseAudio
-.Ll70:
+.Ll64:
 # [121] box(12,70,440,384,145-48);            outtextxyz(12+425,70,'0',145-48+12,2,2);
 	movl	$97,32(%rsp)
 	movl	$384,%r9d
@@ -512,7 +494,7 @@ UMAIN_$$_MAIN1:
 	movl	$70,%edx
 	movl	$437,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll71:
+.Ll65:
 # [123] outtextxyz(20,70,'Modulators',107,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
@@ -521,7 +503,7 @@ UMAIN_$$_MAIN1:
 	movl	$70,%edx
 	movl	$20,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll72:
+.Ll66:
 # [124] outtextxyz(20,110,'0',107,2,2);  box(40,110,64,32,101); outtextxyz(48,110,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
@@ -543,7 +525,7 @@ UMAIN_$$_MAIN1:
 	movl	$110,%edx
 	movl	$48,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll73:
+.Ll67:
 # [125] outtextxyz(20,150,'1',107,2,2);  box(40,150,64,32,101); outtextxyz(48,150,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
@@ -565,7 +547,7 @@ UMAIN_$$_MAIN1:
 	movl	$150,%edx
 	movl	$48,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll74:
+.Ll68:
 # [126] outtextxyz(20,190,'2',107,2,2);  box(40,190,64,32,101); outtextxyz(48,190,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
@@ -587,7 +569,7 @@ UMAIN_$$_MAIN1:
 	movl	$190,%edx
 	movl	$48,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll75:
+.Ll69:
 # [127] outtextxyz(20,230,'3',107,2,2);  box(40,230,64,32,101); outtextxyz(48,230,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
@@ -609,7 +591,7 @@ UMAIN_$$_MAIN1:
 	movl	$230,%edx
 	movl	$48,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll76:
+.Ll70:
 # [128] outtextxyz(20,270,'4',107,2,2);  box(40,270,64,32,101); outtextxyz(48,270,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
@@ -631,7 +613,7 @@ UMAIN_$$_MAIN1:
 	movl	$270,%edx
 	movl	$48,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll77:
+.Ll71:
 # [129] outtextxyz(20,310,'5',107,2,2);  box(40,310,64,32,101); outtextxyz(48,310,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
@@ -653,7 +635,7 @@ UMAIN_$$_MAIN1:
 	movl	$310,%edx
 	movl	$48,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll78:
+.Ll72:
 # [130] outtextxyz(20,350,'6',107,2,2);  box(40,350,64,32,101); outtextxyz(48,350,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
@@ -675,7 +657,7 @@ UMAIN_$$_MAIN1:
 	movl	$350,%edx
 	movl	$48,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll79:
+.Ll73:
 # [131] outtextxyz(20,390,'7',107,2,2);  box(40,390,64,32,101); outtextxyz(48,390,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
@@ -697,7 +679,7 @@ UMAIN_$$_MAIN1:
 	movl	$390,%edx
 	movl	$48,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll80:
+.Ll74:
 # [133] outtextxyz(220,70,'ADSR',107,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
@@ -706,7 +688,7 @@ UMAIN_$$_MAIN1:
 	movl	$70,%edx
 	movl	$220,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll81:
+.Ll75:
 # [134] outtextxyz(220,110,'R1',107,2,2);  box(260,110,64,32,101); outtextxyz(268,110,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
@@ -728,7 +710,7 @@ UMAIN_$$_MAIN1:
 	movl	$110,%edx
 	movl	$268,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll82:
+.Ll76:
 # [135] outtextxyz(220,150,'R2',107,2,2);  box(260,150,64,32,101); outtextxyz(268,150,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
@@ -750,7 +732,7 @@ UMAIN_$$_MAIN1:
 	movl	$150,%edx
 	movl	$268,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll83:
+.Ll77:
 # [136] outtextxyz(220,190,'R3',107,2,2);  box(260,190,64,32,101); outtextxyz(268,190,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
@@ -772,7 +754,7 @@ UMAIN_$$_MAIN1:
 	movl	$190,%edx
 	movl	$268,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll84:
+.Ll78:
 # [137] outtextxyz(220,230,'R4',107,2,2);  box(260,230,64,32,101); outtextxyz(268,230,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
@@ -794,7 +776,7 @@ UMAIN_$$_MAIN1:
 	movl	$230,%edx
 	movl	$268,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll85:
+.Ll79:
 # [138] outtextxyz(330,110,'L1',107,2,2);  box(370,110,64,32,101); outtextxyz(378,110,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
@@ -816,7 +798,7 @@ UMAIN_$$_MAIN1:
 	movl	$110,%edx
 	movl	$378,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll86:
+.Ll80:
 # [139] outtextxyz(330,150,'L2',107,2,2);  box(370,150,64,32,101); outtextxyz(378,150,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
@@ -838,7 +820,7 @@ UMAIN_$$_MAIN1:
 	movl	$150,%edx
 	movl	$378,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll87:
+.Ll81:
 # [140] outtextxyz(330,190,'L3',107,2,2);  box(370,190,64,32,101); outtextxyz(378,190,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
@@ -860,7 +842,7 @@ UMAIN_$$_MAIN1:
 	movl	$190,%edx
 	movl	$378,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll88:
+.Ll82:
 # [141] outtextxyz(330,230,'L4',107,2,2);  box(370,230,64,32,101); outtextxyz(378,230,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
@@ -882,7 +864,7 @@ UMAIN_$$_MAIN1:
 	movl	$230,%edx
 	movl	$378,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll89:
+.Ll83:
 # [152] box(12+443,70,440,384,145-32);        outtextxyz(12+443+425,70,'1',145-32+12,2,2);
 	movl	$113,32(%rsp)
 	movl	$384,%r9d
@@ -897,7 +879,7 @@ UMAIN_$$_MAIN1:
 	movl	$70,%edx
 	movl	$880,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll90:
+.Ll84:
 # [153] box(12+2*443,70,440,384,145-16);      outtextxyz(12+2*443+425,70,'2',145-16+12,2,2);
 	movl	$129,32(%rsp)
 	movl	$384,%r9d
@@ -912,7 +894,7 @@ UMAIN_$$_MAIN1:
 	movl	$70,%edx
 	movl	$1323,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll91:
+.Ll85:
 # [154] box(12+3*443,70,440,384,145);         outtextxyz(12+3*443+425,70,'3',145+12,2,2);
 	movl	$145,32(%rsp)
 	movl	$384,%r9d
@@ -927,7 +909,7 @@ UMAIN_$$_MAIN1:
 	movl	$70,%edx
 	movl	$1766,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll92:
+.Ll86:
 # [155] box(12,70+388,440,384,145+16);        outtextxyz(12+425,70+388,'4',145+16+12,2,2);
 	movl	$161,32(%rsp)
 	movl	$384,%r9d
@@ -942,7 +924,7 @@ UMAIN_$$_MAIN1:
 	movl	$458,%edx
 	movl	$437,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll93:
+.Ll87:
 # [156] box(12+443,70+388,440,384,145+32);    outtextxyz(12+443+425,70+388,'5',145+32+12,2,2);
 	movl	$177,32(%rsp)
 	movl	$384,%r9d
@@ -957,7 +939,7 @@ UMAIN_$$_MAIN1:
 	movl	$458,%edx
 	movl	$880,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll94:
+.Ll88:
 # [157] box(12+2*443,70+388,440,384,145+48);  outtextxyz(12+2*443+425,70+388,'6',145+48+12,2,2);
 	movl	$193,32(%rsp)
 	movl	$384,%r9d
@@ -972,7 +954,7 @@ UMAIN_$$_MAIN1:
 	movl	$458,%edx
 	movl	$1323,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll95:
+.Ll89:
 # [158] box(12+3*443,70+388,440,384,145+64);  outtextxyz(12+3*443+425,70+388,'7',145+64+12,2,2);
 	movl	$209,32(%rsp)
 	movl	$384,%r9d
@@ -987,16 +969,14 @@ UMAIN_$$_MAIN1:
 	movl	$458,%edx
 	movl	$1766,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Lj1002:
-.Ll96:
+.Lj996:
+.Ll90:
 	nop
 .Lj8:
 	movq	%rbp,%rcx
 	call	UMAIN$_$MAIN1_$$_fin$0
-.Ll97:
+.Ll91:
 # [160] end;
-	movq	-40(%rbp),%rbx
-	movq	-32(%rbp),%rsi
 	leaq	(%rbp),%rsp
 	popq	%rbp
 	ret
@@ -1012,14 +992,14 @@ UMAIN_$$_MAIN1:
 .seh_endproc
 .Lc7:
 .Lt1:
-.Ll98:
+.Ll92:
 
 .section .text.n_umain$_$main2_$$_fin$1,"x"
 	.balign 16,0x90
 UMAIN$_$MAIN2_$$_fin$1:
 .Lc11:
 .seh_proc UMAIN$_$MAIN2_$$_fin$1
-.Ll99:
+.Ll93:
 # [175] begin
 	pushq	%rbp
 .seh_pushreg %rbp
@@ -1031,17 +1011,17 @@ UMAIN$_$MAIN2_$$_fin$1:
 .seh_stackalloc 32
 # Var $parentfp located in register rbp
 .seh_endprologue
-.Ll100:
-	leaq	-120(%rbp),%rcx
+.Ll94:
+	leaq	-216(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
-	leaq	-88(%rbp),%rcx
+	leaq	-184(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
-	leaq	-40(%rbp),%rax
+	leaq	-96(%rbp),%rax
 	movq	%rax,%rcx
 	call	fpc_ansistr_decr_ref
-	leaq	-48(%rbp),%rcx
+	leaq	-104(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
-	leaq	-56(%rbp),%rcx
+	leaq	-112(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 	nop
 	leaq	32(%rsp),%rsp
@@ -1050,85 +1030,81 @@ UMAIN$_$MAIN2_$$_fin$1:
 .seh_endproc
 .Lc12:
 .Lt4:
-.Ll101:
+.Ll95:
 
 .section .text.n_umain_$$_main2,"x"
 	.balign 16,0x90
 .globl	UMAIN_$$_MAIN2
 UMAIN_$$_MAIN2:
 .Lc16:
-# Temps allocated between rbp-160 and rbp-80
+# Temps allocated between rbp-240 and rbp-176
 .seh_proc UMAIN_$$_MAIN2
-.Ll102:
+.Ll96:
 	pushq	%rbp
 .seh_pushreg %rbp
 .Lc18:
 .Lc19:
 	movq	%rsp,%rbp
 .Lc20:
-	leaq	-208(%rsp),%rsp
-.seh_stackalloc 208
-# Var ii located in register eax
-# Var iii located in register eax
-# Var il located in register eax
-# Var i located in register edx
-# Var mm located in register rsi
-# Var hh located in register rdi
-# Var ss located in register rbx
-# Var f located in register eax
-# Var aa located in register eax
-# Var aaa located in register eax
-# Var aaaa located in register eax
-# Var md located in register eax
-	movq	%rbx,-160(%rbp)
-	movq	%rdi,-152(%rbp)
-	movq	%rsi,-144(%rbp)
+	leaq	-288(%rsp),%rsp
+.seh_stackalloc 288
+	movq	%rbx,-240(%rbp)
 .seh_savereg %rbx, 48
-.seh_savereg %rdi, 56
-.seh_savereg %rsi, 64
 .seh_endprologue
-# Var buf located at rbp-32, size=OS_NO
-# Var mms located at rbp-40, size=OS_64
-# Var hhs located at rbp-48, size=OS_64
-# Var sss located at rbp-56, size=OS_64
-# Var kwas located at rbp-64, size=OS_64
-# Var rect located at rbp-80, size=OS_128
-.Ll103:
-	movq	$0,-40(%rbp)
-	movq	$0,-48(%rbp)
-	movq	$0,-56(%rbp)
-	movq	$0,-120(%rbp)
-	movq	$0,-88(%rbp)
-.Lj1013:
+# Var ii located at rbp-8, size=OS_S32
+# Var iii located at rbp-16, size=OS_S32
+# Var il located at rbp-24, size=OS_S32
+# Var i located at rbp-32, size=OS_S32
+# Var buf located at rbp-64, size=OS_NO
+# Var mm located at rbp-72, size=OS_S64
+# Var hh located at rbp-80, size=OS_S64
+# Var ss located at rbp-88, size=OS_S64
+# Var mms located at rbp-96, size=OS_64
+# Var hhs located at rbp-104, size=OS_64
+# Var sss located at rbp-112, size=OS_64
+# Var kwas located at rbp-120, size=OS_64
+# Var rect located at rbp-136, size=OS_128
+# Var f located at rbp-144, size=OS_S32
+# Var aa located at rbp-152, size=OS_S32
+# Var aaa located at rbp-160, size=OS_S32
+# Var aaaa located at rbp-168, size=OS_S32
+# Var md located at rbp-176, size=OS_32
+.Ll97:
+	movq	$0,-96(%rbp)
+	movq	$0,-104(%rbp)
+	movq	$0,-112(%rbp)
+	movq	$0,-216(%rbp)
+	movq	$0,-184(%rbp)
+.Lj1007:
 	nop
-.Lj1009:
-.Ll104:
+.Lj1003:
+.Ll98:
 # [178] k:=raml^[$18000];
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	393216(%rax),%eax
 	movl	%eax,U_$UMAIN_$$_K(%rip)
 	.balign 8,0x90
-.Lj1016:
-.Ll105:
+.Lj1010:
+.Ll99:
 # [180] until raml^[$18000]>k;
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	393216(%rax),%eax
 	cmpl	U_$UMAIN_$$_K(%rip),%eax
-	jng	.Lj1016
-.Ll106:
+	jng	.Lj1010
+.Ll100:
 # [185] c:=c+1;
 	movq	TC_$UMAIN_$$_C(%rip),%rax
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UMAIN_$$_C(%rip)
-.Ll107:
+.Ll101:
 # [186] if time6502>0 then c6+=1;
 	cmpq	$0,U_$RETRO_$$_TIME6502(%rip)
-	jng	.Lj1022
+	jng	.Lj1016
 	movq	TC_$UMAIN_$$_C6(%rip),%rax
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UMAIN_$$_C6(%rip)
-.Lj1022:
-.Ll108:
+.Lj1016:
+.Ll102:
 # [187] ss:=(songtime div 1000000) mod 60;
 	movq	U_$RETRO_$$_SONGTIME(%rip),%rcx
 	movq	$4835703278458516699,%rax
@@ -1140,8 +1116,8 @@ UMAIN_$$_MAIN2:
 	cqto
 	movq	$60,%rcx
 	idivq	%rcx
-	movq	%rdx,%rbx
-.Ll109:
+	movq	%rdx,-88(%rbp)
+.Ll103:
 # [188] mm:=(songtime div 60000000) mod 60;
 	movq	U_$RETRO_$$_SONGTIME(%rip),%rcx
 	movq	$-8130577079664715991,%rax
@@ -1154,8 +1130,8 @@ UMAIN_$$_MAIN2:
 	cqto
 	movq	$60,%rcx
 	idivq	%rcx
-	movq	%rdx,%rsi
-.Ll110:
+	movq	%rdx,-72(%rbp)
+.Ll104:
 # [189] hh:=(songtime div 3600000000);
 	movq	U_$RETRO_$$_SONGTIME(%rip),%rcx
 	movq	$-7442832613395060283,%rax
@@ -1164,62 +1140,62 @@ UMAIN_$$_MAIN2:
 	sarq	$31,%rdx
 	shrq	$63,%rcx
 	addq	%rcx,%rdx
-	movq	%rdx,%rdi
-.Ll111:
+	movq	%rdx,-80(%rbp)
+.Ll105:
 # [190] sss:=inttostr(ss); if ss<10 then sss:='0'+sss;
-	movq	%rbx,%rdx
-	leaq	-56(%rbp),%rcx
+	movq	-88(%rbp),%rdx
+	leaq	-112(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$INT64$$ANSISTRING
-	cmpq	$10,%rbx
-	jnl	.Lj1036
-	movq	-56(%rbp),%r8
+	cmpq	$10,-88(%rbp)
+	jnl	.Lj1030
+	movq	-112(%rbp),%r8
 	leaq	_$UMAIN$_Ld3(%rip),%rdx
-	leaq	-56(%rbp),%rcx
+	leaq	-112(%rbp),%rcx
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
-.Lj1036:
-.Ll112:
+.Lj1030:
+.Ll106:
 # [191] mms:=inttostr(mm); if mm<10 then mms:='0'+mms;
-	movq	%rsi,%rdx
-	leaq	-40(%rbp),%rcx
+	movq	-72(%rbp),%rdx
+	leaq	-96(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$INT64$$ANSISTRING
-	cmpq	$10,%rsi
-	jnl	.Lj1050
-	movq	-40(%rbp),%r8
+	cmpq	$10,-72(%rbp)
+	jnl	.Lj1044
+	movq	-96(%rbp),%r8
 	leaq	_$UMAIN$_Ld3(%rip),%rdx
-	leaq	-40(%rbp),%rcx
+	leaq	-96(%rbp),%rcx
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
-.Lj1050:
-.Ll113:
+.Lj1044:
+.Ll107:
 # [192] hhs:=inttostr(hh); if hh<10 then hhs:='0'+hhs;
-	movq	%rdi,%rdx
-	leaq	-48(%rbp),%rcx
+	movq	-80(%rbp),%rdx
+	leaq	-104(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$INT64$$ANSISTRING
-	cmpq	$10,%rdi
-	jnl	.Lj1064
-	movq	-48(%rbp),%r8
+	cmpq	$10,-80(%rbp)
+	jnl	.Lj1058
+	movq	-104(%rbp),%r8
 	leaq	_$UMAIN$_Ld3(%rip),%rdx
-	leaq	-48(%rbp),%rcx
+	leaq	-104(%rbp),%rcx
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
-.Lj1064:
-.Ll114:
+.Lj1058:
+.Ll108:
 # [193] songfreq:=1000000 div siddelay;
 	movq	$1000000,%rax
 	cqto
 	idivq	TC_$RETRO_$$_SIDDELAY(%rip)
 	movq	%rax,U_$RETRO_$$_SONGFREQ(%rip)
-.Ll115:
+.Ll109:
 # [196] avsid:=0;
 	movq	$0,TC_$UMAIN_$$_AVSID(%rip)
-.Ll116:
+.Ll110:
 # [197] sidbuf[sidptr]:=sidtime;
-	movl	TC_$UMAIN$_$MAIN2_$$_SIDPTR(%rip),%eax
-	movq	U_$RETRO_$$_SIDTIME(%rip),%rdx
+	movl	TC_$UMAIN$_$MAIN2_$$_SIDPTR(%rip),%edx
+	movq	U_$RETRO_$$_SIDTIME(%rip),%rax
 	leaq	U_$UMAIN_$$_SIDBUF(%rip),%rcx
-	movq	%rdx,(%rcx,%rax,8)
-.Ll117:
+	movq	%rax,(%rcx,%rdx,8)
+.Ll111:
 # [198] sidptr:=(sidptr+1) mod 60;
 	movslq	TC_$UMAIN$_$MAIN2_$$_SIDPTR(%rip),%rax
 	leaq	1(%rax),%rax
@@ -1227,23 +1203,22 @@ UMAIN_$$_MAIN2:
 	movq	$60,%rcx
 	idivq	%rcx
 	movl	%edx,TC_$UMAIN$_$MAIN2_$$_SIDPTR(%rip)
-.Ll118:
+.Ll112:
 # [199] for i:=0 to 59 do avsid+=sidbuf[i];
-	movl	$0,%edx
-	subl	$1,%edx
+	movl	$0,-32(%rbp)
+	subl	$1,-32(%rbp)
 	.balign 8,0x90
-.Lj1083:
-	addl	$1,%edx
-# PeepHole Optimization,var2a
-	movl	%edx,%eax
-	leaq	U_$UMAIN_$$_SIDBUF(%rip),%rcx
-	movq	(%rcx,%rax,8),%rax
-	movq	TC_$UMAIN_$$_AVSID(%rip),%rcx
-	leaq	(%rax,%rcx),%rax
+.Lj1077:
+	addl	$1,-32(%rbp)
+	movl	-32(%rbp),%eax
+	leaq	U_$UMAIN_$$_SIDBUF(%rip),%rdx
+	movq	(%rdx,%rax,8),%rax
+	movq	TC_$UMAIN_$$_AVSID(%rip),%rdx
+	leaq	(%rax,%rdx),%rax
 	movq	%rax,TC_$UMAIN_$$_AVSID(%rip)
-	cmpl	$59,%edx
-	jl	.Lj1083
-.Ll119:
+	cmpl	$59,-32(%rbp)
+	jl	.Lj1077
+.Ll113:
 # [200] avsid:=avsid div 60;
 	movq	TC_$UMAIN_$$_AVSID(%rip),%rcx
 	movq	$-8608480567731124087,%rax
@@ -1253,31 +1228,31 @@ UMAIN_$$_MAIN2:
 	shrq	$63,%rcx
 	addq	%rcx,%rdx
 	movq	%rdx,TC_$UMAIN_$$_AVSID(%rip)
-.Ll120:
+.Ll114:
 # [201] avsct:=avsct+tim;
 	movq	TC_$UMAIN_$$_AVSCT(%rip),%rdx
 	movq	U_$RETRO_$$_TIM(%rip),%rax
 	leaq	(%rdx,%rax),%rax
 	movq	%rax,TC_$UMAIN_$$_AVSCT(%rip)
-.Ll121:
+.Ll115:
 # [202] avspt:=avspt+ts;
 	movq	TC_$UMAIN_$$_AVSPT(%rip),%rax
 	movq	U_$RETRO_$$_TS(%rip),%rdx
 	leaq	(%rax,%rdx),%rax
 	movq	%rax,TC_$UMAIN_$$_AVSPT(%rip)
-.Ll122:
+.Ll116:
 # [203] avall:=avall+t3;
-	movq	TC_$UMAIN_$$_AVALL(%rip),%rax
-	movq	U_$RETRO_$$_T3(%rip),%rdx
-	leaq	(%rax,%rdx),%rax
-	movq	%rax,TC_$UMAIN_$$_AVALL(%rip)
-.Ll123:
-# [204] av6502:=av6502+time6502;
-	movq	TC_$UMAIN_$$_AV6502(%rip),%rdx
-	movq	U_$RETRO_$$_TIME6502(%rip),%rax
+	movq	TC_$UMAIN_$$_AVALL(%rip),%rdx
+	movq	U_$RETRO_$$_T3(%rip),%rax
 	leaq	(%rdx,%rax),%rax
+	movq	%rax,TC_$UMAIN_$$_AVALL(%rip)
+.Ll117:
+# [204] av6502:=av6502+time6502;
+	movq	TC_$UMAIN_$$_AV6502(%rip),%rax
+	movq	U_$RETRO_$$_TIME6502(%rip),%rdx
+	leaq	(%rax,%rdx),%rax
 	movq	%rax,TC_$UMAIN_$$_AV6502(%rip)
-.Ll124:
+.Ll118:
 # [205] box2(10,1062,1782,1110,118);
 	movl	$118,32(%rsp)
 	movl	$1110,%r9d
@@ -1285,88 +1260,88 @@ UMAIN_$$_MAIN2:
 	movl	$1062,%edx
 	movl	$10,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll125:
+.Ll119:
 # [206] outtextxyz(32,1070,'Avg screen time: '+inttostr(round(avsct/c))+' us',76,2,2);
-	leaq	-88(%rbp),%rcx
+	leaq	-184(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 	leaq	_$UMAIN$_Ld22(%rip),%rax
-	movq	%rax,-112(%rbp)
+	movq	%rax,-208(%rbp)
 	cvtsi2sdq	TC_$UMAIN_$$_AVSCT(%rip),%xmm0
 	cvtsi2sdq	TC_$UMAIN_$$_C(%rip),%xmm1
 	divsd	%xmm1,%xmm0
 	cvtsd2siq	%xmm0,%rdx
-	leaq	-120(%rbp),%rcx
+	leaq	-216(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$INT64$$ANSISTRING
-	movq	-120(%rbp),%rax
-	movq	%rax,-104(%rbp)
+	movq	-216(%rbp),%rax
+	movq	%rax,-200(%rbp)
 	leaq	_$UMAIN$_Ld23(%rip),%rax
-	movq	%rax,-96(%rbp)
-	leaq	-112(%rbp),%rdx
-	leaq	-88(%rbp),%rcx
+	movq	%rax,-192(%rbp)
+	leaq	-208(%rbp),%rdx
+	leaq	-184(%rbp),%rcx
 	movl	$0,%r9d
 	movq	$2,%r8
 	call	fpc_ansistr_concat_multi
-	movq	-88(%rbp),%r8
+	movq	-184(%rbp),%r8
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	movl	$76,%r9d
 	movl	$1070,%edx
 	movl	$32,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll126:
+.Ll120:
 # [207] outtextxyz(438,1070,'Avg sprite time: '+inttostr(round(avspt/c))+' us',186,2,2);
-	leaq	-88(%rbp),%rcx
+	leaq	-184(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 	leaq	_$UMAIN$_Ld24(%rip),%rax
-	movq	%rax,-112(%rbp)
+	movq	%rax,-208(%rbp)
 	cvtsi2sdq	TC_$UMAIN_$$_AVSPT(%rip),%xmm0
 	cvtsi2sdq	TC_$UMAIN_$$_C(%rip),%xmm1
 	divsd	%xmm1,%xmm0
 	cvtsd2siq	%xmm0,%rdx
-	leaq	-120(%rbp),%rcx
+	leaq	-216(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$INT64$$ANSISTRING
-	movq	-120(%rbp),%rax
-	movq	%rax,-104(%rbp)
+	movq	-216(%rbp),%rax
+	movq	%rax,-200(%rbp)
 	leaq	_$UMAIN$_Ld23(%rip),%rax
-	movq	%rax,-96(%rbp)
-	leaq	-112(%rbp),%rdx
-	leaq	-88(%rbp),%rcx
+	movq	%rax,-192(%rbp)
+	leaq	-208(%rbp),%rdx
+	leaq	-184(%rbp),%rcx
 	movl	$0,%r9d
 	movq	$2,%r8
 	call	fpc_ansistr_concat_multi
-	movq	-88(%rbp),%r8
+	movq	-184(%rbp),%r8
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	movl	$186,%r9d
 	movl	$1070,%edx
 	movl	$438,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll127:
+.Ll121:
 # [208] outtextxyz(828,1070,'Avg FM time: '+inttostr(avsid)+' us',233,2,2);
-	leaq	-88(%rbp),%rcx
+	leaq	-184(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 	leaq	_$UMAIN$_Ld25(%rip),%rax
-	movq	%rax,-112(%rbp)
+	movq	%rax,-208(%rbp)
 	movq	TC_$UMAIN_$$_AVSID(%rip),%rdx
-	leaq	-120(%rbp),%rcx
+	leaq	-216(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$INT64$$ANSISTRING
-	movq	-120(%rbp),%rax
-	movq	%rax,-104(%rbp)
+	movq	-216(%rbp),%rax
+	movq	%rax,-200(%rbp)
 	leaq	_$UMAIN$_Ld23(%rip),%rax
-	movq	%rax,-96(%rbp)
-	leaq	-112(%rbp),%rdx
-	leaq	-88(%rbp),%rcx
+	movq	%rax,-192(%rbp)
+	leaq	-208(%rbp),%rdx
+	leaq	-184(%rbp),%rcx
 	movl	$0,%r9d
 	movq	$2,%r8
 	call	fpc_ansistr_concat_multi
-	movq	-88(%rbp),%r8
+	movq	-184(%rbp),%r8
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	movl	$233,%r9d
 	movl	$1070,%edx
 	movl	$828,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll128:
+.Ll122:
 # [213] box2(12,860,896,1047,178);
 	movl	$178,32(%rsp)
 	movl	$1047,%r9d
@@ -1374,7 +1349,7 @@ UMAIN_$$_MAIN2:
 	movl	$860,%edx
 	movl	$12,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll129:
+.Ll123:
 # [214] box2(14,950,894,951,40);
 	movl	$40,32(%rsp)
 	movl	$951,%r9d
@@ -1382,7 +1357,7 @@ UMAIN_$$_MAIN2:
 	movl	$950,%edx
 	movl	$14,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll130:
+.Ll124:
 # [215] box2(14,1014,894,1015,40);
 	movl	$40,32(%rsp)
 	movl	$1015,%r9d
@@ -1390,7 +1365,7 @@ UMAIN_$$_MAIN2:
 	movl	$1014,%edx
 	movl	$14,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll131:
+.Ll125:
 # [216] box2(14,886,894,887,40);
 	movl	$40,32(%rsp)
 	movl	$887,%r9d
@@ -1398,21 +1373,21 @@ UMAIN_$$_MAIN2:
 	movl	$886,%edx
 	movl	$14,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll132:
+.Ll126:
 # [217] for j:=20 to 840 do if abs(scope[j])<46000 then box(24+j,950-scope[j] div 512,2,2,190);
 	movl	$20,U_$UMAIN_$$_J(%rip)
 	subl	$1,U_$UMAIN_$$_J(%rip)
 	.balign 8,0x90
-.Lj1220:
+.Lj1214:
 	addl	$1,U_$UMAIN_$$_J(%rip)
-	movl	U_$UMAIN_$$_J(%rip),%edx
-	leaq	U_$RETRO_$$_SCOPE(%rip),%rax
-	movl	(%rax,%rdx,4),%edx
+	movl	U_$UMAIN_$$_J(%rip),%eax
+	leaq	U_$RETRO_$$_SCOPE(%rip),%rdx
+	movl	(%rdx,%rax,4),%edx
 	movl	%edx,%eax
 	negl	%eax
 	cmovnsl	%eax,%edx
 	cmpl	$46000,%edx
-	jnl	.Lj1222
+	jnl	.Lj1216
 	movl	$190,32(%rsp)
 	movl	U_$UMAIN_$$_J(%rip),%eax
 	leaq	U_$RETRO_$$_SCOPE(%rip),%rdx
@@ -1429,21 +1404,21 @@ UMAIN_$$_MAIN2:
 	movl	$2,%r9d
 	movl	$2,%r8d
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Lj1222:
+.Lj1216:
 	cmpl	$840,U_$UMAIN_$$_J(%rip)
-	jl	.Lj1220
-.Ll133:
+	jl	.Lj1214
+.Ll127:
 # [220] sprx:=round(dpeek($d400)/40+74);
 	movl	$54272,%ecx
 	call	RETRO_$$_DPEEK$LONGINT$$WORD
 # PeepHole Optimization,var11
 	andl	$65535,%eax
 	cvtsi2sd	%eax,%xmm0
-	mulsd	_$UMAIN$_Ld26(%rip),%xmm0
+	divsd	_$UMAIN$_Ld26(%rip),%xmm0
 	addsd	_$UMAIN$_Ld27(%rip),%xmm0
 	cvtsd2siq	%xmm0,%rax
 	movl	%eax,U_$UMAIN_$$_SPRX(%rip)
-.Ll134:
+.Ll128:
 # [221] spry:=920-3*(peek($d406) and $F0);
 	movl	$54278,%ecx
 	call	RETRO_$$_PEEK$LONGINT$$BYTE
@@ -1453,10 +1428,10 @@ UMAIN_$$_MAIN2:
 	leal	(%eax,%eax,2),%edx
 	movl	$920,%eax
 	subl	%edx,%eax
-# PeepHole Optimization,MovMov2Mov1
 	movl	%eax,U_$UMAIN_$$_SPRY(%rip)
-.Ll135:
+.Ll129:
 # [222] raml^[$18010]:=(spry shl 16)+sprx+2048*(1-peek($70003));
+	movl	U_$UMAIN_$$_SPRY(%rip),%eax
 	shll	$16,%eax
 	movl	U_$UMAIN_$$_SPRX(%rip),%edx
 	leal	(%eax,%edx),%ebx
@@ -1470,18 +1445,18 @@ UMAIN_$$_MAIN2:
 	leal	(%ebx,%edx),%eax
 	movq	U_$RETRO_$$_R1(%rip),%rdx
 	movl	%eax,393280(%rdx)
-.Ll136:
+.Ll130:
 # [224] spr2x:=round(dpeek($d407)/40+74);
 	movl	$54279,%ecx
 	call	RETRO_$$_DPEEK$LONGINT$$WORD
 # PeepHole Optimization,var11
 	andl	$65535,%eax
 	cvtsi2sd	%eax,%xmm0
-	mulsd	_$UMAIN$_Ld26(%rip),%xmm0
+	divsd	_$UMAIN$_Ld26(%rip),%xmm0
 	addsd	_$UMAIN$_Ld27(%rip),%xmm0
 	cvtsd2siq	%xmm0,%rax
 	movl	%eax,U_$UMAIN_$$_SPR2X(%rip)
-.Ll137:
+.Ll131:
 # [225] spr2y:=920-3*(peek($d40d) and $F0);
 	movl	$54285,%ecx
 	call	RETRO_$$_PEEK$LONGINT$$BYTE
@@ -1491,10 +1466,10 @@ UMAIN_$$_MAIN2:
 	leal	(%eax,%eax,2),%edx
 	movl	$920,%eax
 	subl	%edx,%eax
-# PeepHole Optimization,MovMov2Mov1
 	movl	%eax,U_$UMAIN_$$_SPR2Y(%rip)
-.Ll138:
+.Ll132:
 # [227] raml^[$18012]:=(spr2y shl 16)+spr2x+2048*(1-peek($70004));
+	movl	U_$UMAIN_$$_SPR2Y(%rip),%eax
 	shll	$16,%eax
 	movl	U_$UMAIN_$$_SPR2X(%rip),%edx
 	leal	(%eax,%edx),%ebx
@@ -1505,21 +1480,21 @@ UMAIN_$$_MAIN2:
 	movl	$1,%edx
 	subl	%eax,%edx
 	shll	$11,%edx
-	leal	(%ebx,%edx),%edx
-	movq	U_$RETRO_$$_R1(%rip),%rax
-	movl	%edx,393288(%rax)
-.Ll139:
+	leal	(%ebx,%edx),%eax
+	movq	U_$RETRO_$$_R1(%rip),%rdx
+	movl	%eax,393288(%rdx)
+.Ll133:
 # [229] spr3x:=round(dpeek($d40e)/40+74);
 	movl	$54286,%ecx
 	call	RETRO_$$_DPEEK$LONGINT$$WORD
 # PeepHole Optimization,var11
 	andl	$65535,%eax
 	cvtsi2sd	%eax,%xmm0
-	mulsd	_$UMAIN$_Ld26(%rip),%xmm0
+	divsd	_$UMAIN$_Ld26(%rip),%xmm0
 	addsd	_$UMAIN$_Ld27(%rip),%xmm0
 	cvtsd2siq	%xmm0,%rax
 	movl	%eax,U_$UMAIN_$$_SPR3X(%rip)
-.Ll140:
+.Ll134:
 # [230] spr3y:=920-3*(peek($d414) and $F0);
 	movl	$54292,%ecx
 	call	RETRO_$$_PEEK$LONGINT$$BYTE
@@ -1529,10 +1504,10 @@ UMAIN_$$_MAIN2:
 	leal	(%eax,%eax,2),%edx
 	movl	$920,%eax
 	subl	%edx,%eax
-# PeepHole Optimization,MovMov2Mov1
 	movl	%eax,U_$UMAIN_$$_SPR3Y(%rip)
-.Ll141:
+.Ll135:
 # [232] raml^[$18014]:=(spr3y shl 16)+spr3x+2048*(1-peek($70005));
+	movl	U_$UMAIN_$$_SPR3Y(%rip),%eax
 	shll	$16,%eax
 	movl	U_$UMAIN_$$_SPR3X(%rip),%edx
 	leal	(%eax,%edx),%ebx
@@ -1546,13 +1521,13 @@ UMAIN_$$_MAIN2:
 	leal	(%ebx,%edx),%eax
 	movq	U_$RETRO_$$_R1(%rip),%rdx
 	movl	%eax,393296(%rdx)
-.Ll142:
+.Ll136:
 # [234] raml^[$1801e]:=raml^[$1800B];
 	movq	U_$RETRO_$$_R1(%rip),%rdx
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	393260(%rax),%eax
 	movl	%eax,393336(%rdx)
-.Ll143:
+.Ll137:
 # [236] box(500,500,300,100,0); outtextxyz(500,500,floattostr(gain),42,2,2);  outtextxyz(500,550,floattostr(fnotes[69]),42,2,2);
 	movl	$0,32(%rsp)
 	movl	$100,%r9d
@@ -1563,9 +1538,9 @@ UMAIN_$$_MAIN2:
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	movsd	TC_$RETRO_$$_GAIN(%rip),%xmm1
-	leaq	-88(%rbp),%rcx
+	leaq	-184(%rbp),%rcx
 	call	SYSUTILS_$$_FLOATTOSTR$DOUBLE$$ANSISTRING
-	movq	-88(%rbp),%r8
+	movq	-184(%rbp),%r8
 	movl	$42,%r9d
 	movl	$500,%edx
 	movl	$500,%ecx
@@ -1573,24 +1548,22 @@ UMAIN_$$_MAIN2:
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	movsd	U_$FMSYNTH_$$_FNOTES+552(%rip),%xmm1
-	leaq	-88(%rbp),%rcx
+	leaq	-184(%rbp),%rcx
 	call	SYSUTILS_$$_FLOATTOSTR$DOUBLE$$ANSISTRING
-	movq	-88(%rbp),%r8
+	movq	-184(%rbp),%r8
 	movl	$42,%r9d
 	movl	$550,%edx
 	movl	$500,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Lj1313:
-.Ll144:
+.Lj1307:
+.Ll138:
 	nop
-.Lj1010:
+.Lj1004:
 	movq	%rbp,%rcx
 	call	UMAIN$_$MAIN2_$$_fin$1
-.Ll145:
+.Ll139:
 # [238] end;
-	movq	-160(%rbp),%rbx
-	movq	-152(%rbp),%rdi
-	movq	-144(%rbp),%rsi
+	movq	-240(%rbp),%rbx
 	leaq	(%rbp),%rsp
 	popq	%rbp
 	ret
@@ -1598,15 +1571,15 @@ UMAIN_$$_MAIN2:
 .seh_handlerdata
 	.long	1
 	.long	0
-	.rva	.Lj1009
-	.rva	.Lj1010
+	.rva	.Lj1003
+	.rva	.Lj1004
 	.rva	UMAIN$_$MAIN2_$$_fin$1
 
 .section .text.n_umain_$$_main2,"x"
 .seh_endproc
 .Lc17:
 .Lt3:
-.Ll146:
+.Ll140:
 
 .section .text.n_umain_$$_init_implicit$,"x"
 	.balign 16,0x90
@@ -1616,17 +1589,23 @@ INIT$_$UMAIN:
 UMAIN_$$_init_implicit$:
 .Lc21:
 .seh_proc UMAIN_$$_init_implicit$
-	leaq	-40(%rsp),%rsp
+	pushq	%rbp
+.seh_pushreg %rbp
 .Lc23:
-.seh_stackalloc 40
+.Lc24:
+	movq	%rsp,%rbp
+.Lc25:
+	leaq	-32(%rsp),%rsp
+.seh_stackalloc 32
 .seh_endprologue
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
 .Lc22:
 .Lt5:
-.Ll147:
+.Ll141:
 
 .section .text.n_umain_$$_finalize_implicit$,"x"
 	.balign 16,0x90
@@ -1634,22 +1613,28 @@ UMAIN_$$_init_implicit$:
 FINALIZE$_$UMAIN:
 .globl	UMAIN_$$_finalize_implicit$
 UMAIN_$$_finalize_implicit$:
-.Lc24:
-.seh_proc UMAIN_$$_finalize_implicit$
-	leaq	-40(%rsp),%rsp
 .Lc26:
-.seh_stackalloc 40
+.seh_proc UMAIN_$$_finalize_implicit$
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc28:
+.Lc29:
+	movq	%rsp,%rbp
+.Lc30:
+	leaq	-32(%rsp),%rsp
+.seh_stackalloc 32
 .seh_endprologue
 	leaq	U_$UMAIN_$$_SONGNAME(%rip),%rax
 	movq	%rax,%rcx
 	call	fpc_ansistr_decr_ref
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc25:
+.Lc27:
 .Lt6:
-.Ll148:
+.Ll142:
 # End asmlist al_procedures
 # Begin asmlist al_globals
 
@@ -2266,8 +2251,8 @@ _$UMAIN$_Ld25:
 	.balign 8
 .globl	_$UMAIN$_Ld26
 _$UMAIN$_Ld26:
-# value: 0d+2.5000000000000001E-002
-	.byte	154,153,153,153,153,153,153,63
+# value: 0d+4.0000000000000000E+001
+	.byte	0,0,0,0,0,0,68,64
 
 .section .rodata.n__$UMAIN$_Ld27,"d"
 	.balign 8
@@ -2315,9 +2300,9 @@ RTTI_$UMAIN_$$_DEF85:
 # Begin asmlist al_dwarf_frame
 
 .section .debug_frame
-.Lc27:
-	.long	.Lc29-.Lc28
-.Lc28:
+.Lc31:
+	.long	.Lc33-.Lc32
+.Lc32:
 	.long	-1
 	.byte	1
 	.byte	0
@@ -2331,10 +2316,10 @@ RTTI_$UMAIN_$$_DEF85:
 	.uleb128	16
 	.uleb128	2
 	.balign 4,0
-.Lc29:
-	.long	.Lc31-.Lc30
-.Lc30:
-	.secrel32	.Lc27
+.Lc33:
+	.long	.Lc35-.Lc34
+.Lc34:
+	.secrel32	.Lc31
 	.quad	.Lc1
 	.quad	.Lc2-.Lc1
 	.byte	4
@@ -2351,10 +2336,10 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc31:
-	.long	.Lc33-.Lc32
-.Lc32:
-	.secrel32	.Lc27
+.Lc35:
+	.long	.Lc37-.Lc36
+.Lc36:
+	.secrel32	.Lc31
 	.quad	.Lc6
 	.quad	.Lc7-.Lc6
 	.byte	4
@@ -2371,10 +2356,10 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc33:
-	.long	.Lc35-.Lc34
-.Lc34:
-	.secrel32	.Lc27
+.Lc37:
+	.long	.Lc39-.Lc38
+.Lc38:
+	.secrel32	.Lc31
 	.quad	.Lc11
 	.quad	.Lc12-.Lc11
 	.byte	4
@@ -2391,10 +2376,10 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc35:
-	.long	.Lc37-.Lc36
-.Lc36:
-	.secrel32	.Lc27
+.Lc39:
+	.long	.Lc41-.Lc40
+.Lc40:
+	.secrel32	.Lc31
 	.quad	.Lc16
 	.quad	.Lc17-.Lc16
 	.byte	4
@@ -2411,29 +2396,47 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc37:
-	.long	.Lc39-.Lc38
-.Lc38:
-	.secrel32	.Lc27
+.Lc41:
+	.long	.Lc43-.Lc42
+.Lc42:
+	.secrel32	.Lc31
 	.quad	.Lc21
 	.quad	.Lc22-.Lc21
 	.byte	4
 	.long	.Lc23-.Lc21
 	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc39:
-	.long	.Lc41-.Lc40
-.Lc40:
-	.secrel32	.Lc27
-	.quad	.Lc24
-	.quad	.Lc25-.Lc24
+	.uleb128	16
 	.byte	4
-	.long	.Lc26-.Lc24
-	.byte	14
-	.uleb128	48
+	.long	.Lc24-.Lc23
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc25-.Lc24
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc41:
+.Lc43:
+	.long	.Lc45-.Lc44
+.Lc44:
+	.secrel32	.Lc31
+	.quad	.Lc26
+	.quad	.Lc27-.Lc26
+	.byte	4
+	.long	.Lc28-.Lc26
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc29-.Lc28
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc30-.Lc29
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc45:
 # End asmlist al_dwarf_frame
 # Begin asmlist al_dwarf_info
 
@@ -2447,8 +2450,8 @@ RTTI_$UMAIN_$$_DEF85:
 	.uleb128	1
 # [48] procedure main1 ;
 	.ascii	"umain.pas\000"
-	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
-	.ascii	"D:/programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
+	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -2957,15 +2960,15 @@ RTTI_$UMAIN_$$_DEF85:
 	.uleb128	4
 	.ascii	"T\000"
 	.byte	2
-	.byte	144
-	.uleb128	3
+	.byte	118
+	.sleb128	-8
 	.long	.La12-.Ldebug_info0
 # Symbol I
 	.uleb128	4
 	.ascii	"I\000"
 	.byte	2
-	.byte	144
-	.uleb128	4
+	.byte	118
+	.sleb128	-16
 	.long	.La1-.Ldebug_info0
 # Symbol fin$0
 	.byte	0
@@ -2999,51 +3002,51 @@ RTTI_$UMAIN_$$_DEF85:
 	.uleb128	4
 	.ascii	"I\000"
 	.byte	2
-	.byte	144
-	.uleb128	1
+	.byte	118
+	.sleb128	-32
 	.long	.La1-.Ldebug_info0
 # Symbol BUF
 # Symbol MM
 	.uleb128	4
 	.ascii	"MM\000"
-	.byte	2
-	.byte	144
-	.uleb128	4
+	.byte	3
+	.byte	118
+	.sleb128	-72
 	.long	.La12-.Ldebug_info0
 # Symbol HH
 	.uleb128	4
 	.ascii	"HH\000"
-	.byte	2
-	.byte	144
-	.uleb128	5
+	.byte	3
+	.byte	118
+	.sleb128	-80
 	.long	.La12-.Ldebug_info0
 # Symbol SS
 	.uleb128	4
 	.ascii	"SS\000"
-	.byte	2
-	.byte	144
-	.uleb128	3
+	.byte	3
+	.byte	118
+	.sleb128	-88
 	.long	.La12-.Ldebug_info0
 # Symbol MMS
 	.uleb128	4
 	.ascii	"MMS\000"
-	.byte	2
+	.byte	3
 	.byte	118
-	.sleb128	-40
+	.sleb128	-96
 	.long	.La5-.Ldebug_info0
 # Symbol HHS
 	.uleb128	4
 	.ascii	"HHS\000"
-	.byte	2
+	.byte	3
 	.byte	118
-	.sleb128	-48
+	.sleb128	-104
 	.long	.La5-.Ldebug_info0
 # Symbol SSS
 	.uleb128	4
 	.ascii	"SSS\000"
-	.byte	2
+	.byte	3
 	.byte	118
-	.sleb128	-56
+	.sleb128	-112
 	.long	.La5-.Ldebug_info0
 # Symbol KWAS
 # Symbol RECT
@@ -3184,7 +3187,7 @@ RTTI_$UMAIN_$$_DEF85:
 # Defs - End unit SYSTEM has index 1
 # Defs - Begin unit OBJPAS has index 6
 # Defs - End unit OBJPAS has index 6
-# Defs - Begin unit SDL2 has index 254
+# Defs - Begin unit SDL2 has index 255
 # Definition TSDL_Event
 .La3:
 	.uleb128	7
@@ -4572,375 +4575,373 @@ RTTI_$UMAIN_$$_DEF85:
 .La86:
 	.uleb128	9
 	.long	.La85-.Ldebug_info0
-# Defs - End unit SDL2 has index 254
+# Defs - End unit SDL2 has index 255
 # Defs - Begin unit WINDOWS has index 5
 # Defs - End unit WINDOWS has index 5
-# Defs - Begin unit SYSCONST has index 27
-# Defs - End unit SYSCONST has index 27
-# Defs - Begin unit WINDIRS has index 28
-# Defs - End unit WINDIRS has index 28
-# Defs - Begin unit SYSUTILS has index 23
-# Defs - End unit SYSUTILS has index 23
-# Defs - Begin unit RTLCONSTS has index 24
-# Defs - End unit RTLCONSTS has index 24
-# Defs - Begin unit MATH has index 29
-# Defs - End unit MATH has index 29
-# Defs - Begin unit TYPES has index 25
-# Defs - End unit TYPES has index 25
-# Defs - Begin unit TYPINFO has index 26
-# Defs - End unit TYPINFO has index 26
-# Defs - Begin unit CLASSES has index 22
-# Defs - End unit CLASSES has index 22
-# Defs - Begin unit CRT has index 255
-# Defs - End unit CRT has index 255
+# Defs - Begin unit SYSCONST has index 28
+# Defs - End unit SYSCONST has index 28
+# Defs - Begin unit WINDIRS has index 29
+# Defs - End unit WINDIRS has index 29
+# Defs - Begin unit SYSUTILS has index 24
+# Defs - End unit SYSUTILS has index 24
+# Defs - Begin unit RTLCONSTS has index 25
+# Defs - End unit RTLCONSTS has index 25
+# Defs - Begin unit MATH has index 30
+# Defs - End unit MATH has index 30
+# Defs - Begin unit TYPES has index 26
+# Defs - End unit TYPES has index 26
+# Defs - Begin unit TYPINFO has index 27
+# Defs - End unit TYPINFO has index 27
+# Defs - Begin unit CLASSES has index 23
+# Defs - End unit CLASSES has index 23
+# Defs - Begin unit CRT has index 257
+# Defs - End unit CRT has index 257
 # Defs - Begin unit UNIT6502 has index 13
 # Defs - End unit UNIT6502 has index 13
-# Defs - Begin unit MMSYSTEM has index 256
-# Defs - End unit MMSYSTEM has index 256
+# Defs - Begin unit MMSYSTEM has index 258
+# Defs - End unit MMSYSTEM has index 258
 # Defs - Begin unit MIDI has index 15
 # Defs - End unit MIDI has index 15
-# Defs - Begin unit FMSYNTH has index 18
-# Defs - End unit FMSYNTH has index 18
-# Defs - Begin unit CONTNRS has index 85
-# Defs - End unit CONTNRS has index 85
-# Defs - Begin unit LAZUTILSSTRCONSTS has index 46
-# Defs - End unit LAZUTILSSTRCONSTS has index 46
-# Defs - Begin unit FPCADDS has index 21
-# Defs - End unit FPCADDS has index 21
-# Defs - Begin unit GETTEXT has index 30
-# Defs - End unit GETTEXT has index 30
-# Defs - Begin unit LAZUTF8 has index 19
-# Defs - End unit LAZUTF8 has index 19
-# Defs - Begin unit MASKS has index 156
-# Defs - End unit MASKS has index 156
-# Defs - Begin unit VARUTILS has index 53
-# Defs - End unit VARUTILS has index 53
-# Defs - Begin unit VARIANTS has index 51
-# Defs - End unit VARIANTS has index 51
-# Defs - Begin unit CTYPES has index 52
-# Defs - End unit CTYPES has index 52
-# Defs - Begin unit ACTIVEX has index 48
-# Defs - End unit ACTIVEX has index 48
-# Defs - Begin unit SHELLAPI has index 49
-# Defs - End unit SHELLAPI has index 49
-# Defs - Begin unit COMMCTRL has index 50
-# Defs - End unit COMMCTRL has index 50
-# Defs - Begin unit SHLOBJ has index 47
-# Defs - End unit SHLOBJ has index 47
-# Defs - Begin unit LAZFILEUTILS has index 41
-# Defs - End unit LAZFILEUTILS has index 41
-# Defs - Begin unit STRUTILS has index 157
-# Defs - End unit STRUTILS has index 157
-# Defs - Begin unit FILEUTIL has index 151
-# Defs - End unit FILEUTIL has index 151
-# Defs - Begin unit SINGLEINSTANCE has index 188
-# Defs - End unit SINGLEINSTANCE has index 188
-# Defs - Begin unit CUSTAPP has index 184
-# Defs - End unit CUSTAPP has index 184
-# Defs - Begin unit LCLSTRCONSTS has index 45
-# Defs - End unit LCLSTRCONSTS has index 45
-# Defs - Begin unit LCLTYPE has index 32
-# Defs - End unit LCLTYPE has index 32
-# Defs - Begin unit LAZ_AVL_TREE has index 40
-# Defs - End unit LAZ_AVL_TREE has index 40
-# Defs - Begin unit LAZMETHODLIST has index 42
-# Defs - End unit LAZMETHODLIST has index 42
-# Defs - Begin unit LAZUTF8CLASSES has index 43
-# Defs - End unit LAZUTF8CLASSES has index 43
-# Defs - Begin unit LAZCLASSES has index 55
-# Defs - End unit LAZCLASSES has index 55
-# Defs - Begin unit LAZLOGGERBASE has index 54
-# Defs - End unit LAZLOGGERBASE has index 54
-# Defs - Begin unit LAZLOGGER has index 44
-# Defs - End unit LAZLOGGER has index 44
-# Defs - Begin unit LCLPROC has index 33
-# Defs - End unit LCLPROC has index 33
-# Defs - Begin unit LAZUTF16 has index 150
-# Defs - End unit LAZUTF16 has index 150
-# Defs - Begin unit GRAPHTYPE has index 36
-# Defs - End unit GRAPHTYPE has index 36
-# Defs - Begin unit MESSAGES has index 56
-# Defs - End unit MESSAGES has index 56
-# Defs - Begin unit LMESSAGES has index 34
-# Defs - End unit LMESSAGES has index 34
-# Defs - Begin unit FPIMAGE has index 31
-# Defs - End unit FPIMAGE has index 31
-# Defs - Begin unit LCLPLATFORMDEF has index 35
-# Defs - End unit LCLPLATFORMDEF has index 35
-# Defs - Begin unit GRAPHMATH has index 37
-# Defs - End unit GRAPHMATH has index 37
-# Defs - Begin unit FPIMGCMN has index 67
-# Defs - End unit FPIMGCMN has index 67
-# Defs - Begin unit BMPCOMN has index 59
-# Defs - End unit BMPCOMN has index 59
-# Defs - Begin unit FPREADBMP has index 57
-# Defs - End unit FPREADBMP has index 57
-# Defs - Begin unit FPWRITEBMP has index 58
-# Defs - End unit FPWRITEBMP has index 58
-# Defs - Begin unit PNGCOMN has index 68
-# Defs - End unit PNGCOMN has index 68
-# Defs - Begin unit ZBASE has index 70
-# Defs - End unit ZBASE has index 70
+# Defs - Begin unit CONTNRS has index 86
+# Defs - End unit CONTNRS has index 86
+# Defs - Begin unit LAZUTILSSTRCONSTS has index 47
+# Defs - End unit LAZUTILSSTRCONSTS has index 47
+# Defs - Begin unit FPCADDS has index 22
+# Defs - End unit FPCADDS has index 22
+# Defs - Begin unit GETTEXT has index 31
+# Defs - End unit GETTEXT has index 31
+# Defs - Begin unit LAZUTF8 has index 20
+# Defs - End unit LAZUTF8 has index 20
+# Defs - Begin unit MASKS has index 157
+# Defs - End unit MASKS has index 157
+# Defs - Begin unit VARUTILS has index 54
+# Defs - End unit VARUTILS has index 54
+# Defs - Begin unit VARIANTS has index 52
+# Defs - End unit VARIANTS has index 52
+# Defs - Begin unit CTYPES has index 53
+# Defs - End unit CTYPES has index 53
+# Defs - Begin unit ACTIVEX has index 49
+# Defs - End unit ACTIVEX has index 49
+# Defs - Begin unit SHELLAPI has index 50
+# Defs - End unit SHELLAPI has index 50
+# Defs - Begin unit COMMCTRL has index 51
+# Defs - End unit COMMCTRL has index 51
+# Defs - Begin unit SHLOBJ has index 48
+# Defs - End unit SHLOBJ has index 48
+# Defs - Begin unit LAZFILEUTILS has index 42
+# Defs - End unit LAZFILEUTILS has index 42
+# Defs - Begin unit STRUTILS has index 158
+# Defs - End unit STRUTILS has index 158
+# Defs - Begin unit FILEUTIL has index 152
+# Defs - End unit FILEUTIL has index 152
+# Defs - Begin unit SINGLEINSTANCE has index 189
+# Defs - End unit SINGLEINSTANCE has index 189
+# Defs - Begin unit CUSTAPP has index 185
+# Defs - End unit CUSTAPP has index 185
+# Defs - Begin unit LCLSTRCONSTS has index 46
+# Defs - End unit LCLSTRCONSTS has index 46
+# Defs - Begin unit LCLTYPE has index 33
+# Defs - End unit LCLTYPE has index 33
+# Defs - Begin unit LAZ_AVL_TREE has index 41
+# Defs - End unit LAZ_AVL_TREE has index 41
+# Defs - Begin unit LAZMETHODLIST has index 43
+# Defs - End unit LAZMETHODLIST has index 43
+# Defs - Begin unit LAZUTF8CLASSES has index 44
+# Defs - End unit LAZUTF8CLASSES has index 44
+# Defs - Begin unit LAZCLASSES has index 56
+# Defs - End unit LAZCLASSES has index 56
+# Defs - Begin unit LAZLOGGERBASE has index 55
+# Defs - End unit LAZLOGGERBASE has index 55
+# Defs - Begin unit LAZLOGGER has index 45
+# Defs - End unit LAZLOGGER has index 45
+# Defs - Begin unit LCLPROC has index 34
+# Defs - End unit LCLPROC has index 34
+# Defs - Begin unit LAZUTF16 has index 151
+# Defs - End unit LAZUTF16 has index 151
+# Defs - Begin unit GRAPHTYPE has index 37
+# Defs - End unit GRAPHTYPE has index 37
+# Defs - Begin unit MESSAGES has index 57
+# Defs - End unit MESSAGES has index 57
+# Defs - Begin unit LMESSAGES has index 35
+# Defs - End unit LMESSAGES has index 35
+# Defs - Begin unit FPIMAGE has index 32
+# Defs - End unit FPIMAGE has index 32
+# Defs - Begin unit LCLPLATFORMDEF has index 36
+# Defs - End unit LCLPLATFORMDEF has index 36
+# Defs - Begin unit GRAPHMATH has index 38
+# Defs - End unit GRAPHMATH has index 38
+# Defs - Begin unit FPIMGCMN has index 68
+# Defs - End unit FPIMGCMN has index 68
+# Defs - Begin unit BMPCOMN has index 60
+# Defs - End unit BMPCOMN has index 60
+# Defs - Begin unit FPREADBMP has index 58
+# Defs - End unit FPREADBMP has index 58
+# Defs - Begin unit FPWRITEBMP has index 59
+# Defs - End unit FPWRITEBMP has index 59
+# Defs - Begin unit PNGCOMN has index 69
+# Defs - End unit PNGCOMN has index 69
+# Defs - Begin unit ZBASE has index 71
+# Defs - End unit ZBASE has index 71
 # Defs - Begin unit STRINGS has index 4
 # Defs - End unit STRINGS has index 4
-# Defs - Begin unit DOS has index 72
-# Defs - End unit DOS has index 72
-# Defs - Begin unit CRC has index 73
-# Defs - End unit CRC has index 73
-# Defs - Begin unit TREES has index 76
-# Defs - End unit TREES has index 76
-# Defs - Begin unit ADLER has index 77
-# Defs - End unit ADLER has index 77
-# Defs - Begin unit ZDEFLATE has index 74
-# Defs - End unit ZDEFLATE has index 74
-# Defs - Begin unit INFUTIL has index 79
-# Defs - End unit INFUTIL has index 79
-# Defs - Begin unit INFFAST has index 82
-# Defs - End unit INFFAST has index 82
-# Defs - Begin unit INFCODES has index 80
-# Defs - End unit INFCODES has index 80
-# Defs - Begin unit INFTREES has index 81
-# Defs - End unit INFTREES has index 81
-# Defs - Begin unit INFBLOCK has index 78
-# Defs - End unit INFBLOCK has index 78
-# Defs - Begin unit ZINFLATE has index 75
-# Defs - End unit ZINFLATE has index 75
-# Defs - Begin unit GZIO has index 71
-# Defs - End unit GZIO has index 71
-# Defs - Begin unit ZSTREAM has index 69
-# Defs - End unit ZSTREAM has index 69
-# Defs - Begin unit FPREADPNG has index 60
-# Defs - End unit FPREADPNG has index 60
-# Defs - Begin unit FPWRITEPNG has index 61
-# Defs - End unit FPWRITEPNG has index 61
-# Defs - Begin unit FPTIFFCMN has index 64
-# Defs - End unit FPTIFFCMN has index 64
-# Defs - Begin unit FPREADTIFF has index 62
-# Defs - End unit FPREADTIFF has index 62
-# Defs - Begin unit FPWRITETIFF has index 63
-# Defs - End unit FPWRITETIFF has index 63
-# Defs - Begin unit LCLVERSION has index 65
-# Defs - End unit LCLVERSION has index 65
-# Defs - Begin unit ICNSTYPES has index 66
-# Defs - End unit ICNSTYPES has index 66
-# Defs - Begin unit CLIPPING has index 95
-# Defs - End unit CLIPPING has index 95
-# Defs - Begin unit FPCANVAS has index 86
-# Defs - End unit FPCANVAS has index 86
-# Defs - Begin unit FPREADPNM has index 87
-# Defs - End unit FPREADPNM has index 87
-# Defs - Begin unit FPWRITEPNM has index 88
-# Defs - End unit FPWRITEPNM has index 88
-# Defs - Begin unit JDEFERR has index 101
-# Defs - End unit JDEFERR has index 101
-# Defs - Begin unit JMORECFG has index 100
-# Defs - End unit JMORECFG has index 100
-# Defs - Begin unit JPEGLIB has index 96
-# Defs - End unit JPEGLIB has index 96
-# Defs - Begin unit JINCLUDE has index 102
-# Defs - End unit JINCLUDE has index 102
-# Defs - Begin unit JCOMAPI has index 107
-# Defs - End unit JCOMAPI has index 107
-# Defs - Begin unit JERROR has index 103
-# Defs - End unit JERROR has index 103
-# Defs - Begin unit JUTILS has index 108
-# Defs - End unit JUTILS has index 108
-# Defs - Begin unit JMEMNOBS has index 109
-# Defs - End unit JMEMNOBS has index 109
-# Defs - Begin unit JMEMMGR has index 104
-# Defs - End unit JMEMMGR has index 104
-# Defs - Begin unit JDMARKER has index 105
-# Defs - End unit JDMARKER has index 105
-# Defs - Begin unit JDINPUT has index 106
-# Defs - End unit JDINPUT has index 106
-# Defs - Begin unit JDAPIMIN has index 97
-# Defs - End unit JDAPIMIN has index 97
-# Defs - Begin unit JDATASRC has index 98
-# Defs - End unit JDATASRC has index 98
-# Defs - Begin unit JDCOLOR has index 111
-# Defs - End unit JDCOLOR has index 111
-# Defs - Begin unit JDSAMPLE has index 112
-# Defs - End unit JDSAMPLE has index 112
-# Defs - Begin unit JDPOSTCT has index 113
-# Defs - End unit JDPOSTCT has index 113
-# Defs - Begin unit JDCT has index 122
-# Defs - End unit JDCT has index 122
-# Defs - Begin unit JIDCTFST has index 123
-# Defs - End unit JIDCTFST has index 123
-# Defs - Begin unit JIDCTINT has index 124
-# Defs - End unit JIDCTINT has index 124
-# Defs - Begin unit JIDCTFLT has index 125
-# Defs - End unit JIDCTFLT has index 125
-# Defs - Begin unit JIDCTRED has index 126
-# Defs - End unit JIDCTRED has index 126
-# Defs - Begin unit JDDCTMGR has index 114
-# Defs - End unit JDDCTMGR has index 114
-# Defs - Begin unit JDHUFF has index 116
-# Defs - End unit JDHUFF has index 116
-# Defs - Begin unit JDPHUFF has index 115
-# Defs - End unit JDPHUFF has index 115
-# Defs - Begin unit JDCOEFCT has index 117
-# Defs - End unit JDCOEFCT has index 117
-# Defs - Begin unit JQUANT2 has index 120
-# Defs - End unit JQUANT2 has index 120
-# Defs - Begin unit JDMAINCT has index 118
-# Defs - End unit JDMAINCT has index 118
-# Defs - Begin unit JQUANT1 has index 119
-# Defs - End unit JQUANT1 has index 119
-# Defs - Begin unit JDMERGE has index 121
-# Defs - End unit JDMERGE has index 121
-# Defs - Begin unit JDMASTER has index 110
-# Defs - End unit JDMASTER has index 110
-# Defs - Begin unit JDAPISTD has index 99
-# Defs - End unit JDAPISTD has index 99
-# Defs - Begin unit FPREADJPEG has index 89
-# Defs - End unit FPREADJPEG has index 89
-# Defs - Begin unit JCMARKER has index 132
-# Defs - End unit JCMARKER has index 132
-# Defs - Begin unit JCAPIMIN has index 128
-# Defs - End unit JCAPIMIN has index 128
-# Defs - Begin unit JCHUFF has index 134
-# Defs - End unit JCHUFF has index 134
-# Defs - Begin unit JCPHUFF has index 133
-# Defs - End unit JCPHUFF has index 133
-# Defs - Begin unit JCMASTER has index 135
-# Defs - End unit JCMASTER has index 135
-# Defs - Begin unit JCCOLOR has index 136
-# Defs - End unit JCCOLOR has index 136
-# Defs - Begin unit JCSAMPLE has index 137
-# Defs - End unit JCSAMPLE has index 137
-# Defs - Begin unit JCPREPCT has index 138
-# Defs - End unit JCPREPCT has index 138
-# Defs - Begin unit JFDCTINT has index 142
-# Defs - End unit JFDCTINT has index 142
-# Defs - Begin unit JFDCTFST has index 143
-# Defs - End unit JFDCTFST has index 143
-# Defs - Begin unit JFDCTFLT has index 144
-# Defs - End unit JFDCTFLT has index 144
-# Defs - Begin unit JCDCTMGR has index 139
-# Defs - End unit JCDCTMGR has index 139
-# Defs - Begin unit JCCOEFCT has index 140
-# Defs - End unit JCCOEFCT has index 140
-# Defs - Begin unit JCMAINCT has index 141
-# Defs - End unit JCMAINCT has index 141
-# Defs - Begin unit JCINIT has index 131
-# Defs - End unit JCINIT has index 131
-# Defs - Begin unit JCAPISTD has index 127
-# Defs - End unit JCAPISTD has index 127
-# Defs - Begin unit JDATADST has index 129
-# Defs - End unit JDATADST has index 129
-# Defs - Begin unit JCPARAM has index 130
-# Defs - End unit JCPARAM has index 130
-# Defs - Begin unit FPWRITEJPEG has index 90
-# Defs - End unit FPWRITEJPEG has index 90
-# Defs - Begin unit FPREADGIF has index 91
-# Defs - End unit FPREADGIF has index 91
-# Defs - Begin unit LAZDBGLOG has index 148
-# Defs - End unit LAZDBGLOG has index 148
-# Defs - Begin unit AVGLVLTREE has index 147
-# Defs - End unit AVGLVLTREE has index 147
-# Defs - Begin unit LAZCONFIGSTORAGE has index 145
-# Defs - End unit LAZCONFIGSTORAGE has index 145
-# Defs - Begin unit DYNQUEUE has index 146
-# Defs - End unit DYNQUEUE has index 146
-# Defs - Begin unit LRESOURCES has index 92
-# Defs - End unit LRESOURCES has index 92
-# Defs - Begin unit WSREFERENCES has index 94
-# Defs - End unit WSREFERENCES has index 94
-# Defs - Begin unit SYNCOBJS has index 149
-# Defs - End unit SYNCOBJS has index 149
-# Defs - Begin unit LCLRESCACHE has index 93
-# Defs - End unit LCLRESCACHE has index 93
-# Defs - Begin unit GRAPHICS has index 83
-# Defs - End unit GRAPHICS has index 83
-# Defs - Begin unit INTFGRAPHICS has index 38
-# Defs - End unit INTFGRAPHICS has index 38
-# Defs - Begin unit TMSCHEMA has index 155
-# Defs - End unit TMSCHEMA has index 155
-# Defs - Begin unit THEMES has index 39
-# Defs - End unit THEMES has index 39
-# Defs - Begin unit INTERFACEBASE has index 20
-# Defs - End unit INTERFACEBASE has index 20
-# Defs - Begin unit PIPES has index 159
-# Defs - End unit PIPES has index 159
-# Defs - Begin unit PROCESS has index 158
-# Defs - End unit PROCESS has index 158
-# Defs - Begin unit UTF8PROCESS has index 152
-# Defs - End unit UTF8PROCESS has index 152
-# Defs - Begin unit LAZUTF8SYSUTILS has index 153
-# Defs - End unit LAZUTF8SYSUTILS has index 153
-# Defs - Begin unit MAPS has index 154
-# Defs - End unit MAPS has index 154
-# Defs - Begin unit LCLINTF has index 84
-# Defs - End unit LCLINTF has index 84
-# Defs - Begin unit WSLCLCLASSES has index 178
-# Defs - End unit WSLCLCLASSES has index 178
-# Defs - Begin unit LCLCLASSES has index 177
-# Defs - End unit LCLCLASSES has index 177
-# Defs - Begin unit RTTIUTILS has index 182
-# Defs - End unit RTTIUTILS has index 182
-# Defs - Begin unit PROPERTYSTORAGE has index 175
-# Defs - End unit PROPERTYSTORAGE has index 175
-# Defs - Begin unit WSFACTORY has index 181
-# Defs - End unit WSFACTORY has index 181
-# Defs - Begin unit WSCONTROLS has index 190
-# Defs - End unit WSCONTROLS has index 190
-# Defs - Begin unit CONTROLS has index 163
-# Defs - End unit CONTROLS has index 163
-# Defs - Begin unit WSPROC has index 180
-# Defs - End unit WSPROC has index 180
-# Defs - Begin unit WSIMGLIST has index 179
-# Defs - End unit WSIMGLIST has index 179
-# Defs - Begin unit IMGLIST has index 174
-# Defs - End unit IMGLIST has index 174
-# Defs - Begin unit ACTNLIST has index 176
-# Defs - End unit ACTNLIST has index 176
-# Defs - Begin unit WSMENUS has index 183
-# Defs - End unit WSMENUS has index 183
-# Defs - Begin unit MENUS has index 167
-# Defs - End unit MENUS has index 167
-# Defs - Begin unit CUSTOMTIMER has index 185
-# Defs - End unit CUSTOMTIMER has index 185
-# Defs - Begin unit FASTHTMLPARSER has index 189
-# Defs - End unit FASTHTMLPARSER has index 189
-# Defs - Begin unit CLIPBRD has index 186
-# Defs - End unit CLIPBRD has index 186
-# Defs - Begin unit HELPINTFS has index 187
-# Defs - End unit HELPINTFS has index 187
-# Defs - Begin unit WSFORMS has index 191
-# Defs - End unit WSFORMS has index 191
+# Defs - Begin unit DOS has index 73
+# Defs - End unit DOS has index 73
+# Defs - Begin unit CRC has index 74
+# Defs - End unit CRC has index 74
+# Defs - Begin unit TREES has index 77
+# Defs - End unit TREES has index 77
+# Defs - Begin unit ADLER has index 78
+# Defs - End unit ADLER has index 78
+# Defs - Begin unit ZDEFLATE has index 75
+# Defs - End unit ZDEFLATE has index 75
+# Defs - Begin unit INFUTIL has index 80
+# Defs - End unit INFUTIL has index 80
+# Defs - Begin unit INFFAST has index 83
+# Defs - End unit INFFAST has index 83
+# Defs - Begin unit INFCODES has index 81
+# Defs - End unit INFCODES has index 81
+# Defs - Begin unit INFTREES has index 82
+# Defs - End unit INFTREES has index 82
+# Defs - Begin unit INFBLOCK has index 79
+# Defs - End unit INFBLOCK has index 79
+# Defs - Begin unit ZINFLATE has index 76
+# Defs - End unit ZINFLATE has index 76
+# Defs - Begin unit GZIO has index 72
+# Defs - End unit GZIO has index 72
+# Defs - Begin unit ZSTREAM has index 70
+# Defs - End unit ZSTREAM has index 70
+# Defs - Begin unit FPREADPNG has index 61
+# Defs - End unit FPREADPNG has index 61
+# Defs - Begin unit FPWRITEPNG has index 62
+# Defs - End unit FPWRITEPNG has index 62
+# Defs - Begin unit FPTIFFCMN has index 65
+# Defs - End unit FPTIFFCMN has index 65
+# Defs - Begin unit FPREADTIFF has index 63
+# Defs - End unit FPREADTIFF has index 63
+# Defs - Begin unit FPWRITETIFF has index 64
+# Defs - End unit FPWRITETIFF has index 64
+# Defs - Begin unit LCLVERSION has index 66
+# Defs - End unit LCLVERSION has index 66
+# Defs - Begin unit ICNSTYPES has index 67
+# Defs - End unit ICNSTYPES has index 67
+# Defs - Begin unit CLIPPING has index 96
+# Defs - End unit CLIPPING has index 96
+# Defs - Begin unit FPCANVAS has index 87
+# Defs - End unit FPCANVAS has index 87
+# Defs - Begin unit FPREADPNM has index 88
+# Defs - End unit FPREADPNM has index 88
+# Defs - Begin unit FPWRITEPNM has index 89
+# Defs - End unit FPWRITEPNM has index 89
+# Defs - Begin unit JDEFERR has index 102
+# Defs - End unit JDEFERR has index 102
+# Defs - Begin unit JMORECFG has index 101
+# Defs - End unit JMORECFG has index 101
+# Defs - Begin unit JPEGLIB has index 97
+# Defs - End unit JPEGLIB has index 97
+# Defs - Begin unit JINCLUDE has index 103
+# Defs - End unit JINCLUDE has index 103
+# Defs - Begin unit JCOMAPI has index 108
+# Defs - End unit JCOMAPI has index 108
+# Defs - Begin unit JERROR has index 104
+# Defs - End unit JERROR has index 104
+# Defs - Begin unit JUTILS has index 109
+# Defs - End unit JUTILS has index 109
+# Defs - Begin unit JMEMNOBS has index 110
+# Defs - End unit JMEMNOBS has index 110
+# Defs - Begin unit JMEMMGR has index 105
+# Defs - End unit JMEMMGR has index 105
+# Defs - Begin unit JDMARKER has index 106
+# Defs - End unit JDMARKER has index 106
+# Defs - Begin unit JDINPUT has index 107
+# Defs - End unit JDINPUT has index 107
+# Defs - Begin unit JDAPIMIN has index 98
+# Defs - End unit JDAPIMIN has index 98
+# Defs - Begin unit JDATASRC has index 99
+# Defs - End unit JDATASRC has index 99
+# Defs - Begin unit JDCOLOR has index 112
+# Defs - End unit JDCOLOR has index 112
+# Defs - Begin unit JDSAMPLE has index 113
+# Defs - End unit JDSAMPLE has index 113
+# Defs - Begin unit JDPOSTCT has index 114
+# Defs - End unit JDPOSTCT has index 114
+# Defs - Begin unit JDCT has index 123
+# Defs - End unit JDCT has index 123
+# Defs - Begin unit JIDCTFST has index 124
+# Defs - End unit JIDCTFST has index 124
+# Defs - Begin unit JIDCTINT has index 125
+# Defs - End unit JIDCTINT has index 125
+# Defs - Begin unit JIDCTFLT has index 126
+# Defs - End unit JIDCTFLT has index 126
+# Defs - Begin unit JIDCTRED has index 127
+# Defs - End unit JIDCTRED has index 127
+# Defs - Begin unit JDDCTMGR has index 115
+# Defs - End unit JDDCTMGR has index 115
+# Defs - Begin unit JDHUFF has index 117
+# Defs - End unit JDHUFF has index 117
+# Defs - Begin unit JDPHUFF has index 116
+# Defs - End unit JDPHUFF has index 116
+# Defs - Begin unit JDCOEFCT has index 118
+# Defs - End unit JDCOEFCT has index 118
+# Defs - Begin unit JQUANT2 has index 121
+# Defs - End unit JQUANT2 has index 121
+# Defs - Begin unit JDMAINCT has index 119
+# Defs - End unit JDMAINCT has index 119
+# Defs - Begin unit JQUANT1 has index 120
+# Defs - End unit JQUANT1 has index 120
+# Defs - Begin unit JDMERGE has index 122
+# Defs - End unit JDMERGE has index 122
+# Defs - Begin unit JDMASTER has index 111
+# Defs - End unit JDMASTER has index 111
+# Defs - Begin unit JDAPISTD has index 100
+# Defs - End unit JDAPISTD has index 100
+# Defs - Begin unit FPREADJPEG has index 90
+# Defs - End unit FPREADJPEG has index 90
+# Defs - Begin unit JCMARKER has index 133
+# Defs - End unit JCMARKER has index 133
+# Defs - Begin unit JCAPIMIN has index 129
+# Defs - End unit JCAPIMIN has index 129
+# Defs - Begin unit JCHUFF has index 135
+# Defs - End unit JCHUFF has index 135
+# Defs - Begin unit JCPHUFF has index 134
+# Defs - End unit JCPHUFF has index 134
+# Defs - Begin unit JCMASTER has index 136
+# Defs - End unit JCMASTER has index 136
+# Defs - Begin unit JCCOLOR has index 137
+# Defs - End unit JCCOLOR has index 137
+# Defs - Begin unit JCSAMPLE has index 138
+# Defs - End unit JCSAMPLE has index 138
+# Defs - Begin unit JCPREPCT has index 139
+# Defs - End unit JCPREPCT has index 139
+# Defs - Begin unit JFDCTINT has index 143
+# Defs - End unit JFDCTINT has index 143
+# Defs - Begin unit JFDCTFST has index 144
+# Defs - End unit JFDCTFST has index 144
+# Defs - Begin unit JFDCTFLT has index 145
+# Defs - End unit JFDCTFLT has index 145
+# Defs - Begin unit JCDCTMGR has index 140
+# Defs - End unit JCDCTMGR has index 140
+# Defs - Begin unit JCCOEFCT has index 141
+# Defs - End unit JCCOEFCT has index 141
+# Defs - Begin unit JCMAINCT has index 142
+# Defs - End unit JCMAINCT has index 142
+# Defs - Begin unit JCINIT has index 132
+# Defs - End unit JCINIT has index 132
+# Defs - Begin unit JCAPISTD has index 128
+# Defs - End unit JCAPISTD has index 128
+# Defs - Begin unit JDATADST has index 130
+# Defs - End unit JDATADST has index 130
+# Defs - Begin unit JCPARAM has index 131
+# Defs - End unit JCPARAM has index 131
+# Defs - Begin unit FPWRITEJPEG has index 91
+# Defs - End unit FPWRITEJPEG has index 91
+# Defs - Begin unit FPREADGIF has index 92
+# Defs - End unit FPREADGIF has index 92
+# Defs - Begin unit LAZDBGLOG has index 149
+# Defs - End unit LAZDBGLOG has index 149
+# Defs - Begin unit AVGLVLTREE has index 148
+# Defs - End unit AVGLVLTREE has index 148
+# Defs - Begin unit LAZCONFIGSTORAGE has index 146
+# Defs - End unit LAZCONFIGSTORAGE has index 146
+# Defs - Begin unit DYNQUEUE has index 147
+# Defs - End unit DYNQUEUE has index 147
+# Defs - Begin unit LRESOURCES has index 93
+# Defs - End unit LRESOURCES has index 93
+# Defs - Begin unit WSREFERENCES has index 95
+# Defs - End unit WSREFERENCES has index 95
+# Defs - Begin unit SYNCOBJS has index 150
+# Defs - End unit SYNCOBJS has index 150
+# Defs - Begin unit LCLRESCACHE has index 94
+# Defs - End unit LCLRESCACHE has index 94
+# Defs - Begin unit GRAPHICS has index 84
+# Defs - End unit GRAPHICS has index 84
+# Defs - Begin unit INTFGRAPHICS has index 39
+# Defs - End unit INTFGRAPHICS has index 39
+# Defs - Begin unit TMSCHEMA has index 156
+# Defs - End unit TMSCHEMA has index 156
+# Defs - Begin unit THEMES has index 40
+# Defs - End unit THEMES has index 40
+# Defs - Begin unit INTERFACEBASE has index 21
+# Defs - End unit INTERFACEBASE has index 21
+# Defs - Begin unit PIPES has index 160
+# Defs - End unit PIPES has index 160
+# Defs - Begin unit PROCESS has index 159
+# Defs - End unit PROCESS has index 159
+# Defs - Begin unit UTF8PROCESS has index 153
+# Defs - End unit UTF8PROCESS has index 153
+# Defs - Begin unit LAZUTF8SYSUTILS has index 154
+# Defs - End unit LAZUTF8SYSUTILS has index 154
+# Defs - Begin unit MAPS has index 155
+# Defs - End unit MAPS has index 155
+# Defs - Begin unit LCLINTF has index 85
+# Defs - End unit LCLINTF has index 85
+# Defs - Begin unit WSLCLCLASSES has index 179
+# Defs - End unit WSLCLCLASSES has index 179
+# Defs - Begin unit LCLCLASSES has index 178
+# Defs - End unit LCLCLASSES has index 178
+# Defs - Begin unit RTTIUTILS has index 183
+# Defs - End unit RTTIUTILS has index 183
+# Defs - Begin unit PROPERTYSTORAGE has index 176
+# Defs - End unit PROPERTYSTORAGE has index 176
+# Defs - Begin unit WSFACTORY has index 182
+# Defs - End unit WSFACTORY has index 182
+# Defs - Begin unit WSCONTROLS has index 191
+# Defs - End unit WSCONTROLS has index 191
+# Defs - Begin unit CONTROLS has index 164
+# Defs - End unit CONTROLS has index 164
+# Defs - Begin unit WSPROC has index 181
+# Defs - End unit WSPROC has index 181
+# Defs - Begin unit WSIMGLIST has index 180
+# Defs - End unit WSIMGLIST has index 180
+# Defs - Begin unit IMGLIST has index 175
+# Defs - End unit IMGLIST has index 175
+# Defs - Begin unit ACTNLIST has index 177
+# Defs - End unit ACTNLIST has index 177
+# Defs - Begin unit WSMENUS has index 184
+# Defs - End unit WSMENUS has index 184
+# Defs - Begin unit MENUS has index 168
+# Defs - End unit MENUS has index 168
+# Defs - Begin unit CUSTOMTIMER has index 186
+# Defs - End unit CUSTOMTIMER has index 186
+# Defs - Begin unit FASTHTMLPARSER has index 190
+# Defs - End unit FASTHTMLPARSER has index 190
+# Defs - Begin unit CLIPBRD has index 187
+# Defs - End unit CLIPBRD has index 187
+# Defs - Begin unit HELPINTFS has index 188
+# Defs - End unit HELPINTFS has index 188
+# Defs - Begin unit WSFORMS has index 192
+# Defs - End unit WSFORMS has index 192
 # Defs - Begin unit FORMS has index 9
 # Defs - End unit FORMS has index 9
-# Defs - Begin unit TEXTSTRINGS has index 193
-# Defs - End unit TEXTSTRINGS has index 193
-# Defs - Begin unit EXTENDEDSTRINGS has index 194
-# Defs - End unit EXTENDEDSTRINGS has index 194
-# Defs - Begin unit WSSTDCTRLS has index 195
-# Defs - End unit WSSTDCTRLS has index 195
-# Defs - Begin unit STDCTRLS has index 166
-# Defs - End unit STDCTRLS has index 166
-# Defs - Begin unit IMAGELISTCACHE has index 192
-# Defs - End unit IMAGELISTCACHE has index 192
-# Defs - Begin unit WSBUTTONS has index 196
-# Defs - End unit WSBUTTONS has index 196
-# Defs - Begin unit BUTTONS has index 164
-# Defs - End unit BUTTONS has index 164
-# Defs - Begin unit POPUPNOTIFIER has index 200
-# Defs - End unit POPUPNOTIFIER has index 200
-# Defs - Begin unit FGL has index 201
-# Defs - End unit FGL has index 201
-# Defs - Begin unit WSEXTCTRLS has index 202
-# Defs - End unit WSEXTCTRLS has index 202
-# Defs - Begin unit EXTCTRLS has index 198
-# Defs - End unit EXTCTRLS has index 198
-# Defs - Begin unit BUTTONPANEL has index 197
-# Defs - End unit BUTTONPANEL has index 197
-# Defs - Begin unit LCLTASKDIALOG has index 199
-# Defs - End unit LCLTASKDIALOG has index 199
-# Defs - Begin unit WSDIALOGS has index 203
-# Defs - End unit WSDIALOGS has index 203
-# Defs - Begin unit DIALOGS has index 165
-# Defs - End unit DIALOGS has index 165
+# Defs - Begin unit TEXTSTRINGS has index 194
+# Defs - End unit TEXTSTRINGS has index 194
+# Defs - Begin unit EXTENDEDSTRINGS has index 195
+# Defs - End unit EXTENDEDSTRINGS has index 195
+# Defs - Begin unit WSSTDCTRLS has index 196
+# Defs - End unit WSSTDCTRLS has index 196
+# Defs - Begin unit STDCTRLS has index 167
+# Defs - End unit STDCTRLS has index 167
+# Defs - Begin unit IMAGELISTCACHE has index 193
+# Defs - End unit IMAGELISTCACHE has index 193
+# Defs - Begin unit WSBUTTONS has index 197
+# Defs - End unit WSBUTTONS has index 197
+# Defs - Begin unit BUTTONS has index 165
+# Defs - End unit BUTTONS has index 165
+# Defs - Begin unit POPUPNOTIFIER has index 201
+# Defs - End unit POPUPNOTIFIER has index 201
+# Defs - Begin unit FGL has index 202
+# Defs - End unit FGL has index 202
+# Defs - Begin unit WSEXTCTRLS has index 203
+# Defs - End unit WSEXTCTRLS has index 203
+# Defs - Begin unit EXTCTRLS has index 199
+# Defs - End unit EXTCTRLS has index 199
+# Defs - Begin unit BUTTONPANEL has index 198
+# Defs - End unit BUTTONPANEL has index 198
+# Defs - Begin unit LCLTASKDIALOG has index 200
+# Defs - End unit LCLTASKDIALOG has index 200
+# Defs - Begin unit WSDIALOGS has index 204
+# Defs - End unit WSDIALOGS has index 204
+# Defs - Begin unit DIALOGS has index 166
+# Defs - End unit DIALOGS has index 166
 # Defs - Begin unit UMAIN has index 11
 # Definition Array[0..599] Of Int64
 .La16:
@@ -4957,6 +4958,8 @@ RTTI_$UMAIN_$$_DEF85:
 	.uleb128	9
 	.long	.La16-.Ldebug_info0
 # Defs - End unit UMAIN has index 11
+# Defs - Begin unit FMSYNTH has index 18
+# Defs - End unit FMSYNTH has index 18
 # Defs - Begin unit RETRO has index 12
 # Definition TRetro
 .La9:
@@ -9219,23 +9222,9 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	5
 	.uleb128	8
 	.byte	13
-# [52:1]
-	.byte	2
-	.uleb128	.Ll18-.Ll17
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	-18
-	.byte	1
-# [70:28]
-	.byte	2
-	.uleb128	.Ll19-.Ll18
-	.byte	5
-	.uleb128	28
-	.byte	30
 # [68:3]
 	.byte	2
-	.uleb128	.Ll20-.Ll19
+	.uleb128	.Ll18-.Ll17
 	.byte	5
 	.uleb128	3
 	.byte	3
@@ -9243,7 +9232,7 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	1
 # [67:1]
 	.byte	2
-	.uleb128	.Ll21-.Ll20
+	.uleb128	.Ll19-.Ll18
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -9251,49 +9240,35 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	1
 # [73:1]
 	.byte	2
-	.uleb128	.Ll22-.Ll21
+	.uleb128	.Ll20-.Ll19
 	.byte	18
 # [74:3]
 	.byte	2
-	.uleb128	.Ll23-.Ll22
+	.uleb128	.Ll21-.Ll20
 	.byte	5
 	.uleb128	3
 	.byte	13
 # [75:9]
 	.byte	2
-	.uleb128	.Ll24-.Ll23
+	.uleb128	.Ll22-.Ll21
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [76:10]
 	.byte	2
-	.uleb128	.Ll25-.Ll24
+	.uleb128	.Ll23-.Ll22
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [77:8]
 	.byte	2
-	.uleb128	.Ll26-.Ll25
+	.uleb128	.Ll24-.Ll23
 	.byte	5
 	.uleb128	8
 	.byte	13
-# [52:1]
-	.byte	2
-	.uleb128	.Ll27-.Ll26
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	-25
-	.byte	1
-# [77:28]
-	.byte	2
-	.uleb128	.Ll28-.Ll27
-	.byte	5
-	.uleb128	28
-	.byte	37
 # [74:3]
 	.byte	2
-	.uleb128	.Ll29-.Ll28
+	.uleb128	.Ll25-.Ll24
 	.byte	5
 	.uleb128	3
 	.byte	3
@@ -9301,7 +9276,7 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	1
 # [73:1]
 	.byte	2
-	.uleb128	.Ll30-.Ll29
+	.uleb128	.Ll26-.Ll25
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -9309,49 +9284,35 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	1
 # [80:1]
 	.byte	2
-	.uleb128	.Ll31-.Ll30
+	.uleb128	.Ll27-.Ll26
 	.byte	19
 # [81:3]
 	.byte	2
-	.uleb128	.Ll32-.Ll31
+	.uleb128	.Ll28-.Ll27
 	.byte	5
 	.uleb128	3
 	.byte	13
 # [82:9]
 	.byte	2
-	.uleb128	.Ll33-.Ll32
+	.uleb128	.Ll29-.Ll28
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [83:10]
 	.byte	2
-	.uleb128	.Ll34-.Ll33
+	.uleb128	.Ll30-.Ll29
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [84:8]
 	.byte	2
-	.uleb128	.Ll35-.Ll34
+	.uleb128	.Ll31-.Ll30
 	.byte	5
 	.uleb128	8
 	.byte	13
-# [52:1]
-	.byte	2
-	.uleb128	.Ll36-.Ll35
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	-32
-	.byte	1
-# [84:28]
-	.byte	2
-	.uleb128	.Ll37-.Ll36
-	.byte	5
-	.uleb128	28
-	.byte	44
 # [81:3]
 	.byte	2
-	.uleb128	.Ll38-.Ll37
+	.uleb128	.Ll32-.Ll31
 	.byte	5
 	.uleb128	3
 	.byte	3
@@ -9359,7 +9320,7 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	1
 # [80:1]
 	.byte	2
-	.uleb128	.Ll39-.Ll38
+	.uleb128	.Ll33-.Ll32
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -9367,123 +9328,123 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	1
 # [91:1]
 	.byte	2
-	.uleb128	.Ll40-.Ll39
+	.uleb128	.Ll34-.Ll33
 	.byte	23
 # [92:1]
 	.byte	2
-	.uleb128	.Ll41-.Ll40
+	.uleb128	.Ll35-.Ll34
 	.byte	13
 # [93:6]
 	.byte	2
-	.uleb128	.Ll42-.Ll41
+	.uleb128	.Ll36-.Ll35
 	.byte	5
 	.uleb128	6
 	.byte	13
 # [94:1]
 	.byte	2
-	.uleb128	.Ll43-.Ll42
+	.uleb128	.Ll37-.Ll36
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [95:1]
 	.byte	2
-	.uleb128	.Ll44-.Ll43
+	.uleb128	.Ll38-.Ll37
 	.byte	13
 # [96:1]
 	.byte	2
-	.uleb128	.Ll45-.Ll44
+	.uleb128	.Ll39-.Ll38
 	.byte	13
 # [97:1]
 	.byte	2
-	.uleb128	.Ll46-.Ll45
+	.uleb128	.Ll40-.Ll39
 	.byte	13
 # [98:9]
 	.byte	2
-	.uleb128	.Ll47-.Ll46
+	.uleb128	.Ll41-.Ll40
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [99:6]
 	.byte	2
-	.uleb128	.Ll48-.Ll47
+	.uleb128	.Ll42-.Ll41
 	.byte	5
 	.uleb128	6
 	.byte	13
 # [100:1]
 	.byte	2
-	.uleb128	.Ll49-.Ll48
+	.uleb128	.Ll43-.Ll42
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [101:1]
 	.byte	2
-	.uleb128	.Ll50-.Ll49
+	.uleb128	.Ll44-.Ll43
 	.byte	13
 # [102:1]
 	.byte	2
-	.uleb128	.Ll51-.Ll50
+	.uleb128	.Ll45-.Ll44
 	.byte	13
 # [103:1]
 	.byte	2
-	.uleb128	.Ll52-.Ll51
+	.uleb128	.Ll46-.Ll45
 	.byte	13
 # [104:1]
 	.byte	2
-	.uleb128	.Ll53-.Ll52
+	.uleb128	.Ll47-.Ll46
 	.byte	13
 # [105:1]
 	.byte	2
-	.uleb128	.Ll54-.Ll53
+	.uleb128	.Ll48-.Ll47
 	.byte	13
 # [106:1]
 	.byte	2
-	.uleb128	.Ll55-.Ll54
+	.uleb128	.Ll49-.Ll48
 	.byte	13
 # [107:1]
 	.byte	2
-	.uleb128	.Ll56-.Ll55
+	.uleb128	.Ll50-.Ll49
 	.byte	13
 # [108:1]
 	.byte	2
-	.uleb128	.Ll57-.Ll56
+	.uleb128	.Ll51-.Ll50
 	.byte	13
 # [109:1]
 	.byte	2
-	.uleb128	.Ll58-.Ll57
+	.uleb128	.Ll52-.Ll51
 	.byte	13
 # [110:1]
 	.byte	2
-	.uleb128	.Ll59-.Ll58
+	.uleb128	.Ll53-.Ll52
 	.byte	13
 # [111:1]
 	.byte	2
-	.uleb128	.Ll60-.Ll59
+	.uleb128	.Ll54-.Ll53
 	.byte	13
 # [113:1]
 	.byte	2
-	.uleb128	.Ll61-.Ll60
+	.uleb128	.Ll55-.Ll54
 	.byte	14
 # [114:4]
 	.byte	2
-	.uleb128	.Ll62-.Ll61
+	.uleb128	.Ll56-.Ll55
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [115:1]
 	.byte	2
-	.uleb128	.Ll63-.Ll62
+	.uleb128	.Ll57-.Ll56
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [116:3]
 	.byte	2
-	.uleb128	.Ll64-.Ll63
+	.uleb128	.Ll58-.Ll57
 	.byte	5
 	.uleb128	3
 	.byte	13
 # [115:1]
 	.byte	2
-	.uleb128	.Ll65-.Ll64
+	.uleb128	.Ll59-.Ll58
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -9491,142 +9452,142 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	1
 # [117:4]
 	.byte	2
-	.uleb128	.Ll66-.Ll65
+	.uleb128	.Ll60-.Ll59
 	.byte	5
 	.uleb128	4
 	.byte	14
 # [118:1]
 	.byte	2
-	.uleb128	.Ll67-.Ll66
+	.uleb128	.Ll61-.Ll60
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [119:1]
 	.byte	2
-	.uleb128	.Ll68-.Ll67
+	.uleb128	.Ll62-.Ll61
 	.byte	13
 # [120:1]
 	.byte	2
-	.uleb128	.Ll69-.Ll68
+	.uleb128	.Ll63-.Ll62
 	.byte	13
 # [121:1]
 	.byte	2
-	.uleb128	.Ll70-.Ll69
+	.uleb128	.Ll64-.Ll63
 	.byte	13
 # [123:1]
 	.byte	2
-	.uleb128	.Ll71-.Ll70
+	.uleb128	.Ll65-.Ll64
 	.byte	14
 # [124:1]
 	.byte	2
-	.uleb128	.Ll72-.Ll71
+	.uleb128	.Ll66-.Ll65
 	.byte	13
 # [125:1]
 	.byte	2
-	.uleb128	.Ll73-.Ll72
+	.uleb128	.Ll67-.Ll66
 	.byte	13
 # [126:1]
 	.byte	2
-	.uleb128	.Ll74-.Ll73
+	.uleb128	.Ll68-.Ll67
 	.byte	13
 # [127:1]
 	.byte	2
-	.uleb128	.Ll75-.Ll74
+	.uleb128	.Ll69-.Ll68
 	.byte	13
 # [128:1]
 	.byte	2
-	.uleb128	.Ll76-.Ll75
+	.uleb128	.Ll70-.Ll69
 	.byte	13
 # [129:1]
 	.byte	2
-	.uleb128	.Ll77-.Ll76
+	.uleb128	.Ll71-.Ll70
 	.byte	13
 # [130:1]
 	.byte	2
-	.uleb128	.Ll78-.Ll77
+	.uleb128	.Ll72-.Ll71
 	.byte	13
 # [131:1]
 	.byte	2
-	.uleb128	.Ll79-.Ll78
+	.uleb128	.Ll73-.Ll72
 	.byte	13
 # [133:1]
 	.byte	2
-	.uleb128	.Ll80-.Ll79
+	.uleb128	.Ll74-.Ll73
 	.byte	14
 # [134:1]
 	.byte	2
-	.uleb128	.Ll81-.Ll80
+	.uleb128	.Ll75-.Ll74
 	.byte	13
 # [135:1]
 	.byte	2
-	.uleb128	.Ll82-.Ll81
+	.uleb128	.Ll76-.Ll75
 	.byte	13
 # [136:1]
 	.byte	2
-	.uleb128	.Ll83-.Ll82
+	.uleb128	.Ll77-.Ll76
 	.byte	13
 # [137:1]
 	.byte	2
-	.uleb128	.Ll84-.Ll83
+	.uleb128	.Ll78-.Ll77
 	.byte	13
 # [138:1]
 	.byte	2
-	.uleb128	.Ll85-.Ll84
+	.uleb128	.Ll79-.Ll78
 	.byte	13
 # [139:1]
 	.byte	2
-	.uleb128	.Ll86-.Ll85
+	.uleb128	.Ll80-.Ll79
 	.byte	13
 # [140:1]
 	.byte	2
-	.uleb128	.Ll87-.Ll86
+	.uleb128	.Ll81-.Ll80
 	.byte	13
 # [141:1]
 	.byte	2
-	.uleb128	.Ll88-.Ll87
+	.uleb128	.Ll82-.Ll81
 	.byte	13
 # [152:1]
 	.byte	2
-	.uleb128	.Ll89-.Ll88
+	.uleb128	.Ll83-.Ll82
 	.byte	23
 # [153:1]
 	.byte	2
-	.uleb128	.Ll90-.Ll89
+	.uleb128	.Ll84-.Ll83
 	.byte	13
 # [154:1]
 	.byte	2
-	.uleb128	.Ll91-.Ll90
+	.uleb128	.Ll85-.Ll84
 	.byte	13
 # [155:1]
 	.byte	2
-	.uleb128	.Ll92-.Ll91
+	.uleb128	.Ll86-.Ll85
 	.byte	13
 # [156:1]
 	.byte	2
-	.uleb128	.Ll93-.Ll92
+	.uleb128	.Ll87-.Ll86
 	.byte	13
 # [157:1]
 	.byte	2
-	.uleb128	.Ll94-.Ll93
+	.uleb128	.Ll88-.Ll87
 	.byte	13
 # [158:1]
 	.byte	2
-	.uleb128	.Ll95-.Ll94
+	.uleb128	.Ll89-.Ll88
 	.byte	13
 # [52:1]
 	.byte	2
-	.uleb128	.Ll96-.Ll95
+	.uleb128	.Ll90-.Ll89
 	.byte	3
 	.sleb128	-106
 	.byte	1
 # [160:1]
 	.byte	2
-	.uleb128	.Ll97-.Ll96
+	.uleb128	.Ll91-.Ll90
 	.byte	120
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll98
+	.quad	.Ll92
 	.byte	0
 	.byte	1
 	.byte	1
@@ -9636,18 +9597,18 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll99
+	.quad	.Ll93
 	.byte	5
 	.uleb128	1
 	.byte	186
 # [175:1]
 	.byte	2
-	.uleb128	.Ll100-.Ll99
+	.uleb128	.Ll94-.Ll93
 	.byte	1
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll101
+	.quad	.Ll95
 	.byte	0
 	.byte	1
 	.byte	1
@@ -9657,248 +9618,248 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll102
+	.quad	.Ll96
 	.byte	5
 	.uleb128	1
 	.byte	186
 # [175:1]
 	.byte	2
-	.uleb128	.Ll103-.Ll102
+	.uleb128	.Ll97-.Ll96
 	.byte	1
 # [178:9]
 	.byte	2
-	.uleb128	.Ll104-.Ll103
+	.uleb128	.Ll98-.Ll97
 	.byte	5
 	.uleb128	9
 	.byte	15
 # [180:12]
 	.byte	2
-	.uleb128	.Ll105-.Ll104
+	.uleb128	.Ll99-.Ll98
 	.byte	5
 	.uleb128	12
 	.byte	14
 # [185:5]
 	.byte	2
-	.uleb128	.Ll106-.Ll105
+	.uleb128	.Ll100-.Ll99
 	.byte	5
 	.uleb128	5
 	.byte	17
 # [186:12]
 	.byte	2
-	.uleb128	.Ll107-.Ll106
+	.uleb128	.Ll101-.Ll100
 	.byte	5
 	.uleb128	12
 	.byte	13
 # [187:5]
 	.byte	2
-	.uleb128	.Ll108-.Ll107
+	.uleb128	.Ll102-.Ll101
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [188:5]
 	.byte	2
-	.uleb128	.Ll109-.Ll108
+	.uleb128	.Ll103-.Ll102
 	.byte	13
 # [189:5]
 	.byte	2
-	.uleb128	.Ll110-.Ll109
+	.uleb128	.Ll104-.Ll103
 	.byte	13
 # [190:6]
 	.byte	2
-	.uleb128	.Ll111-.Ll110
+	.uleb128	.Ll105-.Ll104
 	.byte	5
 	.uleb128	6
 	.byte	13
 # [191:6]
 	.byte	2
-	.uleb128	.Ll112-.Ll111
+	.uleb128	.Ll106-.Ll105
 	.byte	13
 # [192:6]
 	.byte	2
-	.uleb128	.Ll113-.Ll112
+	.uleb128	.Ll107-.Ll106
 	.byte	13
 # [193:19]
 	.byte	2
-	.uleb128	.Ll114-.Ll113
+	.uleb128	.Ll108-.Ll107
 	.byte	5
 	.uleb128	19
 	.byte	13
 # [196:1]
 	.byte	2
-	.uleb128	.Ll115-.Ll114
+	.uleb128	.Ll109-.Ll108
 	.byte	5
 	.uleb128	1
 	.byte	15
 # [197:7]
 	.byte	2
-	.uleb128	.Ll116-.Ll115
+	.uleb128	.Ll110-.Ll109
 	.byte	5
 	.uleb128	7
 	.byte	13
 # [198:10]
 	.byte	2
-	.uleb128	.Ll117-.Ll116
+	.uleb128	.Ll111-.Ll110
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [199:1]
 	.byte	2
-	.uleb128	.Ll118-.Ll117
+	.uleb128	.Ll112-.Ll111
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [200:14]
 	.byte	2
-	.uleb128	.Ll119-.Ll118
+	.uleb128	.Ll113-.Ll112
 	.byte	5
 	.uleb128	14
 	.byte	13
 # [201:13]
 	.byte	2
-	.uleb128	.Ll120-.Ll119
+	.uleb128	.Ll114-.Ll113
 	.byte	5
 	.uleb128	13
 	.byte	13
 # [202:13]
 	.byte	2
-	.uleb128	.Ll121-.Ll120
+	.uleb128	.Ll115-.Ll114
 	.byte	13
 # [203:13]
 	.byte	2
-	.uleb128	.Ll122-.Ll121
+	.uleb128	.Ll116-.Ll115
 	.byte	13
 # [204:15]
 	.byte	2
-	.uleb128	.Ll123-.Ll122
+	.uleb128	.Ll117-.Ll116
 	.byte	5
 	.uleb128	15
 	.byte	13
 # [205:1]
 	.byte	2
-	.uleb128	.Ll124-.Ll123
+	.uleb128	.Ll118-.Ll117
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [206:70]
 	.byte	2
-	.uleb128	.Ll125-.Ll124
+	.uleb128	.Ll119-.Ll118
 	.byte	5
 	.uleb128	70
 	.byte	13
 # [207:71]
 	.byte	2
-	.uleb128	.Ll126-.Ll125
+	.uleb128	.Ll120-.Ll119
 	.byte	5
 	.uleb128	71
 	.byte	13
 # [208:58]
 	.byte	2
-	.uleb128	.Ll127-.Ll126
+	.uleb128	.Ll121-.Ll120
 	.byte	5
 	.uleb128	58
 	.byte	13
 # [213:1]
 	.byte	2
-	.uleb128	.Ll128-.Ll127
+	.uleb128	.Ll122-.Ll121
 	.byte	5
 	.uleb128	1
 	.byte	17
 # [214:1]
 	.byte	2
-	.uleb128	.Ll129-.Ll128
+	.uleb128	.Ll123-.Ll122
 	.byte	13
 # [215:1]
 	.byte	2
-	.uleb128	.Ll130-.Ll129
+	.uleb128	.Ll124-.Ll123
 	.byte	13
 # [216:1]
 	.byte	2
-	.uleb128	.Ll131-.Ll130
+	.uleb128	.Ll125-.Ll124
 	.byte	13
 # [217:1]
 	.byte	2
-	.uleb128	.Ll132-.Ll131
+	.uleb128	.Ll126-.Ll125
 	.byte	13
 # [220:13]
 	.byte	2
-	.uleb128	.Ll133-.Ll132
+	.uleb128	.Ll127-.Ll126
 	.byte	5
 	.uleb128	13
 	.byte	15
 # [221:14]
 	.byte	2
-	.uleb128	.Ll134-.Ll133
+	.uleb128	.Ll128-.Ll127
 	.byte	5
 	.uleb128	14
 	.byte	13
 # [222:16]
 	.byte	2
-	.uleb128	.Ll135-.Ll134
+	.uleb128	.Ll129-.Ll128
 	.byte	5
 	.uleb128	16
 	.byte	13
 # [224:14]
 	.byte	2
-	.uleb128	.Ll136-.Ll135
+	.uleb128	.Ll130-.Ll129
 	.byte	5
 	.uleb128	14
 	.byte	14
 # [225:15]
 	.byte	2
-	.uleb128	.Ll137-.Ll136
+	.uleb128	.Ll131-.Ll130
 	.byte	5
 	.uleb128	15
 	.byte	13
 # [227:16]
 	.byte	2
-	.uleb128	.Ll138-.Ll137
+	.uleb128	.Ll132-.Ll131
 	.byte	5
 	.uleb128	16
 	.byte	14
 # [229:14]
 	.byte	2
-	.uleb128	.Ll139-.Ll138
+	.uleb128	.Ll133-.Ll132
 	.byte	5
 	.uleb128	14
 	.byte	14
 # [230:15]
 	.byte	2
-	.uleb128	.Ll140-.Ll139
+	.uleb128	.Ll134-.Ll133
 	.byte	5
 	.uleb128	15
 	.byte	13
 # [232:16]
 	.byte	2
-	.uleb128	.Ll141-.Ll140
+	.uleb128	.Ll135-.Ll134
 	.byte	5
 	.uleb128	16
 	.byte	14
 # [234:6]
 	.byte	2
-	.uleb128	.Ll142-.Ll141
+	.uleb128	.Ll136-.Ll135
 	.byte	5
 	.uleb128	6
 	.byte	14
 # [236:1]
 	.byte	2
-	.uleb128	.Ll143-.Ll142
+	.uleb128	.Ll137-.Ll136
 	.byte	5
 	.uleb128	1
 	.byte	14
 # [175:1]
 	.byte	2
-	.uleb128	.Ll144-.Ll143
+	.uleb128	.Ll138-.Ll137
 	.byte	3
 	.sleb128	-61
 	.byte	1
 # [238:1]
 	.byte	2
-	.uleb128	.Ll145-.Ll144
+	.uleb128	.Ll139-.Ll138
 	.byte	75
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll146
+	.quad	.Ll140
 	.byte	0
 	.byte	1
 	.byte	1
@@ -9908,7 +9869,7 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll147
+	.quad	.Ll141
 	.byte	0
 	.byte	1
 	.byte	1
@@ -9918,7 +9879,7 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll148
+	.quad	.Ll142
 	.byte	0
 	.byte	1
 	.byte	1

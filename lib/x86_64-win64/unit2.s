@@ -24,20 +24,27 @@ UNIT2$_$TFORM2_$__$$_BUTTON1CLICK$TOBJECT:
 .Ll1:
 # [unit2.pas]
 # [37] begin
-	leaq	-40(%rsp),%rsp
+	pushq	%rbp
+.seh_pushreg %rbp
 .Lc3:
-.seh_stackalloc 40
-# Var Sender located in register rdx
-# Var $self located in register rax
+.Lc4:
+	movq	%rsp,%rbp
+.Lc5:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-	movq	%rcx,%rax
+# Var Sender located at rbp-8, size=OS_64
+# Var $self located at rbp-16, size=OS_64
+	movq	%rcx,-16(%rbp)
+	movq	%rdx,-8(%rbp)
 .Ll2:
 # [38] openmidi;
 	call	MIDI_$$_OPENMIDI
 .Ll3:
 # [39] end;
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
 .Lc2:
@@ -47,29 +54,29 @@ UNIT2$_$TFORM2_$__$$_BUTTON1CLICK$TOBJECT:
 .section .text.n_unit2$_$tform2_$_timer1timer$tobject_$$_fin$4,"x"
 	.balign 16,0x90
 UNIT2$_$TFORM2_$_TIMER1TIMER$TOBJECT_$$_fin$4:
-.Lc4:
+.Lc6:
 .seh_proc UNIT2$_$TFORM2_$_TIMER1TIMER$TOBJECT_$$_fin$4
 .Ll5:
 # [42] begin
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc6:
-.Lc7:
-	movq	%rcx,%rbp
 .Lc8:
+.Lc9:
+	movq	%rcx,%rbp
+.Lc10:
 	leaq	-32(%rsp),%rsp
 .seh_stackalloc 32
 # Var $parentfp located in register rbp
 .seh_endprologue
 .Ll6:
-	leaq	-8(%rbp),%rcx
+	leaq	-24(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 	nop
 	leaq	32(%rsp),%rsp
 	popq	%rbp
 	ret
 .seh_endproc
-.Lc5:
+.Lc7:
 .Lt1:
 .Ll7:
 
@@ -77,24 +84,25 @@ UNIT2$_$TFORM2_$_TIMER1TIMER$TOBJECT_$$_fin$4:
 	.balign 16,0x90
 .globl	UNIT2$_$TFORM2_$__$$_TIMER1TIMER$TOBJECT
 UNIT2$_$TFORM2_$__$$_TIMER1TIMER$TOBJECT:
-.Lc9:
-# Temps allocated between rbp-8 and rbp+0
+.Lc11:
+# Temps allocated between rbp-24 and rbp-16
 .seh_proc UNIT2$_$TFORM2_$__$$_TIMER1TIMER$TOBJECT
 .Ll8:
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc11:
-.Lc12:
-	movq	%rsp,%rbp
 .Lc13:
-	leaq	-48(%rsp),%rsp
-.seh_stackalloc 48
-# Var Sender located in register rdx
-# Var $self located in register rax
+.Lc14:
+	movq	%rsp,%rbp
+.Lc15:
+	leaq	-64(%rsp),%rsp
+.seh_stackalloc 64
 .seh_endprologue
-	movq	%rcx,%rax
+# Var Sender located at rbp-8, size=OS_64
+# Var $self located at rbp-16, size=OS_64
+	movq	%rcx,-16(%rbp)
+	movq	%rdx,-8(%rbp)
 .Ll9:
-	movq	$0,-8(%rbp)
+	movq	$0,-24(%rbp)
 .Lj13:
 	nop
 .Lj9:
@@ -104,10 +112,11 @@ UNIT2$_$TFORM2_$__$$_TIMER1TIMER$TOBJECT:
 	je	.Lj15
 .Ll11:
 # [45] form2.memo1.lines.add(inttostr(mididata));
-	movl	U_$MIDI_$$_MIDIDATA(%rip),%edx
-	leaq	-8(%rbp),%rcx
+	movl	U_$MIDI_$$_MIDIDATA(%rip),%eax
+	movq	%rax,%rdx
+	leaq	-24(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$QWORD$$ANSISTRING
-	movq	-8(%rbp),%rdx
+	movq	-24(%rbp),%rdx
 	movq	U_$UNIT2_$$_FORM2(%rip),%rax
 	movq	1904(%rax),%rax
 	movq	1480(%rax),%rcx
@@ -119,9 +128,9 @@ UNIT2$_$TFORM2_$__$$_TIMER1TIMER$TOBJECT:
 .Ll12:
 # [46] form2.memo1.lines.add(inttostr(callback));
 	movl	U_$MIDI_$$_CALLBACK(%rip),%edx
-	leaq	-8(%rbp),%rcx
+	leaq	-24(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$LONGINT$$ANSISTRING
-	movq	-8(%rbp),%rdx
+	movq	-24(%rbp),%rdx
 	movq	U_$UNIT2_$$_FORM2(%rip),%rax
 	movq	1904(%rax),%rax
 	movq	1480(%rax),%rcx
@@ -159,7 +168,7 @@ UNIT2$_$TFORM2_$__$$_TIMER1TIMER$TOBJECT:
 
 .section .text.n_unit2$_$tform2_$__$$_timer1timer$tobject,"x"
 .seh_endproc
-.Lc10:
+.Lc12:
 .Lt3:
 .Ll17:
 # End asmlist al_procedures
@@ -191,7 +200,7 @@ VMT_$UNIT2_$$_TFORM2:
 	.quad	CONTROLS$_$TWINCONTROL_$__$$_DEFAULTHANDLER$formal
 	.quad	FORMS$_$TCUSTOMFORM_$__$$_AFTERCONSTRUCTION
 	.quad	FORMS$_$TCUSTOMFORM_$__$$_BEFOREDESTRUCTION
-	.quad	FPC_EMPTYMETHOD
+	.quad	SYSTEM$_$TOBJECT_$__$$_DEFAULTHANDLERSTR$formal
 	.quad	SYSTEM$_$TOBJECT_$__$$_DISPATCH$formal
 	.quad	SYSTEM$_$TOBJECT_$__$$_DISPATCHSTR$formal
 	.quad	SYSTEM$_$TOBJECT_$__$$_EQUALS$TOBJECT$$BOOLEAN
@@ -208,17 +217,17 @@ VMT_$UNIT2_$$_TFORM2:
 	.quad	FORMS$_$TFORM_$__$$_LOADED
 	.quad	CLASSES$_$TCOMPONENT_$__$$_LOADING
 	.quad	FORMS$_$TCUSTOMFORM_$__$$_NOTIFICATION$TCOMPONENT$TOPERATION
-	.quad	FPC_EMPTYMETHOD
+	.quad	CLASSES$_$TCOMPONENT_$__$$_PALETTECREATED
 	.quad	CONTROLS$_$TCONTROL_$__$$_READSTATE$TREADER
 	.quad	CONTROLS$_$TCONTROL_$__$$_SETNAME$ANSISTRING
-	.quad	FPC_EMPTYMETHOD
+	.quad	CLASSES$_$TCOMPONENT_$__$$_SETCHILDORDER$TCOMPONENT$LONGINT
 	.quad	CONTROLS$_$TCONTROL_$__$$_SETPARENTCOMPONENT$TCOMPONENT
 	.quad	CLASSES$_$TCOMPONENT_$__$$_UPDATING
 	.quad	CLASSES$_$TCOMPONENT_$__$$_UPDATED
-	.quad	FPC_EMPTYMETHOD
+	.quad	CLASSES$_$TCOMPONENT_$__$$_UPDATEREGISTRY$BOOLEAN$ANSISTRING$ANSISTRING
 	.quad	CLASSES$_$TCOMPONENT_$__$$_VALIDATERENAME$TCOMPONENT$ANSISTRING$ANSISTRING
 	.quad	CLASSES$_$TCOMPONENT_$__$$_VALIDATECONTAINER$TCOMPONENT
-	.quad	FPC_EMPTYMETHOD
+	.quad	CLASSES$_$TCOMPONENT_$__$$_VALIDATEINSERT$TCOMPONENT
 	.quad	CLASSES$_$TCOMPONENT_$__$$_QUERYINTERFACE$TGUID$formal$$HRESULT
 	.quad	CLASSES$_$TCOMPONENT_$__$$_WRITESTATE$TWRITER
 	.quad	FORMS$_$TFORM_$__$$_CREATE$TCOMPONENT$$TFORM
@@ -357,7 +366,7 @@ VMT_$UNIT2_$$_TFORM2:
 	.quad	FORMS$_$TCUSTOMDESIGNCONTROL_$__$$_AUTOADJUSTLAYOUT$crc5F4A49A3
 	.quad	CONTROLS$_$TCONTROL_$__$$_SHOULDAUTOADJUST$BOOLEAN$BOOLEAN
 	.quad	CONTROLS$_$TCONTROL_$__$$_FIXDESIGNFONTSPPI$LONGINT
-	.quad	CONTROLS$_$TCONTROL_$__$$_SCALEFONTSPPI$LONGINT$DOUBLE
+	.quad	CONTROLS$_$TCONTROL_$__$$_SCALEFONTSPPI$DOUBLE
 	.quad	CONTROLS$_$TCONTROL_$__$$_EDITINGDONE
 	.quad	CONTROLS$_$TCONTROL_$__$$_EXECUTEDEFAULTACTION
 	.quad	CONTROLS$_$TCONTROL_$__$$_EXECUTECANCELACTION
@@ -555,9 +564,9 @@ RTTI_$UNIT2_$$_TFORM2:
 # Begin asmlist al_dwarf_frame
 
 .section .debug_frame
-.Lc14:
-	.long	.Lc16-.Lc15
-.Lc15:
+.Lc16:
+	.long	.Lc18-.Lc17
+.Lc17:
 	.long	-1
 	.byte	1
 	.byte	0
@@ -571,58 +580,67 @@ RTTI_$UNIT2_$$_TFORM2:
 	.uleb128	16
 	.uleb128	2
 	.balign 4,0
-.Lc16:
-	.long	.Lc18-.Lc17
-.Lc17:
-	.secrel32	.Lc14
+.Lc18:
+	.long	.Lc20-.Lc19
+.Lc19:
+	.secrel32	.Lc16
 	.quad	.Lc1
 	.quad	.Lc2-.Lc1
 	.byte	4
 	.long	.Lc3-.Lc1
 	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc18:
-	.long	.Lc20-.Lc19
-.Lc19:
-	.secrel32	.Lc14
-	.quad	.Lc4
-	.quad	.Lc5-.Lc4
-	.byte	4
-	.long	.Lc6-.Lc4
-	.byte	14
 	.uleb128	16
 	.byte	4
-	.long	.Lc7-.Lc6
+	.long	.Lc4-.Lc3
 	.byte	5
 	.uleb128	6
 	.uleb128	4
 	.byte	4
-	.long	.Lc8-.Lc7
+	.long	.Lc5-.Lc4
 	.byte	13
 	.uleb128	6
 	.balign 4,0
 .Lc20:
 	.long	.Lc22-.Lc21
 .Lc21:
-	.secrel32	.Lc14
-	.quad	.Lc9
-	.quad	.Lc10-.Lc9
+	.secrel32	.Lc16
+	.quad	.Lc6
+	.quad	.Lc7-.Lc6
 	.byte	4
-	.long	.Lc11-.Lc9
+	.long	.Lc8-.Lc6
 	.byte	14
 	.uleb128	16
 	.byte	4
-	.long	.Lc12-.Lc11
+	.long	.Lc9-.Lc8
 	.byte	5
 	.uleb128	6
 	.uleb128	4
 	.byte	4
-	.long	.Lc13-.Lc12
+	.long	.Lc10-.Lc9
 	.byte	13
 	.uleb128	6
 	.balign 4,0
 .Lc22:
+	.long	.Lc24-.Lc23
+.Lc23:
+	.secrel32	.Lc16
+	.quad	.Lc11
+	.quad	.Lc12-.Lc11
+	.byte	4
+	.long	.Lc13-.Lc11
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc14-.Lc13
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc15-.Lc14
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc24:
 # End asmlist al_dwarf_frame
 # Begin asmlist al_dwarf_info
 
@@ -636,8 +654,8 @@ RTTI_$UNIT2_$$_TFORM2:
 	.uleb128	1
 # [36] procedure TForm2.Button1Click(Sender: TObject);
 	.ascii	"unit2.pas\000"
-	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
-	.ascii	"D:/programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
+	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -699,380 +717,380 @@ RTTI_$UNIT2_$$_TFORM2:
 # Defs - End unit SYSTEM has index 1
 # Defs - Begin unit OBJPAS has index 6
 # Defs - End unit OBJPAS has index 6
-# Defs - Begin unit RTLCONSTS has index 24
-# Defs - End unit RTLCONSTS has index 24
+# Defs - Begin unit RTLCONSTS has index 25
+# Defs - End unit RTLCONSTS has index 25
 # Defs - Begin unit WINDOWS has index 5
 # Defs - End unit WINDOWS has index 5
-# Defs - Begin unit SYSCONST has index 27
-# Defs - End unit SYSCONST has index 27
-# Defs - Begin unit WINDIRS has index 28
-# Defs - End unit WINDIRS has index 28
-# Defs - Begin unit SYSUTILS has index 23
-# Defs - End unit SYSUTILS has index 23
-# Defs - Begin unit MATH has index 29
-# Defs - End unit MATH has index 29
-# Defs - Begin unit TYPES has index 25
-# Defs - End unit TYPES has index 25
-# Defs - Begin unit TYPINFO has index 26
-# Defs - End unit TYPINFO has index 26
-# Defs - Begin unit CLASSES has index 22
-# Defs - End unit CLASSES has index 22
-# Defs - Begin unit CONTNRS has index 85
-# Defs - End unit CONTNRS has index 85
-# Defs - Begin unit LAZUTILSSTRCONSTS has index 46
-# Defs - End unit LAZUTILSSTRCONSTS has index 46
-# Defs - Begin unit FPCADDS has index 21
-# Defs - End unit FPCADDS has index 21
-# Defs - Begin unit GETTEXT has index 30
-# Defs - End unit GETTEXT has index 30
-# Defs - Begin unit LAZUTF8 has index 19
-# Defs - End unit LAZUTF8 has index 19
-# Defs - Begin unit MASKS has index 156
-# Defs - End unit MASKS has index 156
-# Defs - Begin unit VARUTILS has index 53
-# Defs - End unit VARUTILS has index 53
-# Defs - Begin unit VARIANTS has index 51
-# Defs - End unit VARIANTS has index 51
-# Defs - Begin unit CTYPES has index 52
-# Defs - End unit CTYPES has index 52
-# Defs - Begin unit ACTIVEX has index 48
-# Defs - End unit ACTIVEX has index 48
-# Defs - Begin unit SHELLAPI has index 49
-# Defs - End unit SHELLAPI has index 49
-# Defs - Begin unit COMMCTRL has index 50
-# Defs - End unit COMMCTRL has index 50
-# Defs - Begin unit SHLOBJ has index 47
-# Defs - End unit SHLOBJ has index 47
-# Defs - Begin unit LAZFILEUTILS has index 41
-# Defs - End unit LAZFILEUTILS has index 41
-# Defs - Begin unit STRUTILS has index 157
-# Defs - End unit STRUTILS has index 157
-# Defs - Begin unit FILEUTIL has index 151
-# Defs - End unit FILEUTIL has index 151
-# Defs - Begin unit SINGLEINSTANCE has index 188
-# Defs - End unit SINGLEINSTANCE has index 188
-# Defs - Begin unit CUSTAPP has index 184
-# Defs - End unit CUSTAPP has index 184
-# Defs - Begin unit LCLSTRCONSTS has index 45
-# Defs - End unit LCLSTRCONSTS has index 45
-# Defs - Begin unit LCLTYPE has index 32
-# Defs - End unit LCLTYPE has index 32
-# Defs - Begin unit LAZ_AVL_TREE has index 40
-# Defs - End unit LAZ_AVL_TREE has index 40
-# Defs - Begin unit LAZMETHODLIST has index 42
-# Defs - End unit LAZMETHODLIST has index 42
-# Defs - Begin unit LAZUTF8CLASSES has index 43
-# Defs - End unit LAZUTF8CLASSES has index 43
-# Defs - Begin unit LAZCLASSES has index 55
-# Defs - End unit LAZCLASSES has index 55
-# Defs - Begin unit LAZLOGGERBASE has index 54
-# Defs - End unit LAZLOGGERBASE has index 54
-# Defs - Begin unit LAZLOGGER has index 44
-# Defs - End unit LAZLOGGER has index 44
-# Defs - Begin unit LCLPROC has index 33
-# Defs - End unit LCLPROC has index 33
-# Defs - Begin unit LAZUTF16 has index 150
-# Defs - End unit LAZUTF16 has index 150
-# Defs - Begin unit GRAPHTYPE has index 36
-# Defs - End unit GRAPHTYPE has index 36
-# Defs - Begin unit MESSAGES has index 56
-# Defs - End unit MESSAGES has index 56
-# Defs - Begin unit LMESSAGES has index 34
-# Defs - End unit LMESSAGES has index 34
-# Defs - Begin unit FPIMAGE has index 31
-# Defs - End unit FPIMAGE has index 31
-# Defs - Begin unit LCLPLATFORMDEF has index 35
-# Defs - End unit LCLPLATFORMDEF has index 35
-# Defs - Begin unit GRAPHMATH has index 37
-# Defs - End unit GRAPHMATH has index 37
-# Defs - Begin unit FPIMGCMN has index 67
-# Defs - End unit FPIMGCMN has index 67
-# Defs - Begin unit BMPCOMN has index 59
-# Defs - End unit BMPCOMN has index 59
-# Defs - Begin unit FPREADBMP has index 57
-# Defs - End unit FPREADBMP has index 57
-# Defs - Begin unit FPWRITEBMP has index 58
-# Defs - End unit FPWRITEBMP has index 58
-# Defs - Begin unit PNGCOMN has index 68
-# Defs - End unit PNGCOMN has index 68
-# Defs - Begin unit ZBASE has index 70
-# Defs - End unit ZBASE has index 70
+# Defs - Begin unit SYSCONST has index 28
+# Defs - End unit SYSCONST has index 28
+# Defs - Begin unit WINDIRS has index 29
+# Defs - End unit WINDIRS has index 29
+# Defs - Begin unit SYSUTILS has index 24
+# Defs - End unit SYSUTILS has index 24
+# Defs - Begin unit MATH has index 30
+# Defs - End unit MATH has index 30
+# Defs - Begin unit TYPES has index 26
+# Defs - End unit TYPES has index 26
+# Defs - Begin unit TYPINFO has index 27
+# Defs - End unit TYPINFO has index 27
+# Defs - Begin unit CLASSES has index 23
+# Defs - End unit CLASSES has index 23
+# Defs - Begin unit CONTNRS has index 86
+# Defs - End unit CONTNRS has index 86
+# Defs - Begin unit LAZUTILSSTRCONSTS has index 47
+# Defs - End unit LAZUTILSSTRCONSTS has index 47
+# Defs - Begin unit FPCADDS has index 22
+# Defs - End unit FPCADDS has index 22
+# Defs - Begin unit GETTEXT has index 31
+# Defs - End unit GETTEXT has index 31
+# Defs - Begin unit LAZUTF8 has index 20
+# Defs - End unit LAZUTF8 has index 20
+# Defs - Begin unit MASKS has index 157
+# Defs - End unit MASKS has index 157
+# Defs - Begin unit VARUTILS has index 54
+# Defs - End unit VARUTILS has index 54
+# Defs - Begin unit VARIANTS has index 52
+# Defs - End unit VARIANTS has index 52
+# Defs - Begin unit CTYPES has index 53
+# Defs - End unit CTYPES has index 53
+# Defs - Begin unit ACTIVEX has index 49
+# Defs - End unit ACTIVEX has index 49
+# Defs - Begin unit SHELLAPI has index 50
+# Defs - End unit SHELLAPI has index 50
+# Defs - Begin unit COMMCTRL has index 51
+# Defs - End unit COMMCTRL has index 51
+# Defs - Begin unit SHLOBJ has index 48
+# Defs - End unit SHLOBJ has index 48
+# Defs - Begin unit LAZFILEUTILS has index 42
+# Defs - End unit LAZFILEUTILS has index 42
+# Defs - Begin unit STRUTILS has index 158
+# Defs - End unit STRUTILS has index 158
+# Defs - Begin unit FILEUTIL has index 152
+# Defs - End unit FILEUTIL has index 152
+# Defs - Begin unit SINGLEINSTANCE has index 189
+# Defs - End unit SINGLEINSTANCE has index 189
+# Defs - Begin unit CUSTAPP has index 185
+# Defs - End unit CUSTAPP has index 185
+# Defs - Begin unit LCLSTRCONSTS has index 46
+# Defs - End unit LCLSTRCONSTS has index 46
+# Defs - Begin unit LCLTYPE has index 33
+# Defs - End unit LCLTYPE has index 33
+# Defs - Begin unit LAZ_AVL_TREE has index 41
+# Defs - End unit LAZ_AVL_TREE has index 41
+# Defs - Begin unit LAZMETHODLIST has index 43
+# Defs - End unit LAZMETHODLIST has index 43
+# Defs - Begin unit LAZUTF8CLASSES has index 44
+# Defs - End unit LAZUTF8CLASSES has index 44
+# Defs - Begin unit LAZCLASSES has index 56
+# Defs - End unit LAZCLASSES has index 56
+# Defs - Begin unit LAZLOGGERBASE has index 55
+# Defs - End unit LAZLOGGERBASE has index 55
+# Defs - Begin unit LAZLOGGER has index 45
+# Defs - End unit LAZLOGGER has index 45
+# Defs - Begin unit LCLPROC has index 34
+# Defs - End unit LCLPROC has index 34
+# Defs - Begin unit LAZUTF16 has index 151
+# Defs - End unit LAZUTF16 has index 151
+# Defs - Begin unit GRAPHTYPE has index 37
+# Defs - End unit GRAPHTYPE has index 37
+# Defs - Begin unit MESSAGES has index 57
+# Defs - End unit MESSAGES has index 57
+# Defs - Begin unit LMESSAGES has index 35
+# Defs - End unit LMESSAGES has index 35
+# Defs - Begin unit FPIMAGE has index 32
+# Defs - End unit FPIMAGE has index 32
+# Defs - Begin unit LCLPLATFORMDEF has index 36
+# Defs - End unit LCLPLATFORMDEF has index 36
+# Defs - Begin unit GRAPHMATH has index 38
+# Defs - End unit GRAPHMATH has index 38
+# Defs - Begin unit FPIMGCMN has index 68
+# Defs - End unit FPIMGCMN has index 68
+# Defs - Begin unit BMPCOMN has index 60
+# Defs - End unit BMPCOMN has index 60
+# Defs - Begin unit FPREADBMP has index 58
+# Defs - End unit FPREADBMP has index 58
+# Defs - Begin unit FPWRITEBMP has index 59
+# Defs - End unit FPWRITEBMP has index 59
+# Defs - Begin unit PNGCOMN has index 69
+# Defs - End unit PNGCOMN has index 69
+# Defs - Begin unit ZBASE has index 71
+# Defs - End unit ZBASE has index 71
 # Defs - Begin unit STRINGS has index 4
 # Defs - End unit STRINGS has index 4
-# Defs - Begin unit DOS has index 72
-# Defs - End unit DOS has index 72
-# Defs - Begin unit CRC has index 73
-# Defs - End unit CRC has index 73
-# Defs - Begin unit TREES has index 76
-# Defs - End unit TREES has index 76
-# Defs - Begin unit ADLER has index 77
-# Defs - End unit ADLER has index 77
-# Defs - Begin unit ZDEFLATE has index 74
-# Defs - End unit ZDEFLATE has index 74
-# Defs - Begin unit INFUTIL has index 79
-# Defs - End unit INFUTIL has index 79
-# Defs - Begin unit INFFAST has index 82
-# Defs - End unit INFFAST has index 82
-# Defs - Begin unit INFCODES has index 80
-# Defs - End unit INFCODES has index 80
-# Defs - Begin unit INFTREES has index 81
-# Defs - End unit INFTREES has index 81
-# Defs - Begin unit INFBLOCK has index 78
-# Defs - End unit INFBLOCK has index 78
-# Defs - Begin unit ZINFLATE has index 75
-# Defs - End unit ZINFLATE has index 75
-# Defs - Begin unit GZIO has index 71
-# Defs - End unit GZIO has index 71
-# Defs - Begin unit ZSTREAM has index 69
-# Defs - End unit ZSTREAM has index 69
-# Defs - Begin unit FPREADPNG has index 60
-# Defs - End unit FPREADPNG has index 60
-# Defs - Begin unit FPWRITEPNG has index 61
-# Defs - End unit FPWRITEPNG has index 61
-# Defs - Begin unit FPTIFFCMN has index 64
-# Defs - End unit FPTIFFCMN has index 64
-# Defs - Begin unit FPREADTIFF has index 62
-# Defs - End unit FPREADTIFF has index 62
-# Defs - Begin unit FPWRITETIFF has index 63
-# Defs - End unit FPWRITETIFF has index 63
-# Defs - Begin unit LCLVERSION has index 65
-# Defs - End unit LCLVERSION has index 65
-# Defs - Begin unit ICNSTYPES has index 66
-# Defs - End unit ICNSTYPES has index 66
-# Defs - Begin unit CLIPPING has index 95
-# Defs - End unit CLIPPING has index 95
-# Defs - Begin unit FPCANVAS has index 86
-# Defs - End unit FPCANVAS has index 86
-# Defs - Begin unit FPREADPNM has index 87
-# Defs - End unit FPREADPNM has index 87
-# Defs - Begin unit FPWRITEPNM has index 88
-# Defs - End unit FPWRITEPNM has index 88
-# Defs - Begin unit JDEFERR has index 101
-# Defs - End unit JDEFERR has index 101
-# Defs - Begin unit JMORECFG has index 100
-# Defs - End unit JMORECFG has index 100
-# Defs - Begin unit JPEGLIB has index 96
-# Defs - End unit JPEGLIB has index 96
-# Defs - Begin unit JINCLUDE has index 102
-# Defs - End unit JINCLUDE has index 102
-# Defs - Begin unit JCOMAPI has index 107
-# Defs - End unit JCOMAPI has index 107
-# Defs - Begin unit JERROR has index 103
-# Defs - End unit JERROR has index 103
-# Defs - Begin unit JUTILS has index 108
-# Defs - End unit JUTILS has index 108
-# Defs - Begin unit JMEMNOBS has index 109
-# Defs - End unit JMEMNOBS has index 109
-# Defs - Begin unit JMEMMGR has index 104
-# Defs - End unit JMEMMGR has index 104
-# Defs - Begin unit JDMARKER has index 105
-# Defs - End unit JDMARKER has index 105
-# Defs - Begin unit JDINPUT has index 106
-# Defs - End unit JDINPUT has index 106
-# Defs - Begin unit JDAPIMIN has index 97
-# Defs - End unit JDAPIMIN has index 97
-# Defs - Begin unit JDATASRC has index 98
-# Defs - End unit JDATASRC has index 98
-# Defs - Begin unit JDCOLOR has index 111
-# Defs - End unit JDCOLOR has index 111
-# Defs - Begin unit JDSAMPLE has index 112
-# Defs - End unit JDSAMPLE has index 112
-# Defs - Begin unit JDPOSTCT has index 113
-# Defs - End unit JDPOSTCT has index 113
-# Defs - Begin unit JDCT has index 122
-# Defs - End unit JDCT has index 122
-# Defs - Begin unit JIDCTFST has index 123
-# Defs - End unit JIDCTFST has index 123
-# Defs - Begin unit JIDCTINT has index 124
-# Defs - End unit JIDCTINT has index 124
-# Defs - Begin unit JIDCTFLT has index 125
-# Defs - End unit JIDCTFLT has index 125
-# Defs - Begin unit JIDCTRED has index 126
-# Defs - End unit JIDCTRED has index 126
-# Defs - Begin unit JDDCTMGR has index 114
-# Defs - End unit JDDCTMGR has index 114
-# Defs - Begin unit JDHUFF has index 116
-# Defs - End unit JDHUFF has index 116
-# Defs - Begin unit JDPHUFF has index 115
-# Defs - End unit JDPHUFF has index 115
-# Defs - Begin unit JDCOEFCT has index 117
-# Defs - End unit JDCOEFCT has index 117
-# Defs - Begin unit JQUANT2 has index 120
-# Defs - End unit JQUANT2 has index 120
-# Defs - Begin unit JDMAINCT has index 118
-# Defs - End unit JDMAINCT has index 118
-# Defs - Begin unit JQUANT1 has index 119
-# Defs - End unit JQUANT1 has index 119
-# Defs - Begin unit JDMERGE has index 121
-# Defs - End unit JDMERGE has index 121
-# Defs - Begin unit JDMASTER has index 110
-# Defs - End unit JDMASTER has index 110
-# Defs - Begin unit JDAPISTD has index 99
-# Defs - End unit JDAPISTD has index 99
-# Defs - Begin unit FPREADJPEG has index 89
-# Defs - End unit FPREADJPEG has index 89
-# Defs - Begin unit JCMARKER has index 132
-# Defs - End unit JCMARKER has index 132
-# Defs - Begin unit JCAPIMIN has index 128
-# Defs - End unit JCAPIMIN has index 128
-# Defs - Begin unit JCHUFF has index 134
-# Defs - End unit JCHUFF has index 134
-# Defs - Begin unit JCPHUFF has index 133
-# Defs - End unit JCPHUFF has index 133
-# Defs - Begin unit JCMASTER has index 135
-# Defs - End unit JCMASTER has index 135
-# Defs - Begin unit JCCOLOR has index 136
-# Defs - End unit JCCOLOR has index 136
-# Defs - Begin unit JCSAMPLE has index 137
-# Defs - End unit JCSAMPLE has index 137
-# Defs - Begin unit JCPREPCT has index 138
-# Defs - End unit JCPREPCT has index 138
-# Defs - Begin unit JFDCTINT has index 142
-# Defs - End unit JFDCTINT has index 142
-# Defs - Begin unit JFDCTFST has index 143
-# Defs - End unit JFDCTFST has index 143
-# Defs - Begin unit JFDCTFLT has index 144
-# Defs - End unit JFDCTFLT has index 144
-# Defs - Begin unit JCDCTMGR has index 139
-# Defs - End unit JCDCTMGR has index 139
-# Defs - Begin unit JCCOEFCT has index 140
-# Defs - End unit JCCOEFCT has index 140
-# Defs - Begin unit JCMAINCT has index 141
-# Defs - End unit JCMAINCT has index 141
-# Defs - Begin unit JCINIT has index 131
-# Defs - End unit JCINIT has index 131
-# Defs - Begin unit JCAPISTD has index 127
-# Defs - End unit JCAPISTD has index 127
-# Defs - Begin unit JDATADST has index 129
-# Defs - End unit JDATADST has index 129
-# Defs - Begin unit JCPARAM has index 130
-# Defs - End unit JCPARAM has index 130
-# Defs - Begin unit FPWRITEJPEG has index 90
-# Defs - End unit FPWRITEJPEG has index 90
-# Defs - Begin unit FPREADGIF has index 91
-# Defs - End unit FPREADGIF has index 91
-# Defs - Begin unit LAZDBGLOG has index 148
-# Defs - End unit LAZDBGLOG has index 148
-# Defs - Begin unit AVGLVLTREE has index 147
-# Defs - End unit AVGLVLTREE has index 147
-# Defs - Begin unit LAZCONFIGSTORAGE has index 145
-# Defs - End unit LAZCONFIGSTORAGE has index 145
-# Defs - Begin unit DYNQUEUE has index 146
-# Defs - End unit DYNQUEUE has index 146
-# Defs - Begin unit LRESOURCES has index 92
-# Defs - End unit LRESOURCES has index 92
-# Defs - Begin unit WSREFERENCES has index 94
-# Defs - End unit WSREFERENCES has index 94
-# Defs - Begin unit SYNCOBJS has index 149
-# Defs - End unit SYNCOBJS has index 149
-# Defs - Begin unit LCLRESCACHE has index 93
-# Defs - End unit LCLRESCACHE has index 93
-# Defs - Begin unit GRAPHICS has index 83
-# Defs - End unit GRAPHICS has index 83
-# Defs - Begin unit INTFGRAPHICS has index 38
-# Defs - End unit INTFGRAPHICS has index 38
-# Defs - Begin unit TMSCHEMA has index 155
-# Defs - End unit TMSCHEMA has index 155
-# Defs - Begin unit THEMES has index 39
-# Defs - End unit THEMES has index 39
-# Defs - Begin unit INTERFACEBASE has index 20
-# Defs - End unit INTERFACEBASE has index 20
-# Defs - Begin unit PIPES has index 159
-# Defs - End unit PIPES has index 159
-# Defs - Begin unit PROCESS has index 158
-# Defs - End unit PROCESS has index 158
-# Defs - Begin unit UTF8PROCESS has index 152
-# Defs - End unit UTF8PROCESS has index 152
-# Defs - Begin unit LAZUTF8SYSUTILS has index 153
-# Defs - End unit LAZUTF8SYSUTILS has index 153
-# Defs - Begin unit MAPS has index 154
-# Defs - End unit MAPS has index 154
-# Defs - Begin unit LCLINTF has index 84
-# Defs - End unit LCLINTF has index 84
-# Defs - Begin unit WSLCLCLASSES has index 178
-# Defs - End unit WSLCLCLASSES has index 178
-# Defs - Begin unit LCLCLASSES has index 177
-# Defs - End unit LCLCLASSES has index 177
-# Defs - Begin unit RTTIUTILS has index 182
-# Defs - End unit RTTIUTILS has index 182
-# Defs - Begin unit PROPERTYSTORAGE has index 175
-# Defs - End unit PROPERTYSTORAGE has index 175
-# Defs - Begin unit WSFACTORY has index 181
-# Defs - End unit WSFACTORY has index 181
-# Defs - Begin unit WSCONTROLS has index 190
-# Defs - End unit WSCONTROLS has index 190
-# Defs - Begin unit CONTROLS has index 163
-# Defs - End unit CONTROLS has index 163
-# Defs - Begin unit WSPROC has index 180
-# Defs - End unit WSPROC has index 180
-# Defs - Begin unit WSIMGLIST has index 179
-# Defs - End unit WSIMGLIST has index 179
-# Defs - Begin unit IMGLIST has index 174
-# Defs - End unit IMGLIST has index 174
-# Defs - Begin unit ACTNLIST has index 176
-# Defs - End unit ACTNLIST has index 176
-# Defs - Begin unit WSMENUS has index 183
-# Defs - End unit WSMENUS has index 183
-# Defs - Begin unit MENUS has index 167
-# Defs - End unit MENUS has index 167
-# Defs - Begin unit CUSTOMTIMER has index 185
-# Defs - End unit CUSTOMTIMER has index 185
-# Defs - Begin unit FASTHTMLPARSER has index 189
-# Defs - End unit FASTHTMLPARSER has index 189
-# Defs - Begin unit CLIPBRD has index 186
-# Defs - End unit CLIPBRD has index 186
-# Defs - Begin unit HELPINTFS has index 187
-# Defs - End unit HELPINTFS has index 187
-# Defs - Begin unit WSFORMS has index 191
-# Defs - End unit WSFORMS has index 191
+# Defs - Begin unit DOS has index 73
+# Defs - End unit DOS has index 73
+# Defs - Begin unit CRC has index 74
+# Defs - End unit CRC has index 74
+# Defs - Begin unit TREES has index 77
+# Defs - End unit TREES has index 77
+# Defs - Begin unit ADLER has index 78
+# Defs - End unit ADLER has index 78
+# Defs - Begin unit ZDEFLATE has index 75
+# Defs - End unit ZDEFLATE has index 75
+# Defs - Begin unit INFUTIL has index 80
+# Defs - End unit INFUTIL has index 80
+# Defs - Begin unit INFFAST has index 83
+# Defs - End unit INFFAST has index 83
+# Defs - Begin unit INFCODES has index 81
+# Defs - End unit INFCODES has index 81
+# Defs - Begin unit INFTREES has index 82
+# Defs - End unit INFTREES has index 82
+# Defs - Begin unit INFBLOCK has index 79
+# Defs - End unit INFBLOCK has index 79
+# Defs - Begin unit ZINFLATE has index 76
+# Defs - End unit ZINFLATE has index 76
+# Defs - Begin unit GZIO has index 72
+# Defs - End unit GZIO has index 72
+# Defs - Begin unit ZSTREAM has index 70
+# Defs - End unit ZSTREAM has index 70
+# Defs - Begin unit FPREADPNG has index 61
+# Defs - End unit FPREADPNG has index 61
+# Defs - Begin unit FPWRITEPNG has index 62
+# Defs - End unit FPWRITEPNG has index 62
+# Defs - Begin unit FPTIFFCMN has index 65
+# Defs - End unit FPTIFFCMN has index 65
+# Defs - Begin unit FPREADTIFF has index 63
+# Defs - End unit FPREADTIFF has index 63
+# Defs - Begin unit FPWRITETIFF has index 64
+# Defs - End unit FPWRITETIFF has index 64
+# Defs - Begin unit LCLVERSION has index 66
+# Defs - End unit LCLVERSION has index 66
+# Defs - Begin unit ICNSTYPES has index 67
+# Defs - End unit ICNSTYPES has index 67
+# Defs - Begin unit CLIPPING has index 96
+# Defs - End unit CLIPPING has index 96
+# Defs - Begin unit FPCANVAS has index 87
+# Defs - End unit FPCANVAS has index 87
+# Defs - Begin unit FPREADPNM has index 88
+# Defs - End unit FPREADPNM has index 88
+# Defs - Begin unit FPWRITEPNM has index 89
+# Defs - End unit FPWRITEPNM has index 89
+# Defs - Begin unit JDEFERR has index 102
+# Defs - End unit JDEFERR has index 102
+# Defs - Begin unit JMORECFG has index 101
+# Defs - End unit JMORECFG has index 101
+# Defs - Begin unit JPEGLIB has index 97
+# Defs - End unit JPEGLIB has index 97
+# Defs - Begin unit JINCLUDE has index 103
+# Defs - End unit JINCLUDE has index 103
+# Defs - Begin unit JCOMAPI has index 108
+# Defs - End unit JCOMAPI has index 108
+# Defs - Begin unit JERROR has index 104
+# Defs - End unit JERROR has index 104
+# Defs - Begin unit JUTILS has index 109
+# Defs - End unit JUTILS has index 109
+# Defs - Begin unit JMEMNOBS has index 110
+# Defs - End unit JMEMNOBS has index 110
+# Defs - Begin unit JMEMMGR has index 105
+# Defs - End unit JMEMMGR has index 105
+# Defs - Begin unit JDMARKER has index 106
+# Defs - End unit JDMARKER has index 106
+# Defs - Begin unit JDINPUT has index 107
+# Defs - End unit JDINPUT has index 107
+# Defs - Begin unit JDAPIMIN has index 98
+# Defs - End unit JDAPIMIN has index 98
+# Defs - Begin unit JDATASRC has index 99
+# Defs - End unit JDATASRC has index 99
+# Defs - Begin unit JDCOLOR has index 112
+# Defs - End unit JDCOLOR has index 112
+# Defs - Begin unit JDSAMPLE has index 113
+# Defs - End unit JDSAMPLE has index 113
+# Defs - Begin unit JDPOSTCT has index 114
+# Defs - End unit JDPOSTCT has index 114
+# Defs - Begin unit JDCT has index 123
+# Defs - End unit JDCT has index 123
+# Defs - Begin unit JIDCTFST has index 124
+# Defs - End unit JIDCTFST has index 124
+# Defs - Begin unit JIDCTINT has index 125
+# Defs - End unit JIDCTINT has index 125
+# Defs - Begin unit JIDCTFLT has index 126
+# Defs - End unit JIDCTFLT has index 126
+# Defs - Begin unit JIDCTRED has index 127
+# Defs - End unit JIDCTRED has index 127
+# Defs - Begin unit JDDCTMGR has index 115
+# Defs - End unit JDDCTMGR has index 115
+# Defs - Begin unit JDHUFF has index 117
+# Defs - End unit JDHUFF has index 117
+# Defs - Begin unit JDPHUFF has index 116
+# Defs - End unit JDPHUFF has index 116
+# Defs - Begin unit JDCOEFCT has index 118
+# Defs - End unit JDCOEFCT has index 118
+# Defs - Begin unit JQUANT2 has index 121
+# Defs - End unit JQUANT2 has index 121
+# Defs - Begin unit JDMAINCT has index 119
+# Defs - End unit JDMAINCT has index 119
+# Defs - Begin unit JQUANT1 has index 120
+# Defs - End unit JQUANT1 has index 120
+# Defs - Begin unit JDMERGE has index 122
+# Defs - End unit JDMERGE has index 122
+# Defs - Begin unit JDMASTER has index 111
+# Defs - End unit JDMASTER has index 111
+# Defs - Begin unit JDAPISTD has index 100
+# Defs - End unit JDAPISTD has index 100
+# Defs - Begin unit FPREADJPEG has index 90
+# Defs - End unit FPREADJPEG has index 90
+# Defs - Begin unit JCMARKER has index 133
+# Defs - End unit JCMARKER has index 133
+# Defs - Begin unit JCAPIMIN has index 129
+# Defs - End unit JCAPIMIN has index 129
+# Defs - Begin unit JCHUFF has index 135
+# Defs - End unit JCHUFF has index 135
+# Defs - Begin unit JCPHUFF has index 134
+# Defs - End unit JCPHUFF has index 134
+# Defs - Begin unit JCMASTER has index 136
+# Defs - End unit JCMASTER has index 136
+# Defs - Begin unit JCCOLOR has index 137
+# Defs - End unit JCCOLOR has index 137
+# Defs - Begin unit JCSAMPLE has index 138
+# Defs - End unit JCSAMPLE has index 138
+# Defs - Begin unit JCPREPCT has index 139
+# Defs - End unit JCPREPCT has index 139
+# Defs - Begin unit JFDCTINT has index 143
+# Defs - End unit JFDCTINT has index 143
+# Defs - Begin unit JFDCTFST has index 144
+# Defs - End unit JFDCTFST has index 144
+# Defs - Begin unit JFDCTFLT has index 145
+# Defs - End unit JFDCTFLT has index 145
+# Defs - Begin unit JCDCTMGR has index 140
+# Defs - End unit JCDCTMGR has index 140
+# Defs - Begin unit JCCOEFCT has index 141
+# Defs - End unit JCCOEFCT has index 141
+# Defs - Begin unit JCMAINCT has index 142
+# Defs - End unit JCMAINCT has index 142
+# Defs - Begin unit JCINIT has index 132
+# Defs - End unit JCINIT has index 132
+# Defs - Begin unit JCAPISTD has index 128
+# Defs - End unit JCAPISTD has index 128
+# Defs - Begin unit JDATADST has index 130
+# Defs - End unit JDATADST has index 130
+# Defs - Begin unit JCPARAM has index 131
+# Defs - End unit JCPARAM has index 131
+# Defs - Begin unit FPWRITEJPEG has index 91
+# Defs - End unit FPWRITEJPEG has index 91
+# Defs - Begin unit FPREADGIF has index 92
+# Defs - End unit FPREADGIF has index 92
+# Defs - Begin unit LAZDBGLOG has index 149
+# Defs - End unit LAZDBGLOG has index 149
+# Defs - Begin unit AVGLVLTREE has index 148
+# Defs - End unit AVGLVLTREE has index 148
+# Defs - Begin unit LAZCONFIGSTORAGE has index 146
+# Defs - End unit LAZCONFIGSTORAGE has index 146
+# Defs - Begin unit DYNQUEUE has index 147
+# Defs - End unit DYNQUEUE has index 147
+# Defs - Begin unit LRESOURCES has index 93
+# Defs - End unit LRESOURCES has index 93
+# Defs - Begin unit WSREFERENCES has index 95
+# Defs - End unit WSREFERENCES has index 95
+# Defs - Begin unit SYNCOBJS has index 150
+# Defs - End unit SYNCOBJS has index 150
+# Defs - Begin unit LCLRESCACHE has index 94
+# Defs - End unit LCLRESCACHE has index 94
+# Defs - Begin unit GRAPHICS has index 84
+# Defs - End unit GRAPHICS has index 84
+# Defs - Begin unit INTFGRAPHICS has index 39
+# Defs - End unit INTFGRAPHICS has index 39
+# Defs - Begin unit TMSCHEMA has index 156
+# Defs - End unit TMSCHEMA has index 156
+# Defs - Begin unit THEMES has index 40
+# Defs - End unit THEMES has index 40
+# Defs - Begin unit INTERFACEBASE has index 21
+# Defs - End unit INTERFACEBASE has index 21
+# Defs - Begin unit PIPES has index 160
+# Defs - End unit PIPES has index 160
+# Defs - Begin unit PROCESS has index 159
+# Defs - End unit PROCESS has index 159
+# Defs - Begin unit UTF8PROCESS has index 153
+# Defs - End unit UTF8PROCESS has index 153
+# Defs - Begin unit LAZUTF8SYSUTILS has index 154
+# Defs - End unit LAZUTF8SYSUTILS has index 154
+# Defs - Begin unit MAPS has index 155
+# Defs - End unit MAPS has index 155
+# Defs - Begin unit LCLINTF has index 85
+# Defs - End unit LCLINTF has index 85
+# Defs - Begin unit WSLCLCLASSES has index 179
+# Defs - End unit WSLCLCLASSES has index 179
+# Defs - Begin unit LCLCLASSES has index 178
+# Defs - End unit LCLCLASSES has index 178
+# Defs - Begin unit RTTIUTILS has index 183
+# Defs - End unit RTTIUTILS has index 183
+# Defs - Begin unit PROPERTYSTORAGE has index 176
+# Defs - End unit PROPERTYSTORAGE has index 176
+# Defs - Begin unit WSFACTORY has index 182
+# Defs - End unit WSFACTORY has index 182
+# Defs - Begin unit WSCONTROLS has index 191
+# Defs - End unit WSCONTROLS has index 191
+# Defs - Begin unit CONTROLS has index 164
+# Defs - End unit CONTROLS has index 164
+# Defs - Begin unit WSPROC has index 181
+# Defs - End unit WSPROC has index 181
+# Defs - Begin unit WSIMGLIST has index 180
+# Defs - End unit WSIMGLIST has index 180
+# Defs - Begin unit IMGLIST has index 175
+# Defs - End unit IMGLIST has index 175
+# Defs - Begin unit ACTNLIST has index 177
+# Defs - End unit ACTNLIST has index 177
+# Defs - Begin unit WSMENUS has index 184
+# Defs - End unit WSMENUS has index 184
+# Defs - Begin unit MENUS has index 168
+# Defs - End unit MENUS has index 168
+# Defs - Begin unit CUSTOMTIMER has index 186
+# Defs - End unit CUSTOMTIMER has index 186
+# Defs - Begin unit FASTHTMLPARSER has index 190
+# Defs - End unit FASTHTMLPARSER has index 190
+# Defs - Begin unit CLIPBRD has index 187
+# Defs - End unit CLIPBRD has index 187
+# Defs - Begin unit HELPINTFS has index 188
+# Defs - End unit HELPINTFS has index 188
+# Defs - Begin unit WSFORMS has index 192
+# Defs - End unit WSFORMS has index 192
 # Defs - Begin unit FORMS has index 9
 # Defs - End unit FORMS has index 9
-# Defs - Begin unit TEXTSTRINGS has index 193
-# Defs - End unit TEXTSTRINGS has index 193
-# Defs - Begin unit EXTENDEDSTRINGS has index 194
-# Defs - End unit EXTENDEDSTRINGS has index 194
-# Defs - Begin unit WSSTDCTRLS has index 195
-# Defs - End unit WSSTDCTRLS has index 195
-# Defs - Begin unit STDCTRLS has index 166
-# Defs - End unit STDCTRLS has index 166
-# Defs - Begin unit IMAGELISTCACHE has index 192
-# Defs - End unit IMAGELISTCACHE has index 192
-# Defs - Begin unit WSBUTTONS has index 196
-# Defs - End unit WSBUTTONS has index 196
-# Defs - Begin unit BUTTONS has index 164
-# Defs - End unit BUTTONS has index 164
-# Defs - Begin unit POPUPNOTIFIER has index 200
-# Defs - End unit POPUPNOTIFIER has index 200
-# Defs - Begin unit FGL has index 201
-# Defs - End unit FGL has index 201
-# Defs - Begin unit WSEXTCTRLS has index 202
-# Defs - End unit WSEXTCTRLS has index 202
-# Defs - Begin unit EXTCTRLS has index 198
-# Defs - End unit EXTCTRLS has index 198
-# Defs - Begin unit BUTTONPANEL has index 197
-# Defs - End unit BUTTONPANEL has index 197
-# Defs - Begin unit LCLTASKDIALOG has index 199
-# Defs - End unit LCLTASKDIALOG has index 199
-# Defs - Begin unit WSDIALOGS has index 203
-# Defs - End unit WSDIALOGS has index 203
-# Defs - Begin unit DIALOGS has index 165
-# Defs - End unit DIALOGS has index 165
-# Defs - Begin unit MMSYSTEM has index 256
-# Defs - End unit MMSYSTEM has index 256
-# Defs - Begin unit SDL2 has index 254
-# Defs - End unit SDL2 has index 254
-# Defs - Begin unit CRT has index 255
-# Defs - End unit CRT has index 255
+# Defs - Begin unit TEXTSTRINGS has index 194
+# Defs - End unit TEXTSTRINGS has index 194
+# Defs - Begin unit EXTENDEDSTRINGS has index 195
+# Defs - End unit EXTENDEDSTRINGS has index 195
+# Defs - Begin unit WSSTDCTRLS has index 196
+# Defs - End unit WSSTDCTRLS has index 196
+# Defs - Begin unit STDCTRLS has index 167
+# Defs - End unit STDCTRLS has index 167
+# Defs - Begin unit IMAGELISTCACHE has index 193
+# Defs - End unit IMAGELISTCACHE has index 193
+# Defs - Begin unit WSBUTTONS has index 197
+# Defs - End unit WSBUTTONS has index 197
+# Defs - Begin unit BUTTONS has index 165
+# Defs - End unit BUTTONS has index 165
+# Defs - Begin unit POPUPNOTIFIER has index 201
+# Defs - End unit POPUPNOTIFIER has index 201
+# Defs - Begin unit FGL has index 202
+# Defs - End unit FGL has index 202
+# Defs - Begin unit WSEXTCTRLS has index 203
+# Defs - End unit WSEXTCTRLS has index 203
+# Defs - Begin unit EXTCTRLS has index 199
+# Defs - End unit EXTCTRLS has index 199
+# Defs - Begin unit BUTTONPANEL has index 198
+# Defs - End unit BUTTONPANEL has index 198
+# Defs - Begin unit LCLTASKDIALOG has index 200
+# Defs - End unit LCLTASKDIALOG has index 200
+# Defs - Begin unit WSDIALOGS has index 204
+# Defs - End unit WSDIALOGS has index 204
+# Defs - Begin unit DIALOGS has index 166
+# Defs - End unit DIALOGS has index 166
+# Defs - Begin unit MMSYSTEM has index 258
+# Defs - End unit MMSYSTEM has index 258
+# Defs - Begin unit SDL2 has index 255
+# Defs - End unit SDL2 has index 255
+# Defs - Begin unit CRT has index 257
+# Defs - End unit CRT has index 257
 # Defs - Begin unit UNIT6502 has index 13
 # Defs - End unit UNIT6502 has index 13
-# Defs - Begin unit FMSYNTH has index 18
-# Defs - End unit FMSYNTH has index 18
 # Defs - Begin unit UMAIN has index 11
 # Defs - End unit UMAIN has index 11
 # Defs - Begin unit UNIT65032 has index 14
 # Defs - End unit UNIT65032 has index 14
 # Defs - Begin unit SYNTHCONTROL has index 17
 # Defs - End unit SYNTHCONTROL has index 17
+# Defs - Begin unit FFT has index 256
+# Defs - End unit FFT has index 256
 # Defs - Begin unit UNIT2 has index 16
 # Definition TForm2
 .La1:
@@ -1122,16 +1140,16 @@ RTTI_$UNIT2_$$_TFORM2:
 	.uleb128	13
 	.ascii	"this\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.byte	1
 	.long	.La1-.Ldebug_info0
 # Symbol SENDER
 	.uleb128	4
 	.ascii	"SENDER\000"
 	.byte	2
-	.byte	144
-	.uleb128	1
+	.byte	118
+	.sleb128	-8
 	.long	.La20-.Ldebug_info0
 	.byte	0
 # Procdef Timer1Timer(<TForm2>;TObject);
@@ -1146,16 +1164,16 @@ RTTI_$UNIT2_$$_TFORM2:
 	.uleb128	13
 	.ascii	"this\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.byte	1
 	.long	.La1-.Ldebug_info0
 # Symbol SENDER
 	.uleb128	4
 	.ascii	"SENDER\000"
 	.byte	2
-	.byte	144
-	.uleb128	1
+	.byte	118
+	.sleb128	-8
 	.long	.La20-.Ldebug_info0
 # Symbol fin$4
 	.byte	0
@@ -1166,6 +1184,8 @@ RTTI_$UNIT2_$$_TFORM2:
 # Defs - End unit UNIT2 has index 16
 # Defs - Begin unit UNIT1 has index 10
 # Defs - End unit UNIT1 has index 10
+# Defs - Begin unit FMSYNTH has index 18
+# Defs - End unit FMSYNTH has index 18
 # Defs - Begin unit RETRO has index 12
 # Defs - End unit RETRO has index 12
 # Defs - Begin unit MIDI has index 15
@@ -9191,6 +9211,45 @@ RTTI_$UNIT2_$$_TFORM2:
 	.ascii	"ASCALED\000"
 	.long	.La29-.Ldebug_info0
 	.byte	0
+# Procdef AutoAdjustLayout(<TCustomDesignControl>;TLayoutAdjustmentPolicy;const LongInt;const LongInt;const LongInt;const LongInt);
+	.uleb128	17
+	.ascii	"AUTOADJUSTLAYOUT\000"
+	.byte	1
+	.byte	65
+	.byte	1
+	.byte	1
+	.byte	5
+	.byte	6
+	.byte	16
+	.uleb128	1456
+	.byte	34
+	.byte	2
+# Symbol this
+	.uleb128	16
+	.ascii	"this\000"
+	.byte	1
+	.long	.La100-.Ldebug_info0
+# Symbol AMODE
+	.uleb128	19
+	.ascii	"AMODE\000"
+	.long	.La323-.Ldebug_info0
+# Symbol AFROMPPI
+	.uleb128	19
+	.ascii	"AFROMPPI\000"
+	.long	.La120-.Ldebug_info0
+# Symbol ATOPPI
+	.uleb128	19
+	.ascii	"ATOPPI\000"
+	.long	.La120-.Ldebug_info0
+# Symbol AOLDFORMWIDTH
+	.uleb128	19
+	.ascii	"AOLDFORMWIDTH\000"
+	.long	.La120-.Ldebug_info0
+# Symbol ANEWFORMWIDTH
+	.uleb128	19
+	.ascii	"ANEWFORMWIDTH\000"
+	.long	.La120-.Ldebug_info0
+	.byte	0
 # Procdef DoAutoAdjustLayout(<TCustomDesignControl>;const TLayoutAdjustmentPolicy;const Double;const Double);
 	.uleb128	17
 	.ascii	"DOAUTOADJUSTLAYOUT\000"
@@ -9267,44 +9326,6 @@ RTTI_$UNIT2_$$_TFORM2:
 	.uleb128	19
 	.ascii	"THEOWNER\000"
 	.long	.La33-.Ldebug_info0
-	.byte	0
-# Procdef AutoAdjustLayout(<TCustomDesignControl>;TLayoutAdjustmentPolicy;const LongInt;const LongInt;const LongInt;const LongInt);
-	.uleb128	23
-	.ascii	"AUTOADJUSTLAYOUT\000"
-	.byte	1
-	.byte	65
-	.byte	1
-	.byte	1
-	.byte	5
-	.byte	6
-	.byte	16
-	.uleb128	1456
-	.byte	34
-# Symbol this
-	.uleb128	16
-	.ascii	"this\000"
-	.byte	1
-	.long	.La100-.Ldebug_info0
-# Symbol AMODE
-	.uleb128	19
-	.ascii	"AMODE\000"
-	.long	.La323-.Ldebug_info0
-# Symbol AFROMPPI
-	.uleb128	19
-	.ascii	"AFROMPPI\000"
-	.long	.La120-.Ldebug_info0
-# Symbol ATOPPI
-	.uleb128	19
-	.ascii	"ATOPPI\000"
-	.long	.La120-.Ldebug_info0
-# Symbol AOLDFORMWIDTH
-	.uleb128	19
-	.ascii	"AOLDFORMWIDTH\000"
-	.long	.La120-.Ldebug_info0
-# Symbol ANEWFORMWIDTH
-	.uleb128	19
-	.ascii	"ANEWFORMWIDTH\000"
-	.long	.La120-.Ldebug_info0
 	.byte	0
 	.byte	0
 .La101:
@@ -20347,7 +20368,7 @@ RTTI_$UNIT2_$$_TFORM2:
 	.ascii	"ADESIGNTIMEPPI\000"
 	.long	.La120-.Ldebug_info0
 	.byte	0
-# Procdef DoScaleFontPPI(<TControl>;const TFont;const LongInt;const Double);
+# Procdef DoScaleFontPPI(<TControl>;const TFont;const Double);
 	.uleb128	25
 	.ascii	"DOSCALEFONTPPI\000"
 	.byte	1
@@ -20363,10 +20384,6 @@ RTTI_$UNIT2_$$_TFORM2:
 	.uleb128	19
 	.ascii	"AFONT\000"
 	.long	.La445-.Ldebug_info0
-# Symbol ATOPPI
-	.uleb128	19
-	.ascii	"ATOPPI\000"
-	.long	.La120-.Ldebug_info0
 # Symbol APROPORTION
 	.uleb128	19
 	.ascii	"APROPORTION\000"
@@ -21535,7 +21552,7 @@ RTTI_$UNIT2_$$_TFORM2:
 	.ascii	"ADESIGNTIMEPPI\000"
 	.long	.La120-.Ldebug_info0
 	.byte	0
-# Procdef ScaleFontsPPI(<TControl>;const LongInt;const Double);
+# Procdef ScaleFontsPPI(<TControl>;const Double);
 	.uleb128	23
 	.ascii	"SCALEFONTSPPI\000"
 	.byte	1
@@ -21552,10 +21569,6 @@ RTTI_$UNIT2_$$_TFORM2:
 	.ascii	"this\000"
 	.byte	1
 	.long	.La106-.Ldebug_info0
-# Symbol ATOPPI
-	.uleb128	19
-	.ascii	"ATOPPI\000"
-	.long	.La120-.Ldebug_info0
 # Symbol APROPORTION
 	.uleb128	19
 	.ascii	"APROPORTION\000"

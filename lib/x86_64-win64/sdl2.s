@@ -24,32 +24,35 @@ SDL2_$$_SDL_ICONV_UTF8_LOCALE$PCHAR$$PCHAR:
 .Ll1:
 # [sdl2.pas]
 # [2688] begin
-	pushq	%rbx
-.seh_pushreg %rbx
-	leaq	-32(%rsp),%rsp
+	pushq	%rbp
+.seh_pushreg %rbp
 .Lc3:
-.seh_stackalloc 32
-# Var S located in register r8
-# Var $result located in register rax
+.Lc4:
+	movq	%rsp,%rbp
+.Lc5:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-# PeepHole Optimization,MovMov2Mov1
-	movq	%rcx,%rbx
-# Var S located in register rbx
+# Var S located at rbp-8, size=OS_64
+# Var $result located at rbp-16, size=OS_64
+	movq	%rcx,-8(%rbp)
 .Ll2:
 # [2689] exit(SDL_iconv_string('', 'UTF-8', S, SDL_strlen(S) + 1));
+	movq	-8(%rbp),%rax
+	movq	%rax,%rcx
 	call	_$dll$sdl2$SDL_strlen
 	leaq	1(%rax),%r9
-	movq	%rbx,%r8
-# Var S located in register r8
+	movq	-8(%rbp),%r8
 	leaq	_$SDL2$_Ld1(%rip),%rdx
 	leaq	_$SDL2$_Ld2(%rip),%rcx
 	call	_$dll$sdl2$SDL_iconv_string
-# Var $result located in register rax
+	movq	%rax,-16(%rbp)
 .Ll3:
 # [2690] end;
+	movq	-16(%rbp),%rax
 	nop
-	leaq	32(%rsp),%rsp
-	popq	%rbx
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
 .Lc2:
@@ -60,39 +63,42 @@ SDL2_$$_SDL_ICONV_UTF8_LOCALE$PCHAR$$PCHAR:
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_ICONV_UTF8_UCS2$PCHAR$$PCHAR
 SDL2_$$_SDL_ICONV_UTF8_UCS2$PCHAR$$PCHAR:
-.Lc4:
+.Lc6:
 .seh_proc SDL2_$$_SDL_ICONV_UTF8_UCS2$PCHAR$$PCHAR
 .Ll5:
 # [2693] begin
-	pushq	%rbx
-.seh_pushreg %rbx
-	leaq	-32(%rsp),%rsp
-.Lc6:
-.seh_stackalloc 32
-# Var S located in register r8
-# Var $result located in register rax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc8:
+.Lc9:
+	movq	%rsp,%rbp
+.Lc10:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-# PeepHole Optimization,MovMov2Mov1
-	movq	%rcx,%rbx
-# Var S located in register rbx
+# Var S located at rbp-8, size=OS_64
+# Var $result located at rbp-16, size=OS_64
+	movq	%rcx,-8(%rbp)
 .Ll6:
 # [2694] exit(SDL_iconv_string('UCS-2-INTERNAL', 'UTF-8', S, SDL_strlen(S) + 1));
+	movq	-8(%rbp),%rax
+	movq	%rax,%rcx
 	call	_$dll$sdl2$SDL_strlen
 	leaq	1(%rax),%r9
-	movq	%rbx,%r8
-# Var S located in register r8
+	movq	-8(%rbp),%r8
 	leaq	_$SDL2$_Ld1(%rip),%rdx
 	leaq	_$SDL2$_Ld3(%rip),%rcx
 	call	_$dll$sdl2$SDL_iconv_string
-# Var $result located in register rax
+	movq	%rax,-16(%rbp)
 .Ll7:
 # [2695] end;
+	movq	-16(%rbp),%rax
 	nop
-	leaq	32(%rsp),%rsp
-	popq	%rbx
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc5:
+.Lc7:
 .Lt2:
 .Ll8:
 
@@ -100,39 +106,42 @@ SDL2_$$_SDL_ICONV_UTF8_UCS2$PCHAR$$PCHAR:
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_ICONV_UTF8_UCS4$PCHAR$$PCHAR
 SDL2_$$_SDL_ICONV_UTF8_UCS4$PCHAR$$PCHAR:
-.Lc7:
+.Lc11:
 .seh_proc SDL2_$$_SDL_ICONV_UTF8_UCS4$PCHAR$$PCHAR
 .Ll9:
 # [2698] begin
-	pushq	%rbx
-.seh_pushreg %rbx
-	leaq	-32(%rsp),%rsp
-.Lc9:
-.seh_stackalloc 32
-# Var S located in register r8
-# Var $result located in register rax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc13:
+.Lc14:
+	movq	%rsp,%rbp
+.Lc15:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-# PeepHole Optimization,MovMov2Mov1
-	movq	%rcx,%rbx
-# Var S located in register rbx
+# Var S located at rbp-8, size=OS_64
+# Var $result located at rbp-16, size=OS_64
+	movq	%rcx,-8(%rbp)
 .Ll10:
 # [2699] exit(SDL_iconv_string('UCS-4-INTERNAL', 'UTF-8', S, SDL_strlen(S) + 1));
+	movq	-8(%rbp),%rax
+	movq	%rax,%rcx
 	call	_$dll$sdl2$SDL_strlen
 	leaq	1(%rax),%r9
-	movq	%rbx,%r8
-# Var S located in register r8
+	movq	-8(%rbp),%r8
 	leaq	_$SDL2$_Ld1(%rip),%rdx
 	leaq	_$SDL2$_Ld4(%rip),%rcx
 	call	_$dll$sdl2$SDL_iconv_string
-# Var $result located in register rax
+	movq	%rax,-16(%rbp)
 .Ll11:
 # [2700] end;
+	movq	-16(%rbp),%rax
 	nop
-	leaq	32(%rsp),%rsp
-	popq	%rbx
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc8:
+.Lc12:
 .Lt3:
 .Ll12:
 
@@ -140,1771 +149,2421 @@ SDL2_$$_SDL_ICONV_UTF8_UCS4$PCHAR$$PCHAR:
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_MOSTSIGNIFICANTBITINDEX32$LONGWORD$$LONGINT
 SDL2_$$_SDL_MOSTSIGNIFICANTBITINDEX32$LONGWORD$$LONGINT:
-.Lc10:
-# Var x located in register ecx
-# Var $result located in register eax
-# [2706] begin
+.Lc16:
+.seh_proc SDL2_$$_SDL_MOSTSIGNIFICANTBITINDEX32$LONGWORD$$LONGINT
 .Ll13:
-# [2707] if x = 0 then
-	testl	%ecx,%ecx
-	jne	.Lj48
+# [2706] begin
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc18:
+.Lc19:
+	movq	%rsp,%rbp
+.Lc20:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var x located at rbp-8, size=OS_32
+# Var $result located at rbp-16, size=OS_S32
+	movl	%ecx,-8(%rbp)
 .Ll14:
-# [2709] else
-	movl	$-1,%eax
+# [2707] if x = 0 then
+	cmpl	$0,-8(%rbp)
+	jne	.Lj48
 .Ll15:
+# [2709] else
+	movl	$-1,-16(%rbp)
+.Ll16:
 # [2708] exit(-1)
 	jmp	.Lj45
 .Lj48:
-.Ll16:
-# [2710] exit(BsrDword(x));
-	bsrl	%ecx,%edx
-	jne	.Lj54
-	movl	$255,%edx
-.Lj54:
-	movl	%edx,%eax
-.Lj45:
 .Ll17:
-# [2711] end;
-	ret
-.Lc11:
-.Lt4:
+# [2710] exit(BsrDword(x));
+	movl	-8(%rbp),%eax
+	bsrl	%eax,%eax
+	jne	.Lj54
+	movl	$255,%eax
+.Lj54:
+	movl	%eax,-16(%rbp)
+.Lj45:
 .Ll18:
+# [2711] end;
+	movl	-16(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
+	ret
+.seh_endproc
+.Lc17:
+.Lt4:
+.Ll19:
 
 .section .text.n_sdl2_$$_sdl_version$psdl_version,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_VERSION$PSDL_VERSION
 SDL2_$$_SDL_VERSION$PSDL_VERSION:
-.Lc12:
-# Var x located in register rax
-.Ll19:
-# [2717] begin
-	movq	%rcx,%rax
-# Var x located in register rax
+.Lc21:
+.seh_proc SDL2_$$_SDL_VERSION$PSDL_VERSION
 .Ll20:
-# [2718] x^.major := SDL_MAJOR_VERSION;
-	movb	$2,(%rax)
-# Var x located in register rax
+# [2717] begin
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc23:
+.Lc24:
+	movq	%rsp,%rbp
+.Lc25:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var x located at rbp-8, size=OS_64
+	movq	%rcx,-8(%rbp)
 .Ll21:
-# [2719] x^.minor := SDL_MINOR_VERSION;
-	movb	$0,1(%rax)
-# Var x located in register rax
+# [2718] x^.major := SDL_MAJOR_VERSION;
+	movq	-8(%rbp),%rax
+	movb	$2,(%rax)
 .Ll22:
-# [2720] x^.patch := SDL_PATCHLEVEL;
-	movb	$3,2(%rax)
+# [2719] x^.minor := SDL_MINOR_VERSION;
+	movq	-8(%rbp),%rax
+	movb	$0,1(%rax)
 .Ll23:
-# [2721] end;
-	ret
-.Lc13:
-.Lt5:
+# [2720] x^.patch := SDL_PATCHLEVEL;
+	movq	-8(%rbp),%rax
+	movb	$3,2(%rax)
 .Ll24:
+# [2721] end;
+	leaq	(%rbp),%rsp
+	popq	%rbp
+	ret
+.seh_endproc
+.Lc22:
+.Lt5:
+.Ll25:
 
 .section .text.n_sdl2_$$_sdl_versionnum$longint$longint$longint$$longint,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_VERSIONNUM$LONGINT$LONGINT$LONGINT$$LONGINT
 SDL2_$$_SDL_VERSIONNUM$LONGINT$LONGINT$LONGINT$$LONGINT:
-.Lc14:
-# Var X located in register ecx
-# Var Y located in register edx
-# Var Z located in register r8d
-# Var $result located in register eax
-# [2724] begin
-.Ll25:
-# [2725] exit(X * 1000 + Y * 100 + Z);
-	imull	$1000,%ecx,%ecx
-	imull	$100,%edx,%eax
-	leal	(%ecx,%eax),%eax
-	leal	(%eax,%r8d),%eax
-# Var $result located in register eax
+.Lc26:
+.seh_proc SDL2_$$_SDL_VERSIONNUM$LONGINT$LONGINT$LONGINT$$LONGINT
 .Ll26:
-# [2726] end;
-	ret
-.Lc15:
-.Lt6:
+# [2724] begin
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc28:
+.Lc29:
+	movq	%rsp,%rbp
+.Lc30:
+	leaq	-32(%rsp),%rsp
+.seh_stackalloc 32
+.seh_endprologue
+# Var X located at rbp-8, size=OS_S32
+# Var Y located at rbp-16, size=OS_S32
+# Var Z located at rbp-24, size=OS_S32
+# Var $result located at rbp-32, size=OS_S32
+	movl	%ecx,-8(%rbp)
+	movl	%edx,-16(%rbp)
+	movl	%r8d,-24(%rbp)
 .Ll27:
+# [2725] exit(X * 1000 + Y * 100 + Z);
+	movl	-8(%rbp),%eax
+	imull	$1000,%eax,%edx
+	movl	-16(%rbp),%eax
+	imull	$100,%eax,%eax
+	leal	(%edx,%eax),%edx
+	movl	-24(%rbp),%eax
+	leal	(%edx,%eax),%eax
+	movl	%eax,-32(%rbp)
+.Ll28:
+# [2726] end;
+	movl	-32(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
+	ret
+.seh_endproc
+.Lc27:
+.Lt6:
+.Ll29:
 
 .section .text.n_sdl2_$$_sdl_compiledversion$$longint,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_COMPILEDVERSION$$LONGINT
 SDL2_$$_SDL_COMPILEDVERSION$$LONGINT:
-.Lc16:
-# Var $result located in register eax
+.Lc31:
+.seh_proc SDL2_$$_SDL_COMPILEDVERSION$$LONGINT
+.Ll30:
 # [2729] begin
-.Ll28:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc33:
+.Lc34:
+	movq	%rsp,%rbp
+.Lc35:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var $result located at rbp-8, size=OS_S32
+.Ll31:
 # [2730] exit(SDL_VERSIONNUM(SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_PATCHLEVEL));
 	movl	$2003,%eax
-# Var $result located in register eax
-.Ll29:
+	movl	%eax,-8(%rbp)
+.Ll32:
 # [2731] end;
+	movl	-8(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc17:
+.seh_endproc
+.Lc32:
 .Lt7:
-.Ll30:
+.Ll33:
 
 .section .text.n_sdl2_$$_sdl_version_atleast$longint$longint$longint$$boolean,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_VERSION_ATLEAST$LONGINT$LONGINT$LONGINT$$BOOLEAN
 SDL2_$$_SDL_VERSION_ATLEAST$LONGINT$LONGINT$LONGINT$$BOOLEAN:
-.Lc18:
-# Var X located in register ecx
-# Var Y located in register edx
-# Var Z located in register r8d
-# Var $result located in register al
+.Lc36:
+.seh_proc SDL2_$$_SDL_VERSION_ATLEAST$LONGINT$LONGINT$LONGINT$$BOOLEAN
+.Ll34:
 # [2734] begin
-.Ll31:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc38:
+.Lc39:
+	movq	%rsp,%rbp
+.Lc40:
+	leaq	-32(%rsp),%rsp
+.seh_stackalloc 32
+.seh_endprologue
+# Var X located at rbp-8, size=OS_S32
+# Var Y located at rbp-16, size=OS_S32
+# Var Z located at rbp-24, size=OS_S32
+# Var $result located at rbp-32, size=OS_8
+	movl	%ecx,-8(%rbp)
+	movl	%edx,-16(%rbp)
+	movl	%r8d,-24(%rbp)
+.Ll35:
 # [2735] exit(SDL_COMPILEDVERSION >= SDL_VERSIONNUM(X, Y, Z));
-	imull	$1000,%ecx,%ecx
-	imull	$100,%edx,%eax
-	leal	(%ecx,%eax),%eax
-	leal	(%eax,%r8d),%eax
+	movl	-8(%rbp),%eax
+	imull	$1000,%eax,%edx
+	movl	-16(%rbp),%eax
+	imull	$100,%eax,%eax
+	leal	(%edx,%eax),%edx
+	movl	-24(%rbp),%eax
+	leal	(%edx,%eax),%eax
 	movl	$2003,%edx
 	cmpl	%edx,%eax
-# Var $result located in register al
-	setleb	%al
-# PeepHole Optimization,var9
-.Ll32:
+	setleb	-32(%rbp)
+.Ll36:
 # [2736] end;
-	andl	$255,%eax
+	movzbl	-32(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc19:
+.seh_endproc
+.Lc37:
 .Lt8:
-.Ll33:
+.Ll37:
 
 .section .text.n_sdl2_$$_sdl_outofmemory$$longint,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_OUTOFMEMORY$$LONGINT
 SDL2_$$_SDL_OUTOFMEMORY$$LONGINT:
-.Lc20:
+.Lc41:
 .seh_proc SDL2_$$_SDL_OUTOFMEMORY$$LONGINT
-.Ll34:
+.Ll38:
 # [2742] begin
-	leaq	-40(%rsp),%rsp
-.Lc22:
-.seh_stackalloc 40
-# Var $result located in register eax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc43:
+.Lc44:
+	movq	%rsp,%rbp
+.Lc45:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-.Ll35:
+# Var $result located at rbp-8, size=OS_S32
+.Ll39:
 # [2743] exit(SDL_Error(SDL_ENOMEM));
-	movl	$0,%ecx
+	movl	$0,%eax
+	movl	%eax,%ecx
 	call	_$dll$sdl2$SDL_Error
-# Var $result located in register eax
-.Ll36:
+	movl	%eax,-8(%rbp)
+.Ll40:
 # [2744] end;
+	movl	-8(%rbp),%eax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc21:
+.Lc42:
 .Lt9:
-.Ll37:
+.Ll41:
 
 .section .text.n_sdl2_$$_sdl_unsupported$$longint,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_UNSUPPORTED$$LONGINT
 SDL2_$$_SDL_UNSUPPORTED$$LONGINT:
-.Lc23:
+.Lc46:
 .seh_proc SDL2_$$_SDL_UNSUPPORTED$$LONGINT
-.Ll38:
+.Ll42:
 # [2747] begin
-	leaq	-40(%rsp),%rsp
-.Lc25:
-.seh_stackalloc 40
-# Var $result located in register eax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc48:
+.Lc49:
+	movq	%rsp,%rbp
+.Lc50:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-.Ll39:
+# Var $result located at rbp-8, size=OS_S32
+.Ll43:
 # [2748] exit(SDL_Error(SDL_UNSUPPORTED_));
-	movl	$4,%ecx
+	movl	$4,%eax
+	movl	%eax,%ecx
 	call	_$dll$sdl2$SDL_Error
-# Var $result located in register eax
-.Ll40:
+	movl	%eax,-8(%rbp)
+.Ll44:
 # [2749] end;
+	movl	-8(%rbp),%eax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc24:
+.Lc47:
 .Lt10:
-.Ll41:
+.Ll45:
 
 .section .text.n_sdl2_$$_sdl_invalidparamerror$pchar$$longint,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_INVALIDPARAMERROR$PCHAR$$LONGINT
 SDL2_$$_SDL_INVALIDPARAMERROR$PCHAR$$LONGINT:
-.Lc26:
+.Lc51:
 .seh_proc SDL2_$$_SDL_INVALIDPARAMERROR$PCHAR$$LONGINT
-.Ll42:
+.Ll46:
 # [2752] begin
-	leaq	-40(%rsp),%rsp
-.Lc28:
-.seh_stackalloc 40
-# Var param located in register rdx
-# Var $result located in register eax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc53:
+.Lc54:
+	movq	%rsp,%rbp
+.Lc55:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-	movq	%rcx,%rdx
-# Var param located in register rdx
-.Ll43:
+# Var param located at rbp-8, size=OS_64
+# Var $result located at rbp-16, size=OS_S32
+	movq	%rcx,-8(%rbp)
+.Ll47:
 # [2753] exit(SDL_SetError('Parameter ''%s'' is invalid', (param)));
+	movq	-8(%rbp),%rax
 	leaq	_$SDL2$_Ld5(%rip),%rcx
+	movq	%rax,%rdx
 	call	_$dll$sdl2$SDL_SetError
-# Var $result located in register eax
-.Ll44:
+	movl	%eax,-16(%rbp)
+.Ll48:
 # [2754] end;
+	movl	-16(%rbp),%eax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc27:
+.Lc52:
 .Lt11:
-.Ll45:
+.Ll49:
 
 .section .text.n_sdl2_$$_sdl_ticks_passed$longword$longword$$longbool,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_TICKS_PASSED$LONGWORD$LONGWORD$$LONGBOOL
 SDL2_$$_SDL_TICKS_PASSED$LONGWORD$LONGWORD$$LONGBOOL:
-.Lc29:
-# Var a located in register ecx
-# Var b located in register edx
-# Var $result located in register eax
+.Lc56:
+.seh_proc SDL2_$$_SDL_TICKS_PASSED$LONGWORD$LONGWORD$$LONGBOOL
+.Ll50:
 # [2760] begin
-.Ll46:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc58:
+.Lc59:
+	movq	%rsp,%rbp
+.Lc60:
+	leaq	-32(%rsp),%rsp
+.seh_stackalloc 32
+.seh_endprologue
+# Var a located at rbp-8, size=OS_32
+# Var b located at rbp-16, size=OS_32
+# Var $result located at rbp-24, size=OS_S32
+	movl	%ecx,-8(%rbp)
+	movl	%edx,-16(%rbp)
+.Ll51:
 # [2761] exit((b - a) <= 0);
-	andl	$4294967295,%edx
-	andl	$4294967295,%ecx
-	subq	%rcx,%rdx
-	cmpq	$0,%rdx
+	movl	-16(%rbp),%eax
+	movl	-8(%rbp),%edx
+	subq	%rdx,%rax
+	cmpq	$0,%rax
 	setleb	%al
 # PeepHole Optimization,var9
 	andl	$255,%eax
 	negl	%eax
-# Var $result located in register eax
-.Ll47:
+	movl	%eax,-24(%rbp)
+.Ll52:
 # [2762] end;
+	movl	-24(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc30:
+.seh_endproc
+.Lc57:
 .Lt12:
-.Ll48:
+.Ll53:
 
 .section .text.n_sdl2_$$_sdl_mutexp$pointer$$longint,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_MUTEXP$POINTER$$LONGINT
 SDL2_$$_SDL_MUTEXP$POINTER$$LONGINT:
-.Lc31:
+.Lc61:
 .seh_proc SDL2_$$_SDL_MUTEXP$POINTER$$LONGINT
-.Ll49:
+.Ll54:
 # [2768] begin
-	leaq	-40(%rsp),%rsp
-.Lc33:
-.seh_stackalloc 40
-# Var mutex located in register rcx
-# Var $result located in register eax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc63:
+.Lc64:
+	movq	%rsp,%rbp
+.Lc65:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-# Var mutex located in register rcx
-.Ll50:
+# Var mutex located at rbp-8, size=OS_64
+# Var $result located at rbp-16, size=OS_S32
+	movq	%rcx,-8(%rbp)
+.Ll55:
 # [2769] exit(SDL_LockMutex(mutex));
+	movq	-8(%rbp),%rax
+	movq	%rax,%rcx
 	call	_$dll$sdl2$SDL_LockMutex
-# Var $result located in register eax
-.Ll51:
+	movl	%eax,-16(%rbp)
+.Ll56:
 # [2770] end;
+	movl	-16(%rbp),%eax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc32:
+.Lc62:
 .Lt13:
-.Ll52:
+.Ll57:
 
 .section .text.n_sdl2_$$_sdl_mutexv$pointer$$longint,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_MUTEXV$POINTER$$LONGINT
 SDL2_$$_SDL_MUTEXV$POINTER$$LONGINT:
-.Lc34:
+.Lc66:
 .seh_proc SDL2_$$_SDL_MUTEXV$POINTER$$LONGINT
-.Ll53:
+.Ll58:
 # [2773] begin
-	leaq	-40(%rsp),%rsp
-.Lc36:
-.seh_stackalloc 40
-# Var mutex located in register rcx
-# Var $result located in register eax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc68:
+.Lc69:
+	movq	%rsp,%rbp
+.Lc70:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-# Var mutex located in register rcx
-.Ll54:
+# Var mutex located at rbp-8, size=OS_64
+# Var $result located at rbp-16, size=OS_S32
+	movq	%rcx,-8(%rbp)
+.Ll59:
 # [2774] exit(SDL_UnlockMutex(mutex));
+	movq	-8(%rbp),%rax
+	movq	%rax,%rcx
 	call	_$dll$sdl2$SDL_UnlockMutex
-# Var $result located in register eax
-.Ll55:
+	movl	%eax,-16(%rbp)
+.Ll60:
 # [2775] end;
+	movl	-16(%rbp),%eax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc35:
+.Lc67:
 .Lt14:
-.Ll56:
+.Ll61:
 
 .section .text.n_sdl2_$$_sdl_createthread$tsdl_threadfunction$pchar$pointer$$pointer,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_CREATETHREAD$TSDL_THREADFUNCTION$PCHAR$POINTER$$POINTER
 SDL2_$$_SDL_CREATETHREAD$TSDL_THREADFUNCTION$PCHAR$POINTER$$POINTER:
-.Lc37:
+.Lc71:
 .seh_proc SDL2_$$_SDL_CREATETHREAD$TSDL_THREADFUNCTION$PCHAR$POINTER$$POINTER
-.Ll57:
+.Ll62:
 # [2782] begin
-	leaq	-40(%rsp),%rsp
-.Lc39:
-.seh_stackalloc 40
-# Var fn located in register rcx
-# Var name located in register rdx
-# Var data located in register r8
-# Var $result located in register rax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc73:
+.Lc74:
+	movq	%rsp,%rbp
+.Lc75:
+	leaq	-80(%rsp),%rsp
+.seh_stackalloc 80
 .seh_endprologue
-.Ll58:
+# Var fn located at rbp-8, size=OS_64
+# Var name located at rbp-16, size=OS_64
+# Var data located at rbp-24, size=OS_64
+# Var $result located at rbp-32, size=OS_64
+	movq	%rcx,-8(%rbp)
+	movq	%rdx,-16(%rbp)
+	movq	%r8,-24(%rbp)
+.Ll63:
 # [2783] exit(SDL_CreateThread(fn, name, data, NIL, NIL));
 	movq	$0,32(%rsp)
-# Var data located in register r8
-# Var name located in register rdx
-# Var fn located in register rcx
+	movq	-24(%rbp),%rax
+	movq	-16(%rbp),%rdx
+	movq	-8(%rbp),%rcx
 	movq	$0,%r9
+	movq	%rax,%r8
 	call	_$dll$sdl2$SDL_CreateThread
-# Var $result located in register rax
-.Ll59:
+	movq	%rax,-32(%rbp)
+.Ll64:
 # [2784] end;
+	movq	-32(%rbp),%rax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc38:
+.Lc72:
 .Lt15:
-.Ll60:
+.Ll65:
 
 .section .text.n_sdl2_$$_sdl_swap16$word$$word,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_SWAP16$WORD$$WORD
 SDL2_$$_SDL_SWAP16$WORD$$WORD:
-.Lc40:
-# Var x located in register ax
-# Var $result located in register ax
-.Ll61:
+.Lc76:
+.seh_proc SDL2_$$_SDL_SWAP16$WORD$$WORD
+.Ll66:
 # [2791] begin
-	movw	%cx,%ax
-# PeepHole Optimization,var11
-.Ll62:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc78:
+.Lc79:
+	movq	%rsp,%rbp
+.Lc80:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var x located at rbp-8, size=OS_16
+# Var $result located at rbp-16, size=OS_16
+	movw	%cx,-8(%rbp)
+.Ll67:
 # [2792] exit(SwapEndian(x));
-	andl	$65535,%eax
-	movl	%eax,%edx
-	shrl	$8,%edx
-	shll	$8,%eax
-	orl	%edx,%eax
-# Var $result located in register ax
-# PeepHole Optimization,var11
-.Ll63:
+	movzwl	-8(%rbp),%eax
+	shrl	$8,%eax
+	movzwl	-8(%rbp),%edx
+	shll	$8,%edx
+	orl	%eax,%edx
+	movw	%dx,-16(%rbp)
+.Ll68:
 # [2793] end;
-	andl	$65535,%eax
+	movzwl	-16(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc41:
+.seh_endproc
+.Lc77:
 .Lt16:
-.Ll64:
+.Ll69:
 
 .section .text.n_sdl2_$$_sdl_swap32$longword$$longword,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_SWAP32$LONGWORD$$LONGWORD
 SDL2_$$_SDL_SWAP32$LONGWORD$$LONGWORD:
-.Lc42:
+.Lc81:
 .seh_proc SDL2_$$_SDL_SWAP32$LONGWORD$$LONGWORD
-.Ll65:
+.Ll70:
 # [2796] begin
-	leaq	-40(%rsp),%rsp
-.Lc44:
-.seh_stackalloc 40
-# Var x located in register ecx
-# Var $result located in register eax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc83:
+.Lc84:
+	movq	%rsp,%rbp
+.Lc85:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-# Var x located in register ecx
-.Ll66:
+# Var x located at rbp-8, size=OS_32
+# Var $result located at rbp-16, size=OS_32
+	movl	%ecx,-8(%rbp)
+.Ll71:
 # [2797] exit(SwapEndian(x));
+	movl	-8(%rbp),%eax
+	movl	%eax,%ecx
 	call	SYSTEM_$$_SWAPENDIAN$LONGWORD$$LONGWORD
-# Var $result located in register eax
-.Ll67:
+	movl	%eax,-16(%rbp)
+.Ll72:
 # [2798] end;
+	movl	-16(%rbp),%eax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc43:
+.Lc82:
 .Lt17:
-.Ll68:
+.Ll73:
 
 .section .text.n_sdl2_$$_sdl_swap64$qword$$qword,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_SWAP64$QWORD$$QWORD
 SDL2_$$_SDL_SWAP64$QWORD$$QWORD:
-.Lc45:
+.Lc86:
 .seh_proc SDL2_$$_SDL_SWAP64$QWORD$$QWORD
-.Ll69:
+.Ll74:
 # [2801] begin
-	leaq	-40(%rsp),%rsp
-.Lc47:
-.seh_stackalloc 40
-# Var x located in register rcx
-# Var $result located in register rax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc88:
+.Lc89:
+	movq	%rsp,%rbp
+.Lc90:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-# Var x located in register rcx
-.Ll70:
+# Var x located at rbp-8, size=OS_64
+# Var $result located at rbp-16, size=OS_64
+	movq	%rcx,-8(%rbp)
+.Ll75:
 # [2802] exit(SwapEndian(x));
+	movq	-8(%rbp),%rax
+	movq	%rax,%rcx
 	call	SYSTEM_$$_SWAPENDIAN$QWORD$$QWORD
-# Var $result located in register rax
-.Ll71:
+	movq	%rax,-16(%rbp)
+.Ll76:
 # [2803] end;
+	movq	-16(%rbp),%rax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc46:
+.Lc87:
 .Lt18:
-.Ll72:
+.Ll77:
 
 .section .text.n_sdl2_$$_sdl_swapfloat$single$$single,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_SWAPFLOAT$SINGLE$$SINGLE
 SDL2_$$_SDL_SWAPFLOAT$SINGLE$$SINGLE:
-.Lc48:
+.Lc91:
+# Temps allocated between rbp-40 and rbp-24
 .seh_proc SDL2_$$_SDL_SWAPFLOAT$SINGLE$$SINGLE
-.Ll73:
+.Ll78:
 # [2809] begin
-	leaq	-40(%rsp),%rsp
-.Lc50:
-.seh_stackalloc 40
-# Var x located in register xmm0
-# Var $result located in register xmm0
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc93:
+.Lc94:
+	movq	%rsp,%rbp
+.Lc95:
+	leaq	-80(%rsp),%rsp
+.seh_stackalloc 80
 .seh_endprologue
-# Var f located at rsp+32, size=OS_F32
-# Var x located in register xmm0
-.Ll74:
+# Var x located at rbp-8, size=OS_F32
+# Var $result located at rbp-16, size=OS_F32
+# Var f located at rbp-24, size=OS_F32
+	movss	%xmm0,-8(%rbp)
+.Ll79:
 # [2810] f := x;
-	movss	%xmm0,32(%rsp)
-.Ll75:
+	movl	-8(%rbp),%eax
+	movl	%eax,-24(%rbp)
+.Ll80:
 # [2811] ui32 := SwapEndian(ui32);
-	movl	32(%rsp),%eax
-	movl	%eax,%ecx
+	movl	-24(%rbp),%ecx
 	call	SYSTEM_$$_SWAPENDIAN$LONGWORD$$LONGWORD
-	movl	%eax,32(%rsp)
-# Var $result located in register xmm0
-.Ll76:
+	movl	%eax,-24(%rbp)
+.Ll81:
 # [2812] exit(f);
-	movss	32(%rsp),%xmm0
-.Ll77:
+	movl	-24(%rbp),%eax
+	movl	%eax,-16(%rbp)
+.Ll82:
 # [2813] end;
-	nop
-	leaq	40(%rsp),%rsp
+	movss	-16(%rbp),%xmm0
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc49:
+.Lc92:
 .Lt19:
-.Ll78:
+.Ll83:
 
 .section .text.n_sdl2_$$_sdl_swaple16$word$$word,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_SWAPLE16$WORD$$WORD
 SDL2_$$_SDL_SWAPLE16$WORD$$WORD:
-.Lc51:
-# Var x located in register ax
-# Var $result located in register ax
-.Ll79:
+.Lc96:
+.seh_proc SDL2_$$_SDL_SWAPLE16$WORD$$WORD
+.Ll84:
 # [2816] begin
-	movw	%cx,%ax
-# Var x located in register ax
-# Var $result located in register ax
-# PeepHole Optimization,var11
-.Ll80:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc98:
+.Lc99:
+	movq	%rsp,%rbp
+.Lc100:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var x located at rbp-8, size=OS_16
+# Var $result located at rbp-16, size=OS_16
+	movw	%cx,-8(%rbp)
+.Ll85:
+# [2817] exit(LEtoN(x));
+	movw	-8(%rbp),%ax
+	movw	%ax,-16(%rbp)
+.Ll86:
 # [2818] end;
-	andl	$65535,%eax
+	movzwl	-16(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc52:
+.seh_endproc
+.Lc97:
 .Lt20:
-.Ll81:
+.Ll87:
 
 .section .text.n_sdl2_$$_sdl_swaple32$longword$$longword,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_SWAPLE32$LONGWORD$$LONGWORD
 SDL2_$$_SDL_SWAPLE32$LONGWORD$$LONGWORD:
-.Lc53:
-# Var x located in register eax
-# Var $result located in register eax
-.Ll82:
+.Lc101:
+.seh_proc SDL2_$$_SDL_SWAPLE32$LONGWORD$$LONGWORD
+.Ll88:
 # [2821] begin
-	movl	%ecx,%eax
-# Var x located in register eax
-# Var $result located in register eax
-.Ll83:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc103:
+.Lc104:
+	movq	%rsp,%rbp
+.Lc105:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var x located at rbp-8, size=OS_32
+# Var $result located at rbp-16, size=OS_32
+	movl	%ecx,-8(%rbp)
+.Ll89:
+# [2822] exit(LEtoN(x));
+	movl	-8(%rbp),%eax
+	movl	%eax,-16(%rbp)
+.Ll90:
 # [2823] end;
+	movl	-16(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc54:
+.seh_endproc
+.Lc102:
 .Lt21:
-.Ll84:
+.Ll91:
 
 .section .text.n_sdl2_$$_sdl_swaple64$qword$$qword,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_SWAPLE64$QWORD$$QWORD
 SDL2_$$_SDL_SWAPLE64$QWORD$$QWORD:
-.Lc55:
-# Var x located in register rax
-# Var $result located in register rax
-.Ll85:
+.Lc106:
+.seh_proc SDL2_$$_SDL_SWAPLE64$QWORD$$QWORD
+.Ll92:
 # [2826] begin
-	movq	%rcx,%rax
-# Var x located in register rax
-# Var $result located in register rax
-.Ll86:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc108:
+.Lc109:
+	movq	%rsp,%rbp
+.Lc110:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var x located at rbp-8, size=OS_64
+# Var $result located at rbp-16, size=OS_64
+	movq	%rcx,-8(%rbp)
+.Ll93:
+# [2827] exit(LEtoN(x));
+	movq	-8(%rbp),%rax
+	movq	%rax,-16(%rbp)
+.Ll94:
 # [2828] end;
+	movq	-16(%rbp),%rax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc56:
+.seh_endproc
+.Lc107:
 .Lt22:
-.Ll87:
+.Ll95:
 
 .section .text.n_sdl2_$$_sdl_swapfloatle$single$$single,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_SWAPFLOATLE$SINGLE$$SINGLE
 SDL2_$$_SDL_SWAPFLOATLE$SINGLE$$SINGLE:
-.Lc57:
-# Var x located in register xmm0
-# Var $result located in register xmm0
+.Lc111:
+# Temps allocated between rbp-32 and rbp-16
+.seh_proc SDL2_$$_SDL_SWAPFLOATLE$SINGLE$$SINGLE
+.Ll96:
 # [2831] begin
-# Var $result located in register xmm0
-# Var x located in register xmm0
-.Ll88:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc113:
+.Lc114:
+	movq	%rsp,%rbp
+.Lc115:
+	leaq	-32(%rsp),%rsp
+.seh_stackalloc 32
+.seh_endprologue
+# Var x located at rbp-8, size=OS_F32
+# Var $result located at rbp-16, size=OS_F32
+	movss	%xmm0,-8(%rbp)
+.Ll97:
+# [2833] exit(x);
+	movl	-8(%rbp),%eax
+	movl	%eax,-16(%rbp)
+.Ll98:
 # [2837] end;
+	movss	-16(%rbp),%xmm0
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc58:
+.seh_endproc
+.Lc112:
 .Lt23:
-.Ll89:
+.Ll99:
 
 .section .text.n_sdl2_$$_sdl_swapbe16$word$$word,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_SWAPBE16$WORD$$WORD
 SDL2_$$_SDL_SWAPBE16$WORD$$WORD:
-.Lc59:
-# Var x located in register ax
-# Var $result located in register ax
-.Ll90:
+.Lc116:
+.seh_proc SDL2_$$_SDL_SWAPBE16$WORD$$WORD
+.Ll100:
 # [2840] begin
-	movw	%cx,%ax
-# PeepHole Optimization,var11
-.Ll91:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc118:
+.Lc119:
+	movq	%rsp,%rbp
+.Lc120:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var x located at rbp-8, size=OS_16
+# Var $result located at rbp-16, size=OS_16
+	movw	%cx,-8(%rbp)
+.Ll101:
 # [2841] exit(BEtoN(x));
-	andl	$65535,%eax
-	movl	%eax,%edx
-	shrl	$8,%edx
-	shll	$8,%eax
-	orl	%edx,%eax
-# Var $result located in register ax
-# PeepHole Optimization,var11
-.Ll92:
+	movzwl	-8(%rbp),%eax
+	shrl	$8,%eax
+	movzwl	-8(%rbp),%edx
+	shll	$8,%edx
+	orl	%eax,%edx
+	movw	%dx,-16(%rbp)
+.Ll102:
 # [2842] end;
-	andl	$65535,%eax
+	movzwl	-16(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc60:
+.seh_endproc
+.Lc117:
 .Lt24:
-.Ll93:
+.Ll103:
 
 .section .text.n_sdl2_$$_sdl_swapbe32$longword$$longword,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_SWAPBE32$LONGWORD$$LONGWORD
 SDL2_$$_SDL_SWAPBE32$LONGWORD$$LONGWORD:
-.Lc61:
+.Lc121:
 .seh_proc SDL2_$$_SDL_SWAPBE32$LONGWORD$$LONGWORD
-.Ll94:
+.Ll104:
 # [2845] begin
-	leaq	-40(%rsp),%rsp
-.Lc63:
-.seh_stackalloc 40
-# Var x located in register ecx
-# Var $result located in register eax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc123:
+.Lc124:
+	movq	%rsp,%rbp
+.Lc125:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-# Var x located in register ecx
-.Ll95:
+# Var x located at rbp-8, size=OS_32
+# Var $result located at rbp-16, size=OS_32
+	movl	%ecx,-8(%rbp)
+.Ll105:
 # [2846] exit(BEtoN(x));
+	movl	-8(%rbp),%ecx
 	call	SYSTEM_$$_SWAPENDIAN$LONGWORD$$LONGWORD
-# Var $result located in register eax
-.Ll96:
+	movl	%eax,-16(%rbp)
+.Ll106:
 # [2847] end;
+	movl	-16(%rbp),%eax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc62:
+.Lc122:
 .Lt25:
-.Ll97:
+.Ll107:
 
 .section .text.n_sdl2_$$_sdl_swapbe64$qword$$qword,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_SWAPBE64$QWORD$$QWORD
 SDL2_$$_SDL_SWAPBE64$QWORD$$QWORD:
-.Lc64:
+.Lc126:
 .seh_proc SDL2_$$_SDL_SWAPBE64$QWORD$$QWORD
-.Ll98:
+.Ll108:
 # [2850] begin
-	leaq	-40(%rsp),%rsp
-.Lc66:
-.seh_stackalloc 40
-# Var x located in register rcx
-# Var $result located in register rax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc128:
+.Lc129:
+	movq	%rsp,%rbp
+.Lc130:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-# Var x located in register rcx
-.Ll99:
+# Var x located at rbp-8, size=OS_64
+# Var $result located at rbp-16, size=OS_64
+	movq	%rcx,-8(%rbp)
+.Ll109:
 # [2851] exit(BEtoN(x));
+	movq	-8(%rbp),%rcx
 	call	SYSTEM_$$_SWAPENDIAN$QWORD$$QWORD
-# Var $result located in register rax
-.Ll100:
+	movq	%rax,-16(%rbp)
+.Ll110:
 # [2852] end;
+	movq	-16(%rbp),%rax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc65:
+.Lc127:
 .Lt26:
-.Ll101:
+.Ll111:
 
 .section .text.n_sdl2_$$_sdl_swapfloatbe$single$$single,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_SWAPFLOATBE$SINGLE$$SINGLE
 SDL2_$$_SDL_SWAPFLOATBE$SINGLE$$SINGLE:
-.Lc67:
-# Temps allocated between rsp+32 and rsp+40
+.Lc131:
+# Temps allocated between rbp-40 and rbp-16
 .seh_proc SDL2_$$_SDL_SWAPFLOATBE$SINGLE$$SINGLE
-.Ll102:
+.Ll112:
 # [2855] begin
-	leaq	-40(%rsp),%rsp
-.Lc69:
-.seh_stackalloc 40
-# Var x located in register xmm0
-# Var $result located in register xmm0
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc133:
+.Lc134:
+	movq	%rsp,%rbp
+.Lc135:
+	leaq	-80(%rsp),%rsp
+.seh_stackalloc 80
 .seh_endprologue
-# Var x located in register xmm0
-.Ll103:
+# Var x located at rbp-8, size=OS_F32
+# Var $result located at rbp-16, size=OS_F32
+	movss	%xmm0,-8(%rbp)
+.Ll113:
 # [2859] exit(SDL_SwapFloat(x));
-	movss	%xmm0,32(%rsp)
-	movl	32(%rsp),%eax
-	movl	%eax,%ecx
+	movl	-8(%rbp),%eax
+	movl	%eax,-24(%rbp)
+	movl	-24(%rbp),%ecx
 	call	SYSTEM_$$_SWAPENDIAN$LONGWORD$$LONGWORD
-	movl	%eax,32(%rsp)
-	movss	32(%rsp),%xmm0
-# Var $result located in register xmm0
-.Ll104:
+	movl	%eax,-24(%rbp)
+	movss	-24(%rbp),%xmm0
+	movss	%xmm0,-16(%rbp)
+.Ll114:
 # [2861] end;
-	nop
-	leaq	40(%rsp),%rsp
+	movss	-16(%rbp),%xmm0
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc68:
+.Lc132:
 .Lt27:
-.Ll105:
+.Ll115:
 
 .section .text.n_sdl2_$$_sdl_rwsize$psdl_rwops$$int64,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_RWSIZE$PSDL_RWOPS$$INT64
 SDL2_$$_SDL_RWSIZE$PSDL_RWOPS$$INT64:
-.Lc70:
+.Lc136:
 .seh_proc SDL2_$$_SDL_RWSIZE$PSDL_RWOPS$$INT64
-.Ll106:
+.Ll116:
 # [2867] begin
-	leaq	-40(%rsp),%rsp
-.Lc72:
-.seh_stackalloc 40
-# Var ctx located in register rax
-# Var $result located in register rax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc138:
+.Lc139:
+	movq	%rsp,%rbp
+.Lc140:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-# PeepHole Optimization,MovMov2Mov1
-	movq	%rcx,%rax
-# Var ctx located in register rax
-# Var ctx located in register rax
-.Ll107:
+# Var ctx located at rbp-8, size=OS_64
+# Var $result located at rbp-16, size=OS_S64
+	movq	%rcx,-8(%rbp)
+.Ll117:
 # [2868] exit(ctx^.size(ctx));
-	call	*(%rax)
-# Var $result located in register rax
-.Ll108:
+	movq	-8(%rbp),%rax
+	movq	-8(%rbp),%rdx
+	movq	%rax,%rcx
+	call	*(%rdx)
+	movq	%rax,-16(%rbp)
+.Ll118:
 # [2869] end;
+	movq	-16(%rbp),%rax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc71:
+.Lc137:
 .Lt28:
-.Ll109:
+.Ll119:
 
 .section .text.n_sdl2_$$_sdl_rwseek$psdl_rwops$int64$longint$$int64,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_RWSEEK$PSDL_RWOPS$INT64$LONGINT$$INT64
 SDL2_$$_SDL_RWSEEK$PSDL_RWOPS$INT64$LONGINT$$INT64:
-.Lc73:
+.Lc141:
 .seh_proc SDL2_$$_SDL_RWSEEK$PSDL_RWOPS$INT64$LONGINT$$INT64
-.Ll110:
+.Ll120:
 # [2873] begin
-	leaq	-40(%rsp),%rsp
-.Lc75:
-.seh_stackalloc 40
-# Var ctx located in register rax
-# Var offset located in register rdx
-# Var whence located in register r8d
-# Var $result located in register rax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc143:
+.Lc144:
+	movq	%rsp,%rbp
+.Lc145:
+	leaq	-64(%rsp),%rsp
+.seh_stackalloc 64
 .seh_endprologue
-# PeepHole Optimization,MovMov2Mov1
-	movq	%rcx,%rax
-# Var whence located in register r8d
-# Var offset located in register rdx
-# Var ctx located in register rax
-# Var ctx located in register rax
-.Ll111:
+# Var ctx located at rbp-8, size=OS_64
+# Var offset located at rbp-16, size=OS_S64
+# Var whence located at rbp-24, size=OS_S32
+# Var $result located at rbp-32, size=OS_S64
+	movq	%rcx,-8(%rbp)
+	movq	%rdx,-16(%rbp)
+	movl	%r8d,-24(%rbp)
+.Ll121:
 # [2874] exit(ctx^.seek(ctx, offset, whence));
-	call	*8(%rax)
-# Var $result located in register rax
-.Ll112:
+	movl	-24(%rbp),%eax
+	movq	-16(%rbp),%rdx
+	movq	-8(%rbp),%rcx
+	movq	-8(%rbp),%r9
+	movl	%eax,%r8d
+	call	*8(%r9)
+	movq	%rax,-32(%rbp)
+.Ll122:
 # [2875] end;
+	movq	-32(%rbp),%rax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc74:
+.Lc142:
 .Lt29:
-.Ll113:
+.Ll123:
 
 .section .text.n_sdl2_$$_sdl_rwtell$psdl_rwops$$int64,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_RWTELL$PSDL_RWOPS$$INT64
 SDL2_$$_SDL_RWTELL$PSDL_RWOPS$$INT64:
-.Lc76:
+.Lc146:
 .seh_proc SDL2_$$_SDL_RWTELL$PSDL_RWOPS$$INT64
-.Ll114:
+.Ll124:
 # [2878] begin
-	leaq	-40(%rsp),%rsp
-.Lc78:
-.seh_stackalloc 40
-# Var ctx located in register rax
-# Var $result located in register rax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc148:
+.Lc149:
+	movq	%rsp,%rbp
+.Lc150:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-# PeepHole Optimization,MovMov2Mov1
-	movq	%rcx,%rax
-# Var ctx located in register rax
-.Ll115:
+# Var ctx located at rbp-8, size=OS_64
+# Var $result located at rbp-16, size=OS_S64
+	movq	%rcx,-8(%rbp)
+.Ll125:
 # [2879] exit(ctx^.seek(ctx, 0, RW_SEEK_CUR));
+	movq	-8(%rbp),%rax
 	movl	$1,%r8d
 	movq	$0,%rdx
-# Var ctx located in register rax
-	call	*8(%rax)
-# Var $result located in register rax
-.Ll116:
+	movq	-8(%rbp),%r9
+	movq	%rax,%rcx
+	call	*8(%r9)
+	movq	%rax,-16(%rbp)
+.Ll126:
 # [2880] end;
+	movq	-16(%rbp),%rax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc77:
+.Lc147:
 .Lt30:
-.Ll117:
+.Ll127:
 
 .section .text.n_sdl2_$$_sdl_rwread$psdl_rwops$pointer$longword$longword$$longword,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_RWREAD$PSDL_RWOPS$POINTER$LONGWORD$LONGWORD$$LONGWORD
 SDL2_$$_SDL_RWREAD$PSDL_RWOPS$POINTER$LONGWORD$LONGWORD$$LONGWORD:
-.Lc79:
+.Lc151:
 .seh_proc SDL2_$$_SDL_RWREAD$PSDL_RWOPS$POINTER$LONGWORD$LONGWORD$$LONGWORD
-.Ll118:
+.Ll128:
 # [2883] begin
-	leaq	-40(%rsp),%rsp
-.Lc81:
-.seh_stackalloc 40
-# Var ctx located in register rax
-# Var ptr located in register rdx
-# Var size located in register r8d
-# Var n located in register r9d
-# Var $result located in register eax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc153:
+.Lc154:
+	movq	%rsp,%rbp
+.Lc155:
+	leaq	-80(%rsp),%rsp
+.seh_stackalloc 80
 .seh_endprologue
-	movq	%rcx,%rax
-.Ll119:
+# Var ctx located at rbp-8, size=OS_64
+# Var ptr located at rbp-16, size=OS_64
+# Var size located at rbp-24, size=OS_32
+# Var n located at rbp-32, size=OS_32
+# Var $result located at rbp-40, size=OS_32
+	movq	%rcx,-8(%rbp)
+	movq	%rdx,-16(%rbp)
+	movl	%r8d,-24(%rbp)
+	movl	%r9d,-32(%rbp)
+.Ll129:
 # [2884] exit(ctx^.read(ctx, ptr, size, n));
-	andl	$4294967295,%r9d
-	andl	$4294967295,%r8d
-# Var ptr located in register rdx
-# Var ctx located in register rax
-	movq	%rax,%rcx
-# Var ctx located in register rax
+	movl	-32(%rbp),%eax
+	movq	%rax,%r9
+	movl	-24(%rbp),%r8d
+	movq	-16(%rbp),%rdx
+	movq	-8(%rbp),%rcx
+	movq	-8(%rbp),%rax
 	call	*16(%rax)
-# Var $result located in register eax
-.Ll120:
+	movl	%eax,-40(%rbp)
+.Ll130:
 # [2885] end;
+	movl	-40(%rbp),%eax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc80:
+.Lc152:
 .Lt31:
-.Ll121:
+.Ll131:
 
 .section .text.n_sdl2_$$_sdl_rwwrite$psdl_rwops$pointer$longword$longword$$longword,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_RWWRITE$PSDL_RWOPS$POINTER$LONGWORD$LONGWORD$$LONGWORD
 SDL2_$$_SDL_RWWRITE$PSDL_RWOPS$POINTER$LONGWORD$LONGWORD$$LONGWORD:
-.Lc82:
+.Lc156:
 .seh_proc SDL2_$$_SDL_RWWRITE$PSDL_RWOPS$POINTER$LONGWORD$LONGWORD$$LONGWORD
-.Ll122:
+.Ll132:
 # [2888] begin
-	leaq	-40(%rsp),%rsp
-.Lc84:
-.seh_stackalloc 40
-# Var ctx located in register rax
-# Var ptr located in register rdx
-# Var size located in register r8d
-# Var n located in register r9d
-# Var $result located in register eax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc158:
+.Lc159:
+	movq	%rsp,%rbp
+.Lc160:
+	leaq	-80(%rsp),%rsp
+.seh_stackalloc 80
 .seh_endprologue
-	movq	%rcx,%rax
-.Ll123:
+# Var ctx located at rbp-8, size=OS_64
+# Var ptr located at rbp-16, size=OS_64
+# Var size located at rbp-24, size=OS_32
+# Var n located at rbp-32, size=OS_32
+# Var $result located at rbp-40, size=OS_32
+	movq	%rcx,-8(%rbp)
+	movq	%rdx,-16(%rbp)
+	movl	%r8d,-24(%rbp)
+	movl	%r9d,-32(%rbp)
+.Ll133:
 # [2889] exit(ctx^.write(ctx, ptr, size, n));
-	andl	$4294967295,%r9d
-	andl	$4294967295,%r8d
-# Var ptr located in register rdx
-# Var ctx located in register rax
-	movq	%rax,%rcx
-# Var ctx located in register rax
+	movl	-32(%rbp),%eax
+	movq	%rax,%r9
+	movl	-24(%rbp),%r8d
+	movq	-16(%rbp),%rdx
+	movq	-8(%rbp),%rcx
+	movq	-8(%rbp),%rax
 	call	*24(%rax)
-# Var $result located in register eax
-.Ll124:
+	movl	%eax,-40(%rbp)
+.Ll134:
 # [2890] end;
+	movl	-40(%rbp),%eax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc83:
+.Lc157:
 .Lt32:
-.Ll125:
+.Ll135:
 
 .section .text.n_sdl2_$$_sdl_rwclose$psdl_rwops$$longint,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_RWCLOSE$PSDL_RWOPS$$LONGINT
 SDL2_$$_SDL_RWCLOSE$PSDL_RWOPS$$LONGINT:
-.Lc85:
+.Lc161:
 .seh_proc SDL2_$$_SDL_RWCLOSE$PSDL_RWOPS$$LONGINT
-.Ll126:
+.Ll136:
 # [2893] begin
-	leaq	-40(%rsp),%rsp
-.Lc87:
-.seh_stackalloc 40
-# Var ctx located in register rax
-# Var $result located in register eax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc163:
+.Lc164:
+	movq	%rsp,%rbp
+.Lc165:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-# PeepHole Optimization,MovMov2Mov1
-	movq	%rcx,%rax
-# Var ctx located in register rax
-# Var ctx located in register rax
-.Ll127:
+# Var ctx located at rbp-8, size=OS_64
+# Var $result located at rbp-16, size=OS_S32
+	movq	%rcx,-8(%rbp)
+.Ll137:
 # [2894] exit(ctx^.close(ctx));
-	call	*32(%rax)
-# Var $result located in register eax
-.Ll128:
+	movq	-8(%rbp),%rax
+	movq	-8(%rbp),%rdx
+	movq	%rax,%rcx
+	call	*32(%rdx)
+	movl	%eax,-16(%rbp)
+.Ll138:
 # [2895] end;
+	movl	-16(%rbp),%eax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc86:
+.Lc162:
 .Lt33:
-.Ll129:
+.Ll139:
 
 .section .text.n_sdl2_$$_sdl_audio_bitsize$word$$word,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_AUDIO_BITSIZE$WORD$$WORD
 SDL2_$$_SDL_AUDIO_BITSIZE$WORD$$WORD:
-.Lc88:
-# Var x located in register ax
-# Var $result located in register ax
-.Ll130:
+.Lc166:
+.seh_proc SDL2_$$_SDL_AUDIO_BITSIZE$WORD$$WORD
+.Ll140:
 # [2901] begin
-	movw	%cx,%ax
-# PeepHole Optimization,var1
-# Var $result located in register ax
-# PeepHole Optimization,var11
-.Ll131:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc168:
+.Lc169:
+	movq	%rsp,%rbp
+.Lc170:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var x located at rbp-8, size=OS_16
+# Var $result located at rbp-16, size=OS_16
+	movw	%cx,-8(%rbp)
+.Ll141:
+# [2902] exit(x and SDL_AUDIO_MASK_BITSIZE);
+	movw	-8(%rbp),%ax
+	andw	$255,%ax
+	movw	%ax,-16(%rbp)
+.Ll142:
 # [2903] end;
-	andl	$255,%eax
+	movzwl	-16(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc89:
+.seh_endproc
+.Lc167:
 .Lt34:
-.Ll132:
+.Ll143:
 
 .section .text.n_sdl2_$$_sdl_audio_isfloat$word$$boolean,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_AUDIO_ISFLOAT$WORD$$BOOLEAN
 SDL2_$$_SDL_AUDIO_ISFLOAT$WORD$$BOOLEAN:
-.Lc90:
-# Var x located in register cx
-# Var $result located in register al
+.Lc171:
+.seh_proc SDL2_$$_SDL_AUDIO_ISFLOAT$WORD$$BOOLEAN
+.Ll144:
 # [2906] begin
-# PeepHole Optimization,var11
-# PeepHole Optimization,var1
-.Ll133:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc173:
+.Lc174:
+	movq	%rsp,%rbp
+.Lc175:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var x located at rbp-8, size=OS_16
+# Var $result located at rbp-16, size=OS_8
+	movw	%cx,-8(%rbp)
+# PeepHole Optimization,var14
+.Ll145:
 # [2907] exit((x and SDL_AUDIO_MASK_DATATYPE) > 0);
-	andl	$256,%ecx
-	cmpl	$0,%ecx
-# Var $result located in register al
-	setgb	%al
-# PeepHole Optimization,var9
-.Ll134:
+	movl	-8(%rbp),%eax
+	andl	$256,%eax
+	cmpl	$0,%eax
+	setgb	-16(%rbp)
+.Ll146:
 # [2908] end;
-	andl	$255,%eax
+	movzbl	-16(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc91:
+.seh_endproc
+.Lc172:
 .Lt35:
-.Ll135:
+.Ll147:
 
 .section .text.n_sdl2_$$_sdl_audio_isbigendian$word$$boolean,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_AUDIO_ISBIGENDIAN$WORD$$BOOLEAN
 SDL2_$$_SDL_AUDIO_ISBIGENDIAN$WORD$$BOOLEAN:
-.Lc92:
-# Var x located in register cx
-# Var $result located in register al
+.Lc176:
+.seh_proc SDL2_$$_SDL_AUDIO_ISBIGENDIAN$WORD$$BOOLEAN
+.Ll148:
 # [2911] begin
-# PeepHole Optimization,var11
-# PeepHole Optimization,var1
-.Ll136:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc178:
+.Lc179:
+	movq	%rsp,%rbp
+.Lc180:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var x located at rbp-8, size=OS_16
+# Var $result located at rbp-16, size=OS_8
+	movw	%cx,-8(%rbp)
+# PeepHole Optimization,var14
+.Ll149:
 # [2912] exit((x and SDL_AUDIO_MASK_ENDIAN) > 0);
-	andl	$4096,%ecx
-	cmpl	$0,%ecx
-# Var $result located in register al
-	setgb	%al
-# PeepHole Optimization,var9
-.Ll137:
+	movl	-8(%rbp),%eax
+	andl	$4096,%eax
+	cmpl	$0,%eax
+	setgb	-16(%rbp)
+.Ll150:
 # [2913] end;
-	andl	$255,%eax
+	movzbl	-16(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc93:
+.seh_endproc
+.Lc177:
 .Lt36:
-.Ll138:
+.Ll151:
 
 .section .text.n_sdl2_$$_sdl_audio_issigned$word$$boolean,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_AUDIO_ISSIGNED$WORD$$BOOLEAN
 SDL2_$$_SDL_AUDIO_ISSIGNED$WORD$$BOOLEAN:
-.Lc94:
-# Var x located in register cx
-# Var $result located in register al
+.Lc181:
+.seh_proc SDL2_$$_SDL_AUDIO_ISSIGNED$WORD$$BOOLEAN
+.Ll152:
 # [2916] begin
-.Ll139:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc183:
+.Lc184:
+	movq	%rsp,%rbp
+.Lc185:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var x located at rbp-8, size=OS_16
+# Var $result located at rbp-16, size=OS_8
+	movw	%cx,-8(%rbp)
+.Ll153:
 # [2917] exit((x and SDL_AUDIO_MASK_SIGNED) > 0);
-	andw	$32768,%cx
-	cmpw	$0,%cx
-# Var $result located in register al
-	setab	%al
-# PeepHole Optimization,var9
-.Ll140:
+	movw	-8(%rbp),%ax
+	andw	$32768,%ax
+	cmpw	$0,%ax
+	setab	-16(%rbp)
+.Ll154:
 # [2918] end;
-	andl	$255,%eax
+	movzbl	-16(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc95:
+.seh_endproc
+.Lc182:
 .Lt37:
-.Ll141:
+.Ll155:
 
 .section .text.n_sdl2_$$_sdl_audio_isint$word$$boolean,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_AUDIO_ISINT$WORD$$BOOLEAN
 SDL2_$$_SDL_AUDIO_ISINT$WORD$$BOOLEAN:
-.Lc96:
-# Var x located in register cx
-# Var $result located in register al
+.Lc186:
+.seh_proc SDL2_$$_SDL_AUDIO_ISINT$WORD$$BOOLEAN
+.Ll156:
 # [2921] begin
-# PeepHole Optimization,var11
-# PeepHole Optimization,var1
-.Ll142:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc188:
+.Lc189:
+	movq	%rsp,%rbp
+.Lc190:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var x located at rbp-8, size=OS_16
+# Var $result located at rbp-16, size=OS_8
+	movw	%cx,-8(%rbp)
+# PeepHole Optimization,var14
+.Ll157:
 # [2922] exit(not SDL_AUDIO_ISFLOAT(x));
-	andl	$256,%ecx
-	cmpl	$0,%ecx
+	movl	-8(%rbp),%eax
+	andl	$256,%eax
+	cmpl	$0,%eax
 	setgb	%al
 	testb	%al,%al
-# Var $result located in register al
-	seteb	%al
-# PeepHole Optimization,var9
-.Ll143:
+	seteb	-16(%rbp)
+.Ll158:
 # [2923] end;
-	andl	$255,%eax
+	movzbl	-16(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc97:
+.seh_endproc
+.Lc187:
 .Lt38:
-.Ll144:
+.Ll159:
 
 .section .text.n_sdl2_$$_sdl_audio_islittleendian$word$$boolean,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_AUDIO_ISLITTLEENDIAN$WORD$$BOOLEAN
 SDL2_$$_SDL_AUDIO_ISLITTLEENDIAN$WORD$$BOOLEAN:
-.Lc98:
-# Var x located in register cx
-# Var $result located in register al
+.Lc191:
+.seh_proc SDL2_$$_SDL_AUDIO_ISLITTLEENDIAN$WORD$$BOOLEAN
+.Ll160:
 # [2926] begin
-# PeepHole Optimization,var11
-# PeepHole Optimization,var1
-.Ll145:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc193:
+.Lc194:
+	movq	%rsp,%rbp
+.Lc195:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var x located at rbp-8, size=OS_16
+# Var $result located at rbp-16, size=OS_8
+	movw	%cx,-8(%rbp)
+# PeepHole Optimization,var14
+.Ll161:
 # [2927] exit(not SDL_AUDIO_ISBIGENDIAN(x));
-	andl	$4096,%ecx
-	cmpl	$0,%ecx
+	movl	-8(%rbp),%eax
+	andl	$4096,%eax
+	cmpl	$0,%eax
 	setgb	%al
 	testb	%al,%al
-# Var $result located in register al
-	seteb	%al
-# PeepHole Optimization,var9
-.Ll146:
+	seteb	-16(%rbp)
+.Ll162:
 # [2928] end;
-	andl	$255,%eax
+	movzbl	-16(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc99:
+.seh_endproc
+.Lc192:
 .Lt39:
-.Ll147:
+.Ll163:
 
 .section .text.n_sdl2_$$_sdl_audio_isunsigned$word$$boolean,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_AUDIO_ISUNSIGNED$WORD$$BOOLEAN
 SDL2_$$_SDL_AUDIO_ISUNSIGNED$WORD$$BOOLEAN:
-.Lc100:
-# Var x located in register cx
-# Var $result located in register al
+.Lc196:
+.seh_proc SDL2_$$_SDL_AUDIO_ISUNSIGNED$WORD$$BOOLEAN
+.Ll164:
 # [2931] begin
-.Ll148:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc198:
+.Lc199:
+	movq	%rsp,%rbp
+.Lc200:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var x located at rbp-8, size=OS_16
+# Var $result located at rbp-16, size=OS_8
+	movw	%cx,-8(%rbp)
+.Ll165:
 # [2932] exit(not SDL_AUDIO_ISSIGNED(x));
-	andw	$32768,%cx
-	cmpw	$0,%cx
+	movw	-8(%rbp),%ax
+	andw	$32768,%ax
+	cmpw	$0,%ax
 	setab	%al
 	testb	%al,%al
-# Var $result located in register al
-	seteb	%al
-# PeepHole Optimization,var9
-.Ll149:
+	seteb	-16(%rbp)
+.Ll166:
 # [2933] end;
-	andl	$255,%eax
+	movzbl	-16(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc101:
+.seh_endproc
+.Lc197:
 .Lt40:
-.Ll150:
+.Ll167:
 
 .section .text.n_sdl2_$$_sdl_loadwav$pchar$psdl_audiospec$ppbyte$pdword$$psdl_audiospec,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_LOADWAV$PCHAR$PSDL_AUDIOSPEC$PPBYTE$PDWORD$$PSDL_AUDIOSPEC
 SDL2_$$_SDL_LOADWAV$PCHAR$PSDL_AUDIOSPEC$PPBYTE$PDWORD$$PSDL_AUDIOSPEC:
-.Lc102:
+.Lc201:
 .seh_proc SDL2_$$_SDL_LOADWAV$PCHAR$PSDL_AUDIOSPEC$PPBYTE$PDWORD$$PSDL_AUDIOSPEC
-.Ll151:
+.Ll168:
 # [2937] begin
-	pushq	%rbx
-.seh_pushreg %rbx
-	pushq	%rsi
-.seh_pushreg %rsi
-	leaq	-40(%rsp),%rsp
-.Lc104:
-.seh_stackalloc 40
-# Var file_ located in register rcx
-# Var spec located in register r8
-# Var audio_buf located in register r9
-# Var audio_len located in register r9
-# Var $result located in register rax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc203:
+.Lc204:
+	movq	%rsp,%rbp
+.Lc205:
+	leaq	-96(%rsp),%rsp
+.seh_stackalloc 96
 .seh_endprologue
-	movq	%rdx,%rbx
-	movq	%r8,%rsi
-# Var audio_len located in register r9
-.Ll152:
+# Var file_ located at rbp-8, size=OS_64
+# Var spec located at rbp-16, size=OS_64
+# Var audio_buf located at rbp-24, size=OS_64
+# Var audio_len located at rbp-32, size=OS_64
+# Var $result located at rbp-40, size=OS_64
+	movq	%rcx,-8(%rbp)
+	movq	%rdx,-16(%rbp)
+	movq	%r8,-24(%rbp)
+	movq	%r9,-32(%rbp)
+.Ll169:
 # [2938] exit(SDL_LoadWAV_RW(SDL_RWFromFile(file_, 'rb'), 1, spec, audio_buf, audio_len));
-	movq	%r9,32(%rsp)
+	movq	-32(%rbp),%rax
+	movq	%rax,32(%rsp)
 	leaq	_$SDL2$_Ld6(%rip),%rdx
-# Var file_ located in register rcx
+	movq	-8(%rbp),%rcx
 	call	_$dll$sdl2$SDL_RWFromFile
 	movq	%rax,%rcx
-	movq	%rsi,%r9
-# Var audio_buf located in register r9
-	movq	%rbx,%r8
-# Var spec located in register r8
+	movq	-24(%rbp),%r9
+	movq	-16(%rbp),%r8
 	movl	$1,%edx
 	call	_$dll$sdl2$SDL_LoadWAV_RW
-# Var $result located in register rax
-.Ll153:
+	movq	%rax,-40(%rbp)
+.Ll170:
 # [2939] end;
+	movq	-40(%rbp),%rax
 	nop
-	leaq	40(%rsp),%rsp
-	popq	%rsi
-	popq	%rbx
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc103:
+.Lc202:
 .Lt41:
-.Ll154:
+.Ll171:
 
 .section .text.n_sdl2_$$_sdl_pixelflag$longword$$longword,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_PIXELFLAG$LONGWORD$$LONGWORD
 SDL2_$$_SDL_PIXELFLAG$LONGWORD$$LONGWORD:
-.Lc105:
-# Var X located in register eax
-# Var $result located in register eax
-.Ll155:
+.Lc206:
+.seh_proc SDL2_$$_SDL_PIXELFLAG$LONGWORD$$LONGWORD
+.Ll172:
 # [2945] begin
-	movl	%ecx,%eax
-.Ll156:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc208:
+.Lc209:
+	movq	%rsp,%rbp
+.Lc210:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var X located at rbp-8, size=OS_32
+# Var $result located at rbp-16, size=OS_32
+	movl	%ecx,-8(%rbp)
+.Ll173:
 # [2946] exit((X shr 28) and $0F);
+	movl	-8(%rbp),%eax
 	shrl	$28,%eax
 	andl	$15,%eax
-# Var $result located in register eax
-.Ll157:
+	movl	%eax,-16(%rbp)
+.Ll174:
 # [2947] end;
+	movl	-16(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc106:
+.seh_endproc
+.Lc207:
 .Lt42:
-.Ll158:
+.Ll175:
 
 .section .text.n_sdl2_$$_sdl_pixeltype$longword$$longword,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_PIXELTYPE$LONGWORD$$LONGWORD
 SDL2_$$_SDL_PIXELTYPE$LONGWORD$$LONGWORD:
-.Lc107:
-# Var X located in register eax
-# Var $result located in register eax
-.Ll159:
+.Lc211:
+.seh_proc SDL2_$$_SDL_PIXELTYPE$LONGWORD$$LONGWORD
+.Ll176:
 # [2950] begin
-	movl	%ecx,%eax
-.Ll160:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc213:
+.Lc214:
+	movq	%rsp,%rbp
+.Lc215:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var X located at rbp-8, size=OS_32
+# Var $result located at rbp-16, size=OS_32
+	movl	%ecx,-8(%rbp)
+.Ll177:
 # [2951] exit((X shr 24) and $0F);
+	movl	-8(%rbp),%eax
 	shrl	$24,%eax
 	andl	$15,%eax
-# Var $result located in register eax
-.Ll161:
+	movl	%eax,-16(%rbp)
+.Ll178:
 # [2952] end;
+	movl	-16(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc108:
+.seh_endproc
+.Lc212:
 .Lt43:
-.Ll162:
+.Ll179:
 
 .section .text.n_sdl2_$$_sdl_pixelorder$longword$$longword,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_PIXELORDER$LONGWORD$$LONGWORD
 SDL2_$$_SDL_PIXELORDER$LONGWORD$$LONGWORD:
-.Lc109:
-# Var X located in register eax
-# Var $result located in register eax
-.Ll163:
+.Lc216:
+.seh_proc SDL2_$$_SDL_PIXELORDER$LONGWORD$$LONGWORD
+.Ll180:
 # [2955] begin
-	movl	%ecx,%eax
-.Ll164:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc218:
+.Lc219:
+	movq	%rsp,%rbp
+.Lc220:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var X located at rbp-8, size=OS_32
+# Var $result located at rbp-16, size=OS_32
+	movl	%ecx,-8(%rbp)
+.Ll181:
 # [2956] exit((X shr 20) and $0F);
+	movl	-8(%rbp),%eax
 	shrl	$20,%eax
 	andl	$15,%eax
-# Var $result located in register eax
-.Ll165:
+	movl	%eax,-16(%rbp)
+.Ll182:
 # [2957] end;
+	movl	-16(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc110:
+.seh_endproc
+.Lc217:
 .Lt44:
-.Ll166:
+.Ll183:
 
 .section .text.n_sdl2_$$_sdl_pixellayout$longword$$longword,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_PIXELLAYOUT$LONGWORD$$LONGWORD
 SDL2_$$_SDL_PIXELLAYOUT$LONGWORD$$LONGWORD:
-.Lc111:
-# Var X located in register eax
-# Var $result located in register eax
-.Ll167:
+.Lc221:
+.seh_proc SDL2_$$_SDL_PIXELLAYOUT$LONGWORD$$LONGWORD
+.Ll184:
 # [2960] begin
-	movl	%ecx,%eax
-.Ll168:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc223:
+.Lc224:
+	movq	%rsp,%rbp
+.Lc225:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var X located at rbp-8, size=OS_32
+# Var $result located at rbp-16, size=OS_32
+	movl	%ecx,-8(%rbp)
+.Ll185:
 # [2961] exit((X shr 16) and $0F);
+	movl	-8(%rbp),%eax
 	shrl	$16,%eax
 	andl	$15,%eax
-# Var $result located in register eax
-.Ll169:
+	movl	%eax,-16(%rbp)
+.Ll186:
 # [2962] end;
+	movl	-16(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc112:
+.seh_endproc
+.Lc222:
 .Lt45:
-.Ll170:
+.Ll187:
 
 .section .text.n_sdl2_$$_sdl_bitsperpixel$longword$$longword,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_BITSPERPIXEL$LONGWORD$$LONGWORD
 SDL2_$$_SDL_BITSPERPIXEL$LONGWORD$$LONGWORD:
-.Lc113:
-# Var X located in register eax
-# Var $result located in register eax
-.Ll171:
+.Lc226:
+.seh_proc SDL2_$$_SDL_BITSPERPIXEL$LONGWORD$$LONGWORD
+.Ll188:
 # [2965] begin
-	movl	%ecx,%eax
-.Ll172:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc228:
+.Lc229:
+	movq	%rsp,%rbp
+.Lc230:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var X located at rbp-8, size=OS_32
+# Var $result located at rbp-16, size=OS_32
+	movl	%ecx,-8(%rbp)
+.Ll189:
 # [2966] exit((X shr 8) and $FF);
+	movl	-8(%rbp),%eax
 	shrl	$8,%eax
 	andl	$255,%eax
-# Var $result located in register eax
-.Ll173:
+	movl	%eax,-16(%rbp)
+.Ll190:
 # [2967] end;
+	movl	-16(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc114:
+.seh_endproc
+.Lc227:
 .Lt46:
-.Ll174:
+.Ll191:
 
 .section .text.n_sdl2_$$_sdl_bytesperpixel$longword$$longword,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_BYTESPERPIXEL$LONGWORD$$LONGWORD
 SDL2_$$_SDL_BYTESPERPIXEL$LONGWORD$$LONGWORD:
-.Lc115:
+.Lc231:
 .seh_proc SDL2_$$_SDL_BYTESPERPIXEL$LONGWORD$$LONGWORD
-.Ll175:
+.Ll192:
 # [2970] begin
-	pushq	%rbx
-.seh_pushreg %rbx
-	leaq	-32(%rsp),%rsp
-.Lc117:
-.seh_stackalloc 32
-# Var X located in register ebx
-# Var $result located in register eax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc233:
+.Lc234:
+	movq	%rsp,%rbp
+.Lc235:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-# PeepHole Optimization,MovMov2Mov1
-	movl	%ecx,%ebx
-.Ll176:
+# Var X located at rbp-8, size=OS_32
+# Var $result located at rbp-16, size=OS_32
+	movl	%ecx,-8(%rbp)
+.Ll193:
 # [2971] if SDL_ISPIXELFORMAT_FOURCC(X) then
+	movl	-8(%rbp),%eax
+	movl	%eax,%ecx
 	call	SDL2_$$_SDL_ISPIXELFORMAT_FOURCC$LONGWORD$$BOOLEAN
 	testb	%al,%al
-	je	.Lj364
-.Ll177:
+	je	.Lj360
+.Ll194:
 # [2973] if (X = SDL_PIXELFORMAT_YUY2) or
-	cmpl	$844715353,%ebx
-	je	.Lj367
-.Ll178:
+	cmpl	$844715353,-8(%rbp)
+	je	.Lj363
+.Ll195:
 # [2974] (X = SDL_PIXELFORMAT_UYVY) or
-	cmpl	$1498831189,%ebx
-	je	.Lj367
-.Ll179:
+	cmpl	$1498831189,-8(%rbp)
+	je	.Lj363
+.Ll196:
 # [2975] (X = SDL_PIXELFORMAT_YVYU) then
-	cmpl	$1431918169,%ebx
-	jne	.Lj368
-.Lj367:
-.Ll180:
+	cmpl	$1431918169,-8(%rbp)
+	jne	.Lj364
+.Lj363:
+.Ll197:
 # [2977] else
-	movl	$2,%eax
-.Ll181:
+	movl	$2,-16(%rbp)
+.Ll198:
 # [2976] exit(2)
-	jmp	.Lj361
-.Lj368:
-.Ll182:
-# [2978] exit(1);
-	movl	$1,%eax
-	jmp	.Lj361
+	jmp	.Lj357
 .Lj364:
-.Ll183:
+.Ll199:
+# [2978] exit(1);
+	movl	$1,-16(%rbp)
+	jmp	.Lj357
+.Lj360:
+.Ll200:
 # [2981] exit((X shr 0) and $FF);
-	andl	$255,%ebx
-	movl	%ebx,%eax
-.Lj361:
-.Ll184:
+	movl	-8(%rbp),%eax
+	andl	$255,%eax
+	movl	%eax,-16(%rbp)
+.Lj357:
+.Ll201:
 # [2982] end;
+	movl	-16(%rbp),%eax
 	nop
-	leaq	32(%rsp),%rsp
-	popq	%rbx
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc116:
+.Lc232:
 .Lt47:
-.Ll185:
+.Ll202:
 
 .section .text.n_sdl2_$$_sdl_ispixelformat_indexed$longword$$boolean,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_ISPIXELFORMAT_INDEXED$LONGWORD$$BOOLEAN
 SDL2_$$_SDL_ISPIXELFORMAT_INDEXED$LONGWORD$$BOOLEAN:
-.Lc118:
+.Lc236:
 .seh_proc SDL2_$$_SDL_ISPIXELFORMAT_INDEXED$LONGWORD$$BOOLEAN
-.Ll186:
+.Ll203:
 # [2985] begin
-	pushq	%rbx
-.seh_pushreg %rbx
-	leaq	-32(%rsp),%rsp
-.Lc120:
-.seh_stackalloc 32
-# Var format located in register ebx
-# Var $result located in register al
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc238:
+.Lc239:
+	movq	%rsp,%rbp
+.Lc240:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-# PeepHole Optimization,MovMov2Mov1
-	movl	%ecx,%ebx
-.Ll187:
+# Var format located at rbp-8, size=OS_32
+# Var $result located at rbp-16, size=OS_8
+	movl	%ecx,-8(%rbp)
+.Ll204:
 # [2986] exit((not SDL_ISPIXELFORMAT_FOURCC(format)) and
+	movl	-8(%rbp),%eax
+	movl	%eax,%ecx
 	call	SDL2_$$_SDL_ISPIXELFORMAT_FOURCC$LONGWORD$$BOOLEAN
 	testb	%al,%al
-	jne	.Lj382
-.Ll188:
+	jne	.Lj378
+.Ll205:
 # [2987] ((SDL_PIXELTYPE(format) = SDL_PIXELTYPE_INDEX1) or
-	movl	%ebx,%eax
+	movl	-8(%rbp),%eax
 	shrl	$24,%eax
 	andl	$15,%eax
 	cmpl	$1,%eax
-	je	.Lj381
-.Ll189:
+	je	.Lj377
+.Ll206:
 # [2988] (SDL_PIXELTYPE(format) = SDL_PIXELTYPE_INDEX4) or
-	movl	%ebx,%eax
+	movl	-8(%rbp),%eax
 	shrl	$24,%eax
 	andl	$15,%eax
 	cmpl	$2,%eax
-	je	.Lj381
-.Ll190:
+	je	.Lj377
+.Ll207:
 # [2989] (SDL_PIXELTYPE(format) = SDL_PIXELTYPE_INDEX8)));
-	shrl	$24,%ebx
-	andl	$15,%ebx
-	cmpl	$3,%ebx
-	jne	.Lj382
-# Var $result located in register al
-.Lj381:
-	movb	$1,%al
-	jmp	.Lj379
-.Lj382:
-	movb	$0,%al
-.Lj379:
-# PeepHole Optimization,var9
-.Ll191:
+	movl	-8(%rbp),%eax
+	shrl	$24,%eax
+	andl	$15,%eax
+	cmpl	$3,%eax
+	jne	.Lj378
+.Lj377:
+	movb	$1,-16(%rbp)
+	jmp	.Lj375
+.Lj378:
+	movb	$0,-16(%rbp)
+.Lj375:
+.Ll208:
 # [2990] end;
-	andl	$255,%eax
+	movzbl	-16(%rbp),%eax
 	nop
-	leaq	32(%rsp),%rsp
-	popq	%rbx
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc119:
+.Lc237:
 .Lt48:
-.Ll192:
+.Ll209:
 
 .section .text.n_sdl2_$$_sdl_ispixelformat_alpha$longword$$boolean,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_ISPIXELFORMAT_ALPHA$LONGWORD$$BOOLEAN
 SDL2_$$_SDL_ISPIXELFORMAT_ALPHA$LONGWORD$$BOOLEAN:
-.Lc121:
+.Lc241:
 .seh_proc SDL2_$$_SDL_ISPIXELFORMAT_ALPHA$LONGWORD$$BOOLEAN
-.Ll193:
+.Ll210:
 # [2993] begin
-	pushq	%rbx
-.seh_pushreg %rbx
-	leaq	-32(%rsp),%rsp
-.Lc123:
-.seh_stackalloc 32
-# Var format located in register ebx
-# Var $result located in register al
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc243:
+.Lc244:
+	movq	%rsp,%rbp
+.Lc245:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-# PeepHole Optimization,MovMov2Mov1
-	movl	%ecx,%ebx
-.Ll194:
+# Var format located at rbp-8, size=OS_32
+# Var $result located at rbp-16, size=OS_8
+	movl	%ecx,-8(%rbp)
+.Ll211:
 # [2994] exit((not SDL_ISPIXELFORMAT_FOURCC(format)) and
+	movl	-8(%rbp),%eax
+	movl	%eax,%ecx
 	call	SDL2_$$_SDL_ISPIXELFORMAT_FOURCC$LONGWORD$$BOOLEAN
 	testb	%al,%al
-	jne	.Lj401
-.Ll195:
+	jne	.Lj397
+.Ll212:
 # [2995] ((SDL_PIXELORDER(format) = SDL_PACKEDORDER_ARGB) or
-	movl	%ebx,%eax
+	movl	-8(%rbp),%eax
 	shrl	$20,%eax
 	andl	$15,%eax
 	cmpl	$3,%eax
-	je	.Lj400
-.Ll196:
+	je	.Lj396
+.Ll213:
 # [2996] (SDL_PIXELORDER(format) = SDL_PACKEDORDER_RGBA) or
-	movl	%ebx,%eax
+	movl	-8(%rbp),%eax
 	shrl	$20,%eax
 	andl	$15,%eax
 	cmpl	$4,%eax
-	je	.Lj400
-.Ll197:
+	je	.Lj396
+.Ll214:
 # [2997] (SDL_PIXELORDER(format) = SDL_PACKEDORDER_ABGR) or
-	movl	%ebx,%eax
+	movl	-8(%rbp),%eax
 	shrl	$20,%eax
 	andl	$15,%eax
 	cmpl	$7,%eax
-	je	.Lj400
-.Ll198:
+	je	.Lj396
+.Ll215:
 # [2998] (SDL_PIXELORDER(format) = SDL_PACKEDORDER_BGRA)));
-	shrl	$20,%ebx
-	andl	$15,%ebx
-	cmpl	$8,%ebx
-	jne	.Lj401
-# Var $result located in register al
-.Lj400:
-	movb	$1,%al
-	jmp	.Lj398
-.Lj401:
-	movb	$0,%al
-.Lj398:
-# PeepHole Optimization,var9
-.Ll199:
+	movl	-8(%rbp),%eax
+	shrl	$20,%eax
+	andl	$15,%eax
+	cmpl	$8,%eax
+	jne	.Lj397
+.Lj396:
+	movb	$1,-16(%rbp)
+	jmp	.Lj394
+.Lj397:
+	movb	$0,-16(%rbp)
+.Lj394:
+.Ll216:
 # [2999] end;
-	andl	$255,%eax
+	movzbl	-16(%rbp),%eax
 	nop
-	leaq	32(%rsp),%rsp
-	popq	%rbx
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc122:
+.Lc242:
 .Lt49:
-.Ll200:
+.Ll217:
 
 .section .text.n_sdl2_$$_sdl_ispixelformat_fourcc$longword$$boolean,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_ISPIXELFORMAT_FOURCC$LONGWORD$$BOOLEAN
 SDL2_$$_SDL_ISPIXELFORMAT_FOURCC$LONGWORD$$BOOLEAN:
-.Lc124:
-# Var format located in register ecx
-# Var $result located in register al
+.Lc246:
+.seh_proc SDL2_$$_SDL_ISPIXELFORMAT_FOURCC$LONGWORD$$BOOLEAN
+.Ll218:
 # [3002] begin
-.Ll201:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc248:
+.Lc249:
+	movq	%rsp,%rbp
+.Lc250:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var format located at rbp-8, size=OS_32
+# Var $result located at rbp-16, size=OS_8
+	movl	%ecx,-8(%rbp)
+.Ll219:
 # [3003] exit((format and SDL_PIXELFLAG(format)) <> 1);
-	movl	%ecx,%eax
+	movl	-8(%rbp),%eax
 	shrl	$28,%eax
 	andl	$15,%eax
-	andl	%eax,%ecx
-	cmpl	$1,%ecx
-# Var $result located in register al
-	setneb	%al
-# PeepHole Optimization,var9
-.Ll202:
+	movl	-8(%rbp),%edx
+	andl	%eax,%edx
+	cmpl	$1,%edx
+	setneb	-16(%rbp)
+.Ll220:
 # [3004] end;
-	andl	$255,%eax
+	movzbl	-16(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc125:
+.seh_endproc
+.Lc247:
 .Lt50:
-.Ll203:
+.Ll221:
 
 .section .text.n_sdl2_$$_sdl_rectempty$psdl_rect$$longbool,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_RECTEMPTY$PSDL_RECT$$LONGBOOL
 SDL2_$$_SDL_RECTEMPTY$PSDL_RECT$$LONGBOOL:
-.Lc126:
-# Var x located in register rcx
-# Var $result located in register eax
+.Lc251:
+.seh_proc SDL2_$$_SDL_RECTEMPTY$PSDL_RECT$$LONGBOOL
+.Ll222:
 # [3010] begin
-.Ll204:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc253:
+.Lc254:
+	movq	%rsp,%rbp
+.Lc255:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var x located at rbp-8, size=OS_64
+# Var $result located at rbp-16, size=OS_S32
+	movq	%rcx,-8(%rbp)
+.Ll223:
 # [3011] exit((x = NIL) or (x^.w <= 0) or (x^.h <= 0));
-	testq	%rcx,%rcx
-	je	.Lj432
-	cmpl	$0,8(%rcx)
-	jle	.Lj432
-	cmpl	$0,12(%rcx)
-	jnle	.Lj433
-.Lj432:
-	movl	$-1,%eax
-	jmp	.Lj428
-.Lj433:
-	movl	$0,%eax
-# Var $result located in register eax
+	cmpq	$0,-8(%rbp)
+	je	.Lj428
+	movq	-8(%rbp),%rax
+	cmpl	$0,8(%rax)
+	jle	.Lj428
+	movq	-8(%rbp),%rax
+	cmpl	$0,12(%rax)
+	jnle	.Lj429
 .Lj428:
-.Ll205:
+	movl	$-1,%eax
+	jmp	.Lj432
+.Lj429:
+	movl	$0,%eax
+.Lj432:
+	movl	%eax,-16(%rbp)
+.Ll224:
 # [3012] end;
+	movl	-16(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc127:
+.seh_endproc
+.Lc252:
 .Lt51:
-.Ll206:
+.Ll225:
 
 .section .text.n_sdl2_$$_sdl_rectequals$psdl_rect$psdl_rect$$longbool,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_RECTEQUALS$PSDL_RECT$PSDL_RECT$$LONGBOOL
 SDL2_$$_SDL_RECTEQUALS$PSDL_RECT$PSDL_RECT$$LONGBOOL:
-.Lc128:
-# Var a located in register rcx
-# Var b located in register rdx
-# Var $result located in register eax
+.Lc256:
+.seh_proc SDL2_$$_SDL_RECTEQUALS$PSDL_RECT$PSDL_RECT$$LONGBOOL
+.Ll226:
 # [3015] begin
-.Ll207:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc258:
+.Lc259:
+	movq	%rsp,%rbp
+.Lc260:
+	leaq	-32(%rsp),%rsp
+.seh_stackalloc 32
+.seh_endprologue
+# Var a located at rbp-8, size=OS_64
+# Var b located at rbp-16, size=OS_64
+# Var $result located at rbp-24, size=OS_S32
+	movq	%rcx,-8(%rbp)
+	movq	%rdx,-16(%rbp)
+.Ll227:
 # [3016] exit((a <> NIL) and (b <> NIL) and (a^.x = b^.x) and (a^.y = b^.y) and (a^.w = b^.w) and (a^.h = b^.h));
-	testq	%rcx,%rcx
-	je	.Lj442
-	testq	%rdx,%rdx
-	je	.Lj442
-	movl	(%rcx),%eax
+	cmpq	$0,-8(%rbp)
+	je	.Lj438
+	cmpq	$0,-16(%rbp)
+	je	.Lj438
+	movq	-8(%rbp),%rax
+	movq	-16(%rbp),%rdx
+	movl	(%rax),%eax
 	cmpl	(%rdx),%eax
-	jne	.Lj442
-	movl	4(%rcx),%eax
+	jne	.Lj438
+	movq	-8(%rbp),%rax
+	movq	-16(%rbp),%rdx
+	movl	4(%rax),%eax
 	cmpl	4(%rdx),%eax
-	jne	.Lj442
-	movl	8(%rcx),%eax
+	jne	.Lj438
+	movq	-8(%rbp),%rax
+	movq	-16(%rbp),%rdx
+	movl	8(%rax),%eax
 	cmpl	8(%rdx),%eax
-	jne	.Lj442
-	movl	12(%rcx),%eax
+	jne	.Lj438
+	movq	-8(%rbp),%rax
+	movq	-16(%rbp),%rdx
+	movl	12(%rax),%eax
 	cmpl	12(%rdx),%eax
-	jne	.Lj442
+	jne	.Lj438
 	movl	$-1,%eax
-	jmp	.Lj437
-.Lj442:
+	jmp	.Lj444
+.Lj438:
 	movl	$0,%eax
-# Var $result located in register eax
-.Lj437:
-.Ll208:
+.Lj444:
+	movl	%eax,-24(%rbp)
+.Ll228:
 # [3017] end;
+	movl	-24(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc129:
+.seh_endproc
+.Lc257:
 .Lt52:
-.Ll209:
+.Ll229:
 
 .section .text.n_sdl2_$$_sdl_mustlock$psdl_surface$$boolean,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_MUSTLOCK$PSDL_SURFACE$$BOOLEAN
 SDL2_$$_SDL_MUSTLOCK$PSDL_SURFACE$$BOOLEAN:
-.Lc130:
-# Var S located in register rcx
-# Var $result located in register al
+.Lc261:
+.seh_proc SDL2_$$_SDL_MUSTLOCK$PSDL_SURFACE$$BOOLEAN
+.Ll230:
 # [3023] begin
-.Ll210:
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc263:
+.Lc264:
+	movq	%rsp,%rbp
+.Lc265:
+	leaq	-16(%rsp),%rsp
+.seh_stackalloc 16
+.seh_endprologue
+# Var S located at rbp-8, size=OS_64
+# Var $result located at rbp-16, size=OS_8
+	movq	%rcx,-8(%rbp)
+.Ll231:
 # [3024] exit((S^.flags and SDL_RLEACCEL) <> 0);
-	movl	(%rcx),%eax
+	movq	-8(%rbp),%rax
+	movl	(%rax),%eax
 	andl	$2,%eax
 	testl	%eax,%eax
-# Var $result located in register al
-	setneb	%al
-# PeepHole Optimization,var9
-.Ll211:
+	setneb	-16(%rbp)
+.Ll232:
 # [3025] end;
-	andl	$255,%eax
+	movzbl	-16(%rbp),%eax
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
-.Lc131:
+.seh_endproc
+.Lc262:
 .Lt53:
-.Ll212:
+.Ll233:
 
 .section .text.n_sdl2_$$_sdl_loadbmp$pchar$$psdl_surface,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_LOADBMP$PCHAR$$PSDL_SURFACE
 SDL2_$$_SDL_LOADBMP$PCHAR$$PSDL_SURFACE:
-.Lc132:
+.Lc266:
 .seh_proc SDL2_$$_SDL_LOADBMP$PCHAR$$PSDL_SURFACE
-.Ll213:
+.Ll234:
 # [3028] begin
-	leaq	-40(%rsp),%rsp
-.Lc134:
-.seh_stackalloc 40
-# Var file_ located in register rcx
-# Var $result located in register rax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc268:
+.Lc269:
+	movq	%rsp,%rbp
+.Lc270:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-.Ll214:
+# Var file_ located at rbp-8, size=OS_64
+# Var $result located at rbp-16, size=OS_64
+	movq	%rcx,-8(%rbp)
+.Ll235:
 # [3029] exit(SDL_LoadBMP_RW(SDL_RWFromFile(file_, 'rb'), 1));
-	leaq	_$SDL2$_Ld6(%rip),%rdx
-# Var file_ located in register rcx
+	leaq	_$SDL2$_Ld6(%rip),%rax
+	movq	%rax,%rdx
+	movq	-8(%rbp),%rcx
 	call	_$dll$sdl2$SDL_RWFromFile
 	movq	%rax,%rcx
 	movl	$1,%edx
 	call	_$dll$sdl2$SDL_LoadBMP_RW
-# Var $result located in register rax
-.Ll215:
+	movq	%rax,-16(%rbp)
+.Ll236:
 # [3030] end;
+	movq	-16(%rbp),%rax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc133:
+.Lc267:
 .Lt54:
-.Ll216:
+.Ll237:
 
 .section .text.n_sdl2_$$_sdl_savebmp$psdl_surface$pchar$$longint,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_SAVEBMP$PSDL_SURFACE$PCHAR$$LONGINT
 SDL2_$$_SDL_SAVEBMP$PSDL_SURFACE$PCHAR$$LONGINT:
-.Lc135:
+.Lc271:
 .seh_proc SDL2_$$_SDL_SAVEBMP$PSDL_SURFACE$PCHAR$$LONGINT
-.Ll217:
+.Ll238:
 # [3033] begin
-	pushq	%rbx
-.seh_pushreg %rbx
-	leaq	-32(%rsp),%rsp
-.Lc137:
-.seh_stackalloc 32
-# Var surface located in register rcx
-# Var file_ located in register rcx
-# Var $result located in register eax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc273:
+.Lc274:
+	movq	%rsp,%rbp
+.Lc275:
+	leaq	-64(%rsp),%rsp
+.seh_stackalloc 64
 .seh_endprologue
-	movq	%rcx,%rbx
-	movq	%rdx,%rcx
-.Ll218:
+# Var surface located at rbp-8, size=OS_64
+# Var file_ located at rbp-16, size=OS_64
+# Var $result located at rbp-24, size=OS_S32
+	movq	%rcx,-8(%rbp)
+	movq	%rdx,-16(%rbp)
+.Ll239:
 # [3034] exit(SDL_SaveBMP_RW(surface, SDL_RWFromFile(file_, 'wb'), 1));
-	leaq	_$SDL2$_Ld7(%rip),%rdx
-# Var file_ located in register rcx
+	leaq	_$SDL2$_Ld7(%rip),%rax
+	movq	%rax,%rdx
+	movq	-16(%rbp),%rcx
 	call	_$dll$sdl2$SDL_RWFromFile
 	movq	%rax,%rdx
-	movq	%rbx,%rcx
-# Var surface located in register rcx
+	movq	-8(%rbp),%rcx
 	movl	$1,%r8d
 	call	_$dll$sdl2$SDL_SaveBMP_RW
-# Var $result located in register eax
-.Ll219:
+	movl	%eax,-24(%rbp)
+.Ll240:
 # [3035] end;
+	movl	-24(%rbp),%eax
 	nop
-	leaq	32(%rsp),%rsp
-	popq	%rbx
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc136:
+.Lc272:
 .Lt55:
-.Ll220:
+.Ll241:
 
 .section .text.n_sdl2_$$_sdl_blitsurface$psdl_surface$psdl_rect$psdl_surface$psdl_rect$$longint,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_BLITSURFACE$PSDL_SURFACE$PSDL_RECT$PSDL_SURFACE$PSDL_RECT$$LONGINT
 SDL2_$$_SDL_BLITSURFACE$PSDL_SURFACE$PSDL_RECT$PSDL_SURFACE$PSDL_RECT$$LONGINT:
-.Lc138:
+.Lc276:
 .seh_proc SDL2_$$_SDL_BLITSURFACE$PSDL_SURFACE$PSDL_RECT$PSDL_SURFACE$PSDL_RECT$$LONGINT
-.Ll221:
+.Ll242:
 # [3038] begin
-	leaq	-40(%rsp),%rsp
-.Lc140:
-.seh_stackalloc 40
-# Var src located in register rcx
-# Var srcrect located in register rdx
-# Var dst located in register r8
-# Var dstrect located in register r9
-# Var $result located in register eax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc278:
+.Lc279:
+	movq	%rsp,%rbp
+.Lc280:
+	leaq	-80(%rsp),%rsp
+.seh_stackalloc 80
 .seh_endprologue
-# Var dstrect located in register r9
-# Var dst located in register r8
-# Var srcrect located in register rdx
-# Var src located in register rcx
-.Ll222:
+# Var src located at rbp-8, size=OS_64
+# Var srcrect located at rbp-16, size=OS_64
+# Var dst located at rbp-24, size=OS_64
+# Var dstrect located at rbp-32, size=OS_64
+# Var $result located at rbp-40, size=OS_S32
+	movq	%rcx,-8(%rbp)
+	movq	%rdx,-16(%rbp)
+	movq	%r8,-24(%rbp)
+	movq	%r9,-32(%rbp)
+.Ll243:
 # [3039] exit(SDL_UpperBlit(src, srcrect, dst, dstrect));
+	movq	-32(%rbp),%rax
+	movq	-24(%rbp),%r8
+	movq	-16(%rbp),%rdx
+	movq	-8(%rbp),%rcx
+	movq	%rax,%r9
 	call	_$dll$sdl2$SDL_UpperBlit
-# Var $result located in register eax
-.Ll223:
+	movl	%eax,-40(%rbp)
+.Ll244:
 # [3040] end;
+	movl	-40(%rbp),%eax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc139:
+.Lc277:
 .Lt56:
-.Ll224:
+.Ll245:
 
 .section .text.n_sdl2_$$_sdl_blitscaled$psdl_surface$psdl_rect$psdl_surface$psdl_rect$$longint,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_BLITSCALED$PSDL_SURFACE$PSDL_RECT$PSDL_SURFACE$PSDL_RECT$$LONGINT
 SDL2_$$_SDL_BLITSCALED$PSDL_SURFACE$PSDL_RECT$PSDL_SURFACE$PSDL_RECT$$LONGINT:
-.Lc141:
+.Lc281:
 .seh_proc SDL2_$$_SDL_BLITSCALED$PSDL_SURFACE$PSDL_RECT$PSDL_SURFACE$PSDL_RECT$$LONGINT
-.Ll225:
+.Ll246:
 # [3043] begin
-	leaq	-40(%rsp),%rsp
-.Lc143:
-.seh_stackalloc 40
-# Var src located in register rcx
-# Var srcrect located in register rdx
-# Var dst located in register r8
-# Var dstrect located in register r9
-# Var $result located in register eax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc283:
+.Lc284:
+	movq	%rsp,%rbp
+.Lc285:
+	leaq	-80(%rsp),%rsp
+.seh_stackalloc 80
 .seh_endprologue
-# Var dstrect located in register r9
-# Var dst located in register r8
-# Var srcrect located in register rdx
-# Var src located in register rcx
-.Ll226:
+# Var src located at rbp-8, size=OS_64
+# Var srcrect located at rbp-16, size=OS_64
+# Var dst located at rbp-24, size=OS_64
+# Var dstrect located at rbp-32, size=OS_64
+# Var $result located at rbp-40, size=OS_S32
+	movq	%rcx,-8(%rbp)
+	movq	%rdx,-16(%rbp)
+	movq	%r8,-24(%rbp)
+	movq	%r9,-32(%rbp)
+.Ll247:
 # [3044] exit(SDL_UpperBlitScaled(src, srcrect, dst, dstrect));
+	movq	-32(%rbp),%rax
+	movq	-24(%rbp),%r8
+	movq	-16(%rbp),%rdx
+	movq	-8(%rbp),%rcx
+	movq	%rax,%r9
 	call	_$dll$sdl2$SDL_UpperBlitScaled
-# Var $result located in register eax
-.Ll227:
+	movl	%eax,-40(%rbp)
+.Ll248:
 # [3045] end;
+	movl	-40(%rbp),%eax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc142:
+.Lc282:
 .Lt57:
-.Ll228:
+.Ll249:
 
 .section .text.n_sdl2_$$_sdl_gamecontrolleraddmappingsfromfile$pchar$$longint,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_GAMECONTROLLERADDMAPPINGSFROMFILE$PCHAR$$LONGINT
 SDL2_$$_SDL_GAMECONTROLLERADDMAPPINGSFROMFILE$PCHAR$$LONGINT:
-.Lc144:
+.Lc286:
 .seh_proc SDL2_$$_SDL_GAMECONTROLLERADDMAPPINGSFROMFILE$PCHAR$$LONGINT
-.Ll229:
+.Ll250:
 # [3051] begin
-	leaq	-40(%rsp),%rsp
-.Lc146:
-.seh_stackalloc 40
-# Var file_ located in register rcx
-# Var $result located in register eax
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc288:
+.Lc289:
+	movq	%rsp,%rbp
+.Lc290:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-.Ll230:
+# Var file_ located at rbp-8, size=OS_64
+# Var $result located at rbp-16, size=OS_S32
+	movq	%rcx,-8(%rbp)
+.Ll251:
 # [3052] exit(SDL_GameControllerAddMappingsFromRW(SDL_RWFromFile(file_, 'rb'), 1));
-	leaq	_$SDL2$_Ld6(%rip),%rdx
-# Var file_ located in register rcx
+	leaq	_$SDL2$_Ld6(%rip),%rax
+	movq	%rax,%rdx
+	movq	-8(%rbp),%rcx
 	call	_$dll$sdl2$SDL_RWFromFile
 	movq	%rax,%rcx
 	movl	$1,%edx
 	call	_$dll$sdl2$SDL_GameControllerAddMappingsFromRW
-# Var $result located in register eax
-.Ll231:
+	movl	%eax,-16(%rbp)
+.Ll252:
 # [3053] end;
+	movl	-16(%rbp),%eax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc145:
+.Lc287:
 .Lt58:
-.Ll232:
+.Ll253:
 
 .section .text.n_sdl2_$$_sdl_quitrequested$$boolean,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_QUITREQUESTED$$BOOLEAN
 SDL2_$$_SDL_QUITREQUESTED$$BOOLEAN:
-.Lc147:
+.Lc291:
 .seh_proc SDL2_$$_SDL_QUITREQUESTED$$BOOLEAN
-.Ll233:
+.Ll254:
 # [3059] begin
-	leaq	-40(%rsp),%rsp
-.Lc149:
-.seh_stackalloc 40
-# Var $result located in register al
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc293:
+.Lc294:
+	movq	%rsp,%rbp
+.Lc295:
+	leaq	-64(%rsp),%rsp
+.seh_stackalloc 64
 .seh_endprologue
-.Ll234:
+# Var $result located at rbp-8, size=OS_8
+.Ll255:
 # [3060] SDL_PumpEvents;
 	call	_$dll$sdl2$SDL_PumpEvents
-.Ll235:
+.Ll256:
 # [3061] exit(SDL_PeepEvents(NIL, 0, SDL_PEEKEVENT, SDL_QUITEV, SDL_QUITEV) > 0);
 	movl	$256,32(%rsp)
-	movl	$256,%r9d
+	movl	$256,%eax
 	movl	$1,%r8d
 	movl	$0,%edx
 	movq	$0,%rcx
+	movl	%eax,%r9d
 	call	_$dll$sdl2$SDL_PeepEvents
 	cmpl	$0,%eax
-# Var $result located in register al
-	setgb	%al
-# PeepHole Optimization,var9
-.Ll236:
+	setgb	-8(%rbp)
+.Ll257:
 # [3062] end;
-	andl	$255,%eax
+	movzbl	-8(%rbp),%eax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc148:
+.Lc292:
 .Lt59:
-.Ll237:
+.Ll258:
 
 .section .text.n_sdl2_$$_sdl_geteventstate$longword$$byte,"x"
 	.balign 16,0x90
 .globl	SDL2_$$_SDL_GETEVENTSTATE$LONGWORD$$BYTE
 SDL2_$$_SDL_GETEVENTSTATE$LONGWORD$$BYTE:
-.Lc150:
+.Lc296:
 .seh_proc SDL2_$$_SDL_GETEVENTSTATE$LONGWORD$$BYTE
-.Ll238:
+.Ll259:
 # [3065] begin
-	leaq	-40(%rsp),%rsp
-.Lc152:
-.seh_stackalloc 40
-# Var type_ located in register ecx
-# Var $result located in register al
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc298:
+.Lc299:
+	movq	%rsp,%rbp
+.Lc300:
+	leaq	-48(%rsp),%rsp
+.seh_stackalloc 48
 .seh_endprologue
-# Var type_ located in register ecx
-.Ll239:
+# Var type_ located at rbp-8, size=OS_32
+# Var $result located at rbp-16, size=OS_8
+	movl	%ecx,-8(%rbp)
+.Ll260:
 # [3066] exit(SDL_EventState(type_, SDL_QUERY));
+	movl	-8(%rbp),%eax
 	movl	$-1,%edx
+	movl	%eax,%ecx
 	call	_$dll$sdl2$SDL_EventState
-# Var $result located in register al
-# PeepHole Optimization,var9
-.Ll240:
+	movb	%al,-16(%rbp)
+.Ll261:
 # [3067] end;
-	andl	$255,%eax
+	movzbl	-16(%rbp),%eax
 	nop
-	leaq	40(%rsp),%rsp
+	leaq	(%rbp),%rsp
+	popq	%rbp
 	ret
 .seh_endproc
-.Lc151:
+.Lc297:
 .Lt60:
-.Ll241:
+.Ll262:
 # End asmlist al_procedures
 # Begin asmlist al_typedconsts
 
@@ -5101,9 +5760,9 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 # Begin asmlist al_dwarf_frame
 
 .section .debug_frame
-.Lc153:
-	.long	.Lc155-.Lc154
-.Lc154:
+.Lc301:
+	.long	.Lc303-.Lc302
+.Lc302:
 	.long	-1
 	.byte	1
 	.byte	0
@@ -5117,555 +5776,1207 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	16
 	.uleb128	2
 	.balign 4,0
-.Lc155:
-	.long	.Lc157-.Lc156
-.Lc156:
-	.secrel32	.Lc153
+.Lc303:
+	.long	.Lc305-.Lc304
+.Lc304:
+	.secrel32	.Lc301
 	.quad	.Lc1
 	.quad	.Lc2-.Lc1
 	.byte	4
 	.long	.Lc3-.Lc1
 	.byte	14
-	.uleb128	40
-	.balign 4,0
-.Lc157:
-	.long	.Lc159-.Lc158
-.Lc158:
-	.secrel32	.Lc153
-	.quad	.Lc4
-	.quad	.Lc5-.Lc4
+	.uleb128	16
 	.byte	4
-	.long	.Lc6-.Lc4
-	.byte	14
-	.uleb128	40
-	.balign 4,0
-.Lc159:
-	.long	.Lc161-.Lc160
-.Lc160:
-	.secrel32	.Lc153
-	.quad	.Lc7
-	.quad	.Lc8-.Lc7
+	.long	.Lc4-.Lc3
+	.byte	5
+	.uleb128	6
+	.uleb128	4
 	.byte	4
-	.long	.Lc9-.Lc7
+	.long	.Lc5-.Lc4
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc305:
+	.long	.Lc307-.Lc306
+.Lc306:
+	.secrel32	.Lc301
+	.quad	.Lc6
+	.quad	.Lc7-.Lc6
+	.byte	4
+	.long	.Lc8-.Lc6
 	.byte	14
-	.uleb128	40
+	.uleb128	16
+	.byte	4
+	.long	.Lc9-.Lc8
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc10-.Lc9
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc161:
-	.long	.Lc163-.Lc162
-.Lc162:
-	.secrel32	.Lc153
-	.quad	.Lc10
-	.quad	.Lc11-.Lc10
+.Lc307:
+	.long	.Lc309-.Lc308
+.Lc308:
+	.secrel32	.Lc301
+	.quad	.Lc11
+	.quad	.Lc12-.Lc11
+	.byte	4
+	.long	.Lc13-.Lc11
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc14-.Lc13
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc15-.Lc14
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc163:
-	.long	.Lc165-.Lc164
-.Lc164:
-	.secrel32	.Lc153
-	.quad	.Lc12
-	.quad	.Lc13-.Lc12
-	.balign 4,0
-.Lc165:
-	.long	.Lc167-.Lc166
-.Lc166:
-	.secrel32	.Lc153
-	.quad	.Lc14
-	.quad	.Lc15-.Lc14
-	.balign 4,0
-.Lc167:
-	.long	.Lc169-.Lc168
-.Lc168:
-	.secrel32	.Lc153
+.Lc309:
+	.long	.Lc311-.Lc310
+.Lc310:
+	.secrel32	.Lc301
 	.quad	.Lc16
 	.quad	.Lc17-.Lc16
-	.balign 4,0
-.Lc169:
-	.long	.Lc171-.Lc170
-.Lc170:
-	.secrel32	.Lc153
-	.quad	.Lc18
-	.quad	.Lc19-.Lc18
-	.balign 4,0
-.Lc171:
-	.long	.Lc173-.Lc172
-.Lc172:
-	.secrel32	.Lc153
-	.quad	.Lc20
-	.quad	.Lc21-.Lc20
 	.byte	4
-	.long	.Lc22-.Lc20
+	.long	.Lc18-.Lc16
 	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc173:
-	.long	.Lc175-.Lc174
-.Lc174:
-	.secrel32	.Lc153
-	.quad	.Lc23
-	.quad	.Lc24-.Lc23
+	.uleb128	16
 	.byte	4
-	.long	.Lc25-.Lc23
-	.byte	14
-	.uleb128	48
+	.long	.Lc19-.Lc18
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc20-.Lc19
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc175:
-	.long	.Lc177-.Lc176
-.Lc176:
-	.secrel32	.Lc153
+.Lc311:
+	.long	.Lc313-.Lc312
+.Lc312:
+	.secrel32	.Lc301
+	.quad	.Lc21
+	.quad	.Lc22-.Lc21
+	.byte	4
+	.long	.Lc23-.Lc21
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc24-.Lc23
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc25-.Lc24
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc313:
+	.long	.Lc315-.Lc314
+.Lc314:
+	.secrel32	.Lc301
 	.quad	.Lc26
 	.quad	.Lc27-.Lc26
 	.byte	4
 	.long	.Lc28-.Lc26
 	.byte	14
-	.uleb128	48
+	.uleb128	16
+	.byte	4
+	.long	.Lc29-.Lc28
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc30-.Lc29
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc177:
-	.long	.Lc179-.Lc178
-.Lc178:
-	.secrel32	.Lc153
-	.quad	.Lc29
-	.quad	.Lc30-.Lc29
-	.balign 4,0
-.Lc179:
-	.long	.Lc181-.Lc180
-.Lc180:
-	.secrel32	.Lc153
+.Lc315:
+	.long	.Lc317-.Lc316
+.Lc316:
+	.secrel32	.Lc301
 	.quad	.Lc31
 	.quad	.Lc32-.Lc31
 	.byte	4
 	.long	.Lc33-.Lc31
 	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc181:
-	.long	.Lc183-.Lc182
-.Lc182:
-	.secrel32	.Lc153
-	.quad	.Lc34
-	.quad	.Lc35-.Lc34
+	.uleb128	16
 	.byte	4
-	.long	.Lc36-.Lc34
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc183:
-	.long	.Lc185-.Lc184
-.Lc184:
-	.secrel32	.Lc153
-	.quad	.Lc37
-	.quad	.Lc38-.Lc37
+	.long	.Lc34-.Lc33
+	.byte	5
+	.uleb128	6
+	.uleb128	4
 	.byte	4
-	.long	.Lc39-.Lc37
-	.byte	14
-	.uleb128	48
+	.long	.Lc35-.Lc34
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc185:
-	.long	.Lc187-.Lc186
-.Lc186:
-	.secrel32	.Lc153
-	.quad	.Lc40
-	.quad	.Lc41-.Lc40
-	.balign 4,0
-.Lc187:
-	.long	.Lc189-.Lc188
-.Lc188:
-	.secrel32	.Lc153
-	.quad	.Lc42
-	.quad	.Lc43-.Lc42
+.Lc317:
+	.long	.Lc319-.Lc318
+.Lc318:
+	.secrel32	.Lc301
+	.quad	.Lc36
+	.quad	.Lc37-.Lc36
 	.byte	4
-	.long	.Lc44-.Lc42
+	.long	.Lc38-.Lc36
 	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc189:
-	.long	.Lc191-.Lc190
-.Lc190:
-	.secrel32	.Lc153
-	.quad	.Lc45
-	.quad	.Lc46-.Lc45
+	.uleb128	16
 	.byte	4
-	.long	.Lc47-.Lc45
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc191:
-	.long	.Lc193-.Lc192
-.Lc192:
-	.secrel32	.Lc153
-	.quad	.Lc48
-	.quad	.Lc49-.Lc48
+	.long	.Lc39-.Lc38
+	.byte	5
+	.uleb128	6
+	.uleb128	4
 	.byte	4
-	.long	.Lc50-.Lc48
-	.byte	14
-	.uleb128	48
+	.long	.Lc40-.Lc39
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc193:
-	.long	.Lc195-.Lc194
-.Lc194:
-	.secrel32	.Lc153
+.Lc319:
+	.long	.Lc321-.Lc320
+.Lc320:
+	.secrel32	.Lc301
+	.quad	.Lc41
+	.quad	.Lc42-.Lc41
+	.byte	4
+	.long	.Lc43-.Lc41
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc44-.Lc43
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc45-.Lc44
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc321:
+	.long	.Lc323-.Lc322
+.Lc322:
+	.secrel32	.Lc301
+	.quad	.Lc46
+	.quad	.Lc47-.Lc46
+	.byte	4
+	.long	.Lc48-.Lc46
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc49-.Lc48
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc50-.Lc49
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc323:
+	.long	.Lc325-.Lc324
+.Lc324:
+	.secrel32	.Lc301
 	.quad	.Lc51
 	.quad	.Lc52-.Lc51
+	.byte	4
+	.long	.Lc53-.Lc51
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc54-.Lc53
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc55-.Lc54
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc195:
-	.long	.Lc197-.Lc196
-.Lc196:
-	.secrel32	.Lc153
-	.quad	.Lc53
-	.quad	.Lc54-.Lc53
+.Lc325:
+	.long	.Lc327-.Lc326
+.Lc326:
+	.secrel32	.Lc301
+	.quad	.Lc56
+	.quad	.Lc57-.Lc56
+	.byte	4
+	.long	.Lc58-.Lc56
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc59-.Lc58
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc60-.Lc59
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc197:
-	.long	.Lc199-.Lc198
-.Lc198:
-	.secrel32	.Lc153
-	.quad	.Lc55
-	.quad	.Lc56-.Lc55
-	.balign 4,0
-.Lc199:
-	.long	.Lc201-.Lc200
-.Lc200:
-	.secrel32	.Lc153
-	.quad	.Lc57
-	.quad	.Lc58-.Lc57
-	.balign 4,0
-.Lc201:
-	.long	.Lc203-.Lc202
-.Lc202:
-	.secrel32	.Lc153
-	.quad	.Lc59
-	.quad	.Lc60-.Lc59
-	.balign 4,0
-.Lc203:
-	.long	.Lc205-.Lc204
-.Lc204:
-	.secrel32	.Lc153
+.Lc327:
+	.long	.Lc329-.Lc328
+.Lc328:
+	.secrel32	.Lc301
 	.quad	.Lc61
 	.quad	.Lc62-.Lc61
 	.byte	4
 	.long	.Lc63-.Lc61
 	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc205:
-	.long	.Lc207-.Lc206
-.Lc206:
-	.secrel32	.Lc153
-	.quad	.Lc64
-	.quad	.Lc65-.Lc64
+	.uleb128	16
 	.byte	4
-	.long	.Lc66-.Lc64
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc207:
-	.long	.Lc209-.Lc208
-.Lc208:
-	.secrel32	.Lc153
-	.quad	.Lc67
-	.quad	.Lc68-.Lc67
+	.long	.Lc64-.Lc63
+	.byte	5
+	.uleb128	6
+	.uleb128	4
 	.byte	4
-	.long	.Lc69-.Lc67
-	.byte	14
-	.uleb128	48
+	.long	.Lc65-.Lc64
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc209:
-	.long	.Lc211-.Lc210
-.Lc210:
-	.secrel32	.Lc153
-	.quad	.Lc70
-	.quad	.Lc71-.Lc70
+.Lc329:
+	.long	.Lc331-.Lc330
+.Lc330:
+	.secrel32	.Lc301
+	.quad	.Lc66
+	.quad	.Lc67-.Lc66
 	.byte	4
-	.long	.Lc72-.Lc70
+	.long	.Lc68-.Lc66
 	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc211:
-	.long	.Lc213-.Lc212
-.Lc212:
-	.secrel32	.Lc153
-	.quad	.Lc73
-	.quad	.Lc74-.Lc73
+	.uleb128	16
 	.byte	4
-	.long	.Lc75-.Lc73
-	.byte	14
-	.uleb128	48
+	.long	.Lc69-.Lc68
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc70-.Lc69
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc213:
-	.long	.Lc215-.Lc214
-.Lc214:
-	.secrel32	.Lc153
+.Lc331:
+	.long	.Lc333-.Lc332
+.Lc332:
+	.secrel32	.Lc301
+	.quad	.Lc71
+	.quad	.Lc72-.Lc71
+	.byte	4
+	.long	.Lc73-.Lc71
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc74-.Lc73
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc75-.Lc74
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc333:
+	.long	.Lc335-.Lc334
+.Lc334:
+	.secrel32	.Lc301
 	.quad	.Lc76
 	.quad	.Lc77-.Lc76
 	.byte	4
 	.long	.Lc78-.Lc76
 	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc215:
-	.long	.Lc217-.Lc216
-.Lc216:
-	.secrel32	.Lc153
-	.quad	.Lc79
-	.quad	.Lc80-.Lc79
+	.uleb128	16
 	.byte	4
-	.long	.Lc81-.Lc79
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc217:
-	.long	.Lc219-.Lc218
-.Lc218:
-	.secrel32	.Lc153
-	.quad	.Lc82
-	.quad	.Lc83-.Lc82
+	.long	.Lc79-.Lc78
+	.byte	5
+	.uleb128	6
+	.uleb128	4
 	.byte	4
-	.long	.Lc84-.Lc82
-	.byte	14
-	.uleb128	48
+	.long	.Lc80-.Lc79
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc219:
-	.long	.Lc221-.Lc220
-.Lc220:
-	.secrel32	.Lc153
-	.quad	.Lc85
-	.quad	.Lc86-.Lc85
+.Lc335:
+	.long	.Lc337-.Lc336
+.Lc336:
+	.secrel32	.Lc301
+	.quad	.Lc81
+	.quad	.Lc82-.Lc81
 	.byte	4
-	.long	.Lc87-.Lc85
+	.long	.Lc83-.Lc81
 	.byte	14
-	.uleb128	48
+	.uleb128	16
+	.byte	4
+	.long	.Lc84-.Lc83
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc85-.Lc84
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc221:
-	.long	.Lc223-.Lc222
-.Lc222:
-	.secrel32	.Lc153
-	.quad	.Lc88
-	.quad	.Lc89-.Lc88
+.Lc337:
+	.long	.Lc339-.Lc338
+.Lc338:
+	.secrel32	.Lc301
+	.quad	.Lc86
+	.quad	.Lc87-.Lc86
+	.byte	4
+	.long	.Lc88-.Lc86
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc89-.Lc88
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc90-.Lc89
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc223:
-	.long	.Lc225-.Lc224
-.Lc224:
-	.secrel32	.Lc153
-	.quad	.Lc90
-	.quad	.Lc91-.Lc90
+.Lc339:
+	.long	.Lc341-.Lc340
+.Lc340:
+	.secrel32	.Lc301
+	.quad	.Lc91
+	.quad	.Lc92-.Lc91
+	.byte	4
+	.long	.Lc93-.Lc91
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc94-.Lc93
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc95-.Lc94
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc225:
-	.long	.Lc227-.Lc226
-.Lc226:
-	.secrel32	.Lc153
-	.quad	.Lc92
-	.quad	.Lc93-.Lc92
-	.balign 4,0
-.Lc227:
-	.long	.Lc229-.Lc228
-.Lc228:
-	.secrel32	.Lc153
-	.quad	.Lc94
-	.quad	.Lc95-.Lc94
-	.balign 4,0
-.Lc229:
-	.long	.Lc231-.Lc230
-.Lc230:
-	.secrel32	.Lc153
+.Lc341:
+	.long	.Lc343-.Lc342
+.Lc342:
+	.secrel32	.Lc301
 	.quad	.Lc96
 	.quad	.Lc97-.Lc96
-	.balign 4,0
-.Lc231:
-	.long	.Lc233-.Lc232
-.Lc232:
-	.secrel32	.Lc153
-	.quad	.Lc98
-	.quad	.Lc99-.Lc98
-	.balign 4,0
-.Lc233:
-	.long	.Lc235-.Lc234
-.Lc234:
-	.secrel32	.Lc153
-	.quad	.Lc100
-	.quad	.Lc101-.Lc100
-	.balign 4,0
-.Lc235:
-	.long	.Lc237-.Lc236
-.Lc236:
-	.secrel32	.Lc153
-	.quad	.Lc102
-	.quad	.Lc103-.Lc102
 	.byte	4
-	.long	.Lc104-.Lc102
+	.long	.Lc98-.Lc96
 	.byte	14
-	.uleb128	48
+	.uleb128	16
+	.byte	4
+	.long	.Lc99-.Lc98
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc100-.Lc99
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc237:
-	.long	.Lc239-.Lc238
-.Lc238:
-	.secrel32	.Lc153
-	.quad	.Lc105
-	.quad	.Lc106-.Lc105
+.Lc343:
+	.long	.Lc345-.Lc344
+.Lc344:
+	.secrel32	.Lc301
+	.quad	.Lc101
+	.quad	.Lc102-.Lc101
+	.byte	4
+	.long	.Lc103-.Lc101
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc104-.Lc103
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc105-.Lc104
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc239:
-	.long	.Lc241-.Lc240
-.Lc240:
-	.secrel32	.Lc153
-	.quad	.Lc107
-	.quad	.Lc108-.Lc107
+.Lc345:
+	.long	.Lc347-.Lc346
+.Lc346:
+	.secrel32	.Lc301
+	.quad	.Lc106
+	.quad	.Lc107-.Lc106
+	.byte	4
+	.long	.Lc108-.Lc106
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc109-.Lc108
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc110-.Lc109
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc241:
-	.long	.Lc243-.Lc242
-.Lc242:
-	.secrel32	.Lc153
-	.quad	.Lc109
-	.quad	.Lc110-.Lc109
-	.balign 4,0
-.Lc243:
-	.long	.Lc245-.Lc244
-.Lc244:
-	.secrel32	.Lc153
+.Lc347:
+	.long	.Lc349-.Lc348
+.Lc348:
+	.secrel32	.Lc301
 	.quad	.Lc111
 	.quad	.Lc112-.Lc111
-	.balign 4,0
-.Lc245:
-	.long	.Lc247-.Lc246
-.Lc246:
-	.secrel32	.Lc153
-	.quad	.Lc113
-	.quad	.Lc114-.Lc113
-	.balign 4,0
-.Lc247:
-	.long	.Lc249-.Lc248
-.Lc248:
-	.secrel32	.Lc153
-	.quad	.Lc115
-	.quad	.Lc116-.Lc115
 	.byte	4
-	.long	.Lc117-.Lc115
+	.long	.Lc113-.Lc111
 	.byte	14
-	.uleb128	40
-	.balign 4,0
-.Lc249:
-	.long	.Lc251-.Lc250
-.Lc250:
-	.secrel32	.Lc153
-	.quad	.Lc118
-	.quad	.Lc119-.Lc118
+	.uleb128	16
 	.byte	4
-	.long	.Lc120-.Lc118
-	.byte	14
-	.uleb128	40
+	.long	.Lc114-.Lc113
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc115-.Lc114
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc251:
-	.long	.Lc253-.Lc252
-.Lc252:
-	.secrel32	.Lc153
+.Lc349:
+	.long	.Lc351-.Lc350
+.Lc350:
+	.secrel32	.Lc301
+	.quad	.Lc116
+	.quad	.Lc117-.Lc116
+	.byte	4
+	.long	.Lc118-.Lc116
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc119-.Lc118
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc120-.Lc119
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc351:
+	.long	.Lc353-.Lc352
+.Lc352:
+	.secrel32	.Lc301
 	.quad	.Lc121
 	.quad	.Lc122-.Lc121
 	.byte	4
 	.long	.Lc123-.Lc121
 	.byte	14
-	.uleb128	40
+	.uleb128	16
+	.byte	4
+	.long	.Lc124-.Lc123
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc125-.Lc124
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc253:
-	.long	.Lc255-.Lc254
-.Lc254:
-	.secrel32	.Lc153
-	.quad	.Lc124
-	.quad	.Lc125-.Lc124
-	.balign 4,0
-.Lc255:
-	.long	.Lc257-.Lc256
-.Lc256:
-	.secrel32	.Lc153
+.Lc353:
+	.long	.Lc355-.Lc354
+.Lc354:
+	.secrel32	.Lc301
 	.quad	.Lc126
 	.quad	.Lc127-.Lc126
-	.balign 4,0
-.Lc257:
-	.long	.Lc259-.Lc258
-.Lc258:
-	.secrel32	.Lc153
-	.quad	.Lc128
-	.quad	.Lc129-.Lc128
-	.balign 4,0
-.Lc259:
-	.long	.Lc261-.Lc260
-.Lc260:
-	.secrel32	.Lc153
-	.quad	.Lc130
-	.quad	.Lc131-.Lc130
-	.balign 4,0
-.Lc261:
-	.long	.Lc263-.Lc262
-.Lc262:
-	.secrel32	.Lc153
-	.quad	.Lc132
-	.quad	.Lc133-.Lc132
 	.byte	4
-	.long	.Lc134-.Lc132
+	.long	.Lc128-.Lc126
 	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc263:
-	.long	.Lc265-.Lc264
-.Lc264:
-	.secrel32	.Lc153
-	.quad	.Lc135
-	.quad	.Lc136-.Lc135
+	.uleb128	16
 	.byte	4
-	.long	.Lc137-.Lc135
-	.byte	14
-	.uleb128	40
-	.balign 4,0
-.Lc265:
-	.long	.Lc267-.Lc266
-.Lc266:
-	.secrel32	.Lc153
-	.quad	.Lc138
-	.quad	.Lc139-.Lc138
+	.long	.Lc129-.Lc128
+	.byte	5
+	.uleb128	6
+	.uleb128	4
 	.byte	4
-	.long	.Lc140-.Lc138
-	.byte	14
-	.uleb128	48
+	.long	.Lc130-.Lc129
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc267:
-	.long	.Lc269-.Lc268
-.Lc268:
-	.secrel32	.Lc153
+.Lc355:
+	.long	.Lc357-.Lc356
+.Lc356:
+	.secrel32	.Lc301
+	.quad	.Lc131
+	.quad	.Lc132-.Lc131
+	.byte	4
+	.long	.Lc133-.Lc131
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc134-.Lc133
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc135-.Lc134
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc357:
+	.long	.Lc359-.Lc358
+.Lc358:
+	.secrel32	.Lc301
+	.quad	.Lc136
+	.quad	.Lc137-.Lc136
+	.byte	4
+	.long	.Lc138-.Lc136
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc139-.Lc138
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc140-.Lc139
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc359:
+	.long	.Lc361-.Lc360
+.Lc360:
+	.secrel32	.Lc301
 	.quad	.Lc141
 	.quad	.Lc142-.Lc141
 	.byte	4
 	.long	.Lc143-.Lc141
 	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc269:
-	.long	.Lc271-.Lc270
-.Lc270:
-	.secrel32	.Lc153
-	.quad	.Lc144
-	.quad	.Lc145-.Lc144
+	.uleb128	16
 	.byte	4
-	.long	.Lc146-.Lc144
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc271:
-	.long	.Lc273-.Lc272
-.Lc272:
-	.secrel32	.Lc153
-	.quad	.Lc147
-	.quad	.Lc148-.Lc147
+	.long	.Lc144-.Lc143
+	.byte	5
+	.uleb128	6
+	.uleb128	4
 	.byte	4
-	.long	.Lc149-.Lc147
-	.byte	14
-	.uleb128	48
+	.long	.Lc145-.Lc144
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc273:
+.Lc361:
+	.long	.Lc363-.Lc362
+.Lc362:
+	.secrel32	.Lc301
+	.quad	.Lc146
+	.quad	.Lc147-.Lc146
+	.byte	4
+	.long	.Lc148-.Lc146
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc149-.Lc148
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc150-.Lc149
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc363:
+	.long	.Lc365-.Lc364
+.Lc364:
+	.secrel32	.Lc301
+	.quad	.Lc151
+	.quad	.Lc152-.Lc151
+	.byte	4
+	.long	.Lc153-.Lc151
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc154-.Lc153
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc155-.Lc154
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc365:
+	.long	.Lc367-.Lc366
+.Lc366:
+	.secrel32	.Lc301
+	.quad	.Lc156
+	.quad	.Lc157-.Lc156
+	.byte	4
+	.long	.Lc158-.Lc156
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc159-.Lc158
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc160-.Lc159
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc367:
+	.long	.Lc369-.Lc368
+.Lc368:
+	.secrel32	.Lc301
+	.quad	.Lc161
+	.quad	.Lc162-.Lc161
+	.byte	4
+	.long	.Lc163-.Lc161
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc164-.Lc163
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc165-.Lc164
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc369:
+	.long	.Lc371-.Lc370
+.Lc370:
+	.secrel32	.Lc301
+	.quad	.Lc166
+	.quad	.Lc167-.Lc166
+	.byte	4
+	.long	.Lc168-.Lc166
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc169-.Lc168
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc170-.Lc169
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc371:
+	.long	.Lc373-.Lc372
+.Lc372:
+	.secrel32	.Lc301
+	.quad	.Lc171
+	.quad	.Lc172-.Lc171
+	.byte	4
+	.long	.Lc173-.Lc171
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc174-.Lc173
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc175-.Lc174
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc373:
+	.long	.Lc375-.Lc374
+.Lc374:
+	.secrel32	.Lc301
+	.quad	.Lc176
+	.quad	.Lc177-.Lc176
+	.byte	4
+	.long	.Lc178-.Lc176
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc179-.Lc178
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc180-.Lc179
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc375:
+	.long	.Lc377-.Lc376
+.Lc376:
+	.secrel32	.Lc301
+	.quad	.Lc181
+	.quad	.Lc182-.Lc181
+	.byte	4
+	.long	.Lc183-.Lc181
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc184-.Lc183
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc185-.Lc184
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc377:
+	.long	.Lc379-.Lc378
+.Lc378:
+	.secrel32	.Lc301
+	.quad	.Lc186
+	.quad	.Lc187-.Lc186
+	.byte	4
+	.long	.Lc188-.Lc186
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc189-.Lc188
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc190-.Lc189
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc379:
+	.long	.Lc381-.Lc380
+.Lc380:
+	.secrel32	.Lc301
+	.quad	.Lc191
+	.quad	.Lc192-.Lc191
+	.byte	4
+	.long	.Lc193-.Lc191
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc194-.Lc193
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc195-.Lc194
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc381:
+	.long	.Lc383-.Lc382
+.Lc382:
+	.secrel32	.Lc301
+	.quad	.Lc196
+	.quad	.Lc197-.Lc196
+	.byte	4
+	.long	.Lc198-.Lc196
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc199-.Lc198
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc200-.Lc199
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc383:
+	.long	.Lc385-.Lc384
+.Lc384:
+	.secrel32	.Lc301
+	.quad	.Lc201
+	.quad	.Lc202-.Lc201
+	.byte	4
+	.long	.Lc203-.Lc201
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc204-.Lc203
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc205-.Lc204
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc385:
+	.long	.Lc387-.Lc386
+.Lc386:
+	.secrel32	.Lc301
+	.quad	.Lc206
+	.quad	.Lc207-.Lc206
+	.byte	4
+	.long	.Lc208-.Lc206
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc209-.Lc208
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc210-.Lc209
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc387:
+	.long	.Lc389-.Lc388
+.Lc388:
+	.secrel32	.Lc301
+	.quad	.Lc211
+	.quad	.Lc212-.Lc211
+	.byte	4
+	.long	.Lc213-.Lc211
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc214-.Lc213
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc215-.Lc214
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc389:
+	.long	.Lc391-.Lc390
+.Lc390:
+	.secrel32	.Lc301
+	.quad	.Lc216
+	.quad	.Lc217-.Lc216
+	.byte	4
+	.long	.Lc218-.Lc216
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc219-.Lc218
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc220-.Lc219
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc391:
+	.long	.Lc393-.Lc392
+.Lc392:
+	.secrel32	.Lc301
+	.quad	.Lc221
+	.quad	.Lc222-.Lc221
+	.byte	4
+	.long	.Lc223-.Lc221
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc224-.Lc223
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc225-.Lc224
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc393:
+	.long	.Lc395-.Lc394
+.Lc394:
+	.secrel32	.Lc301
+	.quad	.Lc226
+	.quad	.Lc227-.Lc226
+	.byte	4
+	.long	.Lc228-.Lc226
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc229-.Lc228
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc230-.Lc229
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc395:
+	.long	.Lc397-.Lc396
+.Lc396:
+	.secrel32	.Lc301
+	.quad	.Lc231
+	.quad	.Lc232-.Lc231
+	.byte	4
+	.long	.Lc233-.Lc231
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc234-.Lc233
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc235-.Lc234
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc397:
+	.long	.Lc399-.Lc398
+.Lc398:
+	.secrel32	.Lc301
+	.quad	.Lc236
+	.quad	.Lc237-.Lc236
+	.byte	4
+	.long	.Lc238-.Lc236
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc239-.Lc238
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc240-.Lc239
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc399:
+	.long	.Lc401-.Lc400
+.Lc400:
+	.secrel32	.Lc301
+	.quad	.Lc241
+	.quad	.Lc242-.Lc241
+	.byte	4
+	.long	.Lc243-.Lc241
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc244-.Lc243
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc245-.Lc244
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc401:
+	.long	.Lc403-.Lc402
+.Lc402:
+	.secrel32	.Lc301
+	.quad	.Lc246
+	.quad	.Lc247-.Lc246
+	.byte	4
+	.long	.Lc248-.Lc246
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc249-.Lc248
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc250-.Lc249
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc403:
+	.long	.Lc405-.Lc404
+.Lc404:
+	.secrel32	.Lc301
+	.quad	.Lc251
+	.quad	.Lc252-.Lc251
+	.byte	4
+	.long	.Lc253-.Lc251
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc254-.Lc253
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc255-.Lc254
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc405:
+	.long	.Lc407-.Lc406
+.Lc406:
+	.secrel32	.Lc301
+	.quad	.Lc256
+	.quad	.Lc257-.Lc256
+	.byte	4
+	.long	.Lc258-.Lc256
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc259-.Lc258
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc260-.Lc259
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc407:
+	.long	.Lc409-.Lc408
+.Lc408:
+	.secrel32	.Lc301
+	.quad	.Lc261
+	.quad	.Lc262-.Lc261
+	.byte	4
+	.long	.Lc263-.Lc261
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc264-.Lc263
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc265-.Lc264
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc409:
+	.long	.Lc411-.Lc410
+.Lc410:
+	.secrel32	.Lc301
+	.quad	.Lc266
+	.quad	.Lc267-.Lc266
+	.byte	4
+	.long	.Lc268-.Lc266
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc269-.Lc268
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc270-.Lc269
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc411:
+	.long	.Lc413-.Lc412
+.Lc412:
+	.secrel32	.Lc301
+	.quad	.Lc271
+	.quad	.Lc272-.Lc271
+	.byte	4
+	.long	.Lc273-.Lc271
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc274-.Lc273
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
 	.long	.Lc275-.Lc274
-.Lc274:
-	.secrel32	.Lc153
-	.quad	.Lc150
-	.quad	.Lc151-.Lc150
-	.byte	4
-	.long	.Lc152-.Lc150
-	.byte	14
-	.uleb128	48
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc275:
+.Lc413:
+	.long	.Lc415-.Lc414
+.Lc414:
+	.secrel32	.Lc301
+	.quad	.Lc276
+	.quad	.Lc277-.Lc276
+	.byte	4
+	.long	.Lc278-.Lc276
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc279-.Lc278
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc280-.Lc279
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc415:
+	.long	.Lc417-.Lc416
+.Lc416:
+	.secrel32	.Lc301
+	.quad	.Lc281
+	.quad	.Lc282-.Lc281
+	.byte	4
+	.long	.Lc283-.Lc281
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc284-.Lc283
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc285-.Lc284
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc417:
+	.long	.Lc419-.Lc418
+.Lc418:
+	.secrel32	.Lc301
+	.quad	.Lc286
+	.quad	.Lc287-.Lc286
+	.byte	4
+	.long	.Lc288-.Lc286
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc289-.Lc288
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc290-.Lc289
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc419:
+	.long	.Lc421-.Lc420
+.Lc420:
+	.secrel32	.Lc301
+	.quad	.Lc291
+	.quad	.Lc292-.Lc291
+	.byte	4
+	.long	.Lc293-.Lc291
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc294-.Lc293
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc295-.Lc294
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc421:
+	.long	.Lc423-.Lc422
+.Lc422:
+	.secrel32	.Lc301
+	.quad	.Lc296
+	.quad	.Lc297-.Lc296
+	.byte	4
+	.long	.Lc298-.Lc296
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc299-.Lc298
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc300-.Lc299
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc423:
 # End asmlist al_dwarf_frame
 # Begin asmlist al_dwarf_info
 
@@ -5679,14 +6990,14 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	1
 # [2687] function SDL_iconv_utf8_locale(S: PAnsiChar): PAnsiChar; inline;
 	.ascii	"sdl2.pas\000"
-	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
-	.ascii	"D:/programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
+	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
 	.quad	DEBUGSTART_$SDL2
 	.quad	DEBUGEND_$SDL2
-# Syms - Begin unit SDL2 has index 254
+# Syms - Begin unit SDL2 has index 255
 # Symbol SDL2
 # Symbol SYSTEM
 # Symbol OBJPAS
@@ -11400,7 +12711,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 # Symbol SDL_DIRECT3D9GETADAPTERINDEX
 # Symbol SDL_RENDERGETD3D9DEVICE
 # Symbol SDL_DXGIGETOUTPUTINFO
-# Syms - End unit SDL2 has index 254
+# Syms - End unit SDL2 has index 255
 # Syms - Begin Staticsymtable
 # Symbol SDL2_$$_init$
 # Syms - End Staticsymtable
@@ -11417,29 +12728,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"S\000"
 	.byte	2
-	.byte	144
-	.uleb128	8
+	.byte	118
+	.sleb128	-8
 	.long	.La261-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La261-.Ldebug_info0
 # Symbol SDL_ICONV_UTF8_LOCALE
 	.uleb128	8
 	.ascii	"SDL_ICONV_UTF8_LOCALE\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La261-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La261-.Ldebug_info0
 	.byte	0
 # Procdef SDL_iconv_utf8_ucs2(PChar):^Char;
@@ -11455,29 +12766,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"S\000"
 	.byte	2
-	.byte	144
-	.uleb128	8
+	.byte	118
+	.sleb128	-8
 	.long	.La261-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La261-.Ldebug_info0
 # Symbol SDL_ICONV_UTF8_UCS2
 	.uleb128	8
 	.ascii	"SDL_ICONV_UTF8_UCS2\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La261-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La261-.Ldebug_info0
 	.byte	0
 # Procdef SDL_iconv_utf8_ucs4(PChar):^Char;
@@ -11493,29 +12804,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"S\000"
 	.byte	2
-	.byte	144
-	.uleb128	8
+	.byte	118
+	.sleb128	-8
 	.long	.La261-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La261-.Ldebug_info0
 # Symbol SDL_ICONV_UTF8_UCS4
 	.uleb128	8
 	.ascii	"SDL_ICONV_UTF8_UCS4\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La261-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La261-.Ldebug_info0
 	.byte	0
 # Procdef SDL_MostSignificantBitIndex32(LongWord):LongInt;
@@ -11531,29 +12842,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La55-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La17-.Ldebug_info0
 # Symbol SDL_MOSTSIGNIFICANTBITINDEX32
 	.uleb128	8
 	.ascii	"SDL_MOSTSIGNIFICANTBITINDEX32\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La17-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La17-.Ldebug_info0
 	.byte	0
 # Procdef SDL_VERSION(PSDL_version);
@@ -11568,8 +12879,8 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La33-.Ldebug_info0
 	.byte	0
 # Procdef SDL_VERSIONNUM(LongInt;LongInt;LongInt):LongInt;
@@ -11585,43 +12896,43 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La17-.Ldebug_info0
 # Symbol Y
 	.uleb128	7
 	.ascii	"Y\000"
 	.byte	2
-	.byte	144
-	.uleb128	1
+	.byte	118
+	.sleb128	-16
 	.long	.La17-.Ldebug_info0
 # Symbol Z
 	.uleb128	7
 	.ascii	"Z\000"
 	.byte	2
-	.byte	144
-	.uleb128	8
+	.byte	118
+	.sleb128	-24
 	.long	.La17-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-32
 	.long	.La17-.Ldebug_info0
 # Symbol SDL_VERSIONNUM
 	.uleb128	8
 	.ascii	"SDL_VERSIONNUM\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-32
 	.long	.La17-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-32
 	.long	.La17-.Ldebug_info0
 	.byte	0
 # Procdef SDL_COMPILEDVERSION:LongInt;
@@ -11637,22 +12948,22 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La17-.Ldebug_info0
 # Symbol SDL_COMPILEDVERSION
 	.uleb128	8
 	.ascii	"SDL_COMPILEDVERSION\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La17-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La17-.Ldebug_info0
 	.byte	0
 # Procdef SDL_VERSION_ATLEAST(LongInt;LongInt;LongInt):Boolean;
@@ -11668,43 +12979,43 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La17-.Ldebug_info0
 # Symbol Y
 	.uleb128	7
 	.ascii	"Y\000"
 	.byte	2
-	.byte	144
-	.uleb128	1
+	.byte	118
+	.sleb128	-16
 	.long	.La17-.Ldebug_info0
 # Symbol Z
 	.uleb128	7
 	.ascii	"Z\000"
 	.byte	2
-	.byte	144
-	.uleb128	8
+	.byte	118
+	.sleb128	-24
 	.long	.La17-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-32
 	.long	.La263-.Ldebug_info0
 # Symbol SDL_VERSION_ATLEAST
 	.uleb128	8
 	.ascii	"SDL_VERSION_ATLEAST\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-32
 	.long	.La263-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-32
 	.long	.La263-.Ldebug_info0
 	.byte	0
 # Procdef SDL_OutOfMemory:LongInt;
@@ -11720,22 +13031,22 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La17-.Ldebug_info0
 # Symbol SDL_OUTOFMEMORY
 	.uleb128	8
 	.ascii	"SDL_OUTOFMEMORY\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La17-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La17-.Ldebug_info0
 	.byte	0
 # Procdef SDL_Unsupported:LongInt;
@@ -11751,22 +13062,22 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La17-.Ldebug_info0
 # Symbol SDL_UNSUPPORTED
 	.uleb128	8
 	.ascii	"SDL_UNSUPPORTED\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La17-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La17-.Ldebug_info0
 	.byte	0
 # Procdef SDL_InvalidParamError(PChar):LongInt;
@@ -11782,29 +13093,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"PARAM\000"
 	.byte	2
-	.byte	144
-	.uleb128	1
+	.byte	118
+	.sleb128	-8
 	.long	.La261-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La17-.Ldebug_info0
 # Symbol SDL_INVALIDPARAMERROR
 	.uleb128	8
 	.ascii	"SDL_INVALIDPARAMERROR\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La17-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La17-.Ldebug_info0
 	.byte	0
 # Procdef SDL_TICKS_PASSED(LongWord;LongWord):LongBool;
@@ -11820,36 +13131,36 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"A\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La55-.Ldebug_info0
 # Symbol B
 	.uleb128	7
 	.ascii	"B\000"
 	.byte	2
-	.byte	144
-	.uleb128	1
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-24
 	.long	.La3-.Ldebug_info0
 # Symbol SDL_TICKS_PASSED
 	.uleb128	8
 	.ascii	"SDL_TICKS_PASSED\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-24
 	.long	.La3-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-24
 	.long	.La3-.Ldebug_info0
 	.byte	0
 # Procdef SDL_MutexP(Pointer):LongInt;
@@ -11865,29 +13176,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"MUTEX\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La25-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La17-.Ldebug_info0
 # Symbol SDL_MUTEXP
 	.uleb128	8
 	.ascii	"SDL_MUTEXP\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La17-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La17-.Ldebug_info0
 	.byte	0
 # Procdef SDL_MutexV(Pointer):LongInt;
@@ -11903,29 +13214,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"MUTEX\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La25-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La17-.Ldebug_info0
 # Symbol SDL_MUTEXV
 	.uleb128	8
 	.ascii	"SDL_MUTEXV\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La17-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La17-.Ldebug_info0
 	.byte	0
 # Procdef SDL_CreateThread(TSDL_ThreadFunction;PChar;Pointer):^untyped;
@@ -11941,43 +13252,43 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"FN\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La59-.Ldebug_info0
 # Symbol NAME
 	.uleb128	7
 	.ascii	"NAME\000"
 	.byte	2
-	.byte	144
-	.uleb128	1
+	.byte	118
+	.sleb128	-16
 	.long	.La261-.Ldebug_info0
 # Symbol DATA
 	.uleb128	7
 	.ascii	"DATA\000"
 	.byte	2
-	.byte	144
-	.uleb128	8
+	.byte	118
+	.sleb128	-24
 	.long	.La25-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-32
 	.long	.La25-.Ldebug_info0
 # Symbol SDL_CREATETHREAD
 	.uleb128	8
 	.ascii	"SDL_CREATETHREAD\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-32
 	.long	.La25-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-32
 	.long	.La25-.Ldebug_info0
 	.byte	0
 # Procdef SDL_Swap16(const Word):Word;
@@ -11993,29 +13304,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La61-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La61-.Ldebug_info0
 # Symbol SDL_SWAP16
 	.uleb128	8
 	.ascii	"SDL_SWAP16\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La61-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La61-.Ldebug_info0
 	.byte	0
 # Procdef SDL_Swap32(const LongWord):DWord;
@@ -12031,29 +13342,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La55-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 # Symbol SDL_SWAP32
 	.uleb128	8
 	.ascii	"SDL_SWAP32\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 	.byte	0
 # Procdef SDL_Swap64(const QWord):QWord;
@@ -12069,29 +13380,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La21-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La21-.Ldebug_info0
 # Symbol SDL_SWAP64
 	.uleb128	8
 	.ascii	"SDL_SWAP64\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La21-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La21-.Ldebug_info0
 	.byte	0
 # Procdef SDL_SwapFloat(const Single):Single;
@@ -12107,43 +13418,43 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	17
+	.byte	118
+	.sleb128	-8
 	.long	.La29-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	17
+	.byte	118
+	.sleb128	-16
 	.long	.La29-.Ldebug_info0
 # Symbol SDL_SWAPFLOAT
 	.uleb128	8
 	.ascii	"SDL_SWAPFLOAT\000"
 	.byte	2
-	.byte	144
-	.uleb128	17
+	.byte	118
+	.sleb128	-16
 	.long	.La29-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	17
+	.byte	118
+	.sleb128	-16
 	.long	.La29-.Ldebug_info0
 # Symbol F
 	.uleb128	8
 	.ascii	"F\000"
 	.byte	2
-	.byte	119
-	.sleb128	32
+	.byte	118
+	.sleb128	-24
 	.long	.La29-.Ldebug_info0
 # Symbol UI32
 	.uleb128	8
 	.ascii	"UI32\000"
 	.byte	2
-	.byte	119
-	.sleb128	32
+	.byte	118
+	.sleb128	-24
 	.long	.La55-.Ldebug_info0
 	.byte	0
 # Procdef SDL_SwapLE16(const Word):Word;
@@ -12159,29 +13470,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La61-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La61-.Ldebug_info0
 # Symbol SDL_SWAPLE16
 	.uleb128	8
 	.ascii	"SDL_SWAPLE16\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La61-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La61-.Ldebug_info0
 	.byte	0
 # Procdef SDL_SwapLE32(const LongWord):DWord;
@@ -12197,29 +13508,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La55-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 # Symbol SDL_SWAPLE32
 	.uleb128	8
 	.ascii	"SDL_SWAPLE32\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 	.byte	0
 # Procdef SDL_SwapLE64(const QWord):QWord;
@@ -12235,29 +13546,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La21-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La21-.Ldebug_info0
 # Symbol SDL_SWAPLE64
 	.uleb128	8
 	.ascii	"SDL_SWAPLE64\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La21-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La21-.Ldebug_info0
 	.byte	0
 # Procdef SDL_SwapFloatLE(const Single):Single;
@@ -12273,29 +13584,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	17
+	.byte	118
+	.sleb128	-8
 	.long	.La29-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	17
+	.byte	118
+	.sleb128	-16
 	.long	.La29-.Ldebug_info0
 # Symbol SDL_SWAPFLOATLE
 	.uleb128	8
 	.ascii	"SDL_SWAPFLOATLE\000"
 	.byte	2
-	.byte	144
-	.uleb128	17
+	.byte	118
+	.sleb128	-16
 	.long	.La29-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	17
+	.byte	118
+	.sleb128	-16
 	.long	.La29-.Ldebug_info0
 	.byte	0
 # Procdef SDL_SwapBE16(const Word):Word;
@@ -12311,29 +13622,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La61-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La61-.Ldebug_info0
 # Symbol SDL_SWAPBE16
 	.uleb128	8
 	.ascii	"SDL_SWAPBE16\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La61-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La61-.Ldebug_info0
 	.byte	0
 # Procdef SDL_SwapBE32(const LongWord):DWord;
@@ -12349,29 +13660,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La55-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 # Symbol SDL_SWAPBE32
 	.uleb128	8
 	.ascii	"SDL_SWAPBE32\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 	.byte	0
 # Procdef SDL_SwapBE64(const QWord):QWord;
@@ -12387,29 +13698,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La21-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La21-.Ldebug_info0
 # Symbol SDL_SWAPBE64
 	.uleb128	8
 	.ascii	"SDL_SWAPBE64\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La21-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La21-.Ldebug_info0
 	.byte	0
 # Procdef SDL_SwapFloatBE(const Single):Single;
@@ -12425,29 +13736,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	17
+	.byte	118
+	.sleb128	-8
 	.long	.La29-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	17
+	.byte	118
+	.sleb128	-16
 	.long	.La29-.Ldebug_info0
 # Symbol SDL_SWAPFLOATBE
 	.uleb128	8
 	.ascii	"SDL_SWAPFLOATBE\000"
 	.byte	2
-	.byte	144
-	.uleb128	17
+	.byte	118
+	.sleb128	-16
 	.long	.La29-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	17
+	.byte	118
+	.sleb128	-16
 	.long	.La29-.Ldebug_info0
 	.byte	0
 # Procdef SDL_RWsize(PSDL_RWops):Int64;
@@ -12463,29 +13774,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"CTX\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La63-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La19-.Ldebug_info0
 # Symbol SDL_RWSIZE
 	.uleb128	8
 	.ascii	"SDL_RWSIZE\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La19-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La19-.Ldebug_info0
 	.byte	0
 # Procdef SDL_RWseek(PSDL_RWops;Int64;LongInt):Int64;
@@ -12501,43 +13812,43 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"CTX\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La63-.Ldebug_info0
 # Symbol OFFSET
 	.uleb128	7
 	.ascii	"OFFSET\000"
 	.byte	2
-	.byte	144
-	.uleb128	1
+	.byte	118
+	.sleb128	-16
 	.long	.La19-.Ldebug_info0
 # Symbol WHENCE
 	.uleb128	7
 	.ascii	"WHENCE\000"
 	.byte	2
-	.byte	144
-	.uleb128	8
+	.byte	118
+	.sleb128	-24
 	.long	.La17-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-32
 	.long	.La19-.Ldebug_info0
 # Symbol SDL_RWSEEK
 	.uleb128	8
 	.ascii	"SDL_RWSEEK\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-32
 	.long	.La19-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-32
 	.long	.La19-.Ldebug_info0
 	.byte	0
 # Procdef SDL_RWtell(PSDL_RWops):Int64;
@@ -12553,29 +13864,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"CTX\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La63-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La19-.Ldebug_info0
 # Symbol SDL_RWTELL
 	.uleb128	8
 	.ascii	"SDL_RWTELL\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La19-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La19-.Ldebug_info0
 	.byte	0
 # Procdef SDL_RWread(PSDL_RWops;Pointer;LongWord;LongWord):DWord;
@@ -12591,50 +13902,50 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"CTX\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La63-.Ldebug_info0
 # Symbol PTR
 	.uleb128	7
 	.ascii	"PTR\000"
 	.byte	2
-	.byte	144
-	.uleb128	1
+	.byte	118
+	.sleb128	-16
 	.long	.La25-.Ldebug_info0
 # Symbol SIZE
 	.uleb128	7
 	.ascii	"SIZE\000"
 	.byte	2
-	.byte	144
-	.uleb128	8
+	.byte	118
+	.sleb128	-24
 	.long	.La55-.Ldebug_info0
 # Symbol N
 	.uleb128	7
 	.ascii	"N\000"
 	.byte	2
-	.byte	144
-	.uleb128	9
+	.byte	118
+	.sleb128	-32
 	.long	.La55-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-40
 	.long	.La55-.Ldebug_info0
 # Symbol SDL_RWREAD
 	.uleb128	8
 	.ascii	"SDL_RWREAD\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-40
 	.long	.La55-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-40
 	.long	.La55-.Ldebug_info0
 	.byte	0
 # Procdef SDL_RWwrite(PSDL_RWops;Pointer;LongWord;LongWord):DWord;
@@ -12650,50 +13961,50 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"CTX\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La63-.Ldebug_info0
 # Symbol PTR
 	.uleb128	7
 	.ascii	"PTR\000"
 	.byte	2
-	.byte	144
-	.uleb128	1
+	.byte	118
+	.sleb128	-16
 	.long	.La25-.Ldebug_info0
 # Symbol SIZE
 	.uleb128	7
 	.ascii	"SIZE\000"
 	.byte	2
-	.byte	144
-	.uleb128	8
+	.byte	118
+	.sleb128	-24
 	.long	.La55-.Ldebug_info0
 # Symbol N
 	.uleb128	7
 	.ascii	"N\000"
 	.byte	2
-	.byte	144
-	.uleb128	9
+	.byte	118
+	.sleb128	-32
 	.long	.La55-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-40
 	.long	.La55-.Ldebug_info0
 # Symbol SDL_RWWRITE
 	.uleb128	8
 	.ascii	"SDL_RWWRITE\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-40
 	.long	.La55-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-40
 	.long	.La55-.Ldebug_info0
 	.byte	0
 # Procdef SDL_RWclose(PSDL_RWops):LongInt;
@@ -12709,29 +14020,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"CTX\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La63-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La17-.Ldebug_info0
 # Symbol SDL_RWCLOSE
 	.uleb128	8
 	.ascii	"SDL_RWCLOSE\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La17-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La17-.Ldebug_info0
 	.byte	0
 # Procdef SDL_AUDIO_BITSIZE(Word):Word;
@@ -12747,29 +14058,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La61-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La61-.Ldebug_info0
 # Symbol SDL_AUDIO_BITSIZE
 	.uleb128	8
 	.ascii	"SDL_AUDIO_BITSIZE\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La61-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La61-.Ldebug_info0
 	.byte	0
 # Procdef SDL_AUDIO_ISFLOAT(Word):Boolean;
@@ -12785,29 +14096,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La61-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 # Symbol SDL_AUDIO_ISFLOAT
 	.uleb128	8
 	.ascii	"SDL_AUDIO_ISFLOAT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 	.byte	0
 # Procdef SDL_AUDIO_ISBIGENDIAN(Word):Boolean;
@@ -12823,29 +14134,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La61-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 # Symbol SDL_AUDIO_ISBIGENDIAN
 	.uleb128	8
 	.ascii	"SDL_AUDIO_ISBIGENDIAN\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 	.byte	0
 # Procdef SDL_AUDIO_ISSIGNED(Word):Boolean;
@@ -12861,29 +14172,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La61-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 # Symbol SDL_AUDIO_ISSIGNED
 	.uleb128	8
 	.ascii	"SDL_AUDIO_ISSIGNED\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 	.byte	0
 # Procdef SDL_AUDIO_ISINT(Word):Boolean;
@@ -12899,29 +14210,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La61-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 # Symbol SDL_AUDIO_ISINT
 	.uleb128	8
 	.ascii	"SDL_AUDIO_ISINT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 	.byte	0
 # Procdef SDL_AUDIO_ISLITTLEENDIAN(Word):Boolean;
@@ -12937,29 +14248,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La61-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 # Symbol SDL_AUDIO_ISLITTLEENDIAN
 	.uleb128	8
 	.ascii	"SDL_AUDIO_ISLITTLEENDIAN\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 	.byte	0
 # Procdef SDL_AUDIO_ISUNSIGNED(Word):Boolean;
@@ -12975,29 +14286,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La61-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 # Symbol SDL_AUDIO_ISUNSIGNED
 	.uleb128	8
 	.ascii	"SDL_AUDIO_ISUNSIGNED\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 	.byte	0
 # Procdef SDL_LoadWAV(PChar;PSDL_AudioSpec;PPByte;PDWord):^TSDL_AudioSpec;
@@ -13013,50 +14324,50 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"FILE_\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La261-.Ldebug_info0
 # Symbol SPEC
 	.uleb128	7
 	.ascii	"SPEC\000"
 	.byte	2
-	.byte	144
-	.uleb128	8
+	.byte	118
+	.sleb128	-16
 	.long	.La71-.Ldebug_info0
 # Symbol AUDIO_BUF
 	.uleb128	7
 	.ascii	"AUDIO_BUF\000"
 	.byte	2
-	.byte	144
-	.uleb128	9
+	.byte	118
+	.sleb128	-24
 	.long	.La265-.Ldebug_info0
 # Symbol AUDIO_LEN
 	.uleb128	7
 	.ascii	"AUDIO_LEN\000"
 	.byte	2
-	.byte	144
-	.uleb128	9
+	.byte	118
+	.sleb128	-32
 	.long	.La267-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-40
 	.long	.La71-.Ldebug_info0
 # Symbol SDL_LOADWAV
 	.uleb128	8
 	.ascii	"SDL_LOADWAV\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-40
 	.long	.La71-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-40
 	.long	.La71-.Ldebug_info0
 	.byte	0
 # Procdef SDL_PIXELFLAG(LongWord):DWord;
@@ -13072,29 +14383,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La55-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 # Symbol SDL_PIXELFLAG
 	.uleb128	8
 	.ascii	"SDL_PIXELFLAG\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 	.byte	0
 # Procdef SDL_PIXELTYPE(LongWord):DWord;
@@ -13110,29 +14421,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La55-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 # Symbol SDL_PIXELTYPE
 	.uleb128	8
 	.ascii	"SDL_PIXELTYPE\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 	.byte	0
 # Procdef SDL_PIXELORDER(LongWord):DWord;
@@ -13148,29 +14459,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La55-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 # Symbol SDL_PIXELORDER
 	.uleb128	8
 	.ascii	"SDL_PIXELORDER\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 	.byte	0
 # Procdef SDL_PIXELLAYOUT(LongWord):DWord;
@@ -13186,29 +14497,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La55-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 # Symbol SDL_PIXELLAYOUT
 	.uleb128	8
 	.ascii	"SDL_PIXELLAYOUT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 	.byte	0
 # Procdef SDL_BITSPERPIXEL(LongWord):DWord;
@@ -13224,29 +14535,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La55-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 # Symbol SDL_BITSPERPIXEL
 	.uleb128	8
 	.ascii	"SDL_BITSPERPIXEL\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 	.byte	0
 # Procdef SDL_BYTESPERPIXEL(LongWord):DWord;
@@ -13262,29 +14573,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	3
+	.byte	118
+	.sleb128	-8
 	.long	.La55-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 # Symbol SDL_BYTESPERPIXEL
 	.uleb128	8
 	.ascii	"SDL_BYTESPERPIXEL\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La55-.Ldebug_info0
 	.byte	0
 # Procdef SDL_ISPIXELFORMAT_INDEXED(LongWord):Boolean;
@@ -13300,29 +14611,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"FORMAT\000"
 	.byte	2
-	.byte	144
-	.uleb128	3
+	.byte	118
+	.sleb128	-8
 	.long	.La55-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 # Symbol SDL_ISPIXELFORMAT_INDEXED
 	.uleb128	8
 	.ascii	"SDL_ISPIXELFORMAT_INDEXED\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 	.byte	0
 # Procdef SDL_ISPIXELFORMAT_ALPHA(LongWord):Boolean;
@@ -13338,29 +14649,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"FORMAT\000"
 	.byte	2
-	.byte	144
-	.uleb128	3
+	.byte	118
+	.sleb128	-8
 	.long	.La55-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 # Symbol SDL_ISPIXELFORMAT_ALPHA
 	.uleb128	8
 	.ascii	"SDL_ISPIXELFORMAT_ALPHA\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 	.byte	0
 # Procdef SDL_ISPIXELFORMAT_FOURCC(LongWord):Boolean;
@@ -13376,29 +14687,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"FORMAT\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La55-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 # Symbol SDL_ISPIXELFORMAT_FOURCC
 	.uleb128	8
 	.ascii	"SDL_ISPIXELFORMAT_FOURCC\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 	.byte	0
 # Procdef SDL_RectEmpty(const PSDL_Rect):LongBool;
@@ -13414,29 +14725,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"X\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La101-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La3-.Ldebug_info0
 # Symbol SDL_RECTEMPTY
 	.uleb128	8
 	.ascii	"SDL_RECTEMPTY\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La3-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La3-.Ldebug_info0
 	.byte	0
 # Procdef SDL_RectEquals(const PSDL_Rect;const PSDL_Rect):LongBool;
@@ -13452,36 +14763,36 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"A\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La101-.Ldebug_info0
 # Symbol B
 	.uleb128	7
 	.ascii	"B\000"
 	.byte	2
-	.byte	144
-	.uleb128	1
+	.byte	118
+	.sleb128	-16
 	.long	.La101-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-24
 	.long	.La3-.Ldebug_info0
 # Symbol SDL_RECTEQUALS
 	.uleb128	8
 	.ascii	"SDL_RECTEQUALS\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-24
 	.long	.La3-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-24
 	.long	.La3-.Ldebug_info0
 	.byte	0
 # Procdef SDL_MUSTLOCK(PSDL_Surface):Boolean;
@@ -13497,29 +14808,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"S\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La105-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 # Symbol SDL_MUSTLOCK
 	.uleb128	8
 	.ascii	"SDL_MUSTLOCK\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La263-.Ldebug_info0
 	.byte	0
 # Procdef SDL_LoadBMP(PChar):^TSDL_Surface;
@@ -13535,29 +14846,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"FILE_\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La261-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La105-.Ldebug_info0
 # Symbol SDL_LOADBMP
 	.uleb128	8
 	.ascii	"SDL_LOADBMP\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La105-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La105-.Ldebug_info0
 	.byte	0
 # Procdef SDL_SaveBMP(PSDL_Surface;PChar):LongInt;
@@ -13573,36 +14884,36 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"SURFACE\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La105-.Ldebug_info0
 # Symbol FILE_
 	.uleb128	7
 	.ascii	"FILE_\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-16
 	.long	.La261-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-24
 	.long	.La17-.Ldebug_info0
 # Symbol SDL_SAVEBMP
 	.uleb128	8
 	.ascii	"SDL_SAVEBMP\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-24
 	.long	.La17-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-24
 	.long	.La17-.Ldebug_info0
 	.byte	0
 # Procdef SDL_BlitSurface(PSDL_Surface;const PSDL_Rect;PSDL_Surface;PSDL_Rect):LongInt;
@@ -13618,50 +14929,50 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"SRC\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La105-.Ldebug_info0
 # Symbol SRCRECT
 	.uleb128	7
 	.ascii	"SRCRECT\000"
 	.byte	2
-	.byte	144
-	.uleb128	1
+	.byte	118
+	.sleb128	-16
 	.long	.La101-.Ldebug_info0
 # Symbol DST
 	.uleb128	7
 	.ascii	"DST\000"
 	.byte	2
-	.byte	144
-	.uleb128	8
+	.byte	118
+	.sleb128	-24
 	.long	.La105-.Ldebug_info0
 # Symbol DSTRECT
 	.uleb128	7
 	.ascii	"DSTRECT\000"
 	.byte	2
-	.byte	144
-	.uleb128	9
+	.byte	118
+	.sleb128	-32
 	.long	.La101-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-40
 	.long	.La17-.Ldebug_info0
 # Symbol SDL_BLITSURFACE
 	.uleb128	8
 	.ascii	"SDL_BLITSURFACE\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-40
 	.long	.La17-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-40
 	.long	.La17-.Ldebug_info0
 	.byte	0
 # Procdef SDL_BlitScaled(PSDL_Surface;const PSDL_Rect;PSDL_Surface;PSDL_Rect):LongInt;
@@ -13677,50 +14988,50 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"SRC\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La105-.Ldebug_info0
 # Symbol SRCRECT
 	.uleb128	7
 	.ascii	"SRCRECT\000"
 	.byte	2
-	.byte	144
-	.uleb128	1
+	.byte	118
+	.sleb128	-16
 	.long	.La101-.Ldebug_info0
 # Symbol DST
 	.uleb128	7
 	.ascii	"DST\000"
 	.byte	2
-	.byte	144
-	.uleb128	8
+	.byte	118
+	.sleb128	-24
 	.long	.La105-.Ldebug_info0
 # Symbol DSTRECT
 	.uleb128	7
 	.ascii	"DSTRECT\000"
 	.byte	2
-	.byte	144
-	.uleb128	9
+	.byte	118
+	.sleb128	-32
 	.long	.La101-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-40
 	.long	.La17-.Ldebug_info0
 # Symbol SDL_BLITSCALED
 	.uleb128	8
 	.ascii	"SDL_BLITSCALED\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-40
 	.long	.La17-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-40
 	.long	.La17-.Ldebug_info0
 	.byte	0
 # Procdef SDL_GameControllerAddMappingsFromFile(PChar):LongInt;
@@ -13736,29 +15047,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"FILE_\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La261-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La17-.Ldebug_info0
 # Symbol SDL_GAMECONTROLLERADDMAPPINGSFROMFILE
 	.uleb128	8
 	.ascii	"SDL_GAMECONTROLLERADDMAPPINGSFROMFILE\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La17-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La17-.Ldebug_info0
 	.byte	0
 # Procdef SDL_QuitRequested:Boolean;
@@ -13774,22 +15085,22 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La263-.Ldebug_info0
 # Symbol SDL_QUITREQUESTED
 	.uleb128	8
 	.ascii	"SDL_QUITREQUESTED\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La263-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-8
 	.long	.La263-.Ldebug_info0
 	.byte	0
 # Procdef SDL_GetEventState(LongWord):Byte;
@@ -13805,29 +15116,29 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	7
 	.ascii	"TYPE_\000"
 	.byte	2
-	.byte	144
-	.uleb128	2
+	.byte	118
+	.sleb128	-8
 	.long	.La55-.Ldebug_info0
 # Symbol result
 	.uleb128	8
 	.ascii	"result\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La67-.Ldebug_info0
 # Symbol SDL_GETEVENTSTATE
 	.uleb128	8
 	.ascii	"SDL_GETEVENTSTATE\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La67-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	8
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	144
-	.uleb128	0
+	.byte	118
+	.sleb128	-16
 	.long	.La67-.Ldebug_info0
 	.byte	0
 # Defs - Begin unit SYSTEM has index 1
@@ -14090,7 +15401,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 # Defs - End unit SYSTEM has index 1
 # Defs - Begin unit OBJPAS has index 6
 # Defs - End unit OBJPAS has index 6
-# Defs - Begin unit SDL2 has index 254
+# Defs - Begin unit SDL2 has index 255
 # Definition PUint64
 .La5:
 	.uleb128	10
@@ -18044,7 +19355,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 .La260:
 	.uleb128	12
 	.long	.La259-.Ldebug_info0
-# Defs - End unit SDL2 has index 254
+# Defs - End unit SDL2 has index 255
 # Defs - Begin Staticsymtable
 # Defs - End Staticsymtable
 # Definition TSDL_RWops.<procedure variable type of function(PSDL_RWops):Int64;CDecl>
@@ -18963,25 +20274,31 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # ###################
 # function: SDL2_$$_SDL_MOSTSIGNIFICANTBITINDEX32$LONGWORD$$LONGINT
-# [2707:8]
+# [2706:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll13
 	.byte	5
-	.uleb128	8
+	.uleb128	1
 	.byte	3
-	.sleb128	2706
+	.sleb128	2705
 	.byte	1
-# [2709:3]
+# [2707:8]
 	.byte	2
 	.uleb128	.Ll14-.Ll13
+	.byte	5
+	.uleb128	8
+	.byte	13
+# [2709:3]
+	.byte	2
+	.uleb128	.Ll15-.Ll14
 	.byte	5
 	.uleb128	3
 	.byte	14
 # [2708:5]
 	.byte	2
-	.uleb128	.Ll15-.Ll14
+	.uleb128	.Ll16-.Ll15
 	.byte	5
 	.uleb128	5
 	.byte	3
@@ -18989,20 +20306,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2710:21]
 	.byte	2
-	.uleb128	.Ll16-.Ll15
+	.uleb128	.Ll17-.Ll16
 	.byte	5
 	.uleb128	21
 	.byte	14
 # [2711:1]
 	.byte	2
-	.uleb128	.Ll17-.Ll16
+	.uleb128	.Ll18-.Ll17
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll18
+	.quad	.Ll19
 	.byte	0
 	.byte	1
 	.byte	1
@@ -19012,102 +20329,89 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll19
+	.quad	.Ll20
 	.byte	5
 	.uleb128	1
 	.byte	3
 	.sleb128	2716
 	.byte	1
-# [2718:3]
-	.byte	2
-	.uleb128	.Ll20-.Ll19
-	.byte	5
-	.uleb128	3
-	.byte	13
-# [2719:3]
+# [2718:5]
 	.byte	2
 	.uleb128	.Ll21-.Ll20
+	.byte	5
+	.uleb128	5
 	.byte	13
-# [2720:3]
+# [2719:5]
 	.byte	2
 	.uleb128	.Ll22-.Ll21
 	.byte	13
-# [2721:1]
+# [2720:5]
 	.byte	2
 	.uleb128	.Ll23-.Ll22
+	.byte	13
+# [2721:1]
+	.byte	2
+	.uleb128	.Ll24-.Ll23
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll24
+	.quad	.Ll25
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: SDL2_$$_SDL_VERSIONNUM$LONGINT$LONGINT$LONGINT$$LONGINT
-# [2725:10]
+# [2724:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll25
+	.quad	.Ll26
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	2723
+	.byte	1
+# [2725:10]
+	.byte	2
+	.uleb128	.Ll27-.Ll26
 	.byte	5
 	.uleb128	10
-	.byte	3
-	.sleb128	2724
-	.byte	1
+	.byte	13
 # [2726:1]
 	.byte	2
-	.uleb128	.Ll26-.Ll25
+	.uleb128	.Ll28-.Ll27
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll27
+	.quad	.Ll29
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: SDL2_$$_SDL_COMPILEDVERSION$$LONGINT
-# [2730:8]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll28
-	.byte	5
-	.uleb128	8
-	.byte	3
-	.sleb128	2729
-	.byte	1
-# [2731:1]
-	.byte	2
-	.uleb128	.Ll29-.Ll28
-	.byte	5
-	.uleb128	1
-	.byte	13
+# [2729:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll30
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: SDL2_$$_SDL_VERSION_ATLEAST$LONGINT$LONGINT$LONGINT$$BOOLEAN
-# [2735:31]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll31
 	.byte	5
-	.uleb128	31
+	.uleb128	1
 	.byte	3
-	.sleb128	2734
+	.sleb128	2728
 	.byte	1
-# [2736:1]
+# [2730:8]
+	.byte	2
+	.uleb128	.Ll31-.Ll30
+	.byte	5
+	.uleb128	8
+	.byte	13
+# [2731:1]
 	.byte	2
 	.uleb128	.Ll32-.Ll31
 	.byte	5
@@ -19121,8 +20425,8 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 	.byte	1
 # ###################
-# function: SDL2_$$_SDL_OUTOFMEMORY$$LONGINT
-# [2742:1]
+# function: SDL2_$$_SDL_VERSION_ATLEAST$LONGINT$LONGINT$LONGINT$$BOOLEAN
+# [2734:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
@@ -19130,15 +20434,15 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	2741
+	.sleb128	2733
 	.byte	1
-# [2743:8]
+# [2735:31]
 	.byte	2
 	.uleb128	.Ll35-.Ll34
 	.byte	5
-	.uleb128	8
+	.uleb128	31
 	.byte	13
-# [2744:1]
+# [2736:1]
 	.byte	2
 	.uleb128	.Ll36-.Ll35
 	.byte	5
@@ -19152,8 +20456,8 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 	.byte	1
 # ###################
-# function: SDL2_$$_SDL_UNSUPPORTED$$LONGINT
-# [2747:1]
+# function: SDL2_$$_SDL_OUTOFMEMORY$$LONGINT
+# [2742:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
@@ -19161,15 +20465,15 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	2746
+	.sleb128	2741
 	.byte	1
-# [2748:8]
+# [2743:8]
 	.byte	2
 	.uleb128	.Ll39-.Ll38
 	.byte	5
 	.uleb128	8
 	.byte	13
-# [2749:1]
+# [2744:1]
 	.byte	2
 	.uleb128	.Ll40-.Ll39
 	.byte	5
@@ -19183,8 +20487,8 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 	.byte	1
 # ###################
-# function: SDL2_$$_SDL_INVALIDPARAMERROR$PCHAR$$LONGINT
-# [2752:1]
+# function: SDL2_$$_SDL_UNSUPPORTED$$LONGINT
+# [2747:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
@@ -19192,15 +20496,15 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	2751
+	.sleb128	2746
 	.byte	1
-# [2753:50]
+# [2748:8]
 	.byte	2
 	.uleb128	.Ll43-.Ll42
 	.byte	5
-	.uleb128	50
+	.uleb128	8
 	.byte	13
-# [2754:1]
+# [2749:1]
 	.byte	2
 	.uleb128	.Ll44-.Ll43
 	.byte	5
@@ -19214,27 +20518,64 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 	.byte	1
 # ###################
-# function: SDL2_$$_SDL_TICKS_PASSED$LONGWORD$LONGWORD$$LONGBOOL
-# [2761:9]
+# function: SDL2_$$_SDL_INVALIDPARAMERROR$PCHAR$$LONGINT
+# [2752:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll46
 	.byte	5
-	.uleb128	9
+	.uleb128	1
 	.byte	3
-	.sleb128	2760
+	.sleb128	2751
 	.byte	1
-# [2762:1]
+# [2753:8]
 	.byte	2
 	.uleb128	.Ll47-.Ll46
+	.byte	5
+	.uleb128	8
+	.byte	13
+# [2754:1]
+	.byte	2
+	.uleb128	.Ll48-.Ll47
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll48
+	.quad	.Ll49
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: SDL2_$$_SDL_TICKS_PASSED$LONGWORD$LONGWORD$$LONGBOOL
+# [2760:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll50
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	2759
+	.byte	1
+# [2761:9]
+	.byte	2
+	.uleb128	.Ll51-.Ll50
+	.byte	5
+	.uleb128	9
+	.byte	13
+# [2762:1]
+	.byte	2
+	.uleb128	.Ll52-.Ll51
+	.byte	5
+	.uleb128	1
+	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll53
 	.byte	0
 	.byte	1
 	.byte	1
@@ -19244,7 +20585,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll49
+	.quad	.Ll54
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -19252,20 +20593,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2769:8]
 	.byte	2
-	.uleb128	.Ll50-.Ll49
+	.uleb128	.Ll55-.Ll54
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [2770:1]
 	.byte	2
-	.uleb128	.Ll51-.Ll50
+	.uleb128	.Ll56-.Ll55
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll52
+	.quad	.Ll57
 	.byte	0
 	.byte	1
 	.byte	1
@@ -19275,7 +20616,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll53
+	.quad	.Ll58
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -19283,20 +20624,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2774:8]
 	.byte	2
-	.uleb128	.Ll54-.Ll53
+	.uleb128	.Ll59-.Ll58
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [2775:1]
 	.byte	2
-	.uleb128	.Ll55-.Ll54
+	.uleb128	.Ll60-.Ll59
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll56
+	.quad	.Ll61
 	.byte	0
 	.byte	1
 	.byte	1
@@ -19306,7 +20647,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll57
+	.quad	.Ll62
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -19314,20 +20655,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2783:8]
 	.byte	2
-	.uleb128	.Ll58-.Ll57
+	.uleb128	.Ll63-.Ll62
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [2784:1]
 	.byte	2
-	.uleb128	.Ll59-.Ll58
+	.uleb128	.Ll64-.Ll63
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll60
+	.quad	.Ll65
 	.byte	0
 	.byte	1
 	.byte	1
@@ -19337,7 +20678,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll61
+	.quad	.Ll66
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -19345,20 +20686,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2792:8]
 	.byte	2
-	.uleb128	.Ll62-.Ll61
+	.uleb128	.Ll67-.Ll66
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [2793:1]
 	.byte	2
-	.uleb128	.Ll63-.Ll62
+	.uleb128	.Ll68-.Ll67
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll64
+	.quad	.Ll69
 	.byte	0
 	.byte	1
 	.byte	1
@@ -19368,7 +20709,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll65
+	.quad	.Ll70
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -19376,20 +20717,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2797:8]
 	.byte	2
-	.uleb128	.Ll66-.Ll65
+	.uleb128	.Ll71-.Ll70
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [2798:1]
 	.byte	2
-	.uleb128	.Ll67-.Ll66
+	.uleb128	.Ll72-.Ll71
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll68
+	.quad	.Ll73
 	.byte	0
 	.byte	1
 	.byte	1
@@ -19399,7 +20740,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll69
+	.quad	.Ll74
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -19407,20 +20748,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2802:8]
 	.byte	2
-	.uleb128	.Ll70-.Ll69
+	.uleb128	.Ll75-.Ll74
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [2803:1]
 	.byte	2
-	.uleb128	.Ll71-.Ll70
+	.uleb128	.Ll76-.Ll75
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll72
+	.quad	.Ll77
 	.byte	0
 	.byte	1
 	.byte	1
@@ -19430,7 +20771,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll73
+	.quad	.Ll78
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -19438,32 +20779,32 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2810:3]
 	.byte	2
-	.uleb128	.Ll74-.Ll73
+	.uleb128	.Ll79-.Ll78
 	.byte	5
 	.uleb128	3
 	.byte	13
 # [2811:11]
 	.byte	2
-	.uleb128	.Ll75-.Ll74
+	.uleb128	.Ll80-.Ll79
 	.byte	5
 	.uleb128	11
 	.byte	13
 # [2812:10]
 	.byte	2
-	.uleb128	.Ll76-.Ll75
+	.uleb128	.Ll81-.Ll80
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [2813:1]
 	.byte	2
-	.uleb128	.Ll77-.Ll76
+	.uleb128	.Ll82-.Ll81
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll78
+	.quad	.Ll83
 	.byte	0
 	.byte	1
 	.byte	1
@@ -19473,20 +20814,28 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll79
+	.quad	.Ll84
 	.byte	5
 	.uleb128	1
 	.byte	3
 	.sleb128	2815
 	.byte	1
+# [2817:8]
+	.byte	2
+	.uleb128	.Ll85-.Ll84
+	.byte	5
+	.uleb128	8
+	.byte	13
 # [2818:1]
 	.byte	2
-	.uleb128	.Ll80-.Ll79
-	.byte	14
+	.uleb128	.Ll86-.Ll85
+	.byte	5
+	.uleb128	1
+	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll81
+	.quad	.Ll87
 	.byte	0
 	.byte	1
 	.byte	1
@@ -19496,20 +20845,28 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll82
+	.quad	.Ll88
 	.byte	5
 	.uleb128	1
 	.byte	3
 	.sleb128	2820
 	.byte	1
+# [2822:8]
+	.byte	2
+	.uleb128	.Ll89-.Ll88
+	.byte	5
+	.uleb128	8
+	.byte	13
 # [2823:1]
 	.byte	2
-	.uleb128	.Ll83-.Ll82
-	.byte	14
+	.uleb128	.Ll90-.Ll89
+	.byte	5
+	.uleb128	1
+	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll84
+	.quad	.Ll91
 	.byte	0
 	.byte	1
 	.byte	1
@@ -19519,39 +20876,59 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll85
+	.quad	.Ll92
 	.byte	5
 	.uleb128	1
 	.byte	3
 	.sleb128	2825
 	.byte	1
+# [2827:8]
+	.byte	2
+	.uleb128	.Ll93-.Ll92
+	.byte	5
+	.uleb128	8
+	.byte	13
 # [2828:1]
 	.byte	2
-	.uleb128	.Ll86-.Ll85
-	.byte	14
+	.uleb128	.Ll94-.Ll93
+	.byte	5
+	.uleb128	1
+	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll87
+	.quad	.Ll95
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: SDL2_$$_SDL_SWAPFLOATLE$SINGLE$$SINGLE
-# [2837:1]
+# [2831:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll88
+	.quad	.Ll96
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	2836
+	.sleb128	2830
 	.byte	1
+# [2833:10]
+	.byte	2
+	.uleb128	.Ll97-.Ll96
+	.byte	5
+	.uleb128	10
+	.byte	14
+# [2837:1]
+	.byte	2
+	.uleb128	.Ll98-.Ll97
+	.byte	5
+	.uleb128	1
+	.byte	16
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll89
+	.quad	.Ll99
 	.byte	0
 	.byte	1
 	.byte	1
@@ -19561,7 +20938,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll90
+	.quad	.Ll100
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -19569,20 +20946,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2841:8]
 	.byte	2
-	.uleb128	.Ll91-.Ll90
+	.uleb128	.Ll101-.Ll100
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [2842:1]
 	.byte	2
-	.uleb128	.Ll92-.Ll91
+	.uleb128	.Ll102-.Ll101
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll93
+	.quad	.Ll103
 	.byte	0
 	.byte	1
 	.byte	1
@@ -19592,7 +20969,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll94
+	.quad	.Ll104
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -19600,20 +20977,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2846:8]
 	.byte	2
-	.uleb128	.Ll95-.Ll94
+	.uleb128	.Ll105-.Ll104
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [2847:1]
 	.byte	2
-	.uleb128	.Ll96-.Ll95
+	.uleb128	.Ll106-.Ll105
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll97
+	.quad	.Ll107
 	.byte	0
 	.byte	1
 	.byte	1
@@ -19623,7 +21000,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll98
+	.quad	.Ll108
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -19631,20 +21008,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2851:8]
 	.byte	2
-	.uleb128	.Ll99-.Ll98
+	.uleb128	.Ll109-.Ll108
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [2852:1]
 	.byte	2
-	.uleb128	.Ll100-.Ll99
+	.uleb128	.Ll110-.Ll109
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll101
+	.quad	.Ll111
 	.byte	0
 	.byte	1
 	.byte	1
@@ -19654,7 +21031,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll102
+	.quad	.Ll112
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -19662,20 +21039,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2859:8]
 	.byte	2
-	.uleb128	.Ll103-.Ll102
+	.uleb128	.Ll113-.Ll112
 	.byte	5
 	.uleb128	8
 	.byte	16
 # [2861:1]
 	.byte	2
-	.uleb128	.Ll104-.Ll103
+	.uleb128	.Ll114-.Ll113
 	.byte	5
 	.uleb128	1
 	.byte	14
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll105
+	.quad	.Ll115
 	.byte	0
 	.byte	1
 	.byte	1
@@ -19685,7 +21062,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll106
+	.quad	.Ll116
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -19693,20 +21070,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2868:11]
 	.byte	2
-	.uleb128	.Ll107-.Ll106
+	.uleb128	.Ll117-.Ll116
 	.byte	5
 	.uleb128	11
 	.byte	13
 # [2869:1]
 	.byte	2
-	.uleb128	.Ll108-.Ll107
+	.uleb128	.Ll118-.Ll117
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll109
+	.quad	.Ll119
 	.byte	0
 	.byte	1
 	.byte	1
@@ -19716,7 +21093,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll110
+	.quad	.Ll120
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -19724,20 +21101,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2874:11]
 	.byte	2
-	.uleb128	.Ll111-.Ll110
+	.uleb128	.Ll121-.Ll120
 	.byte	5
 	.uleb128	11
 	.byte	13
 # [2875:1]
 	.byte	2
-	.uleb128	.Ll112-.Ll111
+	.uleb128	.Ll122-.Ll121
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll113
+	.quad	.Ll123
 	.byte	0
 	.byte	1
 	.byte	1
@@ -19747,7 +21124,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll114
+	.quad	.Ll124
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -19755,20 +21132,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2879:11]
 	.byte	2
-	.uleb128	.Ll115-.Ll114
+	.uleb128	.Ll125-.Ll124
 	.byte	5
 	.uleb128	11
 	.byte	13
 # [2880:1]
 	.byte	2
-	.uleb128	.Ll116-.Ll115
+	.uleb128	.Ll126-.Ll125
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll117
+	.quad	.Ll127
 	.byte	0
 	.byte	1
 	.byte	1
@@ -19778,7 +21155,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll118
+	.quad	.Ll128
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -19786,20 +21163,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2884:35]
 	.byte	2
-	.uleb128	.Ll119-.Ll118
+	.uleb128	.Ll129-.Ll128
 	.byte	5
 	.uleb128	35
 	.byte	13
 # [2885:1]
 	.byte	2
-	.uleb128	.Ll120-.Ll119
+	.uleb128	.Ll130-.Ll129
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll121
+	.quad	.Ll131
 	.byte	0
 	.byte	1
 	.byte	1
@@ -19809,7 +21186,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll122
+	.quad	.Ll132
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -19817,90 +21194,11 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2889:36]
 	.byte	2
-	.uleb128	.Ll123-.Ll122
+	.uleb128	.Ll133-.Ll132
 	.byte	5
 	.uleb128	36
 	.byte	13
 # [2890:1]
-	.byte	2
-	.uleb128	.Ll124-.Ll123
-	.byte	5
-	.uleb128	1
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll125
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: SDL2_$$_SDL_RWCLOSE$PSDL_RWOPS$$LONGINT
-# [2893:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll126
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	2892
-	.byte	1
-# [2894:11]
-	.byte	2
-	.uleb128	.Ll127-.Ll126
-	.byte	5
-	.uleb128	11
-	.byte	13
-# [2895:1]
-	.byte	2
-	.uleb128	.Ll128-.Ll127
-	.byte	5
-	.uleb128	1
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll129
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: SDL2_$$_SDL_AUDIO_BITSIZE$WORD$$WORD
-# [2901:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll130
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	2900
-	.byte	1
-# [2903:1]
-	.byte	2
-	.uleb128	.Ll131-.Ll130
-	.byte	14
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll132
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: SDL2_$$_SDL_AUDIO_ISFLOAT$WORD$$BOOLEAN
-# [2907:8]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll133
-	.byte	5
-	.uleb128	8
-	.byte	3
-	.sleb128	2906
-	.byte	1
-# [2908:1]
 	.byte	2
 	.uleb128	.Ll134-.Ll133
 	.byte	5
@@ -19914,93 +21212,86 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 	.byte	1
 # ###################
-# function: SDL2_$$_SDL_AUDIO_ISBIGENDIAN$WORD$$BOOLEAN
-# [2912:8]
+# function: SDL2_$$_SDL_RWCLOSE$PSDL_RWOPS$$LONGINT
+# [2893:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll136
 	.byte	5
-	.uleb128	8
+	.uleb128	1
 	.byte	3
-	.sleb128	2911
+	.sleb128	2892
 	.byte	1
-# [2913:1]
+# [2894:11]
 	.byte	2
 	.uleb128	.Ll137-.Ll136
 	.byte	5
+	.uleb128	11
+	.byte	13
+# [2895:1]
+	.byte	2
+	.uleb128	.Ll138-.Ll137
+	.byte	5
 	.uleb128	1
 	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll138
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: SDL2_$$_SDL_AUDIO_ISSIGNED$WORD$$BOOLEAN
-# [2917:8]
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll139
-	.byte	5
-	.uleb128	8
-	.byte	3
-	.sleb128	2916
-	.byte	1
-# [2918:1]
-	.byte	2
-	.uleb128	.Ll140-.Ll139
-	.byte	5
-	.uleb128	1
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll141
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
-# function: SDL2_$$_SDL_AUDIO_ISINT$WORD$$BOOLEAN
-# [2922:12]
+# function: SDL2_$$_SDL_AUDIO_BITSIZE$WORD$$WORD
+# [2901:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll142
+	.quad	.Ll140
 	.byte	5
-	.uleb128	12
+	.uleb128	1
 	.byte	3
-	.sleb128	2921
+	.sleb128	2900
 	.byte	1
-# [2923:1]
+# [2902:10]
 	.byte	2
-	.uleb128	.Ll143-.Ll142
+	.uleb128	.Ll141-.Ll140
+	.byte	5
+	.uleb128	10
+	.byte	13
+# [2903:1]
+	.byte	2
+	.uleb128	.Ll142-.Ll141
 	.byte	5
 	.uleb128	1
 	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll143
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: SDL2_$$_SDL_AUDIO_ISFLOAT$WORD$$BOOLEAN
+# [2906:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll144
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: SDL2_$$_SDL_AUDIO_ISLITTLEENDIAN$WORD$$BOOLEAN
-# [2927:12]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll145
 	.byte	5
-	.uleb128	12
+	.uleb128	1
 	.byte	3
-	.sleb128	2926
+	.sleb128	2905
 	.byte	1
-# [2928:1]
+# [2907:9]
+	.byte	2
+	.uleb128	.Ll145-.Ll144
+	.byte	5
+	.uleb128	9
+	.byte	13
+# [2908:1]
 	.byte	2
 	.uleb128	.Ll146-.Ll145
 	.byte	5
@@ -20014,27 +21305,157 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 	.byte	1
 # ###################
-# function: SDL2_$$_SDL_AUDIO_ISUNSIGNED$WORD$$BOOLEAN
-# [2932:12]
+# function: SDL2_$$_SDL_AUDIO_ISBIGENDIAN$WORD$$BOOLEAN
+# [2911:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll148
 	.byte	5
-	.uleb128	12
+	.uleb128	1
 	.byte	3
-	.sleb128	2931
+	.sleb128	2910
 	.byte	1
-# [2933:1]
+# [2912:9]
 	.byte	2
 	.uleb128	.Ll149-.Ll148
+	.byte	5
+	.uleb128	9
+	.byte	13
+# [2913:1]
+	.byte	2
+	.uleb128	.Ll150-.Ll149
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll150
+	.quad	.Ll151
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: SDL2_$$_SDL_AUDIO_ISSIGNED$WORD$$BOOLEAN
+# [2916:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll152
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	2915
+	.byte	1
+# [2917:8]
+	.byte	2
+	.uleb128	.Ll153-.Ll152
+	.byte	5
+	.uleb128	8
+	.byte	13
+# [2918:1]
+	.byte	2
+	.uleb128	.Ll154-.Ll153
+	.byte	5
+	.uleb128	1
+	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll155
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: SDL2_$$_SDL_AUDIO_ISINT$WORD$$BOOLEAN
+# [2921:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll156
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	2920
+	.byte	1
+# [2922:12]
+	.byte	2
+	.uleb128	.Ll157-.Ll156
+	.byte	5
+	.uleb128	12
+	.byte	13
+# [2923:1]
+	.byte	2
+	.uleb128	.Ll158-.Ll157
+	.byte	5
+	.uleb128	1
+	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll159
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: SDL2_$$_SDL_AUDIO_ISLITTLEENDIAN$WORD$$BOOLEAN
+# [2926:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll160
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	2925
+	.byte	1
+# [2927:12]
+	.byte	2
+	.uleb128	.Ll161-.Ll160
+	.byte	5
+	.uleb128	12
+	.byte	13
+# [2928:1]
+	.byte	2
+	.uleb128	.Ll162-.Ll161
+	.byte	5
+	.uleb128	1
+	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll163
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: SDL2_$$_SDL_AUDIO_ISUNSIGNED$WORD$$BOOLEAN
+# [2931:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll164
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	2930
+	.byte	1
+# [2932:12]
+	.byte	2
+	.uleb128	.Ll165-.Ll164
+	.byte	5
+	.uleb128	12
+	.byte	13
+# [2933:1]
+	.byte	2
+	.uleb128	.Ll166-.Ll165
+	.byte	5
+	.uleb128	1
+	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll167
 	.byte	0
 	.byte	1
 	.byte	1
@@ -20044,7 +21465,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll151
+	.quad	.Ll168
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -20052,20 +21473,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2938:8]
 	.byte	2
-	.uleb128	.Ll152-.Ll151
+	.uleb128	.Ll169-.Ll168
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [2939:1]
 	.byte	2
-	.uleb128	.Ll153-.Ll152
+	.uleb128	.Ll170-.Ll169
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll154
+	.quad	.Ll171
 	.byte	0
 	.byte	1
 	.byte	1
@@ -20075,7 +21496,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll155
+	.quad	.Ll172
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -20083,20 +21504,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2946:8]
 	.byte	2
-	.uleb128	.Ll156-.Ll155
+	.uleb128	.Ll173-.Ll172
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [2947:1]
 	.byte	2
-	.uleb128	.Ll157-.Ll156
+	.uleb128	.Ll174-.Ll173
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll158
+	.quad	.Ll175
 	.byte	0
 	.byte	1
 	.byte	1
@@ -20106,7 +21527,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll159
+	.quad	.Ll176
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -20114,20 +21535,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2951:8]
 	.byte	2
-	.uleb128	.Ll160-.Ll159
+	.uleb128	.Ll177-.Ll176
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [2952:1]
 	.byte	2
-	.uleb128	.Ll161-.Ll160
+	.uleb128	.Ll178-.Ll177
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll162
+	.quad	.Ll179
 	.byte	0
 	.byte	1
 	.byte	1
@@ -20137,7 +21558,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll163
+	.quad	.Ll180
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -20145,20 +21566,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2956:8]
 	.byte	2
-	.uleb128	.Ll164-.Ll163
+	.uleb128	.Ll181-.Ll180
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [2957:1]
 	.byte	2
-	.uleb128	.Ll165-.Ll164
+	.uleb128	.Ll182-.Ll181
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll166
+	.quad	.Ll183
 	.byte	0
 	.byte	1
 	.byte	1
@@ -20168,7 +21589,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll167
+	.quad	.Ll184
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -20176,20 +21597,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2961:8]
 	.byte	2
-	.uleb128	.Ll168-.Ll167
+	.uleb128	.Ll185-.Ll184
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [2962:1]
 	.byte	2
-	.uleb128	.Ll169-.Ll168
+	.uleb128	.Ll186-.Ll185
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll170
+	.quad	.Ll187
 	.byte	0
 	.byte	1
 	.byte	1
@@ -20199,7 +21620,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll171
+	.quad	.Ll188
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -20207,20 +21628,20 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2966:8]
 	.byte	2
-	.uleb128	.Ll172-.Ll171
+	.uleb128	.Ll189-.Ll188
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [2967:1]
 	.byte	2
-	.uleb128	.Ll173-.Ll172
+	.uleb128	.Ll190-.Ll189
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll174
+	.quad	.Ll191
 	.byte	0
 	.byte	1
 	.byte	1
@@ -20230,7 +21651,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll175
+	.quad	.Ll192
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -20238,33 +21659,33 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2971:6]
 	.byte	2
-	.uleb128	.Ll176-.Ll175
+	.uleb128	.Ll193-.Ll192
 	.byte	5
 	.uleb128	6
 	.byte	13
 # [2973:10]
 	.byte	2
-	.uleb128	.Ll177-.Ll176
+	.uleb128	.Ll194-.Ll193
 	.byte	5
 	.uleb128	10
 	.byte	14
 # [2974:10]
 	.byte	2
-	.uleb128	.Ll178-.Ll177
+	.uleb128	.Ll195-.Ll194
 	.byte	13
 # [2975:10]
 	.byte	2
-	.uleb128	.Ll179-.Ll178
+	.uleb128	.Ll196-.Ll195
 	.byte	13
 # [2977:7]
 	.byte	2
-	.uleb128	.Ll180-.Ll179
+	.uleb128	.Ll197-.Ll196
 	.byte	5
 	.uleb128	7
 	.byte	14
 # [2976:9]
 	.byte	2
-	.uleb128	.Ll181-.Ll180
+	.uleb128	.Ll198-.Ll197
 	.byte	5
 	.uleb128	9
 	.byte	3
@@ -20272,26 +21693,26 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2978:16]
 	.byte	2
-	.uleb128	.Ll182-.Ll181
+	.uleb128	.Ll199-.Ll198
 	.byte	5
 	.uleb128	16
 	.byte	14
 # [2981:20]
 	.byte	2
-	.uleb128	.Ll183-.Ll182
+	.uleb128	.Ll200-.Ll199
 	.byte	5
 	.uleb128	20
 	.byte	15
 # [2982:1]
 	.byte	2
-	.uleb128	.Ll184-.Ll183
+	.uleb128	.Ll201-.Ll200
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll185
+	.quad	.Ll202
 	.byte	0
 	.byte	1
 	.byte	1
@@ -20301,7 +21722,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll186
+	.quad	.Ll203
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -20309,149 +21730,25 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [2986:13]
 	.byte	2
-	.uleb128	.Ll187-.Ll186
+	.uleb128	.Ll204-.Ll203
 	.byte	5
 	.uleb128	13
 	.byte	13
 # [2987:10]
 	.byte	2
-	.uleb128	.Ll188-.Ll187
+	.uleb128	.Ll205-.Ll204
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [2988:10]
 	.byte	2
-	.uleb128	.Ll189-.Ll188
+	.uleb128	.Ll206-.Ll205
 	.byte	13
 # [2989:10]
 	.byte	2
-	.uleb128	.Ll190-.Ll189
+	.uleb128	.Ll207-.Ll206
 	.byte	13
 # [2990:1]
-	.byte	2
-	.uleb128	.Ll191-.Ll190
-	.byte	5
-	.uleb128	1
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll192
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: SDL2_$$_SDL_ISPIXELFORMAT_ALPHA$LONGWORD$$BOOLEAN
-# [2993:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll193
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	2992
-	.byte	1
-# [2994:13]
-	.byte	2
-	.uleb128	.Ll194-.Ll193
-	.byte	5
-	.uleb128	13
-	.byte	13
-# [2995:10]
-	.byte	2
-	.uleb128	.Ll195-.Ll194
-	.byte	5
-	.uleb128	10
-	.byte	13
-# [2996:10]
-	.byte	2
-	.uleb128	.Ll196-.Ll195
-	.byte	13
-# [2997:10]
-	.byte	2
-	.uleb128	.Ll197-.Ll196
-	.byte	13
-# [2998:10]
-	.byte	2
-	.uleb128	.Ll198-.Ll197
-	.byte	13
-# [2999:1]
-	.byte	2
-	.uleb128	.Ll199-.Ll198
-	.byte	5
-	.uleb128	1
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll200
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: SDL2_$$_SDL_ISPIXELFORMAT_FOURCC$LONGWORD$$BOOLEAN
-# [3003:20]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll201
-	.byte	5
-	.uleb128	20
-	.byte	3
-	.sleb128	3002
-	.byte	1
-# [3004:1]
-	.byte	2
-	.uleb128	.Ll202-.Ll201
-	.byte	5
-	.uleb128	1
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll203
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: SDL2_$$_SDL_RECTEMPTY$PSDL_RECT$$LONGBOOL
-# [3011:8]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll204
-	.byte	5
-	.uleb128	8
-	.byte	3
-	.sleb128	3010
-	.byte	1
-# [3012:1]
-	.byte	2
-	.uleb128	.Ll205-.Ll204
-	.byte	5
-	.uleb128	1
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll206
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: SDL2_$$_SDL_RECTEQUALS$PSDL_RECT$PSDL_RECT$$LONGBOOL
-# [3016:8]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll207
-	.byte	5
-	.uleb128	8
-	.byte	3
-	.sleb128	3015
-	.byte	1
-# [3017:1]
 	.byte	2
 	.uleb128	.Ll208-.Ll207
 	.byte	5
@@ -20465,27 +21762,175 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 	.byte	1
 # ###################
-# function: SDL2_$$_SDL_MUSTLOCK$PSDL_SURFACE$$BOOLEAN
-# [3024:8]
+# function: SDL2_$$_SDL_ISPIXELFORMAT_ALPHA$LONGWORD$$BOOLEAN
+# [2993:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll210
 	.byte	5
-	.uleb128	8
+	.uleb128	1
 	.byte	3
-	.sleb128	3023
+	.sleb128	2992
 	.byte	1
-# [3025:1]
+# [2994:13]
 	.byte	2
 	.uleb128	.Ll211-.Ll210
+	.byte	5
+	.uleb128	13
+	.byte	13
+# [2995:10]
+	.byte	2
+	.uleb128	.Ll212-.Ll211
+	.byte	5
+	.uleb128	10
+	.byte	13
+# [2996:10]
+	.byte	2
+	.uleb128	.Ll213-.Ll212
+	.byte	13
+# [2997:10]
+	.byte	2
+	.uleb128	.Ll214-.Ll213
+	.byte	13
+# [2998:10]
+	.byte	2
+	.uleb128	.Ll215-.Ll214
+	.byte	13
+# [2999:1]
+	.byte	2
+	.uleb128	.Ll216-.Ll215
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll212
+	.quad	.Ll217
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: SDL2_$$_SDL_ISPIXELFORMAT_FOURCC$LONGWORD$$BOOLEAN
+# [3002:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll218
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	3001
+	.byte	1
+# [3003:20]
+	.byte	2
+	.uleb128	.Ll219-.Ll218
+	.byte	5
+	.uleb128	20
+	.byte	13
+# [3004:1]
+	.byte	2
+	.uleb128	.Ll220-.Ll219
+	.byte	5
+	.uleb128	1
+	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll221
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: SDL2_$$_SDL_RECTEMPTY$PSDL_RECT$$LONGBOOL
+# [3010:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll222
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	3009
+	.byte	1
+# [3011:8]
+	.byte	2
+	.uleb128	.Ll223-.Ll222
+	.byte	5
+	.uleb128	8
+	.byte	13
+# [3012:1]
+	.byte	2
+	.uleb128	.Ll224-.Ll223
+	.byte	5
+	.uleb128	1
+	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll225
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: SDL2_$$_SDL_RECTEQUALS$PSDL_RECT$PSDL_RECT$$LONGBOOL
+# [3015:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll226
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	3014
+	.byte	1
+# [3016:8]
+	.byte	2
+	.uleb128	.Ll227-.Ll226
+	.byte	5
+	.uleb128	8
+	.byte	13
+# [3017:1]
+	.byte	2
+	.uleb128	.Ll228-.Ll227
+	.byte	5
+	.uleb128	1
+	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll229
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: SDL2_$$_SDL_MUSTLOCK$PSDL_SURFACE$$BOOLEAN
+# [3023:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll230
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	3022
+	.byte	1
+# [3024:11]
+	.byte	2
+	.uleb128	.Ll231-.Ll230
+	.byte	5
+	.uleb128	11
+	.byte	13
+# [3025:1]
+	.byte	2
+	.uleb128	.Ll232-.Ll231
+	.byte	5
+	.uleb128	1
+	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll233
 	.byte	0
 	.byte	1
 	.byte	1
@@ -20495,7 +21940,7 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll213
+	.quad	.Ll234
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -20503,172 +21948,11 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 # [3029:49]
 	.byte	2
-	.uleb128	.Ll214-.Ll213
+	.uleb128	.Ll235-.Ll234
 	.byte	5
 	.uleb128	49
 	.byte	13
 # [3030:1]
-	.byte	2
-	.uleb128	.Ll215-.Ll214
-	.byte	5
-	.uleb128	1
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll216
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: SDL2_$$_SDL_SAVEBMP$PSDL_SURFACE$PCHAR$$LONGINT
-# [3033:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll217
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	3032
-	.byte	1
-# [3034:58]
-	.byte	2
-	.uleb128	.Ll218-.Ll217
-	.byte	5
-	.uleb128	58
-	.byte	13
-# [3035:1]
-	.byte	2
-	.uleb128	.Ll219-.Ll218
-	.byte	5
-	.uleb128	1
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll220
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: SDL2_$$_SDL_BLITSURFACE$PSDL_SURFACE$PSDL_RECT$PSDL_SURFACE$PSDL_RECT$$LONGINT
-# [3038:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll221
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	3037
-	.byte	1
-# [3039:8]
-	.byte	2
-	.uleb128	.Ll222-.Ll221
-	.byte	5
-	.uleb128	8
-	.byte	13
-# [3040:1]
-	.byte	2
-	.uleb128	.Ll223-.Ll222
-	.byte	5
-	.uleb128	1
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll224
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: SDL2_$$_SDL_BLITSCALED$PSDL_SURFACE$PSDL_RECT$PSDL_SURFACE$PSDL_RECT$$LONGINT
-# [3043:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll225
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	3042
-	.byte	1
-# [3044:8]
-	.byte	2
-	.uleb128	.Ll226-.Ll225
-	.byte	5
-	.uleb128	8
-	.byte	13
-# [3045:1]
-	.byte	2
-	.uleb128	.Ll227-.Ll226
-	.byte	5
-	.uleb128	1
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll228
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: SDL2_$$_SDL_GAMECONTROLLERADDMAPPINGSFROMFILE$PCHAR$$LONGINT
-# [3051:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll229
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	3050
-	.byte	1
-# [3052:70]
-	.byte	2
-	.uleb128	.Ll230-.Ll229
-	.byte	5
-	.uleb128	70
-	.byte	13
-# [3053:1]
-	.byte	2
-	.uleb128	.Ll231-.Ll230
-	.byte	5
-	.uleb128	1
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll232
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: SDL2_$$_SDL_QUITREQUESTED$$BOOLEAN
-# [3059:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll233
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	3058
-	.byte	1
-# [3060:3]
-	.byte	2
-	.uleb128	.Ll234-.Ll233
-	.byte	5
-	.uleb128	3
-	.byte	13
-# [3061:8]
-	.byte	2
-	.uleb128	.Ll235-.Ll234
-	.byte	5
-	.uleb128	8
-	.byte	13
-# [3062:1]
 	.byte	2
 	.uleb128	.Ll236-.Ll235
 	.byte	5
@@ -20682,8 +21966,8 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	1
 	.byte	1
 # ###################
-# function: SDL2_$$_SDL_GETEVENTSTATE$LONGWORD$$BYTE
-# [3065:1]
+# function: SDL2_$$_SDL_SAVEBMP$PSDL_SURFACE$PCHAR$$LONGINT
+# [3033:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
@@ -20691,15 +21975,15 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	3064
+	.sleb128	3032
 	.byte	1
-# [3066:8]
+# [3034:58]
 	.byte	2
 	.uleb128	.Ll239-.Ll238
 	.byte	5
-	.uleb128	8
+	.uleb128	58
 	.byte	13
-# [3067:1]
+# [3035:1]
 	.byte	2
 	.uleb128	.Ll240-.Ll239
 	.byte	5
@@ -20709,6 +21993,167 @@ RTTI_$SDL2_$$_PSDL_EVENTFILTER:
 	.uleb128	9
 	.byte	2
 	.quad	.Ll241
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: SDL2_$$_SDL_BLITSURFACE$PSDL_SURFACE$PSDL_RECT$PSDL_SURFACE$PSDL_RECT$$LONGINT
+# [3038:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll242
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	3037
+	.byte	1
+# [3039:8]
+	.byte	2
+	.uleb128	.Ll243-.Ll242
+	.byte	5
+	.uleb128	8
+	.byte	13
+# [3040:1]
+	.byte	2
+	.uleb128	.Ll244-.Ll243
+	.byte	5
+	.uleb128	1
+	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll245
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: SDL2_$$_SDL_BLITSCALED$PSDL_SURFACE$PSDL_RECT$PSDL_SURFACE$PSDL_RECT$$LONGINT
+# [3043:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll246
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	3042
+	.byte	1
+# [3044:8]
+	.byte	2
+	.uleb128	.Ll247-.Ll246
+	.byte	5
+	.uleb128	8
+	.byte	13
+# [3045:1]
+	.byte	2
+	.uleb128	.Ll248-.Ll247
+	.byte	5
+	.uleb128	1
+	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll249
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: SDL2_$$_SDL_GAMECONTROLLERADDMAPPINGSFROMFILE$PCHAR$$LONGINT
+# [3051:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll250
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	3050
+	.byte	1
+# [3052:70]
+	.byte	2
+	.uleb128	.Ll251-.Ll250
+	.byte	5
+	.uleb128	70
+	.byte	13
+# [3053:1]
+	.byte	2
+	.uleb128	.Ll252-.Ll251
+	.byte	5
+	.uleb128	1
+	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll253
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: SDL2_$$_SDL_QUITREQUESTED$$BOOLEAN
+# [3059:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll254
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	3058
+	.byte	1
+# [3060:3]
+	.byte	2
+	.uleb128	.Ll255-.Ll254
+	.byte	5
+	.uleb128	3
+	.byte	13
+# [3061:8]
+	.byte	2
+	.uleb128	.Ll256-.Ll255
+	.byte	5
+	.uleb128	8
+	.byte	13
+# [3062:1]
+	.byte	2
+	.uleb128	.Ll257-.Ll256
+	.byte	5
+	.uleb128	1
+	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll258
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: SDL2_$$_SDL_GETEVENTSTATE$LONGWORD$$BYTE
+# [3065:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll259
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	3064
+	.byte	1
+# [3066:8]
+	.byte	2
+	.uleb128	.Ll260-.Ll259
+	.byte	5
+	.uleb128	8
+	.byte	13
+# [3067:1]
+	.byte	2
+	.uleb128	.Ll261-.Ll260
+	.byte	5
+	.uleb128	1
+	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll262
 	.byte	0
 	.byte	1
 	.byte	1
