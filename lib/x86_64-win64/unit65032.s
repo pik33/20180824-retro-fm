@@ -20,65 +20,53 @@ DEBUGSTART_$UNIT65032:
 .globl	UNIT65032_$$_EXEC65032
 UNIT65032_$$_EXEC65032:
 .Lc1:
-.seh_proc UNIT65032_$$_EXEC65032
-.Ll1:
+# Var opcode located in register al
+# Var ea located in register rdx
+# Var eahelp located in register rax
+# Var eahelp2 located in register rcx
 # [unit65032.pas]
 # [32] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc3:
-.Lc4:
-	movq	%rsp,%rbp
-.Lc5:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
-.seh_endprologue
-# Var opcode located at rbp-8, size=OS_8
-# Var ea located at rbp-16, size=OS_S64
-# Var eahelp located at rbp-24, size=OS_S64
-# Var eahelp2 located at rbp-32, size=OS_S64
-.Ll2:
+.Ll1:
 # [33] cs:=@csa; ds:=@dsa;
 	leaq	U_$UNIT65032_$$_CSA(%rip),%rax
 	movq	%rax,U_$UNIT65032_$$_CS(%rip)
 	leaq	U_$UNIT65032_$$_DSA(%rip),%rax
 	movq	%rax,U_$UNIT65032_$$_DS(%rip)
-.Ll3:
+.Ll2:
 # [35] opcode := raml^[pc+cs^];
 	movq	U_$RETRO_$$_R1(%rip),%rcx
 	movl	U_$UNIT65032_$$_PC(%rip),%edx
 	movq	U_$UNIT65032_$$_CS(%rip),%rax
 	movq	(%rax),%rax
 	leaq	(%rdx,%rax),%rax
+# Var opcode located in register al
 	movb	(%rcx,%rax,4),%al
-	movb	%al,-8(%rbp)
-.Ll4:
+.Ll3:
 # [36] inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll5:
-# [37] case opcode of
-	movb	-8(%rbp),%al
 # PeepHole Optimization,var9
+.Ll4:
+# [37] case opcode of
 	andl	$255,%eax
 	leaq	.Ld1(%rip),%rdx
 	movslq	(%rdx,%rax,4),%rax
 	leaq	(%rdx,%rax,1),%rax
 	jmp	*%rax
 .Lj13:
-.Ll6:
+.Ll5:
 # [42] inc(pc);                                            //put incremented pc on the stack
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll7:
+.Ll6:
 # [43] ramb^[ss+(sp+$100)]:=pc shr 8;
 	movq	U_$RETRO_$$_R1(%rip),%rcx
 	movl	U_$UNIT65032_$$_SP(%rip),%eax
-	leaq	256(%rax),%rax
-	movq	U_$UNIT65032_$$_SS(%rip),%rdx
-	leaq	(%rax,%rdx),%rdx
+	leaq	256(%rax),%rdx
+	movq	U_$UNIT65032_$$_SS(%rip),%rax
+	leaq	(%rdx,%rax),%rdx
 	movl	U_$UNIT65032_$$_PC(%rip),%eax
 	shrl	$8,%eax
 	movb	%al,(%rcx,%rdx,1)
-.Ll8:
+.Ll7:
 # [44] ramb^[ss+(sp+$FF)]:=pc;
 	movq	U_$RETRO_$$_R1(%rip),%rcx
 	movl	U_$UNIT65032_$$_SP(%rip),%eax
@@ -87,34 +75,34 @@ UNIT65032_$$_EXEC65032:
 	leaq	(%rdx,%rax),%rax
 	movb	U_$UNIT65032_$$_PC(%rip),%dl
 	movb	%dl,(%rcx,%rax,1)
-.Ll9:
+.Ll8:
 # [45] ramb^[ss+(sp+$FE)]:=status or $10;                  //put flags on the stach with B set
 	movq	U_$RETRO_$$_R1(%rip),%rcx
 	movl	U_$UNIT65032_$$_SP(%rip),%eax
-	leaq	254(%rax),%rax
-	movq	U_$UNIT65032_$$_SS(%rip),%rdx
-	leaq	(%rax,%rdx),%rdx
+	leaq	254(%rax),%rdx
+	movq	U_$UNIT65032_$$_SS(%rip),%rax
+	leaq	(%rdx,%rax),%rdx
 	movzbl	U_$UNIT65032_$$_STATUS(%rip),%eax
 	orl	$16,%eax
 	movb	%al,(%rcx,%rdx,1)
-.Ll10:
+.Ll9:
 # [46] sp-=3;
 	movl	U_$UNIT65032_$$_SP(%rip),%eax
 	leal	-3(%eax),%eax
 	movl	%eax,U_$UNIT65032_$$_SP(%rip)
 # PeepHole Optimization,var3
-.Ll11:
+.Ll10:
 # [47] status:=status or 4;                                //set interrupt flag
 	orb	$4,U_$UNIT65032_$$_STATUS(%rip)
-.Ll12:
+.Ll11:
 # [48] cs:=@csi;                                           //switch segments to interrupt context
 	leaq	U_$UNIT65032_$$_CSI(%rip),%rax
 	movq	%rax,U_$UNIT65032_$$_CS(%rip)
-.Ll13:
+.Ll12:
 # [49] ds:=@dsi;
 	leaq	U_$UNIT65032_$$_DSI(%rip),%rax
 	movq	%rax,U_$UNIT65032_$$_DS(%rip)
-.Ll14:
+.Ll13:
 # [50] pc := ramw^[(csi shr 1)+$7FFF];                     //jump to @$FFFE;
 	movq	U_$RETRO_$$_R1(%rip),%rdx
 	movq	U_$UNIT65032_$$_CSI(%rip),%rax
@@ -123,61 +111,62 @@ UNIT65032_$$_EXEC65032:
 	movl	%eax,U_$UNIT65032_$$_PC(%rip)
 	jmp	.Lj11
 .Lj14:
-.Ll15:
+.Ll14:
 # [59] eahelp := ds^+((ramb^[cs^+pc] + x) and $FF);           //zero-page wraparound for table pointer
 	movq	U_$RETRO_$$_R1(%rip),%rcx
 	movq	U_$UNIT65032_$$_CS(%rip),%rax
 	movl	U_$UNIT65032_$$_PC(%rip),%edx
 	movq	(%rax),%rax
 	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%eax
-	movl	U_$UNIT65032_$$_X(%rip),%edx
-	leaq	(%rax,%rdx),%rax
+	movzbl	(%rcx,%rax,1),%edx
+	movl	U_$UNIT65032_$$_X(%rip),%eax
+	leaq	(%rdx,%rax),%rax
 	andq	$255,%rax
 	movq	U_$UNIT65032_$$_DS(%rip),%rdx
 	movq	(%rdx),%rdx
 	leaq	(%rax,%rdx),%rax
-	movq	%rax,-24(%rbp)
-.Ll16:
+.Ll15:
 # [60] ea:=ds^+256*ramb^[eahelp+1]+ramb^[eahelp];
-	movq	U_$RETRO_$$_R1(%rip),%rax
-	movq	-24(%rbp),%rdx
-	movzbl	1(%rax,%rdx,1),%eax
-	shlq	$8,%rax
-	movq	U_$UNIT65032_$$_DS(%rip),%rdx
-	movq	(%rdx),%rdx
-	leaq	(%rax,%rdx),%rcx
 	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movq	-24(%rbp),%rax
-	movzbl	(%rdx,%rax,1),%eax
-	leaq	(%rcx,%rax),%rax
-	movq	%rax,-16(%rbp)
-.Ll17:
+	movzbl	1(%rdx,%rax,1),%edx
+	shlq	$8,%rdx
+	movq	U_$UNIT65032_$$_DS(%rip),%rcx
+	movq	(%rcx),%rcx
+	leaq	(%rdx,%rcx),%rcx
+	movq	U_$RETRO_$$_R1(%rip),%rdx
+	movzbl	(%rdx,%rax,1),%edx
+	leaq	(%rcx,%rdx),%rdx
+.Ll16:
 # [61] inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll18:
+.Ll17:
 # [65] a:=ramb^[ea] or a;
-	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movq	-16(%rbp),%rax
-	movzbl	(%rdx,%rax,1),%edx
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	orl	%edx,%eax
-	movl	%eax,U_$UNIT65032_$$_A(%rip)
-.Ll19:
+	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movzbl	(%rcx,%rdx,1),%r8d
+# PeepHole Optimization,var2
+# P=movl
+# HP1=orl
+# HP2=movl
+# PeepHole Optimization,var2
+	orl	%r8d,U_$UNIT65032_$$_A(%rip)
+.Ll18:
 # [66] if (a and $80)<>0 then status:=status or $80 else status:=status and $7F; //sign
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	andl	$128,%eax
-	testl	%eax,%eax
+	movl	U_$UNIT65032_$$_A(%rip),%ecx
+	andl	$128,%ecx
+	testl	%ecx,%ecx
 	je	.Lj290
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+	orb	$128,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj293
 .Lj290:
 # PeepHole Optimization,var3
 	andb	$127,U_$UNIT65032_$$_STATUS(%rip)
 .Lj293:
-.Ll20:
+.Ll19:
 # [67] if a=0 then status:=status or $02 else status:=status and %11111101;      //zero
 	cmpl	$0,U_$UNIT65032_$$_A(%rip)
 	jne	.Lj297
@@ -185,1854 +174,1639 @@ UNIT65032_$$_EXEC65032:
 	orb	$2,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
 .Lj297:
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$253,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
+	movb	U_$UNIT65032_$$_STATUS(%rip),%cl
+	andb	$253,%cl
+	movb	%cl,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
 .Lj15:
-.Ll21:
+.Ll20:
 # [76] ea:=ds^+256*ramb^[cs^+pc]+ramb^[cs^+pc+1];
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%eax
-	shlq	$8,%rax
-	movq	U_$UNIT65032_$$_DS(%rip),%rdx
-	movq	(%rdx),%rdx
-	leaq	(%rax,%rdx),%r8
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	1(%rcx,%rax,1),%eax
-	leaq	(%r8,%rax),%rax
-	movq	%rax,-16(%rbp)
-.Ll22:
+	movq	U_$UNIT65032_$$_DS(%rip),%r10
+	movq	U_$RETRO_$$_R1(%rip),%r9
+	movq	U_$UNIT65032_$$_CS(%rip),%rcx
+	movl	U_$UNIT65032_$$_PC(%rip),%r8d
+	movq	(%rcx),%rcx
+	leaq	(%rcx,%r8),%rcx
+	movzbl	(%r9,%rcx,1),%r8d
+	shlq	$8,%r8
+	movq	(%r10),%r9
+	leaq	(%r9,%r8),%r9
+	movq	U_$RETRO_$$_R1(%rip),%r8
+	movzbl	1(%r8,%rcx,1),%ecx
+	leaq	(%r9,%rcx),%rcx
+	movq	%rcx,%rdx
+.Ll21:
 # [77] inc(pc); inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll23:
+.Ll22:
 # [81] cs^:=$100000000*ramb^[ea+3]+$1000000*ramb^[ea+2]+$10000*ramb^[ea+1]+$100*ramb^[ea];
-	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movq	-16(%rbp),%rax
-	movzbl	3(%rdx,%rax,1),%eax
-	shlq	$32,%rax
 	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	-16(%rbp),%rdx
-	movzbl	2(%rcx,%rdx,1),%edx
-	shlq	$24,%rdx
-	leaq	(%rax,%rdx),%rcx
-	movq	U_$RETRO_$$_R1(%rip),%rax
-	movq	-16(%rbp),%rdx
-	movzbl	1(%rax,%rdx,1),%eax
-	shlq	$16,%rax
-	leaq	(%rcx,%rax),%rcx
-	movq	U_$RETRO_$$_R1(%rip),%rax
-	movq	-16(%rbp),%rdx
-	movzbl	(%rax,%rdx,1),%eax
-	shlq	$8,%rax
-	leaq	(%rcx,%rax),%rdx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movq	%rdx,(%rax)
+	movzbl	3(%rcx,%rdx,1),%ecx
+	shlq	$32,%rcx
+	movq	U_$RETRO_$$_R1(%rip),%r8
+	movzbl	2(%r8,%rdx,1),%r8d
+	shlq	$24,%r8
+	leaq	(%rcx,%r8),%r8
+	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movzbl	1(%rcx,%rdx,1),%ecx
+	shlq	$16,%rcx
+	leaq	(%r8,%rcx),%r8
+	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movzbl	(%rcx,%rdx,1),%ecx
+	shlq	$8,%rcx
+	leaq	(%r8,%rcx),%rcx
+	movq	U_$UNIT65032_$$_CS(%rip),%r8
+	movq	%rcx,(%r8)
 	jmp	.Lj11
 .Lj16:
-.Ll24:
+.Ll23:
 # [90] eahelp := ds^+((ramb^[cs^+pc] + x) and $FF);           //zero-page wraparound for table pointer
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%eax
-	movl	U_$UNIT65032_$$_X(%rip),%edx
-	leaq	(%rax,%rdx),%rax
-	andq	$255,%rax
-	movq	U_$UNIT65032_$$_DS(%rip),%rdx
-	movq	(%rdx),%rdx
-	leaq	(%rax,%rdx),%rax
-	movq	%rax,-24(%rbp)
-.Ll25:
+	movq	U_$RETRO_$$_R1(%rip),%r9
+	movq	U_$UNIT65032_$$_CS(%rip),%rcx
+	movl	U_$UNIT65032_$$_PC(%rip),%r8d
+	movq	(%rcx),%rcx
+	leaq	(%rcx,%r8),%rcx
+	movzbl	(%r9,%rcx,1),%ecx
+	movl	U_$UNIT65032_$$_X(%rip),%r8d
+	leaq	(%rcx,%r8),%rcx
+	andq	$255,%rcx
+	movq	U_$UNIT65032_$$_DS(%rip),%r8
+	movq	(%r8),%r8
+	leaq	(%rcx,%r8),%rcx
+	movq	%rcx,%rax
+.Ll24:
 # [91] ea:=ds^+256*ramb^[eahelp+1]+ramb^[eahelp];
-	movq	U_$RETRO_$$_R1(%rip),%rax
-	movq	-24(%rbp),%rdx
-	movzbl	1(%rax,%rdx,1),%eax
-	shlq	$8,%rax
-	movq	U_$UNIT65032_$$_DS(%rip),%rdx
-	movq	(%rdx),%rdx
-	leaq	(%rax,%rdx),%rcx
-	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movq	-24(%rbp),%rax
-	movzbl	(%rdx,%rax,1),%eax
-	leaq	(%rcx,%rax),%rax
-	movq	%rax,-16(%rbp)
-.Ll26:
+	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movzbl	1(%rcx,%rax,1),%ecx
+	shlq	$8,%rcx
+	movq	U_$UNIT65032_$$_DS(%rip),%r8
+	movq	(%r8),%r8
+	leaq	(%rcx,%r8),%r8
+	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movzbl	(%rcx,%rax,1),%ecx
+	leaq	(%r8,%rcx),%rcx
+	movq	%rcx,%rdx
+.Ll25:
 # [92] inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll27:
+.Ll26:
 # [96] value := ramb^[ea];
-	movq	U_$RETRO_$$_R1(%rip),%rax
-	movq	-16(%rbp),%rdx
-	movzbw	(%rax,%rdx,1),%ax
-	movw	%ax,U_$UNIT65032_$$_VALUE(%rip)
-.Ll28:
+	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movzbw	(%rcx,%rdx,1),%cx
+	movw	%cx,U_$UNIT65032_$$_VALUE(%rip)
+.Ll27:
 # [97] aresult := value shl 1;
-	movzwl	U_$UNIT65032_$$_VALUE(%rip),%eax
-	shll	$1,%eax
-	movw	%ax,U_$UNIT65032_$$_ARESULT(%rip)
-.Ll29:
+	movzwl	U_$UNIT65032_$$_VALUE(%rip),%ecx
+	shll	$1,%ecx
+	movw	%cx,U_$UNIT65032_$$_ARESULT(%rip)
+.Ll28:
 # [98] ramb^[ea]:=aresult;
-	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movq	-16(%rbp),%rcx
-	movb	U_$UNIT65032_$$_ARESULT(%rip),%al
-	movb	%al,(%rdx,%rcx,1)
-.Ll30:
+	movq	U_$RETRO_$$_R1(%rip),%r8
+	movb	U_$UNIT65032_$$_ARESULT(%rip),%cl
+	movb	%cl,(%r8,%rdx,1)
+.Ll29:
 # [99] if (aresult and $FF00) <>0 then status:=status or 1 else status:=status and $FE;
-	movw	U_$UNIT65032_$$_ARESULT(%rip),%ax
-	andw	$65280,%ax
-	testw	%ax,%ax
-	je	.Lj318
+	movw	U_$UNIT65032_$$_ARESULT(%rip),%cx
+	andw	$65280,%cx
+	testw	%cx,%cx
+	je	.Lj320
 # PeepHole Optimization,var3
 	orb	$1,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj321
-.Lj318:
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$254,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-.Lj321:
-.Ll31:
+	jmp	.Lj323
+.Lj320:
+	movb	U_$UNIT65032_$$_STATUS(%rip),%cl
+	andb	$254,%cl
+	movb	%cl,U_$UNIT65032_$$_STATUS(%rip)
+.Lj323:
+.Ll30:
 # [103] a:=aresult or a;
-	movzwl	U_$UNIT65032_$$_ARESULT(%rip),%edx
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	orl	%edx,%eax
-	movl	%eax,U_$UNIT65032_$$_A(%rip)
-.Ll32:
+	movzwl	U_$UNIT65032_$$_ARESULT(%rip),%r8d
+# PeepHole Optimization,var2
+# P=movl
+# HP1=orl
+# HP2=movl
+# PeepHole Optimization,var2
+	orl	%r8d,U_$UNIT65032_$$_A(%rip)
+.Ll31:
 # [104] if (a and $80)<>0 then status:=status or $80 else status:=status and $7F; //sign
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	andl	$128,%eax
-	testl	%eax,%eax
-	je	.Lj327
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj330
-.Lj327:
+	movl	U_$UNIT65032_$$_A(%rip),%ecx
+	andl	$128,%ecx
+	testl	%ecx,%ecx
+	je	.Lj329
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+	orb	$128,U_$UNIT65032_$$_STATUS(%rip)
+	jmp	.Lj332
+.Lj329:
 # PeepHole Optimization,var3
 	andb	$127,U_$UNIT65032_$$_STATUS(%rip)
-.Lj330:
-.Ll33:
+.Lj332:
+.Ll32:
 # [105] if a=0 then status:=status or $02 else status:=status and %11111101;      //zero
 	cmpl	$0,U_$UNIT65032_$$_A(%rip)
-	jne	.Lj334
+	jne	.Lj336
 # PeepHole Optimization,var3
 	orb	$2,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
-.Lj334:
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$253,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
+.Lj336:
+	movb	U_$UNIT65032_$$_STATUS(%rip),%cl
+	andb	$253,%cl
+	movb	%cl,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
 .Lj17:
-.Ll34:
+.Ll33:
 # [114] ea := ds^+ramb^[cs^+pc];
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%edx
-	movq	U_$UNIT65032_$$_DS(%rip),%rax
-	movq	(%rax),%rax
-	leaq	(%rdx,%rax),%rax
-	movq	%rax,-16(%rbp)
-.Ll35:
+	movq	U_$RETRO_$$_R1(%rip),%r9
+	movq	U_$UNIT65032_$$_CS(%rip),%rcx
+	movl	U_$UNIT65032_$$_PC(%rip),%r8d
+	movq	(%rcx),%rcx
+	leaq	(%rcx,%r8),%rcx
+	movzbl	(%r9,%rcx,1),%r8d
+	movq	U_$UNIT65032_$$_DS(%rip),%rcx
+	movq	(%rcx),%rcx
+	leaq	(%r8,%rcx),%rcx
+	movq	%rcx,%rdx
+.Ll34:
 # [115] inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll36:
+.Ll35:
 # [119] ramb^[ea]:=ramb^[ea] or a;
-	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movq	-16(%rbp),%rax
-	movzbl	(%rdx,%rax,1),%edx
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	orl	%edx,%eax
 	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	-16(%rbp),%rdx
-	movb	%al,(%rcx,%rdx,1)
-.Ll37:
+	movzbl	(%rcx,%rdx,1),%r8d
+	movl	U_$UNIT65032_$$_A(%rip),%ecx
+	orl	%r8d,%ecx
+	movq	U_$RETRO_$$_R1(%rip),%r8
+	movb	%cl,(%r8,%rdx,1)
+.Ll36:
 # [120] if ramb^[ea]<>0 then status:=status and %11111101 else status:=status or $02;
-	movq	U_$RETRO_$$_R1(%rip),%rax
-	movq	-16(%rbp),%rdx
-	cmpb	$0,(%rax,%rdx,1)
-	je	.Lj345
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$253,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
+	movq	U_$RETRO_$$_R1(%rip),%rcx
+	cmpb	$0,(%rcx,%rdx,1)
+	je	.Lj347
+	movb	U_$UNIT65032_$$_STATUS(%rip),%cl
+	andb	$253,%cl
+	movb	%cl,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
-.Lj345:
+.Lj347:
 # PeepHole Optimization,var3
 	orb	$2,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
 .Lj18:
-.Ll38:
+.Ll37:
 # [129] ea := ds^+ramb^[cs^+pc];
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%edx
-	movq	U_$UNIT65032_$$_DS(%rip),%rax
-	movq	(%rax),%rax
-	leaq	(%rdx,%rax),%rax
-	movq	%rax,-16(%rbp)
-.Ll39:
+	movq	U_$RETRO_$$_R1(%rip),%r9
+	movq	U_$UNIT65032_$$_CS(%rip),%rcx
+	movl	U_$UNIT65032_$$_PC(%rip),%r8d
+	movq	(%rcx),%rcx
+	leaq	(%rcx,%r8),%rcx
+	movzbl	(%r9,%rcx,1),%r8d
+	movq	U_$UNIT65032_$$_DS(%rip),%rcx
+	movq	(%rcx),%rcx
+	leaq	(%r8,%rcx),%rcx
+	movq	%rcx,%rdx
+.Ll38:
 # [130] inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll40:
+.Ll39:
 # [134] a:=ramb^[ea] or a;
-	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movq	-16(%rbp),%rax
-	movzbl	(%rdx,%rax,1),%edx
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	orl	%edx,%eax
-	movl	%eax,U_$UNIT65032_$$_A(%rip)
-.Ll41:
+	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movzbl	(%rcx,%rdx,1),%r8d
+# PeepHole Optimization,var2
+# P=movl
+# HP1=orl
+# HP2=movl
+# PeepHole Optimization,var2
+	orl	%r8d,U_$UNIT65032_$$_A(%rip)
+.Ll40:
 # [135] if (a and $80)<>0 then status:=status or $80 else status:=status and $7F; //sign
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	andl	$128,%eax
-	testl	%eax,%eax
-	je	.Lj356
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj359
-.Lj356:
+	movl	U_$UNIT65032_$$_A(%rip),%ecx
+	andl	$128,%ecx
+	testl	%ecx,%ecx
+	je	.Lj358
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+	orb	$128,U_$UNIT65032_$$_STATUS(%rip)
+	jmp	.Lj361
+.Lj358:
 # PeepHole Optimization,var3
 	andb	$127,U_$UNIT65032_$$_STATUS(%rip)
-.Lj359:
-.Ll42:
+.Lj361:
+.Ll41:
 # [136] if a=0 then status:=status or $02 else status:=status and %11111101;      //zero
 	cmpl	$0,U_$UNIT65032_$$_A(%rip)
-	jne	.Lj363
+	jne	.Lj365
 # PeepHole Optimization,var3
 	orb	$2,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
-.Lj363:
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$253,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
+.Lj365:
+	movb	U_$UNIT65032_$$_STATUS(%rip),%cl
+	andb	$253,%cl
+	movb	%cl,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
 .Lj19:
-.Ll43:
+.Ll42:
 # [145] ea := ds^+ramb^[cs^+pc];
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%edx
-	movq	U_$UNIT65032_$$_DS(%rip),%rax
-	movq	(%rax),%rax
-	leaq	(%rdx,%rax),%rax
-	movq	%rax,-16(%rbp)
-.Ll44:
+	movq	U_$RETRO_$$_R1(%rip),%r9
+	movq	U_$UNIT65032_$$_CS(%rip),%rcx
+	movl	U_$UNIT65032_$$_PC(%rip),%r8d
+	movq	(%rcx),%rcx
+	leaq	(%rcx,%r8),%rcx
+	movzbl	(%r9,%rcx,1),%r8d
+	movq	U_$UNIT65032_$$_DS(%rip),%rcx
+	movq	(%rcx),%rcx
+	leaq	(%r8,%rcx),%rcx
+	movq	%rcx,%rdx
+.Ll43:
 # [146] inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll45:
+.Ll44:
 # [150] value := ramb^[ea];
-	movq	U_$RETRO_$$_R1(%rip),%rax
-	movq	-16(%rbp),%rdx
-	movzbw	(%rax,%rdx,1),%ax
-	movw	%ax,U_$UNIT65032_$$_VALUE(%rip)
-.Ll46:
+	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movzbw	(%rcx,%rdx,1),%cx
+	movw	%cx,U_$UNIT65032_$$_VALUE(%rip)
+.Ll45:
 # [151] aresult := value shl 1;
-	movzwl	U_$UNIT65032_$$_VALUE(%rip),%eax
-	shll	$1,%eax
-	movw	%ax,U_$UNIT65032_$$_ARESULT(%rip)
-.Ll47:
+	movzwl	U_$UNIT65032_$$_VALUE(%rip),%ecx
+	shll	$1,%ecx
+	movw	%cx,U_$UNIT65032_$$_ARESULT(%rip)
+.Ll46:
 # [152] ramb^[ea]:=aresult;
-	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movq	-16(%rbp),%rax
-	movb	U_$UNIT65032_$$_ARESULT(%rip),%cl
-	movb	%cl,(%rdx,%rax,1)
-.Ll48:
+	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movb	U_$UNIT65032_$$_ARESULT(%rip),%r8b
+	movb	%r8b,(%rcx,%rdx,1)
+.Ll47:
 # [153] if (aresult and $FF00) <>0 then status:=status or 1 else status:=status and $FE;
-	movw	U_$UNIT65032_$$_ARESULT(%rip),%ax
-	andw	$65280,%ax
-	testw	%ax,%ax
-	je	.Lj378
+	movw	U_$UNIT65032_$$_ARESULT(%rip),%cx
+	andw	$65280,%cx
+	testw	%cx,%cx
+	je	.Lj380
 # PeepHole Optimization,var3
 	orb	$1,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj381
-.Lj378:
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$254,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-.Lj381:
-.Ll49:
+	jmp	.Lj383
+.Lj380:
+	movb	U_$UNIT65032_$$_STATUS(%rip),%cl
+	andb	$254,%cl
+	movb	%cl,U_$UNIT65032_$$_STATUS(%rip)
+.Lj383:
+.Ll48:
 # [154] if (aresult and $80)<>0 then status:=status or $80 else status:=status and $7F; //sign
-	movw	U_$UNIT65032_$$_ARESULT(%rip),%ax
-	andw	$128,%ax
-	testw	%ax,%ax
-	je	.Lj385
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj388
-.Lj385:
+	movw	U_$UNIT65032_$$_ARESULT(%rip),%cx
+	andw	$128,%cx
+	testw	%cx,%cx
+	je	.Lj387
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+	orb	$128,U_$UNIT65032_$$_STATUS(%rip)
+	jmp	.Lj390
+.Lj387:
 # PeepHole Optimization,var3
 	andb	$127,U_$UNIT65032_$$_STATUS(%rip)
-.Lj388:
-.Ll50:
+.Lj390:
+.Ll49:
 # [155] if aresult=0 then status:=status or $02 else status:=status and %11111101;      //zero
 	cmpw	$0,U_$UNIT65032_$$_ARESULT(%rip)
-	jne	.Lj392
+	jne	.Lj394
 # PeepHole Optimization,var3
 	orb	$2,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
-.Lj392:
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$253,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
+.Lj394:
+	movb	U_$UNIT65032_$$_STATUS(%rip),%cl
+	andb	$253,%cl
+	movb	%cl,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
 .Lj20:
-.Ll51:
+.Ll50:
 # [164] ea := ds^+ramb^[cs^+pc];
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%edx
-	movq	U_$UNIT65032_$$_DS(%rip),%rax
-	movq	(%rax),%rax
-	leaq	(%rdx,%rax),%rax
-	movq	%rax,-16(%rbp)
-.Ll52:
+	movq	U_$RETRO_$$_R1(%rip),%r9
+	movq	U_$UNIT65032_$$_CS(%rip),%rcx
+	movl	U_$UNIT65032_$$_PC(%rip),%r8d
+	movq	(%rcx),%rcx
+	leaq	(%rcx,%r8),%rcx
+	movzbl	(%r9,%rcx,1),%r8d
+	movq	U_$UNIT65032_$$_DS(%rip),%rcx
+	movq	(%rcx),%rcx
+	leaq	(%r8,%rcx),%rcx
+	movq	%rcx,%rdx
+.Ll51:
 # [165] inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll53:
+.Ll52:
 # [169] value := ramb^[ea];
-	movq	U_$RETRO_$$_R1(%rip),%rax
-	movq	-16(%rbp),%rdx
-	movzbw	(%rax,%rdx,1),%ax
-	movw	%ax,U_$UNIT65032_$$_VALUE(%rip)
-.Ll54:
+	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movzbw	(%rcx,%rdx,1),%cx
+	movw	%cx,U_$UNIT65032_$$_VALUE(%rip)
+.Ll53:
 # [170] aresult := value shl 1;
-	movzwl	U_$UNIT65032_$$_VALUE(%rip),%eax
-	shll	$1,%eax
-	movw	%ax,U_$UNIT65032_$$_ARESULT(%rip)
-.Ll55:
+	movzwl	U_$UNIT65032_$$_VALUE(%rip),%ecx
+	shll	$1,%ecx
+	movw	%cx,U_$UNIT65032_$$_ARESULT(%rip)
+.Ll54:
 # [171] ramb^[ea]:=aresult;
 	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	-16(%rbp),%rax
-	movb	U_$UNIT65032_$$_ARESULT(%rip),%dl
-	movb	%dl,(%rcx,%rax,1)
-.Ll56:
+	movb	U_$UNIT65032_$$_ARESULT(%rip),%r8b
+	movb	%r8b,(%rcx,%rdx,1)
+.Ll55:
 # [172] if (aresult and $FF00) <>0 then status:=status or 1 else status:=status and $FE;
-	movw	U_$UNIT65032_$$_ARESULT(%rip),%ax
-	andw	$65280,%ax
-	testw	%ax,%ax
-	je	.Lj407
+	movw	U_$UNIT65032_$$_ARESULT(%rip),%cx
+	andw	$65280,%cx
+	testw	%cx,%cx
+	je	.Lj409
 # PeepHole Optimization,var3
 	orb	$1,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj410
-.Lj407:
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$254,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-.Lj410:
-.Ll57:
+	jmp	.Lj412
+.Lj409:
+	movb	U_$UNIT65032_$$_STATUS(%rip),%cl
+	andb	$254,%cl
+	movb	%cl,U_$UNIT65032_$$_STATUS(%rip)
+.Lj412:
+.Ll56:
 # [176] a:=aresult or a;
-	movzwl	U_$UNIT65032_$$_ARESULT(%rip),%edx
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	orl	%edx,%eax
-	movl	%eax,U_$UNIT65032_$$_A(%rip)
-.Ll58:
+	movzwl	U_$UNIT65032_$$_ARESULT(%rip),%r8d
+# PeepHole Optimization,var2
+# P=movl
+# HP1=orl
+# HP2=movl
+# PeepHole Optimization,var2
+	orl	%r8d,U_$UNIT65032_$$_A(%rip)
+.Ll57:
 # [177] if (a and $80)<>0 then status:=status or $80 else status:=status and $7F; //sign
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	andl	$128,%eax
-	testl	%eax,%eax
-	je	.Lj416
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj419
-.Lj416:
+	movl	U_$UNIT65032_$$_A(%rip),%ecx
+	andl	$128,%ecx
+	testl	%ecx,%ecx
+	je	.Lj418
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+	orb	$128,U_$UNIT65032_$$_STATUS(%rip)
+	jmp	.Lj421
+.Lj418:
 # PeepHole Optimization,var3
 	andb	$127,U_$UNIT65032_$$_STATUS(%rip)
-.Lj419:
-.Ll59:
+.Lj421:
+.Ll58:
 # [178] if a=0 then status:=status or $02 else status:=status and %11111101;      //zero
 	cmpl	$0,U_$UNIT65032_$$_A(%rip)
-	jne	.Lj423
+	jne	.Lj425
 # PeepHole Optimization,var3
 	orb	$2,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
-.Lj423:
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$253,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
+.Lj425:
+	movb	U_$UNIT65032_$$_STATUS(%rip),%cl
+	andb	$253,%cl
+	movb	%cl,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
 .Lj21:
-.Ll60:
+.Ll59:
 # [184] ramb^[ss+(sp+$100)]:=status or $10;
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movl	U_$UNIT65032_$$_SP(%rip),%eax
-	leaq	256(%rax),%rdx
-	movq	U_$UNIT65032_$$_SS(%rip),%rax
-	leaq	(%rdx,%rax),%rdx
-	movzbl	U_$UNIT65032_$$_STATUS(%rip),%eax
-	orl	$16,%eax
-	movb	%al,(%rcx,%rdx,1)
-.Ll61:
+	movq	U_$RETRO_$$_R1(%rip),%r9
+	movl	U_$UNIT65032_$$_SP(%rip),%ecx
+	leaq	256(%rcx),%r8
+	movq	U_$UNIT65032_$$_SS(%rip),%rcx
+	leaq	(%r8,%rcx),%r8
+	movzbl	U_$UNIT65032_$$_STATUS(%rip),%ecx
+	orl	$16,%ecx
+	movb	%cl,(%r9,%r8,1)
+.Ll60:
 # [185] dec(sp);
 	subl	$1,U_$UNIT65032_$$_SP(%rip)
 	jmp	.Lj11
 .Lj22:
-.Ll62:
+.Ll61:
 # [194] ea := cs^+pc;
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movq	%rax,-16(%rbp)
-.Ll63:
+	movq	U_$UNIT65032_$$_CS(%rip),%rcx
+	movl	U_$UNIT65032_$$_PC(%rip),%r8d
+	movq	(%rcx),%rcx
+	leaq	(%rcx,%r8),%rcx
+	movq	%rcx,%rdx
+.Ll62:
 # [195] inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll64:
+.Ll63:
 # [199] a:=ramb^[ea] or a;
-	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movq	-16(%rbp),%rax
-	movzbl	(%rdx,%rax,1),%edx
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	orl	%edx,%eax
-	movl	%eax,U_$UNIT65032_$$_A(%rip)
-.Ll65:
+	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movzbl	(%rcx,%rdx,1),%r8d
+# PeepHole Optimization,var2
+# P=movl
+# HP1=orl
+# HP2=movl
+# PeepHole Optimization,var2
+	orl	%r8d,U_$UNIT65032_$$_A(%rip)
+.Ll64:
 # [200] if (a and $80)<>0 then status:=status or $80 else status:=status and $7F; //sign
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	andl	$128,%eax
-	testl	%eax,%eax
-	je	.Lj436
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj439
-.Lj436:
+	movl	U_$UNIT65032_$$_A(%rip),%ecx
+	andl	$128,%ecx
+	testl	%ecx,%ecx
+	je	.Lj438
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+	orb	$128,U_$UNIT65032_$$_STATUS(%rip)
+	jmp	.Lj441
+.Lj438:
 # PeepHole Optimization,var3
 	andb	$127,U_$UNIT65032_$$_STATUS(%rip)
-.Lj439:
-.Ll66:
+.Lj441:
+.Ll65:
 # [201] if a=0 then status:=status or $02 else status:=status and %11111101;      //zero
 	cmpl	$0,U_$UNIT65032_$$_A(%rip)
-	jne	.Lj443
+	jne	.Lj445
 # PeepHole Optimization,var3
 	orb	$2,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
-.Lj443:
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$253,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
+.Lj445:
+	movb	U_$UNIT65032_$$_STATUS(%rip),%cl
+	andb	$253,%cl
+	movb	%cl,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
 .Lj23:
-.Ll67:
+# PeepHole Optimization,var2
+# P=movl
+# HP1=shll
+# HP2=movl
+# PeepHole Optimization,var2
+.Ll66:
 # [208] a:=a shl 1;
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	shll	$1,%eax
-	movl	%eax,U_$UNIT65032_$$_A(%rip)
-.Ll68:
+	shll	$1,U_$UNIT65032_$$_A(%rip)
+.Ll67:
 # [209] if (a and $FFFFFF00)<>0 then status:=status or 1 else status:=status and $FE;
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	andl	$4294967040,%eax
-	testl	%eax,%eax
-	je	.Lj452
+	movl	U_$UNIT65032_$$_A(%rip),%ecx
+	andl	$4294967040,%ecx
+	testl	%ecx,%ecx
+	je	.Lj454
 # PeepHole Optimization,var3
 	orb	$1,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj455
-.Lj452:
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$254,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-.Lj455:
-.Ll69:
+	jmp	.Lj457
+.Lj454:
+	movb	U_$UNIT65032_$$_STATUS(%rip),%cl
+	andb	$254,%cl
+	movb	%cl,U_$UNIT65032_$$_STATUS(%rip)
+.Lj457:
+.Ll68:
 # [210] if (a and $80)<>0 then status:=status or $80 else status:=status and $7F; //sign
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	andl	$128,%eax
-	testl	%eax,%eax
-	je	.Lj459
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj462
-.Lj459:
+	movl	U_$UNIT65032_$$_A(%rip),%ecx
+	andl	$128,%ecx
+	testl	%ecx,%ecx
+	je	.Lj461
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+	orb	$128,U_$UNIT65032_$$_STATUS(%rip)
+	jmp	.Lj464
+.Lj461:
 # PeepHole Optimization,var3
 	andb	$127,U_$UNIT65032_$$_STATUS(%rip)
-.Lj462:
-.Ll70:
+.Lj464:
+.Ll69:
 # [211] if a=0 then status:=status or $02 else status:=status and %11111101;      //zero
 	cmpl	$0,U_$UNIT65032_$$_A(%rip)
-	jne	.Lj466
+	jne	.Lj468
 # PeepHole Optimization,var3
 	orb	$2,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj469
-.Lj466:
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$253,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-.Lj469:
-.Ll71:
+	jmp	.Lj471
+.Lj468:
+	movb	U_$UNIT65032_$$_STATUS(%rip),%cl
+	andb	$253,%cl
+	movb	%cl,U_$UNIT65032_$$_STATUS(%rip)
+.Lj471:
+.Ll70:
 # [212] a:=a and $FF;
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	andl	$255,%eax
-	movl	%eax,U_$UNIT65032_$$_A(%rip)
+	movl	U_$UNIT65032_$$_A(%rip),%ecx
+	andl	$255,%ecx
+	movl	%ecx,U_$UNIT65032_$$_A(%rip)
 	jmp	.Lj11
 .Lj24:
-.Ll72:
+.Ll71:
 # [218] inc(pc); // imm :)
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
 	jmp	.Lj11
 .Lj25:
-.Ll73:
+.Ll72:
 # [227] ea:=ds^+256*ramb^[cs^+pc]+ramb^[cs^+pc+1];
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%eax
-	shlq	$8,%rax
-	movq	U_$UNIT65032_$$_DS(%rip),%rdx
-	movq	(%rdx),%rdx
-	leaq	(%rax,%rdx),%r8
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	1(%rcx,%rax,1),%eax
-	leaq	(%r8,%rax),%rax
-	movq	%rax,-16(%rbp)
-.Ll74:
+	movq	U_$UNIT65032_$$_DS(%rip),%r10
+	movq	U_$RETRO_$$_R1(%rip),%r9
+	movq	U_$UNIT65032_$$_CS(%rip),%rcx
+	movl	U_$UNIT65032_$$_PC(%rip),%r8d
+	movq	(%rcx),%rcx
+	leaq	(%rcx,%r8),%rcx
+	movzbl	(%r9,%rcx,1),%r8d
+	shlq	$8,%r8
+	movq	(%r10),%r9
+	leaq	(%r9,%r8),%r9
+	movq	U_$RETRO_$$_R1(%rip),%r8
+	movzbl	1(%r8,%rcx,1),%ecx
+	leaq	(%r9,%rcx),%rcx
+	movq	%rcx,%rdx
+.Ll73:
 # [228] inc(pc); inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll75:
+.Ll74:
 # [232] ramb^[ea]:=ramb^[ea] or a;
-	movq	U_$RETRO_$$_R1(%rip),%rax
-	movq	-16(%rbp),%rdx
-	movzbl	(%rax,%rdx,1),%edx
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	orl	%edx,%eax
-	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movq	-16(%rbp),%rcx
-	movb	%al,(%rdx,%rcx,1)
-.Ll76:
+	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movzbl	(%rcx,%rdx,1),%r8d
+	movl	U_$UNIT65032_$$_A(%rip),%ecx
+	orl	%r8d,%ecx
+	movq	U_$RETRO_$$_R1(%rip),%r8
+	movb	%cl,(%r8,%rdx,1)
+.Ll75:
 # [233] if ramb^[ea]<>0 then status:=status and %11111101 else status:=status or $02;
-	movq	U_$RETRO_$$_R1(%rip),%rax
-	movq	-16(%rbp),%rdx
-	cmpb	$0,(%rax,%rdx,1)
-	je	.Lj479
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$253,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
+	movq	U_$RETRO_$$_R1(%rip),%rcx
+	cmpb	$0,(%rcx,%rdx,1)
+	je	.Lj483
+	movb	U_$UNIT65032_$$_STATUS(%rip),%cl
+	andb	$253,%cl
+	movb	%cl,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
-.Lj479:
+.Lj483:
 # PeepHole Optimization,var3
 	orb	$2,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
 .Lj26:
-.Ll77:
+.Ll76:
 # [242] ea:=ds^+256*ramb^[cs^+pc]+ramb^[cs^+pc+1];
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%eax
-	shlq	$8,%rax
-	movq	U_$UNIT65032_$$_DS(%rip),%rdx
-	movq	(%rdx),%rdx
-	leaq	(%rax,%rdx),%r8
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	1(%rcx,%rax,1),%eax
-	leaq	(%r8,%rax),%rax
-	movq	%rax,-16(%rbp)
-.Ll78:
+	movq	U_$UNIT65032_$$_DS(%rip),%r10
+	movq	U_$RETRO_$$_R1(%rip),%r9
+	movq	U_$UNIT65032_$$_CS(%rip),%rcx
+	movl	U_$UNIT65032_$$_PC(%rip),%r8d
+	movq	(%rcx),%rcx
+	leaq	(%rcx,%r8),%rcx
+	movzbl	(%r9,%rcx,1),%r8d
+	shlq	$8,%r8
+	movq	(%r10),%r9
+	leaq	(%r9,%r8),%r9
+	movq	U_$RETRO_$$_R1(%rip),%r8
+	movzbl	1(%r8,%rcx,1),%ecx
+	leaq	(%r9,%rcx),%rcx
+	movq	%rcx,%rdx
+.Ll77:
 # [243] inc(pc); inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll79:
+.Ll78:
 # [247] a:=ramb^[ea] or a;
-	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movq	-16(%rbp),%rax
-	movzbl	(%rdx,%rax,1),%edx
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	orl	%edx,%eax
-	movl	%eax,U_$UNIT65032_$$_A(%rip)
-.Ll80:
+	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movzbl	(%rcx,%rdx,1),%r8d
+# PeepHole Optimization,var2
+# P=movl
+# HP1=orl
+# HP2=movl
+# PeepHole Optimization,var2
+	orl	%r8d,U_$UNIT65032_$$_A(%rip)
+.Ll79:
 # [248] if (a and $80)<>0 then status:=status or $80 else status:=status and $7F; //sign
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	andl	$128,%eax
-	testl	%eax,%eax
-	je	.Lj490
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj493
-.Lj490:
+	movl	U_$UNIT65032_$$_A(%rip),%ecx
+	andl	$128,%ecx
+	testl	%ecx,%ecx
+	je	.Lj496
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+	orb	$128,U_$UNIT65032_$$_STATUS(%rip)
+	jmp	.Lj499
+.Lj496:
 # PeepHole Optimization,var3
 	andb	$127,U_$UNIT65032_$$_STATUS(%rip)
-.Lj493:
-.Ll81:
+.Lj499:
+.Ll80:
 # [249] if a=0 then status:=status or $02 else status:=status and %11111101;      //zero
 	cmpl	$0,U_$UNIT65032_$$_A(%rip)
-	jne	.Lj497
+	jne	.Lj503
 # PeepHole Optimization,var3
 	orb	$2,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
-.Lj497:
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$253,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
+.Lj503:
+	movb	U_$UNIT65032_$$_STATUS(%rip),%cl
+	andb	$253,%cl
+	movb	%cl,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
 .Lj27:
-.Ll82:
+.Ll81:
 # [258] ea:=ds^+256*ramb^[cs^+pc]+ramb^[cs^+pc+1];
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%eax
-	shlq	$8,%rax
-	movq	U_$UNIT65032_$$_DS(%rip),%rdx
-	movq	(%rdx),%rdx
-	leaq	(%rax,%rdx),%r8
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	1(%rcx,%rax,1),%eax
-	leaq	(%r8,%rax),%rax
-	movq	%rax,-16(%rbp)
-.Ll83:
+	movq	U_$UNIT65032_$$_DS(%rip),%r10
+	movq	U_$RETRO_$$_R1(%rip),%r9
+	movq	U_$UNIT65032_$$_CS(%rip),%rcx
+	movl	U_$UNIT65032_$$_PC(%rip),%r8d
+	movq	(%rcx),%rcx
+	leaq	(%rcx,%r8),%rcx
+	movzbl	(%r9,%rcx,1),%r8d
+	shlq	$8,%r8
+	movq	(%r10),%r9
+	leaq	(%r9,%r8),%r9
+	movq	U_$RETRO_$$_R1(%rip),%r8
+	movzbl	1(%r8,%rcx,1),%ecx
+	leaq	(%r9,%rcx),%rcx
+	movq	%rcx,%rdx
+.Ll82:
 # [259] inc(pc); inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll84:
+.Ll83:
 # [263] value := ramb^[ea];
-	movq	U_$RETRO_$$_R1(%rip),%rax
-	movq	-16(%rbp),%rdx
-	movzbw	(%rax,%rdx,1),%ax
-	movw	%ax,U_$UNIT65032_$$_VALUE(%rip)
-.Ll85:
+	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movzbw	(%rcx,%rdx,1),%cx
+	movw	%cx,U_$UNIT65032_$$_VALUE(%rip)
+.Ll84:
 # [264] aresult := value shl 1;
-	movzwl	U_$UNIT65032_$$_VALUE(%rip),%eax
-	shll	$1,%eax
-	movw	%ax,U_$UNIT65032_$$_ARESULT(%rip)
-.Ll86:
+	movzwl	U_$UNIT65032_$$_VALUE(%rip),%ecx
+	shll	$1,%ecx
+	movw	%cx,U_$UNIT65032_$$_ARESULT(%rip)
+.Ll85:
 # [265] ramb^[ea]:=aresult;
-	movq	U_$RETRO_$$_R1(%rip),%rax
-	movq	-16(%rbp),%rcx
-	movb	U_$UNIT65032_$$_ARESULT(%rip),%dl
-	movb	%dl,(%rax,%rcx,1)
-.Ll87:
+	movq	U_$RETRO_$$_R1(%rip),%r8
+	movb	U_$UNIT65032_$$_ARESULT(%rip),%cl
+	movb	%cl,(%r8,%rdx,1)
+.Ll86:
 # [266] if (aresult and $FF00) <>0 then status:=status or 1 else status:=status and $FE;
-	movw	U_$UNIT65032_$$_ARESULT(%rip),%ax
-	andw	$65280,%ax
-	testw	%ax,%ax
-	je	.Lj512
+	movw	U_$UNIT65032_$$_ARESULT(%rip),%cx
+	andw	$65280,%cx
+	testw	%cx,%cx
+	je	.Lj520
 # PeepHole Optimization,var3
 	orb	$1,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj515
-.Lj512:
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$254,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-.Lj515:
-.Ll88:
+	jmp	.Lj523
+.Lj520:
+	movb	U_$UNIT65032_$$_STATUS(%rip),%cl
+	andb	$254,%cl
+	movb	%cl,U_$UNIT65032_$$_STATUS(%rip)
+.Lj523:
+.Ll87:
 # [267] if (aresult and $80)<>0 then status:=status or $80 else status:=status and $7F; //sign
-	movw	U_$UNIT65032_$$_ARESULT(%rip),%ax
-	andw	$128,%ax
-	testw	%ax,%ax
-	je	.Lj519
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj522
-.Lj519:
+	movw	U_$UNIT65032_$$_ARESULT(%rip),%cx
+	andw	$128,%cx
+	testw	%cx,%cx
+	je	.Lj527
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+	orb	$128,U_$UNIT65032_$$_STATUS(%rip)
+	jmp	.Lj530
+.Lj527:
 # PeepHole Optimization,var3
 	andb	$127,U_$UNIT65032_$$_STATUS(%rip)
-.Lj522:
-.Ll89:
+.Lj530:
+.Ll88:
 # [268] if aresult=0 then status:=status or $02 else status:=status and %11111101;      //zero
 	cmpw	$0,U_$UNIT65032_$$_ARESULT(%rip)
-	jne	.Lj526
+	jne	.Lj534
 # PeepHole Optimization,var3
 	orb	$2,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
-.Lj526:
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$253,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
+.Lj534:
+	movb	U_$UNIT65032_$$_STATUS(%rip),%cl
+	andb	$253,%cl
+	movb	%cl,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
 .Lj28:
-.Ll90:
+.Ll89:
 # [277] ea:=ds^+256*ramb^[cs^+pc]+ramb^[cs^+pc+1];
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%eax
-	shlq	$8,%rax
-	movq	U_$UNIT65032_$$_DS(%rip),%rdx
-	movq	(%rdx),%rdx
-	leaq	(%rax,%rdx),%r8
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	1(%rcx,%rax,1),%eax
-	leaq	(%r8,%rax),%rax
-	movq	%rax,-16(%rbp)
-.Ll91:
+	movq	U_$UNIT65032_$$_DS(%rip),%r10
+	movq	U_$RETRO_$$_R1(%rip),%r9
+	movq	U_$UNIT65032_$$_CS(%rip),%rcx
+	movl	U_$UNIT65032_$$_PC(%rip),%r8d
+	movq	(%rcx),%rcx
+	leaq	(%rcx,%r8),%rcx
+	movzbl	(%r9,%rcx,1),%r8d
+	shlq	$8,%r8
+	movq	(%r10),%r9
+	leaq	(%r9,%r8),%r9
+	movq	U_$RETRO_$$_R1(%rip),%r8
+	movzbl	1(%r8,%rcx,1),%ecx
+	leaq	(%r9,%rcx),%rcx
+	movq	%rcx,%rdx
+.Ll90:
 # [278] inc(pc); inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll92:
+.Ll91:
 # [282] value := ramb^[ea];
-	movq	U_$RETRO_$$_R1(%rip),%rax
-	movq	-16(%rbp),%rdx
-	movzbw	(%rax,%rdx,1),%ax
-	movw	%ax,U_$UNIT65032_$$_VALUE(%rip)
-.Ll93:
+	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movzbw	(%rcx,%rdx,1),%cx
+	movw	%cx,U_$UNIT65032_$$_VALUE(%rip)
+.Ll92:
 # [283] aresult := value shl 1;
-	movzwl	U_$UNIT65032_$$_VALUE(%rip),%eax
-	shll	$1,%eax
-	movw	%ax,U_$UNIT65032_$$_ARESULT(%rip)
-.Ll94:
+	movzwl	U_$UNIT65032_$$_VALUE(%rip),%ecx
+	shll	$1,%ecx
+	movw	%cx,U_$UNIT65032_$$_ARESULT(%rip)
+.Ll93:
 # [284] ramb^[ea]:=aresult;
-	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movq	-16(%rbp),%rcx
-	movb	U_$UNIT65032_$$_ARESULT(%rip),%al
-	movb	%al,(%rdx,%rcx,1)
-.Ll95:
+	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movb	U_$UNIT65032_$$_ARESULT(%rip),%r8b
+	movb	%r8b,(%rcx,%rdx,1)
+.Ll94:
 # [285] if (aresult and $FF00) <>0 then status:=status or 1 else status:=status and $FE;
-	movw	U_$UNIT65032_$$_ARESULT(%rip),%ax
-	andw	$65280,%ax
-	testw	%ax,%ax
-	je	.Lj541
+	movw	U_$UNIT65032_$$_ARESULT(%rip),%cx
+	andw	$65280,%cx
+	testw	%cx,%cx
+	je	.Lj551
 # PeepHole Optimization,var3
 	orb	$1,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj544
-.Lj541:
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$254,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-.Lj544:
-.Ll96:
+	jmp	.Lj554
+.Lj551:
+	movb	U_$UNIT65032_$$_STATUS(%rip),%cl
+	andb	$254,%cl
+	movb	%cl,U_$UNIT65032_$$_STATUS(%rip)
+.Lj554:
+.Ll95:
 # [289] a:=aresult or a;
-	movzwl	U_$UNIT65032_$$_ARESULT(%rip),%edx
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	orl	%edx,%eax
-	movl	%eax,U_$UNIT65032_$$_A(%rip)
-.Ll97:
+	movzwl	U_$UNIT65032_$$_ARESULT(%rip),%r8d
+# PeepHole Optimization,var2
+# P=movl
+# HP1=orl
+# HP2=movl
+# PeepHole Optimization,var2
+	orl	%r8d,U_$UNIT65032_$$_A(%rip)
+.Ll96:
 # [290] if (a and $80)<>0 then status:=status or $80 else status:=status and $7F; //sign
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	andl	$128,%eax
-	testl	%eax,%eax
-	je	.Lj550
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj553
-.Lj550:
+	movl	U_$UNIT65032_$$_A(%rip),%ecx
+	andl	$128,%ecx
+	testl	%ecx,%ecx
+	je	.Lj560
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+	orb	$128,U_$UNIT65032_$$_STATUS(%rip)
+	jmp	.Lj563
+.Lj560:
 # PeepHole Optimization,var3
 	andb	$127,U_$UNIT65032_$$_STATUS(%rip)
-.Lj553:
-.Ll98:
+.Lj563:
+.Ll97:
 # [291] if a=0 then status:=status or $02 else status:=status and %11111101;      //zero
 	cmpl	$0,U_$UNIT65032_$$_A(%rip)
-	jne	.Lj557
+	jne	.Lj567
 # PeepHole Optimization,var3
 	orb	$2,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
-.Lj557:
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$253,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
+.Lj567:
+	movb	U_$UNIT65032_$$_STATUS(%rip),%cl
+	andb	$253,%cl
+	movb	%cl,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
 .Lj29:
-.Ll99:
+.Ll98:
 # [300] reladdr := ramb^[cs^+pc];
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%eax
-	movl	%eax,U_$UNIT65032_$$_RELADDR(%rip)
-.Ll100:
+	movq	U_$RETRO_$$_R1(%rip),%r9
+	movq	U_$UNIT65032_$$_CS(%rip),%rcx
+	movl	U_$UNIT65032_$$_PC(%rip),%r8d
+	movq	(%rcx),%rcx
+	leaq	(%rcx,%r8),%rcx
+	movzbl	(%r9,%rcx,1),%ecx
+	movl	%ecx,U_$UNIT65032_$$_RELADDR(%rip)
+.Ll99:
 # [301] inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll101:
+.Ll100:
 # [302] if (reladdr and $80)<>0 then reladdr:=reladdr-256;
-	movl	U_$UNIT65032_$$_RELADDR(%rip),%eax
-	andl	$128,%eax
-	testl	%eax,%eax
-	je	.Lj566
-	movl	U_$UNIT65032_$$_RELADDR(%rip),%eax
-	leal	-256(%eax),%eax
-	movl	%eax,U_$UNIT65032_$$_RELADDR(%rip)
-.Lj566:
-.Ll102:
+	movl	U_$UNIT65032_$$_RELADDR(%rip),%ecx
+	andl	$128,%ecx
+	testl	%ecx,%ecx
+	je	.Lj576
+	movl	U_$UNIT65032_$$_RELADDR(%rip),%ecx
+	leal	-256(%ecx),%ecx
+	movl	%ecx,U_$UNIT65032_$$_RELADDR(%rip)
+.Lj576:
+.Ll101:
 # [306] if ((status and $80) = 0) then   pc += reladdr;
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$128,%al
-	testb	%al,%al
+	movb	U_$UNIT65032_$$_STATUS(%rip),%cl
+	andb	$128,%cl
+	testb	%cl,%cl
 	jne	.Lj11
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movl	U_$UNIT65032_$$_RELADDR(%rip),%eax
-	leal	(%edx,%eax),%eax
-	movl	%eax,U_$UNIT65032_$$_PC(%rip)
+	movl	U_$UNIT65032_$$_PC(%rip),%r8d
+	movl	U_$UNIT65032_$$_RELADDR(%rip),%ecx
+	leal	(%r8d,%ecx),%ecx
+	movl	%ecx,U_$UNIT65032_$$_PC(%rip)
 	jmp	.Lj11
 .Lj30:
-.Ll103:
+.Ll102:
 # [315] eahelp := ramb^[cs^+pc];
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%eax
-	movq	%rax,-24(%rbp)
-.Ll104:
+	movq	U_$RETRO_$$_R1(%rip),%r9
+	movq	U_$UNIT65032_$$_CS(%rip),%rcx
+	movl	U_$UNIT65032_$$_PC(%rip),%r8d
+	movq	(%rcx),%rcx
+	leaq	(%rcx,%r8),%rcx
+	movzbl	(%r9,%rcx,1),%ecx
+	movq	%rcx,%rax
+.Ll103:
 # [316] inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll105:
+.Ll104:
 # [317] eahelp2 := (eahelp + 1) and $00FF; //zero-page wraparound
-	movq	-24(%rbp),%rax
-	leaq	1(%rax),%rax
-	andq	$255,%rax
-	movq	%rax,-32(%rbp)
-.Ll106:
+	leaq	1(%rax),%rcx
+	andq	$255,%rcx
+.Ll105:
 # [318] ea := ramb^[ds^+eahelp] + 256* ramb^[ds^+eahelp2]+y;
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_DS(%rip),%rax
-	movq	(%rax),%rax
-	movq	-32(%rbp),%rdx
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%eax
-	shlq	$8,%rax
-	movq	U_$RETRO_$$_R1(%rip),%r8
-	movq	U_$UNIT65032_$$_DS(%rip),%rdx
-	movq	(%rdx),%rcx
-	movq	-24(%rbp),%rdx
-	leaq	(%rcx,%rdx),%rdx
-	movzbl	(%r8,%rdx,1),%edx
-	leaq	(%rax,%rdx),%rdx
-	movl	U_$UNIT65032_$$_Y(%rip),%eax
-	leaq	(%rdx,%rax),%rax
-	movq	%rax,-16(%rbp)
+	movq	U_$RETRO_$$_R1(%rip),%r9
+	movq	U_$UNIT65032_$$_DS(%rip),%r8
+.Ll106:
+	movq	(%r8),%r11
 .Ll107:
-# [322] a:=ramb^[ea] or a;
-	movq	U_$RETRO_$$_R1(%rip),%rax
-	movq	-16(%rbp),%rdx
-	movzbl	(%rax,%rdx,1),%edx
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	orl	%edx,%eax
-	movl	%eax,U_$UNIT65032_$$_A(%rip)
+	leaq	(%r11,%rcx),%r8
+	movzbl	(%r9,%r8,1),%r8d
+	shlq	$8,%r8
+	movq	U_$RETRO_$$_R1(%rip),%r10
+	leaq	(%r11,%rax),%r9
+	movzbl	(%r10,%r9,1),%r9d
+	leaq	(%r8,%r9),%r9
+	movl	U_$UNIT65032_$$_Y(%rip),%r8d
+	leaq	(%r9,%r8),%r8
+	movq	%r8,%rdx
 .Ll108:
+# [322] a:=ramb^[ea] or a;
+	movq	U_$RETRO_$$_R1(%rip),%r8
+	movzbl	(%r8,%rdx,1),%r9d
+# PeepHole Optimization,var2
+# P=movl
+# HP1=orl
+# HP2=movl
+# PeepHole Optimization,var2
+	orl	%r9d,U_$UNIT65032_$$_A(%rip)
+.Ll109:
 # [323] if (a and $80)<>0 then status:=status or $80 else status:=status and $7F; //sign
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	andl	$128,%eax
-	testl	%eax,%eax
-	je	.Lj582
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj585
-.Lj582:
+	movl	U_$UNIT65032_$$_A(%rip),%r8d
+	andl	$128,%r8d
+	testl	%r8d,%r8d
+	je	.Lj594
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+	orb	$128,U_$UNIT65032_$$_STATUS(%rip)
+	jmp	.Lj597
+.Lj594:
 # PeepHole Optimization,var3
 	andb	$127,U_$UNIT65032_$$_STATUS(%rip)
-.Lj585:
-.Ll109:
+.Lj597:
+.Ll110:
 # [324] if a=0 then status:=status or $02 else status:=status and %11111101;      //zero
 	cmpl	$0,U_$UNIT65032_$$_A(%rip)
-	jne	.Lj589
+	jne	.Lj601
 # PeepHole Optimization,var3
 	orb	$2,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
-.Lj589:
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$253,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
+.Lj601:
+	movb	U_$UNIT65032_$$_STATUS(%rip),%r8b
+	andb	$253,%r8b
+	movb	%r8b,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
 .Lj31:
-.Ll110:
-# [333] eahelp := ramb^[cs^+pc];
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%eax
-	movq	%rax,-24(%rbp)
 .Ll111:
+# [333] eahelp := ramb^[cs^+pc];
+	movq	U_$RETRO_$$_R1(%rip),%r10
+	movq	U_$UNIT65032_$$_CS(%rip),%r8
+	movl	U_$UNIT65032_$$_PC(%rip),%r9d
+	movq	(%r8),%r8
+	leaq	(%r8,%r9),%r8
+	movzbl	(%r10,%r8,1),%r8d
+	movq	%r8,%rax
+.Ll112:
 # [334] inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll112:
-# [335] eahelp2 := (eahelp + 1) and $00FF; //zero-page wraparound
-	movq	-24(%rbp),%rax
-	leaq	1(%rax),%rax
-	andq	$255,%rax
-	movq	%rax,-32(%rbp)
 .Ll113:
-# [336] ea := ramb^[ds^+eahelp] + 256* ramb^[ds^+eahelp2];
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_DS(%rip),%rax
-	movq	(%rax),%rdx
-	movq	-32(%rbp),%rax
-	leaq	(%rdx,%rax),%rax
-	movzbl	(%rcx,%rax,1),%eax
-	shlq	$8,%rax
-	movq	U_$RETRO_$$_R1(%rip),%r8
-	movq	U_$UNIT65032_$$_DS(%rip),%rdx
-	movq	(%rdx),%rcx
-	movq	-24(%rbp),%rdx
-	leaq	(%rcx,%rdx),%rdx
-	movzbl	(%r8,%rdx,1),%edx
-	leaq	(%rax,%rdx),%rax
-	movq	%rax,-16(%rbp)
+# [335] eahelp2 := (eahelp + 1) and $00FF; //zero-page wraparound
+	leaq	1(%rax),%r8
+	andq	$255,%r8
+	movq	%r8,%rcx
 .Ll114:
-# [340] a:=ramb^[ea] or a;
-	movq	U_$RETRO_$$_R1(%rip),%rax
-	movq	-16(%rbp),%rdx
-	movzbl	(%rax,%rdx,1),%edx
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	orl	%edx,%eax
-	movl	%eax,U_$UNIT65032_$$_A(%rip)
+# [336] ea := ramb^[ds^+eahelp] + 256* ramb^[ds^+eahelp2];
+	movq	U_$RETRO_$$_R1(%rip),%r9
+	movq	U_$UNIT65032_$$_DS(%rip),%r8
 .Ll115:
+	movq	(%r8),%r11
+.Ll116:
+	leaq	(%r11,%rcx),%r8
+	movzbl	(%r9,%r8,1),%r8d
+	shlq	$8,%r8
+	movq	U_$RETRO_$$_R1(%rip),%r10
+	leaq	(%r11,%rax),%r9
+	movzbl	(%r10,%r9,1),%r9d
+	leaq	(%r8,%r9),%r8
+	movq	%r8,%rdx
+.Ll117:
+# [340] a:=ramb^[ea] or a;
+	movq	U_$RETRO_$$_R1(%rip),%r8
+	movzbl	(%r8,%rdx,1),%r9d
+# PeepHole Optimization,var2
+# P=movl
+# HP1=orl
+# HP2=movl
+# PeepHole Optimization,var2
+	orl	%r9d,U_$UNIT65032_$$_A(%rip)
+.Ll118:
 # [341] if (a and $80)<>0 then status:=status or $80 else status:=status and $7F; //sign
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	andl	$128,%eax
-	testl	%eax,%eax
-	je	.Lj604
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj607
-.Lj604:
+	movl	U_$UNIT65032_$$_A(%rip),%r8d
+	andl	$128,%r8d
+	testl	%r8d,%r8d
+	je	.Lj618
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+	orb	$128,U_$UNIT65032_$$_STATUS(%rip)
+	jmp	.Lj621
+.Lj618:
 # PeepHole Optimization,var3
 	andb	$127,U_$UNIT65032_$$_STATUS(%rip)
-.Lj607:
-.Ll116:
+.Lj621:
+.Ll119:
 # [342] if a=0 then status:=status or $02 else status:=status and %11111101;      //zero
 	cmpl	$0,U_$UNIT65032_$$_A(%rip)
-	jne	.Lj611
+	jne	.Lj625
 # PeepHole Optimization,var3
 	orb	$2,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
-.Lj611:
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	andb	$253,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
+.Lj625:
+	movb	U_$UNIT65032_$$_STATUS(%rip),%r8b
+	andb	$253,%r8b
+	movb	%r8b,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
 .Lj32:
-.Ll117:
+.Ll120:
 # [350] eahelp := ramb^[cs^+pc];
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%eax
-	movq	%rax,-24(%rbp)
-.Ll118:
+	movq	U_$RETRO_$$_R1(%rip),%r10
+	movq	U_$UNIT65032_$$_CS(%rip),%r8
+	movl	U_$UNIT65032_$$_PC(%rip),%r9d
+	movq	(%r8),%r8
+	leaq	(%r8,%r9),%r8
+	movzbl	(%r10,%r8,1),%r8d
+	movq	%r8,%rax
+.Ll121:
 # [351] inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll119:
-# [352] eahelp2 := (eahelp + 1) and $00FF; //zero-page wraparound
-	movq	-24(%rbp),%rax
-	leaq	1(%rax),%rax
-	andq	$255,%rax
-	movq	%rax,-32(%rbp)
-.Ll120:
-# [353] ea := ramb^[ds^+eahelp] + 256* ramb^[ds^+eahelp2]+y;
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_DS(%rip),%rax
-	movq	(%rax),%rax
-	movq	-32(%rbp),%rdx
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%eax
-	shlq	$8,%rax
-	movq	U_$RETRO_$$_R1(%rip),%r8
-	movq	U_$UNIT65032_$$_DS(%rip),%rdx
-	movq	(%rdx),%rdx
-	movq	-24(%rbp),%rcx
-	leaq	(%rdx,%rcx),%rdx
-	movzbl	(%r8,%rdx,1),%edx
-	leaq	(%rax,%rdx),%rdx
-	movl	U_$UNIT65032_$$_Y(%rip),%eax
-	leaq	(%rdx,%rax),%rax
-	movq	%rax,-16(%rbp)
-.Ll121:
-# [357] value := ramb^[ea];
-	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movq	-16(%rbp),%rax
-	movzbw	(%rdx,%rax,1),%ax
-	movw	%ax,U_$UNIT65032_$$_VALUE(%rip)
 .Ll122:
+# [352] eahelp2 := (eahelp + 1) and $00FF; //zero-page wraparound
+	leaq	1(%rax),%r8
+	andq	$255,%r8
+	movq	%r8,%rcx
+.Ll123:
+# [353] ea := ramb^[ds^+eahelp] + 256* ramb^[ds^+eahelp2]+y;
+	movq	U_$RETRO_$$_R1(%rip),%r9
+	movq	U_$UNIT65032_$$_DS(%rip),%r8
+.Ll124:
+	movq	(%r8),%r10
+.Ll125:
+	leaq	(%r10,%rcx),%rcx
+	movzbl	(%r9,%rcx,1),%ecx
+	shlq	$8,%rcx
+	movq	U_$RETRO_$$_R1(%rip),%r8
+	leaq	(%r10,%rax),%rax
+	movzbl	(%r8,%rax,1),%eax
+	leaq	(%rcx,%rax),%rax
+	movl	U_$UNIT65032_$$_Y(%rip),%ecx
+	leaq	(%rax,%rcx),%rax
+	movq	%rax,%rdx
+.Ll126:
+# [357] value := ramb^[ea];
+	movq	U_$RETRO_$$_R1(%rip),%rax
+	movzbw	(%rax,%rdx,1),%ax
+	movw	%ax,U_$UNIT65032_$$_VALUE(%rip)
+.Ll127:
 # [358] aresult := value shl 1;
 	movzwl	U_$UNIT65032_$$_VALUE(%rip),%eax
 	shll	$1,%eax
 	movw	%ax,U_$UNIT65032_$$_ARESULT(%rip)
-.Ll123:
+.Ll128:
 # [359] ramb^[ea]:=aresult;
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	-16(%rbp),%rax
-	movb	U_$UNIT65032_$$_ARESULT(%rip),%dl
-	movb	%dl,(%rcx,%rax,1)
-.Ll124:
+	movq	U_$RETRO_$$_R1(%rip),%rax
+	movb	U_$UNIT65032_$$_ARESULT(%rip),%cl
+	movb	%cl,(%rax,%rdx,1)
+.Ll129:
 # [360] if (aresult and $FF00) <>0 then status:=status or 1 else status:=status and $FE;
 	movw	U_$UNIT65032_$$_ARESULT(%rip),%ax
 	andw	$65280,%ax
 	testw	%ax,%ax
-	je	.Lj630
+	je	.Lj646
 # PeepHole Optimization,var3
 	orb	$1,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj633
-.Lj630:
+	jmp	.Lj649
+.Lj646:
 	movb	U_$UNIT65032_$$_STATUS(%rip),%al
 	andb	$254,%al
 	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-.Lj633:
-.Ll125:
+.Lj649:
+.Ll130:
 # [364] a:=aresult or a;
-	movzwl	U_$UNIT65032_$$_ARESULT(%rip),%edx
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	orl	%edx,%eax
-	movl	%eax,U_$UNIT65032_$$_A(%rip)
-.Ll126:
+	movzwl	U_$UNIT65032_$$_ARESULT(%rip),%ecx
+# PeepHole Optimization,var2
+# P=movl
+# HP1=orl
+# HP2=movl
+# PeepHole Optimization,var2
+	orl	%ecx,U_$UNIT65032_$$_A(%rip)
+.Ll131:
 # [365] if (a and $80)<>0 then status:=status or $80 else status:=status and $7F; //sign
 	movl	U_$UNIT65032_$$_A(%rip),%eax
 	andl	$128,%eax
 	testl	%eax,%eax
-	je	.Lj639
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj642
-.Lj639:
+	je	.Lj655
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+	orb	$128,U_$UNIT65032_$$_STATUS(%rip)
+	jmp	.Lj658
+.Lj655:
 # PeepHole Optimization,var3
 	andb	$127,U_$UNIT65032_$$_STATUS(%rip)
-.Lj642:
-.Ll127:
+.Lj658:
+.Ll132:
 # [366] if a=0 then status:=status or $02 else status:=status and %11111101;      //zero
 	cmpl	$0,U_$UNIT65032_$$_A(%rip)
-	jne	.Lj646
+	jne	.Lj662
 # PeepHole Optimization,var3
 	orb	$2,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
-.Lj646:
+.Lj662:
 	movb	U_$UNIT65032_$$_STATUS(%rip),%al
 	andb	$253,%al
 	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
 .Lj33:
-.Ll128:
+.Ll133:
 # [376] ea := ds^+ramb^[cs^+pc];
-	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movq	U_$RETRO_$$_R1(%rip),%r8
 	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
+	movl	U_$UNIT65032_$$_PC(%rip),%ecx
 	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%edx
+	leaq	(%rax,%rcx),%rax
+	movzbl	(%r8,%rax,1),%ecx
 	movq	U_$UNIT65032_$$_DS(%rip),%rax
 	movq	(%rax),%rax
-	leaq	(%rdx,%rax),%rax
-	movq	%rax,-16(%rbp)
-.Ll129:
+	leaq	(%rcx,%rax),%rax
+	movq	%rax,%rdx
+.Ll134:
 # [377] inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll130:
+.Ll135:
 # [381] ramb^[ea]:=ramb^[ea] and not a;
 	movq	U_$RETRO_$$_R1(%rip),%rax
-	movq	-16(%rbp),%rdx
-	movzbl	(%rax,%rdx,1),%edx
+	movzbl	(%rax,%rdx,1),%ecx
 	movl	U_$UNIT65032_$$_A(%rip),%eax
 	notl	%eax
-	andl	%edx,%eax
+	andl	%ecx,%eax
 	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	-16(%rbp),%rdx
 	movb	%al,(%rcx,%rdx,1)
-.Ll131:
+.Ll136:
 # [382] if ramb^[ea]<>0 then status:=status and %11111101 else status:=status or $02;
 	movq	U_$RETRO_$$_R1(%rip),%rax
-	movq	-16(%rbp),%rdx
 	cmpb	$0,(%rax,%rdx,1)
-	je	.Lj657
+	je	.Lj673
 	movb	U_$UNIT65032_$$_STATUS(%rip),%al
 	andb	$253,%al
 	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
-.Lj657:
+.Lj673:
 # PeepHole Optimization,var3
 	orb	$2,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
 .Lj34:
-.Ll132:
+.Ll137:
 # [391] ea := ds^+((ramb^[cs^+pc]+x) and $FF); //zero-page wraparound
-	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movq	U_$RETRO_$$_R1(%rip),%r8
 	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
+	movl	U_$UNIT65032_$$_PC(%rip),%ecx
 	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%eax
-	movl	U_$UNIT65032_$$_X(%rip),%edx
-	leaq	(%rax,%rdx),%rax
+	leaq	(%rax,%rcx),%rax
+	movzbl	(%r8,%rax,1),%ecx
+	movl	U_$UNIT65032_$$_X(%rip),%eax
+	leaq	(%rcx,%rax),%rax
 	andq	$255,%rax
-	movq	U_$UNIT65032_$$_DS(%rip),%rdx
-	movq	(%rdx),%rdx
-	leaq	(%rax,%rdx),%rax
-	movq	%rax,-16(%rbp)
-.Ll133:
+	movq	U_$UNIT65032_$$_DS(%rip),%rcx
+	movq	(%rcx),%rcx
+	leaq	(%rax,%rcx),%rax
+	movq	%rax,%rdx
+.Ll138:
 # [392] inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll134:
+.Ll139:
 # [396] a:=ramb^[ea] or a;
-	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movq	-16(%rbp),%rax
-	movzbl	(%rdx,%rax,1),%edx
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	orl	%edx,%eax
-	movl	%eax,U_$UNIT65032_$$_A(%rip)
-.Ll135:
+	movq	U_$RETRO_$$_R1(%rip),%rax
+	movzbl	(%rax,%rdx,1),%ecx
+# PeepHole Optimization,var2
+# P=movl
+# HP1=orl
+# HP2=movl
+# PeepHole Optimization,var2
+	orl	%ecx,U_$UNIT65032_$$_A(%rip)
+.Ll140:
 # [397] if (a and $80)<>0 then status:=status or $80 else status:=status and $7F; //sign
 	movl	U_$UNIT65032_$$_A(%rip),%eax
 	andl	$128,%eax
 	testl	%eax,%eax
-	je	.Lj668
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj671
-.Lj668:
+	je	.Lj684
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+	orb	$128,U_$UNIT65032_$$_STATUS(%rip)
+	jmp	.Lj687
+.Lj684:
 # PeepHole Optimization,var3
 	andb	$127,U_$UNIT65032_$$_STATUS(%rip)
-.Lj671:
-.Ll136:
+.Lj687:
+.Ll141:
 # [398] if a=0 then status:=status or $02 else status:=status and %11111101;      //zero
 	cmpl	$0,U_$UNIT65032_$$_A(%rip)
-	jne	.Lj675
+	jne	.Lj691
 # PeepHole Optimization,var3
 	orb	$2,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
-.Lj675:
+.Lj691:
 	movb	U_$UNIT65032_$$_STATUS(%rip),%al
 	andb	$253,%al
 	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
 .Lj35:
-.Ll137:
+.Ll142:
 # [407] ea := ds^+((ramb^[cs^+pc]+x) and $FF); //zero-page wraparound
-	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movq	U_$RETRO_$$_R1(%rip),%r8
 	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
+	movl	U_$UNIT65032_$$_PC(%rip),%ecx
 	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%eax
-	movl	U_$UNIT65032_$$_X(%rip),%edx
-	leaq	(%rax,%rdx),%rax
+	leaq	(%rax,%rcx),%rax
+	movzbl	(%r8,%rax,1),%ecx
+	movl	U_$UNIT65032_$$_X(%rip),%eax
+	leaq	(%rcx,%rax),%rax
 	andq	$255,%rax
-	movq	U_$UNIT65032_$$_DS(%rip),%rdx
-	movq	(%rdx),%rdx
-	leaq	(%rax,%rdx),%rax
-	movq	%rax,-16(%rbp)
-.Ll138:
+	movq	U_$UNIT65032_$$_DS(%rip),%rcx
+	movq	(%rcx),%rcx
+	leaq	(%rax,%rcx),%rax
+	movq	%rax,%rdx
+.Ll143:
 # [408] inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll139:
+.Ll144:
 # [412] value := ramb^[ea];
-	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movq	-16(%rbp),%rax
-	movzbw	(%rdx,%rax,1),%ax
+	movq	U_$RETRO_$$_R1(%rip),%rax
+	movzbw	(%rax,%rdx,1),%ax
 	movw	%ax,U_$UNIT65032_$$_VALUE(%rip)
-.Ll140:
+.Ll145:
 # [413] aresult := value shl 1;
 	movzwl	U_$UNIT65032_$$_VALUE(%rip),%eax
 	shll	$1,%eax
 	movw	%ax,U_$UNIT65032_$$_ARESULT(%rip)
-.Ll141:
+.Ll146:
 # [414] ramb^[ea]:=aresult;
-	movq	U_$RETRO_$$_R1(%rip),%rax
-	movq	-16(%rbp),%rdx
-	movb	U_$UNIT65032_$$_ARESULT(%rip),%cl
-	movb	%cl,(%rax,%rdx,1)
-.Ll142:
+	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movb	U_$UNIT65032_$$_ARESULT(%rip),%al
+	movb	%al,(%rcx,%rdx,1)
+.Ll147:
 # [415] if (aresult and $FF00) <>0 then status:=status or 1 else status:=status and $FE;
 	movw	U_$UNIT65032_$$_ARESULT(%rip),%ax
 	andw	$65280,%ax
 	testw	%ax,%ax
-	je	.Lj690
+	je	.Lj706
 # PeepHole Optimization,var3
 	orb	$1,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj693
-.Lj690:
+	jmp	.Lj709
+.Lj706:
 	movb	U_$UNIT65032_$$_STATUS(%rip),%al
 	andb	$254,%al
 	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-.Lj693:
-.Ll143:
+.Lj709:
+.Ll148:
 # [416] if (aresult and $80)<>0 then status:=status or $80 else status:=status and $7F; //sign
 	movw	U_$UNIT65032_$$_ARESULT(%rip),%ax
 	andw	$128,%ax
 	testw	%ax,%ax
-	je	.Lj697
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj700
-.Lj697:
+	je	.Lj713
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+	orb	$128,U_$UNIT65032_$$_STATUS(%rip)
+	jmp	.Lj716
+.Lj713:
 # PeepHole Optimization,var3
 	andb	$127,U_$UNIT65032_$$_STATUS(%rip)
-.Lj700:
-.Ll144:
+.Lj716:
+.Ll149:
 # [417] if aresult=0 then status:=status or $02 else status:=status and %11111101;      //zero
 	cmpw	$0,U_$UNIT65032_$$_ARESULT(%rip)
-	jne	.Lj704
+	jne	.Lj720
 # PeepHole Optimization,var3
 	orb	$2,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
-.Lj704:
+.Lj720:
 	movb	U_$UNIT65032_$$_STATUS(%rip),%al
 	andb	$253,%al
 	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
 .Lj36:
-.Ll145:
+.Ll150:
 # [426] ea := ds^+((ramb^[cs^+pc]+x) and $FF); //zero-page wraparound
-	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movq	U_$RETRO_$$_R1(%rip),%r8
 	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
+	movl	U_$UNIT65032_$$_PC(%rip),%ecx
 	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%eax
-	movl	U_$UNIT65032_$$_X(%rip),%edx
-	leaq	(%rax,%rdx),%rax
+	leaq	(%rax,%rcx),%rax
+	movzbl	(%r8,%rax,1),%eax
+	movl	U_$UNIT65032_$$_X(%rip),%ecx
+	leaq	(%rax,%rcx),%rax
 	andq	$255,%rax
-	movq	U_$UNIT65032_$$_DS(%rip),%rdx
-	movq	(%rdx),%rdx
-	leaq	(%rax,%rdx),%rax
-	movq	%rax,-16(%rbp)
-.Ll146:
+	movq	U_$UNIT65032_$$_DS(%rip),%rcx
+	movq	(%rcx),%rcx
+	leaq	(%rax,%rcx),%rax
+	movq	%rax,%rdx
+.Ll151:
 # [427] inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll147:
+.Ll152:
 # [431] value := ramb^[ea];
 	movq	U_$RETRO_$$_R1(%rip),%rax
-	movq	-16(%rbp),%rdx
 	movzbw	(%rax,%rdx,1),%ax
 	movw	%ax,U_$UNIT65032_$$_VALUE(%rip)
-.Ll148:
+.Ll153:
 # [432] aresult := value shl 1;
 	movzwl	U_$UNIT65032_$$_VALUE(%rip),%eax
 	shll	$1,%eax
 	movw	%ax,U_$UNIT65032_$$_ARESULT(%rip)
-.Ll149:
+.Ll154:
 # [433] ramb^[ea]:=aresult;
 	movq	U_$RETRO_$$_R1(%rip),%rax
-	movq	-16(%rbp),%rcx
-	movb	U_$UNIT65032_$$_ARESULT(%rip),%dl
-	movb	%dl,(%rax,%rcx,1)
-.Ll150:
+	movb	U_$UNIT65032_$$_ARESULT(%rip),%cl
+	movb	%cl,(%rax,%rdx,1)
+.Ll155:
 # [434] if (aresult and $FF00) <>0 then status:=status or 1 else status:=status and $FE;
 	movw	U_$UNIT65032_$$_ARESULT(%rip),%ax
 	andw	$65280,%ax
 	testw	%ax,%ax
-	je	.Lj719
+	je	.Lj735
 # PeepHole Optimization,var3
 	orb	$1,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj722
-.Lj719:
+	jmp	.Lj738
+.Lj735:
 	movb	U_$UNIT65032_$$_STATUS(%rip),%al
 	andb	$254,%al
 	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-.Lj722:
-.Ll151:
+.Lj738:
+.Ll156:
 # [438] a:=aresult or a;
-	movzwl	U_$UNIT65032_$$_ARESULT(%rip),%edx
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	orl	%edx,%eax
-	movl	%eax,U_$UNIT65032_$$_A(%rip)
-.Ll152:
+	movzwl	U_$UNIT65032_$$_ARESULT(%rip),%ecx
+# PeepHole Optimization,var2
+# P=movl
+# HP1=orl
+# HP2=movl
+# PeepHole Optimization,var2
+	orl	%ecx,U_$UNIT65032_$$_A(%rip)
+.Ll157:
 # [439] if (a and $80)<>0 then status:=status or $80 else status:=status and $7F; //sign
 	movl	U_$UNIT65032_$$_A(%rip),%eax
 	andl	$128,%eax
 	testl	%eax,%eax
-	je	.Lj728
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj731
-.Lj728:
+	je	.Lj744
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+	orb	$128,U_$UNIT65032_$$_STATUS(%rip)
+	jmp	.Lj747
+.Lj744:
 # PeepHole Optimization,var3
 	andb	$127,U_$UNIT65032_$$_STATUS(%rip)
-.Lj731:
-.Ll153:
+.Lj747:
+.Ll158:
 # [440] if a=0 then status:=status or $02 else status:=status and %11111101;      //zero
 	cmpl	$0,U_$UNIT65032_$$_A(%rip)
-	jne	.Lj735
+	jne	.Lj751
 # PeepHole Optimization,var3
 	orb	$2,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
-.Lj735:
+.Lj751:
 	movb	U_$UNIT65032_$$_STATUS(%rip),%al
 	andb	$253,%al
 	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
 .Lj37:
-.Ll154:
+.Ll159:
 # [446] status:=status and $FE;
 	movb	U_$UNIT65032_$$_STATUS(%rip),%al
 	andb	$254,%al
 	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
 .Lj38:
-.Ll155:
+.Ll160:
 # [455] ea := ds^+ramb^[cs^+pc] +256*ramb^[cs^+pc+1] +y;
-	movq	U_$RETRO_$$_R1(%rip),%rcx
+	movq	U_$RETRO_$$_R1(%rip),%r8
 	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
+	movl	U_$UNIT65032_$$_PC(%rip),%ecx
 	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	(%rcx,%rax,1),%edx
-	movq	U_$UNIT65032_$$_DS(%rip),%rax
-	movq	(%rax),%rax
-	leaq	(%rdx,%rax),%r8
-	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movq	U_$UNIT65032_$$_CS(%rip),%rax
-	movl	U_$UNIT65032_$$_PC(%rip),%edx
-	movq	(%rax),%rax
-	leaq	(%rax,%rdx),%rax
-	movzbl	1(%rcx,%rax,1),%eax
-	shlq	$8,%rax
-	leaq	(%r8,%rax),%rdx
-	movl	U_$UNIT65032_$$_Y(%rip),%eax
-	leaq	(%rdx,%rax),%rax
-	movq	%rax,-16(%rbp)
-.Ll156:
+	leaq	(%rax,%rcx),%rax
+	movzbl	1(%r8,%rax,1),%ecx
+	shlq	$8,%rcx
+	movq	U_$UNIT65032_$$_DS(%rip),%r9
+	movq	U_$RETRO_$$_R1(%rip),%r8
+	movzbl	(%r8,%rax,1),%r8d
+	movq	(%r9),%rax
+	leaq	(%rax,%r8),%rax
+	leaq	(%rcx,%rax),%rax
+	movl	U_$UNIT65032_$$_Y(%rip),%ecx
+	leaq	(%rax,%rcx),%rax
+	movq	%rax,%rdx
+.Ll161:
 # [456] inc(pc); inc(pc);
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
 	addl	$1,U_$UNIT65032_$$_PC(%rip)
-.Ll157:
+.Ll162:
 # [460] a:=ramb^[ea] or a;
-	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movq	-16(%rbp),%rax
-	movzbl	(%rdx,%rax,1),%edx
-	movl	U_$UNIT65032_$$_A(%rip),%eax
-	orl	%edx,%eax
-	movl	%eax,U_$UNIT65032_$$_A(%rip)
-.Ll158:
+	movq	U_$RETRO_$$_R1(%rip),%rax
+	movzbl	(%rax,%rdx,1),%edx
+# PeepHole Optimization,var2
+# P=movl
+# HP1=orl
+# HP2=movl
+# PeepHole Optimization,var2
+	orl	%edx,U_$UNIT65032_$$_A(%rip)
+.Ll163:
 # [461] if (a and $80)<>0 then status:=status or $80 else status:=status and $7F; //sign
 	movl	U_$UNIT65032_$$_A(%rip),%eax
 	andl	$128,%eax
 	testl	%eax,%eax
-	je	.Lj748
-	movb	U_$UNIT65032_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj751
-.Lj748:
+	je	.Lj766
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+	orb	$128,U_$UNIT65032_$$_STATUS(%rip)
+	jmp	.Lj769
+.Lj766:
 # PeepHole Optimization,var3
 	andb	$127,U_$UNIT65032_$$_STATUS(%rip)
-.Lj751:
-.Ll159:
+.Lj769:
+.Ll164:
 # [462] if a=0 then status:=status or $02 else status:=status and %11111101;      //zero
 	cmpl	$0,U_$UNIT65032_$$_A(%rip)
-	jne	.Lj755
+	jne	.Lj773
 # PeepHole Optimization,var3
 	orb	$2,U_$UNIT65032_$$_STATUS(%rip)
 	jmp	.Lj11
-.Lj755:
+.Lj773:
 	movb	U_$UNIT65032_$$_STATUS(%rip),%al
 	andb	$253,%al
 	movb	%al,U_$UNIT65032_$$_STATUS(%rip)
-	jmp	.Lj11
 .Lj39:
-	jmp	.Lj11
 .Lj40:
-	jmp	.Lj11
 .Lj41:
-	jmp	.Lj11
 .Lj42:
-	jmp	.Lj11
 .Lj43:
-	jmp	.Lj11
 .Lj44:
-	jmp	.Lj11
 .Lj45:
-	jmp	.Lj11
 .Lj46:
-	jmp	.Lj11
 .Lj47:
-	jmp	.Lj11
 .Lj48:
-	jmp	.Lj11
 .Lj49:
-	jmp	.Lj11
 .Lj50:
-	jmp	.Lj11
 .Lj51:
-	jmp	.Lj11
 .Lj52:
-	jmp	.Lj11
 .Lj53:
-	jmp	.Lj11
 .Lj54:
-	jmp	.Lj11
 .Lj55:
-	jmp	.Lj11
 .Lj56:
-	jmp	.Lj11
 .Lj57:
-	jmp	.Lj11
 .Lj58:
-	jmp	.Lj11
 .Lj59:
-	jmp	.Lj11
 .Lj60:
-	jmp	.Lj11
 .Lj61:
-	jmp	.Lj11
 .Lj62:
-	jmp	.Lj11
 .Lj63:
-	jmp	.Lj11
 .Lj64:
-	jmp	.Lj11
 .Lj65:
-	jmp	.Lj11
 .Lj66:
-	jmp	.Lj11
 .Lj67:
-	jmp	.Lj11
 .Lj68:
-	jmp	.Lj11
 .Lj69:
-	jmp	.Lj11
 .Lj70:
-	jmp	.Lj11
 .Lj71:
-	jmp	.Lj11
 .Lj72:
-	jmp	.Lj11
 .Lj73:
-	jmp	.Lj11
 .Lj74:
-	jmp	.Lj11
 .Lj75:
-	jmp	.Lj11
 .Lj76:
-	jmp	.Lj11
 .Lj77:
-	jmp	.Lj11
 .Lj78:
-	jmp	.Lj11
 .Lj79:
-	jmp	.Lj11
 .Lj80:
-	jmp	.Lj11
 .Lj81:
-	jmp	.Lj11
 .Lj82:
-	jmp	.Lj11
 .Lj83:
-	jmp	.Lj11
 .Lj84:
-	jmp	.Lj11
 .Lj85:
-	jmp	.Lj11
 .Lj86:
-	jmp	.Lj11
 .Lj87:
-	jmp	.Lj11
 .Lj88:
-	jmp	.Lj11
 .Lj89:
-	jmp	.Lj11
 .Lj90:
-	jmp	.Lj11
 .Lj91:
-	jmp	.Lj11
 .Lj92:
-	jmp	.Lj11
 .Lj93:
-	jmp	.Lj11
 .Lj94:
-	jmp	.Lj11
 .Lj95:
-	jmp	.Lj11
 .Lj96:
-	jmp	.Lj11
 .Lj97:
-	jmp	.Lj11
 .Lj98:
-	jmp	.Lj11
 .Lj99:
-	jmp	.Lj11
 .Lj100:
-	jmp	.Lj11
 .Lj101:
-	jmp	.Lj11
 .Lj102:
-	jmp	.Lj11
 .Lj103:
-	jmp	.Lj11
 .Lj104:
-	jmp	.Lj11
 .Lj105:
-	jmp	.Lj11
 .Lj106:
-	jmp	.Lj11
 .Lj107:
-	jmp	.Lj11
 .Lj108:
-	jmp	.Lj11
 .Lj109:
-	jmp	.Lj11
 .Lj110:
-	jmp	.Lj11
 .Lj111:
-	jmp	.Lj11
 .Lj112:
-	jmp	.Lj11
 .Lj113:
-	jmp	.Lj11
 .Lj114:
-	jmp	.Lj11
 .Lj115:
-	jmp	.Lj11
 .Lj116:
-	jmp	.Lj11
 .Lj117:
-	jmp	.Lj11
 .Lj118:
-	jmp	.Lj11
 .Lj119:
-	jmp	.Lj11
 .Lj120:
-	jmp	.Lj11
 .Lj121:
-	jmp	.Lj11
 .Lj122:
-	jmp	.Lj11
 .Lj123:
-	jmp	.Lj11
 .Lj124:
-	jmp	.Lj11
 .Lj125:
-	jmp	.Lj11
 .Lj126:
-	jmp	.Lj11
 .Lj127:
-	jmp	.Lj11
 .Lj128:
-	jmp	.Lj11
 .Lj129:
-	jmp	.Lj11
 .Lj130:
-	jmp	.Lj11
 .Lj131:
-	jmp	.Lj11
 .Lj132:
-	jmp	.Lj11
 .Lj133:
-	jmp	.Lj11
 .Lj134:
-	jmp	.Lj11
 .Lj135:
-	jmp	.Lj11
 .Lj136:
-	jmp	.Lj11
 .Lj137:
-	jmp	.Lj11
 .Lj138:
-	jmp	.Lj11
 .Lj139:
-	jmp	.Lj11
 .Lj140:
-	jmp	.Lj11
 .Lj141:
-	jmp	.Lj11
 .Lj142:
-	jmp	.Lj11
 .Lj143:
-	jmp	.Lj11
 .Lj144:
-	jmp	.Lj11
 .Lj145:
-	jmp	.Lj11
 .Lj146:
-	jmp	.Lj11
 .Lj147:
-	jmp	.Lj11
 .Lj148:
-	jmp	.Lj11
 .Lj149:
-	jmp	.Lj11
 .Lj150:
-	jmp	.Lj11
 .Lj151:
-	jmp	.Lj11
 .Lj152:
-	jmp	.Lj11
 .Lj153:
-	jmp	.Lj11
 .Lj154:
-	jmp	.Lj11
 .Lj155:
-	jmp	.Lj11
 .Lj156:
-	jmp	.Lj11
 .Lj157:
-	jmp	.Lj11
 .Lj158:
-	jmp	.Lj11
 .Lj159:
-	jmp	.Lj11
 .Lj160:
-	jmp	.Lj11
 .Lj161:
-	jmp	.Lj11
 .Lj162:
-	jmp	.Lj11
 .Lj163:
-	jmp	.Lj11
 .Lj164:
-	jmp	.Lj11
 .Lj165:
-	jmp	.Lj11
 .Lj166:
-	jmp	.Lj11
 .Lj167:
-	jmp	.Lj11
 .Lj168:
-	jmp	.Lj11
 .Lj169:
-	jmp	.Lj11
 .Lj170:
-	jmp	.Lj11
 .Lj171:
-	jmp	.Lj11
 .Lj172:
-	jmp	.Lj11
 .Lj173:
-	jmp	.Lj11
 .Lj174:
-	jmp	.Lj11
 .Lj175:
-	jmp	.Lj11
 .Lj176:
-	jmp	.Lj11
 .Lj177:
-	jmp	.Lj11
 .Lj178:
-	jmp	.Lj11
 .Lj179:
-	jmp	.Lj11
 .Lj180:
-	jmp	.Lj11
 .Lj181:
-	jmp	.Lj11
 .Lj182:
-	jmp	.Lj11
 .Lj183:
-	jmp	.Lj11
 .Lj184:
-	jmp	.Lj11
 .Lj185:
-	jmp	.Lj11
 .Lj186:
-	jmp	.Lj11
 .Lj187:
-	jmp	.Lj11
 .Lj188:
-	jmp	.Lj11
 .Lj189:
-	jmp	.Lj11
 .Lj190:
-	jmp	.Lj11
 .Lj191:
-	jmp	.Lj11
 .Lj192:
-	jmp	.Lj11
 .Lj193:
-	jmp	.Lj11
 .Lj194:
-	jmp	.Lj11
 .Lj195:
-	jmp	.Lj11
 .Lj196:
-	jmp	.Lj11
 .Lj197:
-	jmp	.Lj11
 .Lj198:
-	jmp	.Lj11
 .Lj199:
-	jmp	.Lj11
 .Lj200:
-	jmp	.Lj11
 .Lj201:
-	jmp	.Lj11
 .Lj202:
-	jmp	.Lj11
 .Lj203:
-	jmp	.Lj11
 .Lj204:
-	jmp	.Lj11
 .Lj205:
-	jmp	.Lj11
 .Lj206:
-	jmp	.Lj11
 .Lj207:
-	jmp	.Lj11
 .Lj208:
-	jmp	.Lj11
 .Lj209:
-	jmp	.Lj11
 .Lj210:
-	jmp	.Lj11
 .Lj211:
-	jmp	.Lj11
 .Lj212:
-	jmp	.Lj11
 .Lj213:
-	jmp	.Lj11
 .Lj214:
-	jmp	.Lj11
 .Lj215:
-	jmp	.Lj11
 .Lj216:
-	jmp	.Lj11
 .Lj217:
-	jmp	.Lj11
 .Lj218:
-	jmp	.Lj11
 .Lj219:
-	jmp	.Lj11
 .Lj220:
-	jmp	.Lj11
 .Lj221:
-	jmp	.Lj11
 .Lj222:
-	jmp	.Lj11
 .Lj223:
-	jmp	.Lj11
 .Lj224:
-	jmp	.Lj11
 .Lj225:
-	jmp	.Lj11
 .Lj226:
-	jmp	.Lj11
 .Lj227:
-	jmp	.Lj11
 .Lj228:
-	jmp	.Lj11
 .Lj229:
-	jmp	.Lj11
 .Lj230:
-	jmp	.Lj11
 .Lj231:
-	jmp	.Lj11
 .Lj232:
-	jmp	.Lj11
 .Lj233:
-	jmp	.Lj11
 .Lj234:
-	jmp	.Lj11
 .Lj235:
-	jmp	.Lj11
 .Lj236:
-	jmp	.Lj11
 .Lj237:
-	jmp	.Lj11
 .Lj238:
-	jmp	.Lj11
 .Lj239:
-	jmp	.Lj11
 .Lj240:
-	jmp	.Lj11
 .Lj241:
-	jmp	.Lj11
 .Lj242:
-	jmp	.Lj11
 .Lj243:
-	jmp	.Lj11
 .Lj244:
-	jmp	.Lj11
 .Lj245:
-	jmp	.Lj11
 .Lj246:
-	jmp	.Lj11
 .Lj247:
-	jmp	.Lj11
 .Lj248:
-	jmp	.Lj11
 .Lj249:
-	jmp	.Lj11
 .Lj250:
-	jmp	.Lj11
 .Lj251:
-	jmp	.Lj11
 .Lj252:
-	jmp	.Lj11
 .Lj253:
-	jmp	.Lj11
 .Lj254:
-	jmp	.Lj11
 .Lj255:
-	jmp	.Lj11
 .Lj256:
-	jmp	.Lj11
 .Lj257:
-	jmp	.Lj11
 .Lj258:
-	jmp	.Lj11
 .Lj259:
-	jmp	.Lj11
 .Lj260:
-	jmp	.Lj11
 .Lj261:
-	jmp	.Lj11
 .Lj262:
-	jmp	.Lj11
 .Lj263:
-	jmp	.Lj11
 .Lj264:
-	jmp	.Lj11
 .Lj265:
 .Lj266:
 .Lj12:
 .Lj11:
-.Ll160:
+.Ll165:
 # [1154] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
 .Lc2:
 .Lt1:
-.Ll161:
+.Ll166:
 
 .section .data.n_UNIT65032_$$_EXEC65032,"d"
 	.balign 4
@@ -2406,9 +2180,9 @@ U_$UNIT65032_$$_RELADDR:
 # Begin asmlist al_dwarf_frame
 
 .section .debug_frame
-.Lc6:
-	.long	.Lc8-.Lc7
-.Lc7:
+.Lc3:
+	.long	.Lc5-.Lc4
+.Lc4:
 	.long	-1
 	.byte	1
 	.byte	0
@@ -2422,27 +2196,14 @@ U_$UNIT65032_$$_RELADDR:
 	.uleb128	16
 	.uleb128	2
 	.balign 4,0
-.Lc8:
-	.long	.Lc10-.Lc9
-.Lc9:
-	.secrel32	.Lc6
+.Lc5:
+	.long	.Lc7-.Lc6
+.Lc6:
+	.secrel32	.Lc3
 	.quad	.Lc1
 	.quad	.Lc2-.Lc1
-	.byte	4
-	.long	.Lc3-.Lc1
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc4-.Lc3
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc5-.Lc4
-	.byte	13
-	.uleb128	6
 	.balign 4,0
-.Lc10:
+.Lc7:
 # End asmlist al_dwarf_frame
 # Begin asmlist al_dwarf_info
 
@@ -2456,8 +2217,8 @@ U_$UNIT65032_$$_RELADDR:
 	.uleb128	1
 # [25] procedure exec65032;
 	.ascii	"unit65032.pas\000"
-	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
-	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
+	.ascii	"D:/programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -2623,29 +2384,29 @@ U_$UNIT65032_$$_RELADDR:
 	.uleb128	4
 	.ascii	"OPCODE\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La3-.Ldebug_info0
 # Symbol EA
 	.uleb128	4
 	.ascii	"EA\000"
 	.byte	2
-	.byte	118
-	.sleb128	-16
+	.byte	144
+	.uleb128	1
 	.long	.La9-.Ldebug_info0
 # Symbol EAHELP
 	.uleb128	4
 	.ascii	"EAHELP\000"
 	.byte	2
-	.byte	118
-	.sleb128	-24
+	.byte	144
+	.uleb128	0
 	.long	.La9-.Ldebug_info0
 # Symbol EAHELP2
 	.uleb128	4
 	.ascii	"EAHELP2\000"
 	.byte	2
-	.byte	118
-	.sleb128	-32
+	.byte	144
+	.uleb128	2
 	.long	.La9-.Ldebug_info0
 	.byte	0
 # Defs - Begin unit SYSTEM has index 1
@@ -3087,6 +2848,26 @@ U_$UNIT65032_$$_RELADDR:
 # Defs - End unit DIALOGS has index 166
 # Defs - Begin unit UMAIN has index 11
 # Defs - End unit UMAIN has index 11
+# Defs - Begin unit SYNTHCONTROL has index 17
+# Defs - End unit SYNTHCONTROL has index 17
+# Defs - Begin unit FFT has index 256
+# Defs - End unit FFT has index 256
+# Defs - Begin unit TOOLWIN has index 205
+# Defs - End unit TOOLWIN has index 205
+# Defs - Begin unit WSTOOLWIN has index 207
+# Defs - End unit WSTOOLWIN has index 207
+# Defs - Begin unit WSCOMCTRLS has index 206
+# Defs - End unit WSCOMCTRLS has index 206
+# Defs - Begin unit COMCTRLS has index 169
+# Defs - End unit COMCTRLS has index 169
+# Defs - Begin unit UNIT2 has index 16
+# Defs - End unit UNIT2 has index 16
+# Defs - Begin unit UNIT1 has index 10
+# Defs - End unit UNIT1 has index 10
+# Defs - Begin unit FMSYNTH has index 18
+# Defs - End unit FMSYNTH has index 18
+# Defs - Begin unit RETRO has index 12
+# Defs - End unit RETRO has index 12
 # Defs - Begin unit UNIT65032 has index 14
 # Definition Array[0..65535] Of Byte
 .La1:
@@ -3109,12 +2890,6 @@ U_$UNIT65032_$$_RELADDR:
 .La8:
 	.uleb128	7
 	.long	.La7-.Ldebug_info0
-# Defs - End unit UNIT65032 has index 14
-# Defs - Begin unit FMSYNTH has index 18
-# Defs - End unit FMSYNTH has index 18
-# Defs - Begin unit RETRO has index 12
-# Defs - End unit RETRO has index 12
-# Defs - Begin unit UNIT65032 has index 14
 # Defs - End unit UNIT65032 has index 14
 # Defs - Begin Staticsymtable
 # Defs - End Staticsymtable
@@ -3292,923 +3067,967 @@ U_$UNIT65032_$$_RELADDR:
 .Lehdebug_line0:
 # === header end ===
 # function: UNIT65032_$$_EXEC65032
-# [32:1]
+# [33:5]
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll1
 	.byte	5
-	.uleb128	1
-	.byte	43
-# [33:5]
-	.byte	2
-	.uleb128	.Ll2-.Ll1
-	.byte	5
 	.uleb128	5
-	.byte	13
+	.byte	44
 # [35:18]
 	.byte	2
-	.uleb128	.Ll3-.Ll2
+	.uleb128	.Ll2-.Ll1
 	.byte	5
 	.uleb128	18
 	.byte	14
 # [36:3]
 	.byte	2
-	.uleb128	.Ll4-.Ll3
+	.uleb128	.Ll3-.Ll2
 	.byte	5
 	.uleb128	3
 	.byte	13
 # [37:3]
 	.byte	2
-	.uleb128	.Ll5-.Ll4
+	.uleb128	.Ll4-.Ll3
 	.byte	13
 # [42:5]
 	.byte	2
-	.uleb128	.Ll6-.Ll5
+	.uleb128	.Ll5-.Ll4
 	.byte	5
 	.uleb128	5
 	.byte	17
 # [43:10]
 	.byte	2
-	.uleb128	.Ll7-.Ll6
+	.uleb128	.Ll6-.Ll5
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [44:10]
 	.byte	2
-	.uleb128	.Ll8-.Ll7
+	.uleb128	.Ll7-.Ll6
 	.byte	13
 # [45:10]
 	.byte	2
-	.uleb128	.Ll9-.Ll8
+	.uleb128	.Ll8-.Ll7
 	.byte	13
 # [46:10]
 	.byte	2
-	.uleb128	.Ll10-.Ll9
+	.uleb128	.Ll9-.Ll8
 	.byte	13
 # [47:20]
 	.byte	2
-	.uleb128	.Ll11-.Ll10
+	.uleb128	.Ll10-.Ll9
 	.byte	5
 	.uleb128	20
 	.byte	13
 # [48:9]
 	.byte	2
-	.uleb128	.Ll12-.Ll11
+	.uleb128	.Ll11-.Ll10
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [49:9]
 	.byte	2
-	.uleb128	.Ll13-.Ll12
+	.uleb128	.Ll12-.Ll11
 	.byte	13
 # [50:16]
 	.byte	2
-	.uleb128	.Ll14-.Ll13
+	.uleb128	.Ll13-.Ll12
 	.byte	5
 	.uleb128	16
 	.byte	13
 # [59:26]
 	.byte	2
-	.uleb128	.Ll15-.Ll14
+	.uleb128	.Ll14-.Ll13
 	.byte	5
 	.uleb128	26
 	.byte	21
 # [60:22]
 	.byte	2
-	.uleb128	.Ll16-.Ll15
+	.uleb128	.Ll15-.Ll14
 	.byte	5
 	.uleb128	22
 	.byte	13
 # [61:5]
 	.byte	2
-	.uleb128	.Ll17-.Ll16
+	.uleb128	.Ll16-.Ll15
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [65:13]
 	.byte	2
-	.uleb128	.Ll18-.Ll17
+	.uleb128	.Ll17-.Ll16
 	.byte	5
 	.uleb128	13
 	.byte	16
 # [66:8]
 	.byte	2
-	.uleb128	.Ll19-.Ll18
+	.uleb128	.Ll18-.Ll17
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [67:9]
 	.byte	2
-	.uleb128	.Ll20-.Ll19
+	.uleb128	.Ll19-.Ll18
 	.byte	5
 	.uleb128	9
 	.byte	13
-# [76:22]
+# [76:11]
 	.byte	2
-	.uleb128	.Ll21-.Ll20
+	.uleb128	.Ll20-.Ll19
 	.byte	5
-	.uleb128	22
+	.uleb128	11
 	.byte	21
 # [77:5]
 	.byte	2
-	.uleb128	.Ll22-.Ll21
+	.uleb128	.Ll21-.Ll20
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [81:26]
 	.byte	2
-	.uleb128	.Ll23-.Ll22
+	.uleb128	.Ll22-.Ll21
 	.byte	5
 	.uleb128	26
 	.byte	16
 # [90:26]
 	.byte	2
-	.uleb128	.Ll24-.Ll23
+	.uleb128	.Ll23-.Ll22
 	.byte	21
 # [91:22]
 	.byte	2
-	.uleb128	.Ll25-.Ll24
+	.uleb128	.Ll24-.Ll23
 	.byte	5
 	.uleb128	22
 	.byte	13
 # [92:5]
 	.byte	2
-	.uleb128	.Ll26-.Ll25
+	.uleb128	.Ll25-.Ll24
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [96:19]
 	.byte	2
-	.uleb128	.Ll27-.Ll26
+	.uleb128	.Ll26-.Ll25
 	.byte	5
 	.uleb128	19
 	.byte	16
 # [97:16]
 	.byte	2
-	.uleb128	.Ll28-.Ll27
+	.uleb128	.Ll27-.Ll26
 	.byte	5
 	.uleb128	16
 	.byte	13
 # [98:10]
 	.byte	2
-	.uleb128	.Ll29-.Ll28
+	.uleb128	.Ll28-.Ll27
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [99:8]
 	.byte	2
-	.uleb128	.Ll30-.Ll29
+	.uleb128	.Ll29-.Ll28
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [103:8]
 	.byte	2
-	.uleb128	.Ll31-.Ll30
+	.uleb128	.Ll30-.Ll29
 	.byte	16
 # [104:8]
 	.byte	2
-	.uleb128	.Ll32-.Ll31
+	.uleb128	.Ll31-.Ll30
 	.byte	13
 # [105:9]
 	.byte	2
-	.uleb128	.Ll33-.Ll32
+	.uleb128	.Ll32-.Ll31
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [114:20]
 	.byte	2
-	.uleb128	.Ll34-.Ll33
+	.uleb128	.Ll33-.Ll32
 	.byte	5
 	.uleb128	20
 	.byte	21
 # [115:5]
 	.byte	2
-	.uleb128	.Ll35-.Ll34
+	.uleb128	.Ll34-.Ll33
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [119:21]
 	.byte	2
-	.uleb128	.Ll36-.Ll35
+	.uleb128	.Ll35-.Ll34
 	.byte	5
 	.uleb128	21
 	.byte	16
 # [120:13]
 	.byte	2
-	.uleb128	.Ll37-.Ll36
+	.uleb128	.Ll36-.Ll35
 	.byte	5
 	.uleb128	13
 	.byte	13
 # [129:20]
 	.byte	2
-	.uleb128	.Ll38-.Ll37
+	.uleb128	.Ll37-.Ll36
 	.byte	5
 	.uleb128	20
 	.byte	21
 # [130:5]
 	.byte	2
-	.uleb128	.Ll39-.Ll38
+	.uleb128	.Ll38-.Ll37
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [134:13]
 	.byte	2
-	.uleb128	.Ll40-.Ll39
+	.uleb128	.Ll39-.Ll38
 	.byte	5
 	.uleb128	13
 	.byte	16
 # [135:8]
 	.byte	2
-	.uleb128	.Ll41-.Ll40
+	.uleb128	.Ll40-.Ll39
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [136:9]
 	.byte	2
-	.uleb128	.Ll42-.Ll41
+	.uleb128	.Ll41-.Ll40
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [145:20]
 	.byte	2
-	.uleb128	.Ll43-.Ll42
+	.uleb128	.Ll42-.Ll41
 	.byte	5
 	.uleb128	20
 	.byte	21
 # [146:5]
 	.byte	2
-	.uleb128	.Ll44-.Ll43
+	.uleb128	.Ll43-.Ll42
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [150:19]
 	.byte	2
-	.uleb128	.Ll45-.Ll44
+	.uleb128	.Ll44-.Ll43
 	.byte	5
 	.uleb128	19
 	.byte	16
 # [151:16]
 	.byte	2
-	.uleb128	.Ll46-.Ll45
+	.uleb128	.Ll45-.Ll44
 	.byte	5
 	.uleb128	16
 	.byte	13
 # [152:10]
 	.byte	2
-	.uleb128	.Ll47-.Ll46
+	.uleb128	.Ll46-.Ll45
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [153:8]
 	.byte	2
-	.uleb128	.Ll48-.Ll47
+	.uleb128	.Ll47-.Ll46
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [154:8]
 	.byte	2
-	.uleb128	.Ll49-.Ll48
+	.uleb128	.Ll48-.Ll47
 	.byte	13
 # [155:15]
 	.byte	2
-	.uleb128	.Ll50-.Ll49
+	.uleb128	.Ll49-.Ll48
 	.byte	5
 	.uleb128	15
 	.byte	13
 # [164:20]
 	.byte	2
-	.uleb128	.Ll51-.Ll50
+	.uleb128	.Ll50-.Ll49
 	.byte	5
 	.uleb128	20
 	.byte	21
 # [165:5]
 	.byte	2
-	.uleb128	.Ll52-.Ll51
+	.uleb128	.Ll51-.Ll50
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [169:19]
 	.byte	2
-	.uleb128	.Ll53-.Ll52
+	.uleb128	.Ll52-.Ll51
 	.byte	5
 	.uleb128	19
 	.byte	16
 # [170:16]
 	.byte	2
-	.uleb128	.Ll54-.Ll53
+	.uleb128	.Ll53-.Ll52
 	.byte	5
 	.uleb128	16
 	.byte	13
 # [171:10]
 	.byte	2
-	.uleb128	.Ll55-.Ll54
+	.uleb128	.Ll54-.Ll53
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [172:8]
 	.byte	2
-	.uleb128	.Ll56-.Ll55
+	.uleb128	.Ll55-.Ll54
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [176:8]
 	.byte	2
-	.uleb128	.Ll57-.Ll56
+	.uleb128	.Ll56-.Ll55
 	.byte	16
 # [177:8]
 	.byte	2
-	.uleb128	.Ll58-.Ll57
+	.uleb128	.Ll57-.Ll56
 	.byte	13
 # [178:9]
 	.byte	2
-	.uleb128	.Ll59-.Ll58
+	.uleb128	.Ll58-.Ll57
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [184:10]
 	.byte	2
-	.uleb128	.Ll60-.Ll59
+	.uleb128	.Ll59-.Ll58
 	.byte	5
 	.uleb128	10
 	.byte	18
 # [185:5]
 	.byte	2
-	.uleb128	.Ll61-.Ll60
+	.uleb128	.Ll60-.Ll59
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [194:13]
 	.byte	2
-	.uleb128	.Ll62-.Ll61
+	.uleb128	.Ll61-.Ll60
 	.byte	5
 	.uleb128	13
 	.byte	21
 # [195:5]
 	.byte	2
-	.uleb128	.Ll63-.Ll62
+	.uleb128	.Ll62-.Ll61
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [199:13]
 	.byte	2
-	.uleb128	.Ll64-.Ll63
+	.uleb128	.Ll63-.Ll62
 	.byte	5
 	.uleb128	13
 	.byte	16
 # [200:8]
 	.byte	2
-	.uleb128	.Ll65-.Ll64
+	.uleb128	.Ll64-.Ll63
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [201:9]
 	.byte	2
-	.uleb128	.Ll66-.Ll65
+	.uleb128	.Ll65-.Ll64
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [208:10]
 	.byte	2
-	.uleb128	.Ll67-.Ll66
+	.uleb128	.Ll66-.Ll65
 	.byte	5
 	.uleb128	10
 	.byte	19
 # [209:8]
 	.byte	2
-	.uleb128	.Ll68-.Ll67
+	.uleb128	.Ll67-.Ll66
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [210:8]
 	.byte	2
-	.uleb128	.Ll69-.Ll68
+	.uleb128	.Ll68-.Ll67
 	.byte	13
 # [211:9]
 	.byte	2
-	.uleb128	.Ll70-.Ll69
+	.uleb128	.Ll69-.Ll68
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [212:10]
 	.byte	2
-	.uleb128	.Ll71-.Ll70
+	.uleb128	.Ll70-.Ll69
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [218:5]
 	.byte	2
-	.uleb128	.Ll72-.Ll71
+	.uleb128	.Ll71-.Ll70
 	.byte	5
 	.uleb128	5
 	.byte	18
-# [227:22]
+# [227:11]
 	.byte	2
-	.uleb128	.Ll73-.Ll72
+	.uleb128	.Ll72-.Ll71
 	.byte	5
-	.uleb128	22
+	.uleb128	11
 	.byte	21
 # [228:5]
 	.byte	2
-	.uleb128	.Ll74-.Ll73
+	.uleb128	.Ll73-.Ll72
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [232:21]
 	.byte	2
-	.uleb128	.Ll75-.Ll74
+	.uleb128	.Ll74-.Ll73
 	.byte	5
 	.uleb128	21
 	.byte	16
 # [233:13]
 	.byte	2
-	.uleb128	.Ll76-.Ll75
+	.uleb128	.Ll75-.Ll74
 	.byte	5
 	.uleb128	13
 	.byte	13
-# [242:22]
+# [242:11]
 	.byte	2
-	.uleb128	.Ll77-.Ll76
+	.uleb128	.Ll76-.Ll75
 	.byte	5
-	.uleb128	22
+	.uleb128	11
 	.byte	21
 # [243:5]
 	.byte	2
-	.uleb128	.Ll78-.Ll77
+	.uleb128	.Ll77-.Ll76
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [247:13]
 	.byte	2
-	.uleb128	.Ll79-.Ll78
+	.uleb128	.Ll78-.Ll77
 	.byte	5
 	.uleb128	13
 	.byte	16
 # [248:8]
 	.byte	2
-	.uleb128	.Ll80-.Ll79
+	.uleb128	.Ll79-.Ll78
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [249:9]
 	.byte	2
-	.uleb128	.Ll81-.Ll80
+	.uleb128	.Ll80-.Ll79
 	.byte	5
 	.uleb128	9
 	.byte	13
-# [258:22]
+# [258:11]
 	.byte	2
-	.uleb128	.Ll82-.Ll81
+	.uleb128	.Ll81-.Ll80
 	.byte	5
-	.uleb128	22
+	.uleb128	11
 	.byte	21
 # [259:5]
 	.byte	2
-	.uleb128	.Ll83-.Ll82
+	.uleb128	.Ll82-.Ll81
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [263:19]
 	.byte	2
-	.uleb128	.Ll84-.Ll83
+	.uleb128	.Ll83-.Ll82
 	.byte	5
 	.uleb128	19
 	.byte	16
 # [264:16]
 	.byte	2
-	.uleb128	.Ll85-.Ll84
+	.uleb128	.Ll84-.Ll83
 	.byte	5
 	.uleb128	16
 	.byte	13
 # [265:10]
 	.byte	2
-	.uleb128	.Ll86-.Ll85
+	.uleb128	.Ll85-.Ll84
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [266:8]
 	.byte	2
-	.uleb128	.Ll87-.Ll86
+	.uleb128	.Ll86-.Ll85
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [267:8]
 	.byte	2
-	.uleb128	.Ll88-.Ll87
+	.uleb128	.Ll87-.Ll86
 	.byte	13
 # [268:15]
 	.byte	2
-	.uleb128	.Ll89-.Ll88
+	.uleb128	.Ll88-.Ll87
 	.byte	5
 	.uleb128	15
 	.byte	13
-# [277:22]
+# [277:11]
 	.byte	2
-	.uleb128	.Ll90-.Ll89
+	.uleb128	.Ll89-.Ll88
 	.byte	5
-	.uleb128	22
+	.uleb128	11
 	.byte	21
 # [278:5]
 	.byte	2
-	.uleb128	.Ll91-.Ll90
+	.uleb128	.Ll90-.Ll89
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [282:19]
 	.byte	2
-	.uleb128	.Ll92-.Ll91
+	.uleb128	.Ll91-.Ll90
 	.byte	5
 	.uleb128	19
 	.byte	16
 # [283:16]
 	.byte	2
-	.uleb128	.Ll93-.Ll92
+	.uleb128	.Ll92-.Ll91
 	.byte	5
 	.uleb128	16
 	.byte	13
 # [284:10]
 	.byte	2
-	.uleb128	.Ll94-.Ll93
+	.uleb128	.Ll93-.Ll92
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [285:8]
 	.byte	2
-	.uleb128	.Ll95-.Ll94
+	.uleb128	.Ll94-.Ll93
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [289:8]
 	.byte	2
-	.uleb128	.Ll96-.Ll95
+	.uleb128	.Ll95-.Ll94
 	.byte	16
 # [290:8]
 	.byte	2
-	.uleb128	.Ll97-.Ll96
+	.uleb128	.Ll96-.Ll95
 	.byte	13
 # [291:9]
 	.byte	2
-	.uleb128	.Ll98-.Ll97
+	.uleb128	.Ll97-.Ll96
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [300:21]
 	.byte	2
-	.uleb128	.Ll99-.Ll98
+	.uleb128	.Ll98-.Ll97
 	.byte	5
 	.uleb128	21
 	.byte	21
 # [301:5]
 	.byte	2
-	.uleb128	.Ll100-.Ll99
+	.uleb128	.Ll99-.Ll98
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [302:8]
 	.byte	2
-	.uleb128	.Ll101-.Ll100
+	.uleb128	.Ll100-.Ll99
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [306:9]
 	.byte	2
-	.uleb128	.Ll102-.Ll101
+	.uleb128	.Ll101-.Ll100
 	.byte	5
 	.uleb128	9
 	.byte	16
 # [315:20]
 	.byte	2
-	.uleb128	.Ll103-.Ll102
+	.uleb128	.Ll102-.Ll101
 	.byte	5
 	.uleb128	20
 	.byte	21
 # [316:5]
 	.byte	2
-	.uleb128	.Ll104-.Ll103
+	.uleb128	.Ll103-.Ll102
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [317:16]
 	.byte	2
-	.uleb128	.Ll105-.Ll104
+	.uleb128	.Ll104-.Ll103
 	.byte	5
 	.uleb128	16
 	.byte	13
 # [318:41]
 	.byte	2
-	.uleb128	.Ll106-.Ll105
+	.uleb128	.Ll105-.Ll104
 	.byte	5
 	.uleb128	41
 	.byte	13
-# [322:13]
+# [32:1]
+	.byte	2
+	.uleb128	.Ll106-.Ll105
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	-286
+	.byte	1
+# [318:45]
 	.byte	2
 	.uleb128	.Ll107-.Ll106
+	.byte	5
+	.uleb128	45
+	.byte	3
+	.sleb128	286
+	.byte	1
+# [322:13]
+	.byte	2
+	.uleb128	.Ll108-.Ll107
 	.byte	5
 	.uleb128	13
 	.byte	16
 # [323:8]
 	.byte	2
-	.uleb128	.Ll108-.Ll107
+	.uleb128	.Ll109-.Ll108
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [324:9]
 	.byte	2
-	.uleb128	.Ll109-.Ll108
+	.uleb128	.Ll110-.Ll109
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [333:20]
 	.byte	2
-	.uleb128	.Ll110-.Ll109
+	.uleb128	.Ll111-.Ll110
 	.byte	5
 	.uleb128	20
 	.byte	21
 # [334:5]
 	.byte	2
-	.uleb128	.Ll111-.Ll110
+	.uleb128	.Ll112-.Ll111
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [335:16]
 	.byte	2
-	.uleb128	.Ll112-.Ll111
+	.uleb128	.Ll113-.Ll112
 	.byte	5
 	.uleb128	16
 	.byte	13
 # [336:41]
 	.byte	2
-	.uleb128	.Ll113-.Ll112
+	.uleb128	.Ll114-.Ll113
 	.byte	5
 	.uleb128	41
 	.byte	13
+# [32:1]
+	.byte	2
+	.uleb128	.Ll115-.Ll114
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	-304
+	.byte	1
+# [336:45]
+	.byte	2
+	.uleb128	.Ll116-.Ll115
+	.byte	5
+	.uleb128	45
+	.byte	3
+	.sleb128	304
+	.byte	1
 # [340:13]
 	.byte	2
-	.uleb128	.Ll114-.Ll113
+	.uleb128	.Ll117-.Ll116
 	.byte	5
 	.uleb128	13
 	.byte	16
 # [341:8]
 	.byte	2
-	.uleb128	.Ll115-.Ll114
+	.uleb128	.Ll118-.Ll117
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [342:9]
 	.byte	2
-	.uleb128	.Ll116-.Ll115
+	.uleb128	.Ll119-.Ll118
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [350:20]
 	.byte	2
-	.uleb128	.Ll117-.Ll116
+	.uleb128	.Ll120-.Ll119
 	.byte	5
 	.uleb128	20
 	.byte	20
 # [351:5]
 	.byte	2
-	.uleb128	.Ll118-.Ll117
+	.uleb128	.Ll121-.Ll120
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [352:16]
 	.byte	2
-	.uleb128	.Ll119-.Ll118
+	.uleb128	.Ll122-.Ll121
 	.byte	5
 	.uleb128	16
 	.byte	13
 # [353:41]
 	.byte	2
-	.uleb128	.Ll120-.Ll119
+	.uleb128	.Ll123-.Ll122
 	.byte	5
 	.uleb128	41
 	.byte	13
+# [32:1]
+	.byte	2
+	.uleb128	.Ll124-.Ll123
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	-321
+	.byte	1
+# [353:45]
+	.byte	2
+	.uleb128	.Ll125-.Ll124
+	.byte	5
+	.uleb128	45
+	.byte	3
+	.sleb128	321
+	.byte	1
 # [357:19]
 	.byte	2
-	.uleb128	.Ll121-.Ll120
+	.uleb128	.Ll126-.Ll125
 	.byte	5
 	.uleb128	19
 	.byte	16
 # [358:16]
 	.byte	2
-	.uleb128	.Ll122-.Ll121
+	.uleb128	.Ll127-.Ll126
 	.byte	5
 	.uleb128	16
 	.byte	13
 # [359:10]
 	.byte	2
-	.uleb128	.Ll123-.Ll122
+	.uleb128	.Ll128-.Ll127
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [360:8]
 	.byte	2
-	.uleb128	.Ll124-.Ll123
+	.uleb128	.Ll129-.Ll128
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [364:8]
 	.byte	2
-	.uleb128	.Ll125-.Ll124
+	.uleb128	.Ll130-.Ll129
 	.byte	16
 # [365:8]
 	.byte	2
-	.uleb128	.Ll126-.Ll125
+	.uleb128	.Ll131-.Ll130
 	.byte	13
 # [366:9]
 	.byte	2
-	.uleb128	.Ll127-.Ll126
+	.uleb128	.Ll132-.Ll131
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [376:20]
 	.byte	2
-	.uleb128	.Ll128-.Ll127
+	.uleb128	.Ll133-.Ll132
 	.byte	5
 	.uleb128	20
 	.byte	22
 # [377:5]
 	.byte	2
-	.uleb128	.Ll129-.Ll128
+	.uleb128	.Ll134-.Ll133
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [381:21]
 	.byte	2
-	.uleb128	.Ll130-.Ll129
+	.uleb128	.Ll135-.Ll134
 	.byte	5
 	.uleb128	21
 	.byte	16
 # [382:13]
 	.byte	2
-	.uleb128	.Ll131-.Ll130
+	.uleb128	.Ll136-.Ll135
 	.byte	5
 	.uleb128	13
 	.byte	13
 # [391:22]
 	.byte	2
-	.uleb128	.Ll132-.Ll131
+	.uleb128	.Ll137-.Ll136
 	.byte	5
 	.uleb128	22
 	.byte	21
 # [392:5]
 	.byte	2
-	.uleb128	.Ll133-.Ll132
+	.uleb128	.Ll138-.Ll137
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [396:13]
 	.byte	2
-	.uleb128	.Ll134-.Ll133
+	.uleb128	.Ll139-.Ll138
 	.byte	5
 	.uleb128	13
 	.byte	16
 # [397:8]
 	.byte	2
-	.uleb128	.Ll135-.Ll134
+	.uleb128	.Ll140-.Ll139
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [398:9]
 	.byte	2
-	.uleb128	.Ll136-.Ll135
+	.uleb128	.Ll141-.Ll140
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [407:22]
 	.byte	2
-	.uleb128	.Ll137-.Ll136
+	.uleb128	.Ll142-.Ll141
 	.byte	5
 	.uleb128	22
 	.byte	21
 # [408:5]
 	.byte	2
-	.uleb128	.Ll138-.Ll137
+	.uleb128	.Ll143-.Ll142
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [412:19]
 	.byte	2
-	.uleb128	.Ll139-.Ll138
+	.uleb128	.Ll144-.Ll143
 	.byte	5
 	.uleb128	19
 	.byte	16
 # [413:16]
 	.byte	2
-	.uleb128	.Ll140-.Ll139
+	.uleb128	.Ll145-.Ll144
 	.byte	5
 	.uleb128	16
 	.byte	13
 # [414:10]
 	.byte	2
-	.uleb128	.Ll141-.Ll140
+	.uleb128	.Ll146-.Ll145
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [415:8]
 	.byte	2
-	.uleb128	.Ll142-.Ll141
+	.uleb128	.Ll147-.Ll146
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [416:8]
 	.byte	2
-	.uleb128	.Ll143-.Ll142
+	.uleb128	.Ll148-.Ll147
 	.byte	13
 # [417:15]
 	.byte	2
-	.uleb128	.Ll144-.Ll143
+	.uleb128	.Ll149-.Ll148
 	.byte	5
 	.uleb128	15
 	.byte	13
 # [426:22]
 	.byte	2
-	.uleb128	.Ll145-.Ll144
+	.uleb128	.Ll150-.Ll149
 	.byte	5
 	.uleb128	22
 	.byte	21
 # [427:5]
 	.byte	2
-	.uleb128	.Ll146-.Ll145
+	.uleb128	.Ll151-.Ll150
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [431:19]
 	.byte	2
-	.uleb128	.Ll147-.Ll146
+	.uleb128	.Ll152-.Ll151
 	.byte	5
 	.uleb128	19
 	.byte	16
 # [432:16]
 	.byte	2
-	.uleb128	.Ll148-.Ll147
+	.uleb128	.Ll153-.Ll152
 	.byte	5
 	.uleb128	16
 	.byte	13
 # [433:10]
 	.byte	2
-	.uleb128	.Ll149-.Ll148
+	.uleb128	.Ll154-.Ll153
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [434:8]
 	.byte	2
-	.uleb128	.Ll150-.Ll149
+	.uleb128	.Ll155-.Ll154
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [438:8]
 	.byte	2
-	.uleb128	.Ll151-.Ll150
+	.uleb128	.Ll156-.Ll155
 	.byte	16
 # [439:8]
 	.byte	2
-	.uleb128	.Ll152-.Ll151
+	.uleb128	.Ll157-.Ll156
 	.byte	13
 # [440:9]
 	.byte	2
-	.uleb128	.Ll153-.Ll152
+	.uleb128	.Ll158-.Ll157
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [446:20]
 	.byte	2
-	.uleb128	.Ll154-.Ll153
+	.uleb128	.Ll159-.Ll158
 	.byte	5
 	.uleb128	20
 	.byte	18
-# [455:20]
+# [455:39]
 	.byte	2
-	.uleb128	.Ll155-.Ll154
+	.uleb128	.Ll160-.Ll159
+	.byte	5
+	.uleb128	39
 	.byte	21
 # [456:5]
 	.byte	2
-	.uleb128	.Ll156-.Ll155
+	.uleb128	.Ll161-.Ll160
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [460:13]
 	.byte	2
-	.uleb128	.Ll157-.Ll156
+	.uleb128	.Ll162-.Ll161
 	.byte	5
 	.uleb128	13
 	.byte	16
 # [461:8]
 	.byte	2
-	.uleb128	.Ll158-.Ll157
+	.uleb128	.Ll163-.Ll162
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [462:9]
 	.byte	2
-	.uleb128	.Ll159-.Ll158
+	.uleb128	.Ll164-.Ll163
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [1154:1]
 	.byte	2
-	.uleb128	.Ll160-.Ll159
+	.uleb128	.Ll165-.Ll164
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -4217,7 +4036,7 @@ U_$UNIT65032_$$_RELADDR:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll161
+	.quad	.Ll166
 	.byte	0
 	.byte	1
 	.byte	1

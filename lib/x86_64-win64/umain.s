@@ -34,7 +34,7 @@ UMAIN$_$MAIN1_$$_fin$0:
 # Var $parentfp located in register rbp
 .seh_endprologue
 .Ll2:
-	leaq	-24(%rbp),%rcx
+	leaq	-8(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 	nop
 	leaq	32(%rsp),%rsp
@@ -50,7 +50,7 @@ UMAIN$_$MAIN1_$$_fin$0:
 .globl	UMAIN_$$_MAIN1
 UMAIN_$$_MAIN1:
 .Lc6:
-# Temps allocated between rbp-40 and rbp-16
+# Temps allocated between rbp-40 and rbp+0
 .seh_proc UMAIN_$$_MAIN1
 .Ll4:
 	pushq	%rbp
@@ -61,11 +61,15 @@ UMAIN_$$_MAIN1:
 .Lc10:
 	leaq	-96(%rsp),%rsp
 .seh_stackalloc 96
+# Var t located in register rbx
+# Var i located in register esi
+	movq	%rbx,-40(%rbp)
+	movq	%rsi,-32(%rbp)
+.seh_savereg %rbx, 56
+.seh_savereg %rsi, 64
 .seh_endprologue
-# Var t located at rbp-8, size=OS_S64
-# Var i located at rbp-16, size=OS_S32
 .Ll5:
-	movq	$0,-24(%rbp)
+	movq	$0,-8(%rbp)
 .Lj11:
 	nop
 .Lj7:
@@ -119,11 +123,11 @@ UMAIN_$$_MAIN1:
 	movl	$131074,393340(%rax)
 .Ll14:
 # [67] for i:=0 to 31 do
-	movl	$0,-16(%rbp)
-	subl	$1,-16(%rbp)
+	movl	$0,%esi
+	subl	$1,%esi
 	.balign 8,0x90
 .Lj46:
-	addl	$1,-16(%rbp)
+	addl	$1,%esi
 .Ll15:
 # [68] for j:=0 to 31 do  begin
 	movl	$0,U_$UMAIN_$$_J(%rip)
@@ -148,190 +152,205 @@ UMAIN_$$_MAIN1:
 .Lj54:
 .Ll17:
 # [70] if (i<11) or (i>21) or (j<11) or (j>21) then raml^[$14800+i+32*j]:=k else  raml^[$14800+i+32*j]:=$0;
-	cmpl	$11,-16(%rbp)
+	cmpl	$11,%esi
 	jl	.Lj57
-	cmpl	$21,-16(%rbp)
+	cmpl	$21,%esi
 	jg	.Lj57
-	cmpl	$11,U_$UMAIN_$$_J(%rip)
+.Ll18:
+	movl	U_$UMAIN_$$_J(%rip),%eax
+.Ll19:
+	cmpl	$11,%eax
 	jl	.Lj57
-	cmpl	$21,U_$UMAIN_$$_J(%rip)
+	cmpl	$21,%eax
 	jng	.Lj58
 .Lj57:
 	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movslq	-16(%rbp),%rax
+	movslq	%esi,%rax
 	leaq	83968(%rax),%rdx
 	movslq	U_$UMAIN_$$_J(%rip),%rax
 	shlq	$5,%rax
 	leaq	(%rdx,%rax),%rax
 	movl	U_$UMAIN_$$_K(%rip),%edx
 	movl	%edx,(%rcx,%rax,4)
-	jmp	.Lj64
+	jmp	.Lj66
 .Lj58:
 	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movslq	-16(%rbp),%rax
+	movslq	%esi,%rax
 	leaq	83968(%rax),%rdx
 	movslq	U_$UMAIN_$$_J(%rip),%rax
 	shlq	$5,%rax
 	leaq	(%rdx,%rax),%rax
 	movl	$0,(%rcx,%rax,4)
-.Lj64:
-.Ll18:
+.Lj66:
+.Ll20:
 	cmpl	$31,U_$UMAIN_$$_J(%rip)
 	jl	.Lj49
-.Ll19:
-	cmpl	$31,-16(%rbp)
-	jl	.Lj46
-.Ll20:
-# [73] for i:=0 to 31 do
-	movl	$0,-16(%rbp)
-	subl	$1,-16(%rbp)
-	.balign 8,0x90
-.Lj69:
-	addl	$1,-16(%rbp)
 .Ll21:
+	cmpl	$31,%esi
+	jl	.Lj46
+.Ll22:
+# [73] for i:=0 to 31 do
+	movl	$0,%esi
+	subl	$1,%esi
+	.balign 8,0x90
+.Lj71:
+	addl	$1,%esi
+.Ll23:
 # [74] for j:=0 to 31 do  begin
 	movl	$0,U_$UMAIN_$$_J(%rip)
 	subl	$1,U_$UMAIN_$$_J(%rip)
 	.balign 8,0x90
-.Lj72:
+.Lj74:
 	addl	$1,U_$UMAIN_$$_J(%rip)
-.Ll22:
+.Ll24:
 # [75] if j<16 then k:=j*16 else k:=(31-j)*16 ;
 	cmpl	$16,U_$UMAIN_$$_J(%rip)
-	jnl	.Lj74
+	jnl	.Lj76
 	movl	U_$UMAIN_$$_J(%rip),%eax
 	shll	$4,%eax
 	movl	%eax,U_$UMAIN_$$_K(%rip)
-	jmp	.Lj77
-.Lj74:
+	jmp	.Lj79
+.Lj76:
 	movl	U_$UMAIN_$$_J(%rip),%edx
 	movl	$31,%eax
 	subl	%edx,%eax
 	shll	$4,%eax
 	movl	%eax,U_$UMAIN_$$_K(%rip)
-.Lj77:
-.Ll23:
+.Lj79:
+# PeepHole Optimization,var2
+# P=movl
+# HP1=shll
+# HP2=movl
+# PeepHole Optimization,var2
+.Ll25:
 # [76] k:=k shl 8;
-	movl	U_$UMAIN_$$_K(%rip),%eax
-	shll	$8,%eax
-	movl	%eax,U_$UMAIN_$$_K(%rip)
-.Ll24:
+	shll	$8,U_$UMAIN_$$_K(%rip)
+.Ll26:
 # [77] if (i<11) or (i>21) or (j<11) or (j>21) then raml^[$14C00+i+32*j]:=k else  raml^[$14C00+i+32*j]:=$0;
-	cmpl	$11,-16(%rbp)
-	jl	.Lj82
-	cmpl	$21,-16(%rbp)
-	jg	.Lj82
-	cmpl	$11,U_$UMAIN_$$_J(%rip)
-	jl	.Lj82
-	cmpl	$21,U_$UMAIN_$$_J(%rip)
-	jng	.Lj83
-.Lj82:
+	cmpl	$11,%esi
+	jl	.Lj84
+	cmpl	$21,%esi
+	jg	.Lj84
+.Ll27:
+	movl	U_$UMAIN_$$_J(%rip),%eax
+.Ll28:
+	cmpl	$11,%eax
+	jl	.Lj84
+	cmpl	$21,%eax
+	jng	.Lj85
+.Lj84:
 	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movslq	-16(%rbp),%rax
+	movslq	%esi,%rax
 	leaq	84992(%rax),%rdx
 	movslq	U_$UMAIN_$$_J(%rip),%rax
 	shlq	$5,%rax
-	leaq	(%rdx,%rax),%rax
-	movl	U_$UMAIN_$$_K(%rip),%edx
-	movl	%edx,(%rcx,%rax,4)
-	jmp	.Lj89
-.Lj83:
+	leaq	(%rdx,%rax),%rdx
+	movl	U_$UMAIN_$$_K(%rip),%eax
+	movl	%eax,(%rcx,%rdx,4)
+	jmp	.Lj93
+.Lj85:
 	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movslq	-16(%rbp),%rax
+	movslq	%esi,%rax
 	leaq	84992(%rax),%rdx
 	movslq	U_$UMAIN_$$_J(%rip),%rax
 	shlq	$5,%rax
 	leaq	(%rdx,%rax),%rax
 	movl	$0,(%rcx,%rax,4)
-.Lj89:
-.Ll25:
+.Lj93:
+.Ll29:
 	cmpl	$31,U_$UMAIN_$$_J(%rip)
-	jl	.Lj72
-.Ll26:
-	cmpl	$31,-16(%rbp)
-	jl	.Lj69
-.Ll27:
+	jl	.Lj74
+.Ll30:
+	cmpl	$31,%esi
+	jl	.Lj71
+.Ll31:
 # [80] for i:=0 to 31 do
-	movl	$0,-16(%rbp)
-	subl	$1,-16(%rbp)
+	movl	$0,%esi
+	subl	$1,%esi
 	.balign 8,0x90
-.Lj94:
-	addl	$1,-16(%rbp)
-.Ll28:
+.Lj98:
+	addl	$1,%esi
+.Ll32:
 # [81] for j:=0 to 31 do  begin
 	movl	$0,U_$UMAIN_$$_J(%rip)
 	subl	$1,U_$UMAIN_$$_J(%rip)
 	.balign 8,0x90
-.Lj97:
+.Lj101:
 	addl	$1,U_$UMAIN_$$_J(%rip)
-.Ll29:
+.Ll33:
 # [82] if j<16 then k:=j*16 else k:=(31-j)*16 ;
 	cmpl	$16,U_$UMAIN_$$_J(%rip)
-	jnl	.Lj99
+	jnl	.Lj103
 	movl	U_$UMAIN_$$_J(%rip),%eax
 	shll	$4,%eax
 	movl	%eax,U_$UMAIN_$$_K(%rip)
-	jmp	.Lj102
-.Lj99:
+	jmp	.Lj106
+.Lj103:
 	movl	U_$UMAIN_$$_J(%rip),%edx
 	movl	$31,%eax
 	subl	%edx,%eax
 	shll	$4,%eax
 	movl	%eax,U_$UMAIN_$$_K(%rip)
-.Lj102:
-.Ll30:
+.Lj106:
+# PeepHole Optimization,var2
+# P=movl
+# HP1=shll
+# HP2=movl
+# PeepHole Optimization,var2
+.Ll34:
 # [83] k:=k shl 16;
-	movl	U_$UMAIN_$$_K(%rip),%eax
-	shll	$16,%eax
-	movl	%eax,U_$UMAIN_$$_K(%rip)
-.Ll31:
+	shll	$16,U_$UMAIN_$$_K(%rip)
+.Ll35:
 # [84] if (i<11) or (i>21) or (j<11) or (j>21) then raml^[$15000+i+32*j]:=k else  raml^[$15000+i+32*j]:=$0;
-	cmpl	$11,-16(%rbp)
-	jl	.Lj107
-	cmpl	$21,-16(%rbp)
-	jg	.Lj107
-	cmpl	$11,U_$UMAIN_$$_J(%rip)
-	jl	.Lj107
-	cmpl	$21,U_$UMAIN_$$_J(%rip)
-	jng	.Lj108
-.Lj107:
+	cmpl	$11,%esi
+	jl	.Lj111
+	cmpl	$21,%esi
+	jg	.Lj111
+.Ll36:
+	movl	U_$UMAIN_$$_J(%rip),%eax
+.Ll37:
+	cmpl	$11,%eax
+	jl	.Lj111
+	cmpl	$21,%eax
+	jng	.Lj112
+.Lj111:
 	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movslq	-16(%rbp),%rax
+	movslq	%esi,%rax
 	leaq	86016(%rax),%rdx
 	movslq	U_$UMAIN_$$_J(%rip),%rax
 	shlq	$5,%rax
 	leaq	(%rdx,%rax),%rax
 	movl	U_$UMAIN_$$_K(%rip),%edx
 	movl	%edx,(%rcx,%rax,4)
-	jmp	.Lj114
-.Lj108:
+	jmp	.Lj120
+.Lj112:
 	movq	U_$RETRO_$$_R1(%rip),%rcx
-	movslq	-16(%rbp),%rax
+	movslq	%esi,%rax
 	leaq	86016(%rax),%rdx
 	movslq	U_$UMAIN_$$_J(%rip),%rax
 	shlq	$5,%rax
 	leaq	(%rdx,%rax),%rax
 	movl	$0,(%rcx,%rax,4)
-.Lj114:
-.Ll32:
+.Lj120:
+.Ll38:
 	cmpl	$31,U_$UMAIN_$$_J(%rip)
-	jl	.Lj97
-.Ll33:
-	cmpl	$31,-16(%rbp)
-	jl	.Lj94
-.Ll34:
+	jl	.Lj101
+.Ll39:
+	cmpl	$31,%esi
+	jl	.Lj98
+.Ll40:
 # [91] graphics(16);
 	movl	$16,%ecx
 	call	RETRO_$$_GRAPHICS$LONGINT
-.Ll35:
+.Ll41:
 # [92] cls(146);
 	movl	$146,%ecx
 	call	RETRO_$$_CLS$LONGINT
-.Ll36:
+.Ll42:
 # [93] ttt:=gettime;
 	call	RETRO_$$_GETTIME$$INT64
 	movq	%rax,U_$UMAIN_$$_TTT(%rip)
-.Ll37:
+.Ll43:
 # [94] outtextxyz(96,16,'The retromachine FM Synth v. 0.01 --- 2016.09.02',154,4,2);
 	movl	$2,40(%rsp)
 	movl	$4,32(%rsp)
@@ -340,7 +359,7 @@ UMAIN_$$_MAIN1:
 	movl	$16,%edx
 	movl	$96,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll38:
+.Ll44:
 # [95] box2(8,64,1784,1112,0);
 	movl	$0,32(%rsp)
 	movl	$1112,%r9d
@@ -348,7 +367,7 @@ UMAIN_$$_MAIN1:
 	movl	$64,%edx
 	movl	$8,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll39:
+.Ll45:
 # [96] box2(10,1062,1782,1110,120);
 	movl	$120,32(%rsp)
 	movl	$1110,%r9d
@@ -356,7 +375,7 @@ UMAIN_$$_MAIN1:
 	movl	$1062,%edx
 	movl	$10,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll40:
+.Ll46:
 # [97] outtextxyz(32,1070,'Screen time:',124,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
@@ -365,97 +384,96 @@ UMAIN_$$_MAIN1:
 	movl	$1070,%edx
 	movl	$32,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll41:
+.Ll47:
 # [98] k:=raml^[$18000];
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	393216(%rax),%eax
 	movl	%eax,U_$UMAIN_$$_K(%rip)
-.Ll42:
+.Ll48:
 # [99] raml^[$18003]:=$002040;
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	$8256,393228(%rax)
-.Ll43:
+.Ll49:
 # [100] setataripallette(1);
 	movl	$1,%ecx
 	call	RETRO_$$_SETATARIPALLETTE$LONGINT
-.Ll44:
+.Ll50:
 # [101] setataripallette(2);
 	movl	$2,%ecx
 	call	RETRO_$$_SETATARIPALLETTE$LONGINT
-.Ll45:
+.Ll51:
 # [102] setataripallette(3);
 	movl	$3,%ecx
 	call	RETRO_$$_SETATARIPALLETTE$LONGINT
-.Ll46:
+.Ll52:
 # [103] sethidecolor(250,0,$FF);
 	movl	$255,%r8d
 	movl	$0,%edx
 	movl	$250,%ecx
 	call	RETRO_$$_SETHIDECOLOR$LONGINT$LONGINT$LONGINT
-.Ll47:
+.Ll53:
 # [104] sethidecolor(44,0,$FF);
 	movl	$255,%r8d
 	movl	$0,%edx
 	movl	$44,%ecx
 	call	RETRO_$$_SETHIDECOLOR$LONGINT$LONGINT$LONGINT
-.Ll48:
+.Ll54:
 # [105] sethidecolor(190,0,$FF);
 	movl	$255,%r8d
 	movl	$0,%edx
 	movl	$190,%ecx
 	call	RETRO_$$_SETHIDECOLOR$LONGINT$LONGINT$LONGINT
-.Ll49:
+.Ll55:
 # [106] sethidecolor(188,0,$FF);
 	movl	$255,%r8d
 	movl	$0,%edx
 	movl	$188,%ecx
 	call	RETRO_$$_SETHIDECOLOR$LONGINT$LONGINT$LONGINT
-.Ll50:
+.Ll56:
 # [107] c:=0;
 	movq	$0,TC_$UMAIN_$$_C(%rip)
-.Ll51:
+.Ll57:
 # [108] avsct:=0;
 	movq	$0,TC_$UMAIN_$$_AVSCT(%rip)
-.Ll52:
+.Ll58:
 # [109] avspt:=0;
 	movq	$0,TC_$UMAIN_$$_AVSPT(%rip)
-.Ll53:
+.Ll59:
 # [110] avall:=0;
 	movq	$0,TC_$UMAIN_$$_AVALL(%rip)
-.Ll54:
+.Ll60:
 # [111] avsid:=0;
 	movq	$0,TC_$UMAIN_$$_AVSID(%rip)
-.Ll55:
+.Ll61:
 # [113] sdl_pauseaudio(1); sleep(10);
 	movl	$1,%ecx
 	call	_$dll$sdl2$SDL_PauseAudio
 	movl	$10,%ecx
 	call	SYSUTILS_$$_SLEEP$LONGWORD
-.Ll56:
+.Ll62:
 # [114] t:=gettime;
 	call	RETRO_$$_GETTIME$$INT64
-	movq	%rax,-8(%rbp)
-.Ll57:
+	movq	%rax,%rbx
+.Ll63:
 # [115] for i:=1 to 1000000 do
-	movl	$1,-16(%rbp)
-	subl	$1,-16(%rbp)
+	movl	$1,%esi
+	subl	$1,%esi
 	.balign 8,0x90
-.Lj219:
-	addl	$1,-16(%rbp)
-.Ll58:
+.Lj225:
+	addl	$1,%esi
+.Ll64:
 # [116] voices[0].getsample;
 	movq	U_$FMSYNTH_$$_VOICES(%rip),%rcx
 	call	FMSYNTH$_$TFMVOICE_$__$$_GETSAMPLE$$DOUBLE
-.Ll59:
-	cmpl	$1000000,-16(%rbp)
-	jl	.Lj219
-.Ll60:
+.Ll65:
+	cmpl	$1000000,%esi
+	jl	.Lj225
+.Ll66:
 # [117] t:=gettime-t;
 	call	RETRO_$$_GETTIME$$INT64
-	movq	-8(%rbp),%rdx
-	subq	%rdx,%rax
-	movq	%rax,-8(%rbp)
-.Ll61:
+	subq	%rbx,%rax
+	movq	%rax,%rbx
+.Ll67:
 # [118] box(100,100,200,100,0);
 	movl	$0,32(%rsp)
 	movl	$100,%r9d
@@ -463,24 +481,39 @@ UMAIN_$$_MAIN1:
 	movl	$100,%edx
 	movl	$100,%ecx
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll62:
+.Ll68:
 # [119] outtextxyz(100,100,inttostr(t),44,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	movq	-8(%rbp),%rdx
-	leaq	-24(%rbp),%rcx
+	movq	%rbx,%rdx
+	leaq	-8(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$INT64$$ANSISTRING
-	movq	-24(%rbp),%r8
+	movq	-8(%rbp),%r8
 	movl	$44,%r9d
 	movl	$100,%edx
 	movl	$100,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll63:
+.Ll69:
 # [120] sdl_pauseaudio(0);
 	movl	$0,%ecx
 	call	_$dll$sdl2$SDL_PauseAudio
-.Ll64:
-# [121] box(12,70,440,384,145-48);            outtextxyz(12+425,70,'0',145-48+12,2,2);
+.Ll70:
+# [123] box2(900,860,1019,1047,33);
+	movl	$33,32(%rsp)
+	movl	$1047,%r9d
+	movl	$1019,%r8d
+	movl	$860,%edx
+	movl	$900,%ecx
+	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
+.Ll71:
+# [124] outtextxy(912,864,'Midi reports',44);
+	leaq	_$UMAIN$_Ld3(%rip),%r8
+	movl	$44,%r9d
+	movl	$864,%edx
+	movl	$912,%ecx
+	call	RETRO_$$_OUTTEXTXY$LONGINT$LONGINT$ANSISTRING$LONGINT
+.Ll72:
+# [127] box(12,70,440,384,145-48);            outtextxyz(12+425,70,'0',145-48+12,2,2);
 	movl	$97,32(%rsp)
 	movl	$384,%r9d
 	movl	$440,%r8d
@@ -489,26 +522,26 @@ UMAIN_$$_MAIN1:
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld3(%rip),%r8
+	leaq	_$UMAIN$_Ld4(%rip),%r8
 	movl	$109,%r9d
 	movl	$70,%edx
 	movl	$437,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll65:
-# [123] outtextxyz(20,70,'Modulators',107,2,2);
+.Ll73:
+# [129] outtextxyz(20,70,'Modulators',107,2,2);
+	movl	$2,40(%rsp)
+	movl	$2,32(%rsp)
+	leaq	_$UMAIN$_Ld5(%rip),%r8
+	movl	$107,%r9d
+	movl	$70,%edx
+	movl	$20,%ecx
+	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
+.Ll74:
+# [130] outtextxyz(20,110,'0',107,2,2);  box(40,110,64,32,101); outtextxyz(48,110,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	_$UMAIN$_Ld4(%rip),%r8
 	movl	$107,%r9d
-	movl	$70,%edx
-	movl	$20,%ecx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll66:
-# [124] outtextxyz(20,110,'0',107,2,2);  box(40,110,64,32,101); outtextxyz(48,110,'127',110,2,2);
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld3(%rip),%r8
-	movl	$107,%r9d
 	movl	$110,%edx
 	movl	$20,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
@@ -518,151 +551,151 @@ UMAIN_$$_MAIN1:
 	movl	$110,%edx
 	movl	$40,%ecx
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld5(%rip),%r8
-	movl	$110,%r9d
-	movl	$110,%edx
-	movl	$48,%ecx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll67:
-# [125] outtextxyz(20,150,'1',107,2,2);  box(40,150,64,32,101); outtextxyz(48,150,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	_$UMAIN$_Ld6(%rip),%r8
-	movl	$107,%r9d
-	movl	$150,%edx
-	movl	$20,%ecx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-	movl	$101,32(%rsp)
-	movl	$32,%r9d
-	movl	$64,%r8d
-	movl	$150,%edx
-	movl	$40,%ecx
-	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld5(%rip),%r8
 	movl	$110,%r9d
-	movl	$150,%edx
+	movl	$110,%edx
 	movl	$48,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll68:
-# [126] outtextxyz(20,190,'2',107,2,2);  box(40,190,64,32,101); outtextxyz(48,190,'127',110,2,2);
+.Ll75:
+# [131] outtextxyz(20,150,'1',107,2,2);  box(40,150,64,32,101); outtextxyz(48,150,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	_$UMAIN$_Ld7(%rip),%r8
 	movl	$107,%r9d
-	movl	$190,%edx
+	movl	$150,%edx
 	movl	$20,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
 	movl	$101,32(%rsp)
 	movl	$32,%r9d
 	movl	$64,%r8d
-	movl	$190,%edx
+	movl	$150,%edx
 	movl	$40,%ecx
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld5(%rip),%r8
+	leaq	_$UMAIN$_Ld6(%rip),%r8
 	movl	$110,%r9d
-	movl	$190,%edx
+	movl	$150,%edx
 	movl	$48,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll69:
-# [127] outtextxyz(20,230,'3',107,2,2);  box(40,230,64,32,101); outtextxyz(48,230,'127',110,2,2);
+.Ll76:
+# [132] outtextxyz(20,190,'2',107,2,2);  box(40,190,64,32,101); outtextxyz(48,190,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	_$UMAIN$_Ld8(%rip),%r8
 	movl	$107,%r9d
-	movl	$230,%edx
+	movl	$190,%edx
 	movl	$20,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
 	movl	$101,32(%rsp)
 	movl	$32,%r9d
 	movl	$64,%r8d
-	movl	$230,%edx
+	movl	$190,%edx
 	movl	$40,%ecx
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld5(%rip),%r8
+	leaq	_$UMAIN$_Ld6(%rip),%r8
 	movl	$110,%r9d
-	movl	$230,%edx
+	movl	$190,%edx
 	movl	$48,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll70:
-# [128] outtextxyz(20,270,'4',107,2,2);  box(40,270,64,32,101); outtextxyz(48,270,'127',110,2,2);
+.Ll77:
+# [133] outtextxyz(20,230,'3',107,2,2);  box(40,230,64,32,101); outtextxyz(48,230,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	_$UMAIN$_Ld9(%rip),%r8
 	movl	$107,%r9d
-	movl	$270,%edx
+	movl	$230,%edx
 	movl	$20,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
 	movl	$101,32(%rsp)
 	movl	$32,%r9d
 	movl	$64,%r8d
-	movl	$270,%edx
+	movl	$230,%edx
 	movl	$40,%ecx
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld5(%rip),%r8
+	leaq	_$UMAIN$_Ld6(%rip),%r8
 	movl	$110,%r9d
-	movl	$270,%edx
+	movl	$230,%edx
 	movl	$48,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll71:
-# [129] outtextxyz(20,310,'5',107,2,2);  box(40,310,64,32,101); outtextxyz(48,310,'127',110,2,2);
+.Ll78:
+# [134] outtextxyz(20,270,'4',107,2,2);  box(40,270,64,32,101); outtextxyz(48,270,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	_$UMAIN$_Ld10(%rip),%r8
 	movl	$107,%r9d
-	movl	$310,%edx
+	movl	$270,%edx
 	movl	$20,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
 	movl	$101,32(%rsp)
 	movl	$32,%r9d
 	movl	$64,%r8d
-	movl	$310,%edx
+	movl	$270,%edx
 	movl	$40,%ecx
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld5(%rip),%r8
+	leaq	_$UMAIN$_Ld6(%rip),%r8
 	movl	$110,%r9d
-	movl	$310,%edx
+	movl	$270,%edx
 	movl	$48,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll72:
-# [130] outtextxyz(20,350,'6',107,2,2);  box(40,350,64,32,101); outtextxyz(48,350,'127',110,2,2);
+.Ll79:
+# [135] outtextxyz(20,310,'5',107,2,2);  box(40,310,64,32,101); outtextxyz(48,310,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	_$UMAIN$_Ld11(%rip),%r8
 	movl	$107,%r9d
-	movl	$350,%edx
+	movl	$310,%edx
 	movl	$20,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
 	movl	$101,32(%rsp)
 	movl	$32,%r9d
 	movl	$64,%r8d
-	movl	$350,%edx
+	movl	$310,%edx
 	movl	$40,%ecx
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld5(%rip),%r8
+	leaq	_$UMAIN$_Ld6(%rip),%r8
 	movl	$110,%r9d
-	movl	$350,%edx
+	movl	$310,%edx
 	movl	$48,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll73:
-# [131] outtextxyz(20,390,'7',107,2,2);  box(40,390,64,32,101); outtextxyz(48,390,'127',110,2,2);
+.Ll80:
+# [136] outtextxyz(20,350,'6',107,2,2);  box(40,350,64,32,101); outtextxyz(48,350,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	_$UMAIN$_Ld12(%rip),%r8
 	movl	$107,%r9d
+	movl	$350,%edx
+	movl	$20,%ecx
+	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
+	movl	$101,32(%rsp)
+	movl	$32,%r9d
+	movl	$64,%r8d
+	movl	$350,%edx
+	movl	$40,%ecx
+	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
+	movl	$2,40(%rsp)
+	movl	$2,32(%rsp)
+	leaq	_$UMAIN$_Ld6(%rip),%r8
+	movl	$110,%r9d
+	movl	$350,%edx
+	movl	$48,%ecx
+	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
+.Ll81:
+# [137] outtextxyz(20,390,'7',107,2,2);  box(40,390,64,32,101); outtextxyz(48,390,'127',110,2,2);
+	movl	$2,40(%rsp)
+	movl	$2,32(%rsp)
+	leaq	_$UMAIN$_Ld13(%rip),%r8
+	movl	$107,%r9d
 	movl	$390,%edx
 	movl	$20,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
@@ -674,92 +707,92 @@ UMAIN_$$_MAIN1:
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld5(%rip),%r8
+	leaq	_$UMAIN$_Ld6(%rip),%r8
 	movl	$110,%r9d
 	movl	$390,%edx
 	movl	$48,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll74:
-# [133] outtextxyz(220,70,'ADSR',107,2,2);
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld13(%rip),%r8
-	movl	$107,%r9d
-	movl	$70,%edx
-	movl	$220,%ecx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll75:
-# [134] outtextxyz(220,110,'R1',107,2,2);  box(260,110,64,32,101); outtextxyz(268,110,'127',110,2,2);
+.Ll82:
+# [139] outtextxyz(220,70,'ADSR',107,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	_$UMAIN$_Ld14(%rip),%r8
 	movl	$107,%r9d
-	movl	$110,%edx
+	movl	$70,%edx
 	movl	$220,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-	movl	$101,32(%rsp)
-	movl	$32,%r9d
-	movl	$64,%r8d
-	movl	$110,%edx
-	movl	$260,%ecx
-	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld5(%rip),%r8
-	movl	$110,%r9d
-	movl	$110,%edx
-	movl	$268,%ecx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll76:
-# [135] outtextxyz(220,150,'R2',107,2,2);  box(260,150,64,32,101); outtextxyz(268,150,'127',110,2,2);
+.Ll83:
+# [140] outtextxyz(220,110,'R1',107,2,2);  box(260,110,64,32,101); outtextxyz(268,110,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	_$UMAIN$_Ld15(%rip),%r8
 	movl	$107,%r9d
-	movl	$150,%edx
+	movl	$110,%edx
 	movl	$220,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
 	movl	$101,32(%rsp)
 	movl	$32,%r9d
 	movl	$64,%r8d
-	movl	$150,%edx
+	movl	$110,%edx
 	movl	$260,%ecx
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld5(%rip),%r8
+	leaq	_$UMAIN$_Ld6(%rip),%r8
 	movl	$110,%r9d
-	movl	$150,%edx
+	movl	$110,%edx
 	movl	$268,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll77:
-# [136] outtextxyz(220,190,'R3',107,2,2);  box(260,190,64,32,101); outtextxyz(268,190,'127',110,2,2);
+.Ll84:
+# [141] outtextxyz(220,150,'R2',107,2,2);  box(260,150,64,32,101); outtextxyz(268,150,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	_$UMAIN$_Ld16(%rip),%r8
 	movl	$107,%r9d
-	movl	$190,%edx
+	movl	$150,%edx
 	movl	$220,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
 	movl	$101,32(%rsp)
 	movl	$32,%r9d
 	movl	$64,%r8d
-	movl	$190,%edx
+	movl	$150,%edx
 	movl	$260,%ecx
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld5(%rip),%r8
+	leaq	_$UMAIN$_Ld6(%rip),%r8
 	movl	$110,%r9d
-	movl	$190,%edx
+	movl	$150,%edx
 	movl	$268,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll78:
-# [137] outtextxyz(220,230,'R4',107,2,2);  box(260,230,64,32,101); outtextxyz(268,230,'127',110,2,2);
+.Ll85:
+# [142] outtextxyz(220,190,'R3',107,2,2);  box(260,190,64,32,101); outtextxyz(268,190,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	_$UMAIN$_Ld17(%rip),%r8
 	movl	$107,%r9d
+	movl	$190,%edx
+	movl	$220,%ecx
+	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
+	movl	$101,32(%rsp)
+	movl	$32,%r9d
+	movl	$64,%r8d
+	movl	$190,%edx
+	movl	$260,%ecx
+	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
+	movl	$2,40(%rsp)
+	movl	$2,32(%rsp)
+	leaq	_$UMAIN$_Ld6(%rip),%r8
+	movl	$110,%r9d
+	movl	$190,%edx
+	movl	$268,%ecx
+	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
+.Ll86:
+# [143] outtextxyz(220,230,'R4',107,2,2);  box(260,230,64,32,101); outtextxyz(268,230,'127',110,2,2);
+	movl	$2,40(%rsp)
+	movl	$2,32(%rsp)
+	leaq	_$UMAIN$_Ld18(%rip),%r8
+	movl	$107,%r9d
 	movl	$230,%edx
 	movl	$220,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
@@ -771,61 +804,61 @@ UMAIN_$$_MAIN1:
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld5(%rip),%r8
+	leaq	_$UMAIN$_Ld6(%rip),%r8
 	movl	$110,%r9d
 	movl	$230,%edx
 	movl	$268,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll79:
-# [138] outtextxyz(330,110,'L1',107,2,2);  box(370,110,64,32,101); outtextxyz(378,110,'127',110,2,2);
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld18(%rip),%r8
-	movl	$107,%r9d
-	movl	$110,%edx
-	movl	$330,%ecx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-	movl	$101,32(%rsp)
-	movl	$32,%r9d
-	movl	$64,%r8d
-	movl	$110,%edx
-	movl	$370,%ecx
-	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld5(%rip),%r8
-	movl	$110,%r9d
-	movl	$110,%edx
-	movl	$378,%ecx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll80:
-# [139] outtextxyz(330,150,'L2',107,2,2);  box(370,150,64,32,101); outtextxyz(378,150,'127',110,2,2);
+.Ll87:
+# [144] outtextxyz(330,110,'L1',107,2,2);  box(370,110,64,32,101); outtextxyz(378,110,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	_$UMAIN$_Ld19(%rip),%r8
 	movl	$107,%r9d
-	movl	$150,%edx
+	movl	$110,%edx
 	movl	$330,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
 	movl	$101,32(%rsp)
 	movl	$32,%r9d
 	movl	$64,%r8d
-	movl	$150,%edx
+	movl	$110,%edx
 	movl	$370,%ecx
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld5(%rip),%r8
+	leaq	_$UMAIN$_Ld6(%rip),%r8
 	movl	$110,%r9d
-	movl	$150,%edx
+	movl	$110,%edx
 	movl	$378,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll81:
-# [140] outtextxyz(330,190,'L3',107,2,2);  box(370,190,64,32,101); outtextxyz(378,190,'127',110,2,2);
+.Ll88:
+# [145] outtextxyz(330,150,'L2',107,2,2);  box(370,150,64,32,101); outtextxyz(378,150,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	_$UMAIN$_Ld20(%rip),%r8
 	movl	$107,%r9d
+	movl	$150,%edx
+	movl	$330,%ecx
+	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
+	movl	$101,32(%rsp)
+	movl	$32,%r9d
+	movl	$64,%r8d
+	movl	$150,%edx
+	movl	$370,%ecx
+	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
+	movl	$2,40(%rsp)
+	movl	$2,32(%rsp)
+	leaq	_$UMAIN$_Ld6(%rip),%r8
+	movl	$110,%r9d
+	movl	$150,%edx
+	movl	$378,%ecx
+	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
+.Ll89:
+# [146] outtextxyz(330,190,'L3',107,2,2);  box(370,190,64,32,101); outtextxyz(378,190,'127',110,2,2);
+	movl	$2,40(%rsp)
+	movl	$2,32(%rsp)
+	leaq	_$UMAIN$_Ld21(%rip),%r8
+	movl	$107,%r9d
 	movl	$190,%edx
 	movl	$330,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
@@ -837,16 +870,16 @@ UMAIN_$$_MAIN1:
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld5(%rip),%r8
+	leaq	_$UMAIN$_Ld6(%rip),%r8
 	movl	$110,%r9d
 	movl	$190,%edx
 	movl	$378,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll82:
-# [141] outtextxyz(330,230,'L4',107,2,2);  box(370,230,64,32,101); outtextxyz(378,230,'127',110,2,2);
+.Ll90:
+# [147] outtextxyz(330,230,'L4',107,2,2);  box(370,230,64,32,101); outtextxyz(378,230,'127',110,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld21(%rip),%r8
+	leaq	_$UMAIN$_Ld22(%rip),%r8
 	movl	$107,%r9d
 	movl	$230,%edx
 	movl	$330,%ecx
@@ -859,13 +892,13 @@ UMAIN_$$_MAIN1:
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld5(%rip),%r8
+	leaq	_$UMAIN$_Ld6(%rip),%r8
 	movl	$110,%r9d
 	movl	$230,%edx
 	movl	$378,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll83:
-# [152] box(12+443,70,440,384,145-32);        outtextxyz(12+443+425,70,'1',145-32+12,2,2);
+.Ll91:
+# [158] box(12+443,70,440,384,145-32);        outtextxyz(12+443+425,70,'1',145-32+12,2,2);
 	movl	$113,32(%rsp)
 	movl	$384,%r9d
 	movl	$440,%r8d
@@ -874,13 +907,13 @@ UMAIN_$$_MAIN1:
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld6(%rip),%r8
+	leaq	_$UMAIN$_Ld7(%rip),%r8
 	movl	$125,%r9d
 	movl	$70,%edx
 	movl	$880,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll84:
-# [153] box(12+2*443,70,440,384,145-16);      outtextxyz(12+2*443+425,70,'2',145-16+12,2,2);
+.Ll92:
+# [159] box(12+2*443,70,440,384,145-16);      outtextxyz(12+2*443+425,70,'2',145-16+12,2,2);
 	movl	$129,32(%rsp)
 	movl	$384,%r9d
 	movl	$440,%r8d
@@ -889,13 +922,13 @@ UMAIN_$$_MAIN1:
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld7(%rip),%r8
+	leaq	_$UMAIN$_Ld8(%rip),%r8
 	movl	$141,%r9d
 	movl	$70,%edx
 	movl	$1323,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll85:
-# [154] box(12+3*443,70,440,384,145);         outtextxyz(12+3*443+425,70,'3',145+12,2,2);
+.Ll93:
+# [160] box(12+3*443,70,440,384,145);         outtextxyz(12+3*443+425,70,'3',145+12,2,2);
 	movl	$145,32(%rsp)
 	movl	$384,%r9d
 	movl	$440,%r8d
@@ -904,13 +937,13 @@ UMAIN_$$_MAIN1:
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld8(%rip),%r8
+	leaq	_$UMAIN$_Ld9(%rip),%r8
 	movl	$157,%r9d
 	movl	$70,%edx
 	movl	$1766,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll86:
-# [155] box(12,70+388,440,384,145+16);        outtextxyz(12+425,70+388,'4',145+16+12,2,2);
+.Ll94:
+# [161] box(12,70+388,440,384,145+16);        outtextxyz(12+425,70+388,'4',145+16+12,2,2);
 	movl	$161,32(%rsp)
 	movl	$384,%r9d
 	movl	$440,%r8d
@@ -919,13 +952,13 @@ UMAIN_$$_MAIN1:
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld9(%rip),%r8
+	leaq	_$UMAIN$_Ld10(%rip),%r8
 	movl	$173,%r9d
 	movl	$458,%edx
 	movl	$437,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll87:
-# [156] box(12+443,70+388,440,384,145+32);    outtextxyz(12+443+425,70+388,'5',145+32+12,2,2);
+.Ll95:
+# [162] box(12+443,70+388,440,384,145+32);    outtextxyz(12+443+425,70+388,'5',145+32+12,2,2);
 	movl	$177,32(%rsp)
 	movl	$384,%r9d
 	movl	$440,%r8d
@@ -934,13 +967,13 @@ UMAIN_$$_MAIN1:
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld10(%rip),%r8
+	leaq	_$UMAIN$_Ld11(%rip),%r8
 	movl	$189,%r9d
 	movl	$458,%edx
 	movl	$880,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll88:
-# [157] box(12+2*443,70+388,440,384,145+48);  outtextxyz(12+2*443+425,70+388,'6',145+48+12,2,2);
+.Ll96:
+# [163] box(12+2*443,70+388,440,384,145+48);  outtextxyz(12+2*443+425,70+388,'6',145+48+12,2,2);
 	movl	$193,32(%rsp)
 	movl	$384,%r9d
 	movl	$440,%r8d
@@ -949,13 +982,13 @@ UMAIN_$$_MAIN1:
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld11(%rip),%r8
+	leaq	_$UMAIN$_Ld12(%rip),%r8
 	movl	$205,%r9d
 	movl	$458,%edx
 	movl	$1323,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll89:
-# [158] box(12+3*443,70+388,440,384,145+64);  outtextxyz(12+3*443+425,70+388,'7',145+64+12,2,2);
+.Ll97:
+# [164] box(12+3*443,70+388,440,384,145+64);  outtextxyz(12+3*443+425,70+388,'7',145+64+12,2,2);
 	movl	$209,32(%rsp)
 	movl	$384,%r9d
 	movl	$440,%r8d
@@ -964,19 +997,21 @@ UMAIN_$$_MAIN1:
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UMAIN$_Ld12(%rip),%r8
+	leaq	_$UMAIN$_Ld13(%rip),%r8
 	movl	$221,%r9d
 	movl	$458,%edx
 	movl	$1766,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Lj996:
-.Ll90:
+.Lj1020:
+.Ll98:
 	nop
 .Lj8:
 	movq	%rbp,%rcx
 	call	UMAIN$_$MAIN1_$$_fin$0
-.Ll91:
-# [160] end;
+.Ll99:
+# [166] end;
+	movq	-40(%rbp),%rbx
+	movq	-32(%rbp),%rsi
 	leaq	(%rbp),%rsp
 	popq	%rbp
 	ret
@@ -992,15 +1027,15 @@ UMAIN_$$_MAIN1:
 .seh_endproc
 .Lc7:
 .Lt1:
-.Ll92:
+.Ll100:
 
 .section .text.n_umain$_$main2_$$_fin$1,"x"
 	.balign 16,0x90
 UMAIN$_$MAIN2_$$_fin$1:
 .Lc11:
 .seh_proc UMAIN$_$MAIN2_$$_fin$1
-.Ll93:
-# [175] begin
+.Ll101:
+# [181] begin
 	pushq	%rbp
 .seh_pushreg %rbp
 .Lc13:
@@ -1011,17 +1046,17 @@ UMAIN$_$MAIN2_$$_fin$1:
 .seh_stackalloc 32
 # Var $parentfp located in register rbp
 .seh_endprologue
-.Ll94:
-	leaq	-216(%rbp),%rcx
+.Ll102:
+	leaq	-120(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
-	leaq	-184(%rbp),%rcx
+	leaq	-88(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
-	leaq	-96(%rbp),%rax
+	leaq	-40(%rbp),%rax
 	movq	%rax,%rcx
 	call	fpc_ansistr_decr_ref
-	leaq	-104(%rbp),%rcx
+	leaq	-48(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
-	leaq	-112(%rbp),%rcx
+	leaq	-56(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 	nop
 	leaq	32(%rsp),%rsp
@@ -1030,82 +1065,86 @@ UMAIN$_$MAIN2_$$_fin$1:
 .seh_endproc
 .Lc12:
 .Lt4:
-.Ll95:
+.Ll103:
 
 .section .text.n_umain_$$_main2,"x"
 	.balign 16,0x90
 .globl	UMAIN_$$_MAIN2
 UMAIN_$$_MAIN2:
 .Lc16:
-# Temps allocated between rbp-240 and rbp-176
+# Temps allocated between rbp-160 and rbp-80
 .seh_proc UMAIN_$$_MAIN2
-.Ll96:
+.Ll104:
 	pushq	%rbp
 .seh_pushreg %rbp
 .Lc18:
 .Lc19:
 	movq	%rsp,%rbp
 .Lc20:
-	leaq	-288(%rsp),%rsp
-.seh_stackalloc 288
-	movq	%rbx,-240(%rbp)
+	leaq	-208(%rsp),%rsp
+.seh_stackalloc 208
+# Var ii located in register eax
+# Var iii located in register eax
+# Var il located in register eax
+# Var i located in register edx
+# Var mm located in register rsi
+# Var hh located in register rdi
+# Var ss located in register rbx
+# Var f located in register eax
+# Var aa located in register eax
+# Var aaa located in register eax
+# Var aaaa located in register eax
+# Var md located in register eax
+	movq	%rbx,-160(%rbp)
+	movq	%rdi,-152(%rbp)
+	movq	%rsi,-144(%rbp)
 .seh_savereg %rbx, 48
+.seh_savereg %rdi, 56
+.seh_savereg %rsi, 64
 .seh_endprologue
-# Var ii located at rbp-8, size=OS_S32
-# Var iii located at rbp-16, size=OS_S32
-# Var il located at rbp-24, size=OS_S32
-# Var i located at rbp-32, size=OS_S32
-# Var buf located at rbp-64, size=OS_NO
-# Var mm located at rbp-72, size=OS_S64
-# Var hh located at rbp-80, size=OS_S64
-# Var ss located at rbp-88, size=OS_S64
-# Var mms located at rbp-96, size=OS_64
-# Var hhs located at rbp-104, size=OS_64
-# Var sss located at rbp-112, size=OS_64
-# Var kwas located at rbp-120, size=OS_64
-# Var rect located at rbp-136, size=OS_128
-# Var f located at rbp-144, size=OS_S32
-# Var aa located at rbp-152, size=OS_S32
-# Var aaa located at rbp-160, size=OS_S32
-# Var aaaa located at rbp-168, size=OS_S32
-# Var md located at rbp-176, size=OS_32
-.Ll97:
-	movq	$0,-96(%rbp)
-	movq	$0,-104(%rbp)
-	movq	$0,-112(%rbp)
-	movq	$0,-216(%rbp)
-	movq	$0,-184(%rbp)
-.Lj1007:
+# Var buf located at rbp-32, size=OS_NO
+# Var mms located at rbp-40, size=OS_64
+# Var hhs located at rbp-48, size=OS_64
+# Var sss located at rbp-56, size=OS_64
+# Var kwas located at rbp-64, size=OS_64
+# Var rect located at rbp-80, size=OS_128
+.Ll105:
+	movq	$0,-40(%rbp)
+	movq	$0,-48(%rbp)
+	movq	$0,-56(%rbp)
+	movq	$0,-120(%rbp)
+	movq	$0,-88(%rbp)
+.Lj1031:
 	nop
-.Lj1003:
-.Ll98:
-# [178] k:=raml^[$18000];
+.Lj1027:
+.Ll106:
+# [184] k:=raml^[$18000];
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	393216(%rax),%eax
 	movl	%eax,U_$UMAIN_$$_K(%rip)
 	.balign 8,0x90
-.Lj1010:
-.Ll99:
-# [180] until raml^[$18000]>k;
+.Lj1034:
+.Ll107:
+# [186] until raml^[$18000]>k;
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	393216(%rax),%eax
 	cmpl	U_$UMAIN_$$_K(%rip),%eax
-	jng	.Lj1010
-.Ll100:
-# [185] c:=c+1;
+	jng	.Lj1034
+.Ll108:
+# [191] c:=c+1;
 	movq	TC_$UMAIN_$$_C(%rip),%rax
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UMAIN_$$_C(%rip)
-.Ll101:
-# [186] if time6502>0 then c6+=1;
+.Ll109:
+# [192] if time6502>0 then c6+=1;
 	cmpq	$0,U_$RETRO_$$_TIME6502(%rip)
-	jng	.Lj1016
+	jng	.Lj1040
 	movq	TC_$UMAIN_$$_C6(%rip),%rax
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UMAIN_$$_C6(%rip)
-.Lj1016:
-.Ll102:
-# [187] ss:=(songtime div 1000000) mod 60;
+.Lj1040:
+.Ll110:
+# [193] ss:=(songtime div 1000000) mod 60;
 	movq	U_$RETRO_$$_SONGTIME(%rip),%rcx
 	movq	$4835703278458516699,%rax
 	imulq	%rcx
@@ -1116,9 +1155,9 @@ UMAIN_$$_MAIN2:
 	cqto
 	movq	$60,%rcx
 	idivq	%rcx
-	movq	%rdx,-88(%rbp)
-.Ll103:
-# [188] mm:=(songtime div 60000000) mod 60;
+	movq	%rdx,%rbx
+.Ll111:
+# [194] mm:=(songtime div 60000000) mod 60;
 	movq	U_$RETRO_$$_SONGTIME(%rip),%rcx
 	movq	$-8130577079664715991,%rax
 	imulq	%rcx
@@ -1130,9 +1169,9 @@ UMAIN_$$_MAIN2:
 	cqto
 	movq	$60,%rcx
 	idivq	%rcx
-	movq	%rdx,-72(%rbp)
-.Ll104:
-# [189] hh:=(songtime div 3600000000);
+	movq	%rdx,%rsi
+.Ll112:
+# [195] hh:=(songtime div 3600000000);
 	movq	U_$RETRO_$$_SONGTIME(%rip),%rcx
 	movq	$-7442832613395060283,%rax
 	imulq	%rcx
@@ -1140,86 +1179,87 @@ UMAIN_$$_MAIN2:
 	sarq	$31,%rdx
 	shrq	$63,%rcx
 	addq	%rcx,%rdx
-	movq	%rdx,-80(%rbp)
-.Ll105:
-# [190] sss:=inttostr(ss); if ss<10 then sss:='0'+sss;
-	movq	-88(%rbp),%rdx
-	leaq	-112(%rbp),%rcx
+	movq	%rdx,%rdi
+.Ll113:
+# [196] sss:=inttostr(ss); if ss<10 then sss:='0'+sss;
+	movq	%rbx,%rdx
+	leaq	-56(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$INT64$$ANSISTRING
-	cmpq	$10,-88(%rbp)
-	jnl	.Lj1030
-	movq	-112(%rbp),%r8
-	leaq	_$UMAIN$_Ld3(%rip),%rdx
-	leaq	-112(%rbp),%rcx
+	cmpq	$10,%rbx
+	jnl	.Lj1054
+	movq	-56(%rbp),%r8
+	leaq	_$UMAIN$_Ld4(%rip),%rdx
+	leaq	-56(%rbp),%rcx
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
-.Lj1030:
-.Ll106:
-# [191] mms:=inttostr(mm); if mm<10 then mms:='0'+mms;
-	movq	-72(%rbp),%rdx
-	leaq	-96(%rbp),%rcx
+.Lj1054:
+.Ll114:
+# [197] mms:=inttostr(mm); if mm<10 then mms:='0'+mms;
+	movq	%rsi,%rdx
+	leaq	-40(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$INT64$$ANSISTRING
-	cmpq	$10,-72(%rbp)
-	jnl	.Lj1044
-	movq	-96(%rbp),%r8
-	leaq	_$UMAIN$_Ld3(%rip),%rdx
-	leaq	-96(%rbp),%rcx
+	cmpq	$10,%rsi
+	jnl	.Lj1068
+	movq	-40(%rbp),%r8
+	leaq	_$UMAIN$_Ld4(%rip),%rdx
+	leaq	-40(%rbp),%rcx
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
-.Lj1044:
-.Ll107:
-# [192] hhs:=inttostr(hh); if hh<10 then hhs:='0'+hhs;
-	movq	-80(%rbp),%rdx
-	leaq	-104(%rbp),%rcx
+.Lj1068:
+.Ll115:
+# [198] hhs:=inttostr(hh); if hh<10 then hhs:='0'+hhs;
+	movq	%rdi,%rdx
+	leaq	-48(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$INT64$$ANSISTRING
-	cmpq	$10,-80(%rbp)
-	jnl	.Lj1058
-	movq	-104(%rbp),%r8
-	leaq	_$UMAIN$_Ld3(%rip),%rdx
-	leaq	-104(%rbp),%rcx
+	cmpq	$10,%rdi
+	jnl	.Lj1082
+	movq	-48(%rbp),%r8
+	leaq	_$UMAIN$_Ld4(%rip),%rdx
+	leaq	-48(%rbp),%rcx
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
-.Lj1058:
-.Ll108:
-# [193] songfreq:=1000000 div siddelay;
+.Lj1082:
+.Ll116:
+# [199] songfreq:=1000000 div siddelay;
 	movq	$1000000,%rax
 	cqto
 	idivq	TC_$RETRO_$$_SIDDELAY(%rip)
 	movq	%rax,U_$RETRO_$$_SONGFREQ(%rip)
-.Ll109:
-# [196] avsid:=0;
+.Ll117:
+# [202] avsid:=0;
 	movq	$0,TC_$UMAIN_$$_AVSID(%rip)
-.Ll110:
-# [197] sidbuf[sidptr]:=sidtime;
-	movl	TC_$UMAIN$_$MAIN2_$$_SIDPTR(%rip),%edx
-	movq	U_$RETRO_$$_SIDTIME(%rip),%rax
+.Ll118:
+# [203] sidbuf[sidptr]:=sidtime;
+	movl	TC_$UMAIN$_$MAIN2_$$_SIDPTR(%rip),%eax
+	movq	U_$RETRO_$$_SIDTIME(%rip),%rdx
 	leaq	U_$UMAIN_$$_SIDBUF(%rip),%rcx
-	movq	%rax,(%rcx,%rdx,8)
-.Ll111:
-# [198] sidptr:=(sidptr+1) mod 60;
+	movq	%rdx,(%rcx,%rax,8)
+.Ll119:
+# [204] sidptr:=(sidptr+1) mod 60;
 	movslq	TC_$UMAIN$_$MAIN2_$$_SIDPTR(%rip),%rax
 	leaq	1(%rax),%rax
 	cqto
 	movq	$60,%rcx
 	idivq	%rcx
 	movl	%edx,TC_$UMAIN$_$MAIN2_$$_SIDPTR(%rip)
-.Ll112:
-# [199] for i:=0 to 59 do avsid+=sidbuf[i];
-	movl	$0,-32(%rbp)
-	subl	$1,-32(%rbp)
+.Ll120:
+# [205] for i:=0 to 59 do avsid+=sidbuf[i];
+	movl	$0,%edx
+	subl	$1,%edx
 	.balign 8,0x90
-.Lj1077:
-	addl	$1,-32(%rbp)
-	movl	-32(%rbp),%eax
-	leaq	U_$UMAIN_$$_SIDBUF(%rip),%rdx
-	movq	(%rdx,%rax,8),%rax
-	movq	TC_$UMAIN_$$_AVSID(%rip),%rdx
-	leaq	(%rax,%rdx),%rax
+.Lj1101:
+	addl	$1,%edx
+# PeepHole Optimization,var2a
+	movl	%edx,%eax
+	leaq	U_$UMAIN_$$_SIDBUF(%rip),%rcx
+	movq	(%rcx,%rax,8),%rax
+	movq	TC_$UMAIN_$$_AVSID(%rip),%rcx
+	leaq	(%rax,%rcx),%rax
 	movq	%rax,TC_$UMAIN_$$_AVSID(%rip)
-	cmpl	$59,-32(%rbp)
-	jl	.Lj1077
-.Ll113:
-# [200] avsid:=avsid div 60;
+	cmpl	$59,%edx
+	jl	.Lj1101
+.Ll121:
+# [206] avsid:=avsid div 60;
 	movq	TC_$UMAIN_$$_AVSID(%rip),%rcx
 	movq	$-8608480567731124087,%rax
 	imulq	%rcx
@@ -1228,166 +1268,166 @@ UMAIN_$$_MAIN2:
 	shrq	$63,%rcx
 	addq	%rcx,%rdx
 	movq	%rdx,TC_$UMAIN_$$_AVSID(%rip)
-.Ll114:
-# [201] avsct:=avsct+tim;
+.Ll122:
+# [207] avsct:=avsct+tim;
 	movq	TC_$UMAIN_$$_AVSCT(%rip),%rdx
 	movq	U_$RETRO_$$_TIM(%rip),%rax
 	leaq	(%rdx,%rax),%rax
 	movq	%rax,TC_$UMAIN_$$_AVSCT(%rip)
-.Ll115:
-# [202] avspt:=avspt+ts;
+.Ll123:
+# [208] avspt:=avspt+ts;
 	movq	TC_$UMAIN_$$_AVSPT(%rip),%rax
 	movq	U_$RETRO_$$_TS(%rip),%rdx
 	leaq	(%rax,%rdx),%rax
 	movq	%rax,TC_$UMAIN_$$_AVSPT(%rip)
-.Ll116:
-# [203] avall:=avall+t3;
-	movq	TC_$UMAIN_$$_AVALL(%rip),%rdx
-	movq	U_$RETRO_$$_T3(%rip),%rax
-	leaq	(%rdx,%rax),%rax
-	movq	%rax,TC_$UMAIN_$$_AVALL(%rip)
-.Ll117:
-# [204] av6502:=av6502+time6502;
-	movq	TC_$UMAIN_$$_AV6502(%rip),%rax
-	movq	U_$RETRO_$$_TIME6502(%rip),%rdx
+.Ll124:
+# [209] avall:=avall+t3;
+	movq	TC_$UMAIN_$$_AVALL(%rip),%rax
+	movq	U_$RETRO_$$_T3(%rip),%rdx
 	leaq	(%rax,%rdx),%rax
+	movq	%rax,TC_$UMAIN_$$_AVALL(%rip)
+.Ll125:
+# [210] av6502:=av6502+time6502;
+	movq	TC_$UMAIN_$$_AV6502(%rip),%rdx
+	movq	U_$RETRO_$$_TIME6502(%rip),%rax
+	leaq	(%rdx,%rax),%rax
 	movq	%rax,TC_$UMAIN_$$_AV6502(%rip)
-.Ll118:
-# [205] box2(10,1062,1782,1110,118);
+.Ll126:
+# [211] box2(10,1062,1782,1110,118);
 	movl	$118,32(%rsp)
 	movl	$1110,%r9d
 	movl	$1782,%r8d
 	movl	$1062,%edx
 	movl	$10,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll119:
-# [206] outtextxyz(32,1070,'Avg screen time: '+inttostr(round(avsct/c))+' us',76,2,2);
-	leaq	-184(%rbp),%rcx
+.Ll127:
+# [212] outtextxyz(32,1070,'Avg screen time: '+inttostr(round(avsct/c))+' us',76,2,2);
+	leaq	-88(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
-	leaq	_$UMAIN$_Ld22(%rip),%rax
-	movq	%rax,-208(%rbp)
+	leaq	_$UMAIN$_Ld23(%rip),%rax
+	movq	%rax,-112(%rbp)
 	cvtsi2sdq	TC_$UMAIN_$$_AVSCT(%rip),%xmm0
 	cvtsi2sdq	TC_$UMAIN_$$_C(%rip),%xmm1
 	divsd	%xmm1,%xmm0
 	cvtsd2siq	%xmm0,%rdx
-	leaq	-216(%rbp),%rcx
+	leaq	-120(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$INT64$$ANSISTRING
-	movq	-216(%rbp),%rax
-	movq	%rax,-200(%rbp)
-	leaq	_$UMAIN$_Ld23(%rip),%rax
-	movq	%rax,-192(%rbp)
-	leaq	-208(%rbp),%rdx
-	leaq	-184(%rbp),%rcx
+	movq	-120(%rbp),%rax
+	movq	%rax,-104(%rbp)
+	leaq	_$UMAIN$_Ld24(%rip),%rax
+	movq	%rax,-96(%rbp)
+	leaq	-112(%rbp),%rdx
+	leaq	-88(%rbp),%rcx
 	movl	$0,%r9d
 	movq	$2,%r8
 	call	fpc_ansistr_concat_multi
-	movq	-184(%rbp),%r8
+	movq	-88(%rbp),%r8
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	movl	$76,%r9d
 	movl	$1070,%edx
 	movl	$32,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll120:
-# [207] outtextxyz(438,1070,'Avg sprite time: '+inttostr(round(avspt/c))+' us',186,2,2);
-	leaq	-184(%rbp),%rcx
+.Ll128:
+# [213] outtextxyz(438,1070,'Avg sprite time: '+inttostr(round(avspt/c))+' us',186,2,2);
+	leaq	-88(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
-	leaq	_$UMAIN$_Ld24(%rip),%rax
-	movq	%rax,-208(%rbp)
+	leaq	_$UMAIN$_Ld25(%rip),%rax
+	movq	%rax,-112(%rbp)
 	cvtsi2sdq	TC_$UMAIN_$$_AVSPT(%rip),%xmm0
 	cvtsi2sdq	TC_$UMAIN_$$_C(%rip),%xmm1
 	divsd	%xmm1,%xmm0
 	cvtsd2siq	%xmm0,%rdx
-	leaq	-216(%rbp),%rcx
+	leaq	-120(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$INT64$$ANSISTRING
-	movq	-216(%rbp),%rax
-	movq	%rax,-200(%rbp)
-	leaq	_$UMAIN$_Ld23(%rip),%rax
-	movq	%rax,-192(%rbp)
-	leaq	-208(%rbp),%rdx
-	leaq	-184(%rbp),%rcx
+	movq	-120(%rbp),%rax
+	movq	%rax,-104(%rbp)
+	leaq	_$UMAIN$_Ld24(%rip),%rax
+	movq	%rax,-96(%rbp)
+	leaq	-112(%rbp),%rdx
+	leaq	-88(%rbp),%rcx
 	movl	$0,%r9d
 	movq	$2,%r8
 	call	fpc_ansistr_concat_multi
-	movq	-184(%rbp),%r8
+	movq	-88(%rbp),%r8
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	movl	$186,%r9d
 	movl	$1070,%edx
 	movl	$438,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll121:
-# [208] outtextxyz(828,1070,'Avg FM time: '+inttostr(avsid)+' us',233,2,2);
-	leaq	-184(%rbp),%rcx
+.Ll129:
+# [214] outtextxyz(828,1070,'Avg FM time: '+inttostr(avsid)+' us',233,2,2);
+	leaq	-88(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
-	leaq	_$UMAIN$_Ld25(%rip),%rax
-	movq	%rax,-208(%rbp)
+	leaq	_$UMAIN$_Ld26(%rip),%rax
+	movq	%rax,-112(%rbp)
 	movq	TC_$UMAIN_$$_AVSID(%rip),%rdx
-	leaq	-216(%rbp),%rcx
+	leaq	-120(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$INT64$$ANSISTRING
-	movq	-216(%rbp),%rax
-	movq	%rax,-200(%rbp)
-	leaq	_$UMAIN$_Ld23(%rip),%rax
-	movq	%rax,-192(%rbp)
-	leaq	-208(%rbp),%rdx
-	leaq	-184(%rbp),%rcx
+	movq	-120(%rbp),%rax
+	movq	%rax,-104(%rbp)
+	leaq	_$UMAIN$_Ld24(%rip),%rax
+	movq	%rax,-96(%rbp)
+	leaq	-112(%rbp),%rdx
+	leaq	-88(%rbp),%rcx
 	movl	$0,%r9d
 	movq	$2,%r8
 	call	fpc_ansistr_concat_multi
-	movq	-184(%rbp),%r8
+	movq	-88(%rbp),%r8
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	movl	$233,%r9d
 	movl	$1070,%edx
 	movl	$828,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll122:
-# [213] box2(12,860,896,1047,178);
+.Ll130:
+# [219] box2(12,860,896,1047,178);
 	movl	$178,32(%rsp)
 	movl	$1047,%r9d
 	movl	$896,%r8d
 	movl	$860,%edx
 	movl	$12,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll123:
-# [214] box2(14,950,894,951,40);
+.Ll131:
+# [220] box2(14,950,894,951,40);
 	movl	$40,32(%rsp)
 	movl	$951,%r9d
 	movl	$894,%r8d
 	movl	$950,%edx
 	movl	$14,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll124:
-# [215] box2(14,1014,894,1015,40);
+.Ll132:
+# [221] box2(14,1014,894,1015,40);
 	movl	$40,32(%rsp)
 	movl	$1015,%r9d
 	movl	$894,%r8d
 	movl	$1014,%edx
 	movl	$14,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll125:
-# [216] box2(14,886,894,887,40);
+.Ll133:
+# [222] box2(14,886,894,887,40);
 	movl	$40,32(%rsp)
 	movl	$887,%r9d
 	movl	$894,%r8d
 	movl	$886,%edx
 	movl	$14,%ecx
 	call	RETRO_$$_BOX2$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll126:
-# [217] for j:=20 to 840 do if abs(scope[j])<46000 then box(24+j,950-scope[j] div 512,2,2,190);
+.Ll134:
+# [223] for j:=20 to 840 do if abs(scope[j])<46000 then box(24+j,950-scope[j] div 512,2,2,190);
 	movl	$20,U_$UMAIN_$$_J(%rip)
 	subl	$1,U_$UMAIN_$$_J(%rip)
 	.balign 8,0x90
-.Lj1214:
+.Lj1238:
 	addl	$1,U_$UMAIN_$$_J(%rip)
-	movl	U_$UMAIN_$$_J(%rip),%eax
-	leaq	U_$RETRO_$$_SCOPE(%rip),%rdx
-	movl	(%rdx,%rax,4),%edx
+	movl	U_$UMAIN_$$_J(%rip),%edx
+	leaq	U_$RETRO_$$_SCOPE(%rip),%rax
+	movl	(%rax,%rdx,4),%edx
 	movl	%edx,%eax
 	negl	%eax
 	cmovnsl	%eax,%edx
 	cmpl	$46000,%edx
-	jnl	.Lj1216
+	jnl	.Lj1240
 	movl	$190,32(%rsp)
 	movl	U_$UMAIN_$$_J(%rip),%eax
 	leaq	U_$RETRO_$$_SCOPE(%rip),%rdx
@@ -1404,22 +1444,22 @@ UMAIN_$$_MAIN2:
 	movl	$2,%r9d
 	movl	$2,%r8d
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Lj1216:
+.Lj1240:
 	cmpl	$840,U_$UMAIN_$$_J(%rip)
-	jl	.Lj1214
-.Ll127:
-# [220] sprx:=round(dpeek($d400)/40+74);
+	jl	.Lj1238
+.Ll135:
+# [226] sprx:=round(dpeek($d400)/40+74);
 	movl	$54272,%ecx
 	call	RETRO_$$_DPEEK$LONGINT$$WORD
 # PeepHole Optimization,var11
 	andl	$65535,%eax
 	cvtsi2sd	%eax,%xmm0
-	divsd	_$UMAIN$_Ld26(%rip),%xmm0
-	addsd	_$UMAIN$_Ld27(%rip),%xmm0
+	mulsd	_$UMAIN$_Ld27(%rip),%xmm0
+	addsd	_$UMAIN$_Ld28(%rip),%xmm0
 	cvtsd2siq	%xmm0,%rax
 	movl	%eax,U_$UMAIN_$$_SPRX(%rip)
-.Ll128:
-# [221] spry:=920-3*(peek($d406) and $F0);
+.Ll136:
+# [227] spry:=920-3*(peek($d406) and $F0);
 	movl	$54278,%ecx
 	call	RETRO_$$_PEEK$LONGINT$$BYTE
 # PeepHole Optimization,var1
@@ -1428,10 +1468,10 @@ UMAIN_$$_MAIN2:
 	leal	(%eax,%eax,2),%edx
 	movl	$920,%eax
 	subl	%edx,%eax
+# PeepHole Optimization,MovMov2Mov1
 	movl	%eax,U_$UMAIN_$$_SPRY(%rip)
-.Ll129:
-# [222] raml^[$18010]:=(spry shl 16)+sprx+2048*(1-peek($70003));
-	movl	U_$UMAIN_$$_SPRY(%rip),%eax
+.Ll137:
+# [228] raml^[$18010]:=(spry shl 16)+sprx+2048*(1-peek($70003));
 	shll	$16,%eax
 	movl	U_$UMAIN_$$_SPRX(%rip),%edx
 	leal	(%eax,%edx),%ebx
@@ -1445,19 +1485,19 @@ UMAIN_$$_MAIN2:
 	leal	(%ebx,%edx),%eax
 	movq	U_$RETRO_$$_R1(%rip),%rdx
 	movl	%eax,393280(%rdx)
-.Ll130:
-# [224] spr2x:=round(dpeek($d407)/40+74);
+.Ll138:
+# [230] spr2x:=round(dpeek($d407)/40+74);
 	movl	$54279,%ecx
 	call	RETRO_$$_DPEEK$LONGINT$$WORD
 # PeepHole Optimization,var11
 	andl	$65535,%eax
 	cvtsi2sd	%eax,%xmm0
-	divsd	_$UMAIN$_Ld26(%rip),%xmm0
-	addsd	_$UMAIN$_Ld27(%rip),%xmm0
+	mulsd	_$UMAIN$_Ld27(%rip),%xmm0
+	addsd	_$UMAIN$_Ld28(%rip),%xmm0
 	cvtsd2siq	%xmm0,%rax
 	movl	%eax,U_$UMAIN_$$_SPR2X(%rip)
-.Ll131:
-# [225] spr2y:=920-3*(peek($d40d) and $F0);
+.Ll139:
+# [231] spr2y:=920-3*(peek($d40d) and $F0);
 	movl	$54285,%ecx
 	call	RETRO_$$_PEEK$LONGINT$$BYTE
 # PeepHole Optimization,var1
@@ -1466,10 +1506,10 @@ UMAIN_$$_MAIN2:
 	leal	(%eax,%eax,2),%edx
 	movl	$920,%eax
 	subl	%edx,%eax
+# PeepHole Optimization,MovMov2Mov1
 	movl	%eax,U_$UMAIN_$$_SPR2Y(%rip)
-.Ll132:
-# [227] raml^[$18012]:=(spr2y shl 16)+spr2x+2048*(1-peek($70004));
-	movl	U_$UMAIN_$$_SPR2Y(%rip),%eax
+.Ll140:
+# [233] raml^[$18012]:=(spr2y shl 16)+spr2x+2048*(1-peek($70004));
 	shll	$16,%eax
 	movl	U_$UMAIN_$$_SPR2X(%rip),%edx
 	leal	(%eax,%edx),%ebx
@@ -1480,22 +1520,22 @@ UMAIN_$$_MAIN2:
 	movl	$1,%edx
 	subl	%eax,%edx
 	shll	$11,%edx
-	leal	(%ebx,%edx),%eax
-	movq	U_$RETRO_$$_R1(%rip),%rdx
-	movl	%eax,393288(%rdx)
-.Ll133:
-# [229] spr3x:=round(dpeek($d40e)/40+74);
+	leal	(%ebx,%edx),%edx
+	movq	U_$RETRO_$$_R1(%rip),%rax
+	movl	%edx,393288(%rax)
+.Ll141:
+# [235] spr3x:=round(dpeek($d40e)/40+74);
 	movl	$54286,%ecx
 	call	RETRO_$$_DPEEK$LONGINT$$WORD
 # PeepHole Optimization,var11
 	andl	$65535,%eax
 	cvtsi2sd	%eax,%xmm0
-	divsd	_$UMAIN$_Ld26(%rip),%xmm0
-	addsd	_$UMAIN$_Ld27(%rip),%xmm0
+	mulsd	_$UMAIN$_Ld27(%rip),%xmm0
+	addsd	_$UMAIN$_Ld28(%rip),%xmm0
 	cvtsd2siq	%xmm0,%rax
 	movl	%eax,U_$UMAIN_$$_SPR3X(%rip)
-.Ll134:
-# [230] spr3y:=920-3*(peek($d414) and $F0);
+.Ll142:
+# [236] spr3y:=920-3*(peek($d414) and $F0);
 	movl	$54292,%ecx
 	call	RETRO_$$_PEEK$LONGINT$$BYTE
 # PeepHole Optimization,var1
@@ -1504,10 +1544,10 @@ UMAIN_$$_MAIN2:
 	leal	(%eax,%eax,2),%edx
 	movl	$920,%eax
 	subl	%edx,%eax
+# PeepHole Optimization,MovMov2Mov1
 	movl	%eax,U_$UMAIN_$$_SPR3Y(%rip)
-.Ll135:
-# [232] raml^[$18014]:=(spr3y shl 16)+spr3x+2048*(1-peek($70005));
-	movl	U_$UMAIN_$$_SPR3Y(%rip),%eax
+.Ll143:
+# [238] raml^[$18014]:=(spr3y shl 16)+spr3x+2048*(1-peek($70005));
 	shll	$16,%eax
 	movl	U_$UMAIN_$$_SPR3X(%rip),%edx
 	leal	(%eax,%edx),%ebx
@@ -1521,14 +1561,36 @@ UMAIN_$$_MAIN2:
 	leal	(%ebx,%edx),%eax
 	movq	U_$RETRO_$$_R1(%rip),%rdx
 	movl	%eax,393296(%rdx)
-.Ll136:
-# [234] raml^[$1801e]:=raml^[$1800B];
+.Ll144:
+# [240] raml^[$1801e]:=raml^[$1800B];
 	movq	U_$RETRO_$$_R1(%rip),%rdx
 	movq	U_$RETRO_$$_R1(%rip),%rax
 	movl	393260(%rax),%eax
 	movl	%eax,393336(%rdx)
-.Ll137:
-# [236] box(500,500,300,100,0); outtextxyz(500,500,floattostr(gain),42,2,2);  outtextxyz(500,550,floattostr(fnotes[69]),42,2,2);
+.Ll145:
+# [241] box(1300,1000,300,100,0); outtextxyz(1300,1000,inttostr(peek($60032)),15,2,2) ;
+	movl	$0,32(%rsp)
+	movl	$100,%r9d
+	movl	$300,%r8d
+	movl	$1000,%edx
+	movl	$1300,%ecx
+	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
+	movl	$2,40(%rsp)
+	movl	$2,32(%rsp)
+	movl	$393266,%ecx
+	call	RETRO_$$_PEEK$LONGINT$$BYTE
+	movb	%al,%dl
+# PeepHole Optimization,var9
+	andl	$255,%edx
+	leaq	-88(%rbp),%rcx
+	call	SYSUTILS_$$_INTTOSTR$LONGINT$$ANSISTRING
+	movq	-88(%rbp),%r8
+	movl	$15,%r9d
+	movl	$1000,%edx
+	movl	$1300,%ecx
+	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
+.Ll146:
+# [242] box(500,500,300,100,0); outtextxyz(500,500,floattostr(gain),42,2,2);  outtextxyz(500,550,floattostr(fnotes[69]),42,2,2);
 	movl	$0,32(%rsp)
 	movl	$100,%r9d
 	movl	$300,%r8d
@@ -1538,9 +1600,9 @@ UMAIN_$$_MAIN2:
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	movsd	TC_$RETRO_$$_GAIN(%rip),%xmm1
-	leaq	-184(%rbp),%rcx
+	leaq	-88(%rbp),%rcx
 	call	SYSUTILS_$$_FLOATTOSTR$DOUBLE$$ANSISTRING
-	movq	-184(%rbp),%r8
+	movq	-88(%rbp),%r8
 	movl	$42,%r9d
 	movl	$500,%edx
 	movl	$500,%ecx
@@ -1548,22 +1610,24 @@ UMAIN_$$_MAIN2:
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	movsd	U_$FMSYNTH_$$_FNOTES+552(%rip),%xmm1
-	leaq	-184(%rbp),%rcx
+	leaq	-88(%rbp),%rcx
 	call	SYSUTILS_$$_FLOATTOSTR$DOUBLE$$ANSISTRING
-	movq	-184(%rbp),%r8
+	movq	-88(%rbp),%r8
 	movl	$42,%r9d
 	movl	$550,%edx
 	movl	$500,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Lj1307:
-.Ll138:
+.Lj1359:
+.Ll147:
 	nop
-.Lj1004:
+.Lj1028:
 	movq	%rbp,%rcx
 	call	UMAIN$_$MAIN2_$$_fin$1
-.Ll139:
-# [238] end;
-	movq	-240(%rbp),%rbx
+.Ll148:
+# [244] end;
+	movq	-160(%rbp),%rbx
+	movq	-152(%rbp),%rdi
+	movq	-144(%rbp),%rsi
 	leaq	(%rbp),%rsp
 	popq	%rbp
 	ret
@@ -1571,15 +1635,15 @@ UMAIN_$$_MAIN2:
 .seh_handlerdata
 	.long	1
 	.long	0
-	.rva	.Lj1003
-	.rva	.Lj1004
+	.rva	.Lj1027
+	.rva	.Lj1028
 	.rva	UMAIN$_$MAIN2_$$_fin$1
 
 .section .text.n_umain_$$_main2,"x"
 .seh_endproc
 .Lc17:
 .Lt3:
-.Ll140:
+.Ll149:
 
 .section .text.n_umain_$$_init_implicit$,"x"
 	.balign 16,0x90
@@ -1589,23 +1653,17 @@ INIT$_$UMAIN:
 UMAIN_$$_init_implicit$:
 .Lc21:
 .seh_proc UMAIN_$$_init_implicit$
-	pushq	%rbp
-.seh_pushreg %rbp
+	leaq	-40(%rsp),%rsp
 .Lc23:
-.Lc24:
-	movq	%rsp,%rbp
-.Lc25:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+.seh_stackalloc 40
 .seh_endprologue
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
 .Lc22:
 .Lt5:
-.Ll141:
+.Ll150:
 
 .section .text.n_umain_$$_finalize_implicit$,"x"
 	.balign 16,0x90
@@ -1613,28 +1671,22 @@ UMAIN_$$_init_implicit$:
 FINALIZE$_$UMAIN:
 .globl	UMAIN_$$_finalize_implicit$
 UMAIN_$$_finalize_implicit$:
-.Lc26:
+.Lc24:
 .seh_proc UMAIN_$$_finalize_implicit$
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc28:
-.Lc29:
-	movq	%rsp,%rbp
-.Lc30:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc26:
+.seh_stackalloc 40
 .seh_endprologue
 	leaq	U_$UMAIN_$$_SONGNAME(%rip),%rax
 	movq	%rax,%rcx
 	call	fpc_ansistr_decr_ref
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc27:
+.Lc25:
 .Lt6:
-.Ll142:
+.Ll151:
 # End asmlist al_procedures
 # Begin asmlist al_globals
 
@@ -2039,37 +2091,37 @@ _$UMAIN$_Ld2:
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,1
+	.quad	-1,12
 .globl	_$UMAIN$_Ld3
 _$UMAIN$_Ld3:
-	.ascii	"0\000"
+	.ascii	"Midi reports\000"
 
 .section .rodata.n__$UMAIN$_Ld4,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,10
+	.quad	-1,1
 .globl	_$UMAIN$_Ld4
 _$UMAIN$_Ld4:
-	.ascii	"Modulators\000"
+	.ascii	"0\000"
 
 .section .rodata.n__$UMAIN$_Ld5,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,3
+	.quad	-1,10
 .globl	_$UMAIN$_Ld5
 _$UMAIN$_Ld5:
-	.ascii	"127\000"
+	.ascii	"Modulators\000"
 
 .section .rodata.n__$UMAIN$_Ld6,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,1
+	.quad	-1,3
 .globl	_$UMAIN$_Ld6
 _$UMAIN$_Ld6:
-	.ascii	"1\000"
+	.ascii	"127\000"
 
 .section .rodata.n__$UMAIN$_Ld7,"d"
 	.balign 8
@@ -2078,7 +2130,7 @@ _$UMAIN$_Ld6:
 	.quad	-1,1
 .globl	_$UMAIN$_Ld7
 _$UMAIN$_Ld7:
-	.ascii	"2\000"
+	.ascii	"1\000"
 
 .section .rodata.n__$UMAIN$_Ld8,"d"
 	.balign 8
@@ -2087,7 +2139,7 @@ _$UMAIN$_Ld7:
 	.quad	-1,1
 .globl	_$UMAIN$_Ld8
 _$UMAIN$_Ld8:
-	.ascii	"3\000"
+	.ascii	"2\000"
 
 .section .rodata.n__$UMAIN$_Ld9,"d"
 	.balign 8
@@ -2096,7 +2148,7 @@ _$UMAIN$_Ld8:
 	.quad	-1,1
 .globl	_$UMAIN$_Ld9
 _$UMAIN$_Ld9:
-	.ascii	"4\000"
+	.ascii	"3\000"
 
 .section .rodata.n__$UMAIN$_Ld10,"d"
 	.balign 8
@@ -2105,7 +2157,7 @@ _$UMAIN$_Ld9:
 	.quad	-1,1
 .globl	_$UMAIN$_Ld10
 _$UMAIN$_Ld10:
-	.ascii	"5\000"
+	.ascii	"4\000"
 
 .section .rodata.n__$UMAIN$_Ld11,"d"
 	.balign 8
@@ -2114,7 +2166,7 @@ _$UMAIN$_Ld10:
 	.quad	-1,1
 .globl	_$UMAIN$_Ld11
 _$UMAIN$_Ld11:
-	.ascii	"6\000"
+	.ascii	"5\000"
 
 .section .rodata.n__$UMAIN$_Ld12,"d"
 	.balign 8
@@ -2123,25 +2175,25 @@ _$UMAIN$_Ld11:
 	.quad	-1,1
 .globl	_$UMAIN$_Ld12
 _$UMAIN$_Ld12:
-	.ascii	"7\000"
+	.ascii	"6\000"
 
 .section .rodata.n__$UMAIN$_Ld13,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,4
+	.quad	-1,1
 .globl	_$UMAIN$_Ld13
 _$UMAIN$_Ld13:
-	.ascii	"ADSR\000"
+	.ascii	"7\000"
 
 .section .rodata.n__$UMAIN$_Ld14,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,2
+	.quad	-1,4
 .globl	_$UMAIN$_Ld14
 _$UMAIN$_Ld14:
-	.ascii	"R1\000"
+	.ascii	"ADSR\000"
 
 .section .rodata.n__$UMAIN$_Ld15,"d"
 	.balign 8
@@ -2150,7 +2202,7 @@ _$UMAIN$_Ld14:
 	.quad	-1,2
 .globl	_$UMAIN$_Ld15
 _$UMAIN$_Ld15:
-	.ascii	"R2\000"
+	.ascii	"R1\000"
 
 .section .rodata.n__$UMAIN$_Ld16,"d"
 	.balign 8
@@ -2159,7 +2211,7 @@ _$UMAIN$_Ld15:
 	.quad	-1,2
 .globl	_$UMAIN$_Ld16
 _$UMAIN$_Ld16:
-	.ascii	"R3\000"
+	.ascii	"R2\000"
 
 .section .rodata.n__$UMAIN$_Ld17,"d"
 	.balign 8
@@ -2168,7 +2220,7 @@ _$UMAIN$_Ld16:
 	.quad	-1,2
 .globl	_$UMAIN$_Ld17
 _$UMAIN$_Ld17:
-	.ascii	"R4\000"
+	.ascii	"R3\000"
 
 .section .rodata.n__$UMAIN$_Ld18,"d"
 	.balign 8
@@ -2177,7 +2229,7 @@ _$UMAIN$_Ld17:
 	.quad	-1,2
 .globl	_$UMAIN$_Ld18
 _$UMAIN$_Ld18:
-	.ascii	"L1\000"
+	.ascii	"R4\000"
 
 .section .rodata.n__$UMAIN$_Ld19,"d"
 	.balign 8
@@ -2186,7 +2238,7 @@ _$UMAIN$_Ld18:
 	.quad	-1,2
 .globl	_$UMAIN$_Ld19
 _$UMAIN$_Ld19:
-	.ascii	"L2\000"
+	.ascii	"L1\000"
 
 .section .rodata.n__$UMAIN$_Ld20,"d"
 	.balign 8
@@ -2195,7 +2247,7 @@ _$UMAIN$_Ld19:
 	.quad	-1,2
 .globl	_$UMAIN$_Ld20
 _$UMAIN$_Ld20:
-	.ascii	"L3\000"
+	.ascii	"L2\000"
 
 .section .rodata.n__$UMAIN$_Ld21,"d"
 	.balign 8
@@ -2204,6 +2256,15 @@ _$UMAIN$_Ld20:
 	.quad	-1,2
 .globl	_$UMAIN$_Ld21
 _$UMAIN$_Ld21:
+	.ascii	"L3\000"
+
+.section .rodata.n__$UMAIN$_Ld22,"d"
+	.balign 8
+	.short	0,1
+	.long	0
+	.quad	-1,2
+.globl	_$UMAIN$_Ld22
+_$UMAIN$_Ld22:
 	.ascii	"L4\000"
 
 .section .data.n_tc_$umain$_$main2_$$_sidptr,"d"
@@ -2211,75 +2272,64 @@ _$UMAIN$_Ld21:
 TC_$UMAIN$_$MAIN2_$$_SIDPTR:
 	.long	0
 
-.section .rodata.n__$UMAIN$_Ld22,"d"
-	.balign 8
-	.short	0,1
-	.long	0
-	.quad	-1,17
-.globl	_$UMAIN$_Ld22
-_$UMAIN$_Ld22:
-	.ascii	"Avg screen time: \000"
-
 .section .rodata.n__$UMAIN$_Ld23,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,3
+	.quad	-1,17
 .globl	_$UMAIN$_Ld23
 _$UMAIN$_Ld23:
-	.ascii	" us\000"
+	.ascii	"Avg screen time: \000"
 
 .section .rodata.n__$UMAIN$_Ld24,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,17
+	.quad	-1,3
 .globl	_$UMAIN$_Ld24
 _$UMAIN$_Ld24:
-	.ascii	"Avg sprite time: \000"
+	.ascii	" us\000"
 
 .section .rodata.n__$UMAIN$_Ld25,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,13
+	.quad	-1,17
 .globl	_$UMAIN$_Ld25
 _$UMAIN$_Ld25:
-	.ascii	"Avg FM time: \000"
+	.ascii	"Avg sprite time: \000"
 
 .section .rodata.n__$UMAIN$_Ld26,"d"
 	.balign 8
+	.short	0,1
+	.long	0
+	.quad	-1,13
 .globl	_$UMAIN$_Ld26
 _$UMAIN$_Ld26:
-# value: 0d+4.0000000000000000E+001
-	.byte	0,0,0,0,0,0,68,64
+	.ascii	"Avg FM time: \000"
 
 .section .rodata.n__$UMAIN$_Ld27,"d"
 	.balign 8
 .globl	_$UMAIN$_Ld27
 _$UMAIN$_Ld27:
+# value: 0d+2.5000000000000001E-002
+	.byte	154,153,153,153,153,153,153,63
+
+.section .rodata.n__$UMAIN$_Ld28,"d"
+	.balign 8
+.globl	_$UMAIN$_Ld28
+_$UMAIN$_Ld28:
 # value: 0d+7.4000000000000000E+001
 	.byte	0,0,0,0,0,128,82,64
 # End asmlist al_typedconsts
 # Begin asmlist al_rtti
 
-.section .data.n_RTTI_$UMAIN_$$_DEF82,"d"
+.section .data.n_RTTI_$UMAIN_$$_DEF83,"d"
 	.balign 8
-.globl	RTTI_$UMAIN_$$_DEF82
-RTTI_$UMAIN_$$_DEF82:
+.globl	RTTI_$UMAIN_$$_DEF83
+RTTI_$UMAIN_$$_DEF83:
 	.byte	12
-# [243] 
-	.ascii	"\000"
-	.quad	24,3
-	.quad	RTTI_$SYSTEM_$$_RAWBYTESTRING
-	.byte	1
-	.quad	RTTI_$SYSTEM_$$_LONGINT
-
-.section .data.n_RTTI_$UMAIN_$$_DEF84,"d"
-	.balign 8
-.globl	RTTI_$UMAIN_$$_DEF84
-RTTI_$UMAIN_$$_DEF84:
-	.byte	12
+# [249] 
 	.ascii	"\000"
 	.quad	24,3
 	.quad	RTTI_$SYSTEM_$$_RAWBYTESTRING
@@ -2296,13 +2346,24 @@ RTTI_$UMAIN_$$_DEF85:
 	.quad	RTTI_$SYSTEM_$$_RAWBYTESTRING
 	.byte	1
 	.quad	RTTI_$SYSTEM_$$_LONGINT
+
+.section .data.n_RTTI_$UMAIN_$$_DEF86,"d"
+	.balign 8
+.globl	RTTI_$UMAIN_$$_DEF86
+RTTI_$UMAIN_$$_DEF86:
+	.byte	12
+	.ascii	"\000"
+	.quad	24,3
+	.quad	RTTI_$SYSTEM_$$_RAWBYTESTRING
+	.byte	1
+	.quad	RTTI_$SYSTEM_$$_LONGINT
 # End asmlist al_rtti
 # Begin asmlist al_dwarf_frame
 
 .section .debug_frame
-.Lc31:
-	.long	.Lc33-.Lc32
-.Lc32:
+.Lc27:
+	.long	.Lc29-.Lc28
+.Lc28:
 	.long	-1
 	.byte	1
 	.byte	0
@@ -2316,10 +2377,10 @@ RTTI_$UMAIN_$$_DEF85:
 	.uleb128	16
 	.uleb128	2
 	.balign 4,0
-.Lc33:
-	.long	.Lc35-.Lc34
-.Lc34:
-	.secrel32	.Lc31
+.Lc29:
+	.long	.Lc31-.Lc30
+.Lc30:
+	.secrel32	.Lc27
 	.quad	.Lc1
 	.quad	.Lc2-.Lc1
 	.byte	4
@@ -2336,10 +2397,10 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc35:
-	.long	.Lc37-.Lc36
-.Lc36:
-	.secrel32	.Lc31
+.Lc31:
+	.long	.Lc33-.Lc32
+.Lc32:
+	.secrel32	.Lc27
 	.quad	.Lc6
 	.quad	.Lc7-.Lc6
 	.byte	4
@@ -2356,10 +2417,10 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc37:
-	.long	.Lc39-.Lc38
-.Lc38:
-	.secrel32	.Lc31
+.Lc33:
+	.long	.Lc35-.Lc34
+.Lc34:
+	.secrel32	.Lc27
 	.quad	.Lc11
 	.quad	.Lc12-.Lc11
 	.byte	4
@@ -2376,10 +2437,10 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc39:
-	.long	.Lc41-.Lc40
-.Lc40:
-	.secrel32	.Lc31
+.Lc35:
+	.long	.Lc37-.Lc36
+.Lc36:
+	.secrel32	.Lc27
 	.quad	.Lc16
 	.quad	.Lc17-.Lc16
 	.byte	4
@@ -2396,47 +2457,29 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc41:
-	.long	.Lc43-.Lc42
-.Lc42:
-	.secrel32	.Lc31
+.Lc37:
+	.long	.Lc39-.Lc38
+.Lc38:
+	.secrel32	.Lc27
 	.quad	.Lc21
 	.quad	.Lc22-.Lc21
 	.byte	4
 	.long	.Lc23-.Lc21
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc24-.Lc23
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc25-.Lc24
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc43:
-	.long	.Lc45-.Lc44
-.Lc44:
-	.secrel32	.Lc31
-	.quad	.Lc26
-	.quad	.Lc27-.Lc26
+.Lc39:
+	.long	.Lc41-.Lc40
+.Lc40:
+	.secrel32	.Lc27
+	.quad	.Lc24
+	.quad	.Lc25-.Lc24
 	.byte	4
-	.long	.Lc28-.Lc26
+	.long	.Lc26-.Lc24
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc29-.Lc28
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc30-.Lc29
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc45:
+.Lc41:
 # End asmlist al_dwarf_frame
 # Begin asmlist al_dwarf_info
 
@@ -2450,8 +2493,8 @@ RTTI_$UMAIN_$$_DEF85:
 	.uleb128	1
 # [48] procedure main1 ;
 	.ascii	"umain.pas\000"
-	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
-	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
+	.ascii	"D:/programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -2960,15 +3003,15 @@ RTTI_$UMAIN_$$_DEF85:
 	.uleb128	4
 	.ascii	"T\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	3
 	.long	.La12-.Ldebug_info0
 # Symbol I
 	.uleb128	4
 	.ascii	"I\000"
 	.byte	2
-	.byte	118
-	.sleb128	-16
+	.byte	144
+	.uleb128	4
 	.long	.La1-.Ldebug_info0
 # Symbol fin$0
 	.byte	0
@@ -3002,51 +3045,51 @@ RTTI_$UMAIN_$$_DEF85:
 	.uleb128	4
 	.ascii	"I\000"
 	.byte	2
-	.byte	118
-	.sleb128	-32
+	.byte	144
+	.uleb128	1
 	.long	.La1-.Ldebug_info0
 # Symbol BUF
 # Symbol MM
 	.uleb128	4
 	.ascii	"MM\000"
-	.byte	3
-	.byte	118
-	.sleb128	-72
+	.byte	2
+	.byte	144
+	.uleb128	4
 	.long	.La12-.Ldebug_info0
 # Symbol HH
 	.uleb128	4
 	.ascii	"HH\000"
-	.byte	3
-	.byte	118
-	.sleb128	-80
+	.byte	2
+	.byte	144
+	.uleb128	5
 	.long	.La12-.Ldebug_info0
 # Symbol SS
 	.uleb128	4
 	.ascii	"SS\000"
-	.byte	3
-	.byte	118
-	.sleb128	-88
+	.byte	2
+	.byte	144
+	.uleb128	3
 	.long	.La12-.Ldebug_info0
 # Symbol MMS
 	.uleb128	4
 	.ascii	"MMS\000"
-	.byte	3
+	.byte	2
 	.byte	118
-	.sleb128	-96
+	.sleb128	-40
 	.long	.La5-.Ldebug_info0
 # Symbol HHS
 	.uleb128	4
 	.ascii	"HHS\000"
-	.byte	3
+	.byte	2
 	.byte	118
-	.sleb128	-104
+	.sleb128	-48
 	.long	.La5-.Ldebug_info0
 # Symbol SSS
 	.uleb128	4
 	.ascii	"SSS\000"
-	.byte	3
+	.byte	2
 	.byte	118
-	.sleb128	-112
+	.sleb128	-56
 	.long	.La5-.Ldebug_info0
 # Symbol KWAS
 # Symbol RECT
@@ -9222,9 +9265,23 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	5
 	.uleb128	8
 	.byte	13
-# [68:3]
+# [52:1]
 	.byte	2
 	.uleb128	.Ll18-.Ll17
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	-18
+	.byte	1
+# [70:28]
+	.byte	2
+	.uleb128	.Ll19-.Ll18
+	.byte	5
+	.uleb128	28
+	.byte	30
+# [68:3]
+	.byte	2
+	.uleb128	.Ll20-.Ll19
 	.byte	5
 	.uleb128	3
 	.byte	3
@@ -9232,7 +9289,7 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	1
 # [67:1]
 	.byte	2
-	.uleb128	.Ll19-.Ll18
+	.uleb128	.Ll21-.Ll20
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -9240,35 +9297,49 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	1
 # [73:1]
 	.byte	2
-	.uleb128	.Ll20-.Ll19
+	.uleb128	.Ll22-.Ll21
 	.byte	18
 # [74:3]
 	.byte	2
-	.uleb128	.Ll21-.Ll20
+	.uleb128	.Ll23-.Ll22
 	.byte	5
 	.uleb128	3
 	.byte	13
 # [75:9]
 	.byte	2
-	.uleb128	.Ll22-.Ll21
+	.uleb128	.Ll24-.Ll23
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [76:10]
 	.byte	2
-	.uleb128	.Ll23-.Ll22
+	.uleb128	.Ll25-.Ll24
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [77:8]
 	.byte	2
-	.uleb128	.Ll24-.Ll23
+	.uleb128	.Ll26-.Ll25
 	.byte	5
 	.uleb128	8
 	.byte	13
+# [52:1]
+	.byte	2
+	.uleb128	.Ll27-.Ll26
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	-25
+	.byte	1
+# [77:28]
+	.byte	2
+	.uleb128	.Ll28-.Ll27
+	.byte	5
+	.uleb128	28
+	.byte	37
 # [74:3]
 	.byte	2
-	.uleb128	.Ll25-.Ll24
+	.uleb128	.Ll29-.Ll28
 	.byte	5
 	.uleb128	3
 	.byte	3
@@ -9276,7 +9347,7 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	1
 # [73:1]
 	.byte	2
-	.uleb128	.Ll26-.Ll25
+	.uleb128	.Ll30-.Ll29
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -9284,35 +9355,49 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	1
 # [80:1]
 	.byte	2
-	.uleb128	.Ll27-.Ll26
+	.uleb128	.Ll31-.Ll30
 	.byte	19
 # [81:3]
 	.byte	2
-	.uleb128	.Ll28-.Ll27
+	.uleb128	.Ll32-.Ll31
 	.byte	5
 	.uleb128	3
 	.byte	13
 # [82:9]
 	.byte	2
-	.uleb128	.Ll29-.Ll28
+	.uleb128	.Ll33-.Ll32
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [83:10]
 	.byte	2
-	.uleb128	.Ll30-.Ll29
+	.uleb128	.Ll34-.Ll33
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [84:8]
 	.byte	2
-	.uleb128	.Ll31-.Ll30
+	.uleb128	.Ll35-.Ll34
 	.byte	5
 	.uleb128	8
 	.byte	13
+# [52:1]
+	.byte	2
+	.uleb128	.Ll36-.Ll35
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	-32
+	.byte	1
+# [84:28]
+	.byte	2
+	.uleb128	.Ll37-.Ll36
+	.byte	5
+	.uleb128	28
+	.byte	44
 # [81:3]
 	.byte	2
-	.uleb128	.Ll32-.Ll31
+	.uleb128	.Ll38-.Ll37
 	.byte	5
 	.uleb128	3
 	.byte	3
@@ -9320,7 +9405,7 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	1
 # [80:1]
 	.byte	2
-	.uleb128	.Ll33-.Ll32
+	.uleb128	.Ll39-.Ll38
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -9328,123 +9413,123 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	1
 # [91:1]
 	.byte	2
-	.uleb128	.Ll34-.Ll33
+	.uleb128	.Ll40-.Ll39
 	.byte	23
 # [92:1]
 	.byte	2
-	.uleb128	.Ll35-.Ll34
+	.uleb128	.Ll41-.Ll40
 	.byte	13
 # [93:6]
-	.byte	2
-	.uleb128	.Ll36-.Ll35
-	.byte	5
-	.uleb128	6
-	.byte	13
-# [94:1]
-	.byte	2
-	.uleb128	.Ll37-.Ll36
-	.byte	5
-	.uleb128	1
-	.byte	13
-# [95:1]
-	.byte	2
-	.uleb128	.Ll38-.Ll37
-	.byte	13
-# [96:1]
-	.byte	2
-	.uleb128	.Ll39-.Ll38
-	.byte	13
-# [97:1]
-	.byte	2
-	.uleb128	.Ll40-.Ll39
-	.byte	13
-# [98:9]
-	.byte	2
-	.uleb128	.Ll41-.Ll40
-	.byte	5
-	.uleb128	9
-	.byte	13
-# [99:6]
 	.byte	2
 	.uleb128	.Ll42-.Ll41
 	.byte	5
 	.uleb128	6
 	.byte	13
-# [100:1]
+# [94:1]
 	.byte	2
 	.uleb128	.Ll43-.Ll42
 	.byte	5
 	.uleb128	1
 	.byte	13
-# [101:1]
+# [95:1]
 	.byte	2
 	.uleb128	.Ll44-.Ll43
 	.byte	13
-# [102:1]
+# [96:1]
 	.byte	2
 	.uleb128	.Ll45-.Ll44
 	.byte	13
-# [103:1]
+# [97:1]
 	.byte	2
 	.uleb128	.Ll46-.Ll45
 	.byte	13
-# [104:1]
+# [98:9]
 	.byte	2
 	.uleb128	.Ll47-.Ll46
+	.byte	5
+	.uleb128	9
 	.byte	13
-# [105:1]
+# [99:6]
 	.byte	2
 	.uleb128	.Ll48-.Ll47
+	.byte	5
+	.uleb128	6
 	.byte	13
-# [106:1]
+# [100:1]
 	.byte	2
 	.uleb128	.Ll49-.Ll48
+	.byte	5
+	.uleb128	1
 	.byte	13
-# [107:1]
+# [101:1]
 	.byte	2
 	.uleb128	.Ll50-.Ll49
 	.byte	13
-# [108:1]
+# [102:1]
 	.byte	2
 	.uleb128	.Ll51-.Ll50
 	.byte	13
-# [109:1]
+# [103:1]
 	.byte	2
 	.uleb128	.Ll52-.Ll51
 	.byte	13
-# [110:1]
+# [104:1]
 	.byte	2
 	.uleb128	.Ll53-.Ll52
 	.byte	13
-# [111:1]
+# [105:1]
 	.byte	2
 	.uleb128	.Ll54-.Ll53
 	.byte	13
-# [113:1]
+# [106:1]
 	.byte	2
 	.uleb128	.Ll55-.Ll54
+	.byte	13
+# [107:1]
+	.byte	2
+	.uleb128	.Ll56-.Ll55
+	.byte	13
+# [108:1]
+	.byte	2
+	.uleb128	.Ll57-.Ll56
+	.byte	13
+# [109:1]
+	.byte	2
+	.uleb128	.Ll58-.Ll57
+	.byte	13
+# [110:1]
+	.byte	2
+	.uleb128	.Ll59-.Ll58
+	.byte	13
+# [111:1]
+	.byte	2
+	.uleb128	.Ll60-.Ll59
+	.byte	13
+# [113:1]
+	.byte	2
+	.uleb128	.Ll61-.Ll60
 	.byte	14
 # [114:4]
 	.byte	2
-	.uleb128	.Ll56-.Ll55
+	.uleb128	.Ll62-.Ll61
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [115:1]
 	.byte	2
-	.uleb128	.Ll57-.Ll56
+	.uleb128	.Ll63-.Ll62
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [116:3]
 	.byte	2
-	.uleb128	.Ll58-.Ll57
+	.uleb128	.Ll64-.Ll63
 	.byte	5
 	.uleb128	3
 	.byte	13
 # [115:1]
 	.byte	2
-	.uleb128	.Ll59-.Ll58
+	.uleb128	.Ll65-.Ll64
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -9452,414 +9537,430 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	1
 # [117:4]
 	.byte	2
-	.uleb128	.Ll60-.Ll59
+	.uleb128	.Ll66-.Ll65
 	.byte	5
 	.uleb128	4
 	.byte	14
 # [118:1]
 	.byte	2
-	.uleb128	.Ll61-.Ll60
+	.uleb128	.Ll67-.Ll66
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [119:1]
 	.byte	2
-	.uleb128	.Ll62-.Ll61
+	.uleb128	.Ll68-.Ll67
 	.byte	13
 # [120:1]
 	.byte	2
-	.uleb128	.Ll63-.Ll62
-	.byte	13
-# [121:1]
-	.byte	2
-	.uleb128	.Ll64-.Ll63
+	.uleb128	.Ll69-.Ll68
 	.byte	13
 # [123:1]
 	.byte	2
-	.uleb128	.Ll65-.Ll64
-	.byte	14
-# [124:1]
+	.uleb128	.Ll70-.Ll69
+	.byte	15
+# [124:33]
 	.byte	2
-	.uleb128	.Ll66-.Ll65
-	.byte	13
-# [125:1]
-	.byte	2
-	.uleb128	.Ll67-.Ll66
-	.byte	13
-# [126:1]
-	.byte	2
-	.uleb128	.Ll68-.Ll67
+	.uleb128	.Ll71-.Ll70
+	.byte	5
+	.uleb128	33
 	.byte	13
 # [127:1]
 	.byte	2
-	.uleb128	.Ll69-.Ll68
-	.byte	13
-# [128:1]
-	.byte	2
-	.uleb128	.Ll70-.Ll69
-	.byte	13
+	.uleb128	.Ll72-.Ll71
+	.byte	5
+	.uleb128	1
+	.byte	15
 # [129:1]
 	.byte	2
-	.uleb128	.Ll71-.Ll70
-	.byte	13
+	.uleb128	.Ll73-.Ll72
+	.byte	14
 # [130:1]
 	.byte	2
-	.uleb128	.Ll72-.Ll71
+	.uleb128	.Ll74-.Ll73
 	.byte	13
 # [131:1]
 	.byte	2
-	.uleb128	.Ll73-.Ll72
-	.byte	13
-# [133:1]
-	.byte	2
-	.uleb128	.Ll74-.Ll73
-	.byte	14
-# [134:1]
-	.byte	2
 	.uleb128	.Ll75-.Ll74
 	.byte	13
-# [135:1]
+# [132:1]
 	.byte	2
 	.uleb128	.Ll76-.Ll75
 	.byte	13
-# [136:1]
+# [133:1]
 	.byte	2
 	.uleb128	.Ll77-.Ll76
 	.byte	13
-# [137:1]
+# [134:1]
 	.byte	2
 	.uleb128	.Ll78-.Ll77
 	.byte	13
-# [138:1]
+# [135:1]
 	.byte	2
 	.uleb128	.Ll79-.Ll78
 	.byte	13
-# [139:1]
+# [136:1]
 	.byte	2
 	.uleb128	.Ll80-.Ll79
 	.byte	13
-# [140:1]
+# [137:1]
 	.byte	2
 	.uleb128	.Ll81-.Ll80
 	.byte	13
-# [141:1]
+# [139:1]
 	.byte	2
 	.uleb128	.Ll82-.Ll81
-	.byte	13
-# [152:1]
+	.byte	14
+# [140:1]
 	.byte	2
 	.uleb128	.Ll83-.Ll82
-	.byte	23
-# [153:1]
+	.byte	13
+# [141:1]
 	.byte	2
 	.uleb128	.Ll84-.Ll83
 	.byte	13
-# [154:1]
+# [142:1]
 	.byte	2
 	.uleb128	.Ll85-.Ll84
 	.byte	13
-# [155:1]
+# [143:1]
 	.byte	2
 	.uleb128	.Ll86-.Ll85
 	.byte	13
-# [156:1]
+# [144:1]
 	.byte	2
 	.uleb128	.Ll87-.Ll86
 	.byte	13
-# [157:1]
+# [145:1]
 	.byte	2
 	.uleb128	.Ll88-.Ll87
 	.byte	13
-# [158:1]
+# [146:1]
 	.byte	2
 	.uleb128	.Ll89-.Ll88
 	.byte	13
-# [52:1]
+# [147:1]
 	.byte	2
 	.uleb128	.Ll90-.Ll89
-	.byte	3
-	.sleb128	-106
-	.byte	1
-# [160:1]
+	.byte	13
+# [158:1]
 	.byte	2
 	.uleb128	.Ll91-.Ll90
-	.byte	120
+	.byte	23
+# [159:1]
+	.byte	2
+	.uleb128	.Ll92-.Ll91
+	.byte	13
+# [160:1]
+	.byte	2
+	.uleb128	.Ll93-.Ll92
+	.byte	13
+# [161:1]
+	.byte	2
+	.uleb128	.Ll94-.Ll93
+	.byte	13
+# [162:1]
+	.byte	2
+	.uleb128	.Ll95-.Ll94
+	.byte	13
+# [163:1]
+	.byte	2
+	.uleb128	.Ll96-.Ll95
+	.byte	13
+# [164:1]
+	.byte	2
+	.uleb128	.Ll97-.Ll96
+	.byte	13
+# [52:1]
+	.byte	2
+	.uleb128	.Ll98-.Ll97
+	.byte	3
+	.sleb128	-112
+	.byte	1
+# [166:1]
+	.byte	2
+	.uleb128	.Ll99-.Ll98
+	.byte	126
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll92
+	.quad	.Ll100
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UMAIN$_$MAIN2_$$_fin$1
-# [175:1]
+# [181:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll93
+	.quad	.Ll101
 	.byte	5
 	.uleb128	1
-	.byte	186
-# [175:1]
+	.byte	192
+# [181:1]
 	.byte	2
-	.uleb128	.Ll94-.Ll93
+	.uleb128	.Ll102-.Ll101
 	.byte	1
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll95
+	.quad	.Ll103
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UMAIN_$$_MAIN2
-# [175:1]
+# [181:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll96
+	.quad	.Ll104
 	.byte	5
 	.uleb128	1
-	.byte	186
-# [175:1]
+	.byte	192
+# [181:1]
 	.byte	2
-	.uleb128	.Ll97-.Ll96
+	.uleb128	.Ll105-.Ll104
 	.byte	1
-# [178:9]
+# [184:9]
 	.byte	2
-	.uleb128	.Ll98-.Ll97
+	.uleb128	.Ll106-.Ll105
 	.byte	5
 	.uleb128	9
 	.byte	15
-# [180:12]
+# [186:12]
 	.byte	2
-	.uleb128	.Ll99-.Ll98
+	.uleb128	.Ll107-.Ll106
 	.byte	5
 	.uleb128	12
 	.byte	14
-# [185:5]
-	.byte	2
-	.uleb128	.Ll100-.Ll99
-	.byte	5
-	.uleb128	5
-	.byte	17
-# [186:12]
-	.byte	2
-	.uleb128	.Ll101-.Ll100
-	.byte	5
-	.uleb128	12
-	.byte	13
-# [187:5]
-	.byte	2
-	.uleb128	.Ll102-.Ll101
-	.byte	5
-	.uleb128	5
-	.byte	13
-# [188:5]
-	.byte	2
-	.uleb128	.Ll103-.Ll102
-	.byte	13
-# [189:5]
-	.byte	2
-	.uleb128	.Ll104-.Ll103
-	.byte	13
-# [190:6]
-	.byte	2
-	.uleb128	.Ll105-.Ll104
-	.byte	5
-	.uleb128	6
-	.byte	13
-# [191:6]
-	.byte	2
-	.uleb128	.Ll106-.Ll105
-	.byte	13
-# [192:6]
-	.byte	2
-	.uleb128	.Ll107-.Ll106
-	.byte	13
-# [193:19]
+# [191:5]
 	.byte	2
 	.uleb128	.Ll108-.Ll107
 	.byte	5
-	.uleb128	19
-	.byte	13
-# [196:1]
+	.uleb128	5
+	.byte	17
+# [192:12]
 	.byte	2
 	.uleb128	.Ll109-.Ll108
 	.byte	5
-	.uleb128	1
-	.byte	15
-# [197:7]
+	.uleb128	12
+	.byte	13
+# [193:5]
 	.byte	2
 	.uleb128	.Ll110-.Ll109
 	.byte	5
-	.uleb128	7
+	.uleb128	5
 	.byte	13
-# [198:10]
+# [194:5]
 	.byte	2
 	.uleb128	.Ll111-.Ll110
-	.byte	5
-	.uleb128	10
 	.byte	13
-# [199:1]
+# [195:5]
 	.byte	2
 	.uleb128	.Ll112-.Ll111
-	.byte	5
-	.uleb128	1
 	.byte	13
-# [200:14]
+# [196:6]
 	.byte	2
 	.uleb128	.Ll113-.Ll112
 	.byte	5
-	.uleb128	14
+	.uleb128	6
 	.byte	13
-# [201:13]
+# [197:6]
 	.byte	2
 	.uleb128	.Ll114-.Ll113
-	.byte	5
-	.uleb128	13
 	.byte	13
-# [202:13]
+# [198:6]
 	.byte	2
 	.uleb128	.Ll115-.Ll114
 	.byte	13
-# [203:13]
+# [199:19]
 	.byte	2
 	.uleb128	.Ll116-.Ll115
+	.byte	5
+	.uleb128	19
 	.byte	13
-# [204:15]
+# [202:1]
 	.byte	2
 	.uleb128	.Ll117-.Ll116
 	.byte	5
-	.uleb128	15
-	.byte	13
-# [205:1]
+	.uleb128	1
+	.byte	15
+# [203:7]
 	.byte	2
 	.uleb128	.Ll118-.Ll117
 	.byte	5
-	.uleb128	1
+	.uleb128	7
 	.byte	13
-# [206:70]
+# [204:10]
 	.byte	2
 	.uleb128	.Ll119-.Ll118
 	.byte	5
-	.uleb128	70
+	.uleb128	10
 	.byte	13
-# [207:71]
+# [205:1]
 	.byte	2
 	.uleb128	.Ll120-.Ll119
 	.byte	5
-	.uleb128	71
+	.uleb128	1
 	.byte	13
-# [208:58]
+# [206:14]
 	.byte	2
 	.uleb128	.Ll121-.Ll120
 	.byte	5
-	.uleb128	58
+	.uleb128	14
 	.byte	13
-# [213:1]
+# [207:13]
 	.byte	2
 	.uleb128	.Ll122-.Ll121
 	.byte	5
-	.uleb128	1
-	.byte	17
-# [214:1]
+	.uleb128	13
+	.byte	13
+# [208:13]
 	.byte	2
 	.uleb128	.Ll123-.Ll122
 	.byte	13
-# [215:1]
+# [209:13]
 	.byte	2
 	.uleb128	.Ll124-.Ll123
 	.byte	13
-# [216:1]
+# [210:15]
 	.byte	2
 	.uleb128	.Ll125-.Ll124
+	.byte	5
+	.uleb128	15
 	.byte	13
-# [217:1]
+# [211:1]
 	.byte	2
 	.uleb128	.Ll126-.Ll125
+	.byte	5
+	.uleb128	1
 	.byte	13
-# [220:13]
+# [212:70]
 	.byte	2
 	.uleb128	.Ll127-.Ll126
 	.byte	5
-	.uleb128	13
-	.byte	15
-# [221:14]
+	.uleb128	70
+	.byte	13
+# [213:71]
 	.byte	2
 	.uleb128	.Ll128-.Ll127
 	.byte	5
-	.uleb128	14
+	.uleb128	71
 	.byte	13
-# [222:16]
+# [214:58]
 	.byte	2
 	.uleb128	.Ll129-.Ll128
 	.byte	5
-	.uleb128	16
+	.uleb128	58
 	.byte	13
-# [224:14]
+# [219:1]
 	.byte	2
 	.uleb128	.Ll130-.Ll129
 	.byte	5
-	.uleb128	14
-	.byte	14
-# [225:15]
+	.uleb128	1
+	.byte	17
+# [220:1]
 	.byte	2
 	.uleb128	.Ll131-.Ll130
-	.byte	5
-	.uleb128	15
 	.byte	13
-# [227:16]
+# [221:1]
 	.byte	2
 	.uleb128	.Ll132-.Ll131
-	.byte	5
-	.uleb128	16
-	.byte	14
-# [229:14]
+	.byte	13
+# [222:1]
 	.byte	2
 	.uleb128	.Ll133-.Ll132
-	.byte	5
-	.uleb128	14
-	.byte	14
-# [230:15]
+	.byte	13
+# [223:1]
 	.byte	2
 	.uleb128	.Ll134-.Ll133
-	.byte	5
-	.uleb128	15
 	.byte	13
-# [232:16]
+# [226:13]
 	.byte	2
 	.uleb128	.Ll135-.Ll134
 	.byte	5
-	.uleb128	16
-	.byte	14
-# [234:6]
+	.uleb128	13
+	.byte	15
+# [227:14]
 	.byte	2
 	.uleb128	.Ll136-.Ll135
 	.byte	5
-	.uleb128	6
-	.byte	14
-# [236:1]
+	.uleb128	14
+	.byte	13
+# [228:16]
 	.byte	2
 	.uleb128	.Ll137-.Ll136
 	.byte	5
-	.uleb128	1
-	.byte	14
-# [175:1]
+	.uleb128	16
+	.byte	13
+# [230:14]
 	.byte	2
 	.uleb128	.Ll138-.Ll137
+	.byte	5
+	.uleb128	14
+	.byte	14
+# [231:15]
+	.byte	2
+	.uleb128	.Ll139-.Ll138
+	.byte	5
+	.uleb128	15
+	.byte	13
+# [233:16]
+	.byte	2
+	.uleb128	.Ll140-.Ll139
+	.byte	5
+	.uleb128	16
+	.byte	14
+# [235:14]
+	.byte	2
+	.uleb128	.Ll141-.Ll140
+	.byte	5
+	.uleb128	14
+	.byte	14
+# [236:15]
+	.byte	2
+	.uleb128	.Ll142-.Ll141
+	.byte	5
+	.uleb128	15
+	.byte	13
+# [238:16]
+	.byte	2
+	.uleb128	.Ll143-.Ll142
+	.byte	5
+	.uleb128	16
+	.byte	14
+# [240:6]
+	.byte	2
+	.uleb128	.Ll144-.Ll143
+	.byte	5
+	.uleb128	6
+	.byte	14
+# [241:1]
+	.byte	2
+	.uleb128	.Ll145-.Ll144
+	.byte	5
+	.uleb128	1
+	.byte	13
+# [242:1]
+	.byte	2
+	.uleb128	.Ll146-.Ll145
+	.byte	13
+# [181:1]
+	.byte	2
+	.uleb128	.Ll147-.Ll146
 	.byte	3
 	.sleb128	-61
 	.byte	1
-# [238:1]
+# [244:1]
 	.byte	2
-	.uleb128	.Ll139-.Ll138
+	.uleb128	.Ll148-.Ll147
 	.byte	75
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll140
+	.quad	.Ll149
 	.byte	0
 	.byte	1
 	.byte	1
@@ -9869,7 +9970,7 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll141
+	.quad	.Ll150
 	.byte	0
 	.byte	1
 	.byte	1
@@ -9879,7 +9980,7 @@ RTTI_$UMAIN_$$_DEF85:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll142
+	.quad	.Ll151
 	.byte	0
 	.byte	1
 	.byte	1

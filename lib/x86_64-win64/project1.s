@@ -26,14 +26,9 @@ main:
 .Ll1:
 # [project1.lpr]
 # [16] begin
-	pushq	%rbp
-.seh_pushreg %rbp
+	leaq	-40(%rsp),%rsp
 .Lc3:
-.Lc4:
-	movq	%rsp,%rbp
-.Lc5:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+.seh_stackalloc 40
 .seh_endprologue
 	call	FPC_INITIALIZEUNITS
 .Ll2:
@@ -66,8 +61,7 @@ main:
 # [22] end.
 	call	FPC_DO_EXIT
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
 .Lc2:
@@ -348,7 +342,7 @@ main:
 	.balign 8
 .globl	INITFINAL
 INITFINAL:
-	.quad	85,0
+	.quad	86,0
 	.quad	INIT$_$SYSTEM
 	.quad	0,0
 	.quad	FINALIZE$_$OBJPAS
@@ -504,6 +498,8 @@ INITFINAL:
 	.quad	FINALIZE$_$INTERFACES
 	.quad	INIT$_$CRT
 	.quad	FINALIZE$_$CRT
+	.quad	INIT$_$SYNTHCONTROL
+	.quad	FINALIZE$_$SYNTHCONTROL
 	.quad	INIT$_$FMSYNTH
 	.quad	FINALIZE$_$FMSYNTH
 	.quad	INIT$_$MIDI
@@ -581,7 +577,7 @@ FPC_RESSTRINITTABLES:
 
 .section .fpc.n_version
 	.balign 16
-	.ascii	"FPC 3.0.4 [2017/12/03] for x86_64 - Win64"
+	.ascii	"FPC 3.0.4 [2018/02/25] for x86_64 - Win64"
 
 .section .data.n___heapsize,"d"
 	.balign 8
@@ -597,9 +593,9 @@ __fpc_valgrind:
 # Begin asmlist al_dwarf_frame
 
 .section .debug_frame
-.Lc6:
-	.long	.Lc8-.Lc7
-.Lc7:
+.Lc4:
+	.long	.Lc6-.Lc5
+.Lc5:
 	.long	-1
 	.byte	1
 	.byte	0
@@ -613,27 +609,18 @@ __fpc_valgrind:
 	.uleb128	16
 	.uleb128	2
 	.balign 4,0
-.Lc8:
-	.long	.Lc10-.Lc9
-.Lc9:
-	.secrel32	.Lc6
+.Lc6:
+	.long	.Lc8-.Lc7
+.Lc7:
+	.secrel32	.Lc4
 	.quad	.Lc1
 	.quad	.Lc2-.Lc1
 	.byte	4
 	.long	.Lc3-.Lc1
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc4-.Lc3
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc5-.Lc4
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc10:
+.Lc8:
 # End asmlist al_dwarf_frame
 # Begin asmlist al_dwarf_info
 
@@ -646,8 +633,8 @@ __fpc_valgrind:
 	.byte	8
 	.uleb128	1
 	.ascii	"project1.lpr\000"
-	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
-	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
+	.ascii	"D:/programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -1188,14 +1175,14 @@ __fpc_valgrind:
 # Defs - End unit RETRO has index 12
 # Defs - Begin unit UMAIN has index 11
 # Defs - End unit UMAIN has index 11
-# Defs - Begin unit UNIT65032 has index 14
-# Defs - End unit UNIT65032 has index 14
 # Defs - Begin unit FFT has index 256
 # Defs - End unit FFT has index 256
 # Defs - Begin unit UNIT2 has index 16
 # Defs - End unit UNIT2 has index 16
 # Defs - Begin unit UNIT1 has index 10
 # Defs - End unit UNIT1 has index 10
+# Defs - Begin unit UNIT65032 has index 14
+# Defs - End unit UNIT65032 has index 14
 # Defs - Begin unit LAZARUSPACKAGEINTF has index 259
 # Defs - End unit LAZARUSPACKAGEINTF has index 259
 # Defs - Begin unit FFT1 has index 19

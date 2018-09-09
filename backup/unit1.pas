@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  umain,retro,sdl2,unit6502,windows, unit65032,midi,synthcontrol, fft;
+  umain,retro,sdl2,unit6502,windows, midi,synthcontrol, fft;
 
 type
 
@@ -103,11 +103,11 @@ repeat
 //  if peek($60028)=ord('p') then begin poke ($60028,0); pause:=not pause; if pause then sdl_pauseaudio(1) else sdl_pauseaudio(0); end;
 
   if dpeek($60028)=16446 then begin edelay:=not edelay; dpoke($60028,0); end;  //f4=delay
-  if dpeek($60028)=16442 then begin waveidx+=1; if waveidx>=sampleindex1 then waveidx:=sampleindex1-1;  dpoke($60028,0); end;  //f4=delay
+  if dpeek($60028)=16442 then begin waveidx+=1; if waveidx>=soundindex then waveidx:=soundindex-1;  dpoke($60028,0); end;  //f4=delay
   if dpeek($60028)=16443 then begin waveidx-=1; if waveidx<0 then waveidx:=0;  dpoke($60028,0); end;  //f4=delay
   if dpeek($60028)=16444 then begin transpose+=1; dpoke($60028,0); end;  //f4=delay
   if dpeek($60028)=16445 then begin transpose-=1; dpoke($60028,0); end;  //f4=delay
-  box(600,600,400,120,0); outtextxyz(600,600,waves1[waveidx].name,15,2,2);    outtextxyz(600,640,floattostr(96000/waves1[waveidx].speed),15,2,2);   outtextxyz(600,680,floattostr(transpose),15,2,2);
+  box(600,600,400,120,0); outtextxyz(600,600,sounds[waveidx].name,15,2,2);  outtextxyz(600,680,floattostr(transpose),15,2,2);   outtextxyz(600,640,ss,15);
           // adsr test
           if dpeek($60028)=16447 then begin att:=att*1.1; dpoke($60028,0); end; //f5=reverb
           if dpeek($60028)=16448 then begin att:=att/1.1; ereverb:=not ereverb; dpoke($60028,0); end; //f5=reverb
@@ -145,7 +145,7 @@ repeat
     end;
 
   application.processmessages;
-until (peek($6002b)<>0) and (peek($60028)=27) ;
+until {(peek($6002b)<>0) and (peek($60028)=27) or} (peek($70004)=1);
 timer1:=-1;
 fileclose(fh);
 stopmachine;
@@ -164,27 +164,7 @@ var a:array[0..1023] of double;
     d,dd,dd0,q,q1,q2,q3:double;
 
 begin
-dd0:=0;
-for i:=0 to 1023 do a[i]:=sin(2*pi*i/512);
-for i:=0 to 65535 do
-  begin
-  q:=sin(2*pi*i/65536);
-  i2:=i div 128;
-  i3:=i2+1; if i3>512 then i3:=0;
-
-  q1:=a[i2];
-  q2:=a[i3];
-  d:=(i mod 128)/128;
-  q3:=d*q2+(1-d)*q1;
-  dd:=abs(q3-q);
-  if dd>dd0 then begin dd0:=dd; i0:=i; end;
-
-
-
-
-  end;
-memo1.lines.add(floattostr(1/dd0));
-memo1.lines.add(inttostr(i0));
+form2.show;
 end;
 
 procedure TForm1.fft1GetData(index: integer; var Value: TComplex);

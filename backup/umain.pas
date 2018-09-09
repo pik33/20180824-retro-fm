@@ -118,6 +118,12 @@ t:=gettime-t;
 box(100,100,200,100,0);
 outtextxyz(100,100,inttostr(t),44,2,2);
 sdl_pauseaudio(0);
+
+
+box2(900,860,1019,1047,33);
+outtextxy(926,864,'Midi reports',44);
+
+
 box(12,70,440,384,145-48);            outtextxyz(12+425,70,'0',145-48+12,2,2);
 
 outtextxyz(20,70,'Modulators',107,2,2);
@@ -156,7 +162,7 @@ box(12,70+388,440,384,145+16);        outtextxyz(12+425,70+388,'4',145+16+12,2,2
 box(12+443,70+388,440,384,145+32);    outtextxyz(12+443+425,70+388,'5',145+32+12,2,2);
 box(12+2*443,70+388,440,384,145+48);  outtextxyz(12+2*443+425,70+388,'6',145+48+12,2,2);
 box(12+3*443,70+388,440,384,145+64);  outtextxyz(12+3*443+425,70+388,'7',145+64+12,2,2);
-for i:=0 to 127 do outtextxy(8*i,800,chr(i),15);
+//for i:=0 to 127 do outtextxy(8*i,800,chr(i),15);
 end;
 
 
@@ -232,7 +238,7 @@ spr3y:=920-3*(peek($d414) and $F0);
 raml^[$18014]:=(spr3y shl 16)+spr3x+2048*(1-peek($70005));
 
 raml^[$1801e]:=raml^[$1800B];
-//box(0,0,300,100,0); outtextxyz(0,0,floattostr(ftt),15,2,2) ;
+box(1300,1000,300,100,0); outtextxyz(1300,1000,inttostr(peek($60032)),15,2,2) ;
 box(500,500,300,100,0); outtextxyz(500,500,floattostr(gain),42,2,2);  outtextxyz(500,550,floattostr(fnotes[69]),42,2,2);
 
 end;

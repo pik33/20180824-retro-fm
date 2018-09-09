@@ -345,10 +345,10 @@ var a,i:integer;
     bb:byte;
 
 begin
-
 initvoices;
 initsamples0;
 initsamples1;
+initsamples2;
 r1:=virtualalloc(nil,268435456, MEM_COMMIT or MEM_RESERVE,PAGE_EXECUTE_READWRITE);  // get 256 MB ram
 p2:=virtualalloc(nil,20971520, MEM_COMMIT or MEM_RESERVE,PAGE_READWRITE);  // get the RAM for the framebuffer
 
@@ -549,7 +549,17 @@ repeat
     if y>1159 then y:=1159;
     ramw^[$30016]:=x;
     ramw^[$30017]:=y;
+    end
 
+ else  if (qq<>0) and (event.type_=sdl_mousewheel)  then
+    begin
+    x:=event.wheel.x;
+    y:=event.wheel.y;
+//    if x<64 then x:=64;
+//    if x>1855 then x:=1855;
+//    if y<40 then y:=40;
+//    if y>1159 then y:=1159;
+    ramb^[$60032]:=y;
     end
   else if (qq<>0) and (event.type_=sdl_mousebuttondown)  then
     begin
@@ -575,7 +585,11 @@ repeat
     writekeybuffer(key+$10000);
 
     dpoke($6002A,key);
-    end;
+    end
+   else if (qq<>0) and (event.type_=sdl_windowevent)  then
+     begin
+     if event.window.event=SDL_WINDOWEVENT_CLOSE then poke($70004,1);
+     end;
   until qq=0;
 end;
 

@@ -20,101 +20,67 @@ DEBUGSTART_$UNIT6502:
 .globl	UNIT6502_$$_READ6502$INT64$$BYTE
 UNIT6502_$$_READ6502$INT64$$BYTE:
 .Lc1:
-.seh_proc UNIT6502_$$_READ6502$INT64$$BYTE
-.Ll1:
+# Var address located in register rcx
+# Var $result located in register al
 # [unit6502.pas]
 # [249] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc3:
-.Lc4:
-	movq	%rsp,%rbp
-.Lc5:
-	leaq	-16(%rsp),%rsp
-.seh_stackalloc 16
-.seh_endprologue
-# Var address located at rbp-8, size=OS_S64
-# Var $result located at rbp-16, size=OS_8
-	movq	%rcx,-8(%rbp)
-.Ll2:
+.Ll1:
 # [250] result:=ram[address and $FFFF];
-	movq	-8(%rbp),%rax
-	andq	$65535,%rax
-	leaq	U_$UNIT6502_$$_RAM(%rip),%rdx
-	movb	2(%rdx,%rax,1),%al
-	movb	%al,-16(%rbp)
-.Ll3:
+	andq	$65535,%rcx
+# Var $result located in register al
+	leaq	U_$UNIT6502_$$_RAM(%rip),%rax
+	movb	2(%rax,%rcx,1),%al
+# PeepHole Optimization,var9
+.Ll2:
 # [251] end;
-	movzbl	-16(%rbp),%eax
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	andl	$255,%eax
 	ret
-.seh_endproc
 .Lc2:
 .Lt1:
-.Ll4:
+.Ll3:
 
 .section .text.n_unit6502_$$_write6502$int64$byte,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_WRITE6502$INT64$BYTE
 UNIT6502_$$_WRITE6502$INT64$BYTE:
-.Lc6:
-.seh_proc UNIT6502_$$_WRITE6502$INT64$BYTE
-.Ll5:
+.Lc3:
+# Var address located in register rax
+# Var value located in register dl
+.Ll4:
 # [255] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc8:
-.Lc9:
-	movq	%rsp,%rbp
-.Lc10:
-	leaq	-16(%rsp),%rsp
-.seh_stackalloc 16
-.seh_endprologue
-# Var address located at rbp-8, size=OS_S64
-# Var value located at rbp-16, size=OS_8
-	movq	%rcx,-8(%rbp)
-	movb	%dl,-16(%rbp)
-.Ll6:
+	movq	%rcx,%rax
+.Ll5:
 # [256] ram[address and $FFFF]:=value;
-	movq	-8(%rbp),%rax
 	andq	$65535,%rax
-	movb	-16(%rbp),%cl
-	leaq	U_$UNIT6502_$$_RAM(%rip),%rdx
-	movb	%cl,2(%rdx,%rax,1)
-.Ll7:
+# Var value located in register dl
+	leaq	U_$UNIT6502_$$_RAM(%rip),%rcx
+	movb	%dl,2(%rcx,%rax,1)
+.Ll6:
 # [257] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc7:
+.Lc4:
 .Lt2:
-.Ll8:
+.Ll7:
 
 .section .text.n_unit6502_$$_push32$longword,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_PUSH32$LONGWORD
 UNIT6502_$$_PUSH32$LONGWORD:
-.Lc11:
+.Lc5:
 .seh_proc UNIT6502_$$_PUSH32$LONGWORD
-.Ll9:
+.Ll8:
 # [263] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc13:
-.Lc14:
-	movq	%rsp,%rbp
-.Lc15:
-	leaq	-48(%rsp),%rsp
-.seh_stackalloc 48
+	pushq	%rbx
+.seh_pushreg %rbx
+	leaq	-32(%rsp),%rsp
+.Lc7:
+.seh_stackalloc 32
+# Var pushval located in register ebx
 .seh_endprologue
-# Var pushval located at rbp-8, size=OS_32
-	movl	%ecx,-8(%rbp)
-.Ll10:
+	movl	%ecx,%ebx
+.Ll9:
 # [264] write6502(BASE_STACK+sp,(pushval shr 24) and $FF);
-	movl	-8(%rbp),%eax
-	movl	%eax,%edx
+	movl	%ebx,%edx
 	shrl	$24,%edx
 # PeepHole Optimization,var1
 # PeepHole Optimization,var9
@@ -122,80 +88,76 @@ UNIT6502_$$_PUSH32$LONGWORD:
 	movzbl	U_$UNIT6502_$$_SP(%rip),%eax
 	leaq	256(%rax),%rcx
 	call	UNIT6502_$$_WRITE6502$INT64$BYTE
-.Ll11:
+.Ll10:
 # [265] write6502(BASE_STACK+((sp-1) and $FF),(pushval shr 16) and $FF);
 	movzbl	U_$UNIT6502_$$_SP(%rip),%eax
 	leaq	-1(%rax),%rax
 	andq	$255,%rax
 	leaq	256(%rax),%rcx
-	movl	-8(%rbp),%edx
+	movl	%ebx,%edx
 	shrl	$16,%edx
 # PeepHole Optimization,var1
 # PeepHole Optimization,var9
 	andl	$255,%edx
 	call	UNIT6502_$$_WRITE6502$INT64$BYTE
-.Ll12:
+.Ll11:
 # [266] write6502(BASE_STACK+((sp-2) and $FF),(pushval shr 8) and $FF);
 	movzbl	U_$UNIT6502_$$_SP(%rip),%eax
 	leaq	-2(%rax),%rax
 	andq	$255,%rax
 	leaq	256(%rax),%rcx
-	movl	-8(%rbp),%edx
+	movl	%ebx,%edx
 	shrl	$8,%edx
 # PeepHole Optimization,var1
 # PeepHole Optimization,var9
 	andl	$255,%edx
 	call	UNIT6502_$$_WRITE6502$INT64$BYTE
-.Ll13:
+.Ll12:
 # [267] write6502(BASE_STACK+((sp-3) and $FF),pushval and $FF);
 	movzbl	U_$UNIT6502_$$_SP(%rip),%eax
 	leaq	-3(%rax),%rax
 	andq	$255,%rax
 	leaq	256(%rax),%rcx
-	movl	-8(%rbp),%edx
+	movl	%ebx,%edx
 # PeepHole Optimization,var1
 # PeepHole Optimization,var9
 	andl	$255,%edx
 	call	UNIT6502_$$_WRITE6502$INT64$BYTE
-.Ll14:
+.Ll13:
 # [268] sp-=4;
 	movzbl	U_$UNIT6502_$$_SP(%rip),%eax
 	leal	-4(%eax),%eax
 	movb	%al,U_$UNIT6502_$$_SP(%rip)
-.Ll15:
+.Ll14:
 # [269] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	32(%rsp),%rsp
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc12:
+.Lc6:
 .Lt105:
-.Ll16:
+.Ll15:
 
 .section .text.n_unit6502_$$_push16$word,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_PUSH16$WORD
 UNIT6502_$$_PUSH16$WORD:
-.Lc16:
+.Lc8:
 .seh_proc UNIT6502_$$_PUSH16$WORD
-.Ll17:
+.Ll16:
 # [273] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc18:
-.Lc19:
-	movq	%rsp,%rbp
-.Lc20:
-	leaq	-48(%rsp),%rsp
-.seh_stackalloc 48
+	pushq	%rbx
+.seh_pushreg %rbx
+	leaq	-32(%rsp),%rsp
+.Lc10:
+.seh_stackalloc 32
+# Var pushval located in register bx
 .seh_endprologue
-# Var pushval located at rbp-8, size=OS_16
-	movw	%cx,-8(%rbp)
-.Ll18:
+	movw	%cx,%bx
+.Ll17:
 # [274] write6502(BASE_STACK+sp,(pushval shr 8) and $FF);
-	movzwl	-8(%rbp),%eax
-	movl	%eax,%edx
+	movzwl	%bx,%edx
 	shrl	$8,%edx
 # PeepHole Optimization,var1
 # PeepHole Optimization,var9
@@ -203,107 +165,97 @@ UNIT6502_$$_PUSH16$WORD:
 	movzbl	U_$UNIT6502_$$_SP(%rip),%eax
 	leaq	256(%rax),%rcx
 	call	UNIT6502_$$_WRITE6502$INT64$BYTE
-.Ll19:
+.Ll18:
 # [275] write6502(BASE_STACK+((sp-1) and $FF),pushval and $FF);
 	movzbl	U_$UNIT6502_$$_SP(%rip),%eax
 	leaq	-1(%rax),%rax
 	andq	$255,%rax
 	leaq	256(%rax),%rcx
-	movw	-8(%rbp),%dx
+	movw	%bx,%dx
 # PeepHole Optimization,var1
 # PeepHole Optimization,var9
 	andl	$255,%edx
 	call	UNIT6502_$$_WRITE6502$INT64$BYTE
-.Ll20:
+.Ll19:
 # [276] sp-=2;
 	movzbl	U_$UNIT6502_$$_SP(%rip),%eax
 	leal	-2(%eax),%eax
 	movb	%al,U_$UNIT6502_$$_SP(%rip)
-.Ll21:
+.Ll20:
 # [277] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	32(%rsp),%rsp
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc17:
+.Lc9:
 .Lt106:
-.Ll22:
+.Ll21:
 
 .section .text.n_unit6502_$$_push8$word,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_PUSH8$WORD
 UNIT6502_$$_PUSH8$WORD:
-.Lc21:
+.Lc11:
 .seh_proc UNIT6502_$$_PUSH8$WORD
-.Ll23:
+.Ll22:
 # [281] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc23:
-.Lc24:
-	movq	%rsp,%rbp
-.Lc25:
-	leaq	-48(%rsp),%rsp
-.seh_stackalloc 48
+	leaq	-40(%rsp),%rsp
+.Lc13:
+.seh_stackalloc 40
+# Var pushval located in register ax
 .seh_endprologue
-# Var pushval located at rbp-8, size=OS_16
-	movw	%cx,-8(%rbp)
-.Ll24:
+	movw	%cx,%ax
+.Ll23:
 # [282] write6502(BASE_STACK+sp,pushval);
-	movzbl	U_$UNIT6502_$$_SP(%rip),%eax
-	leaq	256(%rax),%rcx
-	movzbl	-8(%rbp),%edx
+	movzbl	U_$UNIT6502_$$_SP(%rip),%edx
+	leaq	256(%rdx),%rcx
+	movb	%al,%dl
+# PeepHole Optimization,var9
+	andl	$255,%edx
 	call	UNIT6502_$$_WRITE6502$INT64$BYTE
-.Ll25:
+.Ll24:
 # [283] dec(sp);
 	subb	$1,U_$UNIT6502_$$_SP(%rip)
-.Ll26:
+.Ll25:
 # [284] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc22:
+.Lc12:
 .Lt107:
-.Ll27:
+.Ll26:
 
 .section .text.n_unit6502_$$_pull32$$longword,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_PULL32$$LONGWORD
 UNIT6502_$$_PULL32$$LONGWORD:
-.Lc26:
-# Temps allocated between rbp-24 and rbp-16
+.Lc14:
 .seh_proc UNIT6502_$$_PULL32$$LONGWORD
-.Ll28:
+.Ll27:
 # [290] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc28:
-.Lc29:
-	movq	%rsp,%rbp
-.Lc30:
-	leaq	-64(%rsp),%rsp
-.seh_stackalloc 64
-	movq	%rbx,-24(%rbp)
-.seh_savereg %rbx, 40
+	pushq	%rbx
+.seh_pushreg %rbx
+	leaq	-32(%rsp),%rsp
+.Lc16:
+.seh_stackalloc 32
+# Var $result located in register eax
+# Var temp32 located in register eax
 .seh_endprologue
-# Var $result located at rbp-8, size=OS_32
-# Var temp32 located at rbp-16, size=OS_32
-.Ll29:
+.Ll28:
 # [291] temp32:=read6502(BASE_STACK + ((sp + 4) and $FF));
 	movzbl	U_$UNIT6502_$$_SP(%rip),%eax
 	leaq	4(%rax),%rax
 	andq	$255,%rax
 	leaq	256(%rax),%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
+	movb	%al,%bl
 # PeepHole Optimization,var9
-	andl	$255,%eax
-	movl	%eax,-16(%rbp)
-.Ll30:
+	andl	$255,%ebx
+# Var temp32 located in register ebx
+.Ll29:
 # [292] temp32:=(temp32 shl 8) + read6502(BASE_STACK + ((sp + 3) and $FF));
-	movl	-16(%rbp),%ebx
 	shll	$8,%ebx
 	movzbl	U_$UNIT6502_$$_SP(%rip),%eax
 	leaq	3(%rax),%rax
@@ -312,11 +264,10 @@ UNIT6502_$$_PULL32$$LONGWORD:
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 # PeepHole Optimization,var9
 	andl	$255,%eax
-	leal	(%ebx,%eax),%eax
-	movl	%eax,-16(%rbp)
-.Ll31:
+	leal	(%ebx,%eax),%ebx
+# Var temp32 located in register ebx
+.Ll30:
 # [293] temp32:=(temp32 shl 8) + read6502(BASE_STACK + ((sp + 2) and $FF));
-	movl	-16(%rbp),%ebx
 	shll	$8,%ebx
 	movzbl	U_$UNIT6502_$$_SP(%rip),%eax
 	leaq	2(%rax),%rax
@@ -325,11 +276,10 @@ UNIT6502_$$_PULL32$$LONGWORD:
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 # PeepHole Optimization,var9
 	andl	$255,%eax
-	leal	(%ebx,%eax),%eax
-	movl	%eax,-16(%rbp)
-.Ll32:
+	leal	(%ebx,%eax),%ebx
+# Var temp32 located in register ebx
+.Ll31:
 # [294] temp32:=(temp32 shl 8) + read6502(BASE_STACK + ((sp + 1) and $FF));
-	movl	-16(%rbp),%ebx
 	shll	$8,%ebx
 	movzbl	U_$UNIT6502_$$_SP(%rip),%eax
 	leaq	1(%rax),%rax
@@ -339,63 +289,56 @@ UNIT6502_$$_PULL32$$LONGWORD:
 # PeepHole Optimization,var9
 	andl	$255,%eax
 	leal	(%ebx,%eax),%eax
-	movl	%eax,-16(%rbp)
-.Ll33:
-# [295] result:=temp32;
-	movl	-16(%rbp),%eax
-	movl	%eax,-8(%rbp)
-.Ll34:
+# Var temp32 located in register eax
+# Var $result located in register eax
+# Var temp32 located in register eax
+.Ll32:
 # [296] sp+=4;
-	movzbl	U_$UNIT6502_$$_SP(%rip),%eax
-	leal	4(%eax),%eax
-	movb	%al,U_$UNIT6502_$$_SP(%rip)
-.Ll35:
+	movzbl	U_$UNIT6502_$$_SP(%rip),%edx
+	leal	4(%edx),%edx
+	movb	%dl,U_$UNIT6502_$$_SP(%rip)
+.Ll33:
 # [297] end;
-	movl	-8(%rbp),%eax
-	movq	-24(%rbp),%rbx
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	nop
+	leaq	32(%rsp),%rsp
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc27:
+.Lc15:
 .Lt108:
-.Ll36:
+.Ll34:
 
 .section .text.n_unit6502_$$_pull16$$word,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_PULL16$$WORD
 UNIT6502_$$_PULL16$$WORD:
-.Lc31:
-# Temps allocated between rbp-24 and rbp-16
+.Lc17:
 .seh_proc UNIT6502_$$_PULL16$$WORD
-.Ll37:
+.Ll35:
 # [303] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc33:
-.Lc34:
-	movq	%rsp,%rbp
-.Lc35:
-	leaq	-64(%rsp),%rsp
-.seh_stackalloc 64
-	movq	%rbx,-24(%rbp)
-.seh_savereg %rbx, 40
+	pushq	%rbx
+.seh_pushreg %rbx
+	leaq	-32(%rsp),%rsp
+.Lc19:
+.seh_stackalloc 32
+# Var $result located in register ax
+# Var temp16 located in register ax
 .seh_endprologue
-# Var $result located at rbp-8, size=OS_16
-# Var temp16 located at rbp-16, size=OS_16
-.Ll38:
+.Ll36:
 # [304] temp16:=read6502(BASE_STACK + ((sp + 2) and $FF));
 	movzbl	U_$UNIT6502_$$_SP(%rip),%eax
 	leaq	2(%rax),%rax
 	andq	$255,%rax
 	leaq	256(%rax),%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
+	movb	%al,%bl
 # PeepHole Optimization,var7
-	andw	$255,%ax
-	movw	%ax,-16(%rbp)
-.Ll39:
+# PeepHole Optimization,var1
+# Var temp16 located in register bx
+# PeepHole Optimization,var11
+.Ll37:
 # [305] temp16:=(temp16 shl 8) + read6502(BASE_STACK + ((sp + 1) and $FF));
-	movzwl	-16(%rbp),%ebx
+	andl	$255,%ebx
 	shll	$8,%ebx
 	movzbl	U_$UNIT6502_$$_SP(%rip),%eax
 	leaq	1(%rax),%rax
@@ -405,422 +348,387 @@ UNIT6502_$$_PULL16$$WORD:
 # PeepHole Optimization,var9
 	andl	$255,%eax
 	leal	(%ebx,%eax),%eax
-	movw	%ax,-16(%rbp)
-.Ll40:
-# [306] result:=temp16;
-	movw	-16(%rbp),%ax
-	movw	%ax,-8(%rbp)
-.Ll41:
+# Var temp16 located in register ax
+# Var $result located in register ax
+# Var temp16 located in register ax
+.Ll38:
 # [307] sp+=2;
-	movzbl	U_$UNIT6502_$$_SP(%rip),%eax
-	leal	2(%eax),%eax
-	movb	%al,U_$UNIT6502_$$_SP(%rip)
-.Ll42:
+	movzbl	U_$UNIT6502_$$_SP(%rip),%edx
+	leal	2(%edx),%edx
+	movb	%dl,U_$UNIT6502_$$_SP(%rip)
+# PeepHole Optimization,var11
+.Ll39:
 # [308] end;
-	movzwl	-8(%rbp),%eax
-	movq	-24(%rbp),%rbx
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	andl	$65535,%eax
+	nop
+	leaq	32(%rsp),%rsp
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc32:
+.Lc18:
 .Lt109:
-.Ll43:
+.Ll40:
 
 .section .text.n_unit6502_$$_pull8$$byte,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_PULL8$$BYTE
 UNIT6502_$$_PULL8$$BYTE:
-.Lc36:
+.Lc20:
 .seh_proc UNIT6502_$$_PULL8$$BYTE
-.Ll44:
+.Ll41:
 # [312] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc38:
-.Lc39:
-	movq	%rsp,%rbp
-.Lc40:
-	leaq	-48(%rsp),%rsp
-.seh_stackalloc 48
+	leaq	-40(%rsp),%rsp
+.Lc22:
+.seh_stackalloc 40
+# Var $result located in register al
 .seh_endprologue
-# Var $result located at rbp-8, size=OS_8
-.Ll45:
+.Ll42:
 # [313] inc(sp);
 	addb	$1,U_$UNIT6502_$$_SP(%rip)
-.Ll46:
+.Ll43:
 # [314] result:=(read6502(BASE_STACK + sp));
 	movzbl	U_$UNIT6502_$$_SP(%rip),%eax
 	leaq	256(%rax),%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
-	movb	%al,-8(%rbp)
-.Ll47:
+# Var $result located in register al
+# PeepHole Optimization,var9
+.Ll44:
 # [315] end;
-	movzbl	-8(%rbp),%eax
+	andl	$255,%eax
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc37:
+.Lc21:
 .Lt110:
-.Ll48:
+.Ll45:
 
 .section .text.n_unit6502_$$_getvalue$$word,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_GETVALUE$$WORD
 UNIT6502_$$_GETVALUE$$WORD:
-.Lc41:
+.Lc23:
 .seh_proc UNIT6502_$$_GETVALUE$$WORD
-.Ll49:
+.Ll46:
 # [321] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc43:
-.Lc44:
-	movq	%rsp,%rbp
-.Lc45:
-	leaq	-48(%rsp),%rsp
-.seh_stackalloc 48
+	pushq	%rbx
+.seh_pushreg %rbx
+	leaq	-32(%rsp),%rsp
+.Lc25:
+.seh_stackalloc 32
+# Var $result located in register bx
+# Var ea2 located in register rcx
 .seh_endprologue
-# Var $result located at rbp-8, size=OS_16
-# Var ea2 located at rbp-16, size=OS_S64
-.Ll50:
+.Ll47:
 # [322] ea2:=ea+ds^;
 	movzwl	U_$UNIT6502_$$_EA(%rip),%edx
 	movq	U_$UNIT6502_$$_DS(%rip),%rax
 	movq	(%rax),%rax
-	leaq	(%rdx,%rax),%rax
-	movq	%rax,-16(%rbp)
-.Ll51:
+	leaq	(%rdx,%rax),%rcx
+# Var ea2 located in register rcx
+.Ll48:
 # [323] if (addrtable[opcode] = @acc) then
 	movzbl	U_$UNIT6502_$$_OPCODE(%rip),%eax
-	leaq	UNIT6502_$$_ACC(%rip),%rcx
-	leaq	TC_$UNIT6502_$$_ADDRTABLE(%rip),%rdx
-	cmpq	(%rdx,%rax,8),%rcx
+	leaq	UNIT6502_$$_ACC(%rip),%rdx
+	leaq	TC_$UNIT6502_$$_ADDRTABLE(%rip),%r8
+	cmpq	(%r8,%rax,8),%rdx
 	jne	.Lj96
-.Ll52:
+.Ll49:
 # [324] result:=a
 	movzbw	U_$UNIT6502_$$_A(%rip),%ax
-	movw	%ax,-8(%rbp)
+	movw	%ax,%bx
 	jmp	.Lj99
 .Lj96:
-.Ll53:
+.Ll50:
 # [326] result:=read6502(ea2);
-	movq	-16(%rbp),%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 # PeepHole Optimization,var7
 	andw	$255,%ax
-	movw	%ax,-8(%rbp)
+	movw	%ax,%bx
 .Lj99:
-.Ll54:
+.Ll51:
 # [327] end;
-	movzwl	-8(%rbp),%eax
+	movzwl	%bx,%eax
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	32(%rsp),%rsp
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc42:
+.Lc24:
 .Lt111:
-.Ll55:
+.Ll52:
 
 .section .text.n_unit6502_$$_getvalue16$$word,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_GETVALUE16$$WORD
 UNIT6502_$$_GETVALUE16$$WORD:
-.Lc46:
-# Temps allocated between rbp-24 and rbp-16
+.Lc26:
 .seh_proc UNIT6502_$$_GETVALUE16$$WORD
-.Ll56:
+.Ll53:
 # [333] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc48:
-.Lc49:
-	movq	%rsp,%rbp
-.Lc50:
-	leaq	-64(%rsp),%rsp
-.seh_stackalloc 64
-	movq	%rbx,-24(%rbp)
-.seh_savereg %rbx, 40
+	pushq	%rbx
+.seh_pushreg %rbx
+	pushq	%rsi
+.seh_pushreg %rsi
+	leaq	-40(%rsp),%rsp
+.Lc28:
+.seh_stackalloc 40
+# Var $result located in register ax
+# Var ea2 located in register rbx
 .seh_endprologue
-# Var $result located at rbp-8, size=OS_16
-# Var ea2 located at rbp-16, size=OS_S64
-.Ll57:
+.Ll54:
 # [334] ea2:=ea+ds^;
 	movzwl	U_$UNIT6502_$$_EA(%rip),%edx
 	movq	U_$UNIT6502_$$_DS(%rip),%rax
 	movq	(%rax),%rax
-	leaq	(%rdx,%rax),%rax
-	movq	%rax,-16(%rbp)
-.Ll58:
+	leaq	(%rdx,%rax),%rbx
+# Var ea2 located in register rbx
+# Var ea2 located in register rbx
+.Ll55:
 # [335] result:=word(read6502(ea2)) or (word(read6502(ea2+1)) shl 8);
-	movq	-16(%rbp),%rcx
+	movq	%rbx,%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
-	movb	%al,%bl
+	movb	%al,%sil
 # PeepHole Optimization,var7
 # PeepHole Optimization,var1
 # PeepHole Optimization,var11
-	andl	$255,%ebx
-	movq	-16(%rbp),%rax
-	leaq	1(%rax),%rcx
+	andl	$255,%esi
+	leaq	1(%rbx),%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 # PeepHole Optimization,var7
 # PeepHole Optimization,var1
 # PeepHole Optimization,var11
 	andl	$255,%eax
 	shll	$8,%eax
-	orl	%ebx,%eax
-	movw	%ax,-8(%rbp)
-.Ll59:
+	orl	%esi,%eax
+# Var $result located in register ax
+# PeepHole Optimization,var11
+.Ll56:
 # [336] end;
-	movzwl	-8(%rbp),%eax
-	movq	-24(%rbp),%rbx
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	andl	$65535,%eax
+	nop
+	leaq	40(%rsp),%rsp
+	popq	%rsi
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc47:
+.Lc27:
 .Lt112:
-.Ll60:
+.Ll57:
 
 .section .text.n_unit6502_$$_getvalue32$$longword,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_GETVALUE32$$LONGWORD
 UNIT6502_$$_GETVALUE32$$LONGWORD:
-.Lc51:
-# Temps allocated between rbp-32 and rbp-16
+.Lc29:
 .seh_proc UNIT6502_$$_GETVALUE32$$LONGWORD
-.Ll61:
+.Ll58:
 # [342] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc53:
-.Lc54:
-	movq	%rsp,%rbp
-.Lc55:
-	leaq	-64(%rsp),%rsp
-.seh_stackalloc 64
-	movq	%rbx,-32(%rbp)
-	movq	%rsi,-24(%rbp)
-.seh_savereg %rbx, 32
-.seh_savereg %rsi, 40
+	pushq	%rbx
+.seh_pushreg %rbx
+	pushq	%rdi
+.seh_pushreg %rdi
+	pushq	%rsi
+.seh_pushreg %rsi
+	leaq	-32(%rsp),%rsp
+.Lc31:
+.seh_stackalloc 32
+# Var $result located in register eax
+# Var ea2 located in register rbx
 .seh_endprologue
-# Var $result located at rbp-8, size=OS_32
-# Var ea2 located at rbp-16, size=OS_S64
-.Ll62:
+.Ll59:
 # [344] ea2:=ea+ds^;
 	movzwl	U_$UNIT6502_$$_EA(%rip),%edx
 	movq	U_$UNIT6502_$$_DS(%rip),%rax
 	movq	(%rax),%rax
-	leaq	(%rdx,%rax),%rax
-	movq	%rax,-16(%rbp)
-.Ll63:
+	leaq	(%rdx,%rax),%rbx
+# Var ea2 located in register rbx
+# Var ea2 located in register rbx
+.Ll60:
 # [346] result:=cardinal(read6502(ea2))
-	movq	-16(%rbp),%rcx
-	call	UNIT6502_$$_READ6502$INT64$$BYTE
-	movb	%al,%bl
-# PeepHole Optimization,var9
-	andl	$255,%ebx
-.Ll64:
-# [347] or (cardinal(read6502(ea2+1)) shl 8)
-	movq	-16(%rbp),%rax
-	leaq	1(%rax),%rcx
+	movq	%rbx,%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 	movb	%al,%sil
 # PeepHole Optimization,var9
 	andl	$255,%esi
-	shll	$8,%esi
-	orl	%ebx,%esi
-.Ll65:
-# [348] or (cardinal(read6502(ea2+2)) shl 16)
-	movq	-16(%rbp),%rax
-	leaq	2(%rax),%rcx
+.Ll61:
+# [347] or (cardinal(read6502(ea2+1)) shl 8)
+	leaq	1(%rbx),%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
-	movb	%al,%bl
+	movb	%al,%dil
 # PeepHole Optimization,var9
-	andl	$255,%ebx
-	shll	$16,%ebx
-	orl	%esi,%ebx
-.Ll66:
+	andl	$255,%edi
+	shll	$8,%edi
+	orl	%esi,%edi
+.Ll62:
+# [348] or (cardinal(read6502(ea2+2)) shl 16)
+	leaq	2(%rbx),%rcx
+	call	UNIT6502_$$_READ6502$INT64$$BYTE
+	movb	%al,%sil
+# PeepHole Optimization,var9
+	andl	$255,%esi
+	shll	$16,%esi
+	orl	%edi,%esi
+.Ll63:
 # [349] or (cardinal(read6502(ea2+3)) shl 24);
-	movq	-16(%rbp),%rax
-	leaq	3(%rax),%rcx
+	leaq	3(%rbx),%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 # PeepHole Optimization,var9
 	andl	$255,%eax
 	shll	$24,%eax
-	orl	%ebx,%eax
-.Ll67:
-	movl	%eax,-8(%rbp)
-.Ll68:
+	orl	%esi,%eax
+# Var $result located in register eax
+.Ll64:
 # [350] end;
-	movl	-8(%rbp),%eax
-	movq	-32(%rbp),%rbx
-	movq	-24(%rbp),%rsi
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	nop
+	leaq	32(%rsp),%rsp
+	popq	%rsi
+	popq	%rdi
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc52:
+.Lc30:
 .Lt113:
-.Ll69:
+.Ll65:
 
 .section .text.n_unit6502_$$_putvalue$word,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_PUTVALUE$WORD
 UNIT6502_$$_PUTVALUE$WORD:
-.Lc56:
+.Lc32:
 .seh_proc UNIT6502_$$_PUTVALUE$WORD
-.Ll70:
+.Ll66:
 # [356] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc58:
-.Lc59:
-	movq	%rsp,%rbp
-.Lc60:
-	leaq	-48(%rsp),%rsp
-.seh_stackalloc 48
+	leaq	-40(%rsp),%rsp
+.Lc34:
+.seh_stackalloc 40
+# Var saveval located in register dx
+# Var ea2 located in register rcx
 .seh_endprologue
-# Var saveval located at rbp-8, size=OS_16
-# Var ea2 located at rbp-16, size=OS_S64
-	movw	%cx,-8(%rbp)
-.Ll71:
+	movw	%cx,%dx
+.Ll67:
 # [357] ea2:=ea+ds^;
-	movzwl	U_$UNIT6502_$$_EA(%rip),%edx
+	movzwl	U_$UNIT6502_$$_EA(%rip),%ecx
 	movq	U_$UNIT6502_$$_DS(%rip),%rax
 	movq	(%rax),%rax
-	leaq	(%rdx,%rax),%rax
-	movq	%rax,-16(%rbp)
-.Ll72:
+	leaq	(%rcx,%rax),%rcx
+# Var ea2 located in register rcx
+.Ll68:
 # [358] if (addrtable[opcode] = @acc) then a := byte(saveval and $00FF) else write6502(ea2, (saveval and $00FF));
 	movzbl	U_$UNIT6502_$$_OPCODE(%rip),%eax
-	leaq	UNIT6502_$$_ACC(%rip),%rdx
-	leaq	TC_$UNIT6502_$$_ADDRTABLE(%rip),%rcx
-	cmpq	(%rcx,%rax,8),%rdx
+	leaq	UNIT6502_$$_ACC(%rip),%r8
+	leaq	TC_$UNIT6502_$$_ADDRTABLE(%rip),%r9
+	cmpq	(%r9,%rax,8),%r8
 	jne	.Lj133
-	movw	-8(%rbp),%ax
+	movw	%dx,%ax
 	andw	$255,%ax
 	movb	%al,U_$UNIT6502_$$_A(%rip)
 	jmp	.Lj136
 .Lj133:
-	movw	-8(%rbp),%dx
 # PeepHole Optimization,var1
 # PeepHole Optimization,var9
 	andl	$255,%edx
-	movq	-16(%rbp),%rcx
 	call	UNIT6502_$$_WRITE6502$INT64$BYTE
 .Lj136:
-.Ll73:
+.Ll69:
 # [359] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc57:
+.Lc33:
 .Lt114:
-.Ll74:
+.Ll70:
 
 .section .text.n_unit6502_$$_putvalue32$longword,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_PUTVALUE32$LONGWORD
 UNIT6502_$$_PUTVALUE32$LONGWORD:
-.Lc61:
+.Lc35:
 .seh_proc UNIT6502_$$_PUTVALUE32$LONGWORD
-.Ll75:
+.Ll71:
 # [365] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc63:
-.Lc64:
-	movq	%rsp,%rbp
-.Lc65:
-	leaq	-48(%rsp),%rsp
-.seh_stackalloc 48
+	pushq	%rbx
+.seh_pushreg %rbx
+	pushq	%rsi
+.seh_pushreg %rsi
+	leaq	-40(%rsp),%rsp
+.Lc37:
+.seh_stackalloc 40
+# Var saveval located in register ebx
+# Var ea2 located in register rsi
 .seh_endprologue
-# Var saveval located at rbp-8, size=OS_32
-# Var ea2 located at rbp-16, size=OS_S64
-	movl	%ecx,-8(%rbp)
-.Ll76:
+	movl	%ecx,%ebx
+.Ll72:
 # [367] ea2:=ea+ds^;
 	movzwl	U_$UNIT6502_$$_EA(%rip),%edx
 	movq	U_$UNIT6502_$$_DS(%rip),%rax
 	movq	(%rax),%rax
-	leaq	(%rdx,%rax),%rax
-	movq	%rax,-16(%rbp)
-.Ll77:
+	leaq	(%rdx,%rax),%rsi
+# Var ea2 located in register rsi
+.Ll73:
 # [369] write6502(ea2, (saveval and $000000FF));
-	movl	-8(%rbp),%edx
+	movl	%ebx,%edx
 # PeepHole Optimization,var1
 # PeepHole Optimization,var9
 	andl	$255,%edx
-	movq	-16(%rbp),%rcx
+# Var ea2 located in register rsi
+	movq	%rsi,%rcx
 	call	UNIT6502_$$_WRITE6502$INT64$BYTE
-.Ll78:
+.Ll74:
 # [370] write6502(ea2+1, ((saveval shl 8) and $000000FF));
-	movl	-8(%rbp),%edx
+	movl	%ebx,%edx
 	shll	$8,%edx
 # PeepHole Optimization,var1
 # PeepHole Optimization,var9
 	andl	$255,%edx
-	movq	-16(%rbp),%rax
-	leaq	1(%rax),%rcx
+	leaq	1(%rsi),%rcx
 	call	UNIT6502_$$_WRITE6502$INT64$BYTE
-.Ll79:
+.Ll75:
 # [371] write6502(ea2+2, ((saveval shl 16) and $000000FF));
-	movl	-8(%rbp),%edx
+	movl	%ebx,%edx
 	shll	$16,%edx
 # PeepHole Optimization,var1
 # PeepHole Optimization,var9
 	andl	$255,%edx
-	movq	-16(%rbp),%rax
-	leaq	2(%rax),%rcx
+	leaq	2(%rsi),%rcx
 	call	UNIT6502_$$_WRITE6502$INT64$BYTE
-.Ll80:
+.Ll76:
 # [372] write6502(ea2+3, ((saveval shl 24) and $000000FF));
-	movl	-8(%rbp),%edx
+	movl	%ebx,%edx
 	shll	$24,%edx
 # PeepHole Optimization,var1
 # PeepHole Optimization,var9
 	andl	$255,%edx
-	movq	-16(%rbp),%rax
-	leaq	3(%rax),%rcx
+	leaq	3(%rsi),%rcx
 	call	UNIT6502_$$_WRITE6502$INT64$BYTE
-.Ll81:
+.Ll77:
 # [373] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
+	popq	%rsi
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc62:
+.Lc36:
 .Lt115:
-.Ll82:
+.Ll78:
 
 .section .text.n_unit6502_$$_reset6502,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_RESET6502
 UNIT6502_$$_RESET6502:
-.Lc66:
-# Temps allocated between rbp-8 and rbp+0
+.Lc38:
 .seh_proc UNIT6502_$$_RESET6502
-.Ll83:
+.Ll79:
 # [377] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc68:
-.Lc69:
-	movq	%rsp,%rbp
-.Lc70:
-	leaq	-48(%rsp),%rsp
-.seh_stackalloc 48
-	movq	%rbx,-8(%rbp)
-.seh_savereg %rbx, 40
+	pushq	%rbx
+.seh_pushreg %rbx
+	leaq	-32(%rsp),%rsp
+.Lc40:
+.seh_stackalloc 32
 .seh_endprologue
-.Ll84:
+.Ll80:
 # [378] pc := word(read6502($FFFC)) or (word(read6502($FFFD) shl 8));
 	movq	$65532,%rax
 	movq	%rax,%rcx
@@ -835,94 +743,88 @@ UNIT6502_$$_RESET6502:
 	shll	$8,%eax
 	orw	%bx,%ax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll85:
+.Ll81:
 # [379] a := 0;
 	movb	$0,U_$UNIT6502_$$_A(%rip)
-.Ll86:
+.Ll82:
 # [380] x := 0;
 	movb	$0,U_$UNIT6502_$$_X(%rip)
-.Ll87:
+.Ll83:
 # [381] y := 0;
 	movb	$0,U_$UNIT6502_$$_Y(%rip)
-.Ll88:
+.Ll84:
 # [382] sp := $FD;
 	movb	$253,U_$UNIT6502_$$_SP(%rip)
-.Ll89:
+.Ll85:
 # [383] ds:=@dsa;
 	leaq	U_$UNIT6502_$$_DSA(%rip),%rax
 	movq	%rax,U_$UNIT6502_$$_DS(%rip)
-.Ll90:
+.Ll86:
 # [384] cs:=@csa;
 	leaq	U_$UNIT6502_$$_CSA(%rip),%rax
+# PeepHole Optimization,MovMov2Mov1
 	movq	%rax,U_$UNIT6502_$$_CS(%rip)
-.Ll91:
+.Ll87:
 # [385] cs^:=0; ds^:=0; csi:=0; dsi:=0;
-	movq	U_$UNIT6502_$$_CS(%rip),%rax
 	movq	$0,(%rax)
 	movq	U_$UNIT6502_$$_DS(%rip),%rax
 	movq	$0,(%rax)
 	movq	$0,U_$UNIT6502_$$_CSI(%rip)
 	movq	$0,U_$UNIT6502_$$_DSI(%rip)
 # PeepHole Optimization,var3
-.Ll92:
+.Ll88:
 # [386] status:=status or FLAG_CONSTANT;
 	orb	$32,U_$UNIT6502_$$_STATUS(%rip)
-.Ll93:
+.Ll89:
 # [387] clockgoal6502:=0;
 	movq	$0,TC_$UNIT6502_$$_CLOCKGOAL6502(%rip)
-.Ll94:
+.Ll90:
 # [388] instructions:=0;
 	movq	$0,TC_$UNIT6502_$$_INSTRUCTIONS(%rip)
-.Ll95:
+.Ll91:
 # [389] clockticks6502:=0;
 	movq	$0,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
-.Ll96:
+.Ll92:
 # [391] end;
-	movq	-8(%rbp),%rbx
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	nop
+	leaq	32(%rsp),%rsp
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc67:
+.Lc39:
 .Lt3:
-.Ll97:
+.Ll93:
 
 .section .text.n_unit6502_$$_nmi6502,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_NMI6502
 UNIT6502_$$_NMI6502:
-.Lc71:
-# Temps allocated between rbp-8 and rbp+0
+.Lc41:
 .seh_proc UNIT6502_$$_NMI6502
-.Ll98:
+.Ll94:
 # [395] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc73:
-.Lc74:
-	movq	%rsp,%rbp
-.Lc75:
-	leaq	-48(%rsp),%rsp
-.seh_stackalloc 48
-	movq	%rbx,-8(%rbp)
-.seh_savereg %rbx, 40
+	pushq	%rbx
+.seh_pushreg %rbx
+	leaq	-32(%rsp),%rsp
+.Lc43:
+.seh_stackalloc 32
 .seh_endprologue
-.Ll99:
+.Ll95:
 # [396] push16(pc);
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	movl	%eax,%ecx
 	call	UNIT6502_$$_PUSH16$WORD
-.Ll100:
+.Ll96:
 # [397] push8(status);
 	movzbw	U_$UNIT6502_$$_STATUS(%rip),%cx
 # PeepHole Optimization,var11
 	andl	$65535,%ecx
 	call	UNIT6502_$$_PUSH8$WORD
 # PeepHole Optimization,var3
-.Ll101:
+.Ll97:
 # [398] status :=status or FLAG_INTERRUPT;
 	orb	$4,U_$UNIT6502_$$_STATUS(%rip)
-.Ll102:
+.Ll98:
 # [399] pc := word(read6502($FFFA)) or (word(read6502($FFFB)) << 8);
 	movq	$65530,%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
@@ -940,61 +842,55 @@ UNIT6502_$$_NMI6502:
 	shll	$8,%eax
 	orl	%ebx,%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll103:
+.Ll99:
 # [400] cs:=@csi;
 	leaq	U_$UNIT6502_$$_CSI(%rip),%rax
 	movq	%rax,U_$UNIT6502_$$_CS(%rip)
-.Ll104:
+.Ll100:
 # [401] ds:=@dsi;
 	leaq	U_$UNIT6502_$$_DSI(%rip),%rax
 	movq	%rax,U_$UNIT6502_$$_DS(%rip)
-.Ll105:
+.Ll101:
 # [402] end;
-	movq	-8(%rbp),%rbx
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	nop
+	leaq	32(%rsp),%rsp
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc72:
+.Lc42:
 .Lt4:
-.Ll106:
+.Ll102:
 
 .section .text.n_unit6502_$$_irq6502,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_IRQ6502
 UNIT6502_$$_IRQ6502:
-.Lc76:
-# Temps allocated between rbp-8 and rbp+0
+.Lc44:
 .seh_proc UNIT6502_$$_IRQ6502
-.Ll107:
+.Ll103:
 # [406] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc78:
-.Lc79:
-	movq	%rsp,%rbp
-.Lc80:
-	leaq	-48(%rsp),%rsp
-.seh_stackalloc 48
-	movq	%rbx,-8(%rbp)
-.seh_savereg %rbx, 40
+	pushq	%rbx
+.seh_pushreg %rbx
+	leaq	-32(%rsp),%rsp
+.Lc46:
+.seh_stackalloc 32
 .seh_endprologue
-.Ll108:
+.Ll104:
 # [407] push16(pc);
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	movl	%eax,%ecx
 	call	UNIT6502_$$_PUSH16$WORD
-.Ll109:
+.Ll105:
 # [408] push8(status);
 	movzbw	U_$UNIT6502_$$_STATUS(%rip),%cx
 # PeepHole Optimization,var11
 	andl	$65535,%ecx
 	call	UNIT6502_$$_PUSH8$WORD
 # PeepHole Optimization,var3
-.Ll110:
+.Ll106:
 # [409] status :=status or FLAG_INTERRUPT;
 	orb	$4,U_$UNIT6502_$$_STATUS(%rip)
-.Ll111:
+.Ll107:
 # [410] pc := word(read6502($FFFE)) or (word(read6502($FFFF)) << 8);
 	movq	$65534,%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
@@ -1012,56 +908,50 @@ UNIT6502_$$_IRQ6502:
 	shll	$8,%eax
 	orl	%ebx,%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll112:
+.Ll108:
 # [411] cs:=@csi;
 	leaq	U_$UNIT6502_$$_CSI(%rip),%rax
 	movq	%rax,U_$UNIT6502_$$_CS(%rip)
-.Ll113:
+.Ll109:
 # [412] ds:=@dsi;
 	leaq	U_$UNIT6502_$$_DSI(%rip),%rax
 	movq	%rax,U_$UNIT6502_$$_DS(%rip)
-.Ll114:
+.Ll110:
 # [413] end;
-	movq	-8(%rbp),%rbx
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	nop
+	leaq	32(%rsp),%rsp
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc77:
+.Lc45:
 .Lt5:
-.Ll115:
+.Ll111:
 
 .section .text.n_unit6502_$$_exec6502$int64,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_EXEC6502$INT64
 UNIT6502_$$_EXEC6502$INT64:
-.Lc81:
+.Lc47:
 .seh_proc UNIT6502_$$_EXEC6502$INT64
-.Ll116:
+.Ll112:
 # [417] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc83:
-.Lc84:
-	movq	%rsp,%rbp
-.Lc85:
-	leaq	-48(%rsp),%rsp
-.seh_stackalloc 48
+	leaq	-40(%rsp),%rsp
+.Lc49:
+.seh_stackalloc 40
+# Var tickcount located in register rax
 .seh_endprologue
-# Var tickcount located at rbp-8, size=OS_S64
-	movq	%rcx,-8(%rbp)
-.Ll117:
+	movq	%rcx,%rax
+.Ll113:
 # [418] clockgoal6502 += tickcount;
-	movq	TC_$UNIT6502_$$_CLOCKGOAL6502(%rip),%rax
-	movq	-8(%rbp),%rdx
-	leaq	(%rax,%rdx),%rax
+	movq	TC_$UNIT6502_$$_CLOCKGOAL6502(%rip),%rdx
+	leaq	(%rdx,%rax),%rax
 	movq	%rax,TC_$UNIT6502_$$_CLOCKGOAL6502(%rip)
-.Ll118:
+.Ll114:
 # [419] while (clockticks6502 < clockgoal6502) do
 	jmp	.Lj238
 	.balign 8,0x90
 .Lj237:
-.Ll119:
+.Ll115:
 # [421] opcode := read6502(pc+cs^);
 	movzwl	U_$UNIT6502_$$_PC(%rip),%edx
 	movq	U_$UNIT6502_$$_CS(%rip),%rax
@@ -1069,28 +959,28 @@ UNIT6502_$$_EXEC6502$INT64:
 	leaq	(%rdx,%rax),%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 	movb	%al,U_$UNIT6502_$$_OPCODE(%rip)
-.Ll120:
+.Ll116:
 # [422] pc+=1;
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	leal	1(%eax),%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll121:
+.Ll117:
 # [424] penaltyop := 0;
 	movb	$0,U_$UNIT6502_$$_PENALTYOP(%rip)
-.Ll122:
+.Ll118:
 # [425] penaltyaddr := 0;
 	movb	$0,U_$UNIT6502_$$_PENALTYADDR(%rip)
-.Ll123:
+.Ll119:
 # [426] addrtable[opcode];
 	movzbl	U_$UNIT6502_$$_OPCODE(%rip),%edx
 	leaq	TC_$UNIT6502_$$_ADDRTABLE(%rip),%rax
 	call	*(%rax,%rdx,8)
-.Ll124:
+.Ll120:
 # [427] optable[opcode];
 	movzbl	U_$UNIT6502_$$_OPCODE(%rip),%edx
 	leaq	TC_$UNIT6502_$$_OPTABLE(%rip),%rax
 	call	*(%rax,%rdx,8)
-.Ll125:
+.Ll121:
 # [428] clockticks6502 += ticktable[opcode];
 	movzbl	U_$UNIT6502_$$_OPCODE(%rip),%eax
 	leaq	TC_$UNIT6502_$$_TICKTABLE(%rip),%rdx
@@ -1098,7 +988,7 @@ UNIT6502_$$_EXEC6502$INT64:
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	(%rdx,%rax),%rax
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
-.Ll126:
+.Ll122:
 # [429] if (penaltyop<>0) and (penaltyaddr<>0) then  clockticks6502+=1;
 	cmpb	$0,U_$UNIT6502_$$_PENALTYOP(%rip)
 	je	.Lj253
@@ -1108,58 +998,51 @@ UNIT6502_$$_EXEC6502$INT64:
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 .Lj253:
-.Ll127:
+.Ll123:
 # [430] instructions+=1;
 	movq	TC_$UNIT6502_$$_INSTRUCTIONS(%rip),%rax
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UNIT6502_$$_INSTRUCTIONS(%rip)
 .Lj238:
-.Ll128:
+.Ll124:
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	cmpq	TC_$UNIT6502_$$_CLOCKGOAL6502(%rip),%rax
 	jl	.Lj237
-.Ll129:
+.Ll125:
 # [432] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc82:
+.Lc48:
 .Lt6:
-.Ll130:
+.Ll126:
 
 .section .text.n_unit6502_$$_fast6502$int64,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_FAST6502$INT64
 UNIT6502_$$_FAST6502$INT64:
-.Lc86:
+.Lc50:
 .seh_proc UNIT6502_$$_FAST6502$INT64
-.Ll131:
+.Ll127:
 # [436] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc88:
-.Lc89:
-	movq	%rsp,%rbp
-.Lc90:
-	leaq	-48(%rsp),%rsp
-.seh_stackalloc 48
+	leaq	-40(%rsp),%rsp
+.Lc52:
+.seh_stackalloc 40
+# Var tickcount located in register rax
 .seh_endprologue
-# Var tickcount located at rbp-8, size=OS_S64
-	movq	%rcx,-8(%rbp)
-.Ll132:
+	movq	%rcx,%rax
+.Ll128:
 # [437] clockgoal6502 += tickcount;
 	movq	TC_$UNIT6502_$$_CLOCKGOAL6502(%rip),%rdx
-	movq	-8(%rbp),%rax
 	leaq	(%rdx,%rax),%rax
 	movq	%rax,TC_$UNIT6502_$$_CLOCKGOAL6502(%rip)
-.Ll133:
+.Ll129:
 # [438] while (clockticks6502 < clockgoal6502) do
 	jmp	.Lj264
 	.balign 8,0x90
 .Lj263:
-.Ll134:
+.Ll130:
 # [440] opcode := read6502(pc+cs^);
 	movzwl	U_$UNIT6502_$$_PC(%rip),%edx
 	movq	U_$UNIT6502_$$_CS(%rip),%rax
@@ -1167,65 +1050,59 @@ UNIT6502_$$_FAST6502$INT64:
 	leaq	(%rdx,%rax),%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 	movb	%al,U_$UNIT6502_$$_OPCODE(%rip)
-.Ll135:
+.Ll131:
 # [441] pc+=1;
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	leal	1(%eax),%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll136:
+.Ll132:
 # [442] addrtable[opcode];
 	movzbl	U_$UNIT6502_$$_OPCODE(%rip),%edx
 	leaq	TC_$UNIT6502_$$_ADDRTABLE(%rip),%rax
 	call	*(%rax,%rdx,8)
-.Ll137:
+.Ll133:
 # [443] optable[opcode];
-	movzbl	U_$UNIT6502_$$_OPCODE(%rip),%edx
-	leaq	TC_$UNIT6502_$$_OPTABLE(%rip),%rax
-	call	*(%rax,%rdx,8)
-.Ll138:
+	movzbl	U_$UNIT6502_$$_OPCODE(%rip),%eax
+	leaq	TC_$UNIT6502_$$_OPTABLE(%rip),%rdx
+	call	*(%rdx,%rax,8)
+.Ll134:
 # [444] clockticks6502 += 1;
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
-.Ll139:
+.Ll135:
 # [445] instructions+=1;
 	movq	TC_$UNIT6502_$$_INSTRUCTIONS(%rip),%rax
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UNIT6502_$$_INSTRUCTIONS(%rip)
 .Lj264:
-.Ll140:
+.Ll136:
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	cmpq	TC_$UNIT6502_$$_CLOCKGOAL6502(%rip),%rax
 	jl	.Lj263
-.Ll141:
+.Ll137:
 # [447] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc87:
+.Lc51:
 .Lt7:
-.Ll142:
+.Ll138:
 
 .section .text.n_unit6502_$$_step6502,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_STEP6502
 UNIT6502_$$_STEP6502:
-.Lc91:
+.Lc53:
 .seh_proc UNIT6502_$$_STEP6502
-.Ll143:
+.Ll139:
 # [451] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc93:
-.Lc94:
-	movq	%rsp,%rbp
-.Lc95:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc55:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll144:
+.Ll140:
 # [452] opcode := read6502(pc+cs^);
 	movzwl	U_$UNIT6502_$$_PC(%rip),%edx
 	movq	U_$UNIT6502_$$_CS(%rip),%rax
@@ -1233,32 +1110,32 @@ UNIT6502_$$_STEP6502:
 	leaq	(%rdx,%rax),%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 	movb	%al,U_$UNIT6502_$$_OPCODE(%rip)
-.Ll145:
+.Ll141:
 # [453] pc+=1;
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	leal	1(%eax),%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
 # PeepHole Optimization,var3
-.Ll146:
+.Ll142:
 # [454] status :=status or FLAG_CONSTANT;
 	orb	$32,U_$UNIT6502_$$_STATUS(%rip)
-.Ll147:
+.Ll143:
 # [455] penaltyop := 0;
 	movb	$0,U_$UNIT6502_$$_PENALTYOP(%rip)
-.Ll148:
+.Ll144:
 # [456] penaltyaddr := 0;
 	movb	$0,U_$UNIT6502_$$_PENALTYADDR(%rip)
-.Ll149:
+.Ll145:
 # [457] addrtable[opcode];
 	movzbl	U_$UNIT6502_$$_OPCODE(%rip),%eax
 	leaq	TC_$UNIT6502_$$_ADDRTABLE(%rip),%rdx
 	call	*(%rdx,%rax,8)
-.Ll150:
+.Ll146:
 # [458] optable[opcode];
 	movzbl	U_$UNIT6502_$$_OPCODE(%rip),%edx
 	leaq	TC_$UNIT6502_$$_OPTABLE(%rip),%rax
 	call	*(%rax,%rdx,8)
-.Ll151:
+.Ll147:
 # [459] clockticks6502 += ticktable[opcode];
 	movzbl	U_$UNIT6502_$$_OPCODE(%rip),%eax
 	leaq	TC_$UNIT6502_$$_TICKTABLE(%rip),%rdx
@@ -1266,7 +1143,7 @@ UNIT6502_$$_STEP6502:
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	(%rdx,%rax),%rax
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
-.Ll152:
+.Ll148:
 # [460] if (penaltyop<>0) and (penaltyaddr<>0) then clockticks6502+=1;
 	cmpb	$0,U_$UNIT6502_$$_PENALTYOP(%rip)
 	je	.Lj293
@@ -1276,74 +1153,67 @@ UNIT6502_$$_STEP6502:
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 .Lj293:
-.Ll153:
+.Ll149:
 # [461] clockgoal6502 := clockticks6502;
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	movq	%rax,TC_$UNIT6502_$$_CLOCKGOAL6502(%rip)
-.Ll154:
+.Ll150:
 # [462] instructions+=1;
 	movq	TC_$UNIT6502_$$_INSTRUCTIONS(%rip),%rax
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UNIT6502_$$_INSTRUCTIONS(%rip)
-.Ll155:
+.Ll151:
 # [463] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc92:
+.Lc54:
 .Lt8:
-.Ll156:
+.Ll152:
 
 .section .text.n_unit6502_$$_jsr6502$word$int64,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_JSR6502$WORD$INT64
 UNIT6502_$$_JSR6502$WORD$INT64:
-.Lc96:
+.Lc56:
 .seh_proc UNIT6502_$$_JSR6502$WORD$INT64
-.Ll157:
+.Ll153:
 # [470] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc98:
-.Lc99:
-	movq	%rsp,%rbp
-.Lc100:
-	leaq	-64(%rsp),%rsp
-.seh_stackalloc 64
+	pushq	%rbx
+.seh_pushreg %rbx
+	leaq	-32(%rsp),%rsp
+.Lc58:
+.seh_stackalloc 32
+# Var aa located in register cx
+# Var addr located in register rdx
+# Var depth located in register ebx
 .seh_endprologue
-# Var aa located at rbp-8, size=OS_16
-# Var addr located at rbp-16, size=OS_S64
-# Var depth located at rbp-24, size=OS_S32
-	movw	%cx,-8(%rbp)
-	movq	%rdx,-16(%rbp)
-.Ll158:
+.Ll154:
 # [472] pc:=addr;
-	movw	-16(%rbp),%ax
-	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll159:
+	movw	%dx,U_$UNIT6502_$$_PC(%rip)
+.Ll155:
 # [473] sp := $FD;
 	movb	$253,U_$UNIT6502_$$_SP(%rip)
-.Ll160:
+# Var depth located in register ebx
+.Ll156:
 # [474] depth:=0;
-	movl	$0,-24(%rbp)
-.Ll161:
+	movl	$0,%ebx
+.Ll157:
 # [475] if aa<256 then begin a:=aa; x:=0; y:=0; status:=0; end;
-	cmpw	$256,-8(%rbp)
+	cmpw	$256,%cx
 	jnb	.Lj310
-	movb	-8(%rbp),%al
-	movb	%al,U_$UNIT6502_$$_A(%rip)
+	movb	%cl,U_$UNIT6502_$$_A(%rip)
 	movb	$0,U_$UNIT6502_$$_X(%rip)
 	movb	$0,U_$UNIT6502_$$_Y(%rip)
 	movb	$0,U_$UNIT6502_$$_STATUS(%rip)
 .Lj310:
-.Ll162:
+.Ll158:
 # [476] instructions:=0;
 	movq	$0,TC_$UNIT6502_$$_INSTRUCTIONS(%rip)
 	.balign 8,0x90
 .Lj321:
-.Ll163:
+.Ll159:
 # [478] opcode := read6502(pc+cs^);
 	movzwl	U_$UNIT6502_$$_PC(%rip),%edx
 	movq	U_$UNIT6502_$$_CS(%rip),%rax
@@ -1351,156 +1221,115 @@ UNIT6502_$$_JSR6502$WORD$INT64:
 	leaq	(%rdx,%rax),%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 	movb	%al,U_$UNIT6502_$$_OPCODE(%rip)
-.Ll164:
+.Ll160:
 # [479] if opcode=$20 then inc(depth);
 	cmpb	$32,U_$UNIT6502_$$_OPCODE(%rip)
 	jne	.Lj329
-	addl	$1,-24(%rbp)
+	addl	$1,%ebx
 .Lj329:
-.Ll165:
+.Ll161:
 # [480] if opcode=$60 then dec(depth);
 	cmpb	$96,U_$UNIT6502_$$_OPCODE(%rip)
 	jne	.Lj331
-	subl	$1,-24(%rbp)
+	subl	$1,%ebx
 .Lj331:
-.Ll166:
+.Ll162:
 # [482] pc+=1;
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	leal	1(%eax),%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll167:
+.Ll163:
 # [483] addrtable[opcode];
 	movzbl	U_$UNIT6502_$$_OPCODE(%rip),%eax
 	leaq	TC_$UNIT6502_$$_ADDRTABLE(%rip),%rdx
 	call	*(%rdx,%rax,8)
-.Ll168:
+.Ll164:
 # [484] optable[opcode];
 	movzbl	U_$UNIT6502_$$_OPCODE(%rip),%edx
 	leaq	TC_$UNIT6502_$$_OPTABLE(%rip),%rax
 	call	*(%rax,%rdx,8)
-.Ll169:
+.Ll165:
 # [485] instructions+=1;
 	movq	TC_$UNIT6502_$$_INSTRUCTIONS(%rip),%rax
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UNIT6502_$$_INSTRUCTIONS(%rip)
-.Ll170:
+.Ll166:
 # [487] until (depth<0) or (instructions>3000);
-	cmpl	$0,-24(%rbp)
+	cmpl	$0,%ebx
 	jl	.Lj323
 	cmpq	$3000,TC_$UNIT6502_$$_INSTRUCTIONS(%rip)
 	jng	.Lj321
 .Lj323:
-.Ll171:
+.Ll167:
 # [489] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	32(%rsp),%rsp
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc97:
+.Lc57:
 .Lt9:
-.Ll172:
+.Ll168:
 
 .section .text.n_unit6502_$$_imp,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_IMP
 UNIT6502_$$_IMP:
-.Lc101:
-.seh_proc UNIT6502_$$_IMP
-.Ll173:
+.Lc59:
 # [495] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc103:
-.Lc104:
-	movq	%rsp,%rbp
-.Lc105:
-.seh_endprologue
-.Ll174:
+.Ll169:
 # [496] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc102:
+.Lc60:
 .Lt10:
-.Ll175:
+.Ll170:
 
 .section .text.n_unit6502_$$_acc,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_ACC
 UNIT6502_$$_ACC:
-.Lc106:
-.seh_proc UNIT6502_$$_ACC
-.Ll176:
+.Lc61:
 # [500] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc108:
-.Lc109:
-	movq	%rsp,%rbp
-.Lc110:
-.seh_endprologue
-.Ll177:
+.Ll171:
 # [501] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc107:
+.Lc62:
 .Lt14:
-.Ll178:
+.Ll172:
 
 .section .text.n_unit6502_$$_imm,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_IMM
 UNIT6502_$$_IMM:
-.Lc111:
-.seh_proc UNIT6502_$$_IMM
-.Ll179:
+.Lc63:
 # [505] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc113:
-.Lc114:
-	movq	%rsp,%rbp
-.Lc115:
-.seh_endprologue
-.Ll180:
+.Ll173:
 # [506] ea := pc;
 	movw	U_$UNIT6502_$$_PC(%rip),%ax
 	movw	%ax,U_$UNIT6502_$$_EA(%rip)
-.Ll181:
+.Ll174:
 # [507] inc(pc);
 	addw	$1,U_$UNIT6502_$$_PC(%rip)
-.Ll182:
+.Ll175:
 # [508] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc112:
+.Lc64:
 .Lt13:
-.Ll183:
+.Ll176:
 
 .section .text.n_unit6502_$$_zp,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_ZP
 UNIT6502_$$_ZP:
-.Lc116:
+.Lc65:
 .seh_proc UNIT6502_$$_ZP
-.Ll184:
+.Ll177:
 # [512] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc118:
-.Lc119:
-	movq	%rsp,%rbp
-.Lc120:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc67:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll185:
+.Ll178:
 # [513] ea := word(read6502(pc));
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	movq	%rax,%rcx
@@ -1508,38 +1337,32 @@ UNIT6502_$$_ZP:
 # PeepHole Optimization,var7
 	andw	$255,%ax
 	movw	%ax,U_$UNIT6502_$$_EA(%rip)
-.Ll186:
+.Ll179:
 # [514] inc(pc);
 	addw	$1,U_$UNIT6502_$$_PC(%rip)
-.Ll187:
+.Ll180:
 # [515] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc117:
+.Lc66:
 .Lt12:
-.Ll188:
+.Ll181:
 
 .section .text.n_unit6502_$$_zpx,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_ZPX
 UNIT6502_$$_ZPX:
-.Lc121:
+.Lc68:
 .seh_proc UNIT6502_$$_ZPX
-.Ll189:
+.Ll182:
 # [519] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc123:
-.Lc124:
-	movq	%rsp,%rbp
-.Lc125:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc70:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll190:
+.Ll183:
 # [520] ea := ((read6502(pc)+x) and $FF); //zero-page wraparound
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	movq	%rax,%rcx
@@ -1550,38 +1373,32 @@ UNIT6502_$$_ZPX:
 	leal	(%eax,%edx),%eax
 	andl	$255,%eax
 	movw	%ax,U_$UNIT6502_$$_EA(%rip)
-.Ll191:
+.Ll184:
 # [521] inc(pc)
 	addw	$1,U_$UNIT6502_$$_PC(%rip)
-.Ll192:
+.Ll185:
 # [522] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc122:
+.Lc69:
 .Lt21:
-.Ll193:
+.Ll186:
 
 .section .text.n_unit6502_$$_zpy,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_ZPY
 UNIT6502_$$_ZPY:
-.Lc126:
+.Lc71:
 .seh_proc UNIT6502_$$_ZPY
-.Ll194:
+.Ll187:
 # [526] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc128:
-.Lc129:
-	movq	%rsp,%rbp
-.Lc130:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc73:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll195:
+.Ll188:
 # [527] ea := ((read6502(pc)+y) and $FF); //zero-page wraparound
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	movq	%rax,%rcx
@@ -1592,38 +1409,32 @@ UNIT6502_$$_ZPY:
 	leal	(%eax,%edx),%eax
 	andl	$255,%eax
 	movw	%ax,U_$UNIT6502_$$_EA(%rip)
-.Ll196:
+.Ll189:
 # [528] inc(pc)
 	addw	$1,U_$UNIT6502_$$_PC(%rip)
-.Ll197:
+.Ll190:
 # [529] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc127:
+.Lc72:
 .Lt22:
-.Ll198:
+.Ll191:
 
 .section .text.n_unit6502_$$_rel,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_REL
 UNIT6502_$$_REL:
-.Lc131:
+.Lc74:
 .seh_proc UNIT6502_$$_REL
-.Ll199:
+.Ll192:
 # [533] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc133:
-.Lc134:
-	movq	%rsp,%rbp
-.Lc135:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc76:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll200:
+.Ll193:
 # [534] reladdr := word(read6502(pc));
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	movq	%rax,%rcx
@@ -1631,51 +1442,47 @@ UNIT6502_$$_REL:
 # PeepHole Optimization,var7
 	andw	$255,%ax
 	movw	%ax,U_$UNIT6502_$$_RELADDR(%rip)
-.Ll201:
+.Ll194:
 # [535] inc(pc);
 	addw	$1,U_$UNIT6502_$$_PC(%rip)
-.Ll202:
+.Ll195:
 # [536] if (reladdr and $80)<>0 then reladdr:=reladdr or $FF00;
 	movw	U_$UNIT6502_$$_RELADDR(%rip),%ax
 	andw	$128,%ax
 	testw	%ax,%ax
 	je	.Lj370
-	movw	U_$UNIT6502_$$_RELADDR(%rip),%ax
-	orw	$65280,%ax
-	movw	%ax,U_$UNIT6502_$$_RELADDR(%rip)
+# PeepHole Optimization,var2
+# P=movw
+# HP1=orw
+# HP2=movw
+# PeepHole Optimization,var2
+	orw	$65280,U_$UNIT6502_$$_RELADDR(%rip)
 .Lj370:
-.Ll203:
+.Ll196:
 # [537] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc132:
+.Lc75:
 .Lt16:
-.Ll204:
+.Ll197:
 
 .section .text.n_unit6502_$$_abso,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_ABSO
 UNIT6502_$$_ABSO:
-.Lc136:
-# Temps allocated between rbp-8 and rbp+0
+.Lc77:
 .seh_proc UNIT6502_$$_ABSO
-.Ll205:
+.Ll198:
 # [541] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc138:
-.Lc139:
-	movq	%rsp,%rbp
-.Lc140:
-	leaq	-48(%rsp),%rsp
-.seh_stackalloc 48
-	movq	%rbx,-8(%rbp)
-.seh_savereg %rbx, 40
+	pushq	%rbx
+.seh_pushreg %rbx
+	leaq	-32(%rsp),%rsp
+.Lc79:
+.seh_stackalloc 32
 .seh_endprologue
-.Ll206:
+.Ll199:
 # [542] ea := word(read6502(pc)) or (word(read6502(pc+1)) shl 8);
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	movq	%rax,%rcx
@@ -1695,47 +1502,40 @@ UNIT6502_$$_ABSO:
 	shll	$8,%eax
 	orl	%ebx,%eax
 	movw	%ax,U_$UNIT6502_$$_EA(%rip)
-.Ll207:
+.Ll200:
 # [543] pc += 2;
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	leal	2(%eax),%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll208:
+.Ll201:
 # [544] end;
-	movq	-8(%rbp),%rbx
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	nop
+	leaq	32(%rsp),%rsp
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc137:
+.Lc78:
 .Lt15:
-.Ll209:
+.Ll202:
 
 .section .text.n_unit6502_$$_absx,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_ABSX
 UNIT6502_$$_ABSX:
-.Lc141:
-# Temps allocated between rbp-16 and rbp-8
+.Lc80:
 .seh_proc UNIT6502_$$_ABSX
-.Ll210:
+.Ll203:
 # [550] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc143:
-.Lc144:
-	movq	%rsp,%rbp
-.Lc145:
-	leaq	-48(%rsp),%rsp
-.seh_stackalloc 48
-	movq	%rbx,-16(%rbp)
-.seh_savereg %rbx, 32
+	pushq	%rbx
+.seh_pushreg %rbx
+	leaq	-32(%rsp),%rsp
+.Lc82:
+.seh_stackalloc 32
+# Var startpage located in register ax
 .seh_endprologue
-# Var startpage located at rbp-8, size=OS_16
-.Ll211:
+.Ll204:
 # [551] ea := word(read6502(pc)) or (word(read6502(pc+1)) shl 8);
-	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
-	movq	%rax,%rcx
+	movzwl	U_$UNIT6502_$$_PC(%rip),%ecx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 	movb	%al,%bl
 # PeepHole Optimization,var7
@@ -1751,67 +1551,60 @@ UNIT6502_$$_ABSX:
 	andl	$255,%eax
 	shll	$8,%eax
 	orl	%ebx,%eax
+# PeepHole Optimization,MovMov2Mov1
 	movw	%ax,U_$UNIT6502_$$_EA(%rip)
-.Ll212:
+.Ll205:
 # [552] startpage := ea and $FF00;
-	movw	U_$UNIT6502_$$_EA(%rip),%ax
 	andw	$65280,%ax
-	movw	%ax,-8(%rbp)
-.Ll213:
+# Var startpage located in register ax
+.Ll206:
 # [553] ea += x;
-	movzwl	U_$UNIT6502_$$_EA(%rip),%edx
-	movzbl	U_$UNIT6502_$$_X(%rip),%eax
-	leal	(%edx,%eax),%eax
-	movw	%ax,U_$UNIT6502_$$_EA(%rip)
-.Ll214:
+	movzwl	U_$UNIT6502_$$_EA(%rip),%ecx
+	movzbl	U_$UNIT6502_$$_X(%rip),%edx
+	leal	(%ecx,%edx),%edx
+# PeepHole Optimization,MovMov2Mov1
+	movw	%dx,U_$UNIT6502_$$_EA(%rip)
+.Ll207:
 # [554] if (startpage <> (ea and $FF00)) then penaltyaddr := 1;   //one cycle penlty for page-crossing on some opcodes
-	movw	U_$UNIT6502_$$_EA(%rip),%ax
-	andw	$65280,%ax
-	cmpw	-8(%rbp),%ax
+	andw	$65280,%dx
+	cmpw	%ax,%dx
 	je	.Lj396
 	movb	$1,U_$UNIT6502_$$_PENALTYADDR(%rip)
 .Lj396:
-.Ll215:
+.Ll208:
 # [555] pc += 2;
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	leal	2(%eax),%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll216:
+.Ll209:
 # [556] end;
-	movq	-16(%rbp),%rbx
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	nop
+	leaq	32(%rsp),%rsp
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc142:
+.Lc81:
 .Lt19:
-.Ll217:
+.Ll210:
 
 .section .text.n_unit6502_$$_absy,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_ABSY
 UNIT6502_$$_ABSY:
-.Lc146:
-# Temps allocated between rbp-16 and rbp-8
+.Lc83:
 .seh_proc UNIT6502_$$_ABSY
-.Ll218:
+.Ll211:
 # [562] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc148:
-.Lc149:
-	movq	%rsp,%rbp
-.Lc150:
-	leaq	-48(%rsp),%rsp
-.seh_stackalloc 48
-	movq	%rbx,-16(%rbp)
-.seh_savereg %rbx, 32
+	pushq	%rbx
+.seh_pushreg %rbx
+	leaq	-32(%rsp),%rsp
+.Lc85:
+.seh_stackalloc 32
+# Var startpage located in register ax
 .seh_endprologue
-# Var startpage located at rbp-8, size=OS_16
-.Ll219:
+.Ll212:
 # [563] ea := word(read6502(pc)) or (word(read6502(pc+1)) shl 8);
-	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
-	movq	%rax,%rcx
+	movzwl	U_$UNIT6502_$$_PC(%rip),%ecx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 	movb	%al,%bl
 # PeepHole Optimization,var7
@@ -1827,68 +1620,63 @@ UNIT6502_$$_ABSY:
 	andl	$255,%eax
 	shll	$8,%eax
 	orl	%ebx,%eax
+# PeepHole Optimization,MovMov2Mov1
 	movw	%ax,U_$UNIT6502_$$_EA(%rip)
-.Ll220:
+.Ll213:
 # [564] startpage := ea and $FF00;
-	movw	U_$UNIT6502_$$_EA(%rip),%ax
 	andw	$65280,%ax
-	movw	%ax,-8(%rbp)
-.Ll221:
+# Var startpage located in register ax
+.Ll214:
 # [565] ea += y;
-	movzwl	U_$UNIT6502_$$_EA(%rip),%edx
-	movzbl	U_$UNIT6502_$$_Y(%rip),%eax
-	leal	(%edx,%eax),%eax
-	movw	%ax,U_$UNIT6502_$$_EA(%rip)
-.Ll222:
+	movzwl	U_$UNIT6502_$$_EA(%rip),%ecx
+	movzbl	U_$UNIT6502_$$_Y(%rip),%edx
+	leal	(%ecx,%edx),%edx
+# PeepHole Optimization,MovMov2Mov1
+	movw	%dx,U_$UNIT6502_$$_EA(%rip)
+.Ll215:
 # [566] if (startpage <> (ea and $FF00)) then penaltyaddr := 1; //one cycle penlty for page-crossing on some opcodes
-	movw	U_$UNIT6502_$$_EA(%rip),%ax
-	andw	$65280,%ax
-	cmpw	-8(%rbp),%ax
+	andw	$65280,%dx
+	cmpw	%ax,%dx
 	je	.Lj414
 	movb	$1,U_$UNIT6502_$$_PENALTYADDR(%rip)
 .Lj414:
-.Ll223:
+.Ll216:
 # [567] pc += 2;
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	leal	2(%eax),%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll224:
+.Ll217:
 # [568] end;
-	movq	-16(%rbp),%rbx
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	nop
+	leaq	32(%rsp),%rsp
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc147:
+.Lc84:
 .Lt18:
-.Ll225:
+.Ll218:
 
 .section .text.n_unit6502_$$_ind,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_IND
 UNIT6502_$$_IND:
-.Lc151:
-# Temps allocated between rbp-24 and rbp-16
+.Lc86:
 .seh_proc UNIT6502_$$_IND
-.Ll226:
+.Ll219:
 # [574] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc153:
-.Lc154:
-	movq	%rsp,%rbp
-.Lc155:
-	leaq	-64(%rsp),%rsp
-.seh_stackalloc 64
-	movq	%rbx,-24(%rbp)
-.seh_savereg %rbx, 40
+	pushq	%rbx
+.seh_pushreg %rbx
+	pushq	%rsi
+.seh_pushreg %rsi
+	leaq	-40(%rsp),%rsp
+.Lc88:
+.seh_stackalloc 40
+# Var eahelp located in register cx
+# Var eahelp2 located in register bx
 .seh_endprologue
-# Var eahelp located at rbp-8, size=OS_16
-# Var eahelp2 located at rbp-16, size=OS_16
-.Ll227:
+.Ll220:
 # [575] eahelp := word(read6502(pc)) or (word(read6502(pc+1)) shl 8);
-	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
-	movq	%rax,%rcx
+	movzwl	U_$UNIT6502_$$_PC(%rip),%ecx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 	movb	%al,%bl
 # PeepHole Optimization,var7
@@ -1898,105 +1686,105 @@ UNIT6502_$$_IND:
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	leaq	1(%rax),%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
+	movb	%al,%cl
 # PeepHole Optimization,var7
 # PeepHole Optimization,var1
 # PeepHole Optimization,var11
-	andl	$255,%eax
-	shll	$8,%eax
-	orl	%ebx,%eax
-	movw	%ax,-8(%rbp)
-.Ll228:
+	andl	$255,%ecx
+	shll	$8,%ecx
+	orl	%ebx,%ecx
+# Var eahelp located in register cx
+.Ll221:
 # [576] eahelp2 := (eahelp and $FF00) or ((eahelp + 1) and $00FF); //replicate 6502 page-boundary wraparound bug
-	movzwl	-8(%rbp),%eax
+	movzwl	%cx,%eax
 	leal	1(%eax),%eax
 	andl	$255,%eax
-	movw	-8(%rbp),%dx
+	movw	%cx,%bx
 # PeepHole Optimization,var1
 # PeepHole Optimization,var11
-	andl	$65280,%edx
-	orl	%eax,%edx
-	movw	%dx,-16(%rbp)
-.Ll229:
+	andl	$65280,%ebx
+	orl	%eax,%ebx
+# Var eahelp2 located in register bx
+# PeepHole Optimization,var11
+.Ll222:
 # [577] ea := word(read6502(eahelp)) or (word(read6502(eahelp2)) shl 8);
-	movzwl	-8(%rbp),%ecx
+	andl	$65535,%ecx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
-	movb	%al,%bl
+	movb	%al,%sil
 # PeepHole Optimization,var7
 # PeepHole Optimization,var1
 # PeepHole Optimization,var11
-	andl	$255,%ebx
-	movzwl	-16(%rbp),%ecx
+	andl	$255,%esi
+	movzwl	%bx,%ecx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 # PeepHole Optimization,var7
 # PeepHole Optimization,var1
 # PeepHole Optimization,var11
 	andl	$255,%eax
 	shll	$8,%eax
-	orl	%ebx,%eax
+	orl	%esi,%eax
 	movw	%ax,U_$UNIT6502_$$_EA(%rip)
-.Ll230:
+.Ll223:
 # [580] pc += 2;
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	leal	2(%eax),%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll231:
+.Ll224:
 # [581] end;
-	movq	-24(%rbp),%rbx
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	nop
+	leaq	40(%rsp),%rsp
+	popq	%rsi
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc152:
+.Lc87:
 .Lt20:
-.Ll232:
+.Ll225:
 
 .section .text.n_unit6502_$$_izp,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_IZP
 UNIT6502_$$_IZP:
-.Lc156:
-# Temps allocated between rbp-16 and rbp-8
+.Lc89:
 .seh_proc UNIT6502_$$_IZP
-.Ll233:
+.Ll226:
 # [587] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc158:
-.Lc159:
-	movq	%rsp,%rbp
-.Lc160:
-	leaq	-48(%rsp),%rsp
-.seh_stackalloc 48
-	movq	%rbx,-16(%rbp)
-.seh_savereg %rbx, 32
+	pushq	%rbx
+.seh_pushreg %rbx
+	pushq	%rsi
+.seh_pushreg %rsi
+	leaq	-40(%rsp),%rsp
+.Lc91:
+.seh_stackalloc 40
+# Var eahelp located in register bx
 .seh_endprologue
-# Var eahelp located at rbp-8, size=OS_16
-.Ll234:
+.Ll227:
 # [588] eahelp := word(read6502(pc)) and $FF; //zero-page wraparound for table pointer
-	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
-	movq	%rax,%rcx
+	movzwl	U_$UNIT6502_$$_PC(%rip),%ecx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
+	movb	%al,%bl
 # PeepHole Optimization,var4
 # PeepHole Optimization,var7
-	andw	$255,%ax
-	movw	%ax,-8(%rbp)
-.Ll235:
+	andw	$255,%bx
+# Var eahelp located in register bx
+.Ll228:
 # [589] inc(pc);
 	addw	$1,U_$UNIT6502_$$_PC(%rip)
-.Ll236:
+.Ll229:
 # [590] ea := word(read6502(eahelp and $00FF)) or (word(read6502((eahelp+1) and $00FF)) shl 8);
-	movw	-8(%rbp),%cx
+	movw	%bx,%cx
 # PeepHole Optimization,var1
 # PeepHole Optimization,var11
 	andl	$255,%ecx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
-	movb	%al,%bl
+	movb	%al,%sil
 # PeepHole Optimization,var7
 # PeepHole Optimization,var1
 # PeepHole Optimization,var11
-	andl	$255,%ebx
-	movzwl	-8(%rbp),%eax
-	leaq	1(%rax),%rcx
+	andl	$255,%esi
+# PeepHole Optimization,var11
+	andl	$65535,%ebx
+	leaq	1(%rbx),%rcx
 	andq	$255,%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 # PeepHole Optimization,var7
@@ -2004,68 +1792,65 @@ UNIT6502_$$_IZP:
 # PeepHole Optimization,var11
 	andl	$255,%eax
 	shll	$8,%eax
-	orl	%ebx,%eax
+	orl	%esi,%eax
 	movw	%ax,U_$UNIT6502_$$_EA(%rip)
-.Ll237:
+.Ll230:
 # [591] end;
-	movq	-16(%rbp),%rbx
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	nop
+	leaq	40(%rsp),%rsp
+	popq	%rsi
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc157:
+.Lc90:
 .Lt23:
-.Ll238:
+.Ll231:
 
 .section .text.n_unit6502_$$_indx,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_INDX
 UNIT6502_$$_INDX:
-.Lc161:
-# Temps allocated between rbp-16 and rbp-8
+.Lc92:
 .seh_proc UNIT6502_$$_INDX
-.Ll239:
+.Ll232:
 # [598] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc163:
-.Lc164:
-	movq	%rsp,%rbp
-.Lc165:
-	leaq	-48(%rsp),%rsp
-.seh_stackalloc 48
-	movq	%rbx,-16(%rbp)
-.seh_savereg %rbx, 32
+	pushq	%rbx
+.seh_pushreg %rbx
+	pushq	%rsi
+.seh_pushreg %rsi
+	leaq	-40(%rsp),%rsp
+.Lc94:
+.seh_stackalloc 40
+# Var eahelp located in register bx
 .seh_endprologue
-# Var eahelp located at rbp-8, size=OS_16
-.Ll240:
+.Ll233:
 # [599] eahelp := (word(read6502(pc) + x) and $FF); //zero-page wraparound for table pointer
-	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
-	movq	%rax,%rcx
+	movzwl	U_$UNIT6502_$$_PC(%rip),%ecx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 # PeepHole Optimization,var9
 	andl	$255,%eax
 	movzbl	U_$UNIT6502_$$_X(%rip),%edx
-	leal	(%eax,%edx),%eax
-	andw	$255,%ax
-	movw	%ax,-8(%rbp)
-.Ll241:
+	leal	(%eax,%edx),%ebx
+	andw	$255,%bx
+# Var eahelp located in register bx
+.Ll234:
 # [600] inc(pc);
 	addw	$1,U_$UNIT6502_$$_PC(%rip)
-.Ll242:
+.Ll235:
 # [601] ea := word(read6502(eahelp and $00FF)) or (word(read6502((eahelp+1) and $00FF)) shl 8);
-	movw	-8(%rbp),%cx
+	movw	%bx,%cx
 # PeepHole Optimization,var1
 # PeepHole Optimization,var11
 	andl	$255,%ecx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
-	movb	%al,%bl
+	movb	%al,%sil
 # PeepHole Optimization,var7
 # PeepHole Optimization,var1
 # PeepHole Optimization,var11
-	andl	$255,%ebx
-	movzwl	-8(%rbp),%eax
-	leaq	1(%rax),%rcx
+	andl	$255,%esi
+# PeepHole Optimization,var11
+	andl	$65535,%ebx
+	leaq	1(%rbx),%rcx
 	andq	$255,%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 # PeepHole Optimization,var7
@@ -2073,44 +1858,40 @@ UNIT6502_$$_INDX:
 # PeepHole Optimization,var11
 	andl	$255,%eax
 	shll	$8,%eax
-	orl	%ebx,%eax
+	orl	%esi,%eax
 	movw	%ax,U_$UNIT6502_$$_EA(%rip)
-.Ll243:
+.Ll236:
 # [602] end;
-	movq	-16(%rbp),%rbx
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	nop
+	leaq	40(%rsp),%rsp
+	popq	%rsi
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc162:
+.Lc93:
 .Lt11:
-.Ll244:
+.Ll237:
 
 .section .text.n_unit6502_$$_iax,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_IAX
 UNIT6502_$$_IAX:
-.Lc166:
-# Temps allocated between rbp-16 and rbp-8
+.Lc95:
 .seh_proc UNIT6502_$$_IAX
-.Ll245:
+.Ll238:
 # [608] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc168:
-.Lc169:
-	movq	%rsp,%rbp
-.Lc170:
-	leaq	-48(%rsp),%rsp
-.seh_stackalloc 48
-	movq	%rbx,-16(%rbp)
-.seh_savereg %rbx, 32
+	pushq	%rbx
+.seh_pushreg %rbx
+	pushq	%rsi
+.seh_pushreg %rsi
+	leaq	-40(%rsp),%rsp
+.Lc97:
+.seh_stackalloc 40
+# Var eahelp located in register bx
 .seh_endprologue
-# Var eahelp located at rbp-8, size=OS_16
-.Ll246:
+.Ll239:
 # [609] eahelp := word(read6502(pc))+(word(read6502(pc+1) shl 8)+ y); //zero-page wraparound for table pointer
-	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
-	movq	%rax,%rcx
+	movzwl	U_$UNIT6502_$$_PC(%rip),%ecx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 	movb	%al,%bl
 # PeepHole Optimization,var7
@@ -2127,27 +1908,28 @@ UNIT6502_$$_IAX:
 	andl	$65535,%eax
 	movzbl	U_$UNIT6502_$$_Y(%rip),%edx
 	leal	(%eax,%edx),%eax
-	leal	(%ebx,%eax),%eax
-	movw	%ax,-8(%rbp)
-.Ll247:
+	leal	(%ebx,%eax),%ebx
+# Var eahelp located in register bx
+.Ll240:
 # [610] pc+=2;
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	leal	2(%eax),%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll248:
+.Ll241:
 # [611] ea := word(read6502(eahelp and $00FF)) or (word(read6502((eahelp+1) and $00FF)) shl 8);
-	movw	-8(%rbp),%cx
+	movw	%bx,%cx
 # PeepHole Optimization,var1
 # PeepHole Optimization,var11
 	andl	$255,%ecx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
-	movb	%al,%bl
+	movb	%al,%sil
 # PeepHole Optimization,var7
 # PeepHole Optimization,var1
 # PeepHole Optimization,var11
-	andl	$255,%ebx
-	movzwl	-8(%rbp),%eax
-	leaq	1(%rax),%rcx
+	andl	$255,%esi
+# PeepHole Optimization,var11
+	andl	$65535,%ebx
+	leaq	1(%rbx),%rcx
 	andq	$255,%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 # PeepHole Optimization,var7
@@ -2155,137 +1937,131 @@ UNIT6502_$$_IAX:
 # PeepHole Optimization,var11
 	andl	$255,%eax
 	shll	$8,%eax
-	orl	%ebx,%eax
+	orl	%esi,%eax
 	movw	%ax,U_$UNIT6502_$$_EA(%rip)
-.Ll249:
+.Ll242:
 # [612] end;
-	movq	-16(%rbp),%rbx
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	nop
+	leaq	40(%rsp),%rsp
+	popq	%rsi
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc167:
+.Lc96:
 .Lt24:
-.Ll250:
+.Ll243:
 
 .section .text.n_unit6502_$$_indy,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_INDY
 UNIT6502_$$_INDY:
-.Lc171:
-# Temps allocated between rbp-32 and rbp-24
+.Lc98:
 .seh_proc UNIT6502_$$_INDY
-.Ll251:
+.Ll244:
 # [618] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc173:
-.Lc174:
-	movq	%rsp,%rbp
-.Lc175:
-	leaq	-64(%rsp),%rsp
-.seh_stackalloc 64
-	movq	%rbx,-32(%rbp)
-.seh_savereg %rbx, 32
+	pushq	%rbx
+.seh_pushreg %rbx
+	pushq	%rsi
+.seh_pushreg %rsi
+	leaq	-40(%rsp),%rsp
+.Lc100:
+.seh_stackalloc 40
+# Var eahelp located in register cx
+# Var eahelp2 located in register bx
+# Var startpage located in register ax
 .seh_endprologue
-# Var eahelp located at rbp-8, size=OS_16
-# Var eahelp2 located at rbp-16, size=OS_16
-# Var startpage located at rbp-24, size=OS_16
-.Ll252:
+.Ll245:
 # [619] eahelp := word(read6502(pc));
-	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
-	movq	%rax,%rcx
+	movzwl	U_$UNIT6502_$$_PC(%rip),%ecx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
+	movb	%al,%cl
 # PeepHole Optimization,var7
-	andw	$255,%ax
-	movw	%ax,-8(%rbp)
-.Ll253:
+	andw	$255,%cx
+# Var eahelp located in register cx
+.Ll246:
 # [620] inc(pc);
 	addw	$1,U_$UNIT6502_$$_PC(%rip)
-.Ll254:
+.Ll247:
 # [621] eahelp2 := (eahelp and $FF00) or ((eahelp + 1) and $00FF); //zero-page wraparound
-	movzwl	-8(%rbp),%eax
+	movzwl	%cx,%eax
 	leal	1(%eax),%eax
 	andl	$255,%eax
-	movw	-8(%rbp),%dx
+	movw	%cx,%bx
 # PeepHole Optimization,var1
 # PeepHole Optimization,var11
-	andl	$65280,%edx
-	orl	%eax,%edx
-	movw	%dx,-16(%rbp)
-.Ll255:
+	andl	$65280,%ebx
+	orl	%eax,%ebx
+# Var eahelp2 located in register bx
+# PeepHole Optimization,var11
+.Ll248:
 # [622] ea := word(read6502(eahelp)) or (word(read6502(eahelp2)) shl 8);
-	movzwl	-8(%rbp),%ecx
+	andl	$65535,%ecx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
-	movb	%al,%bl
+	movb	%al,%sil
 # PeepHole Optimization,var7
 # PeepHole Optimization,var1
 # PeepHole Optimization,var11
-	andl	$255,%ebx
-	movzwl	-16(%rbp),%ecx
+	andl	$255,%esi
+	movzwl	%bx,%ecx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 # PeepHole Optimization,var7
 # PeepHole Optimization,var1
 # PeepHole Optimization,var11
 	andl	$255,%eax
 	shll	$8,%eax
-	orl	%ebx,%eax
+	orl	%esi,%eax
+# PeepHole Optimization,MovMov2Mov1
 	movw	%ax,U_$UNIT6502_$$_EA(%rip)
-.Ll256:
+.Ll249:
 # [623] startpage := ea and $FF00;
-	movw	U_$UNIT6502_$$_EA(%rip),%ax
 	andw	$65280,%ax
-	movw	%ax,-24(%rbp)
-.Ll257:
+# Var startpage located in register ax
+.Ll250:
 # [624] ea += y;
-	movzwl	U_$UNIT6502_$$_EA(%rip),%eax
-	movzbl	U_$UNIT6502_$$_Y(%rip),%edx
-	leal	(%eax,%edx),%eax
-	movw	%ax,U_$UNIT6502_$$_EA(%rip)
-.Ll258:
+	movzwl	U_$UNIT6502_$$_EA(%rip),%edx
+	movzbl	U_$UNIT6502_$$_Y(%rip),%ecx
+	leal	(%edx,%ecx),%edx
+# PeepHole Optimization,MovMov2Mov1
+	movw	%dx,U_$UNIT6502_$$_EA(%rip)
+.Ll251:
 # [625] if (startpage <> (ea and $FF00)) then penaltyaddr := 1; //one cycle penlty for page-crossing on some opcodes
-	movw	U_$UNIT6502_$$_EA(%rip),%ax
-	andw	$65280,%ax
-	cmpw	-24(%rbp),%ax
+	andw	$65280,%dx
+	cmpw	%ax,%dx
 	je	.Lj496
 	movb	$1,U_$UNIT6502_$$_PENALTYADDR(%rip)
 .Lj496:
-.Ll259:
+.Ll252:
 # [626] end;
-	movq	-32(%rbp),%rbx
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	nop
+	leaq	40(%rsp),%rsp
+	popq	%rsi
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc172:
+.Lc99:
 .Lt17:
-.Ll260:
+.Ll253:
 
 .section .text.n_unit6502_$$_adc,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_ADC
 UNIT6502_$$_ADC:
-.Lc176:
+.Lc101:
 .seh_proc UNIT6502_$$_ADC
-.Ll261:
+.Ll254:
 # [634] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc178:
-.Lc179:
-	movq	%rsp,%rbp
-.Lc180:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc103:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll262:
+.Ll255:
 # [635] penaltyop := 1;
 	movb	$1,U_$UNIT6502_$$_PENALTYOP(%rip)
-.Ll263:
+.Ll256:
 # [636] value := getvalue;
 	call	UNIT6502_$$_GETVALUE$$WORD
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
-.Ll264:
+.Ll257:
 # [637] aresult := word(value)+a+(status and FLAG_CARRY);
 	movzwl	U_$UNIT6502_$$_VALUE(%rip),%eax
 	movzbl	U_$UNIT6502_$$_A(%rip),%edx
@@ -2295,42 +2071,42 @@ UNIT6502_$$_ADC:
 	andw	$1,%ax
 	movswl	%ax,%eax
 	leal	(%edx,%eax),%eax
+# PeepHole Optimization,MovMov2Mov1
 	movw	%ax,U_$UNIT6502_$$_ARESULT(%rip)
-.Ll265:
+.Ll258:
 # [638] if (aresult and $FF00) <>0 then setcarry else clearcarry;
-	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$65280,%ax
 	testw	%ax,%ax
 	je	.Lj508
 # PeepHole Optimization,var3
-.Ll266:
+.Ll259:
 # [217] {$define setcarry:= status :=status or FLAG_CARRY}
 	orb	$1,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj511
 .Lj508:
 # PeepHole Optimization,var3
-.Ll267:
+.Ll260:
 # [218] {$define clearcarry:= status := status and not(FLAG_CARRY)}
 	andb	$-2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj511:
-.Ll268:
+.Ll261:
 # [639] if (aresult and $00FF)<>0 then clearzero else setzero;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$255,%ax
 	testw	%ax,%ax
 	je	.Lj515
 # PeepHole Optimization,var3
-.Ll269:
+.Ll262:
 # [220] {$define clearzero:= status:= status and not(FLAG_ZERO)}
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj518
 .Lj515:
 # PeepHole Optimization,var3
-.Ll270:
+.Ll263:
 # [219] {$define setzero:= status :=status or FLAG_ZERO}
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj518:
-.Ll271:
+.Ll264:
 # [640] if ((aresult xor a) and (aresult xor value) and $0080)<>0 then
 	movzbw	U_$UNIT6502_$$_A(%rip),%dx
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
@@ -2343,49 +2119,52 @@ UNIT6502_$$_ADC:
 	testw	%dx,%dx
 	je	.Lj522
 # PeepHole Optimization,var3
-.Ll272:
+.Ll265:
 # [225] {$define setoverflow:= status :=status or FLAG_OVERFLOW}
 	orb	$64,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj525
 .Lj522:
 # PeepHole Optimization,var3
-.Ll273:
+.Ll266:
 # [226] {$define clearoverflow:= status := status and not(FLAG_OVERFLOW)}
 	andb	$-65,U_$UNIT6502_$$_STATUS(%rip)
 .Lj525:
-.Ll274:
+.Ll267:
 # [644] if (aresult and $0080)<>0 then setsign else clearsign;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$128,%ax
 	testw	%ax,%ax
 	je	.Lj529
-.Ll275:
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll268:
 # [227] {$define setsign:= status :=status or FLAG_SIGN}
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj532
 .Lj529:
 # PeepHole Optimization,var3
-.Ll276:
+.Ll269:
 # [228] {$define clearsign:= status := status and not(FLAG_SIGN)}
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj532:
 # PeepHole Optimization,var15
-.Ll277:
+.Ll270:
 # [645] if (status and FLAG_DECIMAL)<>0 then
 	movw	U_$UNIT6502_$$_STATUS(%rip),%ax
 	andw	$8,%ax
 	testw	%ax,%ax
 	je	.Lj536
-.Ll278:
+.Ll271:
 # [647] inc(clockticks6502);
 	addq	$1,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 # PeepHole Optimization,var3
-.Ll279:
+.Ll272:
 	andb	$-2,U_$UNIT6502_$$_STATUS(%rip)
 # PeepHole Optimization,var15
-.Ll280:
+.Ll273:
 # [649] if ((a and $0F) > $09) then a += $06;
 	movw	U_$UNIT6502_$$_A(%rip),%ax
 	andw	$15,%ax
@@ -2395,235 +2174,219 @@ UNIT6502_$$_ADC:
 	leal	6(%eax),%eax
 	movb	%al,U_$UNIT6502_$$_A(%rip)
 .Lj540:
-.Ll281:
+.Ll274:
 # [650] if ((a and $F0) > $90) then
 	movb	U_$UNIT6502_$$_A(%rip),%al
 	andb	$240,%al
 	cmpb	$144,%al
 	jna	.Lj544
-.Ll282:
+.Ll275:
 # [652] a += $60;
 	movzbl	U_$UNIT6502_$$_A(%rip),%eax
 	leal	96(%eax),%eax
 	movb	%al,U_$UNIT6502_$$_A(%rip)
 # PeepHole Optimization,var3
-.Ll283:
+.Ll276:
 	orb	$1,U_$UNIT6502_$$_STATUS(%rip)
 .Lj544:
 .Lj536:
-.Ll284:
+.Ll277:
 # [656] a:=byte(aresult and $00FF);
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$255,%ax
 	movb	%al,U_$UNIT6502_$$_A(%rip)
-.Ll285:
+.Ll278:
 # [657] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc177:
+.Lc102:
 .Lt50:
-.Ll286:
+.Ll279:
 
 .section .text.n_unit6502_$$_ana,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_ANA
 UNIT6502_$$_ANA:
-.Lc181:
+.Lc104:
 .seh_proc UNIT6502_$$_ANA
-.Ll287:
+.Ll280:
 # [661] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc183:
-.Lc184:
-	movq	%rsp,%rbp
-.Lc185:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc106:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll288:
+.Ll281:
 # [662] penaltyop := 1;
 	movb	$1,U_$UNIT6502_$$_PENALTYOP(%rip)
-.Ll289:
+.Ll282:
 # [663] value := getvalue;
 	call	UNIT6502_$$_GETVALUE$$WORD
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
-.Ll290:
+.Ll283:
 # [664] aresult := a and value;
 	movzbw	U_$UNIT6502_$$_A(%rip),%dx
 	movw	U_$UNIT6502_$$_VALUE(%rip),%ax
 	andw	%dx,%ax
+# PeepHole Optimization,MovMov2Mov1
 	movw	%ax,U_$UNIT6502_$$_ARESULT(%rip)
-.Ll291:
+.Ll284:
 # [665] if (aresult and $00FF)<>0 then clearzero else setzero;
-	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$255,%ax
 	testw	%ax,%ax
 	je	.Lj560
 # PeepHole Optimization,var3
-.Ll292:
+.Ll285:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj563
 .Lj560:
 # PeepHole Optimization,var3
-.Ll293:
+.Ll286:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj563:
-.Ll294:
+.Ll287:
 # [666] if (aresult and $0080)<>0 then setsign else clearsign;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$128,%ax
 	testw	%ax,%ax
 	je	.Lj567
-.Ll295:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll288:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj570
 .Lj567:
 # PeepHole Optimization,var3
-.Ll296:
+.Ll289:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj570:
-.Ll297:
+.Ll290:
 # [667] a:=byte(aresult and $00FF);
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$255,%ax
 	movb	%al,U_$UNIT6502_$$_A(%rip)
-.Ll298:
+.Ll291:
 # [668] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc182:
+.Lc105:
 .Lt28:
-.Ll299:
+.Ll292:
 
 .section .text.n_unit6502_$$_asl,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_ASL
 UNIT6502_$$_ASL:
-.Lc186:
+.Lc107:
 .seh_proc UNIT6502_$$_ASL
-.Ll300:
+.Ll293:
 # [672] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc188:
-.Lc189:
-	movq	%rsp,%rbp
-.Lc190:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc109:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll301:
+.Ll294:
 # [673] value := getvalue;
 	call	UNIT6502_$$_GETVALUE$$WORD
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
-.Ll302:
+.Ll295:
 # [674] aresult := value shl 1;
 	movzwl	U_$UNIT6502_$$_VALUE(%rip),%eax
 	shll	$1,%eax
+# PeepHole Optimization,MovMov2Mov1
 	movw	%ax,U_$UNIT6502_$$_ARESULT(%rip)
-.Ll303:
+.Ll296:
 # [675] if (aresult and $FF00) <>0 then setcarry else clearcarry;
-	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$65280,%ax
 	testw	%ax,%ax
 	je	.Lj582
 # PeepHole Optimization,var3
-.Ll304:
+.Ll297:
 	orb	$1,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj585
 .Lj582:
 # PeepHole Optimization,var3
-.Ll305:
+.Ll298:
 	andb	$-2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj585:
-.Ll306:
+.Ll299:
 # [676] if (aresult and $00FF)<>0 then clearzero else setzero;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$255,%ax
 	testw	%ax,%ax
 	je	.Lj589
 # PeepHole Optimization,var3
-.Ll307:
+.Ll300:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj592
 .Lj589:
 # PeepHole Optimization,var3
-.Ll308:
+.Ll301:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj592:
-.Ll309:
+.Ll302:
 # [677] if (aresult and $0080)<>0 then setsign else clearsign;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$128,%ax
 	testw	%ax,%ax
 	je	.Lj596
-.Ll310:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll303:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj599
 .Lj596:
 # PeepHole Optimization,var3
-.Ll311:
+.Ll304:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj599:
-.Ll312:
+.Ll305:
 # [678] putvalue(aresult);
 	movzwl	U_$UNIT6502_$$_ARESULT(%rip),%ecx
 	call	UNIT6502_$$_PUTVALUE$WORD
-.Ll313:
+.Ll306:
 # [679] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc187:
+.Lc108:
 .Lt30:
-.Ll314:
+.Ll307:
 
 .section .text.n_unit6502_$$_bcc,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_BCC
 UNIT6502_$$_BCC:
-.Lc191:
-.seh_proc UNIT6502_$$_BCC
-.Ll315:
+.Lc110:
 # [683] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc193:
-.Lc194:
-	movq	%rsp,%rbp
-.Lc195:
-.seh_endprologue
 # PeepHole Optimization,var15
-.Ll316:
+.Ll308:
 # [684] if ((status and FLAG_CARRY) = 0) then
 	movw	U_$UNIT6502_$$_STATUS(%rip),%ax
 	andw	$1,%ax
 	testw	%ax,%ax
 	jne	.Lj607
-.Ll317:
+.Ll309:
 # [686] oldpc := pc;
 	movw	U_$UNIT6502_$$_PC(%rip),%ax
 	movw	%ax,U_$UNIT6502_$$_OLDPC(%rip)
-.Ll318:
+.Ll310:
 # [687] pc += reladdr;
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	movzwl	U_$UNIT6502_$$_RELADDR(%rip),%edx
 	leal	(%eax,%edx),%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll319:
+.Ll311:
 # [688] if ((oldpc and $FF00) <> (pc and $FF00)) then clockticks6502 += 2 //check if jump crossed a page boundary
 	movw	U_$UNIT6502_$$_OLDPC(%rip),%ax
 	andw	$65280,%ax
@@ -2631,63 +2394,51 @@ UNIT6502_$$_BCC:
 	andw	$65280,%dx
 	cmpw	%dx,%ax
 	je	.Lj613
-.Ll320:
+.Ll312:
 # [689] else clockticks6502+=1;
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	2(%rax),%rax
-.Ll321:
+.Ll313:
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 	jmp	.Lj616
 .Lj613:
-.Ll322:
+.Ll314:
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 .Lj616:
 .Lj607:
-.Ll323:
+.Ll315:
 # [691] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc192:
+.Lc111:
 .Lt62:
-.Ll324:
+.Ll316:
 
 .section .text.n_unit6502_$$_bcs,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_BCS
 UNIT6502_$$_BCS:
-.Lc196:
-.seh_proc UNIT6502_$$_BCS
-.Ll325:
+.Lc112:
 # [695] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc198:
-.Lc199:
-	movq	%rsp,%rbp
-.Lc200:
-.seh_endprologue
 # PeepHole Optimization,var15
-.Ll326:
+.Ll317:
 # [696] if ((status and FLAG_CARRY) = FLAG_CARRY) then
 	movw	U_$UNIT6502_$$_STATUS(%rip),%ax
 	andw	$1,%ax
 	cmpw	$1,%ax
 	jne	.Lj622
-.Ll327:
+.Ll318:
 # [698] oldpc := pc;
 	movw	U_$UNIT6502_$$_PC(%rip),%ax
 	movw	%ax,U_$UNIT6502_$$_OLDPC(%rip)
-.Ll328:
+.Ll319:
 # [699] pc += reladdr;
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	movzwl	U_$UNIT6502_$$_RELADDR(%rip),%edx
 	leal	(%eax,%edx),%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll329:
+.Ll320:
 # [700] if ((oldpc and $FF00) <> (pc and $FF00)) then clockticks6502 += 2 //check if jump crossed a page boundary
 	movw	U_$UNIT6502_$$_OLDPC(%rip),%ax
 	andw	$65280,%ax
@@ -2695,63 +2446,51 @@ UNIT6502_$$_BCS:
 	andw	$65280,%dx
 	cmpw	%dx,%ax
 	je	.Lj628
-.Ll330:
+.Ll321:
 # [701] else clockticks6502+=1;
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	2(%rax),%rax
-.Ll331:
+.Ll322:
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 	jmp	.Lj631
 .Lj628:
-.Ll332:
+.Ll323:
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 .Lj631:
 .Lj622:
-.Ll333:
+.Ll324:
 # [703] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc197:
+.Lc113:
 .Lt71:
-.Ll334:
+.Ll325:
 
 .section .text.n_unit6502_$$_beq,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_BEQ
 UNIT6502_$$_BEQ:
-.Lc201:
-.seh_proc UNIT6502_$$_BEQ
-.Ll335:
+.Lc114:
 # [707] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc203:
-.Lc204:
-	movq	%rsp,%rbp
-.Lc205:
-.seh_endprologue
 # PeepHole Optimization,var15
-.Ll336:
+.Ll326:
 # [708] if ((status and FLAG_ZERO) = FLAG_ZERO) then
 	movw	U_$UNIT6502_$$_STATUS(%rip),%ax
 	andw	$2,%ax
 	cmpw	$2,%ax
 	jne	.Lj637
-.Ll337:
+.Ll327:
 # [710] oldpc := pc;
 	movw	U_$UNIT6502_$$_PC(%rip),%ax
 	movw	%ax,U_$UNIT6502_$$_OLDPC(%rip)
-.Ll338:
+.Ll328:
 # [711] pc += reladdr;
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	movzwl	U_$UNIT6502_$$_RELADDR(%rip),%edx
 	leal	(%eax,%edx),%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll339:
+.Ll329:
 # [712] if ((oldpc and $FF00) <> (pc and $FF00)) then clockticks6502 += 2 //check if jump crossed a page boundary
 	movw	U_$UNIT6502_$$_OLDPC(%rip),%ax
 	andw	$65280,%ax
@@ -2759,74 +2498,66 @@ UNIT6502_$$_BEQ:
 	andw	$65280,%dx
 	cmpw	%dx,%ax
 	je	.Lj643
-.Ll340:
+.Ll330:
 # [713] else clockticks6502+=1;
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	2(%rax),%rax
-.Ll341:
+.Ll331:
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 	jmp	.Lj646
 .Lj643:
-.Ll342:
+.Ll332:
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 .Lj646:
 .Lj637:
-.Ll343:
+.Ll333:
 # [715] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc202:
+.Lc115:
 .Lt85:
-.Ll344:
+.Ll334:
 
 .section .text.n_unit6502_$$_bit,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_BIT
 UNIT6502_$$_BIT:
-.Lc206:
+.Lc116:
 .seh_proc UNIT6502_$$_BIT
-.Ll345:
+.Ll335:
 # [719] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc208:
-.Lc209:
-	movq	%rsp,%rbp
-.Lc210:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc118:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll346:
+.Ll336:
 # [720] value := getvalue;;
 	call	UNIT6502_$$_GETVALUE$$WORD
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
-.Ll347:
+.Ll337:
 # [721] aresult := a and value;
 	movzbw	U_$UNIT6502_$$_A(%rip),%dx
 	movw	U_$UNIT6502_$$_VALUE(%rip),%ax
 	andw	%dx,%ax
+# PeepHole Optimization,MovMov2Mov1
 	movw	%ax,U_$UNIT6502_$$_ARESULT(%rip)
-.Ll348:
+.Ll338:
 # [722] if (aresult and $00FF)<>0 then clearzero else setzero;
-	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$255,%ax
 	testw	%ax,%ax
 	je	.Lj656
 # PeepHole Optimization,var3
-.Ll349:
+.Ll339:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj659
 .Lj656:
 # PeepHole Optimization,var3
-.Ll350:
+.Ll340:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj659:
 # PeepHole Optimization,var15
-.Ll351:
+.Ll341:
 # [723] status := (status and $3F) or (value and $C0);
 	movw	U_$UNIT6502_$$_STATUS(%rip),%ax
 	andw	$63,%ax
@@ -2837,49 +2568,39 @@ UNIT6502_$$_BIT:
 	andl	$192,%edx
 	orl	%eax,%edx
 	movb	%dl,U_$UNIT6502_$$_STATUS(%rip)
-.Ll352:
+.Ll342:
 # [724] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc207:
+.Lc117:
 .Lt36:
-.Ll353:
+.Ll343:
 
 .section .text.n_unit6502_$$_bmi,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_BMI
 UNIT6502_$$_BMI:
-.Lc211:
-.seh_proc UNIT6502_$$_BMI
-.Ll354:
+.Lc119:
 # [728] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc213:
-.Lc214:
-	movq	%rsp,%rbp
-.Lc215:
-.seh_endprologue
-.Ll355:
+.Ll344:
 # [729] if ((status and FLAG_SIGN) = FLAG_SIGN) then
 	movb	U_$UNIT6502_$$_STATUS(%rip),%al
 	andb	$128,%al
 	cmpb	$128,%al
 	jne	.Lj667
-.Ll356:
+.Ll345:
 # [731] oldpc := pc;
 	movw	U_$UNIT6502_$$_PC(%rip),%ax
 	movw	%ax,U_$UNIT6502_$$_OLDPC(%rip)
-.Ll357:
+.Ll346:
 # [732] pc += reladdr;
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	movzwl	U_$UNIT6502_$$_RELADDR(%rip),%edx
 	leal	(%eax,%edx),%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll358:
+.Ll347:
 # [733] if ((oldpc and $FF00) <> (pc and $FF00)) then clockticks6502 += 2 //check if jump crossed a page boundary
 	movw	U_$UNIT6502_$$_OLDPC(%rip),%ax
 	andw	$65280,%ax
@@ -2887,63 +2608,51 @@ UNIT6502_$$_BMI:
 	andw	$65280,%dx
 	cmpw	%dx,%ax
 	je	.Lj673
-.Ll359:
+.Ll348:
 # [734] else clockticks6502+=1;
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	2(%rax),%rax
-.Ll360:
+.Ll349:
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 	jmp	.Lj676
 .Lj673:
-.Ll361:
+.Ll350:
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 .Lj676:
 .Lj667:
-.Ll362:
+.Ll351:
 # [736] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc212:
+.Lc120:
 .Lt38:
-.Ll363:
+.Ll352:
 
 .section .text.n_unit6502_$$_bne,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_BNE
 UNIT6502_$$_BNE:
-.Lc216:
-.seh_proc UNIT6502_$$_BNE
-.Ll364:
+.Lc121:
 # [740] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc218:
-.Lc219:
-	movq	%rsp,%rbp
-.Lc220:
-.seh_endprologue
 # PeepHole Optimization,var15
-.Ll365:
+.Ll353:
 # [741] if ((status and FLAG_ZERO) = 0) then
 	movw	U_$UNIT6502_$$_STATUS(%rip),%ax
 	andw	$2,%ax
 	testw	%ax,%ax
 	jne	.Lj682
-.Ll366:
+.Ll354:
 # [743] oldpc := pc;
 	movw	U_$UNIT6502_$$_PC(%rip),%ax
 	movw	%ax,U_$UNIT6502_$$_OLDPC(%rip)
-.Ll367:
+.Ll355:
 # [744] pc += reladdr;
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	movzwl	U_$UNIT6502_$$_RELADDR(%rip),%edx
 	leal	(%eax,%edx),%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll368:
+.Ll356:
 # [745] if ((oldpc and $FF00) <> (pc and $FF00)) then clockticks6502 += 2 //check if jump crossed a page boundary
 	movw	U_$UNIT6502_$$_OLDPC(%rip),%ax
 	andw	$65280,%ax
@@ -2951,62 +2660,50 @@ UNIT6502_$$_BNE:
 	andw	$65280,%dx
 	cmpw	%dx,%ax
 	je	.Lj688
-.Ll369:
+.Ll357:
 # [746] else clockticks6502+=1;
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	2(%rax),%rax
-.Ll370:
+.Ll358:
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 	jmp	.Lj691
 .Lj688:
-.Ll371:
+.Ll359:
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 .Lj691:
 .Lj682:
-.Ll372:
+.Ll360:
 # [748] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc217:
+.Lc122:
 .Lt80:
-.Ll373:
+.Ll361:
 
 .section .text.n_unit6502_$$_bpl,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_BPL
 UNIT6502_$$_BPL:
-.Lc221:
-.seh_proc UNIT6502_$$_BPL
-.Ll374:
+.Lc123:
 # [752] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc223:
-.Lc224:
-	movq	%rsp,%rbp
-.Lc225:
-.seh_endprologue
-.Ll375:
+.Ll362:
 # [753] if ((status and FLAG_SIGN) = 0) then
 	movb	U_$UNIT6502_$$_STATUS(%rip),%al
 	andb	$128,%al
 	testb	%al,%al
 	jne	.Lj697
-.Ll376:
+.Ll363:
 # [755] oldpc := pc;
 	movw	U_$UNIT6502_$$_PC(%rip),%ax
 	movw	%ax,U_$UNIT6502_$$_OLDPC(%rip)
-.Ll377:
+.Ll364:
 # [756] pc += reladdr;
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	movzwl	U_$UNIT6502_$$_RELADDR(%rip),%edx
 	leal	(%eax,%edx),%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll378:
+.Ll365:
 # [757] if ((oldpc and $FF00) <> (pc and $FF00)) then clockticks6502 += 2 //check if jump crossed a page boundary
 	movw	U_$UNIT6502_$$_OLDPC(%rip),%ax
 	andw	$65280,%ax
@@ -3014,56 +2711,44 @@ UNIT6502_$$_BPL:
 	andw	$65280,%dx
 	cmpw	%dx,%ax
 	je	.Lj703
-.Ll379:
+.Ll366:
 # [758] else clockticks6502+=1;
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	2(%rax),%rax
-.Ll380:
+.Ll367:
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 	jmp	.Lj706
 .Lj703:
-.Ll381:
+.Ll368:
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 .Lj706:
 .Lj697:
-.Ll382:
+.Ll369:
 # [760] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc222:
+.Lc124:
 .Lt31:
-.Ll383:
+.Ll370:
 
 .section .text.n_unit6502_$$_bra,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_BRA
 UNIT6502_$$_BRA:
-.Lc226:
-.seh_proc UNIT6502_$$_BRA
-.Ll384:
+.Lc125:
 # [764] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc228:
-.Lc229:
-	movq	%rsp,%rbp
-.Lc230:
-.seh_endprologue
-.Ll385:
+.Ll371:
 # [765] oldpc := pc;
 	movw	U_$UNIT6502_$$_PC(%rip),%ax
 	movw	%ax,U_$UNIT6502_$$_OLDPC(%rip)
-.Ll386:
+.Ll372:
 # [766] pc += reladdr;
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	movzwl	U_$UNIT6502_$$_RELADDR(%rip),%edx
 	leal	(%eax,%edx),%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll387:
+.Ll373:
 # [767] if ((oldpc and $FF00) <> (pc and $FF00)) then clockticks6502 += 2 //check if jump crossed a page boundary
 	movw	U_$UNIT6502_$$_OLDPC(%rip),%ax
 	andw	$65280,%ax
@@ -3071,59 +2756,50 @@ UNIT6502_$$_BRA:
 	andw	$65280,%dx
 	cmpw	%dx,%ax
 	je	.Lj716
-.Ll388:
+.Ll374:
 # [768] else clockticks6502+=1;
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	2(%rax),%rax
-.Ll389:
+.Ll375:
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 	jmp	.Lj719
 .Lj716:
-.Ll390:
+.Ll376:
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 .Lj719:
-.Ll391:
+.Ll377:
 # [769] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc227:
+.Lc126:
 .Lt89:
-.Ll392:
+.Ll378:
 
 .section .text.n_unit6502_$$_brk,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_BRK
 UNIT6502_$$_BRK:
-.Lc231:
-# Temps allocated between rbp-8 and rbp+0
+.Lc127:
 .seh_proc UNIT6502_$$_BRK
-.Ll393:
+.Ll379:
 # [773] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc233:
-.Lc234:
-	movq	%rsp,%rbp
-.Lc235:
-	leaq	-48(%rsp),%rsp
-.seh_stackalloc 48
-	movq	%rbx,-8(%rbp)
-.seh_savereg %rbx, 40
+	pushq	%rbx
+.seh_pushreg %rbx
+	leaq	-32(%rsp),%rsp
+.Lc129:
+.seh_stackalloc 32
 .seh_endprologue
-.Ll394:
+.Ll380:
 # [774] pc+=1;
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	leal	1(%eax),%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll395:
+.Ll381:
 # [775] push16(pc); //push next instruction address onto stack
 	movzwl	U_$UNIT6502_$$_PC(%rip),%ecx
 	call	UNIT6502_$$_PUSH16$WORD
-.Ll396:
+.Ll382:
 # [776] push8(status or FLAG_BREAK); //push CPU status to stack
 	movzbl	U_$UNIT6502_$$_STATUS(%rip),%ecx
 	orl	$16,%ecx
@@ -3131,10 +2807,10 @@ UNIT6502_$$_BRK:
 	andl	$65535,%ecx
 	call	UNIT6502_$$_PUSH8$WORD
 # PeepHole Optimization,var3
-.Ll397:
+.Ll383:
 # [221] {$define setinterrupt:= status :=status or FLAG_INTERRUPT}
 	orb	$4,U_$UNIT6502_$$_STATUS(%rip)
-.Ll398:
+.Ll384:
 # [778] pc := word(read6502($FFFE)) or (word(read6502($FFFF)) shl 8);
 	movq	$65534,%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
@@ -3152,50 +2828,41 @@ UNIT6502_$$_BRK:
 	shll	$8,%eax
 	orl	%ebx,%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll399:
+.Ll385:
 # [779] end;
-	movq	-8(%rbp),%rbx
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	nop
+	leaq	32(%rsp),%rsp
+	popq	%rbx
 	ret
 .seh_endproc
-.Lc232:
+.Lc128:
 .Lt25:
-.Ll400:
+.Ll386:
 
 .section .text.n_unit6502_$$_bvc,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_BVC
 UNIT6502_$$_BVC:
-.Lc236:
-.seh_proc UNIT6502_$$_BVC
-.Ll401:
+.Lc130:
 # [783] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc238:
-.Lc239:
-	movq	%rsp,%rbp
-.Lc240:
-.seh_endprologue
 # PeepHole Optimization,var15
-.Ll402:
+.Ll387:
 # [784] if ((status and FLAG_OVERFLOW) = 0) then
 	movw	U_$UNIT6502_$$_STATUS(%rip),%ax
 	andw	$64,%ax
 	testw	%ax,%ax
 	jne	.Lj741
-.Ll403:
+.Ll388:
 # [786] oldpc := pc;
 	movw	U_$UNIT6502_$$_PC(%rip),%ax
 	movw	%ax,U_$UNIT6502_$$_OLDPC(%rip)
-.Ll404:
+.Ll389:
 # [787] pc += reladdr;
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	movzwl	U_$UNIT6502_$$_RELADDR(%rip),%edx
 	leal	(%eax,%edx),%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll405:
+.Ll390:
 # [788] if ((oldpc and $FF00) <> (pc and $FF00)) then clockticks6502 += 2 //check if jump crossed a page boundary
 	movw	U_$UNIT6502_$$_OLDPC(%rip),%ax
 	andw	$65280,%ax
@@ -3203,63 +2870,51 @@ UNIT6502_$$_BVC:
 	andw	$65280,%dx
 	cmpw	%dx,%ax
 	je	.Lj747
-.Ll406:
+.Ll391:
 # [789] else clockticks6502+=1;
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	2(%rax),%rax
-.Ll407:
+.Ll392:
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 	jmp	.Lj750
 .Lj747:
-.Ll408:
+.Ll393:
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 .Lj750:
 .Lj741:
-.Ll409:
+.Ll394:
 # [791] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc237:
+.Lc131:
 .Lt46:
-.Ll410:
+.Ll395:
 
 .section .text.n_unit6502_$$_bvs,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_BVS
 UNIT6502_$$_BVS:
-.Lc241:
-.seh_proc UNIT6502_$$_BVS
-.Ll411:
+.Lc132:
 # [795] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc243:
-.Lc244:
-	movq	%rsp,%rbp
-.Lc245:
-.seh_endprologue
 # PeepHole Optimization,var15
-.Ll412:
+.Ll396:
 # [796] if ((status and FLAG_OVERFLOW) = FLAG_OVERFLOW) then
 	movw	U_$UNIT6502_$$_STATUS(%rip),%ax
 	andw	$64,%ax
 	cmpw	$64,%ax
 	jne	.Lj756
-.Ll413:
+.Ll397:
 # [798] oldpc := pc;
 	movw	U_$UNIT6502_$$_PC(%rip),%ax
 	movw	%ax,U_$UNIT6502_$$_OLDPC(%rip)
-.Ll414:
+.Ll398:
 # [799] pc += reladdr;
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	movzwl	U_$UNIT6502_$$_RELADDR(%rip),%edx
 	leal	(%eax,%edx),%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll415:
+.Ll399:
 # [800] if ((oldpc and $FF00) <> (pc and $FF00)) then clockticks6502 += 2 //check if jump crossed a page boundary
 	movw	U_$UNIT6502_$$_OLDPC(%rip),%ax
 	andw	$65280,%ax
@@ -3267,171 +2922,115 @@ UNIT6502_$$_BVS:
 	andw	$65280,%dx
 	cmpw	%dx,%ax
 	je	.Lj762
-.Ll416:
+.Ll400:
 # [801] else clockticks6502+=1;
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	2(%rax),%rax
-.Ll417:
+.Ll401:
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 	jmp	.Lj765
 .Lj762:
-.Ll418:
+.Ll402:
 	movq	TC_$UNIT6502_$$_CLOCKTICKS6502(%rip),%rax
 	leaq	1(%rax),%rax
 	movq	%rax,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 .Lj765:
 .Lj756:
-.Ll419:
+.Ll403:
 # [803] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc242:
+.Lc133:
 .Lt51:
-.Ll420:
+.Ll404:
 
 .section .text.n_unit6502_$$_clc,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_CLC
 UNIT6502_$$_CLC:
-.Lc246:
-.seh_proc UNIT6502_$$_CLC
-.Ll421:
+.Lc134:
 # [807] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc248:
-.Lc249:
-	movq	%rsp,%rbp
-.Lc250:
-.seh_endprologue
 # PeepHole Optimization,var3
-.Ll422:
+.Ll405:
 	andb	$-2,U_$UNIT6502_$$_STATUS(%rip)
-.Ll423:
+.Ll406:
 # [809] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc247:
+.Lc135:
 .Lt33:
-.Ll424:
+.Ll407:
 
 .section .text.n_unit6502_$$_cld,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_CLD
 UNIT6502_$$_CLD:
-.Lc251:
-.seh_proc UNIT6502_$$_CLD
-.Ll425:
+.Lc136:
 # [813] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc253:
-.Lc254:
-	movq	%rsp,%rbp
-.Lc255:
-.seh_endprologue
 # PeepHole Optimization,var3
-.Ll426:
+.Ll408:
 # [224] {$define cleardecimal:= status := status and not(FLAG_DECIMAL)}
 	andb	$-9,U_$UNIT6502_$$_STATUS(%rip)
-.Ll427:
+.Ll409:
 # [815] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc252:
+.Lc137:
 .Lt81:
-.Ll428:
+.Ll410:
 
 .section .text.n_unit6502_$$_cli,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_CLI
 UNIT6502_$$_CLI:
-.Lc256:
-.seh_proc UNIT6502_$$_CLI
-.Ll429:
+.Lc138:
 # [819] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc258:
-.Lc259:
-	movq	%rsp,%rbp
-.Lc260:
-.seh_endprologue
 # PeepHole Optimization,var3
-.Ll430:
+.Ll411:
 # [222] {$define clearinterrupt:= status:= status and not(FLAG_INTERRUPT)}
 	andb	$-5,U_$UNIT6502_$$_STATUS(%rip)
-.Ll431:
+.Ll412:
 # [821] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc257:
+.Lc139:
 .Lt47:
-.Ll432:
+.Ll413:
 
 .section .text.n_unit6502_$$_clv,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_CLV
 UNIT6502_$$_CLV:
-.Lc261:
-.seh_proc UNIT6502_$$_CLV
-.Ll433:
+.Lc140:
 # [825] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc263:
-.Lc264:
-	movq	%rsp,%rbp
-.Lc265:
-.seh_endprologue
 # PeepHole Optimization,var3
-.Ll434:
+.Ll414:
 	andb	$-65,U_$UNIT6502_$$_STATUS(%rip)
-.Ll435:
+.Ll415:
 # [827] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc262:
+.Lc141:
 .Lt72:
-.Ll436:
+.Ll416:
 
 .section .text.n_unit6502_$$_cmp,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_CMP
 UNIT6502_$$_CMP:
-.Lc266:
+.Lc142:
 .seh_proc UNIT6502_$$_CMP
-.Ll437:
+.Ll417:
 # [831] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc268:
-.Lc269:
-	movq	%rsp,%rbp
-.Lc270:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc144:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll438:
+.Ll418:
 # [832] penaltyop := 1;
 	movb	$1,U_$UNIT6502_$$_PENALTYOP(%rip)
-.Ll439:
+.Ll419:
 # [833] value := byte(getvalue);
 	call	UNIT6502_$$_GETVALUE$$WORD
 # PeepHole Optimization,var7
 	andw	$255,%ax
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
-.Ll440:
+.Ll420:
 # [834] aresult := word(a) - value;
 	movzbw	U_$UNIT6502_$$_A(%rip),%ax
 # PeepHole Optimization,var11
@@ -3439,7 +3038,7 @@ UNIT6502_$$_CMP:
 	movzwl	U_$UNIT6502_$$_VALUE(%rip),%edx
 	subl	%edx,%eax
 	movw	%ax,U_$UNIT6502_$$_ARESULT(%rip)
-.Ll441:
+.Ll421:
 # [835] if (a >= (value and $00FF)) then setcarry else clearcarry;
 	movzbw	U_$UNIT6502_$$_A(%rip),%dx
 	movw	U_$UNIT6502_$$_VALUE(%rip),%ax
@@ -3447,78 +3046,75 @@ UNIT6502_$$_CMP:
 	cmpw	%ax,%dx
 	jnae	.Lj793
 # PeepHole Optimization,var3
-.Ll442:
+.Ll422:
 	orb	$1,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj796
 .Lj793:
 # PeepHole Optimization,var3
-.Ll443:
+.Ll423:
 	andb	$-2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj796:
-.Ll444:
+.Ll424:
 # [836] if (a = (byte(value and $00FF))) then setzero else clearzero;
 	movw	U_$UNIT6502_$$_VALUE(%rip),%ax
 	andw	$255,%ax
 	cmpb	U_$UNIT6502_$$_A(%rip),%al
 	jne	.Lj800
 # PeepHole Optimization,var3
-.Ll445:
+.Ll425:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj803
 .Lj800:
 # PeepHole Optimization,var3
-.Ll446:
+.Ll426:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 .Lj803:
-.Ll447:
+.Ll427:
 # [837] if (aresult and $0080)<>0 then setsign else clearsign;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$128,%ax
 	testw	%ax,%ax
 	je	.Lj807
-.Ll448:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll428:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj810
 .Lj807:
 # PeepHole Optimization,var3
-.Ll449:
+.Ll429:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj810:
-.Ll450:
+.Ll430:
 # [838] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc267:
+.Lc143:
 .Lt75:
-.Ll451:
+.Ll431:
 
 .section .text.n_unit6502_$$_cpx,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_CPX
 UNIT6502_$$_CPX:
-.Lc271:
+.Lc145:
 .seh_proc UNIT6502_$$_CPX
-.Ll452:
+.Ll432:
 # [842] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc273:
-.Lc274:
-	movq	%rsp,%rbp
-.Lc275:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc147:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll453:
+.Ll433:
 # [843] value := getvalue;;
 	call	UNIT6502_$$_GETVALUE$$WORD
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
-.Ll454:
+.Ll434:
 # [844] aresult := word(x) - value;
 	movzbw	U_$UNIT6502_$$_X(%rip),%ax
 # PeepHole Optimization,var11
@@ -3526,7 +3122,7 @@ UNIT6502_$$_CPX:
 	movzwl	U_$UNIT6502_$$_VALUE(%rip),%edx
 	subl	%edx,%eax
 	movw	%ax,U_$UNIT6502_$$_ARESULT(%rip)
-.Ll455:
+.Ll435:
 # [845] if (x >= (value and $00FF)) then setcarry else clearcarry;
 	movzbw	U_$UNIT6502_$$_X(%rip),%dx
 	movw	U_$UNIT6502_$$_VALUE(%rip),%ax
@@ -3534,78 +3130,75 @@ UNIT6502_$$_CPX:
 	cmpw	%ax,%dx
 	jnae	.Lj820
 # PeepHole Optimization,var3
-.Ll456:
+.Ll436:
 	orb	$1,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj823
 .Lj820:
 # PeepHole Optimization,var3
-.Ll457:
+.Ll437:
 	andb	$-2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj823:
-.Ll458:
+.Ll438:
 # [846] if (x = (byte(value and $00FF))) then setzero else clearzero;
 	movw	U_$UNIT6502_$$_VALUE(%rip),%ax
 	andw	$255,%ax
 	cmpb	U_$UNIT6502_$$_X(%rip),%al
 	jne	.Lj827
 # PeepHole Optimization,var3
-.Ll459:
+.Ll439:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj830
 .Lj827:
 # PeepHole Optimization,var3
-.Ll460:
+.Ll440:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 .Lj830:
-.Ll461:
+.Ll441:
 # [847] if (aresult and $0080)<>0 then setsign else clearsign;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$128,%ax
 	testw	%ax,%ax
 	je	.Lj834
-.Ll462:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll442:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj837
 .Lj834:
 # PeepHole Optimization,var3
-.Ll463:
+.Ll443:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj837:
-.Ll464:
+.Ll444:
 # [848] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc272:
+.Lc146:
 .Lt82:
-.Ll465:
+.Ll445:
 
 .section .text.n_unit6502_$$_cpy,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_CPY
 UNIT6502_$$_CPY:
-.Lc276:
+.Lc148:
 .seh_proc UNIT6502_$$_CPY
-.Ll466:
+.Ll446:
 # [852] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc278:
-.Lc279:
-	movq	%rsp,%rbp
-.Lc280:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc150:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll467:
+.Ll447:
 # [853] value := getvalue;;
 	call	UNIT6502_$$_GETVALUE$$WORD
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
-.Ll468:
+.Ll448:
 # [854] aresult := word(y) - value;
 	movzbw	U_$UNIT6502_$$_Y(%rip),%ax
 # PeepHole Optimization,var11
@@ -3613,7 +3206,7 @@ UNIT6502_$$_CPY:
 	movzwl	U_$UNIT6502_$$_VALUE(%rip),%edx
 	subl	%edx,%eax
 	movw	%ax,U_$UNIT6502_$$_ARESULT(%rip)
-.Ll469:
+.Ll449:
 # [855] if (y >= (value and $00FF)) then setcarry else clearcarry;
 	movzbw	U_$UNIT6502_$$_Y(%rip),%dx
 	movw	U_$UNIT6502_$$_VALUE(%rip),%ax
@@ -3621,15 +3214,15 @@ UNIT6502_$$_CPY:
 	cmpw	%ax,%dx
 	jnae	.Lj847
 # PeepHole Optimization,var3
-.Ll470:
+.Ll450:
 	orb	$1,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj850
 .Lj847:
 # PeepHole Optimization,var3
-.Ll471:
+.Ll451:
 	andb	$-2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj850:
-.Ll472:
+.Ll452:
 # [856] if (y = (value and $00FF)) then setzero else clearzero;
 	movzbw	U_$UNIT6502_$$_Y(%rip),%dx
 	movw	U_$UNIT6502_$$_VALUE(%rip),%ax
@@ -3637,955 +3230,861 @@ UNIT6502_$$_CPY:
 	cmpw	%ax,%dx
 	jne	.Lj854
 # PeepHole Optimization,var3
-.Ll473:
+.Ll453:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj857
 .Lj854:
 # PeepHole Optimization,var3
-.Ll474:
+.Ll454:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 .Lj857:
-.Ll475:
+.Ll455:
 # [857] if (aresult and $0080)<>0 then setsign else clearsign;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$128,%ax
 	testw	%ax,%ax
 	je	.Lj861
-.Ll476:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll456:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj864
 .Lj861:
 # PeepHole Optimization,var3
-.Ll477:
+.Ll457:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj864:
-.Ll478:
+.Ll458:
 # [858] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc277:
+.Lc149:
 .Lt74:
-.Ll479:
+.Ll459:
 
 .section .text.n_unit6502_$$_dea,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_DEA
 UNIT6502_$$_DEA:
-.Lc281:
+.Lc151:
 .seh_proc UNIT6502_$$_DEA
-.Ll480:
+.Ll460:
 # [862] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc283:
-.Lc284:
-	movq	%rsp,%rbp
-.Lc285:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc153:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll481:
+.Ll461:
 # [863] value := getvalue;;
 	call	UNIT6502_$$_GETVALUE$$WORD
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
-.Ll482:
+.Ll462:
 # [864] aresult := value - 1;
 	movzwl	U_$UNIT6502_$$_VALUE(%rip),%eax
 	leal	-1(%eax),%eax
+# PeepHole Optimization,MovMov2Mov1
 	movw	%ax,U_$UNIT6502_$$_ARESULT(%rip)
-.Ll483:
+.Ll463:
 # [865] if (aresult and $0080)<>0 then setsign else clearsign;
-	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$128,%ax
 	testw	%ax,%ax
 	je	.Lj874
-.Ll484:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll464:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj877
 .Lj874:
 # PeepHole Optimization,var3
-.Ll485:
+.Ll465:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj877:
-.Ll486:
+.Ll466:
 # [866] if (aresult and $00FF)<>0 then clearzero else setzero;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$255,%ax
 	testw	%ax,%ax
 	je	.Lj881
 # PeepHole Optimization,var3
-.Ll487:
+.Ll467:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj884
 .Lj881:
 # PeepHole Optimization,var3
-.Ll488:
+.Ll468:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj884:
-.Ll489:
+.Ll469:
 # [867] putvalue(aresult);
 	movzwl	U_$UNIT6502_$$_ARESULT(%rip),%ecx
 	call	UNIT6502_$$_PUTVALUE$WORD
-.Ll490:
+.Ll470:
 # [868] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc282:
+.Lc152:
 .Lt77:
-.Ll491:
+.Ll471:
 
 .section .text.n_unit6502_$$_dex,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_DEX
 UNIT6502_$$_DEX:
-.Lc286:
-.seh_proc UNIT6502_$$_DEX
-.Ll492:
+.Lc154:
 # [872] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc288:
-.Lc289:
-	movq	%rsp,%rbp
-.Lc290:
-.seh_endprologue
-.Ll493:
+.Ll472:
 # [873] x-=1;
 	movzbl	U_$UNIT6502_$$_X(%rip),%eax
 	leal	-1(%eax),%eax
+# PeepHole Optimization,MovMov2Mov1
 	movb	%al,U_$UNIT6502_$$_X(%rip)
-.Ll494:
+.Ll473:
 # [874] if (x and $0080)<>0 then setsign else clearsign;
-	movb	U_$UNIT6502_$$_X(%rip),%al
 	andb	$128,%al
 	testb	%al,%al
 	je	.Lj894
-.Ll495:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll474:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj897
 .Lj894:
 # PeepHole Optimization,var3
-.Ll496:
+.Ll475:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj897:
-.Ll497:
+.Ll476:
 # [875] if (x and $00FF)<>0 then clearzero else setzero;
 	movb	U_$UNIT6502_$$_X(%rip),%al
 	testb	%al,%al
 	je	.Lj901
 # PeepHole Optimization,var3
-.Ll498:
+.Ll477:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj904
 .Lj901:
 # PeepHole Optimization,var3
-.Ll499:
+.Ll478:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj904:
-.Ll500:
+.Ll479:
 # [876] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc287:
+.Lc155:
 .Lt79:
-.Ll501:
+.Ll480:
 
 .section .text.n_unit6502_$$_dey,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_DEY
 UNIT6502_$$_DEY:
-.Lc291:
-.seh_proc UNIT6502_$$_DEY
-.Ll502:
+.Lc156:
 # [880] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc293:
-.Lc294:
-	movq	%rsp,%rbp
-.Lc295:
-.seh_endprologue
-.Ll503:
+.Ll481:
 # [881] y-=1;
 	movzbl	U_$UNIT6502_$$_Y(%rip),%eax
 	leal	-1(%eax),%eax
+# PeepHole Optimization,MovMov2Mov1
 	movb	%al,U_$UNIT6502_$$_Y(%rip)
-.Ll504:
+.Ll482:
 # [882] if (y and $0080)<>0 then setsign else clearsign;
-	movb	U_$UNIT6502_$$_Y(%rip),%al
 	andb	$128,%al
 	testb	%al,%al
 	je	.Lj912
-.Ll505:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll483:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj915
 .Lj912:
 # PeepHole Optimization,var3
-.Ll506:
+.Ll484:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj915:
-.Ll507:
+.Ll485:
 # [883] if (y and $00FF)<>0 then clearzero else setzero;
 	movb	U_$UNIT6502_$$_Y(%rip),%al
 	testb	%al,%al
 	je	.Lj919
 # PeepHole Optimization,var3
-.Ll508:
+.Ll486:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj922
 .Lj919:
 # PeepHole Optimization,var3
-.Ll509:
+.Ll487:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj922:
-.Ll510:
+.Ll488:
 # [884] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc292:
+.Lc157:
 .Lt60:
-.Ll511:
+.Ll489:
 
 .section .text.n_unit6502_$$_eor,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_EOR
 UNIT6502_$$_EOR:
-.Lc296:
+.Lc158:
 .seh_proc UNIT6502_$$_EOR
-.Ll512:
+.Ll490:
 # [888] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc298:
-.Lc299:
-	movq	%rsp,%rbp
-.Lc300:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc160:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll513:
+.Ll491:
 # [889] penaltyop := 1;
 	movb	$1,U_$UNIT6502_$$_PENALTYOP(%rip)
-.Ll514:
+.Ll492:
 # [890] value := getvalue;
 	call	UNIT6502_$$_GETVALUE$$WORD
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
-.Ll515:
+.Ll493:
 # [891] aresult := a xor value;
 	movzbw	U_$UNIT6502_$$_A(%rip),%dx
 	movw	U_$UNIT6502_$$_VALUE(%rip),%ax
 	xorw	%dx,%ax
+# PeepHole Optimization,MovMov2Mov1
 	movw	%ax,U_$UNIT6502_$$_ARESULT(%rip)
-.Ll516:
+.Ll494:
 # [892] if (aresult and $0080)<>0 then setsign else clearsign;
-	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$128,%ax
 	testw	%ax,%ax
 	je	.Lj934
-.Ll517:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll495:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj937
 .Lj934:
 # PeepHole Optimization,var3
-.Ll518:
+.Ll496:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj937:
-.Ll519:
+.Ll497:
 # [893] if (aresult and $00FF)<>0 then clearzero else setzero;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$255,%ax
 	testw	%ax,%ax
 	je	.Lj941
 # PeepHole Optimization,var3
-.Ll520:
+.Ll498:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj944
 .Lj941:
 # PeepHole Optimization,var3
-.Ll521:
+.Ll499:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj944:
-.Ll522:
+.Ll500:
 # [894] a:=byte(aresult and $00FF);
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$255,%ax
 	movb	%al,U_$UNIT6502_$$_A(%rip)
-.Ll523:
+.Ll501:
 # [895] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc297:
+.Lc159:
 .Lt42:
-.Ll524:
+.Ll502:
 
 .section .text.n_unit6502_$$_ina,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_INA
 UNIT6502_$$_INA:
-.Lc301:
+.Lc161:
 .seh_proc UNIT6502_$$_INA
-.Ll525:
+.Ll503:
 # [899] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc303:
-.Lc304:
-	movq	%rsp,%rbp
-.Lc305:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc163:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll526:
+.Ll504:
 # [900] value := getvalue;
 	call	UNIT6502_$$_GETVALUE$$WORD
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
-.Ll527:
+.Ll505:
 # [901] aresult := value + 1;
 	movzwl	U_$UNIT6502_$$_VALUE(%rip),%eax
 	leal	1(%eax),%eax
+# PeepHole Optimization,MovMov2Mov1
 	movw	%ax,U_$UNIT6502_$$_ARESULT(%rip)
-.Ll528:
+.Ll506:
 # [902] if (aresult and $0080)<>0 then setsign else clearsign;
-	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$128,%ax
 	testw	%ax,%ax
 	je	.Lj956
-.Ll529:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll507:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj959
 .Lj956:
 # PeepHole Optimization,var3
-.Ll530:
+.Ll508:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj959:
-.Ll531:
+.Ll509:
 # [903] if (aresult and $00FF)<>0 then clearzero else setzero;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$255,%ax
 	testw	%ax,%ax
 	je	.Lj963
 # PeepHole Optimization,var3
-.Ll532:
+.Ll510:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj966
 .Lj963:
 # PeepHole Optimization,var3
-.Ll533:
+.Ll511:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj966:
-.Ll534:
+.Ll512:
 # [904] putvalue(aresult);
 	movzwl	U_$UNIT6502_$$_ARESULT(%rip),%ecx
 	call	UNIT6502_$$_PUTVALUE$WORD
-.Ll535:
+.Ll513:
 # [905] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc302:
+.Lc162:
 .Lt87:
-.Ll536:
+.Ll514:
 
 .section .text.n_unit6502_$$_inx,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_INX
 UNIT6502_$$_INX:
-.Lc306:
-.seh_proc UNIT6502_$$_INX
-.Ll537:
+.Lc164:
 # [909] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc308:
-.Lc309:
-	movq	%rsp,%rbp
-.Lc310:
-.seh_endprologue
-.Ll538:
+.Ll515:
 # [910] x+=1;
 	movzbl	U_$UNIT6502_$$_X(%rip),%eax
 	leal	1(%eax),%eax
+# PeepHole Optimization,MovMov2Mov1
 	movb	%al,U_$UNIT6502_$$_X(%rip)
-.Ll539:
+.Ll516:
 # [911] if (x and $0080)<>0 then setsign else clearsign;
-	movb	U_$UNIT6502_$$_X(%rip),%al
 	andb	$128,%al
 	testb	%al,%al
 	je	.Lj976
-.Ll540:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll517:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj979
 .Lj976:
 # PeepHole Optimization,var3
-.Ll541:
+.Ll518:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj979:
-.Ll542:
+.Ll519:
 # [912] if (x and $00FF)<>0 then clearzero else setzero;
 	movb	U_$UNIT6502_$$_X(%rip),%al
 	testb	%al,%al
 	je	.Lj983
 # PeepHole Optimization,var3
-.Ll543:
+.Ll520:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj986
 .Lj983:
 # PeepHole Optimization,var3
-.Ll544:
+.Ll521:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj986:
-.Ll545:
+.Ll522:
 # [913] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc307:
+.Lc165:
 .Lt84:
-.Ll546:
+.Ll523:
 
 .section .text.n_unit6502_$$_iny,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_INY
 UNIT6502_$$_INY:
-.Lc311:
-.seh_proc UNIT6502_$$_INY
-.Ll547:
+.Lc166:
 # [917] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc313:
-.Lc314:
-	movq	%rsp,%rbp
-.Lc315:
-.seh_endprologue
-.Ll548:
+.Ll524:
 # [918] y+=1;
 	movzbl	U_$UNIT6502_$$_Y(%rip),%eax
 	leal	1(%eax),%eax
+# PeepHole Optimization,MovMov2Mov1
 	movb	%al,U_$UNIT6502_$$_Y(%rip)
-.Ll549:
+.Ll525:
 # [919] if (y and $0080)<>0 then setsign else clearsign;
-	movb	U_$UNIT6502_$$_Y(%rip),%al
 	andb	$128,%al
 	testb	%al,%al
 	je	.Lj994
-.Ll550:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll526:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj997
 .Lj994:
 # PeepHole Optimization,var3
-.Ll551:
+.Ll527:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj997:
-.Ll552:
+.Ll528:
 # [920] if (y and $00FF)<>0 then clearzero else setzero;
 	movb	U_$UNIT6502_$$_Y(%rip),%al
 	testb	%al,%al
 	je	.Lj1001
 # PeepHole Optimization,var3
-.Ll553:
+.Ll529:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1004
 .Lj1001:
 # PeepHole Optimization,var3
-.Ll554:
+.Ll530:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1004:
-.Ll555:
+.Ll531:
 # [921] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc312:
+.Lc167:
 .Lt78:
-.Ll556:
+.Ll532:
 
 .section .text.n_unit6502_$$_jmp,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_JMP
 UNIT6502_$$_JMP:
-.Lc316:
-.seh_proc UNIT6502_$$_JMP
-.Ll557:
+.Lc168:
 # [925] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc318:
-.Lc319:
-	movq	%rsp,%rbp
-.Lc320:
-.seh_endprologue
-.Ll558:
+.Ll533:
 # [926] pc := ea;
 	movw	U_$UNIT6502_$$_EA(%rip),%ax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll559:
+.Ll534:
 # [927] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc317:
+.Lc169:
 .Lt48:
-.Ll560:
+.Ll535:
 
 .section .text.n_unit6502_$$_jsr,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_JSR
 UNIT6502_$$_JSR:
-.Lc321:
+.Lc170:
 .seh_proc UNIT6502_$$_JSR
-.Ll561:
+.Ll536:
 # [931] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc323:
-.Lc324:
-	movq	%rsp,%rbp
-.Lc325:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc172:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll562:
+.Ll537:
 # [932] push16(pc - 1);
 	movzwl	U_$UNIT6502_$$_PC(%rip),%eax
 	leal	-1(%eax),%ecx
 # PeepHole Optimization,var11
 	andl	$65535,%ecx
 	call	UNIT6502_$$_PUSH16$WORD
-.Ll563:
+.Ll538:
 # [933] pc := ea;
 	movw	U_$UNIT6502_$$_EA(%rip),%ax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll564:
+.Ll539:
 # [934] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc322:
+.Lc171:
 .Lt34:
-.Ll565:
+.Ll540:
 
 .section .text.n_unit6502_$$_lda,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_LDA
 UNIT6502_$$_LDA:
-.Lc326:
+.Lc173:
 .seh_proc UNIT6502_$$_LDA
-.Ll566:
+.Ll541:
 # [938] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc328:
-.Lc329:
-	movq	%rsp,%rbp
-.Lc330:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc175:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll567:
+.Ll542:
 # [939] penaltyop := 1;
 	movb	$1,U_$UNIT6502_$$_PENALTYOP(%rip)
-.Ll568:
+.Ll543:
 # [940] value := getvalue;
 	call	UNIT6502_$$_GETVALUE$$WORD
+# PeepHole Optimization,MovMov2Mov1
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
-.Ll569:
+.Ll544:
 # [941] a := (value and $00FF);
-	movw	U_$UNIT6502_$$_VALUE(%rip),%ax
 	andw	$255,%ax
+# PeepHole Optimization,MovMov2Mov1
 	movb	%al,U_$UNIT6502_$$_A(%rip)
-.Ll570:
+.Ll545:
 # [942] if (a and $0080)<>0 then setsign else clearsign;
-	movb	U_$UNIT6502_$$_A(%rip),%al
 	andb	$128,%al
 	testb	%al,%al
 	je	.Lj1026
-.Ll571:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll546:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1029
 .Lj1026:
 # PeepHole Optimization,var3
-.Ll572:
+.Ll547:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1029:
-.Ll573:
+.Ll548:
 # [943] if (a and $00FF)<>0 then clearzero else setzero;
 	movb	U_$UNIT6502_$$_A(%rip),%al
 	testb	%al,%al
 	je	.Lj1033
 # PeepHole Optimization,var3
-.Ll574:
+.Ll549:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1036
 .Lj1033:
 # PeepHole Optimization,var3
-.Ll575:
+.Ll550:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1036:
-.Ll576:
+.Ll551:
 # [944] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc327:
+.Lc174:
 .Lt66:
-.Ll577:
+.Ll552:
 
 .section .text.n_unit6502_$$_ldc,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_LDC
 UNIT6502_$$_LDC:
-.Lc331:
+.Lc176:
 .seh_proc UNIT6502_$$_LDC
-.Ll578:
+.Ll553:
 # [949] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc333:
-.Lc334:
-	movq	%rsp,%rbp
-.Lc335:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc178:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll579:
+.Ll554:
 # [950] cs^:=getvalue32 shl 8;
 	call	UNIT6502_$$_GETVALUE32$$LONGWORD
 	shll	$8,%eax
 	andl	$4294967295,%eax
 	movq	U_$UNIT6502_$$_CS(%rip),%rdx
 	movq	%rax,(%rdx)
-.Ll580:
+.Ll555:
 # [951] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc332:
+.Lc177:
 .Lt97:
-.Ll581:
+.Ll556:
 
 .section .text.n_unit6502_$$_ldd,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_LDD
 UNIT6502_$$_LDD:
-.Lc336:
+.Lc179:
 .seh_proc UNIT6502_$$_LDD
-.Ll582:
+.Ll557:
 # [955] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc338:
-.Lc339:
-	movq	%rsp,%rbp
-.Lc340:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc181:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll583:
+.Ll558:
 # [956] ds^:=getvalue32 shl 8;
 	call	UNIT6502_$$_GETVALUE32$$LONGWORD
 	shll	$8,%eax
 	andl	$4294967295,%eax
 	movq	U_$UNIT6502_$$_DS(%rip),%rdx
 	movq	%rax,(%rdx)
-.Ll584:
+.Ll559:
 # [957] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc337:
+.Lc180:
 .Lt99:
-.Ll585:
+.Ll560:
 
 .section .text.n_unit6502_$$_ldx,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_LDX
 UNIT6502_$$_LDX:
-.Lc341:
+.Lc182:
 .seh_proc UNIT6502_$$_LDX
-.Ll586:
+.Ll561:
 # [962] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc343:
-.Lc344:
-	movq	%rsp,%rbp
-.Lc345:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc184:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll587:
+.Ll562:
 # [963] penaltyop := 1;
 	movb	$1,U_$UNIT6502_$$_PENALTYOP(%rip)
-.Ll588:
+.Ll563:
 # [964] value := getvalue;
 	call	UNIT6502_$$_GETVALUE$$WORD
+# PeepHole Optimization,MovMov2Mov1
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
-.Ll589:
+.Ll564:
 # [965] x := (value and $00FF);
-	movw	U_$UNIT6502_$$_VALUE(%rip),%ax
 	andw	$255,%ax
+# PeepHole Optimization,MovMov2Mov1
 	movb	%al,U_$UNIT6502_$$_X(%rip)
-.Ll590:
+.Ll565:
 # [966] if (x and $0080)<>0 then setsign else clearsign;
-	movb	U_$UNIT6502_$$_X(%rip),%al
 	andb	$128,%al
 	testb	%al,%al
 	je	.Lj1056
-.Ll591:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll566:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1059
 .Lj1056:
 # PeepHole Optimization,var3
-.Ll592:
+.Ll567:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1059:
-.Ll593:
+.Ll568:
 # [967] if (x and $00FF)<>0 then clearzero else setzero;
 	movb	U_$UNIT6502_$$_X(%rip),%al
 	testb	%al,%al
 	je	.Lj1063
 # PeepHole Optimization,var3
-.Ll594:
+.Ll569:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1066
 .Lj1063:
 # PeepHole Optimization,var3
-.Ll595:
+.Ll570:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1066:
-.Ll596:
+.Ll571:
 # [968] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc342:
+.Lc183:
 .Lt67:
-.Ll597:
+.Ll572:
 
 .section .text.n_unit6502_$$_ldy,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_LDY
 UNIT6502_$$_LDY:
-.Lc346:
+.Lc185:
 .seh_proc UNIT6502_$$_LDY
-.Ll598:
+.Ll573:
 # [972] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc348:
-.Lc349:
-	movq	%rsp,%rbp
-.Lc350:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc187:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll599:
+.Ll574:
 # [973] penaltyop := 1;
 	movb	$1,U_$UNIT6502_$$_PENALTYOP(%rip)
-.Ll600:
+.Ll575:
 # [974] value := getvalue;;
 	call	UNIT6502_$$_GETVALUE$$WORD
+# PeepHole Optimization,MovMov2Mov1
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
-.Ll601:
+.Ll576:
 # [975] y := (value and $00FF);
-	movw	U_$UNIT6502_$$_VALUE(%rip),%ax
 	andw	$255,%ax
+# PeepHole Optimization,MovMov2Mov1
 	movb	%al,U_$UNIT6502_$$_Y(%rip)
-.Ll602:
+.Ll577:
 # [976] if (y and $0080)<>0 then setsign else clearsign;
-	movb	U_$UNIT6502_$$_Y(%rip),%al
 	andb	$128,%al
 	testb	%al,%al
 	je	.Lj1078
-.Ll603:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll578:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1081
 .Lj1078:
 # PeepHole Optimization,var3
-.Ll604:
+.Ll579:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1081:
-.Ll605:
+.Ll580:
 # [977] if (y and $00FF)<>0 then clearzero else setzero;
 	movb	U_$UNIT6502_$$_Y(%rip),%al
 	testb	%al,%al
 	je	.Lj1085
 # PeepHole Optimization,var3
-.Ll606:
+.Ll581:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1088
 .Lj1085:
 # PeepHole Optimization,var3
-.Ll607:
+.Ll582:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1088:
-.Ll608:
+.Ll583:
 # [978] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc347:
+.Lc186:
 .Lt65:
-.Ll609:
+.Ll584:
 
 .section .text.n_unit6502_$$_lsr,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_LSR
 UNIT6502_$$_LSR:
-.Lc351:
+.Lc188:
 .seh_proc UNIT6502_$$_LSR
-.Ll610:
+.Ll585:
 # [982] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc353:
-.Lc354:
-	movq	%rsp,%rbp
-.Lc355:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc190:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll611:
+.Ll586:
 # [983] value := getvalue and $FF;
 	call	UNIT6502_$$_GETVALUE$$WORD
 	andw	$255,%ax
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
-.Ll612:
+.Ll587:
 # [984] aresult := value shr 1;
 	movzwl	U_$UNIT6502_$$_VALUE(%rip),%eax
 	shrl	$1,%eax
 	movw	%ax,U_$UNIT6502_$$_ARESULT(%rip)
 # PeepHole Optimization,var14
-.Ll613:
+.Ll588:
 # [985] if (value and 1)=1 then setcarry else clearcarry;
 	movl	U_$UNIT6502_$$_VALUE(%rip),%eax
 	andl	$1,%eax
 	cmpl	$1,%eax
 	jne	.Lj1098
 # PeepHole Optimization,var3
-.Ll614:
+.Ll589:
 	orb	$1,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1101
 .Lj1098:
 # PeepHole Optimization,var3
-.Ll615:
+.Ll590:
 	andb	$-2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1101:
-.Ll616:
+.Ll591:
 # [986] if (aresult and $0080)<>0 then setsign else clearsign;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$128,%ax
 	testw	%ax,%ax
 	je	.Lj1105
-.Ll617:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll592:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1108
 .Lj1105:
 # PeepHole Optimization,var3
-.Ll618:
+.Ll593:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1108:
-.Ll619:
+.Ll594:
 # [987] if (aresult and $00FF)<>0 then clearzero else setzero;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$255,%ax
 	testw	%ax,%ax
 	je	.Lj1112
 # PeepHole Optimization,var3
-.Ll620:
+.Ll595:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1115
 .Lj1112:
 # PeepHole Optimization,var3
-.Ll621:
+.Ll596:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1115:
-.Ll622:
+.Ll597:
 # [988] putvalue(aresult);
 	movzwl	U_$UNIT6502_$$_ARESULT(%rip),%ecx
 	call	UNIT6502_$$_PUTVALUE$WORD
-.Ll623:
+.Ll598:
 # [989] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc352:
+.Lc189:
 .Lt44:
-.Ll624:
+.Ll599:
 
 .section .text.n_unit6502_$$_nop,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_NOP
 UNIT6502_$$_NOP:
-.Lc356:
-.seh_proc UNIT6502_$$_NOP
-.Ll625:
+.Lc191:
 # [993] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc358:
-.Lc359:
-	movq	%rsp,%rbp
-.Lc360:
-.seh_endprologue
-.Ll626:
+.Ll600:
 # [994] case opcode of
 	movb	U_$UNIT6502_$$_OPCODE(%rip),%al
 	cmpb	$28,%al
@@ -4604,308 +4103,267 @@ UNIT6502_$$_NOP:
 	je	.Lj1129
 	jmp	.Lj1123
 .Lj1124:
-.Ll627:
+.Ll601:
 # [995] $1C:  penaltyop := 1;
 	movb	$1,U_$UNIT6502_$$_PENALTYOP(%rip)
 	jmp	.Lj1122
 .Lj1125:
-.Ll628:
+.Ll602:
 # [996] $3C:  penaltyop := 1;
 	movb	$1,U_$UNIT6502_$$_PENALTYOP(%rip)
 	jmp	.Lj1122
 .Lj1126:
-.Ll629:
+.Ll603:
 # [997] $5C:  penaltyop := 1;
 	movb	$1,U_$UNIT6502_$$_PENALTYOP(%rip)
 	jmp	.Lj1122
 .Lj1127:
-.Ll630:
+.Ll604:
 # [998] $7C:  penaltyop := 1;
 	movb	$1,U_$UNIT6502_$$_PENALTYOP(%rip)
 	jmp	.Lj1122
 .Lj1128:
-.Ll631:
+.Ll605:
 # [999] $DC:  penaltyop := 1;
 	movb	$1,U_$UNIT6502_$$_PENALTYOP(%rip)
 	jmp	.Lj1122
 .Lj1129:
-.Ll632:
+.Ll606:
 # [1000] $FC:  penaltyop := 1;
 	movb	$1,U_$UNIT6502_$$_PENALTYOP(%rip)
 .Lj1123:
 .Lj1122:
-.Ll633:
+.Ll607:
 # [1002] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc357:
+.Lc192:
 .Lt27:
-.Ll634:
+.Ll608:
 
 .section .text.n_unit6502_$$_ora,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_ORA
 UNIT6502_$$_ORA:
-.Lc361:
+.Lc193:
 .seh_proc UNIT6502_$$_ORA
-.Ll635:
+.Ll609:
 # [1006] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc363:
-.Lc364:
-	movq	%rsp,%rbp
-.Lc365:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc195:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll636:
+.Ll610:
 # [1007] penaltyop := 1;
 	movb	$1,U_$UNIT6502_$$_PENALTYOP(%rip)
-.Ll637:
+.Ll611:
 # [1008] value := getvalue;;
 	call	UNIT6502_$$_GETVALUE$$WORD
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
-.Ll638:
+.Ll612:
 # [1009] aresult := a or value;
 	movzbw	U_$UNIT6502_$$_A(%rip),%dx
 	movw	U_$UNIT6502_$$_VALUE(%rip),%ax
 	orw	%dx,%ax
+# PeepHole Optimization,MovMov2Mov1
 	movw	%ax,U_$UNIT6502_$$_ARESULT(%rip)
-.Ll639:
+.Ll613:
 # [1010] if (aresult and $0080)<>0 then setsign else clearsign;
-	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$128,%ax
 	testw	%ax,%ax
 	je	.Lj1151
-.Ll640:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll614:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1154
 .Lj1151:
 # PeepHole Optimization,var3
-.Ll641:
+.Ll615:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1154:
-.Ll642:
+.Ll616:
 # [1011] if (aresult and $00FF)<>0 then clearzero else setzero;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$255,%ax
 	testw	%ax,%ax
 	je	.Lj1158
 # PeepHole Optimization,var3
-.Ll643:
+.Ll617:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1161
 .Lj1158:
 # PeepHole Optimization,var3
-.Ll644:
+.Ll618:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1161:
-.Ll645:
+.Ll619:
 # [1012] a:=byte(aresult and $00FF);
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$255,%ax
 	movb	%al,U_$UNIT6502_$$_A(%rip)
-.Ll646:
+.Ll620:
 # [1013] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc362:
+.Lc194:
 .Lt26:
-.Ll647:
+.Ll621:
 
 .section .text.n_unit6502_$$_pha,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_PHA
 UNIT6502_$$_PHA:
-.Lc366:
+.Lc196:
 .seh_proc UNIT6502_$$_PHA
-.Ll648:
+.Ll622:
 # [1017] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc368:
-.Lc369:
-	movq	%rsp,%rbp
-.Lc370:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc198:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll649:
+.Ll623:
 # [1018] push8(a);
 	movzbw	U_$UNIT6502_$$_A(%rip),%ax
 	movzwl	%ax,%ecx
 	call	UNIT6502_$$_PUSH8$WORD
-.Ll650:
+.Ll624:
 # [1019] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc367:
+.Lc197:
 .Lt45:
-.Ll651:
+.Ll625:
 
 .section .text.n_unit6502_$$_phc,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_PHC
 UNIT6502_$$_PHC:
-.Lc371:
+.Lc199:
 .seh_proc UNIT6502_$$_PHC
-.Ll652:
+.Ll626:
 # [1023] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc373:
-.Lc374:
-	movq	%rsp,%rbp
-.Lc375:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc201:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll653:
+.Ll627:
 # [1024] push32(cs^ shr 8);
 	movq	U_$UNIT6502_$$_CS(%rip),%rax
 	movq	(%rax),%rcx
 	shrq	$8,%rcx
 	call	UNIT6502_$$_PUSH32$LONGWORD
-.Ll654:
+.Ll628:
 # [1025] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc372:
+.Lc200:
 .Lt101:
-.Ll655:
+.Ll629:
 
 .section .text.n_unit6502_$$_phd,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_PHD
 UNIT6502_$$_PHD:
-.Lc376:
+.Lc202:
 .seh_proc UNIT6502_$$_PHD
-.Ll656:
+.Ll630:
 # [1029] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc378:
-.Lc379:
-	movq	%rsp,%rbp
-.Lc380:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc204:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll657:
+.Ll631:
 # [1030] push32(ds^ shr 8);
 	movq	U_$UNIT6502_$$_DS(%rip),%rax
 	movq	(%rax),%rcx
 	shrq	$8,%rcx
 	call	UNIT6502_$$_PUSH32$LONGWORD
-.Ll658:
+.Ll632:
 # [1031] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc377:
+.Lc203:
 .Lt102:
-.Ll659:
+.Ll633:
 
 .section .text.n_unit6502_$$_phx,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_PHX
 UNIT6502_$$_PHX:
-.Lc381:
+.Lc205:
 .seh_proc UNIT6502_$$_PHX
-.Ll660:
+.Ll634:
 # [1035] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc383:
-.Lc384:
-	movq	%rsp,%rbp
-.Lc385:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc207:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll661:
+.Ll635:
 # [1036] push8(x);
 	movzbw	U_$UNIT6502_$$_X(%rip),%ax
 	movzwl	%ax,%ecx
 	call	UNIT6502_$$_PUSH8$WORD
-.Ll662:
+.Ll636:
 # [1037] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc382:
+.Lc206:
 .Lt90:
-.Ll663:
+.Ll637:
 
 .section .text.n_unit6502_$$_phy,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_PHY
 UNIT6502_$$_PHY:
-.Lc386:
+.Lc208:
 .seh_proc UNIT6502_$$_PHY
-.Ll664:
+.Ll638:
 # [1041] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc388:
-.Lc389:
-	movq	%rsp,%rbp
-.Lc390:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc210:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll665:
+.Ll639:
 # [1042] push8(y);
 	movzbw	U_$UNIT6502_$$_Y(%rip),%ax
 	movzwl	%ax,%ecx
 	call	UNIT6502_$$_PUSH8$WORD
-.Ll666:
+.Ll640:
 # [1043] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc387:
+.Lc209:
 .Lt91:
-.Ll667:
+.Ll641:
 
 .section .text.n_unit6502_$$_php,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_PHP
 UNIT6502_$$_PHP:
-.Lc391:
+.Lc211:
 .seh_proc UNIT6502_$$_PHP
-.Ll668:
+.Ll642:
 # [1047] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc393:
-.Lc394:
-	movq	%rsp,%rbp
-.Lc395:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc213:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll669:
+.Ll643:
 # [1048] push8(status or FLAG_BREAK);
 	movzbl	U_$UNIT6502_$$_STATUS(%rip),%eax
 	movl	%eax,%ecx
@@ -4913,331 +4371,298 @@ UNIT6502_$$_PHP:
 # PeepHole Optimization,var11
 	andl	$65535,%ecx
 	call	UNIT6502_$$_PUSH8$WORD
-.Ll670:
+.Ll644:
 # [1049] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc392:
+.Lc212:
 .Lt32:
-.Ll671:
+.Ll645:
 
 .section .text.n_unit6502_$$_pla,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_PLA
 UNIT6502_$$_PLA:
-.Lc396:
+.Lc214:
 .seh_proc UNIT6502_$$_PLA
-.Ll672:
+.Ll646:
 # [1053] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc398:
-.Lc399:
-	movq	%rsp,%rbp
-.Lc400:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc216:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll673:
+.Ll647:
 # [1054] a := pull8;
 	call	UNIT6502_$$_PULL8$$BYTE
+# PeepHole Optimization,MovMov2Mov1
 	movb	%al,U_$UNIT6502_$$_A(%rip)
-.Ll674:
+.Ll648:
 # [1055] if (a and $0080)<>0 then setsign else clearsign;
-	movb	U_$UNIT6502_$$_A(%rip),%al
 	andb	$128,%al
 	testb	%al,%al
 	je	.Lj1195
-.Ll675:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll649:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1198
 .Lj1195:
 # PeepHole Optimization,var3
-.Ll676:
+.Ll650:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1198:
-.Ll677:
+.Ll651:
 # [1056] if (a and $00FF)<>0 then clearzero else setzero;
 	movb	U_$UNIT6502_$$_A(%rip),%al
 	testb	%al,%al
 	je	.Lj1202
 # PeepHole Optimization,var3
-.Ll678:
+.Ll652:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1205
 .Lj1202:
 # PeepHole Optimization,var3
-.Ll679:
+.Ll653:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1205:
-.Ll680:
+.Ll654:
 # [1057] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc397:
+.Lc215:
 .Lt54:
-.Ll681:
+.Ll655:
 
 .section .text.n_unit6502_$$_plc,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_PLC
 UNIT6502_$$_PLC:
-.Lc401:
+.Lc217:
 .seh_proc UNIT6502_$$_PLC
-.Ll682:
+.Ll656:
 # [1061] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc403:
-.Lc404:
-	movq	%rsp,%rbp
-.Lc405:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc219:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll683:
+.Ll657:
 # [1062] cs^:=pull32 shl 8;
 	call	UNIT6502_$$_PULL32$$LONGWORD
 	shll	$8,%eax
 	andl	$4294967295,%eax
 	movq	U_$UNIT6502_$$_CS(%rip),%rdx
 	movq	%rax,(%rdx)
-.Ll684:
+.Ll658:
 # [1063] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc402:
+.Lc218:
 .Lt104:
-.Ll685:
+.Ll659:
 
 .section .text.n_unit6502_$$_pld,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_PLD
 UNIT6502_$$_PLD:
-.Lc406:
+.Lc220:
 .seh_proc UNIT6502_$$_PLD
-.Ll686:
+.Ll660:
 # [1067] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc408:
-.Lc409:
-	movq	%rsp,%rbp
-.Lc410:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc222:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll687:
+.Ll661:
 # [1068] ds^:=pull32 shl 8;
 	call	UNIT6502_$$_PULL32$$LONGWORD
 	shll	$8,%eax
 	andl	$4294967295,%eax
 	movq	U_$UNIT6502_$$_DS(%rip),%rdx
 	movq	%rax,(%rdx)
-.Ll688:
+.Ll662:
 # [1069] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc407:
+.Lc221:
 .Lt103:
-.Ll689:
+.Ll663:
 
 .section .text.n_unit6502_$$_plx,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_PLX
 UNIT6502_$$_PLX:
-.Lc411:
+.Lc223:
 .seh_proc UNIT6502_$$_PLX
-.Ll690:
+.Ll664:
 # [1073] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc413:
-.Lc414:
-	movq	%rsp,%rbp
-.Lc415:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc225:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll691:
+.Ll665:
 # [1074] x := pull8;
 	call	UNIT6502_$$_PULL8$$BYTE
+# PeepHole Optimization,MovMov2Mov1
 	movb	%al,U_$UNIT6502_$$_X(%rip)
-.Ll692:
+.Ll666:
 # [1075] if (x and $0080)<>0 then setsign else clearsign;
-	movb	U_$UNIT6502_$$_X(%rip),%al
 	andb	$128,%al
 	testb	%al,%al
 	je	.Lj1221
-.Ll693:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll667:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1224
 .Lj1221:
 # PeepHole Optimization,var3
-.Ll694:
+.Ll668:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1224:
-.Ll695:
+.Ll669:
 # [1076] if (x and $00FF)<>0 then clearzero else setzero;
 	movb	U_$UNIT6502_$$_X(%rip),%al
 	testb	%al,%al
 	je	.Lj1228
 # PeepHole Optimization,var3
-.Ll696:
+.Ll670:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1231
 .Lj1228:
 # PeepHole Optimization,var3
-.Ll697:
+.Ll671:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1231:
-.Ll698:
+.Ll672:
 # [1077] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc412:
+.Lc224:
 .Lt92:
-.Ll699:
+.Ll673:
 
 .section .text.n_unit6502_$$_ply,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_PLY
 UNIT6502_$$_PLY:
-.Lc416:
+.Lc226:
 .seh_proc UNIT6502_$$_PLY
-.Ll700:
+.Ll674:
 # [1081] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc418:
-.Lc419:
-	movq	%rsp,%rbp
-.Lc420:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc228:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll701:
+.Ll675:
 # [1082] y := pull8;
 	call	UNIT6502_$$_PULL8$$BYTE
+# PeepHole Optimization,MovMov2Mov1
 	movb	%al,U_$UNIT6502_$$_Y(%rip)
-.Ll702:
+.Ll676:
 # [1083] if (y and $0080)<>0 then setsign else clearsign;
-	movb	U_$UNIT6502_$$_Y(%rip),%al
 	andb	$128,%al
 	testb	%al,%al
 	je	.Lj1239
-.Ll703:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll677:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1242
 .Lj1239:
 # PeepHole Optimization,var3
-.Ll704:
+.Ll678:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1242:
-.Ll705:
+.Ll679:
 # [1084] if (y and $00FF)<>0 then clearzero else setzero;
 	movb	U_$UNIT6502_$$_Y(%rip),%al
 	testb	%al,%al
 	je	.Lj1246
 # PeepHole Optimization,var3
-.Ll706:
+.Ll680:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1249
 .Lj1246:
 # PeepHole Optimization,var3
-.Ll707:
+.Ll681:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1249:
-.Ll708:
+.Ll682:
 # [1085] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc417:
+.Lc227:
 .Lt93:
-.Ll709:
+.Ll683:
 
 .section .text.n_unit6502_$$_plp,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_PLP
 UNIT6502_$$_PLP:
-.Lc421:
+.Lc229:
 .seh_proc UNIT6502_$$_PLP
-.Ll710:
+.Ll684:
 # [1089] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc423:
-.Lc424:
-	movq	%rsp,%rbp
-.Lc425:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc231:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll711:
+.Ll685:
 # [1090] status := pull8 or FLAG_CONSTANT;
 	call	UNIT6502_$$_PULL8$$BYTE
 # PeepHole Optimization,var9
 	andl	$255,%eax
 	orl	$32,%eax
 	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
-.Ll712:
+.Ll686:
 # [1091] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc422:
+.Lc230:
 .Lt39:
-.Ll713:
+.Ll687:
 
 .section .text.n_unit6502_$$_rol,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_ROL
 UNIT6502_$$_ROL:
-.Lc426:
+.Lc232:
 .seh_proc UNIT6502_$$_ROL
-.Ll714:
+.Ll688:
 # [1095] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc428:
-.Lc429:
-	movq	%rsp,%rbp
-.Lc430:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc234:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll715:
+.Ll689:
 # [1096] value := getvalue;;
 	call	UNIT6502_$$_GETVALUE$$WORD
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
 # PeepHole Optimization,var15
-.Ll716:
+.Ll690:
 # [1097] aresult := (value shl 1) or (status and FLAG_CARRY);
 	movw	U_$UNIT6502_$$_STATUS(%rip),%ax
 	andw	$1,%ax
@@ -5245,91 +4670,89 @@ UNIT6502_$$_ROL:
 	movzwl	U_$UNIT6502_$$_VALUE(%rip),%edx
 	shll	$1,%edx
 	orl	%eax,%edx
+# PeepHole Optimization,MovMov2MovMov1
 	movw	%dx,U_$UNIT6502_$$_ARESULT(%rip)
-.Ll717:
+.Ll691:
 # [1098] if (aresult and $FF00) <>0 then setcarry else clearcarry;
-	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
+	movw	%dx,%ax
 	andw	$65280,%ax
 	testw	%ax,%ax
 	je	.Lj1263
 # PeepHole Optimization,var3
-.Ll718:
+.Ll692:
 	orb	$1,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1266
 .Lj1263:
 # PeepHole Optimization,var3
-.Ll719:
+.Ll693:
 	andb	$-2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1266:
-.Ll720:
+.Ll694:
 # [1099] if (aresult and $00FF)<>0 then clearzero else setzero;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$255,%ax
 	testw	%ax,%ax
 	je	.Lj1270
 # PeepHole Optimization,var3
-.Ll721:
+.Ll695:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1273
 .Lj1270:
 # PeepHole Optimization,var3
-.Ll722:
+.Ll696:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1273:
-.Ll723:
+.Ll697:
 # [1100] if (aresult and $0080)<>0 then setsign else clearsign;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$128,%ax
 	testw	%ax,%ax
 	je	.Lj1277
-.Ll724:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll698:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1280
 .Lj1277:
 # PeepHole Optimization,var3
-.Ll725:
+.Ll699:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1280:
-.Ll726:
+.Ll700:
 # [1101] putvalue(aresult);
 	movzwl	U_$UNIT6502_$$_ARESULT(%rip),%ecx
 	call	UNIT6502_$$_PUTVALUE$WORD
-.Ll727:
+.Ll701:
 # [1102] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc427:
+.Lc233:
 .Lt37:
-.Ll728:
+.Ll702:
 
 .section .text.n_unit6502_$$_ror,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_ROR
 UNIT6502_$$_ROR:
-.Lc431:
+.Lc235:
 .seh_proc UNIT6502_$$_ROR
-.Ll729:
+.Ll703:
 # [1106] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc433:
-.Lc434:
-	movq	%rsp,%rbp
-.Lc435:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc237:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll730:
+.Ll704:
 # [1107] value := getvalue;;
 	call	UNIT6502_$$_GETVALUE$$WORD
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
 # PeepHole Optimization,var15
-.Ll731:
+.Ll705:
 # [1108] aresult := (value shr 1) or ((status and FLAG_CARRY) shl 7);
 	movw	U_$UNIT6502_$$_STATUS(%rip),%ax
 	andw	$1,%ax
@@ -5340,178 +4763,163 @@ UNIT6502_$$_ROR:
 	orl	%eax,%edx
 	movw	%dx,U_$UNIT6502_$$_ARESULT(%rip)
 # PeepHole Optimization,var14
-.Ll732:
+.Ll706:
 # [1109] if (value and 1)=1 then setcarry else clearcarry;
 	movl	U_$UNIT6502_$$_VALUE(%rip),%eax
 	andl	$1,%eax
 	cmpl	$1,%eax
 	jne	.Lj1292
 # PeepHole Optimization,var3
-.Ll733:
+.Ll707:
 	orb	$1,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1295
 .Lj1292:
 # PeepHole Optimization,var3
-.Ll734:
+.Ll708:
 	andb	$-2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1295:
-.Ll735:
+.Ll709:
 # [1110] if (aresult and $00FF)<>0 then clearzero else setzero;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$255,%ax
 	testw	%ax,%ax
 	je	.Lj1299
 # PeepHole Optimization,var3
-.Ll736:
+.Ll710:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1302
 .Lj1299:
 # PeepHole Optimization,var3
-.Ll737:
+.Ll711:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1302:
-.Ll738:
+.Ll712:
 # [1111] if (aresult and $0080)<>0 then setsign else clearsign;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$128,%ax
 	testw	%ax,%ax
 	je	.Lj1306
-.Ll739:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll713:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1309
 .Lj1306:
 # PeepHole Optimization,var3
-.Ll740:
+.Ll714:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1309:
-.Ll741:
+.Ll715:
 # [1112] putvalue(aresult);
 	movzwl	U_$UNIT6502_$$_ARESULT(%rip),%ecx
 	call	UNIT6502_$$_PUTVALUE$WORD
-.Ll742:
+.Ll716:
 # [1113] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc432:
+.Lc236:
 .Lt53:
-.Ll743:
+.Ll717:
 
 .section .text.n_unit6502_$$_rti,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_RTI
 UNIT6502_$$_RTI:
-.Lc436:
+.Lc238:
 .seh_proc UNIT6502_$$_RTI
-.Ll744:
+.Ll718:
 # [1117] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc438:
-.Lc439:
-	movq	%rsp,%rbp
-.Lc440:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc240:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll745:
+.Ll719:
 # [1118] status := pull8;
 	call	UNIT6502_$$_PULL8$$BYTE
 	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
-.Ll746:
+.Ll720:
 # [1119] value := pull16;
 	call	UNIT6502_$$_PULL16$$WORD
+# PeepHole Optimization,MovMov2Mov1
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
-.Ll747:
+.Ll721:
 # [1120] pc := value;
-	movw	U_$UNIT6502_$$_VALUE(%rip),%ax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll748:
+.Ll722:
 # [1121] cs:=@csa;
 	leaq	U_$UNIT6502_$$_CSA(%rip),%rax
 	movq	%rax,U_$UNIT6502_$$_CS(%rip)
-.Ll749:
+.Ll723:
 # [1122] ds:=@dsa;
 	leaq	U_$UNIT6502_$$_DSA(%rip),%rax
 	movq	%rax,U_$UNIT6502_$$_DS(%rip)
-.Ll750:
+.Ll724:
 # [1123] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc437:
+.Lc239:
 .Lt41:
-.Ll751:
+.Ll725:
 
 .section .text.n_unit6502_$$_rts,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_RTS
 UNIT6502_$$_RTS:
-.Lc441:
+.Lc241:
 .seh_proc UNIT6502_$$_RTS
-.Ll752:
+.Ll726:
 # [1127] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc443:
-.Lc444:
-	movq	%rsp,%rbp
-.Lc445:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc243:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll753:
+.Ll727:
 # [1128] value := pull16;
 	call	UNIT6502_$$_PULL16$$WORD
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
-.Ll754:
+.Ll728:
 # [1129] pc := value + 1;
 	movzwl	U_$UNIT6502_$$_VALUE(%rip),%eax
 	leal	1(%eax),%eax
 	movw	%ax,U_$UNIT6502_$$_PC(%rip)
-.Ll755:
+.Ll729:
 # [1130] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc442:
+.Lc242:
 .Lt49:
-.Ll756:
+.Ll730:
 
 .section .text.n_unit6502_$$_sbc,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_SBC
 UNIT6502_$$_SBC:
-.Lc446:
+.Lc244:
 .seh_proc UNIT6502_$$_SBC
-.Ll757:
+.Ll731:
 # [1134] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc448:
-.Lc449:
-	movq	%rsp,%rbp
-.Lc450:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc246:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll758:
+.Ll732:
 # [1135] penaltyop := 1;
 	movb	$1,U_$UNIT6502_$$_PENALTYOP(%rip)
-.Ll759:
+.Ll733:
 # [1136] value := getvalue xor $00FF;
 	call	UNIT6502_$$_GETVALUE$$WORD
 	xorw	$255,%ax
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
-.Ll760:
+.Ll734:
 # [1137] aresult := word(a) + value + (status and FLAG_CARRY);
 	movzbw	U_$UNIT6502_$$_A(%rip),%ax
 # PeepHole Optimization,var11
@@ -5523,38 +4931,38 @@ UNIT6502_$$_SBC:
 	andw	$1,%ax
 	movswl	%ax,%eax
 	leal	(%edx,%eax),%eax
+# PeepHole Optimization,MovMov2Mov1
 	movw	%ax,U_$UNIT6502_$$_ARESULT(%rip)
-.Ll761:
+.Ll735:
 # [1138] if (aresult and $FF00) <>0 then setcarry else clearcarry;
-	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$65280,%ax
 	testw	%ax,%ax
 	je	.Lj1341
 # PeepHole Optimization,var3
-.Ll762:
+.Ll736:
 	orb	$1,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1344
 .Lj1341:
 # PeepHole Optimization,var3
-.Ll763:
+.Ll737:
 	andb	$-2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1344:
-.Ll764:
+.Ll738:
 # [1139] if (aresult and $00FF)<>0 then clearzero else setzero;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$255,%ax
 	testw	%ax,%ax
 	je	.Lj1348
 # PeepHole Optimization,var3
-.Ll765:
+.Ll739:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1351
 .Lj1348:
 # PeepHole Optimization,var3
-.Ll766:
+.Ll740:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1351:
-.Ll767:
+.Ll741:
 # [1140] if ((aresult xor a) and (aresult xor value) and $0080)<>0 then setoverflow else clearoverflow;
 	movzbw	U_$UNIT6502_$$_A(%rip),%dx
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
@@ -5567,45 +4975,48 @@ UNIT6502_$$_SBC:
 	testw	%dx,%dx
 	je	.Lj1355
 # PeepHole Optimization,var3
-.Ll768:
+.Ll742:
 	orb	$64,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1358
 .Lj1355:
 # PeepHole Optimization,var3
-.Ll769:
+.Ll743:
 	andb	$-65,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1358:
-.Ll770:
+.Ll744:
 # [1141] if (aresult and $0080)<>0 then setsign else clearsign;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$128,%ax
 	testw	%ax,%ax
 	je	.Lj1362
-.Ll771:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll745:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1365
 .Lj1362:
 # PeepHole Optimization,var3
-.Ll772:
+.Ll746:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1365:
 # PeepHole Optimization,var15
-.Ll773:
+.Ll747:
 # [1143] if (status and FLAG_DECIMAL)<>0 then
 	movw	U_$UNIT6502_$$_STATUS(%rip),%ax
 	andw	$8,%ax
 	testw	%ax,%ax
 	je	.Lj1369
-.Ll774:
+.Ll748:
 # [1145] inc(clockticks6502);
 	addq	$1,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 # PeepHole Optimization,var3
-.Ll775:
+.Ll749:
 	andb	$-2,U_$UNIT6502_$$_STATUS(%rip)
 # PeepHole Optimization,var15
-.Ll776:
+.Ll750:
 # [1147] if ((a and $0F) > $09) then a += $06;
 	movw	U_$UNIT6502_$$_A(%rip),%ax
 	andw	$15,%ax
@@ -5615,463 +5026,367 @@ UNIT6502_$$_SBC:
 	leal	6(%eax),%eax
 	movb	%al,U_$UNIT6502_$$_A(%rip)
 .Lj1373:
-.Ll777:
+.Ll751:
 # [1148] if ((a and $F0) > $90) then
 	movb	U_$UNIT6502_$$_A(%rip),%al
 	andb	$240,%al
 	cmpb	$144,%al
 	jna	.Lj1377
-.Ll778:
+.Ll752:
 # [1150] a += $60;
 	movzbl	U_$UNIT6502_$$_A(%rip),%eax
 	leal	96(%eax),%eax
 	movb	%al,U_$UNIT6502_$$_A(%rip)
 # PeepHole Optimization,var3
-.Ll779:
+.Ll753:
 	orb	$1,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1377:
 .Lj1369:
-.Ll780:
+.Ll754:
 # [1155] a:=byte(aresult and $00FF);
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$255,%ax
 	movb	%al,U_$UNIT6502_$$_A(%rip)
-.Ll781:
+.Ll755:
 # [1156] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc447:
+.Lc245:
 .Lt86:
-.Ll782:
+.Ll756:
 
 .section .text.n_unit6502_$$_sec,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_SEC
 UNIT6502_$$_SEC:
-.Lc451:
-.seh_proc UNIT6502_$$_SEC
-.Ll783:
+.Lc247:
 # [1160] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc453:
-.Lc454:
-	movq	%rsp,%rbp
-.Lc455:
-.seh_endprologue
 # PeepHole Optimization,var3
-.Ll784:
+.Ll757:
 	orb	$1,U_$UNIT6502_$$_STATUS(%rip)
-.Ll785:
+.Ll758:
 # [1162] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc452:
+.Lc248:
 .Lt40:
-.Ll786:
+.Ll759:
 
 .section .text.n_unit6502_$$_sed,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_SED
 UNIT6502_$$_SED:
-.Lc456:
-.seh_proc UNIT6502_$$_SED
-.Ll787:
+.Lc249:
 # [1166] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc458:
-.Lc459:
-	movq	%rsp,%rbp
-.Lc460:
-.seh_endprologue
 # PeepHole Optimization,var3
-.Ll788:
+.Ll760:
 # [223] {$define setdecimal:= status :=status or FLAG_DECIMAL}
 	orb	$8,U_$UNIT6502_$$_STATUS(%rip)
-.Ll789:
+.Ll761:
 # [1168] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc457:
+.Lc250:
 .Lt88:
-.Ll790:
+.Ll762:
 
 .section .text.n_unit6502_$$_sei,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_SEI
 UNIT6502_$$_SEI:
-.Lc461:
-.seh_proc UNIT6502_$$_SEI
-.Ll791:
+.Lc251:
 # [1172] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc463:
-.Lc464:
-	movq	%rsp,%rbp
-.Lc465:
-.seh_endprologue
 # PeepHole Optimization,var3
-.Ll792:
+.Ll763:
 	orb	$4,U_$UNIT6502_$$_STATUS(%rip)
-.Ll793:
+.Ll764:
 # [1174] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc462:
+.Lc252:
 .Lt55:
-.Ll794:
+.Ll765:
 
 .section .text.n_unit6502_$$_sta,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_STA
 UNIT6502_$$_STA:
-.Lc466:
+.Lc253:
 .seh_proc UNIT6502_$$_STA
-.Ll795:
+.Ll766:
 # [1178] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc468:
-.Lc469:
-	movq	%rsp,%rbp
-.Lc470:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc255:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll796:
+.Ll767:
 # [1179] putvalue(a);
 	movzbw	U_$UNIT6502_$$_A(%rip),%ax
 	movzwl	%ax,%ecx
 	call	UNIT6502_$$_PUTVALUE$WORD
-.Ll797:
+.Ll768:
 # [1180] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc467:
+.Lc254:
 .Lt56:
-.Ll798:
+.Ll769:
 
 .section .text.n_unit6502_$$_stc,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_STC
 UNIT6502_$$_STC:
-.Lc471:
+.Lc256:
 .seh_proc UNIT6502_$$_STC
-.Ll799:
+.Ll770:
 # [1184] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc473:
-.Lc474:
-	movq	%rsp,%rbp
-.Lc475:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc258:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll800:
+.Ll771:
 # [1185] putvalue32(cs^shr 8);
 	movq	U_$UNIT6502_$$_CS(%rip),%rax
 	movq	(%rax),%rcx
 	shrq	$8,%rcx
 	call	UNIT6502_$$_PUTVALUE32$LONGWORD
-.Ll801:
+.Ll772:
 # [1186] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc472:
+.Lc257:
 .Lt98:
-.Ll802:
+.Ll773:
 
 .section .text.n_unit6502_$$_std,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_STD
 UNIT6502_$$_STD:
-.Lc476:
+.Lc259:
 .seh_proc UNIT6502_$$_STD
-.Ll803:
+.Ll774:
 # [1190] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc478:
-.Lc479:
-	movq	%rsp,%rbp
-.Lc480:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc261:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll804:
+.Ll775:
 # [1191] putvalue32(ds^ shr 8);
 	movq	U_$UNIT6502_$$_DS(%rip),%rax
 	movq	(%rax),%rcx
 	shrq	$8,%rcx
 	call	UNIT6502_$$_PUTVALUE32$LONGWORD
-.Ll805:
+.Ll776:
 # [1192] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc477:
+.Lc260:
 .Lt100:
-.Ll806:
+.Ll777:
 
 .section .text.n_unit6502_$$_stx,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_STX
 UNIT6502_$$_STX:
-.Lc481:
+.Lc262:
 .seh_proc UNIT6502_$$_STX
-.Ll807:
+.Ll778:
 # [1196] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc483:
-.Lc484:
-	movq	%rsp,%rbp
-.Lc485:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc264:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll808:
+.Ll779:
 # [1197] putvalue(x);
 	movzbw	U_$UNIT6502_$$_X(%rip),%ax
 	movzwl	%ax,%ecx
 	call	UNIT6502_$$_PUTVALUE$WORD
-.Ll809:
+.Ll780:
 # [1198] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc482:
+.Lc263:
 .Lt58:
-.Ll810:
+.Ll781:
 
 .section .text.n_unit6502_$$_sty,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_STY
 UNIT6502_$$_STY:
-.Lc486:
+.Lc265:
 .seh_proc UNIT6502_$$_STY
-.Ll811:
+.Ll782:
 # [1202] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc488:
-.Lc489:
-	movq	%rsp,%rbp
-.Lc490:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc267:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll812:
+.Ll783:
 # [1203] putvalue(y);
 	movzbw	U_$UNIT6502_$$_Y(%rip),%ax
 	movzwl	%ax,%ecx
 	call	UNIT6502_$$_PUTVALUE$WORD
-.Ll813:
+.Ll784:
 # [1204] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc487:
+.Lc266:
 .Lt59:
-.Ll814:
+.Ll785:
 
 .section .text.n_unit6502_$$_stz,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_STZ
 UNIT6502_$$_STZ:
-.Lc491:
+.Lc268:
 .seh_proc UNIT6502_$$_STZ
-.Ll815:
+.Ll786:
 # [1208] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc493:
-.Lc494:
-	movq	%rsp,%rbp
-.Lc495:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc270:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll816:
+.Ll787:
 # [1209] putvalue(0);
 	movl	$0,%eax
 	movl	%eax,%ecx
 	call	UNIT6502_$$_PUTVALUE$WORD
-.Ll817:
+.Ll788:
 # [1210] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc492:
+.Lc269:
 .Lt94:
-.Ll818:
+.Ll789:
 
 .section .text.n_unit6502_$$_tax,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_TAX
 UNIT6502_$$_TAX:
-.Lc496:
-.seh_proc UNIT6502_$$_TAX
-.Ll819:
+.Lc271:
 # [1214] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc498:
-.Lc499:
-	movq	%rsp,%rbp
-.Lc500:
-.seh_endprologue
-.Ll820:
+.Ll790:
 # [1215] x := a;
 	movb	U_$UNIT6502_$$_A(%rip),%al
+# PeepHole Optimization,MovMov2Mov1
 	movb	%al,U_$UNIT6502_$$_X(%rip)
-.Ll821:
+.Ll791:
 # [1216] if (x and $0080)<>0 then setsign else clearsign;
-	movb	U_$UNIT6502_$$_X(%rip),%al
 	andb	$128,%al
 	testb	%al,%al
 	je	.Lj1425
-.Ll822:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll792:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1428
 .Lj1425:
 # PeepHole Optimization,var3
-.Ll823:
+.Ll793:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1428:
-.Ll824:
+.Ll794:
 # [1217] if (x and $00FF)<>0 then clearzero else setzero;
 	movb	U_$UNIT6502_$$_X(%rip),%al
 	testb	%al,%al
 	je	.Lj1432
 # PeepHole Optimization,var3
-.Ll825:
+.Ll795:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1435
 .Lj1432:
 # PeepHole Optimization,var3
-.Ll826:
+.Ll796:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1435:
-.Ll827:
+.Ll797:
 # [1218] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc497:
+.Lc272:
 .Lt70:
-.Ll828:
+.Ll798:
 
 .section .text.n_unit6502_$$_tay,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_TAY
 UNIT6502_$$_TAY:
-.Lc501:
-.seh_proc UNIT6502_$$_TAY
-.Ll829:
+.Lc273:
 # [1222] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc503:
-.Lc504:
-	movq	%rsp,%rbp
-.Lc505:
-.seh_endprologue
-.Ll830:
+.Ll799:
 # [1223] y := a;
 	movb	U_$UNIT6502_$$_A(%rip),%al
+# PeepHole Optimization,MovMov2Mov1
 	movb	%al,U_$UNIT6502_$$_Y(%rip)
-.Ll831:
+.Ll800:
 # [1224] if (y and $0080)<>0 then setsign else clearsign;
-	movb	U_$UNIT6502_$$_Y(%rip),%al
 	andb	$128,%al
 	testb	%al,%al
 	je	.Lj1443
-.Ll832:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll801:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1446
 .Lj1443:
 # PeepHole Optimization,var3
-.Ll833:
+.Ll802:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1446:
-.Ll834:
+.Ll803:
 # [1225] if (y and $00FF)<>0 then clearzero else setzero;
 	movb	U_$UNIT6502_$$_Y(%rip),%al
 	testb	%al,%al
 	je	.Lj1450
 # PeepHole Optimization,var3
-.Ll835:
+.Ll804:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1453
 .Lj1450:
 # PeepHole Optimization,var3
-.Ll836:
+.Ll805:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1453:
-.Ll837:
+.Ll806:
 # [1226] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc502:
+.Lc274:
 .Lt69:
-.Ll838:
+.Ll807:
 
 .section .text.n_unit6502_$$_trb,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_TRB
 UNIT6502_$$_TRB:
-.Lc506:
+.Lc275:
 .seh_proc UNIT6502_$$_TRB
-.Ll839:
+.Ll808:
 # [1230] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc508:
-.Lc509:
-	movq	%rsp,%rbp
-.Lc510:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc277:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll840:
+.Ll809:
 # [1231] value:=getvalue;
 	call	UNIT6502_$$_GETVALUE$$WORD
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
-.Ll841:
+.Ll810:
 # [1232] aresult:=value and (not a);
 	movb	U_$UNIT6502_$$_A(%rip),%al
 	notb	%al
@@ -6080,357 +5395,300 @@ UNIT6502_$$_TRB:
 	movw	U_$UNIT6502_$$_VALUE(%rip),%dx
 	andw	%ax,%dx
 	movw	%dx,U_$UNIT6502_$$_ARESULT(%rip)
-.Ll842:
+.Ll811:
 # [1233] putvalue(aresult);
 	movzwl	U_$UNIT6502_$$_ARESULT(%rip),%ecx
 	call	UNIT6502_$$_PUTVALUE$WORD
-.Ll843:
+.Ll812:
 # [1234] if (aresult and $00FF)<>0 then clearzero else setzero;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$255,%ax
 	testw	%ax,%ax
 	je	.Lj1465
 # PeepHole Optimization,var3
-.Ll844:
+.Ll813:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1468
 .Lj1465:
 # PeepHole Optimization,var3
-.Ll845:
+.Ll814:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1468:
-.Ll846:
+.Ll815:
 # [1235] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc507:
+.Lc276:
 .Lt95:
-.Ll847:
+.Ll816:
 
 .section .text.n_unit6502_$$_tsb,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_TSB
 UNIT6502_$$_TSB:
-.Lc511:
+.Lc278:
 .seh_proc UNIT6502_$$_TSB
-.Ll848:
+.Ll817:
 # [1239] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc513:
-.Lc514:
-	movq	%rsp,%rbp
-.Lc515:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc280:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll849:
+.Ll818:
 # [1240] value:=getvalue;
 	call	UNIT6502_$$_GETVALUE$$WORD
 	movw	%ax,U_$UNIT6502_$$_VALUE(%rip)
-.Ll850:
+.Ll819:
 # [1241] aresult:=value or a;
 	movzbw	U_$UNIT6502_$$_A(%rip),%dx
 	movw	U_$UNIT6502_$$_VALUE(%rip),%ax
 	orw	%dx,%ax
 	movw	%ax,U_$UNIT6502_$$_ARESULT(%rip)
-.Ll851:
+.Ll820:
 # [1242] putvalue(aresult);
 	movzwl	U_$UNIT6502_$$_ARESULT(%rip),%ecx
 	call	UNIT6502_$$_PUTVALUE$WORD
-.Ll852:
+.Ll821:
 # [1243] if (aresult and $00FF)<>0 then clearzero else setzero;
 	movw	U_$UNIT6502_$$_ARESULT(%rip),%ax
 	andw	$255,%ax
 	testw	%ax,%ax
 	je	.Lj1480
 # PeepHole Optimization,var3
-.Ll853:
+.Ll822:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1483
 .Lj1480:
 # PeepHole Optimization,var3
-.Ll854:
+.Ll823:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1483:
-.Ll855:
+.Ll824:
 # [1244] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc512:
+.Lc279:
 .Lt96:
-.Ll856:
+.Ll825:
 
 .section .text.n_unit6502_$$_tsx,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_TSX
 UNIT6502_$$_TSX:
-.Lc516:
-.seh_proc UNIT6502_$$_TSX
-.Ll857:
+.Lc281:
 # [1248] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc518:
-.Lc519:
-	movq	%rsp,%rbp
-.Lc520:
-.seh_endprologue
-.Ll858:
+.Ll826:
 # [1249] x := sp;
 	movb	U_$UNIT6502_$$_SP(%rip),%al
+# PeepHole Optimization,MovMov2Mov1
 	movb	%al,U_$UNIT6502_$$_X(%rip)
-.Ll859:
+.Ll827:
 # [1250] if (x and $0080)<>0 then setsign else clearsign;
-	movb	U_$UNIT6502_$$_X(%rip),%al
 	andb	$128,%al
 	testb	%al,%al
 	je	.Lj1491
-.Ll860:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll828:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1494
 .Lj1491:
 # PeepHole Optimization,var3
-.Ll861:
+.Ll829:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1494:
-.Ll862:
+.Ll830:
 # [1251] if (x and $00FF)<>0 then clearzero else setzero;
 	movb	U_$UNIT6502_$$_X(%rip),%al
 	testb	%al,%al
 	je	.Lj1498
 # PeepHole Optimization,var3
-.Ll863:
+.Ll831:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1501
 .Lj1498:
 # PeepHole Optimization,var3
-.Ll864:
+.Ll832:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1501:
-.Ll865:
+.Ll833:
 # [1252] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc517:
+.Lc282:
 .Lt73:
-.Ll866:
+.Ll834:
 
 .section .text.n_unit6502_$$_txa,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_TXA
 UNIT6502_$$_TXA:
-.Lc521:
-.seh_proc UNIT6502_$$_TXA
-.Ll867:
+.Lc283:
 # [1256] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc523:
-.Lc524:
-	movq	%rsp,%rbp
-.Lc525:
-.seh_endprologue
-.Ll868:
+.Ll835:
 # [1257] a := x;
 	movb	U_$UNIT6502_$$_X(%rip),%al
+# PeepHole Optimization,MovMov2Mov1
 	movb	%al,U_$UNIT6502_$$_A(%rip)
-.Ll869:
+.Ll836:
 # [1258] if (a and $0080)<>0 then setsign else clearsign;
-	movb	U_$UNIT6502_$$_A(%rip),%al
 	andb	$128,%al
 	testb	%al,%al
 	je	.Lj1509
-.Ll870:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll837:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1512
 .Lj1509:
 # PeepHole Optimization,var3
-.Ll871:
+.Ll838:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1512:
-.Ll872:
+.Ll839:
 # [1259] if (a and $00FF)<>0 then clearzero else setzero;
 	movb	U_$UNIT6502_$$_A(%rip),%al
 	testb	%al,%al
 	je	.Lj1516
 # PeepHole Optimization,var3
-.Ll873:
+.Ll840:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1519
 .Lj1516:
 # PeepHole Optimization,var3
-.Ll874:
+.Ll841:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1519:
-.Ll875:
+.Ll842:
 # [1260] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc522:
+.Lc284:
 .Lt61:
-.Ll876:
+.Ll843:
 
 .section .text.n_unit6502_$$_txs,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_TXS
 UNIT6502_$$_TXS:
-.Lc526:
-.seh_proc UNIT6502_$$_TXS
-.Ll877:
+.Lc285:
 # [1264] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc528:
-.Lc529:
-	movq	%rsp,%rbp
-.Lc530:
-.seh_endprologue
-.Ll878:
+.Ll844:
 # [1265] sp := x;
 	movb	U_$UNIT6502_$$_X(%rip),%al
 	movb	%al,U_$UNIT6502_$$_SP(%rip)
-.Ll879:
+.Ll845:
 # [1266] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc527:
+.Lc286:
 .Lt64:
-.Ll880:
+.Ll846:
 
 .section .text.n_unit6502_$$_tya,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_TYA
 UNIT6502_$$_TYA:
-.Lc531:
-.seh_proc UNIT6502_$$_TYA
-.Ll881:
+.Lc287:
 # [1270] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc533:
-.Lc534:
-	movq	%rsp,%rbp
-.Lc535:
-.seh_endprologue
-.Ll882:
+.Ll847:
 # [1271] a := y;
 	movb	U_$UNIT6502_$$_Y(%rip),%al
+# PeepHole Optimization,MovMov2Mov1
 	movb	%al,U_$UNIT6502_$$_A(%rip)
-.Ll883:
+.Ll848:
 # [1272] if (a and $0080)<>0 then setsign else clearsign;
-	movb	U_$UNIT6502_$$_A(%rip),%al
 	andb	$128,%al
 	testb	%al,%al
 	je	.Lj1531
-.Ll884:
-	movb	U_$UNIT6502_$$_STATUS(%rip),%al
-	orb	$128,%al
-	movb	%al,U_$UNIT6502_$$_STATUS(%rip)
+# PeepHole Optimization,var2
+# P=movb
+# HP1=orb
+# HP2=movb
+# PeepHole Optimization,var2
+.Ll849:
+	orb	$128,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1534
 .Lj1531:
 # PeepHole Optimization,var3
-.Ll885:
+.Ll850:
 	andb	$-129,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1534:
-.Ll886:
+.Ll851:
 # [1273] if (a and $00FF)<>0 then clearzero else setzero;
 	movb	U_$UNIT6502_$$_A(%rip),%al
 	testb	%al,%al
 	je	.Lj1538
 # PeepHole Optimization,var3
-.Ll887:
+.Ll852:
 	andb	$-3,U_$UNIT6502_$$_STATUS(%rip)
 	jmp	.Lj1541
 .Lj1538:
 # PeepHole Optimization,var3
-.Ll888:
+.Ll853:
 	orb	$2,U_$UNIT6502_$$_STATUS(%rip)
 .Lj1541:
-.Ll889:
+.Ll854:
 # [1274] end;
-	leaq	(%rbp),%rsp
-	popq	%rbp
 	ret
-.seh_endproc
-.Lc532:
+.Lc288:
 .Lt63:
-.Ll890:
+.Ll855:
 
 .section .text.n_unit6502_$$_lax,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_LAX
 UNIT6502_$$_LAX:
-.Lc536:
+.Lc289:
 .seh_proc UNIT6502_$$_LAX
-.Ll891:
+.Ll856:
 # [1280] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc538:
-.Lc539:
-	movq	%rsp,%rbp
-.Lc540:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc291:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll892:
+.Ll857:
 # [1281] lda;
 	call	UNIT6502_$$_LDA
-.Ll893:
+.Ll858:
 # [1282] ldx;
 	call	UNIT6502_$$_LDX
-.Ll894:
+.Ll859:
 # [1283] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc537:
+.Lc290:
 .Lt68:
-.Ll895:
+.Ll860:
 
 .section .text.n_unit6502_$$_sax,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_SAX
 UNIT6502_$$_SAX:
-.Lc541:
+.Lc292:
 .seh_proc UNIT6502_$$_SAX
-.Ll896:
+.Ll861:
 # [1287] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc543:
-.Lc544:
-	movq	%rsp,%rbp
-.Lc545:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc294:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll897:
+.Ll862:
 # [1288] sta;
 	call	UNIT6502_$$_STA
-.Ll898:
+.Ll863:
 # [1289] stx;
 	call	UNIT6502_$$_STX
-.Ll899:
+.Ll864:
 # [1290] putvalue(a and x);
 	movb	U_$UNIT6502_$$_A(%rip),%al
 	movb	U_$UNIT6502_$$_X(%rip),%cl
@@ -6440,7 +5698,7 @@ UNIT6502_$$_SAX:
 # PeepHole Optimization,var11
 	andl	$255,%ecx
 	call	UNIT6502_$$_PUTVALUE$WORD
-.Ll900:
+.Ll865:
 # [1291] if (penaltyop<>0) and (penaltyaddr<>0) then dec (clockticks6502);
 	cmpb	$0,U_$UNIT6502_$$_PENALTYOP(%rip)
 	je	.Lj1551
@@ -6448,41 +5706,35 @@ UNIT6502_$$_SAX:
 	je	.Lj1551
 	subq	$1,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 .Lj1551:
-.Ll901:
+.Ll866:
 # [1292] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc542:
+.Lc293:
 .Lt57:
-.Ll902:
+.Ll867:
 
 .section .text.n_unit6502_$$_dcp,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_DCP
 UNIT6502_$$_DCP:
-.Lc546:
+.Lc295:
 .seh_proc UNIT6502_$$_DCP
-.Ll903:
+.Ll868:
 # [1296] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc548:
-.Lc549:
-	movq	%rsp,%rbp
-.Lc550:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc297:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll904:
+.Ll869:
 # [1297] dea;
 	call	UNIT6502_$$_DEA
-.Ll905:
+.Ll870:
 # [1298] cmp;
 	call	UNIT6502_$$_CMP
-.Ll906:
+.Ll871:
 # [1299] if (penaltyop<>0) and (penaltyaddr<>0) then dec (clockticks6502);
 	cmpb	$0,U_$UNIT6502_$$_PENALTYOP(%rip)
 	je	.Lj1556
@@ -6490,41 +5742,35 @@ UNIT6502_$$_DCP:
 	je	.Lj1556
 	subq	$1,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 .Lj1556:
-.Ll907:
+.Ll872:
 # [1300] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc547:
+.Lc296:
 .Lt76:
-.Ll908:
+.Ll873:
 
 .section .text.n_unit6502_$$_isb,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_ISB
 UNIT6502_$$_ISB:
-.Lc551:
+.Lc298:
 .seh_proc UNIT6502_$$_ISB
-.Ll909:
+.Ll874:
 # [1304] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc553:
-.Lc554:
-	movq	%rsp,%rbp
-.Lc555:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc300:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll910:
+.Ll875:
 # [1305] ina;
 	call	UNIT6502_$$_INA
-.Ll911:
+.Ll876:
 # [1306] sbc;
 	call	UNIT6502_$$_SBC
-.Ll912:
+.Ll877:
 # [1307] if (penaltyop<>0) and (penaltyaddr<>0) then dec (clockticks6502);
 	cmpb	$0,U_$UNIT6502_$$_PENALTYOP(%rip)
 	je	.Lj1561
@@ -6532,41 +5778,35 @@ UNIT6502_$$_ISB:
 	je	.Lj1561
 	subq	$1,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 .Lj1561:
-.Ll913:
+.Ll878:
 # [1308] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc552:
+.Lc299:
 .Lt83:
-.Ll914:
+.Ll879:
 
 .section .text.n_unit6502_$$_slo,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_SLO
 UNIT6502_$$_SLO:
-.Lc556:
+.Lc301:
 .seh_proc UNIT6502_$$_SLO
-.Ll915:
+.Ll880:
 # [1312] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc558:
-.Lc559:
-	movq	%rsp,%rbp
-.Lc560:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc303:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll916:
+.Ll881:
 # [1313] asl;
 	call	UNIT6502_$$_ASL
-.Ll917:
+.Ll882:
 # [1314] ora;
 	call	UNIT6502_$$_ORA
-.Ll918:
+.Ll883:
 # [1315] if (penaltyop<>0) and (penaltyaddr<>0) then dec (clockticks6502);
 	cmpb	$0,U_$UNIT6502_$$_PENALTYOP(%rip)
 	je	.Lj1566
@@ -6574,41 +5814,35 @@ UNIT6502_$$_SLO:
 	je	.Lj1566
 	subq	$1,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 .Lj1566:
-.Ll919:
+.Ll884:
 # [1316] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc557:
+.Lc302:
 .Lt29:
-.Ll920:
+.Ll885:
 
 .section .text.n_unit6502_$$_rla,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_RLA
 UNIT6502_$$_RLA:
-.Lc561:
+.Lc304:
 .seh_proc UNIT6502_$$_RLA
-.Ll921:
+.Ll886:
 # [1321] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc563:
-.Lc564:
-	movq	%rsp,%rbp
-.Lc565:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc306:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll922:
+.Ll887:
 # [1322] rol;
 	call	UNIT6502_$$_ROL
-.Ll923:
+.Ll888:
 # [1323] ana;
 	call	UNIT6502_$$_ANA
-.Ll924:
+.Ll889:
 # [1324] if (penaltyop<>0) and (penaltyaddr<>0) then dec (clockticks6502);
 	cmpb	$0,U_$UNIT6502_$$_PENALTYOP(%rip)
 	je	.Lj1571
@@ -6616,41 +5850,35 @@ UNIT6502_$$_RLA:
 	je	.Lj1571
 	subq	$1,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 .Lj1571:
-.Ll925:
+.Ll890:
 # [1325] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc562:
+.Lc305:
 .Lt35:
-.Ll926:
+.Ll891:
 
 .section .text.n_unit6502_$$_sre,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_SRE
 UNIT6502_$$_SRE:
-.Lc566:
+.Lc307:
 .seh_proc UNIT6502_$$_SRE
-.Ll927:
+.Ll892:
 # [1329] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc568:
-.Lc569:
-	movq	%rsp,%rbp
-.Lc570:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc309:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll928:
+.Ll893:
 # [1330] lsr;
 	call	UNIT6502_$$_LSR
-.Ll929:
+.Ll894:
 # [1331] eor;
 	call	UNIT6502_$$_EOR
-.Ll930:
+.Ll895:
 # [1332] if (penaltyop<>0) and (penaltyaddr<>0) then dec (clockticks6502);
 	cmpb	$0,U_$UNIT6502_$$_PENALTYOP(%rip)
 	je	.Lj1576
@@ -6658,41 +5886,35 @@ UNIT6502_$$_SRE:
 	je	.Lj1576
 	subq	$1,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 .Lj1576:
-.Ll931:
+.Ll896:
 # [1333] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc567:
+.Lc308:
 .Lt43:
-.Ll932:
+.Ll897:
 
 .section .text.n_unit6502_$$_rra,"x"
 	.balign 16,0x90
 .globl	UNIT6502_$$_RRA
 UNIT6502_$$_RRA:
-.Lc571:
+.Lc310:
 .seh_proc UNIT6502_$$_RRA
-.Ll933:
+.Ll898:
 # [1337] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc573:
-.Lc574:
-	movq	%rsp,%rbp
-.Lc575:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
+	leaq	-40(%rsp),%rsp
+.Lc312:
+.seh_stackalloc 40
 .seh_endprologue
-.Ll934:
+.Ll899:
 # [1338] ror;
 	call	UNIT6502_$$_ROR
-.Ll935:
+.Ll900:
 # [1339] adc;
 	call	UNIT6502_$$_ADC
-.Ll936:
+.Ll901:
 # [1340] if (penaltyop<>0) and (penaltyaddr<>0) then dec (clockticks6502);
 	cmpb	$0,U_$UNIT6502_$$_PENALTYOP(%rip)
 	je	.Lj1581
@@ -6700,16 +5922,15 @@ UNIT6502_$$_RRA:
 	je	.Lj1581
 	subq	$1,TC_$UNIT6502_$$_CLOCKTICKS6502(%rip)
 .Lj1581:
-.Ll937:
+.Ll902:
 # [1341] end;
 	nop
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc572:
+.Lc311:
 .Lt52:
-.Ll938:
+.Ll903:
 # End asmlist al_procedures
 # Begin asmlist al_globals
 
@@ -7373,9 +6594,9 @@ TC_$UNIT6502_$$_TICKTABLE:
 # Begin asmlist al_dwarf_frame
 
 .section .debug_frame
-.Lc576:
-	.long	.Lc578-.Lc577
-.Lc577:
+.Lc313:
+	.long	.Lc315-.Lc314
+.Lc314:
 	.long	-1
 	.byte	1
 	.byte	0
@@ -7389,2307 +6610,1140 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	16
 	.uleb128	2
 	.balign 4,0
-.Lc578:
-	.long	.Lc580-.Lc579
-.Lc579:
-	.secrel32	.Lc576
+.Lc315:
+	.long	.Lc317-.Lc316
+.Lc316:
+	.secrel32	.Lc313
 	.quad	.Lc1
 	.quad	.Lc2-.Lc1
-	.byte	4
-	.long	.Lc3-.Lc1
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc4-.Lc3
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc5-.Lc4
-	.byte	13
-	.uleb128	6
 	.balign 4,0
-.Lc580:
-	.long	.Lc582-.Lc581
-.Lc581:
-	.secrel32	.Lc576
-	.quad	.Lc6
-	.quad	.Lc7-.Lc6
-	.byte	4
-	.long	.Lc8-.Lc6
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc9-.Lc8
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc10-.Lc9
-	.byte	13
-	.uleb128	6
+.Lc317:
+	.long	.Lc319-.Lc318
+.Lc318:
+	.secrel32	.Lc313
+	.quad	.Lc3
+	.quad	.Lc4-.Lc3
 	.balign 4,0
-.Lc582:
-	.long	.Lc584-.Lc583
-.Lc583:
-	.secrel32	.Lc576
+.Lc319:
+	.long	.Lc321-.Lc320
+.Lc320:
+	.secrel32	.Lc313
+	.quad	.Lc5
+	.quad	.Lc6-.Lc5
+	.byte	4
+	.long	.Lc7-.Lc5
+	.byte	14
+	.uleb128	40
+	.balign 4,0
+.Lc321:
+	.long	.Lc323-.Lc322
+.Lc322:
+	.secrel32	.Lc313
+	.quad	.Lc8
+	.quad	.Lc9-.Lc8
+	.byte	4
+	.long	.Lc10-.Lc8
+	.byte	14
+	.uleb128	40
+	.balign 4,0
+.Lc323:
+	.long	.Lc325-.Lc324
+.Lc324:
+	.secrel32	.Lc313
 	.quad	.Lc11
 	.quad	.Lc12-.Lc11
 	.byte	4
 	.long	.Lc13-.Lc11
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc14-.Lc13
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc15-.Lc14
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc584:
-	.long	.Lc586-.Lc585
-.Lc585:
-	.secrel32	.Lc576
-	.quad	.Lc16
-	.quad	.Lc17-.Lc16
+.Lc325:
+	.long	.Lc327-.Lc326
+.Lc326:
+	.secrel32	.Lc313
+	.quad	.Lc14
+	.quad	.Lc15-.Lc14
 	.byte	4
-	.long	.Lc18-.Lc16
+	.long	.Lc16-.Lc14
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc19-.Lc18
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc20-.Lc19
-	.byte	13
-	.uleb128	6
+	.uleb128	40
 	.balign 4,0
-.Lc586:
-	.long	.Lc588-.Lc587
-.Lc587:
-	.secrel32	.Lc576
-	.quad	.Lc21
-	.quad	.Lc22-.Lc21
+.Lc327:
+	.long	.Lc329-.Lc328
+.Lc328:
+	.secrel32	.Lc313
+	.quad	.Lc17
+	.quad	.Lc18-.Lc17
 	.byte	4
-	.long	.Lc23-.Lc21
+	.long	.Lc19-.Lc17
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc24-.Lc23
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc25-.Lc24
-	.byte	13
-	.uleb128	6
+	.uleb128	40
 	.balign 4,0
-.Lc588:
-	.long	.Lc590-.Lc589
-.Lc589:
-	.secrel32	.Lc576
+.Lc329:
+	.long	.Lc331-.Lc330
+.Lc330:
+	.secrel32	.Lc313
+	.quad	.Lc20
+	.quad	.Lc21-.Lc20
+	.byte	4
+	.long	.Lc22-.Lc20
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc331:
+	.long	.Lc333-.Lc332
+.Lc332:
+	.secrel32	.Lc313
+	.quad	.Lc23
+	.quad	.Lc24-.Lc23
+	.byte	4
+	.long	.Lc25-.Lc23
+	.byte	14
+	.uleb128	40
+	.balign 4,0
+.Lc333:
+	.long	.Lc335-.Lc334
+.Lc334:
+	.secrel32	.Lc313
 	.quad	.Lc26
 	.quad	.Lc27-.Lc26
 	.byte	4
 	.long	.Lc28-.Lc26
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc29-.Lc28
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc30-.Lc29
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc590:
-	.long	.Lc592-.Lc591
-.Lc591:
-	.secrel32	.Lc576
-	.quad	.Lc31
-	.quad	.Lc32-.Lc31
+.Lc335:
+	.long	.Lc337-.Lc336
+.Lc336:
+	.secrel32	.Lc313
+	.quad	.Lc29
+	.quad	.Lc30-.Lc29
 	.byte	4
-	.long	.Lc33-.Lc31
+	.long	.Lc31-.Lc29
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc34-.Lc33
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc35-.Lc34
-	.byte	13
-	.uleb128	6
+	.uleb128	40
 	.balign 4,0
-.Lc592:
-	.long	.Lc594-.Lc593
-.Lc593:
-	.secrel32	.Lc576
-	.quad	.Lc36
-	.quad	.Lc37-.Lc36
+.Lc337:
+	.long	.Lc339-.Lc338
+.Lc338:
+	.secrel32	.Lc313
+	.quad	.Lc32
+	.quad	.Lc33-.Lc32
 	.byte	4
-	.long	.Lc38-.Lc36
+	.long	.Lc34-.Lc32
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc39-.Lc38
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc40-.Lc39
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc594:
-	.long	.Lc596-.Lc595
-.Lc595:
-	.secrel32	.Lc576
+.Lc339:
+	.long	.Lc341-.Lc340
+.Lc340:
+	.secrel32	.Lc313
+	.quad	.Lc35
+	.quad	.Lc36-.Lc35
+	.byte	4
+	.long	.Lc37-.Lc35
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc341:
+	.long	.Lc343-.Lc342
+.Lc342:
+	.secrel32	.Lc313
+	.quad	.Lc38
+	.quad	.Lc39-.Lc38
+	.byte	4
+	.long	.Lc40-.Lc38
+	.byte	14
+	.uleb128	40
+	.balign 4,0
+.Lc343:
+	.long	.Lc345-.Lc344
+.Lc344:
+	.secrel32	.Lc313
 	.quad	.Lc41
 	.quad	.Lc42-.Lc41
 	.byte	4
 	.long	.Lc43-.Lc41
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc44-.Lc43
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc45-.Lc44
-	.byte	13
-	.uleb128	6
+	.uleb128	40
 	.balign 4,0
-.Lc596:
-	.long	.Lc598-.Lc597
-.Lc597:
-	.secrel32	.Lc576
-	.quad	.Lc46
-	.quad	.Lc47-.Lc46
+.Lc345:
+	.long	.Lc347-.Lc346
+.Lc346:
+	.secrel32	.Lc313
+	.quad	.Lc44
+	.quad	.Lc45-.Lc44
 	.byte	4
-	.long	.Lc48-.Lc46
+	.long	.Lc46-.Lc44
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc49-.Lc48
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc50-.Lc49
-	.byte	13
-	.uleb128	6
+	.uleb128	40
 	.balign 4,0
-.Lc598:
-	.long	.Lc600-.Lc599
-.Lc599:
-	.secrel32	.Lc576
-	.quad	.Lc51
-	.quad	.Lc52-.Lc51
+.Lc347:
+	.long	.Lc349-.Lc348
+.Lc348:
+	.secrel32	.Lc313
+	.quad	.Lc47
+	.quad	.Lc48-.Lc47
 	.byte	4
-	.long	.Lc53-.Lc51
+	.long	.Lc49-.Lc47
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc54-.Lc53
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc55-.Lc54
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc600:
-	.long	.Lc602-.Lc601
-.Lc601:
-	.secrel32	.Lc576
+.Lc349:
+	.long	.Lc351-.Lc350
+.Lc350:
+	.secrel32	.Lc313
+	.quad	.Lc50
+	.quad	.Lc51-.Lc50
+	.byte	4
+	.long	.Lc52-.Lc50
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc351:
+	.long	.Lc353-.Lc352
+.Lc352:
+	.secrel32	.Lc313
+	.quad	.Lc53
+	.quad	.Lc54-.Lc53
+	.byte	4
+	.long	.Lc55-.Lc53
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc353:
+	.long	.Lc355-.Lc354
+.Lc354:
+	.secrel32	.Lc313
 	.quad	.Lc56
 	.quad	.Lc57-.Lc56
 	.byte	4
 	.long	.Lc58-.Lc56
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc59-.Lc58
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc60-.Lc59
-	.byte	13
-	.uleb128	6
+	.uleb128	40
 	.balign 4,0
-.Lc602:
-	.long	.Lc604-.Lc603
-.Lc603:
-	.secrel32	.Lc576
+.Lc355:
+	.long	.Lc357-.Lc356
+.Lc356:
+	.secrel32	.Lc313
+	.quad	.Lc59
+	.quad	.Lc60-.Lc59
+	.balign 4,0
+.Lc357:
+	.long	.Lc359-.Lc358
+.Lc358:
+	.secrel32	.Lc313
 	.quad	.Lc61
 	.quad	.Lc62-.Lc61
-	.byte	4
-	.long	.Lc63-.Lc61
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc64-.Lc63
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc65-.Lc64
-	.byte	13
-	.uleb128	6
 	.balign 4,0
-.Lc604:
-	.long	.Lc606-.Lc605
-.Lc605:
-	.secrel32	.Lc576
-	.quad	.Lc66
-	.quad	.Lc67-.Lc66
-	.byte	4
-	.long	.Lc68-.Lc66
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc69-.Lc68
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc70-.Lc69
-	.byte	13
-	.uleb128	6
+.Lc359:
+	.long	.Lc361-.Lc360
+.Lc360:
+	.secrel32	.Lc313
+	.quad	.Lc63
+	.quad	.Lc64-.Lc63
 	.balign 4,0
-.Lc606:
-	.long	.Lc608-.Lc607
-.Lc607:
-	.secrel32	.Lc576
+.Lc361:
+	.long	.Lc363-.Lc362
+.Lc362:
+	.secrel32	.Lc313
+	.quad	.Lc65
+	.quad	.Lc66-.Lc65
+	.byte	4
+	.long	.Lc67-.Lc65
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc363:
+	.long	.Lc365-.Lc364
+.Lc364:
+	.secrel32	.Lc313
+	.quad	.Lc68
+	.quad	.Lc69-.Lc68
+	.byte	4
+	.long	.Lc70-.Lc68
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc365:
+	.long	.Lc367-.Lc366
+.Lc366:
+	.secrel32	.Lc313
 	.quad	.Lc71
 	.quad	.Lc72-.Lc71
 	.byte	4
 	.long	.Lc73-.Lc71
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc74-.Lc73
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc75-.Lc74
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc608:
-	.long	.Lc610-.Lc609
-.Lc609:
-	.secrel32	.Lc576
-	.quad	.Lc76
-	.quad	.Lc77-.Lc76
+.Lc367:
+	.long	.Lc369-.Lc368
+.Lc368:
+	.secrel32	.Lc313
+	.quad	.Lc74
+	.quad	.Lc75-.Lc74
 	.byte	4
-	.long	.Lc78-.Lc76
+	.long	.Lc76-.Lc74
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc79-.Lc78
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc80-.Lc79
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc610:
-	.long	.Lc612-.Lc611
-.Lc611:
-	.secrel32	.Lc576
-	.quad	.Lc81
-	.quad	.Lc82-.Lc81
+.Lc369:
+	.long	.Lc371-.Lc370
+.Lc370:
+	.secrel32	.Lc313
+	.quad	.Lc77
+	.quad	.Lc78-.Lc77
 	.byte	4
-	.long	.Lc83-.Lc81
+	.long	.Lc79-.Lc77
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc84-.Lc83
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc85-.Lc84
-	.byte	13
-	.uleb128	6
+	.uleb128	40
 	.balign 4,0
-.Lc612:
-	.long	.Lc614-.Lc613
-.Lc613:
-	.secrel32	.Lc576
+.Lc371:
+	.long	.Lc373-.Lc372
+.Lc372:
+	.secrel32	.Lc313
+	.quad	.Lc80
+	.quad	.Lc81-.Lc80
+	.byte	4
+	.long	.Lc82-.Lc80
+	.byte	14
+	.uleb128	40
+	.balign 4,0
+.Lc373:
+	.long	.Lc375-.Lc374
+.Lc374:
+	.secrel32	.Lc313
+	.quad	.Lc83
+	.quad	.Lc84-.Lc83
+	.byte	4
+	.long	.Lc85-.Lc83
+	.byte	14
+	.uleb128	40
+	.balign 4,0
+.Lc375:
+	.long	.Lc377-.Lc376
+.Lc376:
+	.secrel32	.Lc313
 	.quad	.Lc86
 	.quad	.Lc87-.Lc86
 	.byte	4
 	.long	.Lc88-.Lc86
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc89-.Lc88
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc90-.Lc89
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc614:
-	.long	.Lc616-.Lc615
-.Lc615:
-	.secrel32	.Lc576
-	.quad	.Lc91
-	.quad	.Lc92-.Lc91
+.Lc377:
+	.long	.Lc379-.Lc378
+.Lc378:
+	.secrel32	.Lc313
+	.quad	.Lc89
+	.quad	.Lc90-.Lc89
 	.byte	4
-	.long	.Lc93-.Lc91
+	.long	.Lc91-.Lc89
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc94-.Lc93
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc95-.Lc94
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc616:
-	.long	.Lc618-.Lc617
-.Lc617:
-	.secrel32	.Lc576
-	.quad	.Lc96
-	.quad	.Lc97-.Lc96
+.Lc379:
+	.long	.Lc381-.Lc380
+.Lc380:
+	.secrel32	.Lc313
+	.quad	.Lc92
+	.quad	.Lc93-.Lc92
 	.byte	4
-	.long	.Lc98-.Lc96
+	.long	.Lc94-.Lc92
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc99-.Lc98
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc100-.Lc99
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc618:
-	.long	.Lc620-.Lc619
-.Lc619:
-	.secrel32	.Lc576
+.Lc381:
+	.long	.Lc383-.Lc382
+.Lc382:
+	.secrel32	.Lc313
+	.quad	.Lc95
+	.quad	.Lc96-.Lc95
+	.byte	4
+	.long	.Lc97-.Lc95
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc383:
+	.long	.Lc385-.Lc384
+.Lc384:
+	.secrel32	.Lc313
+	.quad	.Lc98
+	.quad	.Lc99-.Lc98
+	.byte	4
+	.long	.Lc100-.Lc98
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc385:
+	.long	.Lc387-.Lc386
+.Lc386:
+	.secrel32	.Lc313
 	.quad	.Lc101
 	.quad	.Lc102-.Lc101
 	.byte	4
 	.long	.Lc103-.Lc101
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc104-.Lc103
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc105-.Lc104
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc620:
-	.long	.Lc622-.Lc621
-.Lc621:
-	.secrel32	.Lc576
-	.quad	.Lc106
-	.quad	.Lc107-.Lc106
+.Lc387:
+	.long	.Lc389-.Lc388
+.Lc388:
+	.secrel32	.Lc313
+	.quad	.Lc104
+	.quad	.Lc105-.Lc104
 	.byte	4
-	.long	.Lc108-.Lc106
+	.long	.Lc106-.Lc104
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc109-.Lc108
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc110-.Lc109
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc622:
-	.long	.Lc624-.Lc623
-.Lc623:
-	.secrel32	.Lc576
-	.quad	.Lc111
-	.quad	.Lc112-.Lc111
+.Lc389:
+	.long	.Lc391-.Lc390
+.Lc390:
+	.secrel32	.Lc313
+	.quad	.Lc107
+	.quad	.Lc108-.Lc107
 	.byte	4
-	.long	.Lc113-.Lc111
+	.long	.Lc109-.Lc107
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc114-.Lc113
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc115-.Lc114
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc624:
-	.long	.Lc626-.Lc625
-.Lc625:
-	.secrel32	.Lc576
+.Lc391:
+	.long	.Lc393-.Lc392
+.Lc392:
+	.secrel32	.Lc313
+	.quad	.Lc110
+	.quad	.Lc111-.Lc110
+	.balign 4,0
+.Lc393:
+	.long	.Lc395-.Lc394
+.Lc394:
+	.secrel32	.Lc313
+	.quad	.Lc112
+	.quad	.Lc113-.Lc112
+	.balign 4,0
+.Lc395:
+	.long	.Lc397-.Lc396
+.Lc396:
+	.secrel32	.Lc313
+	.quad	.Lc114
+	.quad	.Lc115-.Lc114
+	.balign 4,0
+.Lc397:
+	.long	.Lc399-.Lc398
+.Lc398:
+	.secrel32	.Lc313
 	.quad	.Lc116
 	.quad	.Lc117-.Lc116
 	.byte	4
 	.long	.Lc118-.Lc116
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc119-.Lc118
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc120-.Lc119
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc626:
-	.long	.Lc628-.Lc627
-.Lc627:
-	.secrel32	.Lc576
+.Lc399:
+	.long	.Lc401-.Lc400
+.Lc400:
+	.secrel32	.Lc313
+	.quad	.Lc119
+	.quad	.Lc120-.Lc119
+	.balign 4,0
+.Lc401:
+	.long	.Lc403-.Lc402
+.Lc402:
+	.secrel32	.Lc313
 	.quad	.Lc121
 	.quad	.Lc122-.Lc121
-	.byte	4
-	.long	.Lc123-.Lc121
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc124-.Lc123
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc125-.Lc124
-	.byte	13
-	.uleb128	6
 	.balign 4,0
-.Lc628:
-	.long	.Lc630-.Lc629
-.Lc629:
-	.secrel32	.Lc576
-	.quad	.Lc126
-	.quad	.Lc127-.Lc126
-	.byte	4
-	.long	.Lc128-.Lc126
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc129-.Lc128
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc130-.Lc129
-	.byte	13
-	.uleb128	6
+.Lc403:
+	.long	.Lc405-.Lc404
+.Lc404:
+	.secrel32	.Lc313
+	.quad	.Lc123
+	.quad	.Lc124-.Lc123
 	.balign 4,0
-.Lc630:
-	.long	.Lc632-.Lc631
-.Lc631:
-	.secrel32	.Lc576
-	.quad	.Lc131
-	.quad	.Lc132-.Lc131
-	.byte	4
-	.long	.Lc133-.Lc131
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc134-.Lc133
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc135-.Lc134
-	.byte	13
-	.uleb128	6
+.Lc405:
+	.long	.Lc407-.Lc406
+.Lc406:
+	.secrel32	.Lc313
+	.quad	.Lc125
+	.quad	.Lc126-.Lc125
 	.balign 4,0
-.Lc632:
-	.long	.Lc634-.Lc633
-.Lc633:
-	.secrel32	.Lc576
+.Lc407:
+	.long	.Lc409-.Lc408
+.Lc408:
+	.secrel32	.Lc313
+	.quad	.Lc127
+	.quad	.Lc128-.Lc127
+	.byte	4
+	.long	.Lc129-.Lc127
+	.byte	14
+	.uleb128	40
+	.balign 4,0
+.Lc409:
+	.long	.Lc411-.Lc410
+.Lc410:
+	.secrel32	.Lc313
+	.quad	.Lc130
+	.quad	.Lc131-.Lc130
+	.balign 4,0
+.Lc411:
+	.long	.Lc413-.Lc412
+.Lc412:
+	.secrel32	.Lc313
+	.quad	.Lc132
+	.quad	.Lc133-.Lc132
+	.balign 4,0
+.Lc413:
+	.long	.Lc415-.Lc414
+.Lc414:
+	.secrel32	.Lc313
+	.quad	.Lc134
+	.quad	.Lc135-.Lc134
+	.balign 4,0
+.Lc415:
+	.long	.Lc417-.Lc416
+.Lc416:
+	.secrel32	.Lc313
 	.quad	.Lc136
 	.quad	.Lc137-.Lc136
-	.byte	4
-	.long	.Lc138-.Lc136
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc139-.Lc138
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc140-.Lc139
-	.byte	13
-	.uleb128	6
 	.balign 4,0
-.Lc634:
-	.long	.Lc636-.Lc635
-.Lc635:
-	.secrel32	.Lc576
-	.quad	.Lc141
-	.quad	.Lc142-.Lc141
-	.byte	4
-	.long	.Lc143-.Lc141
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc144-.Lc143
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc145-.Lc144
-	.byte	13
-	.uleb128	6
+.Lc417:
+	.long	.Lc419-.Lc418
+.Lc418:
+	.secrel32	.Lc313
+	.quad	.Lc138
+	.quad	.Lc139-.Lc138
 	.balign 4,0
-.Lc636:
-	.long	.Lc638-.Lc637
-.Lc637:
-	.secrel32	.Lc576
-	.quad	.Lc146
-	.quad	.Lc147-.Lc146
-	.byte	4
-	.long	.Lc148-.Lc146
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc149-.Lc148
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc150-.Lc149
-	.byte	13
-	.uleb128	6
+.Lc419:
+	.long	.Lc421-.Lc420
+.Lc420:
+	.secrel32	.Lc313
+	.quad	.Lc140
+	.quad	.Lc141-.Lc140
 	.balign 4,0
-.Lc638:
-	.long	.Lc640-.Lc639
-.Lc639:
-	.secrel32	.Lc576
+.Lc421:
+	.long	.Lc423-.Lc422
+.Lc422:
+	.secrel32	.Lc313
+	.quad	.Lc142
+	.quad	.Lc143-.Lc142
+	.byte	4
+	.long	.Lc144-.Lc142
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc423:
+	.long	.Lc425-.Lc424
+.Lc424:
+	.secrel32	.Lc313
+	.quad	.Lc145
+	.quad	.Lc146-.Lc145
+	.byte	4
+	.long	.Lc147-.Lc145
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc425:
+	.long	.Lc427-.Lc426
+.Lc426:
+	.secrel32	.Lc313
+	.quad	.Lc148
+	.quad	.Lc149-.Lc148
+	.byte	4
+	.long	.Lc150-.Lc148
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc427:
+	.long	.Lc429-.Lc428
+.Lc428:
+	.secrel32	.Lc313
 	.quad	.Lc151
 	.quad	.Lc152-.Lc151
 	.byte	4
 	.long	.Lc153-.Lc151
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc154-.Lc153
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc155-.Lc154
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc640:
-	.long	.Lc642-.Lc641
-.Lc641:
-	.secrel32	.Lc576
+.Lc429:
+	.long	.Lc431-.Lc430
+.Lc430:
+	.secrel32	.Lc313
+	.quad	.Lc154
+	.quad	.Lc155-.Lc154
+	.balign 4,0
+.Lc431:
+	.long	.Lc433-.Lc432
+.Lc432:
+	.secrel32	.Lc313
 	.quad	.Lc156
 	.quad	.Lc157-.Lc156
-	.byte	4
-	.long	.Lc158-.Lc156
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc159-.Lc158
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc160-.Lc159
-	.byte	13
-	.uleb128	6
 	.balign 4,0
-.Lc642:
-	.long	.Lc644-.Lc643
-.Lc643:
-	.secrel32	.Lc576
+.Lc433:
+	.long	.Lc435-.Lc434
+.Lc434:
+	.secrel32	.Lc313
+	.quad	.Lc158
+	.quad	.Lc159-.Lc158
+	.byte	4
+	.long	.Lc160-.Lc158
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc435:
+	.long	.Lc437-.Lc436
+.Lc436:
+	.secrel32	.Lc313
 	.quad	.Lc161
 	.quad	.Lc162-.Lc161
 	.byte	4
 	.long	.Lc163-.Lc161
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc164-.Lc163
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc165-.Lc164
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc644:
-	.long	.Lc646-.Lc645
-.Lc645:
-	.secrel32	.Lc576
+.Lc437:
+	.long	.Lc439-.Lc438
+.Lc438:
+	.secrel32	.Lc313
+	.quad	.Lc164
+	.quad	.Lc165-.Lc164
+	.balign 4,0
+.Lc439:
+	.long	.Lc441-.Lc440
+.Lc440:
+	.secrel32	.Lc313
 	.quad	.Lc166
 	.quad	.Lc167-.Lc166
-	.byte	4
-	.long	.Lc168-.Lc166
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc169-.Lc168
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc170-.Lc169
-	.byte	13
-	.uleb128	6
 	.balign 4,0
-.Lc646:
-	.long	.Lc648-.Lc647
-.Lc647:
-	.secrel32	.Lc576
-	.quad	.Lc171
-	.quad	.Lc172-.Lc171
-	.byte	4
-	.long	.Lc173-.Lc171
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc174-.Lc173
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc175-.Lc174
-	.byte	13
-	.uleb128	6
+.Lc441:
+	.long	.Lc443-.Lc442
+.Lc442:
+	.secrel32	.Lc313
+	.quad	.Lc168
+	.quad	.Lc169-.Lc168
 	.balign 4,0
-.Lc648:
-	.long	.Lc650-.Lc649
-.Lc649:
-	.secrel32	.Lc576
+.Lc443:
+	.long	.Lc445-.Lc444
+.Lc444:
+	.secrel32	.Lc313
+	.quad	.Lc170
+	.quad	.Lc171-.Lc170
+	.byte	4
+	.long	.Lc172-.Lc170
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc445:
+	.long	.Lc447-.Lc446
+.Lc446:
+	.secrel32	.Lc313
+	.quad	.Lc173
+	.quad	.Lc174-.Lc173
+	.byte	4
+	.long	.Lc175-.Lc173
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc447:
+	.long	.Lc449-.Lc448
+.Lc448:
+	.secrel32	.Lc313
 	.quad	.Lc176
 	.quad	.Lc177-.Lc176
 	.byte	4
 	.long	.Lc178-.Lc176
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc179-.Lc178
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc180-.Lc179
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc650:
-	.long	.Lc652-.Lc651
-.Lc651:
-	.secrel32	.Lc576
-	.quad	.Lc181
-	.quad	.Lc182-.Lc181
+.Lc449:
+	.long	.Lc451-.Lc450
+.Lc450:
+	.secrel32	.Lc313
+	.quad	.Lc179
+	.quad	.Lc180-.Lc179
 	.byte	4
-	.long	.Lc183-.Lc181
+	.long	.Lc181-.Lc179
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc184-.Lc183
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc185-.Lc184
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc652:
-	.long	.Lc654-.Lc653
-.Lc653:
-	.secrel32	.Lc576
-	.quad	.Lc186
-	.quad	.Lc187-.Lc186
+.Lc451:
+	.long	.Lc453-.Lc452
+.Lc452:
+	.secrel32	.Lc313
+	.quad	.Lc182
+	.quad	.Lc183-.Lc182
 	.byte	4
-	.long	.Lc188-.Lc186
+	.long	.Lc184-.Lc182
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc189-.Lc188
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc190-.Lc189
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc654:
-	.long	.Lc656-.Lc655
-.Lc655:
-	.secrel32	.Lc576
+.Lc453:
+	.long	.Lc455-.Lc454
+.Lc454:
+	.secrel32	.Lc313
+	.quad	.Lc185
+	.quad	.Lc186-.Lc185
+	.byte	4
+	.long	.Lc187-.Lc185
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc455:
+	.long	.Lc457-.Lc456
+.Lc456:
+	.secrel32	.Lc313
+	.quad	.Lc188
+	.quad	.Lc189-.Lc188
+	.byte	4
+	.long	.Lc190-.Lc188
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc457:
+	.long	.Lc459-.Lc458
+.Lc458:
+	.secrel32	.Lc313
 	.quad	.Lc191
 	.quad	.Lc192-.Lc191
-	.byte	4
-	.long	.Lc193-.Lc191
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc194-.Lc193
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc195-.Lc194
-	.byte	13
-	.uleb128	6
 	.balign 4,0
-.Lc656:
-	.long	.Lc658-.Lc657
-.Lc657:
-	.secrel32	.Lc576
+.Lc459:
+	.long	.Lc461-.Lc460
+.Lc460:
+	.secrel32	.Lc313
+	.quad	.Lc193
+	.quad	.Lc194-.Lc193
+	.byte	4
+	.long	.Lc195-.Lc193
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc461:
+	.long	.Lc463-.Lc462
+.Lc462:
+	.secrel32	.Lc313
 	.quad	.Lc196
 	.quad	.Lc197-.Lc196
 	.byte	4
 	.long	.Lc198-.Lc196
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc199-.Lc198
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc200-.Lc199
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc658:
-	.long	.Lc660-.Lc659
-.Lc659:
-	.secrel32	.Lc576
-	.quad	.Lc201
-	.quad	.Lc202-.Lc201
+.Lc463:
+	.long	.Lc465-.Lc464
+.Lc464:
+	.secrel32	.Lc313
+	.quad	.Lc199
+	.quad	.Lc200-.Lc199
 	.byte	4
-	.long	.Lc203-.Lc201
+	.long	.Lc201-.Lc199
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc204-.Lc203
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc205-.Lc204
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc660:
-	.long	.Lc662-.Lc661
-.Lc661:
-	.secrel32	.Lc576
-	.quad	.Lc206
-	.quad	.Lc207-.Lc206
+.Lc465:
+	.long	.Lc467-.Lc466
+.Lc466:
+	.secrel32	.Lc313
+	.quad	.Lc202
+	.quad	.Lc203-.Lc202
 	.byte	4
-	.long	.Lc208-.Lc206
+	.long	.Lc204-.Lc202
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc209-.Lc208
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc210-.Lc209
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc662:
-	.long	.Lc664-.Lc663
-.Lc663:
-	.secrel32	.Lc576
+.Lc467:
+	.long	.Lc469-.Lc468
+.Lc468:
+	.secrel32	.Lc313
+	.quad	.Lc205
+	.quad	.Lc206-.Lc205
+	.byte	4
+	.long	.Lc207-.Lc205
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc469:
+	.long	.Lc471-.Lc470
+.Lc470:
+	.secrel32	.Lc313
+	.quad	.Lc208
+	.quad	.Lc209-.Lc208
+	.byte	4
+	.long	.Lc210-.Lc208
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc471:
+	.long	.Lc473-.Lc472
+.Lc472:
+	.secrel32	.Lc313
 	.quad	.Lc211
 	.quad	.Lc212-.Lc211
 	.byte	4
 	.long	.Lc213-.Lc211
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc214-.Lc213
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc215-.Lc214
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc664:
-	.long	.Lc666-.Lc665
-.Lc665:
-	.secrel32	.Lc576
-	.quad	.Lc216
-	.quad	.Lc217-.Lc216
+.Lc473:
+	.long	.Lc475-.Lc474
+.Lc474:
+	.secrel32	.Lc313
+	.quad	.Lc214
+	.quad	.Lc215-.Lc214
 	.byte	4
-	.long	.Lc218-.Lc216
+	.long	.Lc216-.Lc214
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc219-.Lc218
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc220-.Lc219
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc666:
-	.long	.Lc668-.Lc667
-.Lc667:
-	.secrel32	.Lc576
-	.quad	.Lc221
-	.quad	.Lc222-.Lc221
+.Lc475:
+	.long	.Lc477-.Lc476
+.Lc476:
+	.secrel32	.Lc313
+	.quad	.Lc217
+	.quad	.Lc218-.Lc217
 	.byte	4
-	.long	.Lc223-.Lc221
+	.long	.Lc219-.Lc217
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc224-.Lc223
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc225-.Lc224
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc668:
-	.long	.Lc670-.Lc669
-.Lc669:
-	.secrel32	.Lc576
+.Lc477:
+	.long	.Lc479-.Lc478
+.Lc478:
+	.secrel32	.Lc313
+	.quad	.Lc220
+	.quad	.Lc221-.Lc220
+	.byte	4
+	.long	.Lc222-.Lc220
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc479:
+	.long	.Lc481-.Lc480
+.Lc480:
+	.secrel32	.Lc313
+	.quad	.Lc223
+	.quad	.Lc224-.Lc223
+	.byte	4
+	.long	.Lc225-.Lc223
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc481:
+	.long	.Lc483-.Lc482
+.Lc482:
+	.secrel32	.Lc313
 	.quad	.Lc226
 	.quad	.Lc227-.Lc226
 	.byte	4
 	.long	.Lc228-.Lc226
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc229-.Lc228
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc230-.Lc229
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc670:
-	.long	.Lc672-.Lc671
-.Lc671:
-	.secrel32	.Lc576
-	.quad	.Lc231
-	.quad	.Lc232-.Lc231
+.Lc483:
+	.long	.Lc485-.Lc484
+.Lc484:
+	.secrel32	.Lc313
+	.quad	.Lc229
+	.quad	.Lc230-.Lc229
 	.byte	4
-	.long	.Lc233-.Lc231
+	.long	.Lc231-.Lc229
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc234-.Lc233
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc235-.Lc234
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc672:
-	.long	.Lc674-.Lc673
-.Lc673:
-	.secrel32	.Lc576
-	.quad	.Lc236
-	.quad	.Lc237-.Lc236
+.Lc485:
+	.long	.Lc487-.Lc486
+.Lc486:
+	.secrel32	.Lc313
+	.quad	.Lc232
+	.quad	.Lc233-.Lc232
 	.byte	4
-	.long	.Lc238-.Lc236
+	.long	.Lc234-.Lc232
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc239-.Lc238
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc240-.Lc239
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc674:
-	.long	.Lc676-.Lc675
-.Lc675:
-	.secrel32	.Lc576
+.Lc487:
+	.long	.Lc489-.Lc488
+.Lc488:
+	.secrel32	.Lc313
+	.quad	.Lc235
+	.quad	.Lc236-.Lc235
+	.byte	4
+	.long	.Lc237-.Lc235
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc489:
+	.long	.Lc491-.Lc490
+.Lc490:
+	.secrel32	.Lc313
+	.quad	.Lc238
+	.quad	.Lc239-.Lc238
+	.byte	4
+	.long	.Lc240-.Lc238
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc491:
+	.long	.Lc493-.Lc492
+.Lc492:
+	.secrel32	.Lc313
 	.quad	.Lc241
 	.quad	.Lc242-.Lc241
 	.byte	4
 	.long	.Lc243-.Lc241
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc244-.Lc243
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc245-.Lc244
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc676:
-	.long	.Lc678-.Lc677
-.Lc677:
-	.secrel32	.Lc576
-	.quad	.Lc246
-	.quad	.Lc247-.Lc246
+.Lc493:
+	.long	.Lc495-.Lc494
+.Lc494:
+	.secrel32	.Lc313
+	.quad	.Lc244
+	.quad	.Lc245-.Lc244
 	.byte	4
-	.long	.Lc248-.Lc246
+	.long	.Lc246-.Lc244
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc249-.Lc248
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc250-.Lc249
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc678:
-	.long	.Lc680-.Lc679
-.Lc679:
-	.secrel32	.Lc576
+.Lc495:
+	.long	.Lc497-.Lc496
+.Lc496:
+	.secrel32	.Lc313
+	.quad	.Lc247
+	.quad	.Lc248-.Lc247
+	.balign 4,0
+.Lc497:
+	.long	.Lc499-.Lc498
+.Lc498:
+	.secrel32	.Lc313
+	.quad	.Lc249
+	.quad	.Lc250-.Lc249
+	.balign 4,0
+.Lc499:
+	.long	.Lc501-.Lc500
+.Lc500:
+	.secrel32	.Lc313
 	.quad	.Lc251
 	.quad	.Lc252-.Lc251
-	.byte	4
-	.long	.Lc253-.Lc251
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc254-.Lc253
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc255-.Lc254
-	.byte	13
-	.uleb128	6
 	.balign 4,0
-.Lc680:
-	.long	.Lc682-.Lc681
-.Lc681:
-	.secrel32	.Lc576
+.Lc501:
+	.long	.Lc503-.Lc502
+.Lc502:
+	.secrel32	.Lc313
+	.quad	.Lc253
+	.quad	.Lc254-.Lc253
+	.byte	4
+	.long	.Lc255-.Lc253
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc503:
+	.long	.Lc505-.Lc504
+.Lc504:
+	.secrel32	.Lc313
 	.quad	.Lc256
 	.quad	.Lc257-.Lc256
 	.byte	4
 	.long	.Lc258-.Lc256
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc259-.Lc258
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc260-.Lc259
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc682:
-	.long	.Lc684-.Lc683
-.Lc683:
-	.secrel32	.Lc576
-	.quad	.Lc261
-	.quad	.Lc262-.Lc261
+.Lc505:
+	.long	.Lc507-.Lc506
+.Lc506:
+	.secrel32	.Lc313
+	.quad	.Lc259
+	.quad	.Lc260-.Lc259
 	.byte	4
-	.long	.Lc263-.Lc261
+	.long	.Lc261-.Lc259
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc264-.Lc263
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc265-.Lc264
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc684:
-	.long	.Lc686-.Lc685
-.Lc685:
-	.secrel32	.Lc576
-	.quad	.Lc266
-	.quad	.Lc267-.Lc266
+.Lc507:
+	.long	.Lc509-.Lc508
+.Lc508:
+	.secrel32	.Lc313
+	.quad	.Lc262
+	.quad	.Lc263-.Lc262
 	.byte	4
-	.long	.Lc268-.Lc266
+	.long	.Lc264-.Lc262
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc269-.Lc268
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc270-.Lc269
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc686:
-	.long	.Lc688-.Lc687
-.Lc687:
-	.secrel32	.Lc576
+.Lc509:
+	.long	.Lc511-.Lc510
+.Lc510:
+	.secrel32	.Lc313
+	.quad	.Lc265
+	.quad	.Lc266-.Lc265
+	.byte	4
+	.long	.Lc267-.Lc265
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc511:
+	.long	.Lc513-.Lc512
+.Lc512:
+	.secrel32	.Lc313
+	.quad	.Lc268
+	.quad	.Lc269-.Lc268
+	.byte	4
+	.long	.Lc270-.Lc268
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc513:
+	.long	.Lc515-.Lc514
+.Lc514:
+	.secrel32	.Lc313
 	.quad	.Lc271
 	.quad	.Lc272-.Lc271
-	.byte	4
-	.long	.Lc273-.Lc271
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc274-.Lc273
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc275-.Lc274
-	.byte	13
-	.uleb128	6
 	.balign 4,0
-.Lc688:
-	.long	.Lc690-.Lc689
-.Lc689:
-	.secrel32	.Lc576
-	.quad	.Lc276
-	.quad	.Lc277-.Lc276
-	.byte	4
-	.long	.Lc278-.Lc276
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc279-.Lc278
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc280-.Lc279
-	.byte	13
-	.uleb128	6
+.Lc515:
+	.long	.Lc517-.Lc516
+.Lc516:
+	.secrel32	.Lc313
+	.quad	.Lc273
+	.quad	.Lc274-.Lc273
 	.balign 4,0
-.Lc690:
-	.long	.Lc692-.Lc691
-.Lc691:
-	.secrel32	.Lc576
+.Lc517:
+	.long	.Lc519-.Lc518
+.Lc518:
+	.secrel32	.Lc313
+	.quad	.Lc275
+	.quad	.Lc276-.Lc275
+	.byte	4
+	.long	.Lc277-.Lc275
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc519:
+	.long	.Lc521-.Lc520
+.Lc520:
+	.secrel32	.Lc313
+	.quad	.Lc278
+	.quad	.Lc279-.Lc278
+	.byte	4
+	.long	.Lc280-.Lc278
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc521:
+	.long	.Lc523-.Lc522
+.Lc522:
+	.secrel32	.Lc313
 	.quad	.Lc281
 	.quad	.Lc282-.Lc281
-	.byte	4
-	.long	.Lc283-.Lc281
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc284-.Lc283
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc285-.Lc284
-	.byte	13
-	.uleb128	6
 	.balign 4,0
-.Lc692:
-	.long	.Lc694-.Lc693
-.Lc693:
-	.secrel32	.Lc576
-	.quad	.Lc286
-	.quad	.Lc287-.Lc286
-	.byte	4
-	.long	.Lc288-.Lc286
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc289-.Lc288
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc290-.Lc289
-	.byte	13
-	.uleb128	6
+.Lc523:
+	.long	.Lc525-.Lc524
+.Lc524:
+	.secrel32	.Lc313
+	.quad	.Lc283
+	.quad	.Lc284-.Lc283
 	.balign 4,0
-.Lc694:
-	.long	.Lc696-.Lc695
-.Lc695:
-	.secrel32	.Lc576
-	.quad	.Lc291
-	.quad	.Lc292-.Lc291
-	.byte	4
-	.long	.Lc293-.Lc291
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc294-.Lc293
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc295-.Lc294
-	.byte	13
-	.uleb128	6
+.Lc525:
+	.long	.Lc527-.Lc526
+.Lc526:
+	.secrel32	.Lc313
+	.quad	.Lc285
+	.quad	.Lc286-.Lc285
 	.balign 4,0
-.Lc696:
-	.long	.Lc698-.Lc697
-.Lc697:
-	.secrel32	.Lc576
-	.quad	.Lc296
-	.quad	.Lc297-.Lc296
-	.byte	4
-	.long	.Lc298-.Lc296
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc299-.Lc298
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc300-.Lc299
-	.byte	13
-	.uleb128	6
+.Lc527:
+	.long	.Lc529-.Lc528
+.Lc528:
+	.secrel32	.Lc313
+	.quad	.Lc287
+	.quad	.Lc288-.Lc287
 	.balign 4,0
-.Lc698:
-	.long	.Lc700-.Lc699
-.Lc699:
-	.secrel32	.Lc576
+.Lc529:
+	.long	.Lc531-.Lc530
+.Lc530:
+	.secrel32	.Lc313
+	.quad	.Lc289
+	.quad	.Lc290-.Lc289
+	.byte	4
+	.long	.Lc291-.Lc289
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc531:
+	.long	.Lc533-.Lc532
+.Lc532:
+	.secrel32	.Lc313
+	.quad	.Lc292
+	.quad	.Lc293-.Lc292
+	.byte	4
+	.long	.Lc294-.Lc292
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc533:
+	.long	.Lc535-.Lc534
+.Lc534:
+	.secrel32	.Lc313
+	.quad	.Lc295
+	.quad	.Lc296-.Lc295
+	.byte	4
+	.long	.Lc297-.Lc295
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc535:
+	.long	.Lc537-.Lc536
+.Lc536:
+	.secrel32	.Lc313
+	.quad	.Lc298
+	.quad	.Lc299-.Lc298
+	.byte	4
+	.long	.Lc300-.Lc298
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc537:
+	.long	.Lc539-.Lc538
+.Lc538:
+	.secrel32	.Lc313
 	.quad	.Lc301
 	.quad	.Lc302-.Lc301
 	.byte	4
 	.long	.Lc303-.Lc301
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc304-.Lc303
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc305-.Lc304
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc700:
-	.long	.Lc702-.Lc701
-.Lc701:
-	.secrel32	.Lc576
-	.quad	.Lc306
-	.quad	.Lc307-.Lc306
+.Lc539:
+	.long	.Lc541-.Lc540
+.Lc540:
+	.secrel32	.Lc313
+	.quad	.Lc304
+	.quad	.Lc305-.Lc304
 	.byte	4
-	.long	.Lc308-.Lc306
+	.long	.Lc306-.Lc304
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc309-.Lc308
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc310-.Lc309
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc702:
-	.long	.Lc704-.Lc703
-.Lc703:
-	.secrel32	.Lc576
-	.quad	.Lc311
-	.quad	.Lc312-.Lc311
+.Lc541:
+	.long	.Lc543-.Lc542
+.Lc542:
+	.secrel32	.Lc313
+	.quad	.Lc307
+	.quad	.Lc308-.Lc307
 	.byte	4
-	.long	.Lc313-.Lc311
+	.long	.Lc309-.Lc307
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc314-.Lc313
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc315-.Lc314
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc704:
-	.long	.Lc706-.Lc705
-.Lc705:
-	.secrel32	.Lc576
-	.quad	.Lc316
-	.quad	.Lc317-.Lc316
-	.byte	4
-	.long	.Lc318-.Lc316
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc319-.Lc318
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc320-.Lc319
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc706:
-	.long	.Lc708-.Lc707
-.Lc707:
-	.secrel32	.Lc576
-	.quad	.Lc321
-	.quad	.Lc322-.Lc321
-	.byte	4
-	.long	.Lc323-.Lc321
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc324-.Lc323
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc325-.Lc324
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc708:
-	.long	.Lc710-.Lc709
-.Lc709:
-	.secrel32	.Lc576
-	.quad	.Lc326
-	.quad	.Lc327-.Lc326
-	.byte	4
-	.long	.Lc328-.Lc326
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc329-.Lc328
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc330-.Lc329
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc710:
-	.long	.Lc712-.Lc711
-.Lc711:
-	.secrel32	.Lc576
-	.quad	.Lc331
-	.quad	.Lc332-.Lc331
-	.byte	4
-	.long	.Lc333-.Lc331
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc334-.Lc333
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc335-.Lc334
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc712:
-	.long	.Lc714-.Lc713
-.Lc713:
-	.secrel32	.Lc576
-	.quad	.Lc336
-	.quad	.Lc337-.Lc336
-	.byte	4
-	.long	.Lc338-.Lc336
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc339-.Lc338
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc340-.Lc339
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc714:
-	.long	.Lc716-.Lc715
-.Lc715:
-	.secrel32	.Lc576
-	.quad	.Lc341
-	.quad	.Lc342-.Lc341
-	.byte	4
-	.long	.Lc343-.Lc341
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc344-.Lc343
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc345-.Lc344
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc716:
-	.long	.Lc718-.Lc717
-.Lc717:
-	.secrel32	.Lc576
-	.quad	.Lc346
-	.quad	.Lc347-.Lc346
-	.byte	4
-	.long	.Lc348-.Lc346
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc349-.Lc348
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc350-.Lc349
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc718:
-	.long	.Lc720-.Lc719
-.Lc719:
-	.secrel32	.Lc576
-	.quad	.Lc351
-	.quad	.Lc352-.Lc351
-	.byte	4
-	.long	.Lc353-.Lc351
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc354-.Lc353
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc355-.Lc354
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc720:
-	.long	.Lc722-.Lc721
-.Lc721:
-	.secrel32	.Lc576
-	.quad	.Lc356
-	.quad	.Lc357-.Lc356
-	.byte	4
-	.long	.Lc358-.Lc356
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc359-.Lc358
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc360-.Lc359
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc722:
-	.long	.Lc724-.Lc723
-.Lc723:
-	.secrel32	.Lc576
-	.quad	.Lc361
-	.quad	.Lc362-.Lc361
-	.byte	4
-	.long	.Lc363-.Lc361
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc364-.Lc363
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc365-.Lc364
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc724:
-	.long	.Lc726-.Lc725
-.Lc725:
-	.secrel32	.Lc576
-	.quad	.Lc366
-	.quad	.Lc367-.Lc366
-	.byte	4
-	.long	.Lc368-.Lc366
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc369-.Lc368
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc370-.Lc369
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc726:
-	.long	.Lc728-.Lc727
-.Lc727:
-	.secrel32	.Lc576
-	.quad	.Lc371
-	.quad	.Lc372-.Lc371
-	.byte	4
-	.long	.Lc373-.Lc371
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc374-.Lc373
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc375-.Lc374
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc728:
-	.long	.Lc730-.Lc729
-.Lc729:
-	.secrel32	.Lc576
-	.quad	.Lc376
-	.quad	.Lc377-.Lc376
-	.byte	4
-	.long	.Lc378-.Lc376
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc379-.Lc378
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc380-.Lc379
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc730:
-	.long	.Lc732-.Lc731
-.Lc731:
-	.secrel32	.Lc576
-	.quad	.Lc381
-	.quad	.Lc382-.Lc381
-	.byte	4
-	.long	.Lc383-.Lc381
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc384-.Lc383
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc385-.Lc384
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc732:
-	.long	.Lc734-.Lc733
-.Lc733:
-	.secrel32	.Lc576
-	.quad	.Lc386
-	.quad	.Lc387-.Lc386
-	.byte	4
-	.long	.Lc388-.Lc386
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc389-.Lc388
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc390-.Lc389
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc734:
-	.long	.Lc736-.Lc735
-.Lc735:
-	.secrel32	.Lc576
-	.quad	.Lc391
-	.quad	.Lc392-.Lc391
-	.byte	4
-	.long	.Lc393-.Lc391
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc394-.Lc393
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc395-.Lc394
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc736:
-	.long	.Lc738-.Lc737
-.Lc737:
-	.secrel32	.Lc576
-	.quad	.Lc396
-	.quad	.Lc397-.Lc396
-	.byte	4
-	.long	.Lc398-.Lc396
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc399-.Lc398
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc400-.Lc399
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc738:
-	.long	.Lc740-.Lc739
-.Lc739:
-	.secrel32	.Lc576
-	.quad	.Lc401
-	.quad	.Lc402-.Lc401
-	.byte	4
-	.long	.Lc403-.Lc401
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc404-.Lc403
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc405-.Lc404
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc740:
-	.long	.Lc742-.Lc741
-.Lc741:
-	.secrel32	.Lc576
-	.quad	.Lc406
-	.quad	.Lc407-.Lc406
-	.byte	4
-	.long	.Lc408-.Lc406
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc409-.Lc408
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc410-.Lc409
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc742:
-	.long	.Lc744-.Lc743
-.Lc743:
-	.secrel32	.Lc576
-	.quad	.Lc411
-	.quad	.Lc412-.Lc411
-	.byte	4
-	.long	.Lc413-.Lc411
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc414-.Lc413
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc415-.Lc414
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc744:
-	.long	.Lc746-.Lc745
-.Lc745:
-	.secrel32	.Lc576
-	.quad	.Lc416
-	.quad	.Lc417-.Lc416
-	.byte	4
-	.long	.Lc418-.Lc416
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc419-.Lc418
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc420-.Lc419
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc746:
-	.long	.Lc748-.Lc747
-.Lc747:
-	.secrel32	.Lc576
-	.quad	.Lc421
-	.quad	.Lc422-.Lc421
-	.byte	4
-	.long	.Lc423-.Lc421
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc424-.Lc423
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc425-.Lc424
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc748:
-	.long	.Lc750-.Lc749
-.Lc749:
-	.secrel32	.Lc576
-	.quad	.Lc426
-	.quad	.Lc427-.Lc426
-	.byte	4
-	.long	.Lc428-.Lc426
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc429-.Lc428
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc430-.Lc429
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc750:
-	.long	.Lc752-.Lc751
-.Lc751:
-	.secrel32	.Lc576
-	.quad	.Lc431
-	.quad	.Lc432-.Lc431
-	.byte	4
-	.long	.Lc433-.Lc431
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc434-.Lc433
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc435-.Lc434
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc752:
-	.long	.Lc754-.Lc753
-.Lc753:
-	.secrel32	.Lc576
-	.quad	.Lc436
-	.quad	.Lc437-.Lc436
-	.byte	4
-	.long	.Lc438-.Lc436
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc439-.Lc438
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc440-.Lc439
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc754:
-	.long	.Lc756-.Lc755
-.Lc755:
-	.secrel32	.Lc576
-	.quad	.Lc441
-	.quad	.Lc442-.Lc441
-	.byte	4
-	.long	.Lc443-.Lc441
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc444-.Lc443
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc445-.Lc444
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc756:
-	.long	.Lc758-.Lc757
-.Lc757:
-	.secrel32	.Lc576
-	.quad	.Lc446
-	.quad	.Lc447-.Lc446
-	.byte	4
-	.long	.Lc448-.Lc446
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc449-.Lc448
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc450-.Lc449
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc758:
-	.long	.Lc760-.Lc759
-.Lc759:
-	.secrel32	.Lc576
-	.quad	.Lc451
-	.quad	.Lc452-.Lc451
-	.byte	4
-	.long	.Lc453-.Lc451
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc454-.Lc453
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc455-.Lc454
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc760:
-	.long	.Lc762-.Lc761
-.Lc761:
-	.secrel32	.Lc576
-	.quad	.Lc456
-	.quad	.Lc457-.Lc456
-	.byte	4
-	.long	.Lc458-.Lc456
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc459-.Lc458
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc460-.Lc459
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc762:
-	.long	.Lc764-.Lc763
-.Lc763:
-	.secrel32	.Lc576
-	.quad	.Lc461
-	.quad	.Lc462-.Lc461
-	.byte	4
-	.long	.Lc463-.Lc461
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc464-.Lc463
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc465-.Lc464
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc764:
-	.long	.Lc766-.Lc765
-.Lc765:
-	.secrel32	.Lc576
-	.quad	.Lc466
-	.quad	.Lc467-.Lc466
-	.byte	4
-	.long	.Lc468-.Lc466
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc469-.Lc468
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc470-.Lc469
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc766:
-	.long	.Lc768-.Lc767
-.Lc767:
-	.secrel32	.Lc576
-	.quad	.Lc471
-	.quad	.Lc472-.Lc471
-	.byte	4
-	.long	.Lc473-.Lc471
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc474-.Lc473
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc475-.Lc474
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc768:
-	.long	.Lc770-.Lc769
-.Lc769:
-	.secrel32	.Lc576
-	.quad	.Lc476
-	.quad	.Lc477-.Lc476
-	.byte	4
-	.long	.Lc478-.Lc476
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc479-.Lc478
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc480-.Lc479
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc770:
-	.long	.Lc772-.Lc771
-.Lc771:
-	.secrel32	.Lc576
-	.quad	.Lc481
-	.quad	.Lc482-.Lc481
-	.byte	4
-	.long	.Lc483-.Lc481
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc484-.Lc483
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc485-.Lc484
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc772:
-	.long	.Lc774-.Lc773
-.Lc773:
-	.secrel32	.Lc576
-	.quad	.Lc486
-	.quad	.Lc487-.Lc486
-	.byte	4
-	.long	.Lc488-.Lc486
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc489-.Lc488
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc490-.Lc489
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc774:
-	.long	.Lc776-.Lc775
-.Lc775:
-	.secrel32	.Lc576
-	.quad	.Lc491
-	.quad	.Lc492-.Lc491
-	.byte	4
-	.long	.Lc493-.Lc491
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc494-.Lc493
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc495-.Lc494
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc776:
-	.long	.Lc778-.Lc777
-.Lc777:
-	.secrel32	.Lc576
-	.quad	.Lc496
-	.quad	.Lc497-.Lc496
-	.byte	4
-	.long	.Lc498-.Lc496
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc499-.Lc498
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc500-.Lc499
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc778:
-	.long	.Lc780-.Lc779
-.Lc779:
-	.secrel32	.Lc576
-	.quad	.Lc501
-	.quad	.Lc502-.Lc501
-	.byte	4
-	.long	.Lc503-.Lc501
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc504-.Lc503
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc505-.Lc504
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc780:
-	.long	.Lc782-.Lc781
-.Lc781:
-	.secrel32	.Lc576
-	.quad	.Lc506
-	.quad	.Lc507-.Lc506
-	.byte	4
-	.long	.Lc508-.Lc506
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc509-.Lc508
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc510-.Lc509
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc782:
-	.long	.Lc784-.Lc783
-.Lc783:
-	.secrel32	.Lc576
-	.quad	.Lc511
-	.quad	.Lc512-.Lc511
-	.byte	4
-	.long	.Lc513-.Lc511
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc514-.Lc513
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc515-.Lc514
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc784:
-	.long	.Lc786-.Lc785
-.Lc785:
-	.secrel32	.Lc576
-	.quad	.Lc516
-	.quad	.Lc517-.Lc516
-	.byte	4
-	.long	.Lc518-.Lc516
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc519-.Lc518
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc520-.Lc519
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc786:
-	.long	.Lc788-.Lc787
-.Lc787:
-	.secrel32	.Lc576
-	.quad	.Lc521
-	.quad	.Lc522-.Lc521
-	.byte	4
-	.long	.Lc523-.Lc521
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc524-.Lc523
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc525-.Lc524
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc788:
-	.long	.Lc790-.Lc789
-.Lc789:
-	.secrel32	.Lc576
-	.quad	.Lc526
-	.quad	.Lc527-.Lc526
-	.byte	4
-	.long	.Lc528-.Lc526
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc529-.Lc528
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc530-.Lc529
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc790:
-	.long	.Lc792-.Lc791
-.Lc791:
-	.secrel32	.Lc576
-	.quad	.Lc531
-	.quad	.Lc532-.Lc531
-	.byte	4
-	.long	.Lc533-.Lc531
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc534-.Lc533
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc535-.Lc534
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc792:
-	.long	.Lc794-.Lc793
-.Lc793:
-	.secrel32	.Lc576
-	.quad	.Lc536
-	.quad	.Lc537-.Lc536
-	.byte	4
-	.long	.Lc538-.Lc536
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc539-.Lc538
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc540-.Lc539
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc794:
-	.long	.Lc796-.Lc795
-.Lc795:
-	.secrel32	.Lc576
-	.quad	.Lc541
-	.quad	.Lc542-.Lc541
-	.byte	4
-	.long	.Lc543-.Lc541
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc544-.Lc543
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
+.Lc543:
 	.long	.Lc545-.Lc544
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc796:
-	.long	.Lc798-.Lc797
-.Lc797:
-	.secrel32	.Lc576
-	.quad	.Lc546
-	.quad	.Lc547-.Lc546
+.Lc544:
+	.secrel32	.Lc313
+	.quad	.Lc310
+	.quad	.Lc311-.Lc310
 	.byte	4
-	.long	.Lc548-.Lc546
+	.long	.Lc312-.Lc310
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc549-.Lc548
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc550-.Lc549
-	.byte	13
-	.uleb128	6
+	.uleb128	48
 	.balign 4,0
-.Lc798:
-	.long	.Lc800-.Lc799
-.Lc799:
-	.secrel32	.Lc576
-	.quad	.Lc551
-	.quad	.Lc552-.Lc551
-	.byte	4
-	.long	.Lc553-.Lc551
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc554-.Lc553
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc555-.Lc554
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc800:
-	.long	.Lc802-.Lc801
-.Lc801:
-	.secrel32	.Lc576
-	.quad	.Lc556
-	.quad	.Lc557-.Lc556
-	.byte	4
-	.long	.Lc558-.Lc556
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc559-.Lc558
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc560-.Lc559
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc802:
-	.long	.Lc804-.Lc803
-.Lc803:
-	.secrel32	.Lc576
-	.quad	.Lc561
-	.quad	.Lc562-.Lc561
-	.byte	4
-	.long	.Lc563-.Lc561
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc564-.Lc563
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc565-.Lc564
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc804:
-	.long	.Lc806-.Lc805
-.Lc805:
-	.secrel32	.Lc576
-	.quad	.Lc566
-	.quad	.Lc567-.Lc566
-	.byte	4
-	.long	.Lc568-.Lc566
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc569-.Lc568
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc570-.Lc569
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc806:
-	.long	.Lc808-.Lc807
-.Lc807:
-	.secrel32	.Lc576
-	.quad	.Lc571
-	.quad	.Lc572-.Lc571
-	.byte	4
-	.long	.Lc573-.Lc571
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc574-.Lc573
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc575-.Lc574
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc808:
+.Lc545:
 # End asmlist al_dwarf_frame
 # Begin asmlist al_dwarf_info
 
@@ -9703,8 +7757,8 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	1
 # [40] procedure imp; forward;
 	.ascii	"unit6502.pas\000"
-	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
-	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
+	.ascii	"D:/programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -10043,29 +8097,29 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	5
 	.ascii	"ADDRESS\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	2
 	.long	.La3-.Ldebug_info0
 # Symbol result
 	.uleb128	3
 	.ascii	"result\000"
 	.byte	2
-	.byte	118
-	.sleb128	-16
+	.byte	144
+	.uleb128	0
 	.long	.La17-.Ldebug_info0
 # Symbol READ6502
 	.uleb128	3
 	.ascii	"READ6502\000"
 	.byte	2
-	.byte	118
-	.sleb128	-16
+	.byte	144
+	.uleb128	0
 	.long	.La17-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	3
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	118
-	.sleb128	-16
+	.byte	144
+	.uleb128	0
 	.long	.La17-.Ldebug_info0
 	.byte	0
 # Procdef write6502(Int64;Byte);
@@ -10080,15 +8134,15 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	5
 	.ascii	"ADDRESS\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La3-.Ldebug_info0
 # Symbol VALUE
 	.uleb128	5
 	.ascii	"VALUE\000"
 	.byte	2
-	.byte	118
-	.sleb128	-16
+	.byte	144
+	.uleb128	1
 	.long	.La17-.Ldebug_info0
 	.byte	0
 # Procdef reset6502;
@@ -10130,8 +8184,8 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	5
 	.ascii	"TICKCOUNT\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La3-.Ldebug_info0
 	.byte	0
 # Procdef fast6502(Int64);
@@ -10146,8 +8200,8 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	5
 	.ascii	"TICKCOUNT\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La3-.Ldebug_info0
 	.byte	0
 # Procdef step6502;
@@ -10171,22 +8225,22 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	5
 	.ascii	"AA\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	2
 	.long	.La15-.Ldebug_info0
 # Symbol ADDR
 	.uleb128	5
 	.ascii	"ADDR\000"
 	.byte	2
-	.byte	118
-	.sleb128	-16
+	.byte	144
+	.uleb128	1
 	.long	.La3-.Ldebug_info0
 # Symbol DEPTH
 	.uleb128	3
 	.ascii	"DEPTH\000"
 	.byte	2
-	.byte	118
-	.sleb128	-24
+	.byte	144
+	.uleb128	3
 	.long	.La21-.Ldebug_info0
 	.byte	0
 # Procdef imp;
@@ -10210,8 +8264,8 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	3
 	.ascii	"EAHELP\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	3
 	.long	.La15-.Ldebug_info0
 	.byte	0
 # Procdef zp;
@@ -10271,22 +8325,22 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	3
 	.ascii	"EAHELP\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	2
 	.long	.La15-.Ldebug_info0
 # Symbol EAHELP2
 	.uleb128	3
 	.ascii	"EAHELP2\000"
 	.byte	2
-	.byte	118
-	.sleb128	-16
+	.byte	144
+	.uleb128	3
 	.long	.La15-.Ldebug_info0
 # Symbol STARTPAGE
 	.uleb128	3
 	.ascii	"STARTPAGE\000"
 	.byte	2
-	.byte	118
-	.sleb128	-24
+	.byte	144
+	.uleb128	0
 	.long	.La15-.Ldebug_info0
 	.byte	0
 # Procdef absy;
@@ -10301,8 +8355,8 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	3
 	.ascii	"STARTPAGE\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La15-.Ldebug_info0
 	.byte	0
 # Procdef absx;
@@ -10317,8 +8371,8 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	3
 	.ascii	"STARTPAGE\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La15-.Ldebug_info0
 	.byte	0
 # Procdef ind;
@@ -10333,15 +8387,15 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	3
 	.ascii	"EAHELP\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	2
 	.long	.La15-.Ldebug_info0
 # Symbol EAHELP2
 	.uleb128	3
 	.ascii	"EAHELP2\000"
 	.byte	2
-	.byte	118
-	.sleb128	-16
+	.byte	144
+	.uleb128	3
 	.long	.La15-.Ldebug_info0
 	.byte	0
 # Procdef zpx;
@@ -10374,8 +8428,8 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	3
 	.ascii	"EAHELP\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	3
 	.long	.La15-.Ldebug_info0
 	.byte	0
 # Procdef iax;
@@ -10390,8 +8444,8 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	3
 	.ascii	"EAHELP\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	3
 	.long	.La15-.Ldebug_info0
 	.byte	0
 # Procdef brk;
@@ -11126,8 +9180,8 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	5
 	.ascii	"PUSHVAL\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	3
 	.long	.La23-.Ldebug_info0
 	.byte	0
 # Procdef push16(Word);
@@ -11142,8 +9196,8 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	5
 	.ascii	"PUSHVAL\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	3
 	.long	.La15-.Ldebug_info0
 	.byte	0
 # Procdef push8(Word);
@@ -11158,8 +9212,8 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	5
 	.ascii	"PUSHVAL\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La15-.Ldebug_info0
 	.byte	0
 # Procdef pull32:DWord;
@@ -11175,29 +9229,29 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	3
 	.ascii	"result\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La23-.Ldebug_info0
 # Symbol PULL32
 	.uleb128	3
 	.ascii	"PULL32\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La23-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	3
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La23-.Ldebug_info0
 # Symbol TEMP32
 	.uleb128	3
 	.ascii	"TEMP32\000"
 	.byte	2
-	.byte	118
-	.sleb128	-16
+	.byte	144
+	.uleb128	0
 	.long	.La23-.Ldebug_info0
 	.byte	0
 # Procdef pull16:Word;
@@ -11213,29 +9267,29 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	3
 	.ascii	"result\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La15-.Ldebug_info0
 # Symbol PULL16
 	.uleb128	3
 	.ascii	"PULL16\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La15-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	3
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La15-.Ldebug_info0
 # Symbol TEMP16
 	.uleb128	3
 	.ascii	"TEMP16\000"
 	.byte	2
-	.byte	118
-	.sleb128	-16
+	.byte	144
+	.uleb128	0
 	.long	.La15-.Ldebug_info0
 	.byte	0
 # Procdef pull8:Byte;
@@ -11251,22 +9305,22 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	3
 	.ascii	"result\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La17-.Ldebug_info0
 # Symbol PULL8
 	.uleb128	3
 	.ascii	"PULL8\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La17-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	3
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La17-.Ldebug_info0
 	.byte	0
 # Procdef getvalue:Word;
@@ -11282,29 +9336,29 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	3
 	.ascii	"result\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	3
 	.long	.La15-.Ldebug_info0
 # Symbol GETVALUE
 	.uleb128	3
 	.ascii	"GETVALUE\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	3
 	.long	.La15-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	3
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	3
 	.long	.La15-.Ldebug_info0
 # Symbol EA2
 	.uleb128	3
 	.ascii	"EA2\000"
 	.byte	2
-	.byte	118
-	.sleb128	-16
+	.byte	144
+	.uleb128	2
 	.long	.La3-.Ldebug_info0
 	.byte	0
 # Procdef getvalue16:Word;
@@ -11320,29 +9374,29 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	3
 	.ascii	"result\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La15-.Ldebug_info0
 # Symbol GETVALUE16
 	.uleb128	3
 	.ascii	"GETVALUE16\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La15-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	3
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La15-.Ldebug_info0
 # Symbol EA2
 	.uleb128	3
 	.ascii	"EA2\000"
 	.byte	2
-	.byte	118
-	.sleb128	-16
+	.byte	144
+	.uleb128	3
 	.long	.La3-.Ldebug_info0
 	.byte	0
 # Procdef getvalue32:DWord;
@@ -11358,29 +9412,29 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	3
 	.ascii	"result\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La23-.Ldebug_info0
 # Symbol GETVALUE32
 	.uleb128	3
 	.ascii	"GETVALUE32\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La23-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	3
 	.ascii	"RESULT\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	0
 	.long	.La23-.Ldebug_info0
 # Symbol EA2
 	.uleb128	3
 	.ascii	"EA2\000"
 	.byte	2
-	.byte	118
-	.sleb128	-16
+	.byte	144
+	.uleb128	3
 	.long	.La3-.Ldebug_info0
 	.byte	0
 # Procdef putvalue(Word);
@@ -11395,15 +9449,15 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	5
 	.ascii	"SAVEVAL\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	1
 	.long	.La15-.Ldebug_info0
 # Symbol EA2
 	.uleb128	3
 	.ascii	"EA2\000"
 	.byte	2
-	.byte	118
-	.sleb128	-16
+	.byte	144
+	.uleb128	2
 	.long	.La3-.Ldebug_info0
 	.byte	0
 # Procdef putvalue32(LongWord);
@@ -11418,15 +9472,15 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.uleb128	5
 	.ascii	"SAVEVAL\000"
 	.byte	2
-	.byte	118
-	.sleb128	-8
+	.byte	144
+	.uleb128	3
 	.long	.La23-.Ldebug_info0
 # Symbol EA2
 	.uleb128	3
 	.ascii	"EA2\000"
 	.byte	2
-	.byte	118
-	.sleb128	-16
+	.byte	144
+	.uleb128	4
 	.long	.La3-.Ldebug_info0
 	.byte	0
 # Defs - Begin unit SYSTEM has index 1
@@ -11825,32 +9879,26 @@ TC_$UNIT6502_$$_TICKTABLE:
 .Lehdebug_line0:
 # === header end ===
 # function: UNIT6502_$$_READ6502$INT64$$BYTE
-# [249:1]
+# [250:21]
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll1
 	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	248
-	.byte	1
-# [250:21]
-	.byte	2
-	.uleb128	.Ll2-.Ll1
-	.byte	5
 	.uleb128	21
-	.byte	13
+	.byte	3
+	.sleb128	249
+	.byte	1
 # [251:1]
 	.byte	2
-	.uleb128	.Ll3-.Ll2
+	.uleb128	.Ll2-.Ll1
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll4
+	.quad	.Ll3
 	.byte	0
 	.byte	1
 	.byte	1
@@ -11860,7 +9908,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll5
+	.quad	.Ll4
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -11868,20 +9916,20 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [256:13]
 	.byte	2
-	.uleb128	.Ll6-.Ll5
+	.uleb128	.Ll5-.Ll4
 	.byte	5
 	.uleb128	13
 	.byte	13
 # [257:1]
 	.byte	2
-	.uleb128	.Ll7-.Ll6
+	.uleb128	.Ll6-.Ll5
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll8
+	.quad	.Ll7
 	.byte	0
 	.byte	1
 	.byte	1
@@ -11891,7 +9939,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll9
+	.quad	.Ll8
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -11899,38 +9947,38 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [264:25]
 	.byte	2
-	.uleb128	.Ll10-.Ll9
+	.uleb128	.Ll9-.Ll8
 	.byte	5
 	.uleb128	25
 	.byte	13
 # [265:24]
 	.byte	2
-	.uleb128	.Ll11-.Ll10
+	.uleb128	.Ll10-.Ll9
 	.byte	5
 	.uleb128	24
 	.byte	13
 # [266:24]
 	.byte	2
-	.uleb128	.Ll12-.Ll11
+	.uleb128	.Ll11-.Ll10
 	.byte	13
 # [267:24]
 	.byte	2
-	.uleb128	.Ll13-.Ll12
+	.uleb128	.Ll12-.Ll11
 	.byte	13
 # [268:1]
 	.byte	2
-	.uleb128	.Ll14-.Ll13
+	.uleb128	.Ll13-.Ll12
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [269:1]
 	.byte	2
-	.uleb128	.Ll15-.Ll14
+	.uleb128	.Ll14-.Ll13
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll16
+	.quad	.Ll15
 	.byte	0
 	.byte	1
 	.byte	1
@@ -11940,7 +9988,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll17
+	.quad	.Ll16
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -11948,30 +9996,30 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [274:26]
 	.byte	2
-	.uleb128	.Ll18-.Ll17
+	.uleb128	.Ll17-.Ll16
 	.byte	5
 	.uleb128	26
 	.byte	13
 # [275:24]
 	.byte	2
-	.uleb128	.Ll19-.Ll18
+	.uleb128	.Ll18-.Ll17
 	.byte	5
 	.uleb128	24
 	.byte	13
 # [276:1]
 	.byte	2
-	.uleb128	.Ll20-.Ll19
+	.uleb128	.Ll19-.Ll18
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [277:1]
 	.byte	2
-	.uleb128	.Ll21-.Ll20
+	.uleb128	.Ll20-.Ll19
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll22
+	.quad	.Ll21
 	.byte	0
 	.byte	1
 	.byte	1
@@ -11981,7 +10029,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll23
+	.quad	.Ll22
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -11989,24 +10037,24 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [282:22]
 	.byte	2
-	.uleb128	.Ll24-.Ll23
+	.uleb128	.Ll23-.Ll22
 	.byte	5
 	.uleb128	22
 	.byte	13
 # [283:1]
 	.byte	2
-	.uleb128	.Ll25-.Ll24
+	.uleb128	.Ll24-.Ll23
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [284:1]
 	.byte	2
-	.uleb128	.Ll26-.Ll25
+	.uleb128	.Ll25-.Ll24
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll27
+	.quad	.Ll26
 	.byte	0
 	.byte	1
 	.byte	1
@@ -12016,7 +10064,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll28
+	.quad	.Ll27
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -12024,42 +10072,38 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [291:33]
 	.byte	2
-	.uleb128	.Ll29-.Ll28
+	.uleb128	.Ll28-.Ll27
 	.byte	5
 	.uleb128	33
 	.byte	13
 # [292:9]
 	.byte	2
-	.uleb128	.Ll30-.Ll29
+	.uleb128	.Ll29-.Ll28
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [293:9]
 	.byte	2
-	.uleb128	.Ll31-.Ll30
+	.uleb128	.Ll30-.Ll29
 	.byte	13
 # [294:9]
 	.byte	2
-	.uleb128	.Ll32-.Ll31
-	.byte	13
-# [295:1]
-	.byte	2
-	.uleb128	.Ll33-.Ll32
-	.byte	5
-	.uleb128	1
+	.uleb128	.Ll31-.Ll30
 	.byte	13
 # [296:1]
 	.byte	2
-	.uleb128	.Ll34-.Ll33
-	.byte	13
+	.uleb128	.Ll32-.Ll31
+	.byte	5
+	.uleb128	1
+	.byte	14
 # [297:1]
 	.byte	2
-	.uleb128	.Ll35-.Ll34
+	.uleb128	.Ll33-.Ll32
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll36
+	.quad	.Ll34
 	.byte	0
 	.byte	1
 	.byte	1
@@ -12069,7 +10113,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll37
+	.quad	.Ll35
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -12077,34 +10121,30 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [304:33]
 	.byte	2
-	.uleb128	.Ll38-.Ll37
+	.uleb128	.Ll36-.Ll35
 	.byte	5
 	.uleb128	33
 	.byte	13
 # [305:10]
 	.byte	2
-	.uleb128	.Ll39-.Ll38
+	.uleb128	.Ll37-.Ll36
 	.byte	5
 	.uleb128	10
 	.byte	13
-# [306:1]
-	.byte	2
-	.uleb128	.Ll40-.Ll39
-	.byte	5
-	.uleb128	1
-	.byte	13
 # [307:1]
 	.byte	2
-	.uleb128	.Ll41-.Ll40
-	.byte	13
+	.uleb128	.Ll38-.Ll37
+	.byte	5
+	.uleb128	1
+	.byte	14
 # [308:1]
 	.byte	2
-	.uleb128	.Ll42-.Ll41
+	.uleb128	.Ll39-.Ll38
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll43
+	.quad	.Ll40
 	.byte	0
 	.byte	1
 	.byte	1
@@ -12114,7 +10154,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll44
+	.quad	.Ll41
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -12122,24 +10162,24 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [313:1]
 	.byte	2
-	.uleb128	.Ll45-.Ll44
+	.uleb128	.Ll42-.Ll41
 	.byte	13
 # [314:32]
 	.byte	2
-	.uleb128	.Ll46-.Ll45
+	.uleb128	.Ll43-.Ll42
 	.byte	5
 	.uleb128	32
 	.byte	13
 # [315:1]
 	.byte	2
-	.uleb128	.Ll47-.Ll46
+	.uleb128	.Ll44-.Ll43
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll48
+	.quad	.Ll45
 	.byte	0
 	.byte	1
 	.byte	1
@@ -12149,7 +10189,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll49
+	.quad	.Ll46
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -12157,36 +10197,36 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [322:6]
 	.byte	2
-	.uleb128	.Ll50-.Ll49
+	.uleb128	.Ll47-.Ll46
 	.byte	5
 	.uleb128	6
 	.byte	13
 # [323:14]
 	.byte	2
-	.uleb128	.Ll51-.Ll50
+	.uleb128	.Ll48-.Ll47
 	.byte	5
 	.uleb128	14
 	.byte	13
 # [324:11]
 	.byte	2
-	.uleb128	.Ll52-.Ll51
+	.uleb128	.Ll49-.Ll48
 	.byte	5
 	.uleb128	11
 	.byte	13
 # [326:11]
 	.byte	2
-	.uleb128	.Ll53-.Ll52
+	.uleb128	.Ll50-.Ll49
 	.byte	14
 # [327:1]
 	.byte	2
-	.uleb128	.Ll54-.Ll53
+	.uleb128	.Ll51-.Ll50
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll55
+	.quad	.Ll52
 	.byte	0
 	.byte	1
 	.byte	1
@@ -12196,7 +10236,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll56
+	.quad	.Ll53
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -12204,26 +10244,26 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [334:6]
 	.byte	2
-	.uleb128	.Ll57-.Ll56
+	.uleb128	.Ll54-.Ll53
 	.byte	5
 	.uleb128	6
 	.byte	13
 # [335:14]
 	.byte	2
-	.uleb128	.Ll58-.Ll57
+	.uleb128	.Ll55-.Ll54
 	.byte	5
 	.uleb128	14
 	.byte	13
 # [336:1]
 	.byte	2
-	.uleb128	.Ll59-.Ll58
+	.uleb128	.Ll56-.Ll55
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll60
+	.quad	.Ll57
 	.byte	0
 	.byte	1
 	.byte	1
@@ -12233,7 +10273,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll61
+	.quad	.Ll58
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -12241,50 +10281,44 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [344:6]
 	.byte	2
-	.uleb128	.Ll62-.Ll61
+	.uleb128	.Ll59-.Ll58
 	.byte	5
 	.uleb128	6
 	.byte	14
 # [346:18]
 	.byte	2
-	.uleb128	.Ll63-.Ll62
+	.uleb128	.Ll60-.Ll59
 	.byte	5
 	.uleb128	18
 	.byte	14
 # [347:30]
 	.byte	2
-	.uleb128	.Ll64-.Ll63
+	.uleb128	.Ll61-.Ll60
 	.byte	5
 	.uleb128	30
 	.byte	13
 # [348:32]
 	.byte	2
-	.uleb128	.Ll65-.Ll64
+	.uleb128	.Ll62-.Ll61
 	.byte	5
 	.uleb128	32
 	.byte	13
 # [349:34]
 	.byte	2
-	.uleb128	.Ll66-.Ll65
+	.uleb128	.Ll63-.Ll62
 	.byte	5
 	.uleb128	34
 	.byte	13
-# [346:1]
-	.byte	2
-	.uleb128	.Ll67-.Ll66
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	-3
-	.byte	1
 # [350:1]
 	.byte	2
-	.uleb128	.Ll68-.Ll67
-	.byte	16
+	.uleb128	.Ll64-.Ll63
+	.byte	5
+	.uleb128	1
+	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll69
+	.quad	.Ll65
 	.byte	0
 	.byte	1
 	.byte	1
@@ -12294,7 +10328,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll70
+	.quad	.Ll66
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -12302,26 +10336,26 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [357:6]
 	.byte	2
-	.uleb128	.Ll71-.Ll70
+	.uleb128	.Ll67-.Ll66
 	.byte	5
 	.uleb128	6
 	.byte	13
 # [358:14]
 	.byte	2
-	.uleb128	.Ll72-.Ll71
+	.uleb128	.Ll68-.Ll67
 	.byte	5
 	.uleb128	14
 	.byte	13
 # [359:1]
 	.byte	2
-	.uleb128	.Ll73-.Ll72
+	.uleb128	.Ll69-.Ll68
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll74
+	.quad	.Ll70
 	.byte	0
 	.byte	1
 	.byte	1
@@ -12331,7 +10365,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll75
+	.quad	.Ll71
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -12339,40 +10373,40 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [367:6]
 	.byte	2
-	.uleb128	.Ll76-.Ll75
+	.uleb128	.Ll72-.Ll71
 	.byte	5
 	.uleb128	6
 	.byte	14
 # [369:39]
 	.byte	2
-	.uleb128	.Ll77-.Ll76
+	.uleb128	.Ll73-.Ll72
 	.byte	5
 	.uleb128	39
 	.byte	14
 # [370:19]
 	.byte	2
-	.uleb128	.Ll78-.Ll77
+	.uleb128	.Ll74-.Ll73
 	.byte	5
 	.uleb128	19
 	.byte	13
 # [371:19]
 	.byte	2
-	.uleb128	.Ll79-.Ll78
+	.uleb128	.Ll75-.Ll74
 	.byte	13
 # [372:19]
 	.byte	2
-	.uleb128	.Ll80-.Ll79
+	.uleb128	.Ll76-.Ll75
 	.byte	13
 # [373:1]
 	.byte	2
-	.uleb128	.Ll81-.Ll80
+	.uleb128	.Ll77-.Ll76
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll82
+	.quad	.Ll78
 	.byte	0
 	.byte	1
 	.byte	1
@@ -12382,7 +10416,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll83
+	.quad	.Ll79
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -12390,72 +10424,72 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [378:12]
 	.byte	2
-	.uleb128	.Ll84-.Ll83
+	.uleb128	.Ll80-.Ll79
 	.byte	5
 	.uleb128	12
 	.byte	13
 # [379:1]
 	.byte	2
-	.uleb128	.Ll85-.Ll84
+	.uleb128	.Ll81-.Ll80
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [380:1]
 	.byte	2
-	.uleb128	.Ll86-.Ll85
+	.uleb128	.Ll82-.Ll81
 	.byte	13
 # [381:1]
 	.byte	2
-	.uleb128	.Ll87-.Ll86
+	.uleb128	.Ll83-.Ll82
 	.byte	13
 # [382:1]
 	.byte	2
-	.uleb128	.Ll88-.Ll87
+	.uleb128	.Ll84-.Ll83
 	.byte	13
 # [383:5]
 	.byte	2
-	.uleb128	.Ll89-.Ll88
+	.uleb128	.Ll85-.Ll84
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [384:5]
 	.byte	2
-	.uleb128	.Ll90-.Ll89
+	.uleb128	.Ll86-.Ll85
 	.byte	13
-# [385:3]
+# [385:1]
 	.byte	2
-	.uleb128	.Ll91-.Ll90
+	.uleb128	.Ll87-.Ll86
 	.byte	5
-	.uleb128	3
+	.uleb128	1
 	.byte	13
 # [386:16]
 	.byte	2
-	.uleb128	.Ll92-.Ll91
+	.uleb128	.Ll88-.Ll87
 	.byte	5
 	.uleb128	16
 	.byte	13
 # [387:1]
 	.byte	2
-	.uleb128	.Ll93-.Ll92
+	.uleb128	.Ll89-.Ll88
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [388:1]
 	.byte	2
-	.uleb128	.Ll94-.Ll93
+	.uleb128	.Ll90-.Ll89
 	.byte	13
 # [389:1]
 	.byte	2
-	.uleb128	.Ll95-.Ll94
+	.uleb128	.Ll91-.Ll90
 	.byte	13
 # [391:1]
 	.byte	2
-	.uleb128	.Ll96-.Ll95
+	.uleb128	.Ll92-.Ll91
 	.byte	14
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll97
+	.quad	.Ll93
 	.byte	0
 	.byte	1
 	.byte	1
@@ -12465,7 +10499,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll98
+	.quad	.Ll94
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -12473,46 +10507,46 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [396:1]
 	.byte	2
-	.uleb128	.Ll99-.Ll98
+	.uleb128	.Ll95-.Ll94
 	.byte	13
 # [397:13]
 	.byte	2
-	.uleb128	.Ll100-.Ll99
+	.uleb128	.Ll96-.Ll95
 	.byte	5
 	.uleb128	13
 	.byte	13
 # [398:17]
 	.byte	2
-	.uleb128	.Ll101-.Ll100
+	.uleb128	.Ll97-.Ll96
 	.byte	5
 	.uleb128	17
 	.byte	13
 # [399:12]
 	.byte	2
-	.uleb128	.Ll102-.Ll101
+	.uleb128	.Ll98-.Ll97
 	.byte	5
 	.uleb128	12
 	.byte	13
 # [400:5]
 	.byte	2
-	.uleb128	.Ll103-.Ll102
+	.uleb128	.Ll99-.Ll98
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [401:5]
 	.byte	2
-	.uleb128	.Ll104-.Ll103
+	.uleb128	.Ll100-.Ll99
 	.byte	13
 # [402:1]
 	.byte	2
-	.uleb128	.Ll105-.Ll104
+	.uleb128	.Ll101-.Ll100
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll106
+	.quad	.Ll102
 	.byte	0
 	.byte	1
 	.byte	1
@@ -12522,7 +10556,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll107
+	.quad	.Ll103
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -12530,46 +10564,46 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [407:1]
 	.byte	2
-	.uleb128	.Ll108-.Ll107
+	.uleb128	.Ll104-.Ll103
 	.byte	13
 # [408:13]
 	.byte	2
-	.uleb128	.Ll109-.Ll108
+	.uleb128	.Ll105-.Ll104
 	.byte	5
 	.uleb128	13
 	.byte	13
 # [409:17]
 	.byte	2
-	.uleb128	.Ll110-.Ll109
+	.uleb128	.Ll106-.Ll105
 	.byte	5
 	.uleb128	17
 	.byte	13
 # [410:12]
 	.byte	2
-	.uleb128	.Ll111-.Ll110
+	.uleb128	.Ll107-.Ll106
 	.byte	5
 	.uleb128	12
 	.byte	13
 # [411:5]
 	.byte	2
-	.uleb128	.Ll112-.Ll111
+	.uleb128	.Ll108-.Ll107
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [412:5]
 	.byte	2
-	.uleb128	.Ll113-.Ll112
+	.uleb128	.Ll109-.Ll108
 	.byte	13
 # [413:1]
 	.byte	2
-	.uleb128	.Ll114-.Ll113
+	.uleb128	.Ll110-.Ll109
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll115
+	.quad	.Ll111
 	.byte	0
 	.byte	1
 	.byte	1
@@ -12579,7 +10613,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll116
+	.quad	.Ll112
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -12587,69 +10621,69 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [418:27]
 	.byte	2
-	.uleb128	.Ll117-.Ll116
+	.uleb128	.Ll113-.Ll112
 	.byte	5
 	.uleb128	27
 	.byte	13
 # [419:1]
 	.byte	2
-	.uleb128	.Ll118-.Ll117
+	.uleb128	.Ll114-.Ll113
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [421:22]
 	.byte	2
-	.uleb128	.Ll119-.Ll118
+	.uleb128	.Ll115-.Ll114
 	.byte	5
 	.uleb128	22
 	.byte	14
 # [422:3]
 	.byte	2
-	.uleb128	.Ll120-.Ll119
+	.uleb128	.Ll116-.Ll115
 	.byte	5
 	.uleb128	3
 	.byte	13
 # [424:3]
 	.byte	2
-	.uleb128	.Ll121-.Ll120
+	.uleb128	.Ll117-.Ll116
 	.byte	14
 # [425:3]
 	.byte	2
-	.uleb128	.Ll122-.Ll121
+	.uleb128	.Ll118-.Ll117
 	.byte	13
 # [426:12]
 	.byte	2
-	.uleb128	.Ll123-.Ll122
+	.uleb128	.Ll119-.Ll118
 	.byte	5
 	.uleb128	12
 	.byte	13
 # [427:10]
 	.byte	2
-	.uleb128	.Ll124-.Ll123
+	.uleb128	.Ll120-.Ll119
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [428:30]
 	.byte	2
-	.uleb128	.Ll125-.Ll124
+	.uleb128	.Ll121-.Ll120
 	.byte	5
 	.uleb128	30
 	.byte	13
 # [429:6]
 	.byte	2
-	.uleb128	.Ll126-.Ll125
+	.uleb128	.Ll122-.Ll121
 	.byte	5
 	.uleb128	6
 	.byte	13
 # [430:18]
 	.byte	2
-	.uleb128	.Ll127-.Ll126
+	.uleb128	.Ll123-.Ll122
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [419:7]
 	.byte	2
-	.uleb128	.Ll128-.Ll127
+	.uleb128	.Ll124-.Ll123
 	.byte	5
 	.uleb128	7
 	.byte	3
@@ -12657,14 +10691,14 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [432:1]
 	.byte	2
-	.uleb128	.Ll129-.Ll128
+	.uleb128	.Ll125-.Ll124
 	.byte	5
 	.uleb128	1
 	.byte	25
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll130
+	.quad	.Ll126
 	.byte	0
 	.byte	1
 	.byte	1
@@ -12674,7 +10708,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll131
+	.quad	.Ll127
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -12682,55 +10716,55 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [437:27]
 	.byte	2
-	.uleb128	.Ll132-.Ll131
+	.uleb128	.Ll128-.Ll127
 	.byte	5
 	.uleb128	27
 	.byte	13
 # [438:1]
 	.byte	2
-	.uleb128	.Ll133-.Ll132
+	.uleb128	.Ll129-.Ll128
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [440:22]
 	.byte	2
-	.uleb128	.Ll134-.Ll133
+	.uleb128	.Ll130-.Ll129
 	.byte	5
 	.uleb128	22
 	.byte	14
 # [441:3]
 	.byte	2
-	.uleb128	.Ll135-.Ll134
+	.uleb128	.Ll131-.Ll130
 	.byte	5
 	.uleb128	3
 	.byte	13
 # [442:12]
 	.byte	2
-	.uleb128	.Ll136-.Ll135
+	.uleb128	.Ll132-.Ll131
 	.byte	5
 	.uleb128	12
 	.byte	13
 # [443:10]
 	.byte	2
-	.uleb128	.Ll137-.Ll136
+	.uleb128	.Ll133-.Ll132
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [444:22]
 	.byte	2
-	.uleb128	.Ll138-.Ll137
+	.uleb128	.Ll134-.Ll133
 	.byte	5
 	.uleb128	22
 	.byte	13
 # [445:18]
 	.byte	2
-	.uleb128	.Ll139-.Ll138
+	.uleb128	.Ll135-.Ll134
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [438:7]
 	.byte	2
-	.uleb128	.Ll140-.Ll139
+	.uleb128	.Ll136-.Ll135
 	.byte	5
 	.uleb128	7
 	.byte	3
@@ -12738,14 +10772,14 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [447:1]
 	.byte	2
-	.uleb128	.Ll141-.Ll140
+	.uleb128	.Ll137-.Ll136
 	.byte	5
 	.uleb128	1
 	.byte	21
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll142
+	.quad	.Ll138
 	.byte	0
 	.byte	1
 	.byte	1
@@ -12755,7 +10789,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll143
+	.quad	.Ll139
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -12763,78 +10797,78 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [452:20]
 	.byte	2
-	.uleb128	.Ll144-.Ll143
+	.uleb128	.Ll140-.Ll139
 	.byte	5
 	.uleb128	20
 	.byte	13
 # [453:1]
 	.byte	2
-	.uleb128	.Ll145-.Ll144
+	.uleb128	.Ll141-.Ll140
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [454:17]
 	.byte	2
-	.uleb128	.Ll146-.Ll145
+	.uleb128	.Ll142-.Ll141
 	.byte	5
 	.uleb128	17
 	.byte	13
 # [455:1]
 	.byte	2
-	.uleb128	.Ll147-.Ll146
+	.uleb128	.Ll143-.Ll142
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [456:1]
 	.byte	2
-	.uleb128	.Ll148-.Ll147
+	.uleb128	.Ll144-.Ll143
 	.byte	13
 # [457:10]
 	.byte	2
-	.uleb128	.Ll149-.Ll148
+	.uleb128	.Ll145-.Ll144
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [458:8]
 	.byte	2
-	.uleb128	.Ll150-.Ll149
+	.uleb128	.Ll146-.Ll145
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [459:28]
 	.byte	2
-	.uleb128	.Ll151-.Ll150
+	.uleb128	.Ll147-.Ll146
 	.byte	5
 	.uleb128	28
 	.byte	13
 # [460:4]
 	.byte	2
-	.uleb128	.Ll152-.Ll151
+	.uleb128	.Ll148-.Ll147
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [461:1]
 	.byte	2
-	.uleb128	.Ll153-.Ll152
+	.uleb128	.Ll149-.Ll148
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [462:16]
 	.byte	2
-	.uleb128	.Ll154-.Ll153
+	.uleb128	.Ll150-.Ll149
 	.byte	5
 	.uleb128	16
 	.byte	13
 # [463:1]
 	.byte	2
-	.uleb128	.Ll155-.Ll154
+	.uleb128	.Ll151-.Ll150
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll156
+	.quad	.Ll152
 	.byte	0
 	.byte	1
 	.byte	1
@@ -12844,7 +10878,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll157
+	.quad	.Ll153
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -12852,80 +10886,118 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [472:1]
 	.byte	2
-	.uleb128	.Ll158-.Ll157
+	.uleb128	.Ll154-.Ll153
 	.byte	14
 # [473:1]
 	.byte	2
-	.uleb128	.Ll159-.Ll158
+	.uleb128	.Ll155-.Ll154
 	.byte	13
 # [474:1]
 	.byte	2
-	.uleb128	.Ll160-.Ll159
+	.uleb128	.Ll156-.Ll155
 	.byte	13
 # [475:6]
 	.byte	2
-	.uleb128	.Ll161-.Ll160
+	.uleb128	.Ll157-.Ll156
 	.byte	5
 	.uleb128	6
 	.byte	13
 # [476:1]
 	.byte	2
-	.uleb128	.Ll162-.Ll161
+	.uleb128	.Ll158-.Ll157
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [478:22]
 	.byte	2
-	.uleb128	.Ll163-.Ll162
+	.uleb128	.Ll159-.Ll158
 	.byte	5
 	.uleb128	22
 	.byte	14
 # [479:12]
 	.byte	2
-	.uleb128	.Ll164-.Ll163
+	.uleb128	.Ll160-.Ll159
 	.byte	5
 	.uleb128	12
 	.byte	13
 # [480:12]
 	.byte	2
-	.uleb128	.Ll165-.Ll164
+	.uleb128	.Ll161-.Ll160
 	.byte	13
 # [482:5]
 	.byte	2
-	.uleb128	.Ll166-.Ll165
+	.uleb128	.Ll162-.Ll161
 	.byte	5
 	.uleb128	5
 	.byte	14
 # [483:14]
 	.byte	2
-	.uleb128	.Ll167-.Ll166
+	.uleb128	.Ll163-.Ll162
 	.byte	5
 	.uleb128	14
 	.byte	13
 # [484:12]
 	.byte	2
-	.uleb128	.Ll168-.Ll167
+	.uleb128	.Ll164-.Ll163
 	.byte	5
 	.uleb128	12
 	.byte	13
 # [485:20]
 	.byte	2
-	.uleb128	.Ll169-.Ll168
+	.uleb128	.Ll165-.Ll164
 	.byte	5
 	.uleb128	20
 	.byte	13
 # [487:9]
 	.byte	2
-	.uleb128	.Ll170-.Ll169
+	.uleb128	.Ll166-.Ll165
 	.byte	5
 	.uleb128	9
 	.byte	14
 # [489:1]
 	.byte	2
-	.uleb128	.Ll171-.Ll170
+	.uleb128	.Ll167-.Ll166
 	.byte	5
 	.uleb128	1
 	.byte	14
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll168
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: UNIT6502_$$_IMP
+# [496:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll169
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	495
+	.byte	1
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll170
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: UNIT6502_$$_ACC
+# [501:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll171
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	500
+	.byte	1
 	.byte	0
 	.uleb128	9
 	.byte	2
@@ -12934,8 +11006,8 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 	.byte	1
 # ###################
-# function: UNIT6502_$$_IMP
-# [495:1]
+# function: UNIT6502_$$_IMM
+# [506:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
@@ -12943,70 +11015,20 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	494
+	.sleb128	505
 	.byte	1
-# [496:1]
+# [507:1]
 	.byte	2
 	.uleb128	.Ll174-.Ll173
 	.byte	13
-	.byte	0
-	.uleb128	9
+# [508:1]
 	.byte	2
-	.quad	.Ll175
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: UNIT6502_$$_ACC
-# [500:1]
+	.uleb128	.Ll175-.Ll174
+	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll176
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	499
-	.byte	1
-# [501:1]
-	.byte	2
-	.uleb128	.Ll177-.Ll176
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll178
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: UNIT6502_$$_IMM
-# [505:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll179
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	504
-	.byte	1
-# [506:1]
-	.byte	2
-	.uleb128	.Ll180-.Ll179
-	.byte	13
-# [507:1]
-	.byte	2
-	.uleb128	.Ll181-.Ll180
-	.byte	13
-# [508:1]
-	.byte	2
-	.uleb128	.Ll182-.Ll181
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll183
 	.byte	0
 	.byte	1
 	.byte	1
@@ -13016,7 +11038,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll184
+	.quad	.Ll177
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -13024,24 +11046,24 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [513:23]
 	.byte	2
-	.uleb128	.Ll185-.Ll184
+	.uleb128	.Ll178-.Ll177
 	.byte	5
 	.uleb128	23
 	.byte	13
 # [514:1]
 	.byte	2
-	.uleb128	.Ll186-.Ll185
+	.uleb128	.Ll179-.Ll178
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [515:1]
 	.byte	2
-	.uleb128	.Ll187-.Ll186
+	.uleb128	.Ll180-.Ll179
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll188
+	.quad	.Ll181
 	.byte	0
 	.byte	1
 	.byte	1
@@ -13051,7 +11073,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll189
+	.quad	.Ll182
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -13059,24 +11081,24 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [520:20]
 	.byte	2
-	.uleb128	.Ll190-.Ll189
+	.uleb128	.Ll183-.Ll182
 	.byte	5
 	.uleb128	20
 	.byte	13
 # [521:1]
 	.byte	2
-	.uleb128	.Ll191-.Ll190
+	.uleb128	.Ll184-.Ll183
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [522:1]
 	.byte	2
-	.uleb128	.Ll192-.Ll191
+	.uleb128	.Ll185-.Ll184
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll193
+	.quad	.Ll186
 	.byte	0
 	.byte	1
 	.byte	1
@@ -13086,7 +11108,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll194
+	.quad	.Ll187
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -13094,24 +11116,24 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [527:20]
 	.byte	2
-	.uleb128	.Ll195-.Ll194
+	.uleb128	.Ll188-.Ll187
 	.byte	5
 	.uleb128	20
 	.byte	13
 # [528:1]
 	.byte	2
-	.uleb128	.Ll196-.Ll195
+	.uleb128	.Ll189-.Ll188
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [529:1]
 	.byte	2
-	.uleb128	.Ll197-.Ll196
+	.uleb128	.Ll190-.Ll189
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll198
+	.quad	.Ll191
 	.byte	0
 	.byte	1
 	.byte	1
@@ -13121,7 +11143,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll199
+	.quad	.Ll192
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -13129,32 +11151,32 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [534:28]
 	.byte	2
-	.uleb128	.Ll200-.Ll199
+	.uleb128	.Ll193-.Ll192
 	.byte	5
 	.uleb128	28
 	.byte	13
 # [535:1]
 	.byte	2
-	.uleb128	.Ll201-.Ll200
+	.uleb128	.Ll194-.Ll193
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [536:4]
 	.byte	2
-	.uleb128	.Ll202-.Ll201
+	.uleb128	.Ll195-.Ll194
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [537:1]
 	.byte	2
-	.uleb128	.Ll203-.Ll202
+	.uleb128	.Ll196-.Ll195
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll204
+	.quad	.Ll197
 	.byte	0
 	.byte	1
 	.byte	1
@@ -13164,7 +11186,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll205
+	.quad	.Ll198
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -13172,24 +11194,24 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [542:23]
 	.byte	2
-	.uleb128	.Ll206-.Ll205
+	.uleb128	.Ll199-.Ll198
 	.byte	5
 	.uleb128	23
 	.byte	13
 # [543:1]
 	.byte	2
-	.uleb128	.Ll207-.Ll206
+	.uleb128	.Ll200-.Ll199
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [544:1]
 	.byte	2
-	.uleb128	.Ll208-.Ll207
+	.uleb128	.Ll201-.Ll200
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll209
+	.quad	.Ll202
 	.byte	0
 	.byte	1
 	.byte	1
@@ -13199,7 +11221,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll210
+	.quad	.Ll203
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -13207,42 +11229,42 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [551:23]
 	.byte	2
-	.uleb128	.Ll211-.Ll210
+	.uleb128	.Ll204-.Ll203
 	.byte	5
 	.uleb128	23
 	.byte	13
 # [552:17]
 	.byte	2
-	.uleb128	.Ll212-.Ll211
+	.uleb128	.Ll205-.Ll204
 	.byte	5
 	.uleb128	17
 	.byte	13
 # [553:1]
 	.byte	2
-	.uleb128	.Ll213-.Ll212
+	.uleb128	.Ll206-.Ll205
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [554:18]
 	.byte	2
-	.uleb128	.Ll214-.Ll213
+	.uleb128	.Ll207-.Ll206
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [555:1]
 	.byte	2
-	.uleb128	.Ll215-.Ll214
+	.uleb128	.Ll208-.Ll207
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [556:1]
 	.byte	2
-	.uleb128	.Ll216-.Ll215
+	.uleb128	.Ll209-.Ll208
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll217
+	.quad	.Ll210
 	.byte	0
 	.byte	1
 	.byte	1
@@ -13252,7 +11274,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll218
+	.quad	.Ll211
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -13260,35 +11282,82 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [563:23]
 	.byte	2
-	.uleb128	.Ll219-.Ll218
+	.uleb128	.Ll212-.Ll211
 	.byte	5
 	.uleb128	23
 	.byte	13
 # [564:17]
 	.byte	2
-	.uleb128	.Ll220-.Ll219
+	.uleb128	.Ll213-.Ll212
 	.byte	5
 	.uleb128	17
 	.byte	13
 # [565:1]
 	.byte	2
-	.uleb128	.Ll221-.Ll220
+	.uleb128	.Ll214-.Ll213
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [566:18]
 	.byte	2
-	.uleb128	.Ll222-.Ll221
+	.uleb128	.Ll215-.Ll214
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [567:1]
 	.byte	2
-	.uleb128	.Ll223-.Ll222
+	.uleb128	.Ll216-.Ll215
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [568:1]
+	.byte	2
+	.uleb128	.Ll217-.Ll216
+	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll218
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: UNIT6502_$$_IND
+# [574:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll219
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	573
+	.byte	1
+# [575:27]
+	.byte	2
+	.uleb128	.Ll220-.Ll219
+	.byte	5
+	.uleb128	27
+	.byte	13
+# [576:36]
+	.byte	2
+	.uleb128	.Ll221-.Ll220
+	.byte	5
+	.uleb128	36
+	.byte	13
+# [577:27]
+	.byte	2
+	.uleb128	.Ll222-.Ll221
+	.byte	5
+	.uleb128	27
+	.byte	13
+# [580:1]
+	.byte	2
+	.uleb128	.Ll223-.Ll222
+	.byte	5
+	.uleb128	1
+	.byte	15
+# [581:1]
 	.byte	2
 	.uleb128	.Ll224-.Ll223
 	.byte	13
@@ -13300,8 +11369,8 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 	.byte	1
 # ###################
-# function: UNIT6502_$$_IND
-# [574:1]
+# function: UNIT6502_$$_IZP
+# [587:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
@@ -13309,83 +11378,36 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	573
+	.sleb128	586
 	.byte	1
-# [575:27]
+# [588:27]
 	.byte	2
 	.uleb128	.Ll227-.Ll226
 	.byte	5
 	.uleb128	27
 	.byte	13
-# [576:36]
-	.byte	2
-	.uleb128	.Ll228-.Ll227
-	.byte	5
-	.uleb128	36
-	.byte	13
-# [577:27]
-	.byte	2
-	.uleb128	.Ll229-.Ll228
-	.byte	5
-	.uleb128	27
-	.byte	13
-# [580:1]
-	.byte	2
-	.uleb128	.Ll230-.Ll229
-	.byte	5
-	.uleb128	1
-	.byte	15
-# [581:1]
-	.byte	2
-	.uleb128	.Ll231-.Ll230
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll232
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: UNIT6502_$$_IZP
-# [587:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll233
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	586
-	.byte	1
-# [588:27]
-	.byte	2
-	.uleb128	.Ll234-.Ll233
-	.byte	5
-	.uleb128	27
-	.byte	13
 # [589:1]
 	.byte	2
-	.uleb128	.Ll235-.Ll234
+	.uleb128	.Ll228-.Ll227
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [590:37]
 	.byte	2
-	.uleb128	.Ll236-.Ll235
+	.uleb128	.Ll229-.Ll228
 	.byte	5
 	.uleb128	37
 	.byte	13
 # [591:1]
 	.byte	2
-	.uleb128	.Ll237-.Ll236
+	.uleb128	.Ll230-.Ll229
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll238
+	.quad	.Ll231
 	.byte	0
 	.byte	1
 	.byte	1
@@ -13395,7 +11417,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll239
+	.quad	.Ll232
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -13403,32 +11425,32 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [599:28]
 	.byte	2
-	.uleb128	.Ll240-.Ll239
+	.uleb128	.Ll233-.Ll232
 	.byte	5
 	.uleb128	28
 	.byte	13
 # [600:1]
 	.byte	2
-	.uleb128	.Ll241-.Ll240
+	.uleb128	.Ll234-.Ll233
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [601:37]
 	.byte	2
-	.uleb128	.Ll242-.Ll241
+	.uleb128	.Ll235-.Ll234
 	.byte	5
 	.uleb128	37
 	.byte	13
 # [602:1]
 	.byte	2
-	.uleb128	.Ll243-.Ll242
+	.uleb128	.Ll236-.Ll235
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll244
+	.quad	.Ll237
 	.byte	0
 	.byte	1
 	.byte	1
@@ -13438,7 +11460,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll245
+	.quad	.Ll238
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -13446,32 +11468,32 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [609:27]
 	.byte	2
-	.uleb128	.Ll246-.Ll245
+	.uleb128	.Ll239-.Ll238
 	.byte	5
 	.uleb128	27
 	.byte	13
 # [610:1]
 	.byte	2
-	.uleb128	.Ll247-.Ll246
+	.uleb128	.Ll240-.Ll239
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [611:37]
 	.byte	2
-	.uleb128	.Ll248-.Ll247
+	.uleb128	.Ll241-.Ll240
 	.byte	5
 	.uleb128	37
 	.byte	13
 # [612:1]
 	.byte	2
-	.uleb128	.Ll249-.Ll248
+	.uleb128	.Ll242-.Ll241
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll250
+	.quad	.Ll243
 	.byte	0
 	.byte	1
 	.byte	1
@@ -13481,7 +11503,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll251
+	.quad	.Ll244
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -13489,56 +11511,56 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [619:27]
 	.byte	2
-	.uleb128	.Ll252-.Ll251
+	.uleb128	.Ll245-.Ll244
 	.byte	5
 	.uleb128	27
 	.byte	13
 # [620:1]
 	.byte	2
-	.uleb128	.Ll253-.Ll252
+	.uleb128	.Ll246-.Ll245
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [621:36]
 	.byte	2
-	.uleb128	.Ll254-.Ll253
+	.uleb128	.Ll247-.Ll246
 	.byte	5
 	.uleb128	36
 	.byte	13
 # [622:27]
 	.byte	2
-	.uleb128	.Ll255-.Ll254
+	.uleb128	.Ll248-.Ll247
 	.byte	5
 	.uleb128	27
 	.byte	13
 # [623:17]
 	.byte	2
-	.uleb128	.Ll256-.Ll255
+	.uleb128	.Ll249-.Ll248
 	.byte	5
 	.uleb128	17
 	.byte	13
 # [624:1]
 	.byte	2
-	.uleb128	.Ll257-.Ll256
+	.uleb128	.Ll250-.Ll249
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [625:18]
 	.byte	2
-	.uleb128	.Ll258-.Ll257
+	.uleb128	.Ll251-.Ll250
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [626:1]
 	.byte	2
-	.uleb128	.Ll259-.Ll258
+	.uleb128	.Ll252-.Ll251
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll260
+	.quad	.Ll253
 	.byte	0
 	.byte	1
 	.byte	1
@@ -13548,7 +11570,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll261
+	.quad	.Ll254
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -13556,29 +11578,29 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [635:1]
 	.byte	2
-	.uleb128	.Ll262-.Ll261
+	.uleb128	.Ll255-.Ll254
 	.byte	13
 # [636:10]
 	.byte	2
-	.uleb128	.Ll263-.Ll262
+	.uleb128	.Ll256-.Ll255
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [637:23]
 	.byte	2
-	.uleb128	.Ll264-.Ll263
+	.uleb128	.Ll257-.Ll256
 	.byte	5
 	.uleb128	23
 	.byte	13
 # [638:4]
 	.byte	2
-	.uleb128	.Ll265-.Ll264
+	.uleb128	.Ll258-.Ll257
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [217:17]
 	.byte	2
-	.uleb128	.Ll266-.Ll265
+	.uleb128	.Ll259-.Ll258
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -13586,13 +11608,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [218:18]
 	.byte	2
-	.uleb128	.Ll267-.Ll266
+	.uleb128	.Ll260-.Ll259
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [639:4]
 	.byte	2
-	.uleb128	.Ll268-.Ll267
+	.uleb128	.Ll261-.Ll260
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -13600,7 +11622,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll269-.Ll268
+	.uleb128	.Ll262-.Ll261
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -13608,13 +11630,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll270-.Ll269
+	.uleb128	.Ll263-.Ll262
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [640:18]
 	.byte	2
-	.uleb128	.Ll271-.Ll270
+	.uleb128	.Ll264-.Ll263
 	.byte	5
 	.uleb128	18
 	.byte	3
@@ -13622,7 +11644,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [225:17]
 	.byte	2
-	.uleb128	.Ll272-.Ll271
+	.uleb128	.Ll265-.Ll264
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -13630,13 +11652,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [226:18]
 	.byte	2
-	.uleb128	.Ll273-.Ll272
+	.uleb128	.Ll266-.Ll265
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [644:4]
 	.byte	2
-	.uleb128	.Ll274-.Ll273
+	.uleb128	.Ll267-.Ll266
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -13644,7 +11666,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [227:17]
 	.byte	2
-	.uleb128	.Ll275-.Ll274
+	.uleb128	.Ll268-.Ll267
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -13652,13 +11674,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll276-.Ll275
+	.uleb128	.Ll269-.Ll268
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [645:5]
 	.byte	2
-	.uleb128	.Ll277-.Ll276
+	.uleb128	.Ll270-.Ll269
 	.byte	5
 	.uleb128	5
 	.byte	3
@@ -13666,13 +11688,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [647:3]
 	.byte	2
-	.uleb128	.Ll278-.Ll277
+	.uleb128	.Ll271-.Ll270
 	.byte	5
 	.uleb128	3
 	.byte	14
 # [218:18]
 	.byte	2
-	.uleb128	.Ll279-.Ll278
+	.uleb128	.Ll272-.Ll271
 	.byte	5
 	.uleb128	18
 	.byte	3
@@ -13680,7 +11702,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [649:8]
 	.byte	2
-	.uleb128	.Ll280-.Ll279
+	.uleb128	.Ll273-.Ll272
 	.byte	5
 	.uleb128	8
 	.byte	3
@@ -13688,19 +11710,19 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [650:7]
 	.byte	2
-	.uleb128	.Ll281-.Ll280
+	.uleb128	.Ll274-.Ll273
 	.byte	5
 	.uleb128	7
 	.byte	13
 # [652:5]
 	.byte	2
-	.uleb128	.Ll282-.Ll281
+	.uleb128	.Ll275-.Ll274
 	.byte	5
 	.uleb128	5
 	.byte	14
 # [217:17]
 	.byte	2
-	.uleb128	.Ll283-.Ll282
+	.uleb128	.Ll276-.Ll275
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -13708,20 +11730,20 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [656:17]
 	.byte	2
-	.uleb128	.Ll284-.Ll283
+	.uleb128	.Ll277-.Ll276
 	.byte	3
 	.sleb128	439
 	.byte	1
 # [657:1]
 	.byte	2
-	.uleb128	.Ll285-.Ll284
+	.uleb128	.Ll278-.Ll277
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll286
+	.quad	.Ll279
 	.byte	0
 	.byte	1
 	.byte	1
@@ -13731,7 +11753,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll287
+	.quad	.Ll280
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -13739,29 +11761,29 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [662:1]
 	.byte	2
-	.uleb128	.Ll288-.Ll287
+	.uleb128	.Ll281-.Ll280
 	.byte	13
 # [663:10]
 	.byte	2
-	.uleb128	.Ll289-.Ll288
+	.uleb128	.Ll282-.Ll281
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [664:12]
 	.byte	2
-	.uleb128	.Ll290-.Ll289
+	.uleb128	.Ll283-.Ll282
 	.byte	5
 	.uleb128	12
 	.byte	13
 # [665:4]
 	.byte	2
-	.uleb128	.Ll291-.Ll290
+	.uleb128	.Ll284-.Ll283
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [220:17]
 	.byte	2
-	.uleb128	.Ll292-.Ll291
+	.uleb128	.Ll285-.Ll284
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -13769,13 +11791,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll293-.Ll292
+	.uleb128	.Ll286-.Ll285
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [666:4]
 	.byte	2
-	.uleb128	.Ll294-.Ll293
+	.uleb128	.Ll287-.Ll286
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -13783,7 +11805,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [227:17]
 	.byte	2
-	.uleb128	.Ll295-.Ll294
+	.uleb128	.Ll288-.Ll287
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -13791,13 +11813,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll296-.Ll295
+	.uleb128	.Ll289-.Ll288
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [667:17]
 	.byte	2
-	.uleb128	.Ll297-.Ll296
+	.uleb128	.Ll290-.Ll289
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -13805,14 +11827,14 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [668:1]
 	.byte	2
-	.uleb128	.Ll298-.Ll297
+	.uleb128	.Ll291-.Ll290
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll299
+	.quad	.Ll292
 	.byte	0
 	.byte	1
 	.byte	1
@@ -13822,7 +11844,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll300
+	.quad	.Ll293
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -13830,25 +11852,25 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [673:10]
 	.byte	2
-	.uleb128	.Ll301-.Ll300
+	.uleb128	.Ll294-.Ll293
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [674:12]
 	.byte	2
-	.uleb128	.Ll302-.Ll301
+	.uleb128	.Ll295-.Ll294
 	.byte	5
 	.uleb128	12
 	.byte	13
 # [675:4]
 	.byte	2
-	.uleb128	.Ll303-.Ll302
+	.uleb128	.Ll296-.Ll295
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [217:17]
 	.byte	2
-	.uleb128	.Ll304-.Ll303
+	.uleb128	.Ll297-.Ll296
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -13856,13 +11878,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [218:18]
 	.byte	2
-	.uleb128	.Ll305-.Ll304
+	.uleb128	.Ll298-.Ll297
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [676:4]
 	.byte	2
-	.uleb128	.Ll306-.Ll305
+	.uleb128	.Ll299-.Ll298
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -13870,7 +11892,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll307-.Ll306
+	.uleb128	.Ll300-.Ll299
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -13878,13 +11900,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll308-.Ll307
+	.uleb128	.Ll301-.Ll300
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [677:4]
 	.byte	2
-	.uleb128	.Ll309-.Ll308
+	.uleb128	.Ll302-.Ll301
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -13892,7 +11914,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [227:17]
 	.byte	2
-	.uleb128	.Ll310-.Ll309
+	.uleb128	.Ll303-.Ll302
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -13900,13 +11922,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll311-.Ll310
+	.uleb128	.Ll304-.Ll303
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [678:1]
 	.byte	2
-	.uleb128	.Ll312-.Ll311
+	.uleb128	.Ll305-.Ll304
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -13914,58 +11936,52 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [679:1]
 	.byte	2
-	.uleb128	.Ll313-.Ll312
+	.uleb128	.Ll306-.Ll305
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll314
+	.quad	.Ll307
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT6502_$$_BCC
-# [683:1]
+# [684:6]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll315
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	682
-	.byte	1
-# [684:6]
-	.byte	2
-	.uleb128	.Ll316-.Ll315
+	.quad	.Ll308
 	.byte	5
 	.uleb128	6
-	.byte	13
+	.byte	3
+	.sleb128	683
+	.byte	1
 # [686:3]
 	.byte	2
-	.uleb128	.Ll317-.Ll316
+	.uleb128	.Ll309-.Ll308
 	.byte	5
 	.uleb128	3
 	.byte	14
 # [687:3]
 	.byte	2
-	.uleb128	.Ll318-.Ll317
+	.uleb128	.Ll310-.Ll309
 	.byte	13
 # [688:7]
 	.byte	2
-	.uleb128	.Ll319-.Ll318
+	.uleb128	.Ll311-.Ll310
 	.byte	5
 	.uleb128	7
 	.byte	13
 # [689:13]
 	.byte	2
-	.uleb128	.Ll320-.Ll319
+	.uleb128	.Ll312-.Ll311
 	.byte	5
 	.uleb128	13
 	.byte	13
 # [688:49]
 	.byte	2
-	.uleb128	.Ll321-.Ll320
+	.uleb128	.Ll313-.Ll312
 	.byte	5
 	.uleb128	49
 	.byte	3
@@ -13973,66 +11989,60 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [689:35]
 	.byte	2
-	.uleb128	.Ll322-.Ll321
+	.uleb128	.Ll314-.Ll313
 	.byte	5
 	.uleb128	35
 	.byte	13
 # [691:1]
 	.byte	2
-	.uleb128	.Ll323-.Ll322
+	.uleb128	.Ll315-.Ll314
 	.byte	5
 	.uleb128	1
 	.byte	14
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll324
+	.quad	.Ll316
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT6502_$$_BCS
-# [695:1]
+# [696:6]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll325
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	694
-	.byte	1
-# [696:6]
-	.byte	2
-	.uleb128	.Ll326-.Ll325
+	.quad	.Ll317
 	.byte	5
 	.uleb128	6
-	.byte	13
+	.byte	3
+	.sleb128	695
+	.byte	1
 # [698:3]
 	.byte	2
-	.uleb128	.Ll327-.Ll326
+	.uleb128	.Ll318-.Ll317
 	.byte	5
 	.uleb128	3
 	.byte	14
 # [699:3]
 	.byte	2
-	.uleb128	.Ll328-.Ll327
+	.uleb128	.Ll319-.Ll318
 	.byte	13
 # [700:7]
 	.byte	2
-	.uleb128	.Ll329-.Ll328
+	.uleb128	.Ll320-.Ll319
 	.byte	5
 	.uleb128	7
 	.byte	13
 # [701:13]
 	.byte	2
-	.uleb128	.Ll330-.Ll329
+	.uleb128	.Ll321-.Ll320
 	.byte	5
 	.uleb128	13
 	.byte	13
 # [700:49]
 	.byte	2
-	.uleb128	.Ll331-.Ll330
+	.uleb128	.Ll322-.Ll321
 	.byte	5
 	.uleb128	49
 	.byte	3
@@ -14040,11 +12050,72 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [701:35]
 	.byte	2
-	.uleb128	.Ll332-.Ll331
+	.uleb128	.Ll323-.Ll322
 	.byte	5
 	.uleb128	35
 	.byte	13
 # [703:1]
+	.byte	2
+	.uleb128	.Ll324-.Ll323
+	.byte	5
+	.uleb128	1
+	.byte	14
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll325
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: UNIT6502_$$_BEQ
+# [708:6]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll326
+	.byte	5
+	.uleb128	6
+	.byte	3
+	.sleb128	707
+	.byte	1
+# [710:3]
+	.byte	2
+	.uleb128	.Ll327-.Ll326
+	.byte	5
+	.uleb128	3
+	.byte	14
+# [711:3]
+	.byte	2
+	.uleb128	.Ll328-.Ll327
+	.byte	13
+# [712:7]
+	.byte	2
+	.uleb128	.Ll329-.Ll328
+	.byte	5
+	.uleb128	7
+	.byte	13
+# [713:3]
+	.byte	2
+	.uleb128	.Ll330-.Ll329
+	.byte	5
+	.uleb128	3
+	.byte	13
+# [712:49]
+	.byte	2
+	.uleb128	.Ll331-.Ll330
+	.byte	5
+	.uleb128	49
+	.byte	3
+	.sleb128	-1
+	.byte	1
+# [713:25]
+	.byte	2
+	.uleb128	.Ll332-.Ll331
+	.byte	5
+	.uleb128	25
+	.byte	13
+# [715:1]
 	.byte	2
 	.uleb128	.Ll333-.Ll332
 	.byte	5
@@ -14058,8 +12129,8 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 	.byte	1
 # ###################
-# function: UNIT6502_$$_BEQ
-# [707:1]
+# function: UNIT6502_$$_BIT
+# [719:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
@@ -14067,96 +12138,29 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	706
-	.byte	1
-# [708:6]
-	.byte	2
-	.uleb128	.Ll336-.Ll335
-	.byte	5
-	.uleb128	6
-	.byte	13
-# [710:3]
-	.byte	2
-	.uleb128	.Ll337-.Ll336
-	.byte	5
-	.uleb128	3
-	.byte	14
-# [711:3]
-	.byte	2
-	.uleb128	.Ll338-.Ll337
-	.byte	13
-# [712:7]
-	.byte	2
-	.uleb128	.Ll339-.Ll338
-	.byte	5
-	.uleb128	7
-	.byte	13
-# [713:3]
-	.byte	2
-	.uleb128	.Ll340-.Ll339
-	.byte	5
-	.uleb128	3
-	.byte	13
-# [712:49]
-	.byte	2
-	.uleb128	.Ll341-.Ll340
-	.byte	5
-	.uleb128	49
-	.byte	3
-	.sleb128	-1
-	.byte	1
-# [713:25]
-	.byte	2
-	.uleb128	.Ll342-.Ll341
-	.byte	5
-	.uleb128	25
-	.byte	13
-# [715:1]
-	.byte	2
-	.uleb128	.Ll343-.Ll342
-	.byte	5
-	.uleb128	1
-	.byte	14
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll344
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: UNIT6502_$$_BIT
-# [719:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll345
-	.byte	5
-	.uleb128	1
-	.byte	3
 	.sleb128	718
 	.byte	1
 # [720:10]
 	.byte	2
-	.uleb128	.Ll346-.Ll345
+	.uleb128	.Ll336-.Ll335
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [721:12]
 	.byte	2
-	.uleb128	.Ll347-.Ll346
+	.uleb128	.Ll337-.Ll336
 	.byte	5
 	.uleb128	12
 	.byte	13
 # [722:4]
 	.byte	2
-	.uleb128	.Ll348-.Ll347
+	.uleb128	.Ll338-.Ll337
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [220:17]
 	.byte	2
-	.uleb128	.Ll349-.Ll348
+	.uleb128	.Ll339-.Ll338
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -14164,13 +12168,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll350-.Ll349
+	.uleb128	.Ll340-.Ll339
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [723:12]
 	.byte	2
-	.uleb128	.Ll351-.Ll350
+	.uleb128	.Ll341-.Ll340
 	.byte	5
 	.uleb128	12
 	.byte	3
@@ -14178,60 +12182,54 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [724:1]
 	.byte	2
-	.uleb128	.Ll352-.Ll351
+	.uleb128	.Ll342-.Ll341
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll353
+	.quad	.Ll343
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT6502_$$_BMI
-# [728:1]
+# [729:5]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll354
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	727
-	.byte	1
-# [729:5]
-	.byte	2
-	.uleb128	.Ll355-.Ll354
+	.quad	.Ll344
 	.byte	5
 	.uleb128	5
-	.byte	13
+	.byte	3
+	.sleb128	728
+	.byte	1
 # [731:3]
 	.byte	2
-	.uleb128	.Ll356-.Ll355
+	.uleb128	.Ll345-.Ll344
 	.byte	5
 	.uleb128	3
 	.byte	14
 # [732:3]
 	.byte	2
-	.uleb128	.Ll357-.Ll356
+	.uleb128	.Ll346-.Ll345
 	.byte	13
 # [733:7]
 	.byte	2
-	.uleb128	.Ll358-.Ll357
+	.uleb128	.Ll347-.Ll346
 	.byte	5
 	.uleb128	7
 	.byte	13
 # [734:3]
 	.byte	2
-	.uleb128	.Ll359-.Ll358
+	.uleb128	.Ll348-.Ll347
 	.byte	5
 	.uleb128	3
 	.byte	13
 # [733:49]
 	.byte	2
-	.uleb128	.Ll360-.Ll359
+	.uleb128	.Ll349-.Ll348
 	.byte	5
 	.uleb128	49
 	.byte	3
@@ -14239,66 +12237,60 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [734:25]
 	.byte	2
-	.uleb128	.Ll361-.Ll360
+	.uleb128	.Ll350-.Ll349
 	.byte	5
 	.uleb128	25
 	.byte	13
 # [736:1]
 	.byte	2
-	.uleb128	.Ll362-.Ll361
+	.uleb128	.Ll351-.Ll350
 	.byte	5
 	.uleb128	1
 	.byte	14
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll363
+	.quad	.Ll352
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT6502_$$_BNE
-# [740:1]
+# [741:6]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll364
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	739
-	.byte	1
-# [741:6]
-	.byte	2
-	.uleb128	.Ll365-.Ll364
+	.quad	.Ll353
 	.byte	5
 	.uleb128	6
-	.byte	13
+	.byte	3
+	.sleb128	740
+	.byte	1
 # [743:3]
 	.byte	2
-	.uleb128	.Ll366-.Ll365
+	.uleb128	.Ll354-.Ll353
 	.byte	5
 	.uleb128	3
 	.byte	14
 # [744:3]
 	.byte	2
-	.uleb128	.Ll367-.Ll366
+	.uleb128	.Ll355-.Ll354
 	.byte	13
 # [745:7]
 	.byte	2
-	.uleb128	.Ll368-.Ll367
+	.uleb128	.Ll356-.Ll355
 	.byte	5
 	.uleb128	7
 	.byte	13
 # [746:3]
 	.byte	2
-	.uleb128	.Ll369-.Ll368
+	.uleb128	.Ll357-.Ll356
 	.byte	5
 	.uleb128	3
 	.byte	13
 # [745:49]
 	.byte	2
-	.uleb128	.Ll370-.Ll369
+	.uleb128	.Ll358-.Ll357
 	.byte	5
 	.uleb128	49
 	.byte	3
@@ -14306,66 +12298,60 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [746:25]
 	.byte	2
-	.uleb128	.Ll371-.Ll370
+	.uleb128	.Ll359-.Ll358
 	.byte	5
 	.uleb128	25
 	.byte	13
 # [748:1]
 	.byte	2
-	.uleb128	.Ll372-.Ll371
+	.uleb128	.Ll360-.Ll359
 	.byte	5
 	.uleb128	1
 	.byte	14
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll373
+	.quad	.Ll361
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT6502_$$_BPL
-# [752:1]
+# [753:5]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll374
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	751
-	.byte	1
-# [753:5]
-	.byte	2
-	.uleb128	.Ll375-.Ll374
+	.quad	.Ll362
 	.byte	5
 	.uleb128	5
-	.byte	13
+	.byte	3
+	.sleb128	752
+	.byte	1
 # [755:3]
 	.byte	2
-	.uleb128	.Ll376-.Ll375
+	.uleb128	.Ll363-.Ll362
 	.byte	5
 	.uleb128	3
 	.byte	14
 # [756:3]
 	.byte	2
-	.uleb128	.Ll377-.Ll376
+	.uleb128	.Ll364-.Ll363
 	.byte	13
 # [757:7]
 	.byte	2
-	.uleb128	.Ll378-.Ll377
+	.uleb128	.Ll365-.Ll364
 	.byte	5
 	.uleb128	7
 	.byte	13
 # [758:3]
 	.byte	2
-	.uleb128	.Ll379-.Ll378
+	.uleb128	.Ll366-.Ll365
 	.byte	5
 	.uleb128	3
 	.byte	13
 # [757:49]
 	.byte	2
-	.uleb128	.Ll380-.Ll379
+	.uleb128	.Ll367-.Ll366
 	.byte	5
 	.uleb128	49
 	.byte	3
@@ -14373,58 +12359,54 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [758:25]
 	.byte	2
-	.uleb128	.Ll381-.Ll380
+	.uleb128	.Ll368-.Ll367
 	.byte	5
 	.uleb128	25
 	.byte	13
 # [760:1]
 	.byte	2
-	.uleb128	.Ll382-.Ll381
+	.uleb128	.Ll369-.Ll368
 	.byte	5
 	.uleb128	1
 	.byte	14
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll383
+	.quad	.Ll370
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT6502_$$_BRA
-# [764:1]
+# [765:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll384
+	.quad	.Ll371
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	763
+	.sleb128	764
 	.byte	1
-# [765:1]
-	.byte	2
-	.uleb128	.Ll385-.Ll384
-	.byte	13
 # [766:1]
 	.byte	2
-	.uleb128	.Ll386-.Ll385
+	.uleb128	.Ll372-.Ll371
 	.byte	13
 # [767:5]
 	.byte	2
-	.uleb128	.Ll387-.Ll386
+	.uleb128	.Ll373-.Ll372
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [768:1]
 	.byte	2
-	.uleb128	.Ll388-.Ll387
+	.uleb128	.Ll374-.Ll373
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [767:47]
 	.byte	2
-	.uleb128	.Ll389-.Ll388
+	.uleb128	.Ll375-.Ll374
 	.byte	5
 	.uleb128	47
 	.byte	3
@@ -14432,20 +12414,20 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [768:23]
 	.byte	2
-	.uleb128	.Ll390-.Ll389
+	.uleb128	.Ll376-.Ll375
 	.byte	5
 	.uleb128	23
 	.byte	13
 # [769:1]
 	.byte	2
-	.uleb128	.Ll391-.Ll390
+	.uleb128	.Ll377-.Ll376
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll392
+	.quad	.Ll378
 	.byte	0
 	.byte	1
 	.byte	1
@@ -14455,7 +12437,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll393
+	.quad	.Ll379
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -14463,21 +12445,21 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [774:1]
 	.byte	2
-	.uleb128	.Ll394-.Ll393
+	.uleb128	.Ll380-.Ll379
 	.byte	13
 # [775:1]
 	.byte	2
-	.uleb128	.Ll395-.Ll394
+	.uleb128	.Ll381-.Ll380
 	.byte	13
 # [776:7]
 	.byte	2
-	.uleb128	.Ll396-.Ll395
+	.uleb128	.Ll382-.Ll381
 	.byte	5
 	.uleb128	7
 	.byte	13
 # [221:17]
 	.byte	2
-	.uleb128	.Ll397-.Ll396
+	.uleb128	.Ll383-.Ll382
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -14485,7 +12467,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [778:12]
 	.byte	2
-	.uleb128	.Ll398-.Ll397
+	.uleb128	.Ll384-.Ll383
 	.byte	5
 	.uleb128	12
 	.byte	3
@@ -14493,60 +12475,54 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [779:1]
 	.byte	2
-	.uleb128	.Ll399-.Ll398
+	.uleb128	.Ll385-.Ll384
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll400
+	.quad	.Ll386
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT6502_$$_BVC
-# [783:1]
+# [784:6]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll401
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	782
-	.byte	1
-# [784:6]
-	.byte	2
-	.uleb128	.Ll402-.Ll401
+	.quad	.Ll387
 	.byte	5
 	.uleb128	6
-	.byte	13
+	.byte	3
+	.sleb128	783
+	.byte	1
 # [786:3]
 	.byte	2
-	.uleb128	.Ll403-.Ll402
+	.uleb128	.Ll388-.Ll387
 	.byte	5
 	.uleb128	3
 	.byte	14
 # [787:3]
 	.byte	2
-	.uleb128	.Ll404-.Ll403
+	.uleb128	.Ll389-.Ll388
 	.byte	13
 # [788:7]
 	.byte	2
-	.uleb128	.Ll405-.Ll404
+	.uleb128	.Ll390-.Ll389
 	.byte	5
 	.uleb128	7
 	.byte	13
 # [789:3]
 	.byte	2
-	.uleb128	.Ll406-.Ll405
+	.uleb128	.Ll391-.Ll390
 	.byte	5
 	.uleb128	3
 	.byte	13
 # [788:49]
 	.byte	2
-	.uleb128	.Ll407-.Ll406
+	.uleb128	.Ll392-.Ll391
 	.byte	5
 	.uleb128	49
 	.byte	3
@@ -14554,16 +12530,127 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [789:25]
 	.byte	2
-	.uleb128	.Ll408-.Ll407
+	.uleb128	.Ll393-.Ll392
 	.byte	5
 	.uleb128	25
 	.byte	13
 # [791:1]
 	.byte	2
-	.uleb128	.Ll409-.Ll408
+	.uleb128	.Ll394-.Ll393
 	.byte	5
 	.uleb128	1
 	.byte	14
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll395
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: UNIT6502_$$_BVS
+# [796:6]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll396
+	.byte	5
+	.uleb128	6
+	.byte	3
+	.sleb128	795
+	.byte	1
+# [798:3]
+	.byte	2
+	.uleb128	.Ll397-.Ll396
+	.byte	5
+	.uleb128	3
+	.byte	14
+# [799:3]
+	.byte	2
+	.uleb128	.Ll398-.Ll397
+	.byte	13
+# [800:7]
+	.byte	2
+	.uleb128	.Ll399-.Ll398
+	.byte	5
+	.uleb128	7
+	.byte	13
+# [801:3]
+	.byte	2
+	.uleb128	.Ll400-.Ll399
+	.byte	5
+	.uleb128	3
+	.byte	13
+# [800:49]
+	.byte	2
+	.uleb128	.Ll401-.Ll400
+	.byte	5
+	.uleb128	49
+	.byte	3
+	.sleb128	-1
+	.byte	1
+# [801:25]
+	.byte	2
+	.uleb128	.Ll402-.Ll401
+	.byte	5
+	.uleb128	25
+	.byte	13
+# [803:1]
+	.byte	2
+	.uleb128	.Ll403-.Ll402
+	.byte	5
+	.uleb128	1
+	.byte	14
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll404
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: UNIT6502_$$_CLC
+# [218:18]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll405
+	.byte	5
+	.uleb128	18
+	.byte	229
+# [809:1]
+	.byte	2
+	.uleb128	.Ll406-.Ll405
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	591
+	.byte	1
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll407
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: UNIT6502_$$_CLD
+# [224:18]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll408
+	.byte	5
+	.uleb128	18
+	.byte	235
+# [815:1]
+	.byte	2
+	.uleb128	.Ll409-.Ll408
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	591
+	.byte	1
 	.byte	0
 	.uleb128	9
 	.byte	2
@@ -14572,165 +12659,18 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 	.byte	1
 # ###################
-# function: UNIT6502_$$_BVS
-# [795:1]
+# function: UNIT6502_$$_CLI
+# [222:17]
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll411
 	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	794
-	.byte	1
-# [796:6]
-	.byte	2
-	.uleb128	.Ll412-.Ll411
-	.byte	5
-	.uleb128	6
-	.byte	13
-# [798:3]
-	.byte	2
-	.uleb128	.Ll413-.Ll412
-	.byte	5
-	.uleb128	3
-	.byte	14
-# [799:3]
-	.byte	2
-	.uleb128	.Ll414-.Ll413
-	.byte	13
-# [800:7]
-	.byte	2
-	.uleb128	.Ll415-.Ll414
-	.byte	5
-	.uleb128	7
-	.byte	13
-# [801:3]
-	.byte	2
-	.uleb128	.Ll416-.Ll415
-	.byte	5
-	.uleb128	3
-	.byte	13
-# [800:49]
-	.byte	2
-	.uleb128	.Ll417-.Ll416
-	.byte	5
-	.uleb128	49
-	.byte	3
-	.sleb128	-1
-	.byte	1
-# [801:25]
-	.byte	2
-	.uleb128	.Ll418-.Ll417
-	.byte	5
-	.uleb128	25
-	.byte	13
-# [803:1]
-	.byte	2
-	.uleb128	.Ll419-.Ll418
-	.byte	5
-	.uleb128	1
-	.byte	14
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll420
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: UNIT6502_$$_CLC
-# [807:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll421
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	806
-	.byte	1
-# [218:18]
-	.byte	2
-	.uleb128	.Ll422-.Ll421
-	.byte	5
-	.uleb128	18
-	.byte	3
-	.sleb128	-589
-	.byte	1
-# [809:1]
-	.byte	2
-	.uleb128	.Ll423-.Ll422
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	591
-	.byte	1
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll424
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: UNIT6502_$$_CLD
-# [813:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll425
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	812
-	.byte	1
-# [224:18]
-	.byte	2
-	.uleb128	.Ll426-.Ll425
-	.byte	5
-	.uleb128	18
-	.byte	3
-	.sleb128	-589
-	.byte	1
-# [815:1]
-	.byte	2
-	.uleb128	.Ll427-.Ll426
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	591
-	.byte	1
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll428
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: UNIT6502_$$_CLI
-# [819:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll429
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	818
-	.byte	1
-# [222:17]
-	.byte	2
-	.uleb128	.Ll430-.Ll429
-	.byte	5
 	.uleb128	17
-	.byte	3
-	.sleb128	-597
-	.byte	1
+	.byte	233
 # [821:1]
 	.byte	2
-	.uleb128	.Ll431-.Ll430
+	.uleb128	.Ll412-.Ll411
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -14739,33 +12679,23 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll432
+	.quad	.Ll413
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT6502_$$_CLV
-# [825:1]
+# [226:18]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll433
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	824
-	.byte	1
-# [226:18]
-	.byte	2
-	.uleb128	.Ll434-.Ll433
+	.quad	.Ll414
 	.byte	5
 	.uleb128	18
-	.byte	3
-	.sleb128	-599
-	.byte	1
+	.byte	237
 # [827:1]
 	.byte	2
-	.uleb128	.Ll435-.Ll434
+	.uleb128	.Ll415-.Ll414
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -14774,7 +12704,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll436
+	.quad	.Ll416
 	.byte	0
 	.byte	1
 	.byte	1
@@ -14784,7 +12714,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll437
+	.quad	.Ll417
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -14792,29 +12722,29 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [832:1]
 	.byte	2
-	.uleb128	.Ll438-.Ll437
+	.uleb128	.Ll418-.Ll417
 	.byte	13
 # [833:15]
 	.byte	2
-	.uleb128	.Ll439-.Ll438
+	.uleb128	.Ll419-.Ll418
 	.byte	5
 	.uleb128	15
 	.byte	13
 # [834:12]
 	.byte	2
-	.uleb128	.Ll440-.Ll439
+	.uleb128	.Ll420-.Ll419
 	.byte	5
 	.uleb128	12
 	.byte	13
 # [835:5]
 	.byte	2
-	.uleb128	.Ll441-.Ll440
+	.uleb128	.Ll421-.Ll420
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [217:17]
 	.byte	2
-	.uleb128	.Ll442-.Ll441
+	.uleb128	.Ll422-.Ll421
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -14822,13 +12752,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [218:18]
 	.byte	2
-	.uleb128	.Ll443-.Ll442
+	.uleb128	.Ll423-.Ll422
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [836:21]
 	.byte	2
-	.uleb128	.Ll444-.Ll443
+	.uleb128	.Ll424-.Ll423
 	.byte	5
 	.uleb128	21
 	.byte	3
@@ -14836,7 +12766,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll445-.Ll444
+	.uleb128	.Ll425-.Ll424
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -14844,11 +12774,11 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll446-.Ll445
+	.uleb128	.Ll426-.Ll425
 	.byte	13
 # [837:4]
 	.byte	2
-	.uleb128	.Ll447-.Ll446
+	.uleb128	.Ll427-.Ll426
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -14856,7 +12786,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [227:17]
 	.byte	2
-	.uleb128	.Ll448-.Ll447
+	.uleb128	.Ll428-.Ll427
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -14864,13 +12794,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll449-.Ll448
+	.uleb128	.Ll429-.Ll428
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [838:1]
 	.byte	2
-	.uleb128	.Ll450-.Ll449
+	.uleb128	.Ll430-.Ll429
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -14879,7 +12809,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll451
+	.quad	.Ll431
 	.byte	0
 	.byte	1
 	.byte	1
@@ -14889,7 +12819,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll452
+	.quad	.Ll432
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -14897,25 +12827,25 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [843:10]
 	.byte	2
-	.uleb128	.Ll453-.Ll452
+	.uleb128	.Ll433-.Ll432
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [844:12]
 	.byte	2
-	.uleb128	.Ll454-.Ll453
+	.uleb128	.Ll434-.Ll433
 	.byte	5
 	.uleb128	12
 	.byte	13
 # [845:5]
 	.byte	2
-	.uleb128	.Ll455-.Ll454
+	.uleb128	.Ll435-.Ll434
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [217:17]
 	.byte	2
-	.uleb128	.Ll456-.Ll455
+	.uleb128	.Ll436-.Ll435
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -14923,13 +12853,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [218:18]
 	.byte	2
-	.uleb128	.Ll457-.Ll456
+	.uleb128	.Ll437-.Ll436
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [846:21]
 	.byte	2
-	.uleb128	.Ll458-.Ll457
+	.uleb128	.Ll438-.Ll437
 	.byte	5
 	.uleb128	21
 	.byte	3
@@ -14937,7 +12867,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll459-.Ll458
+	.uleb128	.Ll439-.Ll438
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -14945,11 +12875,11 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll460-.Ll459
+	.uleb128	.Ll440-.Ll439
 	.byte	13
 # [847:4]
 	.byte	2
-	.uleb128	.Ll461-.Ll460
+	.uleb128	.Ll441-.Ll440
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -14957,7 +12887,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [227:17]
 	.byte	2
-	.uleb128	.Ll462-.Ll461
+	.uleb128	.Ll442-.Ll441
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -14965,13 +12895,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll463-.Ll462
+	.uleb128	.Ll443-.Ll442
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [848:1]
 	.byte	2
-	.uleb128	.Ll464-.Ll463
+	.uleb128	.Ll444-.Ll443
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -14980,7 +12910,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll465
+	.quad	.Ll445
 	.byte	0
 	.byte	1
 	.byte	1
@@ -14990,7 +12920,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll466
+	.quad	.Ll446
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -14998,25 +12928,25 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [853:10]
 	.byte	2
-	.uleb128	.Ll467-.Ll466
+	.uleb128	.Ll447-.Ll446
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [854:12]
 	.byte	2
-	.uleb128	.Ll468-.Ll467
+	.uleb128	.Ll448-.Ll447
 	.byte	5
 	.uleb128	12
 	.byte	13
 # [855:5]
 	.byte	2
-	.uleb128	.Ll469-.Ll468
+	.uleb128	.Ll449-.Ll448
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [217:17]
 	.byte	2
-	.uleb128	.Ll470-.Ll469
+	.uleb128	.Ll450-.Ll449
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -15024,13 +12954,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [218:18]
 	.byte	2
-	.uleb128	.Ll471-.Ll470
+	.uleb128	.Ll451-.Ll450
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [856:5]
 	.byte	2
-	.uleb128	.Ll472-.Ll471
+	.uleb128	.Ll452-.Ll451
 	.byte	5
 	.uleb128	5
 	.byte	3
@@ -15038,7 +12968,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll473-.Ll472
+	.uleb128	.Ll453-.Ll452
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -15046,11 +12976,11 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll474-.Ll473
+	.uleb128	.Ll454-.Ll453
 	.byte	13
 # [857:4]
 	.byte	2
-	.uleb128	.Ll475-.Ll474
+	.uleb128	.Ll455-.Ll454
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -15058,7 +12988,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [227:17]
 	.byte	2
-	.uleb128	.Ll476-.Ll475
+	.uleb128	.Ll456-.Ll455
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -15066,13 +12996,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll477-.Ll476
+	.uleb128	.Ll457-.Ll456
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [858:1]
 	.byte	2
-	.uleb128	.Ll478-.Ll477
+	.uleb128	.Ll458-.Ll457
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -15081,7 +13011,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll479
+	.quad	.Ll459
 	.byte	0
 	.byte	1
 	.byte	1
@@ -15091,7 +13021,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll480
+	.quad	.Ll460
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -15099,25 +13029,25 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [863:10]
 	.byte	2
-	.uleb128	.Ll481-.Ll480
+	.uleb128	.Ll461-.Ll460
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [864:12]
 	.byte	2
-	.uleb128	.Ll482-.Ll481
+	.uleb128	.Ll462-.Ll461
 	.byte	5
 	.uleb128	12
 	.byte	13
 # [865:4]
 	.byte	2
-	.uleb128	.Ll483-.Ll482
+	.uleb128	.Ll463-.Ll462
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [227:17]
 	.byte	2
-	.uleb128	.Ll484-.Ll483
+	.uleb128	.Ll464-.Ll463
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -15125,13 +13055,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll485-.Ll484
+	.uleb128	.Ll465-.Ll464
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [866:4]
 	.byte	2
-	.uleb128	.Ll486-.Ll485
+	.uleb128	.Ll466-.Ll465
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -15139,7 +13069,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll487-.Ll486
+	.uleb128	.Ll467-.Ll466
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -15147,13 +13077,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll488-.Ll487
+	.uleb128	.Ll468-.Ll467
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [867:1]
 	.byte	2
-	.uleb128	.Ll489-.Ll488
+	.uleb128	.Ll469-.Ll468
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -15161,32 +13091,182 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [868:1]
 	.byte	2
-	.uleb128	.Ll490-.Ll489
+	.uleb128	.Ll470-.Ll469
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll491
+	.quad	.Ll471
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT6502_$$_DEX
-# [872:1]
+# [873:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll492
+	.quad	.Ll472
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	871
+	.sleb128	872
 	.byte	1
-# [873:1]
+# [874:4]
+	.byte	2
+	.uleb128	.Ll473-.Ll472
+	.byte	5
+	.uleb128	4
+	.byte	13
+# [227:17]
+	.byte	2
+	.uleb128	.Ll474-.Ll473
+	.byte	5
+	.uleb128	17
+	.byte	3
+	.sleb128	-647
+	.byte	1
+# [228:18]
+	.byte	2
+	.uleb128	.Ll475-.Ll474
+	.byte	5
+	.uleb128	18
+	.byte	13
+# [875:4]
+	.byte	2
+	.uleb128	.Ll476-.Ll475
+	.byte	5
+	.uleb128	4
+	.byte	3
+	.sleb128	647
+	.byte	1
+# [220:17]
+	.byte	2
+	.uleb128	.Ll477-.Ll476
+	.byte	5
+	.uleb128	17
+	.byte	3
+	.sleb128	-655
+	.byte	1
+# [219:17]
+	.byte	2
+	.uleb128	.Ll478-.Ll477
+	.byte	3
+	.sleb128	-1
+	.byte	1
+# [876:1]
+	.byte	2
+	.uleb128	.Ll479-.Ll478
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	657
+	.byte	1
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll480
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: UNIT6502_$$_DEY
+# [881:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll481
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	880
+	.byte	1
+# [882:4]
+	.byte	2
+	.uleb128	.Ll482-.Ll481
+	.byte	5
+	.uleb128	4
+	.byte	13
+# [227:17]
+	.byte	2
+	.uleb128	.Ll483-.Ll482
+	.byte	5
+	.uleb128	17
+	.byte	3
+	.sleb128	-655
+	.byte	1
+# [228:18]
+	.byte	2
+	.uleb128	.Ll484-.Ll483
+	.byte	5
+	.uleb128	18
+	.byte	13
+# [883:4]
+	.byte	2
+	.uleb128	.Ll485-.Ll484
+	.byte	5
+	.uleb128	4
+	.byte	3
+	.sleb128	655
+	.byte	1
+# [220:17]
+	.byte	2
+	.uleb128	.Ll486-.Ll485
+	.byte	5
+	.uleb128	17
+	.byte	3
+	.sleb128	-663
+	.byte	1
+# [219:17]
+	.byte	2
+	.uleb128	.Ll487-.Ll486
+	.byte	3
+	.sleb128	-1
+	.byte	1
+# [884:1]
+	.byte	2
+	.uleb128	.Ll488-.Ll487
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	665
+	.byte	1
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll489
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: UNIT6502_$$_EOR
+# [888:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll490
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	887
+	.byte	1
+# [889:1]
+	.byte	2
+	.uleb128	.Ll491-.Ll490
+	.byte	13
+# [890:10]
+	.byte	2
+	.uleb128	.Ll492-.Ll491
+	.byte	5
+	.uleb128	10
+	.byte	13
+# [891:12]
 	.byte	2
 	.uleb128	.Ll493-.Ll492
+	.byte	5
+	.uleb128	12
 	.byte	13
-# [874:4]
+# [892:4]
 	.byte	2
 	.uleb128	.Ll494-.Ll493
 	.byte	5
@@ -15198,7 +13278,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	5
 	.uleb128	17
 	.byte	3
-	.sleb128	-647
+	.sleb128	-665
 	.byte	1
 # [228:18]
 	.byte	2
@@ -15206,13 +13286,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	5
 	.uleb128	18
 	.byte	13
-# [875:4]
+# [893:4]
 	.byte	2
 	.uleb128	.Ll497-.Ll496
 	.byte	5
 	.uleb128	4
 	.byte	3
-	.sleb128	647
+	.sleb128	665
 	.byte	1
 # [220:17]
 	.byte	2
@@ -15220,7 +13300,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	5
 	.uleb128	17
 	.byte	3
-	.sleb128	-655
+	.sleb128	-673
 	.byte	1
 # [219:17]
 	.byte	2
@@ -15228,123 +13308,123 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	3
 	.sleb128	-1
 	.byte	1
-# [876:1]
+# [894:17]
 	.byte	2
 	.uleb128	.Ll500-.Ll499
+	.byte	3
+	.sleb128	675
+	.byte	1
+# [895:1]
+	.byte	2
+	.uleb128	.Ll501-.Ll500
 	.byte	5
 	.uleb128	1
-	.byte	3
-	.sleb128	657
-	.byte	1
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll501
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: UNIT6502_$$_DEY
-# [880:1]
+	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll502
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: UNIT6502_$$_INA
+# [899:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll503
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	879
+	.sleb128	898
 	.byte	1
-# [881:1]
-	.byte	2
-	.uleb128	.Ll503-.Ll502
-	.byte	13
-# [882:4]
+# [900:10]
 	.byte	2
 	.uleb128	.Ll504-.Ll503
+	.byte	5
+	.uleb128	10
+	.byte	13
+# [901:12]
+	.byte	2
+	.uleb128	.Ll505-.Ll504
+	.byte	5
+	.uleb128	12
+	.byte	13
+# [902:4]
+	.byte	2
+	.uleb128	.Ll506-.Ll505
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [227:17]
 	.byte	2
-	.uleb128	.Ll505-.Ll504
+	.uleb128	.Ll507-.Ll506
 	.byte	5
 	.uleb128	17
 	.byte	3
-	.sleb128	-655
+	.sleb128	-675
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll506-.Ll505
+	.uleb128	.Ll508-.Ll507
 	.byte	5
 	.uleb128	18
 	.byte	13
-# [883:4]
+# [903:4]
 	.byte	2
-	.uleb128	.Ll507-.Ll506
+	.uleb128	.Ll509-.Ll508
 	.byte	5
 	.uleb128	4
 	.byte	3
-	.sleb128	655
+	.sleb128	675
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll508-.Ll507
+	.uleb128	.Ll510-.Ll509
 	.byte	5
 	.uleb128	17
 	.byte	3
-	.sleb128	-663
+	.sleb128	-683
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll509-.Ll508
+	.uleb128	.Ll511-.Ll510
 	.byte	3
 	.sleb128	-1
 	.byte	1
-# [884:1]
+# [904:1]
 	.byte	2
-	.uleb128	.Ll510-.Ll509
+	.uleb128	.Ll512-.Ll511
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	665
+	.sleb128	685
 	.byte	1
+# [905:1]
+	.byte	2
+	.uleb128	.Ll513-.Ll512
+	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll511
+	.quad	.Ll514
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
-# function: UNIT6502_$$_EOR
-# [888:1]
+# function: UNIT6502_$$_INX
+# [910:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll512
+	.quad	.Ll515
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	887
+	.sleb128	909
 	.byte	1
-# [889:1]
-	.byte	2
-	.uleb128	.Ll513-.Ll512
-	.byte	13
-# [890:10]
-	.byte	2
-	.uleb128	.Ll514-.Ll513
-	.byte	5
-	.uleb128	10
-	.byte	13
-# [891:12]
-	.byte	2
-	.uleb128	.Ll515-.Ll514
-	.byte	5
-	.uleb128	12
-	.byte	13
-# [892:4]
+# [911:4]
 	.byte	2
 	.uleb128	.Ll516-.Ll515
 	.byte	5
@@ -15356,7 +13436,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	5
 	.uleb128	17
 	.byte	3
-	.sleb128	-665
+	.sleb128	-684
 	.byte	1
 # [228:18]
 	.byte	2
@@ -15364,171 +13444,9 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	5
 	.uleb128	18
 	.byte	13
-# [893:4]
-	.byte	2
-	.uleb128	.Ll519-.Ll518
-	.byte	5
-	.uleb128	4
-	.byte	3
-	.sleb128	665
-	.byte	1
-# [220:17]
-	.byte	2
-	.uleb128	.Ll520-.Ll519
-	.byte	5
-	.uleb128	17
-	.byte	3
-	.sleb128	-673
-	.byte	1
-# [219:17]
-	.byte	2
-	.uleb128	.Ll521-.Ll520
-	.byte	3
-	.sleb128	-1
-	.byte	1
-# [894:17]
-	.byte	2
-	.uleb128	.Ll522-.Ll521
-	.byte	3
-	.sleb128	675
-	.byte	1
-# [895:1]
-	.byte	2
-	.uleb128	.Ll523-.Ll522
-	.byte	5
-	.uleb128	1
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll524
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: UNIT6502_$$_INA
-# [899:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll525
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	898
-	.byte	1
-# [900:10]
-	.byte	2
-	.uleb128	.Ll526-.Ll525
-	.byte	5
-	.uleb128	10
-	.byte	13
-# [901:12]
-	.byte	2
-	.uleb128	.Ll527-.Ll526
-	.byte	5
-	.uleb128	12
-	.byte	13
-# [902:4]
-	.byte	2
-	.uleb128	.Ll528-.Ll527
-	.byte	5
-	.uleb128	4
-	.byte	13
-# [227:17]
-	.byte	2
-	.uleb128	.Ll529-.Ll528
-	.byte	5
-	.uleb128	17
-	.byte	3
-	.sleb128	-675
-	.byte	1
-# [228:18]
-	.byte	2
-	.uleb128	.Ll530-.Ll529
-	.byte	5
-	.uleb128	18
-	.byte	13
-# [903:4]
-	.byte	2
-	.uleb128	.Ll531-.Ll530
-	.byte	5
-	.uleb128	4
-	.byte	3
-	.sleb128	675
-	.byte	1
-# [220:17]
-	.byte	2
-	.uleb128	.Ll532-.Ll531
-	.byte	5
-	.uleb128	17
-	.byte	3
-	.sleb128	-683
-	.byte	1
-# [219:17]
-	.byte	2
-	.uleb128	.Ll533-.Ll532
-	.byte	3
-	.sleb128	-1
-	.byte	1
-# [904:1]
-	.byte	2
-	.uleb128	.Ll534-.Ll533
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	685
-	.byte	1
-# [905:1]
-	.byte	2
-	.uleb128	.Ll535-.Ll534
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll536
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: UNIT6502_$$_INX
-# [909:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll537
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	908
-	.byte	1
-# [910:1]
-	.byte	2
-	.uleb128	.Ll538-.Ll537
-	.byte	13
-# [911:4]
-	.byte	2
-	.uleb128	.Ll539-.Ll538
-	.byte	5
-	.uleb128	4
-	.byte	13
-# [227:17]
-	.byte	2
-	.uleb128	.Ll540-.Ll539
-	.byte	5
-	.uleb128	17
-	.byte	3
-	.sleb128	-684
-	.byte	1
-# [228:18]
-	.byte	2
-	.uleb128	.Ll541-.Ll540
-	.byte	5
-	.uleb128	18
-	.byte	13
 # [912:4]
 	.byte	2
-	.uleb128	.Ll542-.Ll541
+	.uleb128	.Ll519-.Ll518
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -15536,7 +13454,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll543-.Ll542
+	.uleb128	.Ll520-.Ll519
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -15544,13 +13462,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll544-.Ll543
+	.uleb128	.Ll521-.Ll520
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [913:1]
 	.byte	2
-	.uleb128	.Ll545-.Ll544
+	.uleb128	.Ll522-.Ll521
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -15559,35 +13477,31 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll546
+	.quad	.Ll523
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT6502_$$_INY
-# [917:1]
+# [918:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll547
+	.quad	.Ll524
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	916
+	.sleb128	917
 	.byte	1
-# [918:1]
-	.byte	2
-	.uleb128	.Ll548-.Ll547
-	.byte	13
 # [919:4]
 	.byte	2
-	.uleb128	.Ll549-.Ll548
+	.uleb128	.Ll525-.Ll524
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [227:17]
 	.byte	2
-	.uleb128	.Ll550-.Ll549
+	.uleb128	.Ll526-.Ll525
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -15595,13 +13509,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll551-.Ll550
+	.uleb128	.Ll527-.Ll526
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [920:4]
 	.byte	2
-	.uleb128	.Ll552-.Ll551
+	.uleb128	.Ll528-.Ll527
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -15609,7 +13523,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll553-.Ll552
+	.uleb128	.Ll529-.Ll528
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -15617,13 +13531,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll554-.Ll553
+	.uleb128	.Ll530-.Ll529
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [921:1]
 	.byte	2
-	.uleb128	.Ll555-.Ll554
+	.uleb128	.Ll531-.Ll530
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -15632,34 +13546,30 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll556
+	.quad	.Ll532
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT6502_$$_JMP
-# [925:1]
+# [926:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll557
+	.quad	.Ll533
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	924
+	.sleb128	925
 	.byte	1
-# [926:1]
-	.byte	2
-	.uleb128	.Ll558-.Ll557
-	.byte	13
 # [927:1]
 	.byte	2
-	.uleb128	.Ll559-.Ll558
+	.uleb128	.Ll534-.Ll533
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll560
+	.quad	.Ll535
 	.byte	0
 	.byte	1
 	.byte	1
@@ -15669,7 +13579,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll561
+	.quad	.Ll536
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -15677,24 +13587,24 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [932:8]
 	.byte	2
-	.uleb128	.Ll562-.Ll561
+	.uleb128	.Ll537-.Ll536
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [933:1]
 	.byte	2
-	.uleb128	.Ll563-.Ll562
+	.uleb128	.Ll538-.Ll537
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [934:1]
 	.byte	2
-	.uleb128	.Ll564-.Ll563
+	.uleb128	.Ll539-.Ll538
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll565
+	.quad	.Ll540
 	.byte	0
 	.byte	1
 	.byte	1
@@ -15704,7 +13614,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll566
+	.quad	.Ll541
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -15712,29 +13622,29 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [939:1]
 	.byte	2
-	.uleb128	.Ll567-.Ll566
+	.uleb128	.Ll542-.Ll541
 	.byte	13
 # [940:10]
 	.byte	2
-	.uleb128	.Ll568-.Ll567
+	.uleb128	.Ll543-.Ll542
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [941:6]
 	.byte	2
-	.uleb128	.Ll569-.Ll568
+	.uleb128	.Ll544-.Ll543
 	.byte	5
 	.uleb128	6
 	.byte	13
 # [942:4]
 	.byte	2
-	.uleb128	.Ll570-.Ll569
+	.uleb128	.Ll545-.Ll544
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [227:17]
 	.byte	2
-	.uleb128	.Ll571-.Ll570
+	.uleb128	.Ll546-.Ll545
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -15742,13 +13652,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll572-.Ll571
+	.uleb128	.Ll547-.Ll546
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [943:4]
 	.byte	2
-	.uleb128	.Ll573-.Ll572
+	.uleb128	.Ll548-.Ll547
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -15756,7 +13666,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll574-.Ll573
+	.uleb128	.Ll549-.Ll548
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -15764,13 +13674,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll575-.Ll574
+	.uleb128	.Ll550-.Ll549
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [944:1]
 	.byte	2
-	.uleb128	.Ll576-.Ll575
+	.uleb128	.Ll551-.Ll550
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -15779,7 +13689,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll577
+	.quad	.Ll552
 	.byte	0
 	.byte	1
 	.byte	1
@@ -15789,7 +13699,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll578
+	.quad	.Ll553
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -15797,20 +13707,20 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [950:6]
 	.byte	2
-	.uleb128	.Ll579-.Ll578
+	.uleb128	.Ll554-.Ll553
 	.byte	5
 	.uleb128	6
 	.byte	13
 # [951:1]
 	.byte	2
-	.uleb128	.Ll580-.Ll579
+	.uleb128	.Ll555-.Ll554
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll581
+	.quad	.Ll556
 	.byte	0
 	.byte	1
 	.byte	1
@@ -15820,7 +13730,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll582
+	.quad	.Ll557
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -15828,20 +13738,20 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [956:6]
 	.byte	2
-	.uleb128	.Ll583-.Ll582
+	.uleb128	.Ll558-.Ll557
 	.byte	5
 	.uleb128	6
 	.byte	13
 # [957:1]
 	.byte	2
-	.uleb128	.Ll584-.Ll583
+	.uleb128	.Ll559-.Ll558
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll585
+	.quad	.Ll560
 	.byte	0
 	.byte	1
 	.byte	1
@@ -15851,7 +13761,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll586
+	.quad	.Ll561
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -15859,29 +13769,29 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [963:1]
 	.byte	2
-	.uleb128	.Ll587-.Ll586
+	.uleb128	.Ll562-.Ll561
 	.byte	13
 # [964:10]
 	.byte	2
-	.uleb128	.Ll588-.Ll587
+	.uleb128	.Ll563-.Ll562
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [965:6]
 	.byte	2
-	.uleb128	.Ll589-.Ll588
+	.uleb128	.Ll564-.Ll563
 	.byte	5
 	.uleb128	6
 	.byte	13
 # [966:4]
 	.byte	2
-	.uleb128	.Ll590-.Ll589
+	.uleb128	.Ll565-.Ll564
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [227:17]
 	.byte	2
-	.uleb128	.Ll591-.Ll590
+	.uleb128	.Ll566-.Ll565
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -15889,13 +13799,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll592-.Ll591
+	.uleb128	.Ll567-.Ll566
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [967:4]
 	.byte	2
-	.uleb128	.Ll593-.Ll592
+	.uleb128	.Ll568-.Ll567
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -15903,7 +13813,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll594-.Ll593
+	.uleb128	.Ll569-.Ll568
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -15911,13 +13821,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll595-.Ll594
+	.uleb128	.Ll570-.Ll569
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [968:1]
 	.byte	2
-	.uleb128	.Ll596-.Ll595
+	.uleb128	.Ll571-.Ll570
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -15926,7 +13836,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll597
+	.quad	.Ll572
 	.byte	0
 	.byte	1
 	.byte	1
@@ -15936,7 +13846,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll598
+	.quad	.Ll573
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -15944,29 +13854,29 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [973:1]
 	.byte	2
-	.uleb128	.Ll599-.Ll598
+	.uleb128	.Ll574-.Ll573
 	.byte	13
 # [974:10]
 	.byte	2
-	.uleb128	.Ll600-.Ll599
+	.uleb128	.Ll575-.Ll574
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [975:6]
 	.byte	2
-	.uleb128	.Ll601-.Ll600
+	.uleb128	.Ll576-.Ll575
 	.byte	5
 	.uleb128	6
 	.byte	13
 # [976:4]
 	.byte	2
-	.uleb128	.Ll602-.Ll601
+	.uleb128	.Ll577-.Ll576
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [227:17]
 	.byte	2
-	.uleb128	.Ll603-.Ll602
+	.uleb128	.Ll578-.Ll577
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -15974,13 +13884,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll604-.Ll603
+	.uleb128	.Ll579-.Ll578
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [977:4]
 	.byte	2
-	.uleb128	.Ll605-.Ll604
+	.uleb128	.Ll580-.Ll579
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -15988,7 +13898,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll606-.Ll605
+	.uleb128	.Ll581-.Ll580
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -15996,13 +13906,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll607-.Ll606
+	.uleb128	.Ll582-.Ll581
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [978:1]
 	.byte	2
-	.uleb128	.Ll608-.Ll607
+	.uleb128	.Ll583-.Ll582
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -16011,7 +13921,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll609
+	.quad	.Ll584
 	.byte	0
 	.byte	1
 	.byte	1
@@ -16021,7 +13931,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll610
+	.quad	.Ll585
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -16029,25 +13939,25 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [983:10]
 	.byte	2
-	.uleb128	.Ll611-.Ll610
+	.uleb128	.Ll586-.Ll585
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [984:12]
 	.byte	2
-	.uleb128	.Ll612-.Ll611
+	.uleb128	.Ll587-.Ll586
 	.byte	5
 	.uleb128	12
 	.byte	13
 # [985:5]
 	.byte	2
-	.uleb128	.Ll613-.Ll612
+	.uleb128	.Ll588-.Ll587
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [217:17]
 	.byte	2
-	.uleb128	.Ll614-.Ll613
+	.uleb128	.Ll589-.Ll588
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -16055,13 +13965,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [218:18]
 	.byte	2
-	.uleb128	.Ll615-.Ll614
+	.uleb128	.Ll590-.Ll589
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [986:4]
 	.byte	2
-	.uleb128	.Ll616-.Ll615
+	.uleb128	.Ll591-.Ll590
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -16069,7 +13979,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [227:17]
 	.byte	2
-	.uleb128	.Ll617-.Ll616
+	.uleb128	.Ll592-.Ll591
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -16077,13 +13987,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll618-.Ll617
+	.uleb128	.Ll593-.Ll592
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [987:4]
 	.byte	2
-	.uleb128	.Ll619-.Ll618
+	.uleb128	.Ll594-.Ll593
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -16091,7 +14001,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll620-.Ll619
+	.uleb128	.Ll595-.Ll594
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -16099,13 +14009,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll621-.Ll620
+	.uleb128	.Ll596-.Ll595
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [988:1]
 	.byte	2
-	.uleb128	.Ll622-.Ll621
+	.uleb128	.Ll597-.Ll596
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -16113,67 +14023,63 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [989:1]
 	.byte	2
-	.uleb128	.Ll623-.Ll622
+	.uleb128	.Ll598-.Ll597
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll624
+	.quad	.Ll599
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT6502_$$_NOP
-# [993:1]
+# [994:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll625
+	.quad	.Ll600
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	992
+	.sleb128	993
 	.byte	1
-# [994:1]
-	.byte	2
-	.uleb128	.Ll626-.Ll625
-	.byte	13
 # [995:9]
 	.byte	2
-	.uleb128	.Ll627-.Ll626
+	.uleb128	.Ll601-.Ll600
 	.byte	5
 	.uleb128	9
 	.byte	13
 # [996:9]
 	.byte	2
-	.uleb128	.Ll628-.Ll627
+	.uleb128	.Ll602-.Ll601
 	.byte	13
 # [997:9]
 	.byte	2
-	.uleb128	.Ll629-.Ll628
+	.uleb128	.Ll603-.Ll602
 	.byte	13
 # [998:9]
 	.byte	2
-	.uleb128	.Ll630-.Ll629
+	.uleb128	.Ll604-.Ll603
 	.byte	13
 # [999:9]
 	.byte	2
-	.uleb128	.Ll631-.Ll630
+	.uleb128	.Ll605-.Ll604
 	.byte	13
 # [1000:9]
 	.byte	2
-	.uleb128	.Ll632-.Ll631
+	.uleb128	.Ll606-.Ll605
 	.byte	13
 # [1002:1]
 	.byte	2
-	.uleb128	.Ll633-.Ll632
+	.uleb128	.Ll607-.Ll606
 	.byte	5
 	.uleb128	1
 	.byte	14
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll634
+	.quad	.Ll608
 	.byte	0
 	.byte	1
 	.byte	1
@@ -16183,7 +14089,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll635
+	.quad	.Ll609
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -16191,29 +14097,29 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1007:1]
 	.byte	2
-	.uleb128	.Ll636-.Ll635
+	.uleb128	.Ll610-.Ll609
 	.byte	13
 # [1008:10]
 	.byte	2
-	.uleb128	.Ll637-.Ll636
+	.uleb128	.Ll611-.Ll610
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [1009:12]
 	.byte	2
-	.uleb128	.Ll638-.Ll637
+	.uleb128	.Ll612-.Ll611
 	.byte	5
 	.uleb128	12
 	.byte	13
 # [1010:4]
 	.byte	2
-	.uleb128	.Ll639-.Ll638
+	.uleb128	.Ll613-.Ll612
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [227:17]
 	.byte	2
-	.uleb128	.Ll640-.Ll639
+	.uleb128	.Ll614-.Ll613
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -16221,13 +14127,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll641-.Ll640
+	.uleb128	.Ll615-.Ll614
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [1011:4]
 	.byte	2
-	.uleb128	.Ll642-.Ll641
+	.uleb128	.Ll616-.Ll615
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -16235,7 +14141,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll643-.Ll642
+	.uleb128	.Ll617-.Ll616
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -16243,26 +14149,26 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll644-.Ll643
+	.uleb128	.Ll618-.Ll617
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [1012:17]
 	.byte	2
-	.uleb128	.Ll645-.Ll644
+	.uleb128	.Ll619-.Ll618
 	.byte	3
 	.sleb128	793
 	.byte	1
 # [1013:1]
 	.byte	2
-	.uleb128	.Ll646-.Ll645
+	.uleb128	.Ll620-.Ll619
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll647
+	.quad	.Ll621
 	.byte	0
 	.byte	1
 	.byte	1
@@ -16272,7 +14178,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll648
+	.quad	.Ll622
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -16280,20 +14186,20 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1018:8]
 	.byte	2
-	.uleb128	.Ll649-.Ll648
+	.uleb128	.Ll623-.Ll622
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [1019:1]
 	.byte	2
-	.uleb128	.Ll650-.Ll649
+	.uleb128	.Ll624-.Ll623
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll651
+	.quad	.Ll625
 	.byte	0
 	.byte	1
 	.byte	1
@@ -16303,7 +14209,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll652
+	.quad	.Ll626
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -16311,20 +14217,20 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1024:10]
 	.byte	2
-	.uleb128	.Ll653-.Ll652
+	.uleb128	.Ll627-.Ll626
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [1025:1]
 	.byte	2
-	.uleb128	.Ll654-.Ll653
+	.uleb128	.Ll628-.Ll627
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll655
+	.quad	.Ll629
 	.byte	0
 	.byte	1
 	.byte	1
@@ -16334,7 +14240,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll656
+	.quad	.Ll630
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -16342,11 +14248,210 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1030:10]
 	.byte	2
-	.uleb128	.Ll657-.Ll656
+	.uleb128	.Ll631-.Ll630
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [1031:1]
+	.byte	2
+	.uleb128	.Ll632-.Ll631
+	.byte	5
+	.uleb128	1
+	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll633
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: UNIT6502_$$_PHX
+# [1035:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll634
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	1034
+	.byte	1
+# [1036:8]
+	.byte	2
+	.uleb128	.Ll635-.Ll634
+	.byte	5
+	.uleb128	8
+	.byte	13
+# [1037:1]
+	.byte	2
+	.uleb128	.Ll636-.Ll635
+	.byte	5
+	.uleb128	1
+	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll637
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: UNIT6502_$$_PHY
+# [1041:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll638
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	1040
+	.byte	1
+# [1042:8]
+	.byte	2
+	.uleb128	.Ll639-.Ll638
+	.byte	5
+	.uleb128	8
+	.byte	13
+# [1043:1]
+	.byte	2
+	.uleb128	.Ll640-.Ll639
+	.byte	5
+	.uleb128	1
+	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll641
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: UNIT6502_$$_PHP
+# [1047:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll642
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	1046
+	.byte	1
+# [1048:7]
+	.byte	2
+	.uleb128	.Ll643-.Ll642
+	.byte	5
+	.uleb128	7
+	.byte	13
+# [1049:1]
+	.byte	2
+	.uleb128	.Ll644-.Ll643
+	.byte	5
+	.uleb128	1
+	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll645
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: UNIT6502_$$_PLA
+# [1053:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll646
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	1052
+	.byte	1
+# [1054:6]
+	.byte	2
+	.uleb128	.Ll647-.Ll646
+	.byte	5
+	.uleb128	6
+	.byte	13
+# [1055:4]
+	.byte	2
+	.uleb128	.Ll648-.Ll647
+	.byte	5
+	.uleb128	4
+	.byte	13
+# [227:17]
+	.byte	2
+	.uleb128	.Ll649-.Ll648
+	.byte	5
+	.uleb128	17
+	.byte	3
+	.sleb128	-828
+	.byte	1
+# [228:18]
+	.byte	2
+	.uleb128	.Ll650-.Ll649
+	.byte	5
+	.uleb128	18
+	.byte	13
+# [1056:4]
+	.byte	2
+	.uleb128	.Ll651-.Ll650
+	.byte	5
+	.uleb128	4
+	.byte	3
+	.sleb128	828
+	.byte	1
+# [220:17]
+	.byte	2
+	.uleb128	.Ll652-.Ll651
+	.byte	5
+	.uleb128	17
+	.byte	3
+	.sleb128	-836
+	.byte	1
+# [219:17]
+	.byte	2
+	.uleb128	.Ll653-.Ll652
+	.byte	3
+	.sleb128	-1
+	.byte	1
+# [1057:1]
+	.byte	2
+	.uleb128	.Ll654-.Ll653
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	838
+	.byte	1
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll655
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: UNIT6502_$$_PLC
+# [1061:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll656
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	1060
+	.byte	1
+# [1062:6]
+	.byte	2
+	.uleb128	.Ll657-.Ll656
+	.byte	5
+	.uleb128	6
+	.byte	13
+# [1063:1]
 	.byte	2
 	.uleb128	.Ll658-.Ll657
 	.byte	5
@@ -16360,8 +14465,8 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 	.byte	1
 # ###################
-# function: UNIT6502_$$_PHX
-# [1035:1]
+# function: UNIT6502_$$_PLD
+# [1067:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
@@ -16369,15 +14474,15 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	1034
+	.sleb128	1066
 	.byte	1
-# [1036:8]
+# [1068:6]
 	.byte	2
 	.uleb128	.Ll661-.Ll660
 	.byte	5
-	.uleb128	8
+	.uleb128	6
 	.byte	13
-# [1037:1]
+# [1069:1]
 	.byte	2
 	.uleb128	.Ll662-.Ll661
 	.byte	5
@@ -16391,8 +14496,8 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 	.byte	1
 # ###################
-# function: UNIT6502_$$_PHY
-# [1041:1]
+# function: UNIT6502_$$_PLX
+# [1073:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
@@ -16400,222 +14505,23 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	1040
-	.byte	1
-# [1042:8]
-	.byte	2
-	.uleb128	.Ll665-.Ll664
-	.byte	5
-	.uleb128	8
-	.byte	13
-# [1043:1]
-	.byte	2
-	.uleb128	.Ll666-.Ll665
-	.byte	5
-	.uleb128	1
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll667
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: UNIT6502_$$_PHP
-# [1047:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll668
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	1046
-	.byte	1
-# [1048:7]
-	.byte	2
-	.uleb128	.Ll669-.Ll668
-	.byte	5
-	.uleb128	7
-	.byte	13
-# [1049:1]
-	.byte	2
-	.uleb128	.Ll670-.Ll669
-	.byte	5
-	.uleb128	1
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll671
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: UNIT6502_$$_PLA
-# [1053:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll672
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	1052
-	.byte	1
-# [1054:6]
-	.byte	2
-	.uleb128	.Ll673-.Ll672
-	.byte	5
-	.uleb128	6
-	.byte	13
-# [1055:4]
-	.byte	2
-	.uleb128	.Ll674-.Ll673
-	.byte	5
-	.uleb128	4
-	.byte	13
-# [227:17]
-	.byte	2
-	.uleb128	.Ll675-.Ll674
-	.byte	5
-	.uleb128	17
-	.byte	3
-	.sleb128	-828
-	.byte	1
-# [228:18]
-	.byte	2
-	.uleb128	.Ll676-.Ll675
-	.byte	5
-	.uleb128	18
-	.byte	13
-# [1056:4]
-	.byte	2
-	.uleb128	.Ll677-.Ll676
-	.byte	5
-	.uleb128	4
-	.byte	3
-	.sleb128	828
-	.byte	1
-# [220:17]
-	.byte	2
-	.uleb128	.Ll678-.Ll677
-	.byte	5
-	.uleb128	17
-	.byte	3
-	.sleb128	-836
-	.byte	1
-# [219:17]
-	.byte	2
-	.uleb128	.Ll679-.Ll678
-	.byte	3
-	.sleb128	-1
-	.byte	1
-# [1057:1]
-	.byte	2
-	.uleb128	.Ll680-.Ll679
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	838
-	.byte	1
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll681
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: UNIT6502_$$_PLC
-# [1061:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll682
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	1060
-	.byte	1
-# [1062:6]
-	.byte	2
-	.uleb128	.Ll683-.Ll682
-	.byte	5
-	.uleb128	6
-	.byte	13
-# [1063:1]
-	.byte	2
-	.uleb128	.Ll684-.Ll683
-	.byte	5
-	.uleb128	1
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll685
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: UNIT6502_$$_PLD
-# [1067:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll686
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	1066
-	.byte	1
-# [1068:6]
-	.byte	2
-	.uleb128	.Ll687-.Ll686
-	.byte	5
-	.uleb128	6
-	.byte	13
-# [1069:1]
-	.byte	2
-	.uleb128	.Ll688-.Ll687
-	.byte	5
-	.uleb128	1
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll689
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: UNIT6502_$$_PLX
-# [1073:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll690
-	.byte	5
-	.uleb128	1
-	.byte	3
 	.sleb128	1072
 	.byte	1
 # [1074:6]
 	.byte	2
-	.uleb128	.Ll691-.Ll690
+	.uleb128	.Ll665-.Ll664
 	.byte	5
 	.uleb128	6
 	.byte	13
 # [1075:4]
 	.byte	2
-	.uleb128	.Ll692-.Ll691
+	.uleb128	.Ll666-.Ll665
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [227:17]
 	.byte	2
-	.uleb128	.Ll693-.Ll692
+	.uleb128	.Ll667-.Ll666
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -16623,13 +14529,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll694-.Ll693
+	.uleb128	.Ll668-.Ll667
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [1076:4]
 	.byte	2
-	.uleb128	.Ll695-.Ll694
+	.uleb128	.Ll669-.Ll668
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -16637,7 +14543,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll696-.Ll695
+	.uleb128	.Ll670-.Ll669
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -16645,13 +14551,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll697-.Ll696
+	.uleb128	.Ll671-.Ll670
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [1077:1]
 	.byte	2
-	.uleb128	.Ll698-.Ll697
+	.uleb128	.Ll672-.Ll671
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -16660,7 +14566,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll699
+	.quad	.Ll673
 	.byte	0
 	.byte	1
 	.byte	1
@@ -16670,7 +14576,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll700
+	.quad	.Ll674
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -16678,19 +14584,19 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1082:6]
 	.byte	2
-	.uleb128	.Ll701-.Ll700
+	.uleb128	.Ll675-.Ll674
 	.byte	5
 	.uleb128	6
 	.byte	13
 # [1083:4]
 	.byte	2
-	.uleb128	.Ll702-.Ll701
+	.uleb128	.Ll676-.Ll675
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [227:17]
 	.byte	2
-	.uleb128	.Ll703-.Ll702
+	.uleb128	.Ll677-.Ll676
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -16698,13 +14604,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll704-.Ll703
+	.uleb128	.Ll678-.Ll677
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [1084:4]
 	.byte	2
-	.uleb128	.Ll705-.Ll704
+	.uleb128	.Ll679-.Ll678
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -16712,7 +14618,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll706-.Ll705
+	.uleb128	.Ll680-.Ll679
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -16720,13 +14626,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll707-.Ll706
+	.uleb128	.Ll681-.Ll680
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [1085:1]
 	.byte	2
-	.uleb128	.Ll708-.Ll707
+	.uleb128	.Ll682-.Ll681
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -16735,7 +14641,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll709
+	.quad	.Ll683
 	.byte	0
 	.byte	1
 	.byte	1
@@ -16745,7 +14651,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll710
+	.quad	.Ll684
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -16753,20 +14659,20 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1090:11]
 	.byte	2
-	.uleb128	.Ll711-.Ll710
+	.uleb128	.Ll685-.Ll684
 	.byte	5
 	.uleb128	11
 	.byte	13
 # [1091:1]
 	.byte	2
-	.uleb128	.Ll712-.Ll711
+	.uleb128	.Ll686-.Ll685
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll713
+	.quad	.Ll687
 	.byte	0
 	.byte	1
 	.byte	1
@@ -16776,7 +14682,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll714
+	.quad	.Ll688
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -16784,25 +14690,25 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1096:10]
 	.byte	2
-	.uleb128	.Ll715-.Ll714
+	.uleb128	.Ll689-.Ll688
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [1097:30]
 	.byte	2
-	.uleb128	.Ll716-.Ll715
+	.uleb128	.Ll690-.Ll689
 	.byte	5
 	.uleb128	30
 	.byte	13
 # [1098:4]
 	.byte	2
-	.uleb128	.Ll717-.Ll716
+	.uleb128	.Ll691-.Ll690
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [217:17]
 	.byte	2
-	.uleb128	.Ll718-.Ll717
+	.uleb128	.Ll692-.Ll691
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -16810,13 +14716,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [218:18]
 	.byte	2
-	.uleb128	.Ll719-.Ll718
+	.uleb128	.Ll693-.Ll692
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [1099:4]
 	.byte	2
-	.uleb128	.Ll720-.Ll719
+	.uleb128	.Ll694-.Ll693
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -16824,7 +14730,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll721-.Ll720
+	.uleb128	.Ll695-.Ll694
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -16832,13 +14738,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll722-.Ll721
+	.uleb128	.Ll696-.Ll695
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [1100:4]
 	.byte	2
-	.uleb128	.Ll723-.Ll722
+	.uleb128	.Ll697-.Ll696
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -16846,7 +14752,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [227:17]
 	.byte	2
-	.uleb128	.Ll724-.Ll723
+	.uleb128	.Ll698-.Ll697
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -16854,13 +14760,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll725-.Ll724
+	.uleb128	.Ll699-.Ll698
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [1101:1]
 	.byte	2
-	.uleb128	.Ll726-.Ll725
+	.uleb128	.Ll700-.Ll699
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -16868,12 +14774,12 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1102:1]
 	.byte	2
-	.uleb128	.Ll727-.Ll726
+	.uleb128	.Ll701-.Ll700
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll728
+	.quad	.Ll702
 	.byte	0
 	.byte	1
 	.byte	1
@@ -16883,7 +14789,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll729
+	.quad	.Ll703
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -16891,25 +14797,25 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1107:10]
 	.byte	2
-	.uleb128	.Ll730-.Ll729
+	.uleb128	.Ll704-.Ll703
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [1108:31]
 	.byte	2
-	.uleb128	.Ll731-.Ll730
+	.uleb128	.Ll705-.Ll704
 	.byte	5
 	.uleb128	31
 	.byte	13
 # [1109:5]
 	.byte	2
-	.uleb128	.Ll732-.Ll731
+	.uleb128	.Ll706-.Ll705
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [217:17]
 	.byte	2
-	.uleb128	.Ll733-.Ll732
+	.uleb128	.Ll707-.Ll706
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -16917,13 +14823,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [218:18]
 	.byte	2
-	.uleb128	.Ll734-.Ll733
+	.uleb128	.Ll708-.Ll707
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [1110:4]
 	.byte	2
-	.uleb128	.Ll735-.Ll734
+	.uleb128	.Ll709-.Ll708
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -16931,7 +14837,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll736-.Ll735
+	.uleb128	.Ll710-.Ll709
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -16939,13 +14845,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll737-.Ll736
+	.uleb128	.Ll711-.Ll710
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [1111:4]
 	.byte	2
-	.uleb128	.Ll738-.Ll737
+	.uleb128	.Ll712-.Ll711
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -16953,7 +14859,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [227:17]
 	.byte	2
-	.uleb128	.Ll739-.Ll738
+	.uleb128	.Ll713-.Ll712
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -16961,13 +14867,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll740-.Ll739
+	.uleb128	.Ll714-.Ll713
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [1112:1]
 	.byte	2
-	.uleb128	.Ll741-.Ll740
+	.uleb128	.Ll715-.Ll714
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -16975,12 +14881,12 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1113:1]
 	.byte	2
-	.uleb128	.Ll742-.Ll741
+	.uleb128	.Ll716-.Ll715
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll743
+	.quad	.Ll717
 	.byte	0
 	.byte	1
 	.byte	1
@@ -16990,7 +14896,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll744
+	.quad	.Ll718
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -16998,42 +14904,42 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1118:11]
 	.byte	2
-	.uleb128	.Ll745-.Ll744
+	.uleb128	.Ll719-.Ll718
 	.byte	5
 	.uleb128	11
 	.byte	13
 # [1119:10]
 	.byte	2
-	.uleb128	.Ll746-.Ll745
+	.uleb128	.Ll720-.Ll719
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [1120:1]
 	.byte	2
-	.uleb128	.Ll747-.Ll746
+	.uleb128	.Ll721-.Ll720
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [1121:5]
 	.byte	2
-	.uleb128	.Ll748-.Ll747
+	.uleb128	.Ll722-.Ll721
 	.byte	5
 	.uleb128	5
 	.byte	13
 # [1122:5]
 	.byte	2
-	.uleb128	.Ll749-.Ll748
+	.uleb128	.Ll723-.Ll722
 	.byte	13
 # [1123:1]
 	.byte	2
-	.uleb128	.Ll750-.Ll749
+	.uleb128	.Ll724-.Ll723
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll751
+	.quad	.Ll725
 	.byte	0
 	.byte	1
 	.byte	1
@@ -17043,7 +14949,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll752
+	.quad	.Ll726
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -17051,17 +14957,200 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1128:10]
 	.byte	2
-	.uleb128	.Ll753-.Ll752
+	.uleb128	.Ll727-.Ll726
 	.byte	5
 	.uleb128	10
 	.byte	13
 # [1129:7]
 	.byte	2
-	.uleb128	.Ll754-.Ll753
+	.uleb128	.Ll728-.Ll727
 	.byte	5
 	.uleb128	7
 	.byte	13
 # [1130:1]
+	.byte	2
+	.uleb128	.Ll729-.Ll728
+	.byte	5
+	.uleb128	1
+	.byte	13
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll730
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: UNIT6502_$$_SBC
+# [1134:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll731
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	1133
+	.byte	1
+# [1135:1]
+	.byte	2
+	.uleb128	.Ll732-.Ll731
+	.byte	13
+# [1136:10]
+	.byte	2
+	.uleb128	.Ll733-.Ll732
+	.byte	5
+	.uleb128	10
+	.byte	13
+# [1137:12]
+	.byte	2
+	.uleb128	.Ll734-.Ll733
+	.byte	5
+	.uleb128	12
+	.byte	13
+# [1138:4]
+	.byte	2
+	.uleb128	.Ll735-.Ll734
+	.byte	5
+	.uleb128	4
+	.byte	13
+# [217:17]
+	.byte	2
+	.uleb128	.Ll736-.Ll735
+	.byte	5
+	.uleb128	17
+	.byte	3
+	.sleb128	-921
+	.byte	1
+# [218:18]
+	.byte	2
+	.uleb128	.Ll737-.Ll736
+	.byte	5
+	.uleb128	18
+	.byte	13
+# [1139:4]
+	.byte	2
+	.uleb128	.Ll738-.Ll737
+	.byte	5
+	.uleb128	4
+	.byte	3
+	.sleb128	921
+	.byte	1
+# [220:17]
+	.byte	2
+	.uleb128	.Ll739-.Ll738
+	.byte	5
+	.uleb128	17
+	.byte	3
+	.sleb128	-919
+	.byte	1
+# [219:17]
+	.byte	2
+	.uleb128	.Ll740-.Ll739
+	.byte	3
+	.sleb128	-1
+	.byte	1
+# [1140:18]
+	.byte	2
+	.uleb128	.Ll741-.Ll740
+	.byte	5
+	.uleb128	18
+	.byte	3
+	.sleb128	921
+	.byte	1
+# [225:17]
+	.byte	2
+	.uleb128	.Ll742-.Ll741
+	.byte	5
+	.uleb128	17
+	.byte	3
+	.sleb128	-915
+	.byte	1
+# [226:18]
+	.byte	2
+	.uleb128	.Ll743-.Ll742
+	.byte	5
+	.uleb128	18
+	.byte	13
+# [1141:4]
+	.byte	2
+	.uleb128	.Ll744-.Ll743
+	.byte	5
+	.uleb128	4
+	.byte	3
+	.sleb128	915
+	.byte	1
+# [227:17]
+	.byte	2
+	.uleb128	.Ll745-.Ll744
+	.byte	5
+	.uleb128	17
+	.byte	3
+	.sleb128	-914
+	.byte	1
+# [228:18]
+	.byte	2
+	.uleb128	.Ll746-.Ll745
+	.byte	5
+	.uleb128	18
+	.byte	13
+# [1143:5]
+	.byte	2
+	.uleb128	.Ll747-.Ll746
+	.byte	5
+	.uleb128	5
+	.byte	3
+	.sleb128	915
+	.byte	1
+# [1145:3]
+	.byte	2
+	.uleb128	.Ll748-.Ll747
+	.byte	5
+	.uleb128	3
+	.byte	14
+# [218:18]
+	.byte	2
+	.uleb128	.Ll749-.Ll748
+	.byte	5
+	.uleb128	18
+	.byte	3
+	.sleb128	-927
+	.byte	1
+# [1147:8]
+	.byte	2
+	.uleb128	.Ll750-.Ll749
+	.byte	5
+	.uleb128	8
+	.byte	3
+	.sleb128	929
+	.byte	1
+# [1148:7]
+	.byte	2
+	.uleb128	.Ll751-.Ll750
+	.byte	5
+	.uleb128	7
+	.byte	13
+# [1150:5]
+	.byte	2
+	.uleb128	.Ll752-.Ll751
+	.byte	5
+	.uleb128	5
+	.byte	14
+# [217:17]
+	.byte	2
+	.uleb128	.Ll753-.Ll752
+	.byte	5
+	.uleb128	17
+	.byte	3
+	.sleb128	-933
+	.byte	1
+# [1155:17]
+	.byte	2
+	.uleb128	.Ll754-.Ll753
+	.byte	3
+	.sleb128	938
+	.byte	1
+# [1156:1]
 	.byte	2
 	.uleb128	.Ll755-.Ll754
 	.byte	5
@@ -17075,211 +15164,18 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 	.byte	1
 # ###################
-# function: UNIT6502_$$_SBC
-# [1134:1]
+# function: UNIT6502_$$_SEC
+# [217:17]
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll757
 	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	1133
-	.byte	1
-# [1135:1]
-	.byte	2
-	.uleb128	.Ll758-.Ll757
-	.byte	13
-# [1136:10]
-	.byte	2
-	.uleb128	.Ll759-.Ll758
-	.byte	5
-	.uleb128	10
-	.byte	13
-# [1137:12]
-	.byte	2
-	.uleb128	.Ll760-.Ll759
-	.byte	5
-	.uleb128	12
-	.byte	13
-# [1138:4]
-	.byte	2
-	.uleb128	.Ll761-.Ll760
-	.byte	5
-	.uleb128	4
-	.byte	13
-# [217:17]
-	.byte	2
-	.uleb128	.Ll762-.Ll761
-	.byte	5
 	.uleb128	17
-	.byte	3
-	.sleb128	-921
-	.byte	1
-# [218:18]
-	.byte	2
-	.uleb128	.Ll763-.Ll762
-	.byte	5
-	.uleb128	18
-	.byte	13
-# [1139:4]
-	.byte	2
-	.uleb128	.Ll764-.Ll763
-	.byte	5
-	.uleb128	4
-	.byte	3
-	.sleb128	921
-	.byte	1
-# [220:17]
-	.byte	2
-	.uleb128	.Ll765-.Ll764
-	.byte	5
-	.uleb128	17
-	.byte	3
-	.sleb128	-919
-	.byte	1
-# [219:17]
-	.byte	2
-	.uleb128	.Ll766-.Ll765
-	.byte	3
-	.sleb128	-1
-	.byte	1
-# [1140:18]
-	.byte	2
-	.uleb128	.Ll767-.Ll766
-	.byte	5
-	.uleb128	18
-	.byte	3
-	.sleb128	921
-	.byte	1
-# [225:17]
-	.byte	2
-	.uleb128	.Ll768-.Ll767
-	.byte	5
-	.uleb128	17
-	.byte	3
-	.sleb128	-915
-	.byte	1
-# [226:18]
-	.byte	2
-	.uleb128	.Ll769-.Ll768
-	.byte	5
-	.uleb128	18
-	.byte	13
-# [1141:4]
-	.byte	2
-	.uleb128	.Ll770-.Ll769
-	.byte	5
-	.uleb128	4
-	.byte	3
-	.sleb128	915
-	.byte	1
-# [227:17]
-	.byte	2
-	.uleb128	.Ll771-.Ll770
-	.byte	5
-	.uleb128	17
-	.byte	3
-	.sleb128	-914
-	.byte	1
-# [228:18]
-	.byte	2
-	.uleb128	.Ll772-.Ll771
-	.byte	5
-	.uleb128	18
-	.byte	13
-# [1143:5]
-	.byte	2
-	.uleb128	.Ll773-.Ll772
-	.byte	5
-	.uleb128	5
-	.byte	3
-	.sleb128	915
-	.byte	1
-# [1145:3]
-	.byte	2
-	.uleb128	.Ll774-.Ll773
-	.byte	5
-	.uleb128	3
-	.byte	14
-# [218:18]
-	.byte	2
-	.uleb128	.Ll775-.Ll774
-	.byte	5
-	.uleb128	18
-	.byte	3
-	.sleb128	-927
-	.byte	1
-# [1147:8]
-	.byte	2
-	.uleb128	.Ll776-.Ll775
-	.byte	5
-	.uleb128	8
-	.byte	3
-	.sleb128	929
-	.byte	1
-# [1148:7]
-	.byte	2
-	.uleb128	.Ll777-.Ll776
-	.byte	5
-	.uleb128	7
-	.byte	13
-# [1150:5]
-	.byte	2
-	.uleb128	.Ll778-.Ll777
-	.byte	5
-	.uleb128	5
-	.byte	14
-# [217:17]
-	.byte	2
-	.uleb128	.Ll779-.Ll778
-	.byte	5
-	.uleb128	17
-	.byte	3
-	.sleb128	-933
-	.byte	1
-# [1155:17]
-	.byte	2
-	.uleb128	.Ll780-.Ll779
-	.byte	3
-	.sleb128	938
-	.byte	1
-# [1156:1]
-	.byte	2
-	.uleb128	.Ll781-.Ll780
-	.byte	5
-	.uleb128	1
-	.byte	13
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll782
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: UNIT6502_$$_SEC
-# [1160:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll783
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	1159
-	.byte	1
-# [217:17]
-	.byte	2
-	.uleb128	.Ll784-.Ll783
-	.byte	5
-	.uleb128	17
-	.byte	3
-	.sleb128	-943
-	.byte	1
+	.byte	228
 # [1162:1]
 	.byte	2
-	.uleb128	.Ll785-.Ll784
+	.uleb128	.Ll758-.Ll757
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -17288,33 +15184,23 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll786
+	.quad	.Ll759
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT6502_$$_SED
-# [1166:1]
+# [223:17]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll787
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	1165
-	.byte	1
-# [223:17]
-	.byte	2
-	.uleb128	.Ll788-.Ll787
+	.quad	.Ll760
 	.byte	5
 	.uleb128	17
-	.byte	3
-	.sleb128	-943
-	.byte	1
+	.byte	234
 # [1168:1]
 	.byte	2
-	.uleb128	.Ll789-.Ll788
+	.uleb128	.Ll761-.Ll760
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -17323,33 +15209,23 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll790
+	.quad	.Ll762
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT6502_$$_SEI
-# [1172:1]
+# [221:17]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll791
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	1171
-	.byte	1
-# [221:17]
-	.byte	2
-	.uleb128	.Ll792-.Ll791
+	.quad	.Ll763
 	.byte	5
 	.uleb128	17
-	.byte	3
-	.sleb128	-951
-	.byte	1
+	.byte	232
 # [1174:1]
 	.byte	2
-	.uleb128	.Ll793-.Ll792
+	.uleb128	.Ll764-.Ll763
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -17358,7 +15234,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll794
+	.quad	.Ll765
 	.byte	0
 	.byte	1
 	.byte	1
@@ -17368,7 +15244,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll795
+	.quad	.Ll766
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -17376,20 +15252,20 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1179:11]
 	.byte	2
-	.uleb128	.Ll796-.Ll795
+	.uleb128	.Ll767-.Ll766
 	.byte	5
 	.uleb128	11
 	.byte	13
 # [1180:1]
 	.byte	2
-	.uleb128	.Ll797-.Ll796
+	.uleb128	.Ll768-.Ll767
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll798
+	.quad	.Ll769
 	.byte	0
 	.byte	1
 	.byte	1
@@ -17399,7 +15275,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll799
+	.quad	.Ll770
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -17407,20 +15283,20 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1185:14]
 	.byte	2
-	.uleb128	.Ll800-.Ll799
+	.uleb128	.Ll771-.Ll770
 	.byte	5
 	.uleb128	14
 	.byte	13
 # [1186:1]
 	.byte	2
-	.uleb128	.Ll801-.Ll800
+	.uleb128	.Ll772-.Ll771
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll802
+	.quad	.Ll773
 	.byte	0
 	.byte	1
 	.byte	1
@@ -17430,7 +15306,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll803
+	.quad	.Ll774
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -17438,20 +15314,20 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1191:14]
 	.byte	2
-	.uleb128	.Ll804-.Ll803
+	.uleb128	.Ll775-.Ll774
 	.byte	5
 	.uleb128	14
 	.byte	13
 # [1192:1]
 	.byte	2
-	.uleb128	.Ll805-.Ll804
+	.uleb128	.Ll776-.Ll775
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll806
+	.quad	.Ll777
 	.byte	0
 	.byte	1
 	.byte	1
@@ -17461,7 +15337,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll807
+	.quad	.Ll778
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -17469,20 +15345,20 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1197:11]
 	.byte	2
-	.uleb128	.Ll808-.Ll807
+	.uleb128	.Ll779-.Ll778
 	.byte	5
 	.uleb128	11
 	.byte	13
 # [1198:1]
 	.byte	2
-	.uleb128	.Ll809-.Ll808
+	.uleb128	.Ll780-.Ll779
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll810
+	.quad	.Ll781
 	.byte	0
 	.byte	1
 	.byte	1
@@ -17492,7 +15368,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll811
+	.quad	.Ll782
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -17500,20 +15376,20 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1203:11]
 	.byte	2
-	.uleb128	.Ll812-.Ll811
+	.uleb128	.Ll783-.Ll782
 	.byte	5
 	.uleb128	11
 	.byte	13
 # [1204:1]
 	.byte	2
-	.uleb128	.Ll813-.Ll812
+	.uleb128	.Ll784-.Ll783
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll814
+	.quad	.Ll785
 	.byte	0
 	.byte	1
 	.byte	1
@@ -17523,7 +15399,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll815
+	.quad	.Ll786
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -17531,44 +15407,40 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1209:1]
 	.byte	2
-	.uleb128	.Ll816-.Ll815
+	.uleb128	.Ll787-.Ll786
 	.byte	13
 # [1210:1]
 	.byte	2
-	.uleb128	.Ll817-.Ll816
+	.uleb128	.Ll788-.Ll787
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll818
+	.quad	.Ll789
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT6502_$$_TAX
-# [1214:1]
+# [1215:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll819
+	.quad	.Ll790
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	1213
+	.sleb128	1214
 	.byte	1
-# [1215:1]
-	.byte	2
-	.uleb128	.Ll820-.Ll819
-	.byte	13
 # [1216:4]
 	.byte	2
-	.uleb128	.Ll821-.Ll820
+	.uleb128	.Ll791-.Ll790
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [227:17]
 	.byte	2
-	.uleb128	.Ll822-.Ll821
+	.uleb128	.Ll792-.Ll791
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -17576,13 +15448,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll823-.Ll822
+	.uleb128	.Ll793-.Ll792
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [1217:4]
 	.byte	2
-	.uleb128	.Ll824-.Ll823
+	.uleb128	.Ll794-.Ll793
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -17590,7 +15462,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll825-.Ll824
+	.uleb128	.Ll795-.Ll794
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -17598,13 +15470,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll826-.Ll825
+	.uleb128	.Ll796-.Ll795
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [1218:1]
 	.byte	2
-	.uleb128	.Ll827-.Ll826
+	.uleb128	.Ll797-.Ll796
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -17613,35 +15485,31 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll828
+	.quad	.Ll798
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT6502_$$_TAY
-# [1222:1]
+# [1223:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll829
+	.quad	.Ll799
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	1221
+	.sleb128	1222
 	.byte	1
-# [1223:1]
-	.byte	2
-	.uleb128	.Ll830-.Ll829
-	.byte	13
 # [1224:4]
 	.byte	2
-	.uleb128	.Ll831-.Ll830
+	.uleb128	.Ll800-.Ll799
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [227:17]
 	.byte	2
-	.uleb128	.Ll832-.Ll831
+	.uleb128	.Ll801-.Ll800
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -17649,13 +15517,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll833-.Ll832
+	.uleb128	.Ll802-.Ll801
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [1225:4]
 	.byte	2
-	.uleb128	.Ll834-.Ll833
+	.uleb128	.Ll803-.Ll802
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -17663,7 +15531,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll835-.Ll834
+	.uleb128	.Ll804-.Ll803
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -17671,13 +15539,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll836-.Ll835
+	.uleb128	.Ll805-.Ll804
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [1226:1]
 	.byte	2
-	.uleb128	.Ll837-.Ll836
+	.uleb128	.Ll806-.Ll805
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -17686,7 +15554,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll838
+	.quad	.Ll807
 	.byte	0
 	.byte	1
 	.byte	1
@@ -17696,7 +15564,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll839
+	.quad	.Ll808
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -17704,31 +15572,31 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1231:8]
 	.byte	2
-	.uleb128	.Ll840-.Ll839
+	.uleb128	.Ll809-.Ll808
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [1232:20]
 	.byte	2
-	.uleb128	.Ll841-.Ll840
+	.uleb128	.Ll810-.Ll809
 	.byte	5
 	.uleb128	20
 	.byte	13
 # [1233:1]
 	.byte	2
-	.uleb128	.Ll842-.Ll841
+	.uleb128	.Ll811-.Ll810
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [1234:4]
 	.byte	2
-	.uleb128	.Ll843-.Ll842
+	.uleb128	.Ll812-.Ll811
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [220:17]
 	.byte	2
-	.uleb128	.Ll844-.Ll843
+	.uleb128	.Ll813-.Ll812
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -17736,13 +15604,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll845-.Ll844
+	.uleb128	.Ll814-.Ll813
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [1235:1]
 	.byte	2
-	.uleb128	.Ll846-.Ll845
+	.uleb128	.Ll815-.Ll814
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -17751,7 +15619,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll847
+	.quad	.Ll816
 	.byte	0
 	.byte	1
 	.byte	1
@@ -17761,7 +15629,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll848
+	.quad	.Ll817
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -17769,31 +15637,31 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1240:8]
 	.byte	2
-	.uleb128	.Ll849-.Ll848
+	.uleb128	.Ll818-.Ll817
 	.byte	5
 	.uleb128	8
 	.byte	13
 # [1241:19]
 	.byte	2
-	.uleb128	.Ll850-.Ll849
+	.uleb128	.Ll819-.Ll818
 	.byte	5
 	.uleb128	19
 	.byte	13
 # [1242:1]
 	.byte	2
-	.uleb128	.Ll851-.Ll850
+	.uleb128	.Ll820-.Ll819
 	.byte	5
 	.uleb128	1
 	.byte	13
 # [1243:4]
 	.byte	2
-	.uleb128	.Ll852-.Ll851
+	.uleb128	.Ll821-.Ll820
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [220:17]
 	.byte	2
-	.uleb128	.Ll853-.Ll852
+	.uleb128	.Ll822-.Ll821
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -17801,13 +15669,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll854-.Ll853
+	.uleb128	.Ll823-.Ll822
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [1244:1]
 	.byte	2
-	.uleb128	.Ll855-.Ll854
+	.uleb128	.Ll824-.Ll823
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -17816,35 +15684,31 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll856
+	.quad	.Ll825
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT6502_$$_TSX
-# [1248:1]
+# [1249:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll857
+	.quad	.Ll826
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	1247
+	.sleb128	1248
 	.byte	1
-# [1249:1]
-	.byte	2
-	.uleb128	.Ll858-.Ll857
-	.byte	13
 # [1250:4]
 	.byte	2
-	.uleb128	.Ll859-.Ll858
+	.uleb128	.Ll827-.Ll826
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [227:17]
 	.byte	2
-	.uleb128	.Ll860-.Ll859
+	.uleb128	.Ll828-.Ll827
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -17852,13 +15716,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll861-.Ll860
+	.uleb128	.Ll829-.Ll828
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [1251:4]
 	.byte	2
-	.uleb128	.Ll862-.Ll861
+	.uleb128	.Ll830-.Ll829
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -17866,7 +15730,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll863-.Ll862
+	.uleb128	.Ll831-.Ll830
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -17874,13 +15738,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll864-.Ll863
+	.uleb128	.Ll832-.Ll831
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [1252:1]
 	.byte	2
-	.uleb128	.Ll865-.Ll864
+	.uleb128	.Ll833-.Ll832
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -17889,35 +15753,31 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll866
+	.quad	.Ll834
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT6502_$$_TXA
-# [1256:1]
+# [1257:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll867
+	.quad	.Ll835
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	1255
+	.sleb128	1256
 	.byte	1
-# [1257:1]
-	.byte	2
-	.uleb128	.Ll868-.Ll867
-	.byte	13
 # [1258:4]
 	.byte	2
-	.uleb128	.Ll869-.Ll868
+	.uleb128	.Ll836-.Ll835
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [227:17]
 	.byte	2
-	.uleb128	.Ll870-.Ll869
+	.uleb128	.Ll837-.Ll836
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -17925,13 +15785,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll871-.Ll870
+	.uleb128	.Ll838-.Ll837
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [1259:4]
 	.byte	2
-	.uleb128	.Ll872-.Ll871
+	.uleb128	.Ll839-.Ll838
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -17939,7 +15799,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll873-.Ll872
+	.uleb128	.Ll840-.Ll839
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -17947,13 +15807,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll874-.Ll873
+	.uleb128	.Ll841-.Ll840
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [1260:1]
 	.byte	2
-	.uleb128	.Ll875-.Ll874
+	.uleb128	.Ll842-.Ll841
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -17962,62 +15822,54 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll876
+	.quad	.Ll843
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT6502_$$_TXS
-# [1264:1]
+# [1265:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll877
+	.quad	.Ll844
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	1263
+	.sleb128	1264
 	.byte	1
-# [1265:1]
-	.byte	2
-	.uleb128	.Ll878-.Ll877
-	.byte	13
 # [1266:1]
 	.byte	2
-	.uleb128	.Ll879-.Ll878
+	.uleb128	.Ll845-.Ll844
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll880
+	.quad	.Ll846
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT6502_$$_TYA
-# [1270:1]
+# [1271:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll881
+	.quad	.Ll847
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	1269
+	.sleb128	1270
 	.byte	1
-# [1271:1]
-	.byte	2
-	.uleb128	.Ll882-.Ll881
-	.byte	13
 # [1272:4]
 	.byte	2
-	.uleb128	.Ll883-.Ll882
+	.uleb128	.Ll848-.Ll847
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [227:17]
 	.byte	2
-	.uleb128	.Ll884-.Ll883
+	.uleb128	.Ll849-.Ll848
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -18025,13 +15877,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [228:18]
 	.byte	2
-	.uleb128	.Ll885-.Ll884
+	.uleb128	.Ll850-.Ll849
 	.byte	5
 	.uleb128	18
 	.byte	13
 # [1273:4]
 	.byte	2
-	.uleb128	.Ll886-.Ll885
+	.uleb128	.Ll851-.Ll850
 	.byte	5
 	.uleb128	4
 	.byte	3
@@ -18039,7 +15891,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [220:17]
 	.byte	2
-	.uleb128	.Ll887-.Ll886
+	.uleb128	.Ll852-.Ll851
 	.byte	5
 	.uleb128	17
 	.byte	3
@@ -18047,13 +15899,13 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [219:17]
 	.byte	2
-	.uleb128	.Ll888-.Ll887
+	.uleb128	.Ll853-.Ll852
 	.byte	3
 	.sleb128	-1
 	.byte	1
 # [1274:1]
 	.byte	2
-	.uleb128	.Ll889-.Ll888
+	.uleb128	.Ll854-.Ll853
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -18062,7 +15914,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll890
+	.quad	.Ll855
 	.byte	0
 	.byte	1
 	.byte	1
@@ -18072,7 +15924,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll891
+	.quad	.Ll856
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -18080,20 +15932,20 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1281:1]
 	.byte	2
-	.uleb128	.Ll892-.Ll891
+	.uleb128	.Ll857-.Ll856
 	.byte	13
 # [1282:1]
 	.byte	2
-	.uleb128	.Ll893-.Ll892
+	.uleb128	.Ll858-.Ll857
 	.byte	13
 # [1283:1]
 	.byte	2
-	.uleb128	.Ll894-.Ll893
+	.uleb128	.Ll859-.Ll858
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll895
+	.quad	.Ll860
 	.byte	0
 	.byte	1
 	.byte	1
@@ -18103,7 +15955,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll896
+	.quad	.Ll861
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -18111,34 +15963,34 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1288:1]
 	.byte	2
-	.uleb128	.Ll897-.Ll896
+	.uleb128	.Ll862-.Ll861
 	.byte	13
 # [1289:1]
 	.byte	2
-	.uleb128	.Ll898-.Ll897
+	.uleb128	.Ll863-.Ll862
 	.byte	13
 # [1290:17]
 	.byte	2
-	.uleb128	.Ll899-.Ll898
+	.uleb128	.Ll864-.Ll863
 	.byte	5
 	.uleb128	17
 	.byte	13
 # [1291:4]
 	.byte	2
-	.uleb128	.Ll900-.Ll899
+	.uleb128	.Ll865-.Ll864
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [1292:1]
 	.byte	2
-	.uleb128	.Ll901-.Ll900
+	.uleb128	.Ll866-.Ll865
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll902
+	.quad	.Ll867
 	.byte	0
 	.byte	1
 	.byte	1
@@ -18148,7 +16000,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll903
+	.quad	.Ll868
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -18156,28 +16008,28 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1297:1]
 	.byte	2
-	.uleb128	.Ll904-.Ll903
+	.uleb128	.Ll869-.Ll868
 	.byte	13
 # [1298:1]
 	.byte	2
-	.uleb128	.Ll905-.Ll904
+	.uleb128	.Ll870-.Ll869
 	.byte	13
 # [1299:4]
 	.byte	2
-	.uleb128	.Ll906-.Ll905
+	.uleb128	.Ll871-.Ll870
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [1300:1]
 	.byte	2
-	.uleb128	.Ll907-.Ll906
+	.uleb128	.Ll872-.Ll871
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll908
+	.quad	.Ll873
 	.byte	0
 	.byte	1
 	.byte	1
@@ -18187,7 +16039,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll909
+	.quad	.Ll874
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -18195,28 +16047,28 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1305:1]
 	.byte	2
-	.uleb128	.Ll910-.Ll909
+	.uleb128	.Ll875-.Ll874
 	.byte	13
 # [1306:1]
 	.byte	2
-	.uleb128	.Ll911-.Ll910
+	.uleb128	.Ll876-.Ll875
 	.byte	13
 # [1307:4]
 	.byte	2
-	.uleb128	.Ll912-.Ll911
+	.uleb128	.Ll877-.Ll876
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [1308:1]
 	.byte	2
-	.uleb128	.Ll913-.Ll912
+	.uleb128	.Ll878-.Ll877
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll914
+	.quad	.Ll879
 	.byte	0
 	.byte	1
 	.byte	1
@@ -18226,7 +16078,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll915
+	.quad	.Ll880
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -18234,28 +16086,28 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1313:1]
 	.byte	2
-	.uleb128	.Ll916-.Ll915
+	.uleb128	.Ll881-.Ll880
 	.byte	13
 # [1314:1]
 	.byte	2
-	.uleb128	.Ll917-.Ll916
+	.uleb128	.Ll882-.Ll881
 	.byte	13
 # [1315:4]
 	.byte	2
-	.uleb128	.Ll918-.Ll917
+	.uleb128	.Ll883-.Ll882
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [1316:1]
 	.byte	2
-	.uleb128	.Ll919-.Ll918
+	.uleb128	.Ll884-.Ll883
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll920
+	.quad	.Ll885
 	.byte	0
 	.byte	1
 	.byte	1
@@ -18265,7 +16117,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll921
+	.quad	.Ll886
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -18273,28 +16125,28 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1322:1]
 	.byte	2
-	.uleb128	.Ll922-.Ll921
+	.uleb128	.Ll887-.Ll886
 	.byte	13
 # [1323:1]
 	.byte	2
-	.uleb128	.Ll923-.Ll922
+	.uleb128	.Ll888-.Ll887
 	.byte	13
 # [1324:4]
 	.byte	2
-	.uleb128	.Ll924-.Ll923
+	.uleb128	.Ll889-.Ll888
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [1325:1]
 	.byte	2
-	.uleb128	.Ll925-.Ll924
+	.uleb128	.Ll890-.Ll889
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll926
+	.quad	.Ll891
 	.byte	0
 	.byte	1
 	.byte	1
@@ -18304,7 +16156,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll927
+	.quad	.Ll892
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -18312,28 +16164,28 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1330:1]
 	.byte	2
-	.uleb128	.Ll928-.Ll927
+	.uleb128	.Ll893-.Ll892
 	.byte	13
 # [1331:1]
 	.byte	2
-	.uleb128	.Ll929-.Ll928
+	.uleb128	.Ll894-.Ll893
 	.byte	13
 # [1332:4]
 	.byte	2
-	.uleb128	.Ll930-.Ll929
+	.uleb128	.Ll895-.Ll894
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [1333:1]
 	.byte	2
-	.uleb128	.Ll931-.Ll930
+	.uleb128	.Ll896-.Ll895
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll932
+	.quad	.Ll897
 	.byte	0
 	.byte	1
 	.byte	1
@@ -18343,7 +16195,7 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll933
+	.quad	.Ll898
 	.byte	5
 	.uleb128	1
 	.byte	3
@@ -18351,28 +16203,28 @@ TC_$UNIT6502_$$_TICKTABLE:
 	.byte	1
 # [1338:1]
 	.byte	2
-	.uleb128	.Ll934-.Ll933
+	.uleb128	.Ll899-.Ll898
 	.byte	13
 # [1339:1]
 	.byte	2
-	.uleb128	.Ll935-.Ll934
+	.uleb128	.Ll900-.Ll899
 	.byte	13
 # [1340:4]
 	.byte	2
-	.uleb128	.Ll936-.Ll935
+	.uleb128	.Ll901-.Ll900
 	.byte	5
 	.uleb128	4
 	.byte	13
 # [1341:1]
 	.byte	2
-	.uleb128	.Ll937-.Ll936
+	.uleb128	.Ll902-.Ll901
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll938
+	.quad	.Ll903
 	.byte	0
 	.byte	1
 	.byte	1

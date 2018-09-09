@@ -34,11 +34,12 @@ type TFmOperator=class
      intpa:integer;
      freqmod:myfloat;
      outputtable:PSingleSample;
+     pan:myfloat;
      function getsample:TSingleSample;
      procedure init;
      procedure setfreq(afreq:myfloat);
      constructor create(mode:integer;outs:pointer);
-     destructor destroy;
+     destructor destroy; override;
      end;
 
 type TFmVoice=class
@@ -55,7 +56,17 @@ type TWaveSample1=record
      len,lstart,lend:integer;
      speed:myfloat;
      wave:^myfloat;
+     note:integer;
+     finetune:integer;
      end;
+
+type TMultiSample=record
+     name:string;
+     samples:array[0..47] of TWaveSample1;
+     notes:array[0..127] of integer;
+     end;
+
+     // C0=midi 12 - tracker 1
 
 type TWaveSample0=record
      name:string;
@@ -87,9 +98,11 @@ var flogtable:array[0..65540] of myfloat;
     voices:array [0..31] of TFmVoice;
     waves0:array [0..127] of TWaveSample0;
     waves1:array [0..16383] of TWaveSample1;
+    sounds:array[0..8191] of TMultiSample;
        att:double=1/960;
     sampleindex0:integer=0;
     sampleindex1:integer=0;
+    soundindex:integer=0;
     waveidx:integer=0;
     fftwave:^double;
     transpose:integer=0;
@@ -97,6 +110,7 @@ var flogtable:array[0..65540] of myfloat;
 procedure initvoices;
 procedure initsamples0;
 procedure initsamples1;
+procedure initsamples2;
 
 
 implementation
@@ -116,11 +130,24 @@ if findfirst(currentdir2+'*.s2',faAnyFile,sr)=0 then
   repeat
   fh:=fileopen(currentdir2+sr.name,$40);
   fileread(fh,dummy,16);
-  waves0[sampleindex0].name:=copy(sr.name,1,length(sr.name)-3); ;
+  waves1[sampleindex1].name:=copy(sr.name,1,length(sr.name)-3);
+  waves1[sampleindex1].wave:=getmem(8*1024);
+  waves1[sampleindex1].len:=1024;
+  waves1[sampleindex1].lend:=1024;
+  waves1[sampleindex1].lstart:=0;
+  waves1[sampleindex1].speed:=1024;
+  waves1[sampleindex1].note:=0;
+  waves1[sampleindex1].finetune:=0;
+
   fileread(fh,intwave,2048);
-  for i:=0 to 1023 do waves0[sampleindex0].wave[i]:=intwave[i]/32768;
+  for i:=0 to 1023 do waves1[sampleindex1].wave[i]:=intwave[i]/32768;
   fileclose(fh);
-  sampleindex0+=1;
+
+  sounds[soundindex].name:=waves1[sampleindex1].name;
+  sounds[soundindex].samples[0]:= waves1[sampleindex1];
+  for i:=0 to 127 do sounds[soundindex].notes[i]:=0;
+    sampleindex1+=1;
+  soundindex+=1;
   until (findnext(sr)<>0) or (sampleindex0=128);
 findclose(sr);
 end;
@@ -146,17 +173,22 @@ currentdir2:='C:\xi\';
 if findfirst(currentdir2+'*.xi',faAnyFile,sr)=0 then
   repeat
   fh:=fileopen(currentdir2+sr.name,$40);
-  fileread(fh,dummy,$40);  //text header
+  fileread(fh,dummy,21);  //text header
+  fileread(fh,dummy,22);  // instr name
+  for i:=0 to 21 do sounds[soundindex].name+=chr(dummy[i]);
+  fileread(fh,dummy,21);
   fileread(fh,dummy,$e8);  //inst headers
+  for i:=0 to 95 do sounds[soundindex].notes[i]:=dummy[i+2];
   fileread(fh,samplenum,2);
   for i:=0 to samplenum-1 do fileread(fh,sampleinfo[i],40);
   for i:=0 to samplenum-1 do
     begin
     waves1[sampleindex1].len:=sampleinfo[i].slen div 2;
     waves1[sampleindex1].name:='';
-    for j:=0 to sampleinfo[i].snl do waves1[sampleindex1].name+=sampleinfo[i].samplename[j];
+    for j:=0 to sampleinfo[i].snl-1 do waves1[sampleindex1].name+=sampleinfo[i].samplename[j];
+
     intwave:=getmem(sampleinfo[i].slen);
-    waves1[sampleindex1].wave:=getmem(4*sampleinfo[i].slen+16);
+    waves1[sampleindex1].wave:=getmem(4*sampleinfo[i].slen+1024);
     fileread(fh,intwave^,sampleinfo[i].slen);
     integrator:=0;
     maxval:=0;
@@ -167,41 +199,120 @@ if findfirst(currentdir2+'*.xi',faAnyFile,sr)=0 then
       if abs(integrator)>maxval then maxval:=abs(integrator);
       waves1[sampleindex1].wave[j]:=integrator;
       end;
-//    fftwave:=getmem(4*sampleinfo[i].slen+16);
-//    integrator:=0;
-//    for j:=0 to (sampleinfo[i].slen div 2)-1 do
-//      begin
-//      integrator+=waves1[sampleindex1].wave[j];
-//      fftwave[j]:=integrator;
-//      end;
+    for j:= (sampleinfo[i].slen div 2) to (sampleinfo[i].slen div 2)+127 do
+      begin
+        waves1[sampleindex1].wave[j]:=0;       // add a silence to the end of the sample
+      end;
+
  // normalize
     for j:=0 to (sampleinfo[i].slen div 2)-1 do waves1[sampleindex1].wave[j]*=1/maxval;
- //   form1.fft1.fft;
-//    maxval:=0;
-//    for j:=600 to 65535 do
-  //    begin
-   //   if j>400 then k:=j else k:=800-j;
-//      fftv:= sqr(form1.fft1.transformeddata[j].real)+sqr(form1.fft1.transformeddata[j].imag);
-//      if (fftv/j)>maxval then begin maxval:=fftv/j; ffti:=j;end;
-//      end;
-
-
-    // 1 period=ffti
-  //  waves1[sampleindex1].speed:= (524288/ffti); //836; //(ffti*96000/524288)*
-                               //power(a212,sampleinfo[i].relnote);
-   freemem(intwave);
-//   freemem(fftwave);
-    if (sampleinfo[i].sampletype and 1) =0 then begin waves1[sampleindex1].lstart:=waves1[sampleindex1].len-1 ; waves1[sampleindex1].lend:=waves1[sampleindex1].len ;  end else
+    freemem(intwave);
+    if (sampleinfo[i].sampletype and 1) =0 then begin waves1[sampleindex1].lstart:=waves1[sampleindex1].len; waves1[sampleindex1].lend:=waves1[sampleindex1].len+127 ;  end else
     begin waves1[sampleindex1].lstart:=sampleinfo[i].sls div 2;
     waves1[sampleindex1].lend:=((sampleinfo[i].sls+sampleinfo[i].sll) div 2); end;
-    waves1[sampleindex1].speed:=31.569678791045951421351411329291*power(a212,sampleinfo[i].relnote+sampleinfo[i].finetune/128);
+
+//    relnote 0 is c4 @ 8363 Hz!!!!     or is it c6??
+
+    waves1[sampleindex1].speed:= 31.964988724534648167259106371593 *power(a212,sampleinfo[i].relnote + sampleinfo[i].finetune/128);
+
+    sounds[soundindex].samples[i]:=waves1[sampleindex1];
     sampleindex1+=1;
   end;
+  soundindex+=1;
   fileclose(fh);
   until (findnext(sr)<>0) or (sampleindex1=16384);
 findclose(sr);
 end;
 
+
+procedure initsamples2;
+
+label p999;
+
+var sr,sr2:tsearchrec;
+    i,j,fh:integer;
+    currentdir2,currentdir3:string;
+    dummy:array[0..15] of byte;
+    intwave:Psmallint;
+    filelength:int64;
+    oldsi:integer;
+
+begin
+currentdir2:='C:\wav\';
+if findfirst(currentdir2+'*',faDirectory,sr)=0 then
+  repeat
+  if (sr.name='.') or (sr.name='..') then goto p999;
+  sounds[soundindex].name:=sr.name ;
+  currentdir3:=currentdir2+sr.name ;
+  oldsi:=sampleindex1;
+  i:=0;
+  if findfirst(currentdir3+'\*.wav',faanyfile,sr2)=0 then
+
+
+   repeat
+   fh:= fileopen(currentdir3+'\'+sr2.name,$40);
+   filelength:=fileseek(fh,0,fsfromend)-44;
+   fileseek(fh,44,fsfrombeginning);
+   waves1[sampleindex1].name:=sr.name+' '+copy(sr2.name,1,length(sr2.name)-4);
+   waves1[sampleindex1].wave:=getmem(4*filelength+1024);
+   waves1[sampleindex1].len:=(filelength) div 2;
+   waves1[sampleindex1].lend:=(filelength div 2)+128;
+   waves1[sampleindex1].lstart:=filelength div 2;
+   waves1[sampleindex1].speed:=1024;  // todo!
+   waves1[sampleindex1].note:=0;
+   waves1[sampleindex1].finetune:=0;
+   intwave:=getmem(filelength);
+   fileread(fh,intwave^,filelength) ;
+   for j:=0 to filelength div 2 do waves1[sampleindex1].wave[j]:=intwave[j]/32768;
+   freemem(intwave);
+   sounds[soundindex].samples[i]:=waves1[sampleindex1];
+   case sr2.name of
+       'G2.wav':begin for j:=0 to 43-12 do sounds[soundindex].notes[j]:=i; sounds[soundindex].samples[i].speed:=44100/fnotes[43]; end;
+       'G#2.wav':begin sounds[soundindex].notes[44-12]:=i; sounds[soundindex].samples[i].speed:=44100/fnotes[44]; end;
+       'A2.wav':begin sounds[soundindex].notes[45-12]:=i;  sounds[soundindex].samples[i].speed:=400.90909090909090909090909090909; end;
+       'A#2.wav':begin sounds[soundindex].notes[46-12]:=i; sounds[soundindex].samples[i].speed:=44100/fnotes[46]; end;
+       'B2.wav':begin sounds[soundindex].notes[47-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[47]; end;
+       'C3.wav':begin sounds[soundindex].notes[48-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[48]; end;
+       'C#3.wav':begin sounds[soundindex].notes[49-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[49]; end;
+       'D3.wav':begin sounds[soundindex].notes[50-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[50]; end;
+       'D#3.wav':begin sounds[soundindex].notes[51-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[51]; end;
+       'E3.wav':begin sounds[soundindex].notes[52-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[52]; end;
+       'F3.wav':begin sounds[soundindex].notes[53-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[53]; end;
+       'F#3.wav':begin sounds[soundindex].notes[54-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[54]; end;
+       'G3.wav':begin sounds[soundindex].notes[55-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[55]; end;
+       'G#3.wav':begin sounds[soundindex].notes[56-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[56]; end;
+       'A3.wav':begin sounds[soundindex].notes[57-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[57]; end;
+       'A#3.wav':begin sounds[soundindex].notes[58-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[58]; end;
+       'B3.wav':begin sounds[soundindex].notes[59-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[59]; end;
+       'C4.wav':begin sounds[soundindex].notes[60-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[60]; end;
+       'C#4.wav':begin sounds[soundindex].notes[61-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[61]; end;
+       'D4.wav':begin sounds[soundindex].notes[62-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[62]; end;
+       'D#4.wav':begin sounds[soundindex].notes[63-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[63]; end;
+       'E4.wav':begin sounds[soundindex].notes[64-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[64]; end;
+       'F4.wav':begin sounds[soundindex].notes[65-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[65]; end;
+       'F#4.wav':begin sounds[soundindex].notes[66-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[66]; end;
+       'G4.wav':begin sounds[soundindex].notes[67-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[67]; end;
+       'G#4.wav':begin sounds[soundindex].notes[68-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[68]; end;
+       'A4.wav': begin sounds[soundindex].notes[69-12]:=i; sounds[soundindex].samples[i].speed:=44100/fnotes[69]; end;
+       'A#4.wav':begin sounds[soundindex].notes[70-12]:=i; sounds[soundindex].samples[i].speed:=44100/fnotes[70]; end;
+       'B4.wav':begin sounds[soundindex].notes[71-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[71]; end;
+       'C5.wav':begin sounds[soundindex].notes[72-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[72]; end;
+       'C#5.wav':begin sounds[soundindex].notes[73-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[73]; end;
+       'D5.wav':begin sounds[soundindex].notes[74-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[74]; end;
+       'D#5.wav':begin sounds[soundindex].notes[75-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[75]; end;
+       'E5.wav':begin sounds[soundindex].notes[76-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[76]; end;
+       'F5.wav':begin for j:=77 to 127 do sounds[soundindex].notes[j-12]:=i;sounds[soundindex].samples[i].speed:=44100/fnotes[77]; end;
+
+       end;
+   sampleindex1+=1;
+   i+=1;
+   until (findnext(sr2)<>0);
+  soundindex+=1;
+
+  p999:
+until (findnext(sr)<>0);
+findclose(sr);
+end;
 
 
 procedure initvoices;
@@ -314,6 +425,7 @@ destructor TFmOperator.destroy;
 
 begin
 freemem(wptr);
+inherited destroy;
 end;
 
 procedure TFmVoice.setfreq(afreq:myfloat);
@@ -435,7 +547,7 @@ pa2:=pa+modulator;
 // stage 3
 // load the sample
 
-if wavemode=0 then
+{if wavemode=0 then
   begin
   if pa>=wlength then
       pa:=pa-wlength;
@@ -450,7 +562,7 @@ if wavemode=0 then
 
 else
 
-  begin
+  begin }
   if pa>=wlend then
     pa:=pa-wlend+wlstart;
 
@@ -460,7 +572,7 @@ else
     repeat pa2:=pa2-wlend+wlstart until pa2<wlend;
   if pa2<0 then
     repeat pa2:=pa2+wlength until pa2>=0;
-  end;
+// end;
 
 intpa:=trunc(pa2);
 pa21:=intpa+1; if pa21>=wlength then
