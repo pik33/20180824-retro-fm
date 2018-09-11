@@ -207,7 +207,7 @@ VMT_$UNIT2_$$_TFORM2:
 	.quad	FORMS$_$TCUSTOMDESIGNCONTROL_$__$$_AUTOADJUSTLAYOUT$crc5F4A49A3
 	.quad	CONTROLS$_$TCONTROL_$__$$_SHOULDAUTOADJUST$BOOLEAN$BOOLEAN
 	.quad	CONTROLS$_$TCONTROL_$__$$_FIXDESIGNFONTSPPI$LONGINT
-	.quad	CONTROLS$_$TCONTROL_$__$$_SCALEFONTSPPI$LONGINT$DOUBLE
+	.quad	CONTROLS$_$TCONTROL_$__$$_SCALEFONTSPPI$DOUBLE
 	.quad	CONTROLS$_$TCONTROL_$__$$_EDITINGDONE
 	.quad	CONTROLS$_$TCONTROL_$__$$_EXECUTEDEFAULTACTION
 	.quad	CONTROLS$_$TCONTROL_$__$$_EXECUTECANCELACTION
@@ -446,8 +446,8 @@ RTTI_$UNIT2_$$_TFORM2:
 	.uleb128	1
 # [43] end.
 	.ascii	"unit2.pas\000"
-	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
-	.ascii	"D:/programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
+	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -861,8 +861,6 @@ RTTI_$UNIT2_$$_TFORM2:
 # Defs - End unit UNIT6502 has index 13
 # Defs - Begin unit UMAIN has index 11
 # Defs - End unit UMAIN has index 11
-# Defs - Begin unit UNIT65032 has index 14
-# Defs - End unit UNIT65032 has index 14
 # Defs - Begin unit SYNTHCONTROL has index 17
 # Defs - End unit SYNTHCONTROL has index 17
 # Defs - Begin unit FFT has index 256
@@ -7497,6 +7495,45 @@ RTTI_$UNIT2_$$_TFORM2:
 	.ascii	"ASCALED\000"
 	.long	.La20-.Ldebug_info0
 	.byte	0
+# Procdef AutoAdjustLayout(<TCustomDesignControl>;TLayoutAdjustmentPolicy;const LongInt;const LongInt;const LongInt;const LongInt);
+	.uleb128	12
+	.ascii	"AUTOADJUSTLAYOUT\000"
+	.byte	1
+	.byte	65
+	.byte	1
+	.byte	1
+	.byte	5
+	.byte	6
+	.byte	16
+	.uleb128	1456
+	.byte	34
+	.byte	2
+# Symbol this
+	.uleb128	11
+	.ascii	"this\000"
+	.byte	1
+	.long	.La36-.Ldebug_info0
+# Symbol AMODE
+	.uleb128	14
+	.ascii	"AMODE\000"
+	.long	.La234-.Ldebug_info0
+# Symbol AFROMPPI
+	.uleb128	14
+	.ascii	"AFROMPPI\000"
+	.long	.La56-.Ldebug_info0
+# Symbol ATOPPI
+	.uleb128	14
+	.ascii	"ATOPPI\000"
+	.long	.La56-.Ldebug_info0
+# Symbol AOLDFORMWIDTH
+	.uleb128	14
+	.ascii	"AOLDFORMWIDTH\000"
+	.long	.La56-.Ldebug_info0
+# Symbol ANEWFORMWIDTH
+	.uleb128	14
+	.ascii	"ANEWFORMWIDTH\000"
+	.long	.La56-.Ldebug_info0
+	.byte	0
 # Procdef DoAutoAdjustLayout(<TCustomDesignControl>;const TLayoutAdjustmentPolicy;const Double;const Double);
 	.uleb128	12
 	.ascii	"DOAUTOADJUSTLAYOUT\000"
@@ -7573,44 +7610,6 @@ RTTI_$UNIT2_$$_TFORM2:
 	.uleb128	14
 	.ascii	"THEOWNER\000"
 	.long	.La24-.Ldebug_info0
-	.byte	0
-# Procdef AutoAdjustLayout(<TCustomDesignControl>;TLayoutAdjustmentPolicy;const LongInt;const LongInt;const LongInt;const LongInt);
-	.uleb128	19
-	.ascii	"AUTOADJUSTLAYOUT\000"
-	.byte	1
-	.byte	65
-	.byte	1
-	.byte	1
-	.byte	5
-	.byte	6
-	.byte	16
-	.uleb128	1456
-	.byte	34
-# Symbol this
-	.uleb128	11
-	.ascii	"this\000"
-	.byte	1
-	.long	.La36-.Ldebug_info0
-# Symbol AMODE
-	.uleb128	14
-	.ascii	"AMODE\000"
-	.long	.La234-.Ldebug_info0
-# Symbol AFROMPPI
-	.uleb128	14
-	.ascii	"AFROMPPI\000"
-	.long	.La56-.Ldebug_info0
-# Symbol ATOPPI
-	.uleb128	14
-	.ascii	"ATOPPI\000"
-	.long	.La56-.Ldebug_info0
-# Symbol AOLDFORMWIDTH
-	.uleb128	14
-	.ascii	"AOLDFORMWIDTH\000"
-	.long	.La56-.Ldebug_info0
-# Symbol ANEWFORMWIDTH
-	.uleb128	14
-	.ascii	"ANEWFORMWIDTH\000"
-	.long	.La56-.Ldebug_info0
 	.byte	0
 	.byte	0
 .La37:
@@ -18653,7 +18652,7 @@ RTTI_$UNIT2_$$_TFORM2:
 	.ascii	"ADESIGNTIMEPPI\000"
 	.long	.La56-.Ldebug_info0
 	.byte	0
-# Procdef DoScaleFontPPI(<TControl>;const TFont;const LongInt;const Double);
+# Procdef DoScaleFontPPI(<TControl>;const TFont;const Double);
 	.uleb128	16
 	.ascii	"DOSCALEFONTPPI\000"
 	.byte	1
@@ -18669,10 +18668,6 @@ RTTI_$UNIT2_$$_TFORM2:
 	.uleb128	14
 	.ascii	"AFONT\000"
 	.long	.La368-.Ldebug_info0
-# Symbol ATOPPI
-	.uleb128	14
-	.ascii	"ATOPPI\000"
-	.long	.La56-.Ldebug_info0
 # Symbol APROPORTION
 	.uleb128	14
 	.ascii	"APROPORTION\000"
@@ -19841,7 +19836,7 @@ RTTI_$UNIT2_$$_TFORM2:
 	.ascii	"ADESIGNTIMEPPI\000"
 	.long	.La56-.Ldebug_info0
 	.byte	0
-# Procdef ScaleFontsPPI(<TControl>;const LongInt;const Double);
+# Procdef ScaleFontsPPI(<TControl>;const Double);
 	.uleb128	19
 	.ascii	"SCALEFONTSPPI\000"
 	.byte	1
@@ -19858,10 +19853,6 @@ RTTI_$UNIT2_$$_TFORM2:
 	.ascii	"this\000"
 	.byte	1
 	.long	.La42-.Ldebug_info0
-# Symbol ATOPPI
-	.uleb128	14
-	.ascii	"ATOPPI\000"
-	.long	.La56-.Ldebug_info0
 # Symbol APROPORTION
 	.uleb128	14
 	.ascii	"APROPORTION\000"

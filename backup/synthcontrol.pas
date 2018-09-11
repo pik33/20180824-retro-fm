@@ -5,7 +5,7 @@ unit synthcontrol;
 interface
 
 uses
-  Classes, SysUtils,math;
+  Classes, SysUtils,math,fmsynth;
 
 
 const maxchannel=30; //
@@ -79,7 +79,7 @@ procedure noteon(channel,note,velocity,preset:integer);
 procedure noteoff(channel, note:integer);
 
 implementation
-uses retro,midi,fmsynth;
+uses retro,midi;
 
 constructor TSynthCtrl.Create(CreateSuspended : boolean);
 
@@ -239,11 +239,11 @@ voices[channel].setfreq(0);
 for i:=0 to 7 do  voices[channel].operators[i].pa:=0;
 for i:=0 to 7 do voices[channel].operators[i].vel:=flogtable[49152+128*velocity];
 
-voices[channel].outmuls[0]:=1;
+voices[channel].outmuls[0]:=3;
 voices[channel].outmuls[1]:=0;
-voices[channel].outmuls[2]:=0;
+voices[channel].outmuls[2]:=1;
 voices[channel].outmuls[3]:=0;
-voices[channel].outmuls[4]:=0;
+voices[channel].outmuls[4]:=1;
 voices[channel].outmuls[5]:=0;
 voices[channel].outmuls[6]:=0;
 voices[channel].outmuls[7]:=0;

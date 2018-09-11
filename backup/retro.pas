@@ -348,7 +348,7 @@ begin
 initvoices;
 initsamples0;
 initsamples1;
-//initsamples2;
+initsamples2;
 r1:=virtualalloc(nil,268435456, MEM_COMMIT or MEM_RESERVE,PAGE_EXECUTE_READWRITE);  // get 256 MB ram
 p2:=virtualalloc(nil,20971520, MEM_COMMIT or MEM_RESERVE,PAGE_READWRITE);  // get the RAM for the framebuffer
 
@@ -1788,7 +1788,7 @@ procedure AudioCallback(userdata:pointer; audio:Pbyte; length:integer); cdecl;
 
 var audio2:psmallint;
     s:tsample;
-    fs:myfloat;
+    fs:TSingleStereoSample;
     t:int64;
     k,i,il,j:integer;
     buf:array[0..25] of byte;
@@ -1808,17 +1808,18 @@ for i:=0 to 959 do
  gain:=gain*1.0000002;
 if gain>1 then gain:=1;
 
-  fs:=0.25*voices[0].getsample;
-  for j:=1 to maxchannel-1 do
-     fs+=0.25*voices[j].getsample;
-  if edelay then fs:=delay1(fs);
-  if gain*abs(fs)>1 then gain:=1/(1.01*abs(fs));
- // gain:=1;
-  fs:=fs*gain;
+  fs:=voices[0].getsample;
+  for j:=1 to maxchannel-1 do fs+=voices[j].getsample;
+
+//  if edelay then fs:=delay1(fs);
+  if gain*abs(fs[0])>1 then gain:=1/(1.01*abs(fs[0]));
+  if gain*abs(fs[1])>1 then gain:=1/(1.01*abs(fs[1]));
+
+ fs[0]:=fs*gain;
+ fs[1]:=fs*gain;
   s1:=round(32767*fs);
-  s[0]:=s1;
-  s[1]:=s1;
- // if ereverb then s:=reverb1(s);
+  s[0]:=round(32767*fs[0]);
+  s[1]:=round(32767*fs[1]);
 
   audio2[2*i]:=s[0];
   audio2[2*i+1]:=s[1];

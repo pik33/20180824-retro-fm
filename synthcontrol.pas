@@ -239,11 +239,11 @@ voices[channel].setfreq(0);
 for i:=0 to 7 do  voices[channel].operators[i].pa:=0;
 for i:=0 to 7 do voices[channel].operators[i].vel:=flogtable[49152+128*velocity];
 
-voices[channel].outmuls[0]:=1;
+voices[channel].outmuls[0]:=2;
 voices[channel].outmuls[1]:=0;
-voices[channel].outmuls[2]:=0;
+voices[channel].outmuls[2]:=2;
 voices[channel].outmuls[3]:=0;
-voices[channel].outmuls[4]:=0;
+voices[channel].outmuls[4]:=2;
 voices[channel].outmuls[5]:=0;
 voices[channel].outmuls[6]:=0;
 voices[channel].outmuls[7]:=0;

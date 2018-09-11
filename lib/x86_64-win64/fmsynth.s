@@ -15,11 +15,11 @@ DEBUGSTART_$FMSYNTH:
 # End asmlist al_begin
 # Begin asmlist al_procedures
 
-.section .text.n_fmsynth$_$initsamples0_$$_fin$0,"x"
+.section .text.n_fmsynth$_$initsamples0_$$_fin$2,"x"
 	.balign 16,0x90
-FMSYNTH$_$INITSAMPLES0_$$_fin$0:
+FMSYNTH$_$INITSAMPLES0_$$_fin$2:
 .Lc1:
-.seh_proc FMSYNTH$_$INITSAMPLES0_$$_fin$0
+.seh_proc FMSYNTH$_$INITSAMPLES0_$$_fin$2
 .Ll1:
 # [fmsynth.pas]
 # [127] begin
@@ -296,7 +296,7 @@ FMSYNTH_$$_INITSAMPLES0:
 	nop
 .Lj8:
 	movq	%rbp,%rcx
-	call	FMSYNTH$_$INITSAMPLES0_$$_fin$0
+	call	FMSYNTH$_$INITSAMPLES0_$$_fin$2
 .Ll29:
 # [153] end;
 	movq	-2768(%rbp),%rbx
@@ -310,7 +310,7 @@ FMSYNTH_$$_INITSAMPLES0:
 	.long	0
 	.rva	.Lj7
 	.rva	.Lj8
-	.rva	FMSYNTH$_$INITSAMPLES0_$$_fin$0
+	.rva	FMSYNTH$_$INITSAMPLES0_$$_fin$2
 
 .section .text.n_fmsynth_$$_initsamples0,"x"
 .seh_endproc
@@ -318,11 +318,11 @@ FMSYNTH_$$_INITSAMPLES0:
 .Lt2:
 .Ll30:
 
-.section .text.n_fmsynth$_$initsamples1_$$_fin$1,"x"
+.section .text.n_fmsynth$_$initsamples1_$$_fin$3,"x"
 	.balign 16,0x90
-FMSYNTH$_$INITSAMPLES1_$$_fin$1:
+FMSYNTH$_$INITSAMPLES1_$$_fin$3:
 .Lc11:
-.seh_proc FMSYNTH$_$INITSAMPLES1_$$_fin$1
+.seh_proc FMSYNTH$_$INITSAMPLES1_$$_fin$3
 .Ll31:
 # [171] begin
 	pushq	%rbp
@@ -912,7 +912,7 @@ FMSYNTH_$$_INITSAMPLES1:
 	nop
 .Lj141:
 	movq	%rbp,%rcx
-	call	FMSYNTH$_$INITSAMPLES1_$$_fin$1
+	call	FMSYNTH$_$INITSAMPLES1_$$_fin$3
 .Ll84:
 # [225] end;
 	movq	-2304(%rbp),%rbx
@@ -932,7 +932,7 @@ FMSYNTH_$$_INITSAMPLES1:
 	.long	0
 	.rva	.Lj140
 	.rva	.Lj141
-	.rva	FMSYNTH$_$INITSAMPLES1_$$_fin$1
+	.rva	FMSYNTH$_$INITSAMPLES1_$$_fin$3
 
 .section .text.n_fmsynth_$$_initsamples1,"x"
 .seh_endproc
@@ -940,11 +940,11 @@ FMSYNTH_$$_INITSAMPLES1:
 .Lt4:
 .Ll85:
 
-.section .text.n_fmsynth$_$initsamples2_$$_fin$2,"x"
+.section .text.n_fmsynth$_$initsamples2_$$_fin$4,"x"
 	.balign 16,0x90
-FMSYNTH$_$INITSAMPLES2_$$_fin$2:
+FMSYNTH$_$INITSAMPLES2_$$_fin$4:
 .Lc21:
-.seh_proc FMSYNTH$_$INITSAMPLES2_$$_fin$2
+.seh_proc FMSYNTH$_$INITSAMPLES2_$$_fin$4
 .Ll86:
 # [241] begin
 	pushq	%rbp
@@ -2257,7 +2257,7 @@ FMSYNTH_$$_INITSAMPLES2:
 	nop
 .Lj391:
 	movq	%rbp,%rcx
-	call	FMSYNTH$_$INITSAMPLES2_$$_fin$2
+	call	FMSYNTH$_$INITSAMPLES2_$$_fin$4
 .Ll196:
 # [318] end;
 	movq	-1432(%rbp),%rbx
@@ -2277,7 +2277,7 @@ FMSYNTH_$$_INITSAMPLES2:
 	.long	0
 	.rva	.Lj390
 	.rva	.Lj391
-	.rva	FMSYNTH$_$INITSAMPLES2_$$_fin$2
+	.rva	FMSYNTH$_$INITSAMPLES2_$$_fin$4
 
 .section .text.n_fmsynth_$$_initsamples2,"x"
 .seh_endproc
@@ -3191,181 +3191,162 @@ FMSYNTH$_$TFMOPERATOR_$__$$_GETSAMPLE$$DOUBLE:
 .seh_savexmm %xmm10, 48
 .seh_endprologue
 .Ll313:
-	movl	328(%rcx),%eax
-.Ll314:
-# [517] if (adsrstate=0) or ((adsrstate=6) and (adsrval=0)) then begin sample:=0; goto p999; end;
-	testl	%eax,%eax
-	je	.Lj1335
-	cmpl	$6,%eax
+# [517] if (adsrstate=0) then begin sample:=0; goto p999; end;
+	cmpl	$0,328(%rcx)
 	jne	.Lj1336
-	movsd	168(%rcx),%xmm1
-	comisd	_$FMSYNTH$_Ld7(%rip),%xmm1
-	jp	.Lj1336
-	jne	.Lj1336
-.Lj1335:
 	movsd	_$FMSYNTH$_Ld7(%rip),%xmm4
-	jmp	.Lj1344
+	jmp	.Lj1339
 .Lj1336:
-.Ll315:
-# [521] freq2:=(freq+(c3*lfo1))*c4*lfo2;
+.Ll314:
+# [519] freq2:=(freq+(c3*lfo1))*c4*lfo2;
 	movsd	16(%rcx),%xmm1
 	mulsd	48(%rcx),%xmm1
 	addsd	8(%rcx),%xmm1
 	mulsd	24(%rcx),%xmm1
 	mulsd	56(%rcx),%xmm1
 	movapd	%xmm1,%xmm2
-.Ll316:
+.Ll315:
 	movq	312(%rcx),%rax
-.Ll317:
-# [535] modulator:=outputtable[0]*mul0
+.Ll316:
+# [523] modulator:=outputtable[0]*mul0
 	movsd	(%rax),%xmm9
 	mulsd	72(%rcx),%xmm9
-.Ll318:
-# [536] +outputtable[1]*mul1
+.Ll317:
+# [524] +outputtable[1]*mul1
 	movsd	8(%rax),%xmm1
 	mulsd	80(%rcx),%xmm1
 	addsd	%xmm9,%xmm1
-.Ll319:
-# [537] +outputtable[2]*mul2
+.Ll318:
+# [525] +outputtable[2]*mul2
 	movsd	16(%rax),%xmm9
 	mulsd	88(%rcx),%xmm9
 	addsd	%xmm1,%xmm9
-.Ll320:
-# [538] +outputtable[3]*mul3
+.Ll319:
+# [526] +outputtable[3]*mul3
 	movsd	24(%rax),%xmm1
 	mulsd	96(%rcx),%xmm1
 	addsd	%xmm9,%xmm1
-.Ll321:
-# [539] +outputtable[4]*mul4
+.Ll320:
+# [527] +outputtable[4]*mul4
 	movsd	32(%rax),%xmm9
 	mulsd	104(%rcx),%xmm9
 	addsd	%xmm1,%xmm9
-.Ll322:
-# [540] +outputtable[5]*mul5
+.Ll321:
+# [528] +outputtable[5]*mul5
 	movsd	40(%rax),%xmm1
 	mulsd	112(%rcx),%xmm1
 	addsd	%xmm9,%xmm1
-.Ll323:
-# [541] +outputtable[6]*mul6
+.Ll322:
+# [529] +outputtable[6]*mul6
 	movsd	48(%rax),%xmm9
 	mulsd	120(%rcx),%xmm9
 	addsd	%xmm1,%xmm9
-.Ll324:
-# [542] +outputtable[7]*mul7;
+.Ll323:
+# [530] +outputtable[7]*mul7;
 	movsd	56(%rax),%xmm1
 	mulsd	128(%rcx),%xmm1
 	addsd	%xmm9,%xmm1
-.Ll325:
+.Ll324:
 	movapd	%xmm1,%xmm3
-.Ll326:
-# [544] pa:=pa+freq2;
+.Ll325:
+# [532] pa:=pa+freq2;
 	movsd	288(%rcx),%xmm1
 	addsd	%xmm2,%xmm1
 	movsd	%xmm1,288(%rcx)
-.Ll327:
-# [545] pa2:=pa+modulator;
+.Ll326:
+# [533] pa2:=pa+modulator;
 	movsd	288(%rcx),%xmm1
 	addsd	%xmm3,%xmm1
 	movsd	%xmm1,296(%rcx)
-.Ll328:
-# [569] if pa>=wlend then
+.Ll327:
+# [537] if pa>=wlend then pa:=pa-wlend+wlstart;
 	movsd	288(%rcx),%xmm1
 	comisd	160(%rcx),%xmm1
-	jp	.Lj1356
-	jnae	.Lj1356
-.Ll329:
-# [570] pa:=pa-wlend+wlstart;
+	jp	.Lj1351
+	jnae	.Lj1351
 	movsd	288(%rcx),%xmm1
 	subsd	160(%rcx),%xmm1
 	addsd	152(%rcx),%xmm1
 	movsd	%xmm1,288(%rcx)
-.Lj1356:
-.Ll330:
-# [572] pa2:=pa+modulator;
+.Lj1351:
+.Ll328:
+# [538] pa2:=pa+modulator;
 	movsd	288(%rcx),%xmm1
 	addsd	%xmm3,%xmm1
 	movsd	%xmm1,296(%rcx)
-.Ll331:
-# [574] if pa2>=wlend then
+.Ll329:
+# [539] if pa2>=wlend then
 	movsd	296(%rcx),%xmm1
 	comisd	160(%rcx),%xmm1
-	jp	.Lj1363
-	jnae	.Lj1363
+	jp	.Lj1358
+	jnae	.Lj1358
 	.balign 8,0x90
-.Lj1365:
-.Ll332:
-# [575] repeat pa2:=pa2-wlend+wlstart until pa2<wlend;
+.Lj1360:
+.Ll330:
+# [540] repeat pa2:=pa2-wlend+wlstart until pa2<wlend;
 	movsd	296(%rcx),%xmm1
 	subsd	160(%rcx),%xmm1
 	addsd	152(%rcx),%xmm1
 	movsd	%xmm1,296(%rcx)
 	movsd	296(%rcx),%xmm1
 	comisd	160(%rcx),%xmm1
-	jp	.Lj1365
-	jnb	.Lj1365
-.Lj1363:
-.Ll333:
-# [576] if pa2<0 then
+	jp	.Lj1360
+	jnb	.Lj1360
+.Lj1358:
+.Ll331:
+# [541] if pa2<0 then
 	movsd	296(%rcx),%xmm1
 	comisd	_$FMSYNTH$_Ld7(%rip),%xmm1
-	jp	.Lj1372
-	jnb	.Lj1372
+	jp	.Lj1367
+	jnb	.Lj1367
 	.balign 8,0x90
-.Lj1374:
-.Ll334:
-# [577] repeat pa2:=pa2+wlength until pa2>=0;
+.Lj1369:
+.Ll332:
+# [542] repeat pa2:=pa2+wlength until pa2>=0;
 	movsd	296(%rcx),%xmm1
 	addsd	144(%rcx),%xmm1
 	movsd	%xmm1,296(%rcx)
 	movsd	296(%rcx),%xmm1
 	comisd	_$FMSYNTH$_Ld7(%rip),%xmm1
-	jp	.Lj1374
-	jnae	.Lj1374
-.Lj1372:
-.Ll335:
-# [580] intpa:=trunc(pa2);
+	jp	.Lj1369
+	jnae	.Lj1369
+.Lj1367:
+.Ll333:
+# [543] intpa:=trunc(pa2);
 	movsd	296(%rcx),%xmm1
 	cvttsd2siq	%xmm1,%rax
 # PeepHole Optimization,MovMov2Mov1
 	movl	%eax,336(%rcx)
-.Ll336:
-# [581] pa21:=intpa+1; if pa21>=wlength then
+.Ll334:
+# [544] pa21:=intpa+1; if pa21>=wlength then pa21:=trunc(wlstart);
 	leal	1(%eax),%eax
 	movl	%eax,%edx
 	cvtsi2sd	%edx,%xmm1
 	comisd	144(%rcx),%xmm1
-	jp	.Lj1385
-	jnae	.Lj1385
-.Ll337:
-# [582] if wavemode=0 then pa21:=0 else pa21:=trunc(wlstart);
-	cmpl	$0,332(%rcx)
-	jne	.Lj1388
-	movl	$0,%edx
-	jmp	.Lj1391
-.Lj1388:
+	jp	.Lj1380
+	jnae	.Lj1380
 	movsd	152(%rcx),%xmm1
 	cvttsd2siq	%xmm1,%rax
 	movl	%eax,%edx
-.Lj1391:
-.Lj1385:
-.Ll338:
-# [583] sample:=wptr[intpa];
+.Lj1380:
+.Ll335:
+# [545] sample:=wptr[intpa];
 	movq	136(%rcx),%r10
 	movslq	336(%rcx),%rax
 	movsd	(%r10,%rax,8),%xmm4
-.Ll339:
-# [584] s2:=wptr[pa21];
+.Ll336:
+# [546] s2:=wptr[pa21];
 	movq	136(%rcx),%r10
 	movslq	%edx,%rax
 	movsd	(%r10,%rax,8),%xmm8
-.Ll340:
-# [585] d:=pa2-intpa;
+.Ll337:
+# [547] d:=pa2-intpa;
 	cvtsi2sdl	336(%rcx),%xmm9
 	movsd	296(%rcx),%xmm1
 	subsd	%xmm9,%xmm1
 	movapd	%xmm1,%xmm6
-.Ll341:
-# [586] sample:=(1-d)*sample+d*s2;
+.Ll338:
+# [548] sample:=(1-d)*sample+d*s2;
 	movsd	_$FMSYNTH$_Ld8(%rip),%xmm1
 	subsd	%xmm6,%xmm1
 	mulsd	%xmm4,%xmm1
@@ -3373,167 +3354,172 @@ FMSYNTH$_$TFMOPERATOR_$__$$_GETSAMPLE$$DOUBLE:
 	mulsd	%xmm8,%xmm9
 	addsd	%xmm1,%xmm9
 	movapd	%xmm9,%xmm4
+.Ll339:
+# [554] if adsrstate=4 then goto p101;
+	cmpl	$4,328(%rcx)
+	je	.Lj1394
+.Ll340:
+# [556] case adsrstate of
+	movl	328(%rcx),%eax
+	cmpl	$1,%eax
+	jl	.Lj1396
+	subl	$1,%eax
+	je	.Lj1401
+	subl	$1,%eax
+	je	.Lj1400
+	subl	$1,%eax
+	je	.Lj1399
+	subl	$2,%eax
+	je	.Lj1398
+	subl	$1,%eax
+	jne	.Lj1396
+.Ll341:
+# [557] 6: if adsrval=0 then adsrstate:=0;
+	movsd	168(%rcx),%xmm1
+	comisd	_$FMSYNTH$_Ld7(%rip),%xmm1
+	jp	.Lj1395
+	jne	.Lj1395
+	movl	$0,328(%rcx)
+	jmp	.Lj1395
+.Lj1398:
 .Ll342:
-# [592] if adsrstate = 5 then   // release
-	cmpl	$5,328(%rcx)
-	jne	.Lj1403
-.Ll343:
-# [594] adsrval:=adsrval+ar4;
+# [560] adsrval:=adsrval+ar4;
 	movsd	168(%rcx),%xmm1
 	addsd	224(%rcx),%xmm1
 	movsd	%xmm1,168(%rcx)
-.Ll344:
-# [595] if ar4<0 then begin if adsrval<av4 then begin adsrval:=av4; adsrstate:=6; end; end
+.Ll343:
+# [561] if ar4<0 then begin if adsrval<av4 then begin adsrval:=av4; adsrstate:=6; end; end
 	movsd	224(%rcx),%xmm1
 	comisd	_$FMSYNTH$_Ld7(%rip),%xmm1
-	jp	.Lj1407
-	jnb	.Lj1407
+	jp	.Lj1410
+	jnb	.Lj1410
 	movsd	168(%rcx),%xmm1
 	comisd	232(%rcx),%xmm1
-	jp	.Lj1424
-	jnb	.Lj1424
+	jp	.Lj1395
+	jnb	.Lj1395
 	movq	232(%rcx),%rax
 	movq	%rax,168(%rcx)
 	movl	$6,328(%rcx)
-	jmp	.Lj1424
-.Lj1407:
+	jmp	.Lj1395
+.Lj1410:
+.Ll344:
+# [562] else begin if adsrval>av4 then begin adsrval:=av4; adsrstate:=6; end; end;
+	movsd	168(%rcx),%xmm1
+	comisd	232(%rcx),%xmm1
+	jp	.Lj1395
+	jna	.Lj1395
+	movq	232(%rcx),%rax
+	movq	%rax,168(%rcx)
+	movl	$6,328(%rcx)
+	jmp	.Lj1395
+.Lj1399:
 .Ll345:
-# [596] else begin if adsrval>av4 then begin adsrval:=av4; adsrstate:=6; end; end;
-	movsd	168(%rcx),%xmm1
-	comisd	232(%rcx),%xmm1
-	jp	.Lj1424
-	jna	.Lj1424
-	movq	232(%rcx),%rax
-	movq	%rax,168(%rcx)
-	movl	$6,328(%rcx)
-.Ll346:
-# [597] goto p101;
-	jmp	.Lj1424
-.Lj1403:
-.Ll347:
-# [599] if adsrstate =   3 then  // release
-	cmpl	$3,328(%rcx)
-	jne	.Lj1426
-.Ll348:
-# [601] adsrval:=adsrval+ar3;
+# [566] adsrval:=adsrval+ar3;
 	movsd	168(%rcx),%xmm1
 	addsd	208(%rcx),%xmm1
 	movsd	%xmm1,168(%rcx)
-.Ll349:
-# [602] if ar3<0 then begin if adsrval<av3 then begin adsrval:=av3; adsrstate:=4; end; end
+.Ll346:
+# [567] if ar3<0 then begin if adsrval<av3 then begin adsrval:=av3; adsrstate:=4; end; end
 	movsd	208(%rcx),%xmm1
 	comisd	_$FMSYNTH$_Ld7(%rip),%xmm1
 	jp	.Lj1430
 	jnb	.Lj1430
 	movsd	168(%rcx),%xmm1
 	comisd	216(%rcx),%xmm1
-	jp	.Lj1424
-	jnb	.Lj1424
+	jp	.Lj1395
+	jnb	.Lj1395
 	movq	216(%rcx),%rax
 	movq	%rax,168(%rcx)
 	movl	$4,328(%rcx)
-	jmp	.Lj1424
+	jmp	.Lj1395
 .Lj1430:
-.Ll350:
-# [603] else begin if adsrval>av3 then begin adsrval:=av3; adsrstate:=4; end; end;
+.Ll347:
+# [568] else begin if adsrval>av3 then begin adsrval:=av3; adsrstate:=4; end; end;
 	movsd	168(%rcx),%xmm1
 	comisd	216(%rcx),%xmm1
-	jp	.Lj1424
-	jna	.Lj1424
+	jp	.Lj1395
+	jna	.Lj1395
 	movq	216(%rcx),%rax
 	movq	%rax,168(%rcx)
 	movl	$4,328(%rcx)
-.Ll351:
-# [604] goto p101;
-	jmp	.Lj1424
-.Lj1426:
-.Ll352:
-# [606] if adsrstate= 2 then  // release
-	cmpl	$2,328(%rcx)
-	jne	.Lj1448
-.Ll353:
-# [608] adsrval:=adsrval+ar2;
+	jmp	.Lj1395
+.Lj1400:
+.Ll348:
+# [572] adsrval:=adsrval+ar2;
 	movsd	168(%rcx),%xmm1
 	addsd	192(%rcx),%xmm1
 	movsd	%xmm1,168(%rcx)
-.Ll354:
-# [609] if ar2<0 then begin if adsrval<av2 then begin adsrval:=av2; adsrstate:=3; end; end
+.Ll349:
+# [573] if ar2<0 then begin if adsrval<av2 then begin adsrval:=av2; adsrstate:=3; end; end
 	movsd	192(%rcx),%xmm1
 	comisd	_$FMSYNTH$_Ld7(%rip),%xmm1
-	jp	.Lj1452
-	jnb	.Lj1452
+	jp	.Lj1450
+	jnb	.Lj1450
 	movsd	168(%rcx),%xmm1
 	comisd	200(%rcx),%xmm1
-	jp	.Lj1424
-	jnb	.Lj1424
+	jp	.Lj1395
+	jnb	.Lj1395
 	movq	200(%rcx),%rax
 	movq	%rax,168(%rcx)
 	movl	$3,328(%rcx)
-	jmp	.Lj1424
-.Lj1452:
-.Ll355:
-# [610] else begin if adsrval>av2 then begin adsrval:=av2; adsrstate:=3; end; end;
+	jmp	.Lj1395
+.Lj1450:
+.Ll350:
+# [574] else begin if adsrval>av2 then begin adsrval:=av2; adsrstate:=3; end; end;
 	movsd	168(%rcx),%xmm1
 	comisd	200(%rcx),%xmm1
-	jp	.Lj1424
-	jna	.Lj1424
+	jp	.Lj1395
+	jna	.Lj1395
 	movq	200(%rcx),%rax
 	movq	%rax,168(%rcx)
 	movl	$3,328(%rcx)
-.Ll356:
-# [611] goto p101;
-	jmp	.Lj1424
-.Lj1448:
-.Ll357:
-# [613] if adsrstate=1 then    // release
-	cmpl	$1,328(%rcx)
-	jne	.Lj1470
-.Ll358:
-# [615] adsrval:=adsrval+ar1;
+	jmp	.Lj1395
+.Lj1401:
+.Ll351:
+# [578] adsrval:=adsrval+ar1;
 	movsd	168(%rcx),%xmm1
 	addsd	176(%rcx),%xmm1
 	movsd	%xmm1,168(%rcx)
-.Ll359:
-# [616] if ar1<0 then begin if adsrval<av1 then begin adsrval:=av1; adsrstate:=2; end; end
+.Ll352:
+# [579] if ar1<0 then begin if adsrval<av1 then begin adsrval:=av1; adsrstate:=2; end; end
 	movsd	176(%rcx),%xmm1
 	comisd	_$FMSYNTH$_Ld7(%rip),%xmm1
-	jp	.Lj1474
-	jnb	.Lj1474
+	jp	.Lj1470
+	jnb	.Lj1470
 	movsd	168(%rcx),%xmm1
 	comisd	184(%rcx),%xmm1
-	jp	.Lj1483
-	jnb	.Lj1483
+	jp	.Lj1395
+	jnb	.Lj1395
 	movq	184(%rcx),%rax
 	movq	%rax,168(%rcx)
 	movl	$2,328(%rcx)
-	jmp	.Lj1483
-.Lj1474:
-.Ll360:
-# [617] else begin if adsrval>av1 then begin  adsrval:=av1; adsrstate:=2; end;  end;
-	movsd	168(%rcx),%xmm1
-	comisd	184(%rcx),%xmm1
-	jp	.Lj1485
-	jna	.Lj1485
-	movq	184(%rcx),%rax
-	movq	%rax,168(%rcx)
-	movl	$2,328(%rcx)
-.Lj1485:
-.Lj1483:
-.Lj1424:
+	jmp	.Lj1395
 .Lj1470:
-.Ll361:
+.Ll353:
+# [580] else begin if adsrval>av1 then begin  adsrval:=av1; adsrstate:=2; end;  end;
+	movsd	168(%rcx),%xmm1
+	comisd	184(%rcx),%xmm1
+	jp	.Lj1395
+	jna	.Lj1395
+	movq	184(%rcx),%rax
+	movq	%rax,168(%rcx)
+	movl	$2,328(%rcx)
+.Lj1396:
+.Lj1395:
+.Lj1394:
+.Ll354:
 	movsd	256(%rcx),%xmm9
-.Ll362:
-# [621] h1:=((1-adsrbias)*adsrval)+adsrbias;
+.Ll355:
+# [584] h1:=((1-adsrbias)*adsrval)+adsrbias;
 	movsd	_$FMSYNTH$_Ld8(%rip),%xmm1
 	subsd	%xmm9,%xmm1
 	mulsd	168(%rcx),%xmm1
 	addsd	%xmm9,%xmm1
 	movapd	%xmm1,%xmm5
-.Ll363:
-# [622] if adsrstate<>0 then sample:=sample*flogtable[round(65535*h1)] else sample:=0;
+.Ll356:
+# [585] if adsrstate<>0 then sample:=sample*flogtable[round(65535*h1)] else sample:=0;
 	cmpl	$0,328(%rcx)
-	je	.Lj1496
+	je	.Lj1492
 	movsd	_$FMSYNTH$_Ld76(%rip),%xmm1
 	mulsd	%xmm5,%xmm1
 	cvtsd2siq	%xmm1,%rax
@@ -3541,38 +3527,38 @@ FMSYNTH$_$TFMOPERATOR_$__$$_GETSAMPLE$$DOUBLE:
 	leaq	U_$FMSYNTH_$$_FLOGTABLE(%rip),%r10
 	mulsd	(%r10,%rax,8),%xmm1
 	movapd	%xmm1,%xmm4
-	jmp	.Lj1499
-.Lj1496:
+	jmp	.Lj1495
+.Lj1492:
 	movsd	_$FMSYNTH$_Ld7(%rip),%xmm4
-.Lj1499:
-.Ll364:
-# [625] h1:=1.000-keysense;
+.Lj1495:
+.Ll357:
+# [588] h1:=1.000-keysense;
 	movsd	_$FMSYNTH$_Ld8(%rip),%xmm1
 	subsd	272(%rcx),%xmm1
 	movapd	%xmm1,%xmm5
-.Ll365:
-# [626] h1:=h1+vel*keysense;
+.Ll358:
+# [589] h1:=h1+vel*keysense;
 	movsd	264(%rcx),%xmm1
 	mulsd	272(%rcx),%xmm1
 	addsd	%xmm5,%xmm1
 	movapd	%xmm1,%xmm5
-.Ll366:
-# [627] h1:=h1*c6*expr;
+.Ll359:
+# [590] h1:=h1*c6*expr;
 	movapd	%xmm5,%xmm1
 	mulsd	40(%rcx),%xmm1
 	mulsd	280(%rcx),%xmm1
 	movapd	%xmm1,%xmm5
-.Ll367:
-# [628] sample:=sample*h1;
+.Ll360:
+# [591] sample:=sample*h1;
 	movapd	%xmm4,%xmm1
 	mulsd	%xmm5,%xmm1
 	movapd	%xmm1,%xmm4
-.Lj1344:
-.Ll368:
-# [644] result:=sample;
+.Lj1339:
+.Ll361:
+# [598] result:=sample;
 	movapd	%xmm4,%xmm0
-.Ll369:
-# [646] end;
+.Ll362:
+# [600] end;
 	movdqa	(%rsp),%xmm6
 	movdqa	16(%rsp),%xmm8
 	movdqa	32(%rsp),%xmm9
@@ -3582,7 +3568,7 @@ FMSYNTH$_$TFMOPERATOR_$__$$_GETSAMPLE$$DOUBLE:
 .seh_endproc
 .Lc68:
 .Lt15:
-.Ll370:
+.Ll363:
 
 .section .text.n_fmsynth_$$_initnotes,"x"
 	.balign 16,0x90
@@ -3591,39 +3577,39 @@ FMSYNTH_$$_INITNOTES:
 .Lc70:
 # Var i located in register edx
 # Var q located in register xmm1
-# [654] begin
+# [608] begin
 # Var q located in register xmm1
-.Ll371:
-# [655] q:=c03;
+.Ll364:
+# [609] q:=c03;
 	movsd	_$FMSYNTH$_Ld77(%rip),%xmm1
 # Var i located in register edx
-.Ll372:
-# [656] for i:=0 to 127 do
+.Ll365:
+# [610] for i:=0 to 127 do
 	movl	$0,%edx
 	subl	$1,%edx
 	.balign 8,0x90
-.Lj1518:
+.Lj1514:
 	addl	$1,%edx
 # PeepHole Optimization,var2a
-.Ll373:
-# [658] fnotes[i]:=q;
+.Ll366:
+# [612] fnotes[i]:=q;
 	movl	%edx,%eax
 	leaq	U_$FMSYNTH_$$_FNOTES(%rip),%rcx
 	movsd	%xmm1,(%rcx,%rax,8)
-.Ll374:
-# [659] q:=q*a212;
+.Ll367:
+# [613] q:=q*a212;
 	movapd	%xmm1,%xmm0
 	mulsd	_$FMSYNTH$_Ld11(%rip),%xmm0
 	movapd	%xmm0,%xmm1
-.Ll375:
+.Ll368:
 	cmpl	$127,%edx
-	jl	.Lj1518
-.Ll376:
-# [661] end;
+	jl	.Lj1514
+.Ll369:
+# [615] end;
 	ret
 .Lc71:
 .Lt13:
-.Ll377:
+.Ll370:
 
 .section .text.n_fmsynth_$$_init$,"x"
 	.balign 16,0x90
@@ -3633,30 +3619,30 @@ INIT$_$FMSYNTH:
 FMSYNTH_$$_init$:
 .Lc72:
 .seh_proc FMSYNTH_$$_init$
-.Ll378:
-# [665] initialization
+.Ll371:
+# [619] initialization
 	leaq	-40(%rsp),%rsp
 .Lc74:
 .seh_stackalloc 40
 .seh_endprologue
-.Ll379:
-# [667] initflogtable;
+.Ll372:
+# [621] initflogtable;
 	call	FMSYNTH_$$_INITFLOGTABLE
-.Ll380:
-# [668] initfsinetable;
+.Ll373:
+# [622] initfsinetable;
 	call	FMSYNTH_$$_INITFSINETABLE
-.Ll381:
-# [669] initnotes;
+.Ll374:
+# [623] initnotes;
 	call	FMSYNTH_$$_INITNOTES
-.Ll382:
-# [673] end.
+.Ll375:
+# [627] end.
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
 .Lc73:
 .Lt8:
-.Ll383:
+.Ll376:
 
 .section .text.n_fmsynth_$$_finalize_implicit$,"x"
 	.balign 16,0x90
@@ -3686,7 +3672,7 @@ FMSYNTH_$$_finalize_implicit$:
 .seh_endproc
 .Lc76:
 .Lt14:
-.Ll384:
+.Ll377:
 # End asmlist al_procedures
 # Begin asmlist al_globals
 
@@ -3787,7 +3773,7 @@ VMT_$FMSYNTH_$$_TFMOPERATOR:
 	.quad	SYSTEM$_$TOBJECT_$__$$_GETHASHCODE$$INT64
 	.quad	SYSTEM$_$TOBJECT_$__$$_TOSTRING$$ANSISTRING
 	.quad	0
-# [675] 
+# [629] 
 	.balign 8
 .Ld78:
 	.byte	11
@@ -4509,14 +4495,6 @@ RTTI_$FMSYNTH_$$_PSINGLESAMPLE:
 	.ascii	"PSinglesample"
 	.quad	RTTI_$SYSTEM_$$_DOUBLE
 
-.section .data.n_RTTI_$FMSYNTH_$$_PSINGLESTEREOSAMPLE,"d"
-	.balign 8
-.globl	RTTI_$FMSYNTH_$$_PSINGLESTEREOSAMPLE
-RTTI_$FMSYNTH_$$_PSINGLESTEREOSAMPLE:
-	.byte	29,19
-	.ascii	"PSingleStereosample"
-	.quad	RTTI_$SYSTEM_$$_DOUBLE
-
 .section .data.n_RTTI_$FMSYNTH_$$_TSINGLESTEREOSAMPLE,"d"
 	.balign 8
 .globl	RTTI_$FMSYNTH_$$_TSINGLESTEREOSAMPLE
@@ -4527,6 +4505,14 @@ RTTI_$FMSYNTH_$$_TSINGLESTEREOSAMPLE:
 	.quad	RTTI_$SYSTEM_$$_DOUBLE
 	.byte	1
 	.quad	RTTI_$SYSTEM_$$_SHORTINT
+
+.section .data.n_RTTI_$FMSYNTH_$$_PSINGLESTEREOSAMPLE,"d"
+	.balign 8
+.globl	RTTI_$FMSYNTH_$$_PSINGLESTEREOSAMPLE
+RTTI_$FMSYNTH_$$_PSINGLESTEREOSAMPLE:
+	.byte	29,19
+	.ascii	"PSingleStereosample"
+	.quad	RTTI_$FMSYNTH_$$_TSINGLESTEREOSAMPLE
 
 .section .data.n_INIT_$FMSYNTH_$$_TFMOPERATOR,"d"
 	.balign 8
@@ -4784,10 +4770,10 @@ INIT_$FMSYNTH_$$_DEF32:
 	.byte	1
 	.quad	RTTI_$SYSTEM_$$_SMALLINT
 
-.section .data.n_RTTI_$FMSYNTH_$$_DEF353,"d"
+.section .data.n_RTTI_$FMSYNTH_$$_DEF352,"d"
 	.balign 8
-.globl	RTTI_$FMSYNTH_$$_DEF353
-RTTI_$FMSYNTH_$$_DEF353:
+.globl	RTTI_$FMSYNTH_$$_DEF352
+RTTI_$FMSYNTH_$$_DEF352:
 	.byte	12
 	.ascii	"\000"
 	.quad	24,3
@@ -4795,10 +4781,10 @@ RTTI_$FMSYNTH_$$_DEF353:
 	.byte	1
 	.quad	RTTI_$SYSTEM_$$_LONGINT
 
-.section .data.n_RTTI_$FMSYNTH_$$_DEF355,"d"
+.section .data.n_RTTI_$FMSYNTH_$$_DEF354,"d"
 	.balign 8
-.globl	RTTI_$FMSYNTH_$$_DEF355
-RTTI_$FMSYNTH_$$_DEF355:
+.globl	RTTI_$FMSYNTH_$$_DEF354
+RTTI_$FMSYNTH_$$_DEF354:
 	.byte	12
 	.ascii	"\000"
 	.quad	24,3
@@ -5132,8 +5118,8 @@ RTTI_$FMSYNTH_$$_DEF355:
 	.byte	8
 	.uleb128	1
 	.ascii	"fmsynth.pas\000"
-	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
-	.ascii	"D:/programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
+	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -5381,7 +5367,7 @@ RTTI_$FMSYNTH_$$_DEF355:
 	.byte	118
 	.sleb128	-2720
 	.long	.La49-.Ldebug_info0
-# Symbol fin$0
+# Symbol fin$2
 # Definition Array[0..15] Of Byte
 .La47:
 	.uleb128	6
@@ -5411,12 +5397,12 @@ RTTI_$FMSYNTH_$$_DEF355:
 	.uleb128	8
 	.long	.La49-.Ldebug_info0
 	.byte	0
-# Procdef $fin$0(<^untyped>) is nested;
+# Procdef $fin$2(<^untyped>) is nested;
 	.uleb128	9
-	.ascii	"fin$0\000"
+	.ascii	"fin$2\000"
 	.byte	1
 	.byte	65
-	.quad	FMSYNTH$_$INITSAMPLES0_$$_fin$0
+	.quad	FMSYNTH$_$INITSAMPLES0_$$_fin$2
 	.quad	.Lt3
 # Symbol parentfp
 	.uleb128	10
@@ -5514,7 +5500,7 @@ RTTI_$FMSYNTH_$$_DEF355:
 	.long	.La1-.Ldebug_info0
 # Symbol FFTI
 # Symbol FFTV
-# Symbol fin$1
+# Symbol fin$3
 # Definition Array[0..255] Of Byte
 .La59:
 	.uleb128	6
@@ -5544,12 +5530,12 @@ RTTI_$FMSYNTH_$$_DEF355:
 	.uleb128	8
 	.long	.La65-.Ldebug_info0
 	.byte	0
-# Procdef $fin$1(<^untyped>) is nested;
+# Procdef $fin$3(<^untyped>) is nested;
 	.uleb128	9
-	.ascii	"fin$1\000"
+	.ascii	"fin$3\000"
 	.byte	1
 	.byte	65
-	.quad	FMSYNTH$_$INITSAMPLES1_$$_fin$1
+	.quad	FMSYNTH$_$INITSAMPLES1_$$_fin$3
 	.quad	.Lt5
 # Symbol parentfp
 	.uleb128	10
@@ -5646,14 +5632,14 @@ RTTI_$FMSYNTH_$$_DEF355:
 	.byte	144
 	.uleb128	23
 	.long	.La1-.Ldebug_info0
-# Symbol fin$2
+# Symbol fin$4
 	.byte	0
-# Procdef $fin$2(<^untyped>) is nested;
+# Procdef $fin$4(<^untyped>) is nested;
 	.uleb128	9
-	.ascii	"fin$2\000"
+	.ascii	"fin$4\000"
 	.byte	1
 	.byte	65
-	.quad	FMSYNTH$_$INITSAMPLES2_$$_fin$2
+	.quad	FMSYNTH$_$INITSAMPLES2_$$_fin$4
 	.quad	.Lt7
 # Symbol parentfp
 	.uleb128	10
@@ -6436,7 +6422,7 @@ RTTI_$FMSYNTH_$$_DEF355:
 	.long	.La93-.Ldebug_info0
 .La93:
 	.uleb128	14
-	.long	.La1-.Ldebug_info0
+	.long	.La7-.Ldebug_info0
 .La6:
 	.uleb128	8
 	.long	.La5-.Ldebug_info0
@@ -9468,7 +9454,7 @@ RTTI_$FMSYNTH_$$_DEF355:
 	.byte	0
 .Lehdebug_line0:
 # === header end ===
-# function: FMSYNTH$_$INITSAMPLES0_$$_fin$0
+# function: FMSYNTH$_$INITSAMPLES0_$$_fin$2
 # [127:1]
 	.byte	0
 	.uleb128	9
@@ -9640,7 +9626,7 @@ RTTI_$FMSYNTH_$$_DEF355:
 	.byte	1
 	.byte	1
 # ###################
-# function: FMSYNTH$_$INITSAMPLES1_$$_fin$1
+# function: FMSYNTH$_$INITSAMPLES1_$$_fin$3
 # [171:1]
 	.byte	0
 	.uleb128	9
@@ -9978,7 +9964,7 @@ RTTI_$FMSYNTH_$$_DEF355:
 	.byte	1
 	.byte	1
 # ###################
-# function: FMSYNTH$_$INITSAMPLES2_$$_fin$2
+# function: FMSYNTH$_$INITSAMPLES2_$$_fin$4
 # [241:1]
 	.byte	0
 	.uleb128	9
@@ -11375,336 +11361,357 @@ RTTI_$FMSYNTH_$$_DEF355:
 	.byte	3
 	.sleb128	514
 	.byte	1
-# [515:1]
-	.byte	2
-	.uleb128	.Ll313-.Ll312
-	.byte	1
 # [517:4]
 	.byte	2
-	.uleb128	.Ll314-.Ll313
+	.uleb128	.Ll313-.Ll312
 	.byte	5
 	.uleb128	4
 	.byte	14
-# [521:14]
+# [519:14]
+	.byte	2
+	.uleb128	.Ll314-.Ll313
+	.byte	5
+	.uleb128	14
+	.byte	14
+# [515:1]
 	.byte	2
 	.uleb128	.Ll315-.Ll314
 	.byte	5
-	.uleb128	14
-	.byte	16
-# [515:1]
+	.uleb128	1
+	.byte	3
+	.sleb128	-4
+	.byte	1
+# [523:26]
 	.byte	2
 	.uleb128	.Ll316-.Ll315
 	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	-6
-	.byte	1
-# [535:26]
+	.uleb128	26
+	.byte	20
+# [524:18]
 	.byte	2
 	.uleb128	.Ll317-.Ll316
 	.byte	5
-	.uleb128	26
-	.byte	32
-# [536:16]
+	.uleb128	18
+	.byte	13
+# [525:20]
 	.byte	2
 	.uleb128	.Ll318-.Ll317
 	.byte	5
-	.uleb128	16
+	.uleb128	20
 	.byte	13
-# [537:16]
+# [526:22]
 	.byte	2
 	.uleb128	.Ll319-.Ll318
+	.byte	5
+	.uleb128	22
 	.byte	13
-# [538:16]
+# [527:24]
 	.byte	2
 	.uleb128	.Ll320-.Ll319
+	.byte	5
+	.uleb128	24
 	.byte	13
-# [539:16]
+# [528:26]
 	.byte	2
 	.uleb128	.Ll321-.Ll320
+	.byte	5
+	.uleb128	26
 	.byte	13
-# [540:16]
+# [529:28]
 	.byte	2
 	.uleb128	.Ll322-.Ll321
+	.byte	5
+	.uleb128	28
 	.byte	13
-# [541:16]
+# [530:30]
 	.byte	2
 	.uleb128	.Ll323-.Ll322
+	.byte	5
+	.uleb128	30
 	.byte	13
-# [542:16]
+# [523:1]
 	.byte	2
 	.uleb128	.Ll324-.Ll323
-	.byte	13
-# [535:1]
-	.byte	2
-	.uleb128	.Ll325-.Ll324
 	.byte	5
 	.uleb128	1
 	.byte	3
 	.sleb128	-7
 	.byte	1
-# [544:7]
+# [532:7]
 	.byte	2
-	.uleb128	.Ll326-.Ll325
+	.uleb128	.Ll325-.Ll324
 	.byte	5
 	.uleb128	7
 	.byte	21
-# [545:8]
+# [533:8]
 	.byte	2
-	.uleb128	.Ll327-.Ll326
+	.uleb128	.Ll326-.Ll325
 	.byte	5
 	.uleb128	8
 	.byte	13
-# [569:8]
+# [537:6]
+	.byte	2
+	.uleb128	.Ll327-.Ll326
+	.byte	5
+	.uleb128	6
+	.byte	16
+# [538:8]
 	.byte	2
 	.uleb128	.Ll328-.Ll327
-	.byte	36
-# [570:11]
+	.byte	5
+	.uleb128	8
+	.byte	13
+# [539:7]
 	.byte	2
 	.uleb128	.Ll329-.Ll328
 	.byte	5
-	.uleb128	11
+	.uleb128	7
 	.byte	13
-# [572:10]
+# [540:20]
 	.byte	2
 	.uleb128	.Ll330-.Ll329
 	.byte	5
-	.uleb128	10
-	.byte	14
-# [574:9]
+	.uleb128	20
+	.byte	13
+# [541:7]
 	.byte	2
 	.uleb128	.Ll331-.Ll330
 	.byte	5
-	.uleb128	9
-	.byte	14
-# [575:20]
+	.uleb128	7
+	.byte	13
+# [542:20]
 	.byte	2
 	.uleb128	.Ll332-.Ll331
 	.byte	5
 	.uleb128	20
 	.byte	13
-# [576:9]
+# [543:18]
 	.byte	2
 	.uleb128	.Ll333-.Ll332
 	.byte	5
-	.uleb128	9
+	.uleb128	18
 	.byte	13
-# [577:20]
+# [544:12]
 	.byte	2
 	.uleb128	.Ll334-.Ll333
 	.byte	5
-	.uleb128	20
+	.uleb128	12
 	.byte	13
-# [580:18]
+# [545:9]
 	.byte	2
 	.uleb128	.Ll335-.Ll334
 	.byte	5
-	.uleb128	18
-	.byte	15
-# [581:12]
+	.uleb128	9
+	.byte	13
+# [546:5]
 	.byte	2
 	.uleb128	.Ll336-.Ll335
 	.byte	5
-	.uleb128	12
+	.uleb128	5
 	.byte	13
-# [582:19]
+# [547:8]
 	.byte	2
 	.uleb128	.Ll337-.Ll336
 	.byte	5
-	.uleb128	19
+	.uleb128	8
 	.byte	13
-# [583:9]
+# [548:9]
 	.byte	2
 	.uleb128	.Ll338-.Ll337
 	.byte	5
 	.uleb128	9
 	.byte	13
-# [584:5]
+# [554:13]
 	.byte	2
 	.uleb128	.Ll339-.Ll338
 	.byte	5
-	.uleb128	5
-	.byte	13
-# [585:8]
+	.uleb128	13
+	.byte	18
+# [556:1]
 	.byte	2
 	.uleb128	.Ll340-.Ll339
 	.byte	5
-	.uleb128	8
-	.byte	13
-# [586:9]
+	.uleb128	1
+	.byte	14
+# [557:18]
 	.byte	2
 	.uleb128	.Ll341-.Ll340
 	.byte	5
-	.uleb128	9
+	.uleb128	18
 	.byte	13
-# [592:14]
+# [560:26]
 	.byte	2
 	.uleb128	.Ll342-.Ll341
 	.byte	5
-	.uleb128	14
-	.byte	18
-# [594:19]
+	.uleb128	26
+	.byte	15
+# [561:16]
 	.byte	2
 	.uleb128	.Ll343-.Ll342
 	.byte	5
-	.uleb128	19
-	.byte	14
-# [595:9]
+	.uleb128	16
+	.byte	13
+# [562:37]
 	.byte	2
 	.uleb128	.Ll344-.Ll343
 	.byte	5
-	.uleb128	9
+	.uleb128	37
 	.byte	13
-# [596:31]
+# [566:27]
 	.byte	2
 	.uleb128	.Ll345-.Ll344
 	.byte	5
-	.uleb128	31
-	.byte	13
-# [597:3]
+	.uleb128	27
+	.byte	16
+# [567:17]
 	.byte	2
 	.uleb128	.Ll346-.Ll345
 	.byte	5
-	.uleb128	3
+	.uleb128	17
 	.byte	13
-# [599:15]
+# [568:39]
 	.byte	2
 	.uleb128	.Ll347-.Ll346
 	.byte	5
-	.uleb128	15
-	.byte	14
-# [601:19]
+	.uleb128	39
+	.byte	13
+# [572:28]
 	.byte	2
 	.uleb128	.Ll348-.Ll347
 	.byte	5
-	.uleb128	19
-	.byte	14
-# [602:9]
+	.uleb128	28
+	.byte	16
+# [573:17]
 	.byte	2
 	.uleb128	.Ll349-.Ll348
 	.byte	5
-	.uleb128	9
+	.uleb128	17
 	.byte	13
-# [603:31]
+# [574:39]
 	.byte	2
 	.uleb128	.Ll350-.Ll349
 	.byte	5
-	.uleb128	31
+	.uleb128	39
 	.byte	13
-# [604:3]
+# [578:27]
 	.byte	2
 	.uleb128	.Ll351-.Ll350
 	.byte	5
-	.uleb128	3
-	.byte	13
-# [606:17]
+	.uleb128	27
+	.byte	16
+# [579:17]
 	.byte	2
 	.uleb128	.Ll352-.Ll351
 	.byte	5
 	.uleb128	17
-	.byte	14
-# [608:20]
+	.byte	13
+# [580:40]
 	.byte	2
 	.uleb128	.Ll353-.Ll352
 	.byte	5
-	.uleb128	20
-	.byte	14
-# [609:9]
+	.uleb128	40
+	.byte	13
+# [515:1]
 	.byte	2
 	.uleb128	.Ll354-.Ll353
 	.byte	5
-	.uleb128	9
-	.byte	13
-# [610:31]
+	.uleb128	1
+	.byte	3
+	.sleb128	-65
+	.byte	1
+# [584:6]
 	.byte	2
 	.uleb128	.Ll355-.Ll354
 	.byte	5
-	.uleb128	31
-	.byte	13
-# [611:3]
+	.uleb128	6
+	.byte	81
+# [585:13]
 	.byte	2
 	.uleb128	.Ll356-.Ll355
 	.byte	5
-	.uleb128	3
+	.uleb128	13
 	.byte	13
-# [613:17]
+# [588:10]
 	.byte	2
 	.uleb128	.Ll357-.Ll356
 	.byte	5
-	.uleb128	17
-	.byte	14
-# [615:19]
+	.uleb128	10
+	.byte	15
+# [589:11]
 	.byte	2
 	.uleb128	.Ll358-.Ll357
 	.byte	5
-	.uleb128	19
-	.byte	14
-# [616:9]
+	.uleb128	11
+	.byte	13
+# [590:7]
 	.byte	2
 	.uleb128	.Ll359-.Ll358
 	.byte	5
-	.uleb128	9
+	.uleb128	7
 	.byte	13
-# [617:32]
+# [591:15]
 	.byte	2
 	.uleb128	.Ll360-.Ll359
 	.byte	5
-	.uleb128	32
+	.uleb128	15
 	.byte	13
-# [515:1]
+# [598:1]
 	.byte	2
 	.uleb128	.Ll361-.Ll360
 	.byte	5
 	.uleb128	1
-	.byte	3
-	.sleb128	-102
-	.byte	1
-# [621:6]
+	.byte	19
+# [600:1]
 	.byte	2
 	.uleb128	.Ll362-.Ll361
-	.byte	5
-	.uleb128	6
-	.byte	118
-# [622:13]
+	.byte	14
+	.byte	0
+	.uleb128	9
 	.byte	2
-	.uleb128	.Ll363-.Ll362
-	.byte	5
-	.uleb128	13
-	.byte	13
-# [625:10]
+	.quad	.Ll363
+	.byte	0
+	.byte	1
+	.byte	1
+# ###################
+# function: FMSYNTH_$$_INITNOTES
+# [609:1]
+	.byte	0
+	.uleb128	9
 	.byte	2
-	.uleb128	.Ll364-.Ll363
+	.quad	.Ll364
 	.byte	5
-	.uleb128	10
-	.byte	15
-# [626:11]
+	.uleb128	1
+	.byte	3
+	.sleb128	608
+	.byte	1
+# [610:1]
 	.byte	2
 	.uleb128	.Ll365-.Ll364
-	.byte	5
-	.uleb128	11
 	.byte	13
-# [627:7]
+# [612:10]
 	.byte	2
 	.uleb128	.Ll366-.Ll365
 	.byte	5
-	.uleb128	7
-	.byte	13
-# [628:15]
+	.uleb128	10
+	.byte	14
+# [613:7]
 	.byte	2
 	.uleb128	.Ll367-.Ll366
 	.byte	5
-	.uleb128	15
+	.uleb128	7
 	.byte	13
-# [644:1]
+# [610:1]
 	.byte	2
 	.uleb128	.Ll368-.Ll367
 	.byte	5
 	.uleb128	1
-	.byte	28
-# [646:1]
+	.byte	3
+	.sleb128	-3
+	.byte	1
+# [615:1]
 	.byte	2
 	.uleb128	.Ll369-.Ll368
-	.byte	14
+	.byte	17
 	.byte	0
 	.uleb128	9
 	.byte	2
@@ -11713,8 +11720,9 @@ RTTI_$FMSYNTH_$$_DEF355:
 	.byte	1
 	.byte	1
 # ###################
-# function: FMSYNTH_$$_INITNOTES
-# [655:1]
+# function: INIT$_$FMSYNTH
+# function: FMSYNTH_$$_init$
+# [619:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
@@ -11722,76 +11730,28 @@ RTTI_$FMSYNTH_$$_DEF355:
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	654
+	.sleb128	618
 	.byte	1
-# [656:1]
+# [621:1]
 	.byte	2
 	.uleb128	.Ll372-.Ll371
-	.byte	13
-# [658:10]
+	.byte	14
+# [622:1]
 	.byte	2
 	.uleb128	.Ll373-.Ll372
-	.byte	5
-	.uleb128	10
-	.byte	14
-# [659:7]
+	.byte	13
+# [623:1]
 	.byte	2
 	.uleb128	.Ll374-.Ll373
-	.byte	5
-	.uleb128	7
 	.byte	13
-# [656:1]
+# [627:1]
 	.byte	2
 	.uleb128	.Ll375-.Ll374
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	-3
-	.byte	1
-# [661:1]
-	.byte	2
-	.uleb128	.Ll376-.Ll375
-	.byte	17
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll377
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: INIT$_$FMSYNTH
-# function: FMSYNTH_$$_init$
-# [665:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll378
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	664
-	.byte	1
-# [667:1]
-	.byte	2
-	.uleb128	.Ll379-.Ll378
-	.byte	14
-# [668:1]
-	.byte	2
-	.uleb128	.Ll380-.Ll379
-	.byte	13
-# [669:1]
-	.byte	2
-	.uleb128	.Ll381-.Ll380
-	.byte	13
-# [673:1]
-	.byte	2
-	.uleb128	.Ll382-.Ll381
 	.byte	16
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll383
+	.quad	.Ll376
 	.byte	0
 	.byte	1
 	.byte	1
@@ -11801,7 +11761,7 @@ RTTI_$FMSYNTH_$$_DEF355:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll384
+	.quad	.Ll377
 	.byte	0
 	.byte	1
 	.byte	1

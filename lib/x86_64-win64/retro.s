@@ -3055,11 +3055,11 @@ RETRO_$$_PUTCHARZ$LONGINT$LONGINT$CHAR$LONGINT$LONGINT$LONGINT:
 .Lt24:
 .Ll395:
 
-.section .text.n_retro$_$outtextxy$crc6744c382_$$_fin$7,"x"
+.section .text.n_retro$_$outtextxy$crc6744c382_$$_fin$0,"x"
 	.balign 16,0x90
-RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$7:
+RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$0:
 .Lc81:
-.seh_proc RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$7
+.seh_proc RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$0
 .Ll396:
 # [950] begin
 	pushq	%rbp
@@ -3156,7 +3156,7 @@ RETRO_$$_OUTTEXTXY$LONGINT$LONGINT$ANSISTRING$LONGINT:
 	nop
 .Lj1107:
 	movq	%rbp,%rcx
-	call	RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$7
+	call	RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$0
 .Ll401:
 # [952] end;
 	movq	-48(%rbp),%rbx
@@ -3173,7 +3173,7 @@ RETRO_$$_OUTTEXTXY$LONGINT$LONGINT$ANSISTRING$LONGINT:
 	.long	0
 	.rva	.Lj1106
 	.rva	.Lj1107
-	.rva	RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$7
+	.rva	RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$0
 
 .section .text.n_retro_$$_outtextxy$longint$longint$ansistring$longint,"x"
 .seh_endproc
@@ -3181,11 +3181,11 @@ RETRO_$$_OUTTEXTXY$LONGINT$LONGINT$ANSISTRING$LONGINT:
 .Lt9:
 .Ll402:
 
-.section .text.n_retro$_$outtextxyz$crcca10a6fc_$$_fin$8,"x"
+.section .text.n_retro$_$outtextxyz$crcca10a6fc_$$_fin$1,"x"
 	.balign 16,0x90
-RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$8:
+RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$1:
 .Lc91:
-.seh_proc RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$8
+.seh_proc RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$1
 .Ll403:
 # [958] begin
 	pushq	%rbp
@@ -3296,7 +3296,7 @@ RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT:
 	nop
 .Lj1133:
 	movq	%rbp,%rcx
-	call	RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$8
+	call	RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$1
 .Ll408:
 # [960] end;
 	movq	-64(%rbp),%rbx
@@ -3315,7 +3315,7 @@ RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT:
 	.long	0
 	.rva	.Lj1132
 	.rva	.Lj1133
-	.rva	RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$8
+	.rva	RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$1
 
 .section .text.n_retro_$$_outtextxyz$longint$longint$ansistring$longint$longint$longint,"x"
 .seh_endproc
@@ -8975,8 +8975,8 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.uleb128	1
 # [189] var
 	.ascii	"retro.pas\000"
-	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
-	.ascii	"D:/programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
+	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -9936,14 +9936,14 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.byte	144
 	.uleb128	13
 	.long	.La16-.Ldebug_info0
-# Symbol fin$7
+# Symbol fin$0
 	.byte	0
-# Procdef $fin$7(<^untyped>) is nested;
+# Procdef $fin$0(<^untyped>) is nested;
 	.uleb128	9
-	.ascii	"fin$7\000"
+	.ascii	"fin$0\000"
 	.byte	1
 	.byte	65
-	.quad	RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$7
+	.quad	RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$0
 	.quad	.Lt10
 # Symbol parentfp
 	.uleb128	6
@@ -10649,14 +10649,14 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.byte	144
 	.uleb128	13
 	.long	.La16-.Ldebug_info0
-# Symbol fin$8
+# Symbol fin$1
 	.byte	0
-# Procdef $fin$8(<^untyped>) is nested;
+# Procdef $fin$1(<^untyped>) is nested;
 	.uleb128	9
-	.ascii	"fin$8\000"
+	.ascii	"fin$1\000"
 	.byte	1
 	.byte	65
-	.quad	RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$8
+	.quad	RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$1
 	.quad	.Lt26
 # Symbol parentfp
 	.uleb128	6
@@ -22016,7 +22016,7 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.byte	1
 	.byte	1
 # ###################
-# function: RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$7
+# function: RETRO$_$OUTTEXTXY$crc6744C382_$$_fin$0
 # [950:1]
 	.byte	0
 	.uleb128	9
@@ -22066,7 +22066,7 @@ RTTI_$RETRO_$$_TFILTERTABLE:
 	.byte	1
 	.byte	1
 # ###################
-# function: RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$8
+# function: RETRO$_$OUTTEXTXYZ$crcCA10A6FC_$$_fin$1
 # [958:1]
 	.byte	0
 	.uleb128	9

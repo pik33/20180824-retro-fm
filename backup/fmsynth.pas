@@ -13,7 +13,7 @@ type myfloat=double;
 type PSinglesample=^TSinglesample;
      TSingleSample=myfloat; //array[0..1] of single;
 
-type PSingleStereosample=^TSinglesample;
+type PSingleStereosample=^TSingleStereosample;
      TSingleStereoSample=array[0..1] of myfloat;
 
 type TFmOperator=class
@@ -236,6 +236,7 @@ var sr,sr2:tsearchrec;
     intwave:Psmallint;
     filelength:int64;
     oldsi:integer;
+    maxval:double;
 
 begin
 currentdir2:='C:\wav\';
@@ -263,7 +264,9 @@ if findfirst(currentdir2+'*',faDirectory,sr)=0 then
    waves1[sampleindex1].finetune:=0;
    intwave:=getmem(filelength);
    fileread(fh,intwave^,filelength) ;
-   for j:=0 to filelength div 2 do waves1[sampleindex1].wave[j]:=intwave[j]/32768;
+   maxval:=0;
+   for j:=0 to filelength div 2 do begin waves1[sampleindex1].wave[j]:=intwave[j]/32768; if (abs(intwave[j])/32768)>maxval then maxval:=abs(intwave[j])/32768; end;
+   for j:=0 to (filelength div 2)-1 do waves1[sampleindex1].wave[j]*=1/maxval;
    freemem(intwave);
    sounds[soundindex].samples[i]:=waves1[sampleindex1];
    case sr2.name of
@@ -397,6 +400,13 @@ result[0]:=a[0]*b;
 result[1]:=a[1]*b;
 end;
 
+operator +=(a:TSingleStereoSample;b:a:TSingleStereoSample):TSingleStereoSample; inline;
+
+begin
+result[0]:=a[0]+b[0];
+result[1]:=a[1]+b[1];
+end;
+
 constructor TFmOperator.create(mode:integer;outs:pointer);
 
 var q:myfloat;
@@ -496,13 +506,11 @@ end;
 
 
 
-function TFmOperator.getsample:TSingleSample;
+function TFmOperator.getsample:TStereoSample;
 
 label p101,p999;
 
-var res64a:myfloat;
-    modulator:myfloat;
-    i,j:integer;
+var modulator:myfloat;
     sample:TSingleSample;
     freq2:myfloat;
     h1:myfloat;
@@ -511,110 +519,73 @@ var res64a:myfloat;
 
 begin
 
-if (adsrstate=0) or ((adsrstate=6) and (adsrval=0)) then begin sample:=0; goto p999; end;
-//ft:=gettime;
-//for i:=1 to 1000 do begin
+if (adsrstate=0) then begin sample:=0; goto p999; end;
 
 freq2:=(freq+(c3*lfo1))*c4*lfo2;
 
 // stage2: compute the modulator
-           {
-h1:= outputtable[0]*mul0  ;
-h1+= outputtable[1]*mul1  ;
-h1+= outputtable[2]*mul2  ;
-h1+= outputtable[3]*mul3  ;
-h1+= outputtable[4]*mul4  ;
-h1+= outputtable[5]*mul5  ;
-h1+= outputtable[6]*mul6  ;
-h1+= outputtable[7]*mul7  ;
-       modulator:=h1;}
 
 modulator:=outputtable[0]*mul0
-+outputtable[1]*mul1
-+outputtable[2]*mul2
-+outputtable[3]*mul3
-+outputtable[4]*mul4
-+outputtable[5]*mul5
-+outputtable[6]*mul6
-+outputtable[7]*mul7;
+  +outputtable[1]*mul1
+    +outputtable[2]*mul2
+      +outputtable[3]*mul3
+        +outputtable[4]*mul4
+          +outputtable[5]*mul5
+            +outputtable[6]*mul6
+              +outputtable[7]*mul7;
 
 pa:=pa+freq2;
 pa2:=pa+modulator;
 
-// pa is 32 bit; n bit used for addressing
-// todo: what if the sample is looped??
+// stage 3: get a sample
 
-// stage 3
-// load the sample
-
-{if wavemode=0 then
-  begin
-  if pa>=wlength then
-      pa:=pa-wlength;
-
-  pa2:=pa+modulator;
-
-  if pa2>=wlength then
-    repeat pa2:=pa2-wlength until pa2<wlength;
-  if pa2<0 then
-    repeat pa2:=pa2+wlength until pa2>0;
-  end
-
-else
-
-  begin }
-  if pa>=wlend then
-    pa:=pa-wlend+wlstart;
-
-  pa2:=pa+modulator;
-
-  if pa2>=wlend then
+if pa>=wlend then pa:=pa-wlend+wlstart;
+pa2:=pa+modulator;
+if pa2>=wlend then
     repeat pa2:=pa2-wlend+wlstart until pa2<wlend;
-  if pa2<0 then
+if pa2<0 then
     repeat pa2:=pa2+wlength until pa2>=0;
-// end;
-
 intpa:=trunc(pa2);
-pa21:=intpa+1; if pa21>=wlength then
-       if wavemode=0 then pa21:=0 else pa21:=trunc(wlstart);
+pa21:=intpa+1; if pa21>=wlength then pa21:=trunc(wlstart);
 sample:=wptr[intpa];
 s2:=wptr[pa21];
 d:=pa2-intpa;
 sample:=(1-d)*sample+d*s2;
- //        stage 4
- //       Compute ADSR
 
-// adsrstates: 0-idle, 1 attack,2 decay1, 3 decay2, 4 sustain, 5 release
+// stage 4: compute ADSR
 
-if adsrstate = 5 then   // release
-  begin
-  adsrval:=adsrval+ar4;
-  if ar4<0 then begin if adsrval<av4 then begin adsrval:=av4; adsrstate:=6; end; end
-         else begin if adsrval>av4 then begin adsrval:=av4; adsrstate:=6; end; end;
-  goto p101;
-  end;
- if adsrstate =   3 then  // release
-  begin
-  adsrval:=adsrval+ar3;
-  if ar3<0 then begin if adsrval<av3 then begin adsrval:=av3; adsrstate:=4; end; end
-         else begin if adsrval>av3 then begin adsrval:=av3; adsrstate:=4; end; end;
-  goto p101;
-  end;
-    if adsrstate= 2 then  // release
-  begin
-   adsrval:=adsrval+ar2;
-  if ar2<0 then begin if adsrval<av2 then begin adsrval:=av2; adsrstate:=3; end; end
-         else begin if adsrval>av2 then begin adsrval:=av2; adsrstate:=3; end; end;
-  goto p101;
-  end;
-    if adsrstate=1 then    // release
-  begin
-  adsrval:=adsrval+ar1;
-  if ar1<0 then begin if adsrval<av1 then begin adsrval:=av1; adsrstate:=2; end; end
-          else begin if adsrval>av1 then begin  adsrval:=av1; adsrstate:=2; end;  end;
+// adsrstates: 0 idle, 1 attack,2 decay1, 3 decay2, 4 sustain, 5 release 6 end
+
+if adsrstate=4 then goto p101;
+
+case adsrstate of
+    6: if adsrval=0 then adsrstate:=0;
+    5:   // release
+         begin
+         adsrval:=adsrval+ar4;
+         if ar4<0 then begin if adsrval<av4 then begin adsrval:=av4; adsrstate:=6; end; end
+               else begin if adsrval>av4 then begin adsrval:=av4; adsrstate:=6; end; end;
+         end;
+    3:   // decay2
+          begin
+          adsrval:=adsrval+ar3;
+          if ar3<0 then begin if adsrval<av3 then begin adsrval:=av3; adsrstate:=4; end; end
+                 else begin if adsrval>av3 then begin adsrval:=av3; adsrstate:=4; end; end;
+          end;
+    2:   // decay
+          begin
+           adsrval:=adsrval+ar2;
+          if ar2<0 then begin if adsrval<av2 then begin adsrval:=av2; adsrstate:=3; end; end
+                 else begin if adsrval>av2 then begin adsrval:=av2; adsrstate:=3; end; end;
+          end;
+    1:  // attack
+          begin
+          adsrval:=adsrval+ar1;
+          if ar1<0 then begin if adsrval<av1 then begin adsrval:=av1; adsrstate:=2; end; end
+                  else begin if adsrval>av1 then begin  adsrval:=av1; adsrstate:=2; end;  end;
+         end;
+    end;
 p101:
- end;
-
 h1:=((1-adsrbias)*adsrval)+adsrbias;
 if adsrstate<>0 then sample:=sample*flogtable[round(65535*h1)] else sample:=0;
 
@@ -623,22 +594,14 @@ h1:=1.000-keysense;
 h1:=h1+vel*keysense;
 h1:=h1*c6*expr;
 sample:=sample*h1;
-//sample:=sample*(1.000-keysense+vel*keysense);
-//sample:=sample*c6*expr;
-//if sample>1 then
-//  sample:=1;
-//if sample<-1 then
-//  sample:=-1;
-
-
-
 
 // TODO: pan
 //                       end;
 //ftt:=gettime-ft;
 //if abs(sample)>1 then begin box(200,200,200,200,0); outtextxy(200,200,floattostr(sample),15); outtextxy(200,220,floattostr(pa2),15); outtextxy(200,240,floattostr(pa21),15); end;
 p999:
-result:=sample;
+result[0]:=sample*(1-pan);
+result[1]:=sample*(1+pan);
 
 end;
 
