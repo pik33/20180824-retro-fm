@@ -42,7 +42,7 @@ var channels:array[0..maxchannel-1] of int64;
     notes:array[0..127,0..4] of integer;
     instruments:array[0..192] of TInstrDesc;
 
-    ss:string;
+    ss1:string;
     keymap2:array[0..255] of byte=(
  //    0   1   2   3   4   5   6   7   8   9
      000,000,000,000,049,057,053,000,000,054, // 000
@@ -222,7 +222,7 @@ else
   result:=q;
   channels[q]:=gettime;
   end;
-    box(1000,200,200,100,0); outtextxyz(1000,200,inttostr(result),15,2,2);
+//    box(1000,200,200,100,0); outtextxyz(1000,200,inttostr(result),15,2,2);
 end;
 
 procedure noteon(channel,note,velocity,preset:integer);
@@ -239,7 +239,7 @@ voices[channel].setfreq(0);
 for i:=0 to 7 do  voices[channel].operators[i].pa:=0;
 for i:=0 to 7 do voices[channel].operators[i].vel:=flogtable[49152+128*velocity];
 
-voices[channel].outmuls[0]:=3;
+voices[channel].outmuls[0]:=1;
 voices[channel].outmuls[1]:=0;
 voices[channel].outmuls[2]:=1;
 voices[channel].outmuls[3]:=0;
@@ -255,7 +255,7 @@ for i:=0 to 7 do  voices[channel].operators[i].wptr:=sounds[waveidx].samples[sou
 for i:=0 to 7 do  voices[channel].operators[i].wlend:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].lend ;
 for i:=0 to 7 do  voices[channel].operators[i].wlstart:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].lstart;
 for i:=0 to 7 do  voices[channel].operators[i].wlength:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].len;
-ss:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].name;
+ss1:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].name;
 for i:=0 to 7 do  voices[channel].operators[i].freqmod:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].speed*power(2,transpose);
 //voices[channel].operators[0].mul0:=waves1[waveidx].speed/8;
 for i:=0 to 7 do  voices[channel].operators[i].mul0:=0;
@@ -267,10 +267,10 @@ for i:=0 to 7 do  voices[channel].operators[i].mul5:=0;
 for i:=0 to 7 do  voices[channel].operators[i].mul6:=0;
 for i:=0 to 7 do  voices[channel].operators[i].mul7:=0;
 //for i:=0 to 7 do  voices[channel].operators[i].ar1:=1;
-for i:=0 to 7 do  voices[channel].operators[i].ar2:=0;
-for i:=0 to 7 do  voices[channel].operators[i].ar3:=0;
-for i:=0 to 7 do  voices[channel].operators[i].av2:=1;
-for i:=0 to 7 do  voices[channel].operators[i].av3:=1;
+//for i:=0 to 7 do  voices[channel].operators[i].ar2:=0;
+//for i:=0 to 7 do  voices[channel].operators[i].ar3:=0;
+//for i:=0 to 7 do  voices[channel].operators[i].av2:=1;
+//for i:=0 to 7 do  voices[channel].operators[i].av3:=1;
 //for i:=0 to 7 do  voices[channel].operators[i].ar1:=1;
 
 voices[channel].setfreq(f);

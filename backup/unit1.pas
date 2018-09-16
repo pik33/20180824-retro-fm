@@ -107,11 +107,11 @@ repeat
   if dpeek($60028)=16443 then begin waveidx-=1; if waveidx<0 then waveidx:=0;  dpoke($60028,0); end;  //f4=delay
   if dpeek($60028)=16444 then begin transpose+=1; dpoke($60028,0); end;  //f4=delay
   if dpeek($60028)=16445 then begin transpose-=1; dpoke($60028,0); end;  //f4=delay
-  box(600,600,400,120,0); outtextxyz(600,600,sounds[waveidx].name,15,2,2);  outtextxyz(600,680,floattostr(transpose),15,2,2);   outtextxyz(600,640,ss,15);
+  box(1040,860,400,120,0); outtextxyz(1040,860,sounds[waveidx].name,15,2,2);  outtextxyz(1040,940,floattostr(transpose),15,2,2);   outtextxyz(1040,900,ss,15,2,2);
           // adsr test
           if dpeek($60028)=16447 then begin att:=att*1.1; dpoke($60028,0); end; //f5=reverb
           if dpeek($60028)=16448 then begin att:=att/1.1; ereverb:=not ereverb; dpoke($60028,0); end; //f5=reverb
-          box(100,700,500,50,0); outtextxyz(100,700,floattostr(1/(96000*att)),15,2,2);
+          box(1400,860,390,50,0); outtextxyz(1400,860,floattostr(1/(96000*att)),15,2,2);
           // end adsr test
 
   if (dpeek($60028)=16451) and (peek($70002)=0) then         // f10 toggles fullscreen

@@ -34,8 +34,6 @@ UNIT1$_$TFORM1_$_BUTTON1CLICK$TOBJECT_$$_fin$4:
 # Var $parentfp located in register rbp
 .seh_endprologue
 .Ll2:
-	leaq	-24736(%rbp),%rcx
-	call	fpc_ansistr_decr_ref
 	leaq	-24(%rbp),%rax
 	movq	%rax,%rcx
 	call	fpc_ansistr_decr_ref
@@ -53,7 +51,7 @@ UNIT1$_$TFORM1_$_BUTTON1CLICK$TOBJECT_$$_fin$4:
 .globl	UNIT1$_$TFORM1_$__$$_BUTTON1CLICK$TOBJECT
 UNIT1$_$TFORM1_$__$$_BUTTON1CLICK$TOBJECT:
 .Lc6:
-# Temps allocated between rbp-24752 and rbp-24728
+# Temps allocated between rbp-24744 and rbp-24728
 .seh_proc UNIT1$_$TFORM1_$__$$_BUTTON1CLICK$TOBJECT
 .Ll4:
 	pushq	%rbp
@@ -63,11 +61,11 @@ UNIT1$_$TFORM1_$__$$_BUTTON1CLICK$TOBJECT:
 	movq	%rsp,%rbp
 .Lc10:
 	movq	$6,%r10
-.Lj346:
+.Lj270:
 	leaq	-4096(%rsp),%rsp
 	movl	%eax,(%rsp)
 	subq	$1,%r10
-	jne	.Lj346
+	jne	.Lj270
 	leaq	-224(%rsp),%rsp
 .seh_stackalloc 24800
 # Var Sender located in register rdx
@@ -94,7 +92,6 @@ UNIT1$_$TFORM1_$__$$_BUTTON1CLICK$TOBJECT:
 # Var fn located at rbp-24728, size=OS_64
 .Ll5:
 	movq	$0,-24(%rbp)
-	movq	$0,-24736(%rbp)
 .Lj11:
 	nop
 .Lj7:
@@ -231,59 +228,24 @@ UNIT1$_$TFORM1_$__$$_BUTTON1CLICK$TOBJECT:
 	call	RETRO_$$_DPOKE$LONGINT$WORD
 .Lj98:
 .Ll24:
-# [110] box(600,600,400,120,0); outtextxyz(600,600,sounds[waveidx].name,15,2,2);  outtextxyz(600,680,floattostr(transpose),15,2,2);   outtextxyz(600,640,ss,15,2,2);
-	movl	$0,32(%rsp)
-	movl	$120,%r9d
-	movl	$400,%r8d
-	movl	$600,%edx
-	movl	$600,%ecx
-	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-	movl	TC_$FMSYNTH_$$_WAVEIDX(%rip),%eax
-	imulq	$2824,%rax,%rax
-	leaq	U_$FMSYNTH_$$_SOUNDS(%rip),%rdx
-	movq	(%rdx,%rax),%r8
-	movl	$15,%r9d
-	movl	$600,%edx
-	movl	$600,%ecx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-	movslq	TC_$FMSYNTH_$$_TRANSPOSE(%rip),%rdx
-	leaq	-24736(%rbp),%rcx
-	call	SYSUTILS_$$_FLOATTOSTR$INT64$$ANSISTRING
-	movq	-24736(%rbp),%r8
-	movl	$15,%r9d
-	movl	$680,%edx
-	movl	$600,%ecx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-	movq	U_$SYNTHCONTROL_$$_SS(%rip),%r8
-	movl	$15,%r9d
-	movl	$640,%edx
-	movl	$600,%ecx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll25:
-# [112] if dpeek($60028)=16447 then begin att:=att*1.1; dpoke($60028,0); end; //f5=reverb
+# [111] if dpeek($60028)=16447 then begin att:=att*1.1; dpoke($60028,0); end; //f5=reverb
 	movl	$393256,%ecx
 	call	RETRO_$$_DPEEK$LONGINT$$WORD
 	cmpw	$16447,%ax
-	jne	.Lj158
+	jne	.Lj108
 	movsd	TC_$FMSYNTH_$$_ATT(%rip),%xmm0
 	mulsd	_$UNIT1$_Ld2(%rip),%xmm0
 	movsd	%xmm0,TC_$FMSYNTH_$$_ATT(%rip)
 	movl	$0,%edx
 	movl	$393256,%ecx
 	call	RETRO_$$_DPOKE$LONGINT$WORD
-.Lj158:
-.Ll26:
-# [113] if dpeek($60028)=16448 then begin att:=att/1.1; ereverb:=not ereverb; dpoke($60028,0); end; //f5=reverb
+.Lj108:
+.Ll25:
+# [112] if dpeek($60028)=16448 then begin att:=att/1.1; ereverb:=not ereverb; dpoke($60028,0); end; //f5=reverb
 	movl	$393256,%ecx
 	call	RETRO_$$_DPEEK$LONGINT$$WORD
 	cmpw	$16448,%ax
-	jne	.Lj168
+	jne	.Lj118
 	movsd	TC_$FMSYNTH_$$_ATT(%rip),%xmm0
 	mulsd	_$UNIT1$_Ld3(%rip),%xmm0
 	movsd	%xmm0,TC_$FMSYNTH_$$_ATT(%rip)
@@ -292,83 +254,62 @@ UNIT1$_$TFORM1_$__$$_BUTTON1CLICK$TOBJECT:
 	movl	$0,%edx
 	movl	$393256,%ecx
 	call	RETRO_$$_DPOKE$LONGINT$WORD
-.Lj168:
-.Ll27:
-# [114] box(100,700,500,50,0); outtextxyz(100,700,floattostr(1/(96000*att)),15,2,2);
-	movl	$0,32(%rsp)
-	movl	$50,%r9d
-	movl	$500,%r8d
-	movl	$700,%edx
-	movl	$100,%ecx
-	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-	movsd	_$UNIT1$_Ld5(%rip),%xmm0
-	mulsd	TC_$FMSYNTH_$$_ATT(%rip),%xmm0
-	movsd	_$UNIT1$_Ld4(%rip),%xmm1
-	divsd	%xmm0,%xmm1
-	leaq	-24736(%rbp),%rcx
-	call	SYSUTILS_$$_FLOATTOSTR$DOUBLE$$ANSISTRING
-	movq	-24736(%rbp),%r8
-	movl	$15,%r9d
-	movl	$700,%edx
-	movl	$100,%ecx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll28:
-# [117] if (dpeek($60028)=16451) and (peek($70002)=0) then         // f10 toggles fullscreen
+.Lj118:
+.Ll26:
+# [116] if (dpeek($60028)=16451) and (peek($70002)=0) then         // f10 toggles fullscreen
 	movl	$393256,%ecx
 	call	RETRO_$$_DPEEK$LONGINT$$WORD
 	cmpw	$16451,%ax
-	jne	.Lj206
+	jne	.Lj130
 	movl	$458754,%ecx
 	call	RETRO_$$_PEEK$LONGINT$$BYTE
 	testb	%al,%al
-	jne	.Lj206
-.Ll29:
-# [119] dpoke($60028,0);
+	jne	.Lj130
+.Ll27:
+# [118] dpoke($60028,0);
 	movl	$0,%edx
 	movl	$393256,%ecx
 	call	RETRO_$$_DPOKE$LONGINT$WORD
 	.balign 8,0x90
-.Lj216:
-.Ll30:
-# [120] repeat until peek($70000)=1;
+.Lj140:
+.Ll28:
+# [119] repeat until peek($70000)=1;
 	movl	$458752,%ecx
 	call	RETRO_$$_PEEK$LONGINT$$BYTE
 	cmpb	$1,%al
-	jne	.Lj216
-.Ll31:
-# [121] poke ($70000,2);
+	jne	.Lj140
+.Ll29:
+# [120] poke ($70000,2);
 	movl	$2,%edx
 	movl	$458752,%ecx
 	call	RETRO_$$_POKE$LONGINT$BYTE
-.Ll32:
-# [122] SDL_DestroyTexture( sdlTexture );
+.Ll30:
+# [121] SDL_DestroyTexture( sdlTexture );
 	movq	U_$RETRO_$$_SDLTEXTURE(%rip),%rcx
 	call	_$dll$sdl2$SDL_DestroyTexture
-.Ll33:
-# [123] SDL_DestroyRenderer( sdlRenderer );
+.Ll31:
+# [122] SDL_DestroyRenderer( sdlRenderer );
 	movq	U_$RETRO_$$_SDLRENDERER(%rip),%rcx
 	call	_$dll$sdl2$SDL_DestroyRenderer
-.Ll34:
-# [124] poke($70002,1);
+.Ll32:
+# [123] poke($70002,1);
 	movl	$1,%edx
 	movl	$458754,%ecx
 	call	RETRO_$$_POKE$LONGINT$BYTE
-.Ll35:
-# [125] sdl_setwindowfullscreen(scr,sdl_window_fullscreen_desktop);
+.Ll33:
+# [124] sdl_setwindowfullscreen(scr,sdl_window_fullscreen_desktop);
 	movq	U_$RETRO_$$_SCR(%rip),%rcx
 	movl	$4097,%edx
 	call	_$dll$sdl2$SDL_SetWindowFullscreen
-.Ll36:
-# [126] sdlRenderer := SDL_CreateRenderer(scr, -1, 14);
+.Ll34:
+# [125] sdlRenderer := SDL_CreateRenderer(scr, -1, 14);
 	movq	U_$RETRO_$$_SCR(%rip),%rcx
 	movl	$14,%r8d
 	movl	$-1,%edx
 	call	_$dll$sdl2$SDL_CreateRenderer
 	movq	%rax,U_$RETRO_$$_SDLRENDERER(%rip)
-.Ll37:
-# [127] sdlTexture := SDL_CreateTexture(sdlRenderer,SDL_PIXELFORMAT_ARGB8888,SDL_TEXTUREACCESS_STreaming,1920,1200);
+.Ll35:
+# [126] sdlTexture := SDL_CreateTexture(sdlRenderer,SDL_PIXELFORMAT_ARGB8888,SDL_TEXTUREACCESS_STreaming,1920,1200);
 	movl	$1200,32(%rsp)
 	movq	U_$RETRO_$$_SDLRENDERER(%rip),%rcx
 	movl	$1920,%r9d
@@ -376,73 +317,73 @@ UNIT1$_$TFORM1_$__$$_BUTTON1CLICK$TOBJECT:
 	movl	$372645892,%edx
 	call	_$dll$sdl2$SDL_CreateTexture
 	movq	%rax,U_$RETRO_$$_SDLTEXTURE(%rip)
-.Ll38:
-# [128] SDL_RenderSetLogicalSize(sdlRenderer,1920,1200);
+.Ll36:
+# [127] SDL_RenderSetLogicalSize(sdlRenderer,1920,1200);
 	movq	U_$RETRO_$$_SDLRENDERER(%rip),%rcx
 	movl	$1200,%r8d
 	movl	$1920,%edx
 	call	_$dll$sdl2$SDL_RenderSetLogicalSize
-.Ll39:
-# [129] poke ($70000,1);
+.Ll37:
+# [128] poke ($70000,1);
 	movl	$1,%edx
 	movl	$458752,%ecx
 	call	RETRO_$$_POKE$LONGINT$BYTE
-.Lj206:
-.Ll40:
-# [132] if ((dpeek($60028)=16451)) and (peek($70002)=1) then
+.Lj130:
+.Ll38:
+# [131] if ((dpeek($60028)=16451)) and (peek($70002)=1) then
 	movl	$393256,%ecx
 	call	RETRO_$$_DPEEK$LONGINT$$WORD
 	cmpw	$16451,%ax
-	jne	.Lj268
+	jne	.Lj192
 	movl	$458754,%ecx
 	call	RETRO_$$_PEEK$LONGINT$$BYTE
 	cmpb	$1,%al
-	jne	.Lj268
-.Ll41:
-# [134] poke($60028,0);
+	jne	.Lj192
+.Ll39:
+# [133] poke($60028,0);
 	movl	$0,%edx
 	movl	$393256,%ecx
 	call	RETRO_$$_POKE$LONGINT$BYTE
 	.balign 8,0x90
-.Lj278:
-.Ll42:
-# [135] repeat until peek($70000)=1;
+.Lj202:
+.Ll40:
+# [134] repeat until peek($70000)=1;
 	movl	$458752,%ecx
 	call	RETRO_$$_PEEK$LONGINT$$BYTE
 	cmpb	$1,%al
-	jne	.Lj278
-.Ll43:
-# [136] poke ($70000,2);
+	jne	.Lj202
+.Ll41:
+# [135] poke ($70000,2);
 	movl	$2,%edx
 	movl	$458752,%ecx
 	call	RETRO_$$_POKE$LONGINT$BYTE
-.Ll44:
-# [137] SDL_DestroyTexture( sdlTexture );
+.Ll42:
+# [136] SDL_DestroyTexture( sdlTexture );
 	movq	U_$RETRO_$$_SDLTEXTURE(%rip),%rcx
 	call	_$dll$sdl2$SDL_DestroyTexture
-.Ll45:
-# [138] SDL_DestroyRenderer( sdlRenderer );
+.Ll43:
+# [137] SDL_DestroyRenderer( sdlRenderer );
 	movq	U_$RETRO_$$_SDLRENDERER(%rip),%rcx
 	call	_$dll$sdl2$SDL_DestroyRenderer
-.Ll46:
-# [139] poke($70002,0);
+.Ll44:
+# [138] poke($70002,0);
 	movl	$0,%edx
 	movl	$458754,%ecx
 	call	RETRO_$$_POKE$LONGINT$BYTE
-.Ll47:
-# [140] sdl_setwindowfullscreen(scr,0);
+.Ll45:
+# [139] sdl_setwindowfullscreen(scr,0);
 	movq	U_$RETRO_$$_SCR(%rip),%rcx
 	movl	$0,%edx
 	call	_$dll$sdl2$SDL_SetWindowFullscreen
-.Ll48:
-# [141] sdlRenderer := SDL_CreateRenderer(scr, -1, 14);
+.Ll46:
+# [140] sdlRenderer := SDL_CreateRenderer(scr, -1, 14);
 	movq	U_$RETRO_$$_SCR(%rip),%rcx
 	movl	$14,%r8d
 	movl	$-1,%edx
 	call	_$dll$sdl2$SDL_CreateRenderer
 	movq	%rax,U_$RETRO_$$_SDLRENDERER(%rip)
-.Ll49:
-# [142] sdlTexture := SDL_CreateTexture(sdlRenderer,SDL_PIXELFORMAT_ARGB8888,SDL_TEXTUREACCESS_STreaming,1920,1200);
+.Ll47:
+# [141] sdlTexture := SDL_CreateTexture(sdlRenderer,SDL_PIXELFORMAT_ARGB8888,SDL_TEXTUREACCESS_STreaming,1920,1200);
 	movl	$1200,32(%rsp)
 	movq	U_$RETRO_$$_SDLRENDERER(%rip),%rcx
 	movl	$1920,%r9d
@@ -450,50 +391,50 @@ UNIT1$_$TFORM1_$__$$_BUTTON1CLICK$TOBJECT:
 	movl	$372645892,%edx
 	call	_$dll$sdl2$SDL_CreateTexture
 	movq	%rax,U_$RETRO_$$_SDLTEXTURE(%rip)
-.Ll50:
-# [143] SDL_RenderSetLogicalSize(sdlRenderer,1920,1200);
+.Ll48:
+# [142] SDL_RenderSetLogicalSize(sdlRenderer,1920,1200);
 	movq	U_$RETRO_$$_SDLRENDERER(%rip),%rcx
 	movl	$1200,%r8d
 	movl	$1920,%edx
 	call	_$dll$sdl2$SDL_RenderSetLogicalSize
-.Ll51:
-# [144] poke ($70000,1);
+.Ll49:
+# [143] poke ($70000,1);
 	movl	$1,%edx
 	movl	$458752,%ecx
 	call	RETRO_$$_POKE$LONGINT$BYTE
-.Lj268:
-.Ll52:
-# [147] application.processmessages;
+.Lj192:
+.Ll50:
+# [146] application.processmessages;
 	movq	TC_$FORMS_$$_APPLICATION(%rip),%rcx
 	call	FORMS$_$TAPPLICATION_$__$$_PROCESSMESSAGES
-.Ll53:
-# [148] until {(peek($6002b)<>0) and (peek($60028)=27) or} (peek($70004)=1);
+.Ll51:
+# [147] until {(peek($6002b)<>0) and (peek($60028)=27) or} (peek($70004)=1);
 	movl	$458756,%ecx
 	call	RETRO_$$_PEEK$LONGINT$$BYTE
 	cmpb	$1,%al
 	jne	.Lj46
-.Ll54:
-# [149] timer1:=-1;
+.Ll52:
+# [148] timer1:=-1;
 	movq	$-1,TC_$RETRO_$$_TIMER1(%rip)
-.Ll55:
-# [150] fileclose(fh);
+.Ll53:
+# [149] fileclose(fh);
 	movslq	U_$RETRO_$$_FH(%rip),%rcx
 	call	SYSUTILS_$$_FILECLOSE$QWORD
-.Ll56:
-# [151] stopmachine;
+.Ll54:
+# [150] stopmachine;
 	call	RETRO_$$_STOPMACHINE
-.Ll57:
-# [152] halt;
+.Ll55:
+# [151] halt;
 	movl	$0,%ecx
 	call	SYSTEM_$$_HALT$LONGINT
-.Lj339:
-.Ll58:
+.Lj263:
+.Ll56:
 	nop
 .Lj8:
 	movq	%rbp,%rcx
 	call	UNIT1$_$TFORM1_$_BUTTON1CLICK$TOBJECT_$$_fin$4
-.Ll59:
-# [153] end;
+.Ll57:
+# [152] end;
 	leaq	(%rbp),%rsp
 	popq	%rbp
 	ret
@@ -509,7 +450,7 @@ UNIT1$_$TFORM1_$__$$_BUTTON1CLICK$TOBJECT:
 .seh_endproc
 .Lc7:
 .Lt6:
-.Ll60:
+.Ll58:
 
 .section .text.n_unit1$_$tform1_$__$$_button2click$tobject,"x"
 	.balign 16,0x90
@@ -517,8 +458,8 @@ UNIT1$_$TFORM1_$__$$_BUTTON1CLICK$TOBJECT:
 UNIT1$_$TFORM1_$__$$_BUTTON2CLICK$TOBJECT:
 .Lc11:
 .seh_proc UNIT1$_$TFORM1_$__$$_BUTTON2CLICK$TOBJECT
-.Ll61:
-# [156] begin
+.Ll59:
+# [155] begin
 	pushq	%rbx
 .seh_pushreg %rbx
 	leaq	-32(%rsp),%rsp
@@ -528,20 +469,20 @@ UNIT1$_$TFORM1_$__$$_BUTTON2CLICK$TOBJECT:
 # Var $self located in register rbx
 .seh_endprologue
 	movq	%rcx,%rbx
-.Ll62:
-# [157] if opendialog1.execute then loadxi(opendialog1.filename);
+.Ll60:
+# [156] if opendialog1.execute then loadxi(opendialog1.filename);
 	movq	1944(%rbx),%rcx
 	movq	1944(%rbx),%rax
 	movq	(%rax),%rax
 	call	*504(%rax)
 	testb	%al,%al
-	je	.Lj350
+	je	.Lj274
 	movq	1944(%rbx),%rax
 	movq	224(%rax),%rcx
 	call	UNIT1_$$_LOADXI$ANSISTRING$$LONGINT
-.Lj350:
-.Ll63:
-# [158] end;
+.Lj274:
+.Ll61:
+# [157] end;
 	nop
 	leaq	32(%rsp),%rsp
 	popq	%rbx
@@ -549,7 +490,7 @@ UNIT1$_$TFORM1_$__$$_BUTTON2CLICK$TOBJECT:
 .seh_endproc
 .Lc12:
 .Lt7:
-.Ll64:
+.Ll62:
 
 .section .text.n_unit1$_$tform1_$__$$_button3click$tobject,"x"
 	.balign 16,0x90
@@ -557,8 +498,8 @@ UNIT1$_$TFORM1_$__$$_BUTTON2CLICK$TOBJECT:
 UNIT1$_$TFORM1_$__$$_BUTTON3CLICK$TOBJECT:
 .Lc14:
 .seh_proc UNIT1$_$TFORM1_$__$$_BUTTON3CLICK$TOBJECT
-.Ll65:
-# [166] begin
+.Ll63:
+# [165] begin
 	leaq	-8232(%rsp),%rsp
 	movl	%eax,4140(%rsp)
 	movl	%eax,44(%rsp)
@@ -580,19 +521,19 @@ UNIT1$_$TFORM1_$__$$_BUTTON3CLICK$TOBJECT:
 # Var q3 located in register xmm0
 .seh_endprologue
 # Var a located at rsp+32, size=OS_NO
-.Ll66:
-# [167] form2.show;
+.Ll64:
+# [166] form2.show;
 	movq	U_$UNIT2_$$_FORM2(%rip),%rcx
 	call	FORMS$_$TCUSTOMFORM_$__$$_SHOW
-.Ll67:
-# [168] end;
+.Ll65:
+# [167] end;
 	nop
 	leaq	8232(%rsp),%rsp
 	ret
 .seh_endproc
 .Lc15:
 .Lt8:
-.Ll68:
+.Ll66:
 
 .section .text.n_unit1$_$tform1_$__$$_fft1getdata$longint$tcomplex,"x"
 	.balign 16,0x90
@@ -602,36 +543,36 @@ UNIT1$_$TFORM1_$__$$_FFT1GETDATA$LONGINT$TCOMPLEX:
 # Var index located in register edx
 # Var Value located in register r8
 # Var $self located in register rax
-.Ll69:
-# [171] begin
+.Ll67:
+# [170] begin
 	movq	%rcx,%rax
-.Ll70:
-# [172] if index<waves1[sampleindex1].len then value.real:=fftwave[index] else value.real:=0;
+.Ll68:
+# [171] if index<waves1[sampleindex1].len then value.real:=fftwave[index] else value.real:=0;
 	movl	TC_$FMSYNTH_$$_SAMPLEINDEX1(%rip),%eax
 	imulq	$48,%rax,%rax
 	leaq	U_$FMSYNTH_$$_WAVES1(%rip),%rcx
 	movl	8(%rcx,%rax),%eax
 	cmpl	%edx,%eax
-	jng	.Lj362
+	jng	.Lj286
 	movq	U_$FMSYNTH_$$_FFTWAVE(%rip),%rax
 	movslq	%edx,%rdx
 	movq	(%rax,%rdx,8),%rax
 	movq	%rax,(%r8)
-	jmp	.Lj365
-.Lj362:
-	movq	_$UNIT1$_Ld6(%rip),%rax
+	jmp	.Lj289
+.Lj286:
+	movq	_$UNIT1$_Ld4(%rip),%rax
 	movq	%rax,(%r8)
-.Lj365:
-.Ll71:
-# [173] value.imag:=0;
-	movq	_$UNIT1$_Ld6(%rip),%rax
+.Lj289:
+.Ll69:
+# [172] value.imag:=0;
+	movq	_$UNIT1$_Ld4(%rip),%rax
 	movq	%rax,8(%r8)
-.Ll72:
-# [174] end;
+.Ll70:
+# [173] end;
 	ret
 .Lc18:
 .Lt9:
-.Ll73:
+.Ll71:
 
 .section .text.n_unit1$_$tform1_$__$$_formclose$tobject$tcloseaction,"x"
 	.balign 16,0x90
@@ -641,18 +582,18 @@ UNIT1$_$TFORM1_$__$$_FORMCLOSE$TOBJECT$TCLOSEACTION:
 # Var Sender located in register rdx
 # Var CloseAction located in register r8
 # Var $self located in register rax
-.Ll74:
-# [178] begin
+.Ll72:
+# [177] begin
 	movq	%rcx,%rax
-.Ll75:
-# [179] closeaction:=cafree;
+.Ll73:
+# [178] closeaction:=cafree;
 	movl	$2,(%r8)
-.Ll76:
-# [180] end;
+.Ll74:
+# [179] end;
 	ret
 .Lc20:
 .Lt10:
-.Ll77:
+.Ll75:
 
 .section .text.n_unit1$_$tform1_$__$$_formcreate$tobject,"x"
 	.balign 16,0x90
@@ -661,26 +602,26 @@ UNIT1$_$TFORM1_$__$$_FORMCREATE$TOBJECT:
 .Lc21:
 # Var Sender located in register rdx
 # Var $self located in register rax
-.Ll78:
-# [183] begin
+.Ll76:
+# [182] begin
 	movq	%rcx,%rax
-.Ll79:
-# [184] DefaultFormatSettings.DecimalSeparator := '.';
+.Ll77:
+# [183] DefaultFormatSettings.DecimalSeparator := '.';
 	movb	$46,TC_$SYSUTILS_$$_DEFAULTFORMATSETTINGS+3(%rip)
-.Ll80:
-# [186] end;
+.Ll78:
+# [185] end;
 	ret
 .Lc22:
 .Lt11:
-.Ll81:
+.Ll79:
 
 .section .text.n_unit1$_$sidopen$longint_$$_fin$5,"x"
 	.balign 16,0x90
 UNIT1$_$SIDOPEN$LONGINT_$$_fin$5:
 .Lc23:
 .seh_proc UNIT1$_$SIDOPEN$LONGINT_$$_fin$5
-.Ll82:
-# [198] begin
+.Ll80:
+# [197] begin
 	pushq	%rbp
 .seh_pushreg %rbp
 .Lc25:
@@ -691,7 +632,7 @@ UNIT1$_$SIDOPEN$LONGINT_$$_fin$5:
 .seh_stackalloc 32
 # Var $parentfp located in register rbp
 .seh_endprologue
-.Ll83:
+.Ll81:
 	leaq	-88(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 	leaq	-80(%rbp),%rcx
@@ -703,7 +644,7 @@ UNIT1$_$SIDOPEN$LONGINT_$$_fin$5:
 .seh_endproc
 .Lc24:
 .Lt3:
-.Ll84:
+.Ll82:
 
 .section .text.n_unit1_$$_sidopen$longint,"x"
 	.balign 16,0x90
@@ -712,7 +653,7 @@ UNIT1_$$_SIDOPEN$LONGINT:
 .Lc28:
 # Temps allocated between rbp-104 and rbp-72
 .seh_proc UNIT1_$$_SIDOPEN$LONGINT
-.Ll85:
+.Ll83:
 	pushq	%rbp
 .seh_pushreg %rbp
 .Lc30:
@@ -739,41 +680,41 @@ UNIT1_$$_SIDOPEN$LONGINT:
 # Var dump located at rbp-64, size=OS_16
 # Var b located at rbp-72, size=OS_8
 	movl	%ecx,%ebx
-.Ll86:
+.Ll84:
 	movq	$0,-88(%rbp)
 	movq	$0,-80(%rbp)
-.Lj386:
+.Lj310:
 	nop
-.Lj382:
-.Ll87:
-# [190] var i:integer;
+.Lj306:
+.Ll85:
+# [189] var i:integer;
 	leaq	TC_$UNIT1$_$SIDOPEN$LONGINT_$$_defaultmagic(%rip),%r8
 	leaq	-56(%rbp),%rcx
 	movq	$4,%rdx
 	call	fpc_shortstr_to_shortstr
-.Ll88:
-# [199] reset6502;
+.Ll86:
+# [198] reset6502;
 	call	UNIT6502_$$_RESET6502
-.Ll89:
-# [200] title:='                                ';
-	leaq	_$UNIT1$_Ld7(%rip),%r8
+.Ll87:
+# [199] title:='                                ';
+	leaq	_$UNIT1$_Ld5(%rip),%r8
 	leaq	U_$UNIT1_$$_TITLE(%rip),%rcx
 	movq	$32,%rdx
 	call	fpc_shortstr_to_shortstr
-.Ll90:
-# [201] author:='                                ';
-	leaq	_$UNIT1$_Ld7(%rip),%r8
+.Ll88:
+# [200] author:='                                ';
+	leaq	_$UNIT1$_Ld5(%rip),%r8
 	leaq	U_$UNIT1_$$_AUTHOR(%rip),%rcx
 	movq	$32,%rdx
 	call	fpc_shortstr_to_shortstr
-.Ll91:
-# [202] copyright:='                                ';
-	leaq	_$UNIT1$_Ld7(%rip),%r8
+.Ll89:
+# [201] copyright:='                                ';
+	leaq	_$UNIT1$_Ld5(%rip),%r8
 	leaq	U_$UNIT1_$$_COPYRIGHT(%rip),%rcx
 	movq	$32,%rdx
 	call	fpc_shortstr_to_shortstr
-.Ll92:
-# [207] fileread(fh,version,2); version:=(version shl 8) or (version shr 8);
+.Ll90:
+# [206] fileread(fh,version,2); version:=(version shl 8) or (version shr 8);
 	movslq	%ebx,%rcx
 	leaq	-16(%rbp),%rdx
 	movl	$2,%r8d
@@ -784,8 +725,8 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	shrl	$8,%eax
 	orl	%edx,%eax
 	movw	%ax,-16(%rbp)
-.Ll93:
-# [208] fileread(fh,offset,2); offset:=(offset shl 8) or (offset shr 8);
+.Ll91:
+# [207] fileread(fh,offset,2); offset:=(offset shl 8) or (offset shr 8);
 	movslq	%ebx,%rcx
 	leaq	-24(%rbp),%rdx
 	movl	$2,%r8d
@@ -796,8 +737,8 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	shrl	$8,%eax
 	orl	%edx,%eax
 	movw	%ax,-24(%rbp)
-.Ll94:
-# [209] fileread(fh,load,2); load:=(load shl 8) or (load shr 8);
+.Ll92:
+# [208] fileread(fh,load,2); load:=(load shl 8) or (load shr 8);
 	movslq	%ebx,%rcx
 	leaq	-32(%rbp),%rdx
 	movl	$2,%r8d
@@ -808,8 +749,8 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	shrl	$8,%eax
 	orl	%edx,%eax
 	movw	%ax,-32(%rbp)
-.Ll95:
-# [210] fileread(fh,init,2); init:=(init shl 8) or (init shr 8);
+.Ll93:
+# [209] fileread(fh,init,2); init:=(init shl 8) or (init shr 8);
 	movslq	%ebx,%rcx
 	leaq	U_$UNIT1_$$_INIT(%rip),%rdx
 	movl	$2,%r8d
@@ -820,8 +761,8 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	shrl	$8,%eax
 	orl	%edx,%eax
 	movw	%ax,U_$UNIT1_$$_INIT(%rip)
-.Ll96:
-# [211] fileread(fh,play,2);  play:=(play shl 8) or (play shr 8);
+.Ll94:
+# [210] fileread(fh,play,2);  play:=(play shl 8) or (play shr 8);
 	movslq	%ebx,%rcx
 	leaq	U_$RETRO_$$_PLAY(%rip),%rdx
 	movl	$2,%r8d
@@ -832,8 +773,8 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	shrl	$8,%eax
 	orl	%edx,%eax
 	movw	%ax,U_$RETRO_$$_PLAY(%rip)
-.Ll97:
-# [212] fileread(fh,songs,2); songs:=(songs shl 8) or (songs shr 8);
+.Ll95:
+# [211] fileread(fh,songs,2); songs:=(songs shl 8) or (songs shr 8);
 	movslq	%ebx,%rcx
 	leaq	TC_$UNIT1_$$_SONGS(%rip),%rdx
 	movl	$2,%r8d
@@ -844,8 +785,8 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	shrl	$8,%eax
 	orl	%edx,%eax
 	movw	%ax,TC_$UNIT1_$$_SONGS(%rip)
-.Ll98:
-# [213] fileread(fh,startsong,2); startsong:=(startsong shl 8) or (startsong shr 8);
+.Ll96:
+# [212] fileread(fh,startsong,2); startsong:=(startsong shl 8) or (startsong shr 8);
 	movslq	%ebx,%rcx
 	leaq	-40(%rbp),%rdx
 	movl	$2,%r8d
@@ -856,16 +797,16 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	shrl	$8,%eax
 	orl	%edx,%eax
 	movw	%ax,-40(%rbp)
-.Ll99:
-# [214] fileread(fh,speed,4);
+.Ll97:
+# [213] fileread(fh,speed,4);
 	movslq	%ebx,%rcx
 	leaq	-8(%rbp),%rdx
 	movl	$4,%r8d
 	call	SYSUTILS_$$_FILEREAD$QWORD$formal$LONGINT$$LONGINT
-.Ll100:
+.Ll98:
 	movl	-8(%rbp),%edx
-.Ll101:
-# [215] speed:=speed shr 24+((speed shr 8) and $0000FF00) + ((speed shl 8) and $00FF0000) + (speed shl 24);
+.Ll99:
+# [214] speed:=speed shr 24+((speed shr 8) and $0000FF00) + ((speed shl 8) and $00FF0000) + (speed shl 24);
 	movl	%edx,%eax
 	shrl	$8,%eax
 	andl	$65280,%eax
@@ -879,30 +820,30 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	shll	$24,%edx
 	leal	(%eax,%edx),%eax
 	movl	%eax,-8(%rbp)
-.Ll102:
-# [216] fileread(fh,title[1],32);
+.Ll100:
+# [215] fileread(fh,title[1],32);
 	movslq	%ebx,%rcx
 	leaq	U_$UNIT1_$$_TITLE+1(%rip),%rdx
 	movl	$32,%r8d
 	call	SYSUTILS_$$_FILEREAD$QWORD$formal$LONGINT$$LONGINT
-.Ll103:
-# [217] fileread(fh,author[1],32);
+.Ll101:
+# [216] fileread(fh,author[1],32);
 	movslq	%ebx,%rcx
 	leaq	U_$UNIT1_$$_AUTHOR+1(%rip),%rdx
 	movl	$32,%r8d
 	call	SYSUTILS_$$_FILEREAD$QWORD$formal$LONGINT$$LONGINT
-.Ll104:
-# [218] fileread(fh,copyright[1],32);
+.Ll102:
+# [217] fileread(fh,copyright[1],32);
 	movslq	%ebx,%rcx
 	leaq	U_$UNIT1_$$_COPYRIGHT+1(%rip),%rdx
 	movl	$32,%r8d
 	call	SYSUTILS_$$_FILEREAD$QWORD$formal$LONGINT$$LONGINT
-.Ll105:
-# [219] if version>1 then begin
+.Ll103:
+# [218] if version>1 then begin
 	cmpw	$1,-16(%rbp)
-	jna	.Lj510
-.Ll106:
-# [220] fileread(fh,flags,2); flags:=(flags shl 8) or (flags shr 8);
+	jna	.Lj434
+.Ll104:
+# [219] fileread(fh,flags,2); flags:=(flags shl 8) or (flags shr 8);
 	movslq	%ebx,%rcx
 	leaq	-48(%rbp),%rdx
 	movl	$2,%r8d
@@ -913,91 +854,91 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	shrl	$8,%eax
 	orl	%edx,%eax
 	movw	%ax,-48(%rbp)
-.Ll107:
+.Ll105:
+# [220] fileread(fh,dump,2);
+	movslq	%ebx,%rcx
+	leaq	-64(%rbp),%rdx
+	movl	$2,%r8d
+	call	SYSUTILS_$$_FILEREAD$QWORD$formal$LONGINT$$LONGINT
+.Ll106:
 # [221] fileread(fh,dump,2);
 	movslq	%ebx,%rcx
 	leaq	-64(%rbp),%rdx
 	movl	$2,%r8d
 	call	SYSUTILS_$$_FILEREAD$QWORD$formal$LONGINT$$LONGINT
-.Ll108:
-# [222] fileread(fh,dump,2);
-	movslq	%ebx,%rcx
-	leaq	-64(%rbp),%rdx
-	movl	$2,%r8d
-	call	SYSUTILS_$$_FILEREAD$QWORD$formal$LONGINT$$LONGINT
-.Ll109:
-# [223] b:=0; if load=0 then begin b:=1; fileread(fh,load,2); end;
+.Ll107:
+# [222] b:=0; if load=0 then begin b:=1; fileread(fh,load,2); end;
 	movb	$0,-72(%rbp)
 	cmpw	$0,-32(%rbp)
-	jne	.Lj536
+	jne	.Lj460
 	movb	$1,-72(%rbp)
 	movslq	%ebx,%rcx
 	leaq	-32(%rbp),%rdx
 	movl	$2,%r8d
 	call	SYSUTILS_$$_FILEREAD$QWORD$formal$LONGINT$$LONGINT
-.Lj536:
-.Lj510:
+.Lj460:
+.Lj434:
+.Ll108:
+# [224] for i:=1 to 32 do if byte(title[i])=$F1 then title[i]:=char(26);
+	movl	$1,%esi
+	subl	$1,%esi
+	.balign 8,0x90
+.Lj471:
+	addl	$1,%esi
+	movb	%sil,%al
+# PeepHole Optimization,var9
+	andl	$255,%eax
+	leaq	U_$UNIT1_$$_TITLE(%rip),%rdx
+	cmpb	$241,(%rdx,%rax,1)
+	jne	.Lj473
+	movb	%sil,%al
+# PeepHole Optimization,var9
+	andl	$255,%eax
+	leaq	U_$UNIT1_$$_TITLE(%rip),%rdx
+	movb	$26,(%rdx,%rax,1)
+.Lj473:
+	cmpl	$32,%esi
+	jl	.Lj471
+.Ll109:
+# [225] for i:=1 to 32 do if byte(author[i])=$F1 then author[i]:=char(26);
+	movl	$1,%esi
+	subl	$1,%esi
+	.balign 8,0x90
+.Lj478:
+	addl	$1,%esi
+	movb	%sil,%al
+# PeepHole Optimization,var9
+	andl	$255,%eax
+	leaq	U_$UNIT1_$$_AUTHOR(%rip),%rdx
+	cmpb	$241,(%rdx,%rax,1)
+	jne	.Lj480
+	movb	%sil,%al
+# PeepHole Optimization,var9
+	andl	$255,%eax
+	leaq	U_$UNIT1_$$_AUTHOR(%rip),%rdx
+	movb	$26,(%rdx,%rax,1)
+.Lj480:
+	cmpl	$32,%esi
+	jl	.Lj478
 .Ll110:
-# [225] for i:=1 to 32 do if byte(title[i])=$F1 then title[i]:=char(26);
-	movl	$1,%esi
-	subl	$1,%esi
-	.balign 8,0x90
-.Lj547:
-	addl	$1,%esi
-	movb	%sil,%al
-# PeepHole Optimization,var9
-	andl	$255,%eax
-	leaq	U_$UNIT1_$$_TITLE(%rip),%rdx
-	cmpb	$241,(%rdx,%rax,1)
-	jne	.Lj549
-	movb	%sil,%al
-# PeepHole Optimization,var9
-	andl	$255,%eax
-	leaq	U_$UNIT1_$$_TITLE(%rip),%rdx
-	movb	$26,(%rdx,%rax,1)
-.Lj549:
-	cmpl	$32,%esi
-	jl	.Lj547
-.Ll111:
-# [226] for i:=1 to 32 do if byte(author[i])=$F1 then author[i]:=char(26);
-	movl	$1,%esi
-	subl	$1,%esi
-	.balign 8,0x90
-.Lj554:
-	addl	$1,%esi
-	movb	%sil,%al
-# PeepHole Optimization,var9
-	andl	$255,%eax
-	leaq	U_$UNIT1_$$_AUTHOR(%rip),%rdx
-	cmpb	$241,(%rdx,%rax,1)
-	jne	.Lj556
-	movb	%sil,%al
-# PeepHole Optimization,var9
-	andl	$255,%eax
-	leaq	U_$UNIT1_$$_AUTHOR(%rip),%rdx
-	movb	$26,(%rdx,%rax,1)
-.Lj556:
-	cmpl	$32,%esi
-	jl	.Lj554
-.Ll112:
-# [227] box(18,132,800,600,178);
+# [226] box(18,132,800,600,178);
 	movl	$178,32(%rsp)
 	movl	$600,%r9d
 	movl	$800,%r8d
 	movl	$132,%edx
 	movl	$18,%ecx
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll113:
-# [228] outtextxyz(18,132,'type: PSID',188,2,2);
+.Ll111:
+# [227] outtextxyz(18,132,'type: PSID',188,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
-	leaq	_$UNIT1$_Ld8(%rip),%r8
+	leaq	_$UNIT1$_Ld6(%rip),%r8
 	movl	$188,%r9d
 	movl	$132,%edx
 	movl	$18,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll114:
-# [229] outtextxyz(18,164,'version: '+inttostr(version),188,2,2);
+.Ll112:
+# [228] outtextxyz(18,164,'version: '+inttostr(version),188,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	-80(%rbp),%rcx
@@ -1006,7 +947,7 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	leaq	-88(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$LONGINT$$ANSISTRING
 	movq	-88(%rbp),%r8
-	leaq	_$UNIT1$_Ld9(%rip),%rdx
+	leaq	_$UNIT1$_Ld7(%rip),%rdx
 	leaq	-80(%rbp),%rcx
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
@@ -1015,8 +956,8 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	movl	$164,%edx
 	movl	$18,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll115:
-# [230] outtextxyz(18,196,'offset: ' +inttohex(offset,4),188,2,2);
+.Ll113:
+# [229] outtextxyz(18,196,'offset: ' +inttohex(offset,4),188,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	-88(%rbp),%rcx
@@ -1026,7 +967,7 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	movl	$4,%r8d
 	call	SYSUTILS_$$_INTTOHEX$LONGINT$LONGINT$$ANSISTRING
 	movq	-80(%rbp),%r8
-	leaq	_$UNIT1$_Ld10(%rip),%rdx
+	leaq	_$UNIT1$_Ld8(%rip),%rdx
 	leaq	-88(%rbp),%rcx
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
@@ -1035,8 +976,8 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	movl	$196,%edx
 	movl	$18,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll116:
-# [231] outtextxyz(18,228,'load: '+inttohex(load,4),188-144*b,2,2);
+.Ll114:
+# [230] outtextxyz(18,228,'load: '+inttohex(load,4),188-144*b,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	-88(%rbp),%rcx
@@ -1046,7 +987,7 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	movl	$4,%r8d
 	call	SYSUTILS_$$_INTTOHEX$LONGINT$LONGINT$$ANSISTRING
 	movq	-80(%rbp),%r8
-	leaq	_$UNIT1$_Ld11(%rip),%rdx
+	leaq	_$UNIT1$_Ld9(%rip),%rdx
 	leaq	-88(%rbp),%rcx
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
@@ -1058,8 +999,8 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	movl	$228,%edx
 	movl	$18,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll117:
-# [232] outtextxyz(18,260,'init: '+inttohex(init,4),188,2,2);
+.Ll115:
+# [231] outtextxyz(18,260,'init: '+inttohex(init,4),188,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	-88(%rbp),%rcx
@@ -1069,7 +1010,7 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	movl	$4,%r8d
 	call	SYSUTILS_$$_INTTOHEX$LONGINT$LONGINT$$ANSISTRING
 	movq	-80(%rbp),%r8
-	leaq	_$UNIT1$_Ld12(%rip),%rdx
+	leaq	_$UNIT1$_Ld10(%rip),%rdx
 	leaq	-88(%rbp),%rcx
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
@@ -1078,8 +1019,8 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	movl	$260,%edx
 	movl	$18,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll118:
-# [233] outtextxyz(18,292,'play: '+inttohex(play,4),188,2,2);
+.Ll116:
+# [232] outtextxyz(18,292,'play: '+inttohex(play,4),188,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	-88(%rbp),%rcx
@@ -1089,7 +1030,7 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	movl	$4,%r8d
 	call	SYSUTILS_$$_INTTOHEX$LONGINT$LONGINT$$ANSISTRING
 	movq	-80(%rbp),%r8
-	leaq	_$UNIT1$_Ld13(%rip),%rdx
+	leaq	_$UNIT1$_Ld11(%rip),%rdx
 	leaq	-88(%rbp),%rcx
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
@@ -1098,8 +1039,8 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	movl	$292,%edx
 	movl	$18,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll119:
-# [234] outtextxyz(18,324,'songs: '+inttostr(songs),188,2,2);
+.Ll117:
+# [233] outtextxyz(18,324,'songs: '+inttostr(songs),188,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	-88(%rbp),%rcx
@@ -1108,7 +1049,7 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	leaq	-80(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$LONGINT$$ANSISTRING
 	movq	-80(%rbp),%r8
-	leaq	_$UNIT1$_Ld14(%rip),%rdx
+	leaq	_$UNIT1$_Ld12(%rip),%rdx
 	leaq	-88(%rbp),%rcx
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
@@ -1117,8 +1058,8 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	movl	$324,%edx
 	movl	$18,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll120:
-# [235] outtextxyz(18,356,'startsong: '+inttostr(startsong),188,2,2);
+.Ll118:
+# [234] outtextxyz(18,356,'startsong: '+inttostr(startsong),188,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	-88(%rbp),%rcx
@@ -1127,7 +1068,7 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	leaq	-80(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$LONGINT$$ANSISTRING
 	movq	-80(%rbp),%r8
-	leaq	_$UNIT1$_Ld15(%rip),%rdx
+	leaq	_$UNIT1$_Ld13(%rip),%rdx
 	leaq	-88(%rbp),%rcx
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
@@ -1136,8 +1077,8 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	movl	$356,%edx
 	movl	$18,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll121:
-# [236] outtextxyz(18,388,'speed: '+inttohex(speed,8),188,2,2);
+.Ll119:
+# [235] outtextxyz(18,388,'speed: '+inttohex(speed,8),188,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	-88(%rbp),%rcx
@@ -1147,7 +1088,7 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	movl	$8,%r8d
 	call	SYSUTILS_$$_INTTOHEX$QWORD$LONGINT$$ANSISTRING
 	movq	-80(%rbp),%r8
-	leaq	_$UNIT1$_Ld16(%rip),%rdx
+	leaq	_$UNIT1$_Ld14(%rip),%rdx
 	leaq	-88(%rbp),%rcx
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
@@ -1156,13 +1097,53 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	movl	$388,%edx
 	movl	$18,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll122:
-# [237] outtextxyz(18,420,'title: '+title,188,2,2);
+.Ll120:
+# [236] outtextxyz(18,420,'title: '+title,188,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	-88(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 	leaq	U_$UNIT1_$$_TITLE(%rip),%rdx
+	leaq	-80(%rbp),%rcx
+	movl	$0,%r8d
+	call	fpc_shortstr_to_ansistr
+	movq	-80(%rbp),%r8
+	leaq	_$UNIT1$_Ld15(%rip),%rdx
+	leaq	-88(%rbp),%rcx
+	movl	$0,%r9d
+	call	fpc_ansistr_concat
+	movq	-88(%rbp),%r8
+	movl	$188,%r9d
+	movl	$420,%edx
+	movl	$18,%ecx
+	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
+.Ll121:
+# [237] outtextxyz(18,452,'author: '+author,188,2,2);
+	movl	$2,40(%rsp)
+	movl	$2,32(%rsp)
+	leaq	-88(%rbp),%rcx
+	call	fpc_ansistr_decr_ref
+	leaq	U_$UNIT1_$$_AUTHOR(%rip),%rdx
+	leaq	-80(%rbp),%rcx
+	movl	$0,%r8d
+	call	fpc_shortstr_to_ansistr
+	movq	-80(%rbp),%r8
+	leaq	_$UNIT1$_Ld16(%rip),%rdx
+	leaq	-88(%rbp),%rcx
+	movl	$0,%r9d
+	call	fpc_ansistr_concat
+	movq	-88(%rbp),%r8
+	movl	$188,%r9d
+	movl	$452,%edx
+	movl	$18,%ecx
+	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
+.Ll122:
+# [238] outtextxyz(18,484,'copyright: '+copyright,188,2,2);
+	movl	$2,40(%rsp)
+	movl	$2,32(%rsp)
+	leaq	-88(%rbp),%rcx
+	call	fpc_ansistr_decr_ref
+	leaq	U_$UNIT1_$$_COPYRIGHT(%rip),%rdx
 	leaq	-80(%rbp),%rcx
 	movl	$0,%r8d
 	call	fpc_shortstr_to_ansistr
@@ -1173,51 +1154,11 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	call	fpc_ansistr_concat
 	movq	-88(%rbp),%r8
 	movl	$188,%r9d
-	movl	$420,%edx
-	movl	$18,%ecx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll123:
-# [238] outtextxyz(18,452,'author: '+author,188,2,2);
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-	leaq	-88(%rbp),%rcx
-	call	fpc_ansistr_decr_ref
-	leaq	U_$UNIT1_$$_AUTHOR(%rip),%rdx
-	leaq	-80(%rbp),%rcx
-	movl	$0,%r8d
-	call	fpc_shortstr_to_ansistr
-	movq	-80(%rbp),%r8
-	leaq	_$UNIT1$_Ld18(%rip),%rdx
-	leaq	-88(%rbp),%rcx
-	movl	$0,%r9d
-	call	fpc_ansistr_concat
-	movq	-88(%rbp),%r8
-	movl	$188,%r9d
-	movl	$452,%edx
-	movl	$18,%ecx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll124:
-# [239] outtextxyz(18,484,'copyright: '+copyright,188,2,2);
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-	leaq	-88(%rbp),%rcx
-	call	fpc_ansistr_decr_ref
-	leaq	U_$UNIT1_$$_COPYRIGHT(%rip),%rdx
-	leaq	-80(%rbp),%rcx
-	movl	$0,%r8d
-	call	fpc_shortstr_to_ansistr
-	movq	-80(%rbp),%r8
-	leaq	_$UNIT1$_Ld19(%rip),%rdx
-	leaq	-88(%rbp),%rcx
-	movl	$0,%r9d
-	call	fpc_ansistr_concat
-	movq	-88(%rbp),%r8
-	movl	$188,%r9d
 	movl	$484,%edx
 	movl	$18,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll125:
-# [240] outtextxyz(18,516,'flags: '+inttohex(flags,4),188,2,2);
+.Ll123:
+# [239] outtextxyz(18,516,'flags: '+inttohex(flags,4),188,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	-88(%rbp),%rcx
@@ -1227,7 +1168,7 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	movl	$4,%r8d
 	call	SYSUTILS_$$_INTTOHEX$LONGINT$LONGINT$$ANSISTRING
 	movq	-80(%rbp),%r8
-	leaq	_$UNIT1$_Ld20(%rip),%rdx
+	leaq	_$UNIT1$_Ld18(%rip),%rdx
 	leaq	-88(%rbp),%rcx
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
@@ -1236,77 +1177,77 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	movl	$516,%edx
 	movl	$18,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Ll126:
-# [243] song:=startsong-1;
+.Ll124:
+# [242] song:=startsong-1;
 	movzwl	-40(%rbp),%eax
 	leal	-1(%eax),%eax
 	movw	%ax,TC_$UNIT1_$$_SONG(%rip)
-.Ll127:
-# [244] fuck:=0;
+.Ll125:
+# [243] fuck:=0;
 	movl	$0,TC_$UNIT1_$$_FUCK(%rip)
-.Ll128:
-# [245] for i:=0 to 100000000 do begin end;
+.Ll126:
+# [244] for i:=0 to 100000000 do begin end;
 	movl	$0,%esi
 	subl	$1,%esi
 	.balign 8,0x90
-.Lj893:
+.Lj817:
 	addl	$1,%esi
 	cmpl	$100000000,%esi
-	jl	.Lj893
-.Ll129:
-# [246] reset6502;
+	jl	.Lj817
+.Ll127:
+# [245] reset6502;
 	call	UNIT6502_$$_RESET6502
-.Ll130:
-# [247] for i:=0 to 65535 do write6502(i,0);
+.Ll128:
+# [246] for i:=0 to 65535 do write6502(i,0);
 	movl	$0,%esi
 	subl	$1,%esi
 	.balign 8,0x90
-.Lj896:
+.Lj820:
 	addl	$1,%esi
 	movslq	%esi,%rcx
 	movl	$0,%edx
 	call	UNIT6502_$$_WRITE6502$INT64$BYTE
 	cmpl	$65535,%esi
-	jl	.Lj896
+	jl	.Lj820
 	.balign 8,0x90
-.Lj901:
-.Ll131:
-# [249] il:=fileread(fh,b,1);
+.Lj825:
+.Ll129:
+# [248] il:=fileread(fh,b,1);
 	movslq	%ebx,%rcx
 	leaq	-72(%rbp),%rdx
 	movl	$1,%r8d
 	call	SYSUTILS_$$_FILEREAD$QWORD$formal$LONGINT$$LONGINT
 	movb	%al,%sil
-.Ll132:
-# [250] write6502(load,b);
+.Ll130:
+# [249] write6502(load,b);
 	movzwl	-32(%rbp),%ecx
 	movzbl	-72(%rbp),%edx
 	call	UNIT6502_$$_WRITE6502$INT64$BYTE
-.Ll133:
-# [251] load+=1;
+.Ll131:
+# [250] load+=1;
 	movzwl	-32(%rbp),%eax
 	leal	1(%eax),%eax
 	movw	%ax,-32(%rbp)
-.Ll134:
-# [252] until il<>1;
+.Ll132:
+# [251] until il<>1;
 	cmpb	$1,%sil
-	je	.Lj901
-.Ll135:
-# [253] fileseek(fh,0,fsfrombeginning);
+	je	.Lj825
+.Ll133:
+# [252] fileseek(fh,0,fsfrombeginning);
 	movslq	%ebx,%rcx
 	movl	$0,%r8d
 	movl	$0,%edx
 	call	SYSUTILS_$$_FILESEEK$QWORD$LONGINT$LONGINT$$LONGINT
-.Ll136:
-# [255] reset6502;
+.Ll134:
+# [254] reset6502;
 	call	UNIT6502_$$_RESET6502
-.Ll137:
-# [257] jsr6502(song,init);
+.Ll135:
+# [256] jsr6502(song,init);
 	movzwl	U_$UNIT1_$$_INIT(%rip),%edx
 	movzwl	TC_$UNIT1_$$_SONG(%rip),%ecx
 	call	UNIT6502_$$_JSR6502$WORD$INT64
-.Ll138:
-# [258] cia:=read6502($dc04)+256*read6502($dc05);
+.Ll136:
+# [257] cia:=read6502($dc04)+256*read6502($dc05);
 	movq	$56324,%rcx
 	call	UNIT6502_$$_READ6502$INT64$$BYTE
 	movb	%al,%bl
@@ -1319,8 +1260,8 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	shll	$8,%eax
 	leal	(%ebx,%eax),%eax
 	movl	%eax,U_$UNIT1_$$_CIA(%rip)
-.Ll139:
-# [259] outtextxyz(18,578,'cia: '+inttohex(read6502($dc04)+256*read6502($dc05),4),188,2,2);
+.Ll137:
+# [258] outtextxyz(18,578,'cia: '+inttohex(read6502($dc04)+256*read6502($dc05),4),188,2,2);
 	movl	$2,40(%rsp)
 	movl	$2,32(%rsp)
 	leaq	-88(%rbp),%rcx
@@ -1340,7 +1281,7 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	movl	$4,%r8d
 	call	SYSUTILS_$$_INTTOHEX$INT64$LONGINT$$ANSISTRING
 	movq	-80(%rbp),%r8
-	leaq	_$UNIT1$_Ld21(%rip),%rdx
+	leaq	_$UNIT1$_Ld19(%rip),%rdx
 	leaq	-88(%rbp),%rcx
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
@@ -1349,14 +1290,14 @@ UNIT1_$$_SIDOPEN$LONGINT:
 	movl	$578,%edx
 	movl	$18,%ecx
 	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Lj964:
-.Ll140:
+.Lj888:
+.Ll138:
 	nop
-.Lj383:
+.Lj307:
 	movq	%rbp,%rcx
 	call	UNIT1$_$SIDOPEN$LONGINT_$$_fin$5
-.Ll141:
-# [263] end;
+.Ll139:
+# [262] end;
 	movq	-104(%rbp),%rbx
 	movq	-96(%rbp),%rsi
 	leaq	(%rbp),%rsp
@@ -1366,23 +1307,23 @@ UNIT1_$$_SIDOPEN$LONGINT:
 .seh_handlerdata
 	.long	1
 	.long	0
-	.rva	.Lj382
-	.rva	.Lj383
+	.rva	.Lj306
+	.rva	.Lj307
 	.rva	UNIT1$_$SIDOPEN$LONGINT_$$_fin$5
 
 .section .text.n_unit1_$$_sidopen$longint,"x"
 .seh_endproc
 .Lc29:
 .Lt2:
-.Ll142:
+.Ll140:
 
 .section .text.n_unit1$_$loadxi$ansistring$$longint_$$_fin$6,"x"
 	.balign 16,0x90
 UNIT1$_$LOADXI$ANSISTRING$$LONGINT_$$_fin$6:
 .Lc33:
 .seh_proc UNIT1$_$LOADXI$ANSISTRING$$LONGINT_$$_fin$6
-.Ll143:
-# [287] begin
+.Ll141:
+# [286] begin
 	pushq	%rbp
 .seh_pushreg %rbp
 .Lc35:
@@ -1393,7 +1334,7 @@ UNIT1$_$LOADXI$ANSISTRING$$LONGINT_$$_fin$6:
 .seh_stackalloc 32
 # Var $parentfp located in register rbp
 .seh_endprologue
-.Ll144:
+.Ll142:
 	leaq	-976(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 	leaq	-968(%rbp),%rcx
@@ -1410,7 +1351,7 @@ UNIT1$_$LOADXI$ANSISTRING$$LONGINT_$$_fin$6:
 .seh_endproc
 .Lc34:
 .Lt5:
-.Ll145:
+.Ll143:
 
 .section .text.n_unit1_$$_loadxi$ansistring$$longint,"x"
 	.balign 16,0x90
@@ -1419,7 +1360,7 @@ UNIT1_$$_LOADXI$ANSISTRING$$LONGINT:
 .Lc38:
 # Temps allocated between rbp-1000 and rbp-960
 .seh_proc UNIT1_$$_LOADXI$ANSISTRING$$LONGINT
-.Ll146:
+.Ll144:
 	pushq	%rbp
 .seh_pushreg %rbp
 .Lc40:
@@ -1450,47 +1391,47 @@ UNIT1_$$_LOADXI$ANSISTRING$$LONGINT:
 # PeepHole Optimization,MovMov2Mov1
 	movq	%rcx,-8(%rbp)
 	call	fpc_ansistr_incr_ref
-.Ll147:
+.Ll145:
 	movq	$0,-960(%rbp)
 	movq	$0,-976(%rbp)
 	movq	$0,-968(%rbp)
-.Lj975:
+.Lj899:
 	nop
-.Lj971:
-.Ll148:
-# [288] fh:=fileopen(filename,$40);
+.Lj895:
+.Ll146:
+# [287] fh:=fileopen(filename,$40);
 	movq	-8(%rbp),%rcx
 	movl	$64,%edx
 	call	SYSUTILS_$$_FILEOPEN$RAWBYTESTRING$LONGINT$$QWORD
 	movl	%eax,U_$RETRO_$$_FH(%rip)
-.Ll149:
-# [289] fileread(fh,head1,$40);  //text header
+.Ll147:
+# [288] fileread(fh,head1,$40);  //text header
 	movslq	U_$RETRO_$$_FH(%rip),%rcx
 	leaq	-80(%rbp),%rdx
 	movl	$64,%r8d
 	call	SYSUTILS_$$_FILEREAD$QWORD$formal$LONGINT$$LONGINT
-.Ll150:
-# [290] fileread(fh,head2,$e8);  //inst headers
+.Ll148:
+# [289] fileread(fh,head2,$e8);  //inst headers
 	movslq	U_$RETRO_$$_FH(%rip),%rcx
 	leaq	-312(%rbp),%rdx
 	movl	$232,%r8d
 	call	SYSUTILS_$$_FILEREAD$QWORD$formal$LONGINT$$LONGINT
-.Ll151:
-# [291] fileread(fh,samplenum,2);
+.Ll149:
+# [290] fileread(fh,samplenum,2);
 	movslq	U_$RETRO_$$_FH(%rip),%rcx
 	leaq	-16(%rbp),%rdx
 	movl	$2,%r8d
 	call	SYSUTILS_$$_FILEREAD$QWORD$formal$LONGINT$$LONGINT
-.Ll152:
-# [292] for i:=0 to samplenum-1 do fileread(fh,sampleinfo[i],40);
+.Ll150:
+# [291] for i:=0 to samplenum-1 do fileread(fh,sampleinfo[i],40);
 	movzwl	-16(%rbp),%eax
 	leal	-1(%eax),%ebx
 	movl	$0,%esi
 	cmpl	%esi,%ebx
-	jl	.Lj1003
+	jl	.Lj927
 	subl	$1,%esi
 	.balign 8,0x90
-.Lj1004:
+.Lj928:
 	addl	$1,%esi
 # PeepHole Optimization,var2a
 	movl	%esi,%eax
@@ -1500,14 +1441,14 @@ UNIT1_$$_LOADXI$ANSISTRING$$LONGINT:
 	movl	$40,%r8d
 	call	SYSUTILS_$$_FILEREAD$QWORD$formal$LONGINT$$LONGINT
 	cmpl	%esi,%ebx
-	jg	.Lj1004
-.Lj1003:
-.Ll153:
-# [293] fileclose(fh);
+	jg	.Lj928
+.Lj927:
+.Ll151:
+# [292] fileclose(fh);
 	movslq	U_$RETRO_$$_FH(%rip),%rcx
 	call	SYSUTILS_$$_FILECLOSE$QWORD
-.Ll154:
-# [294] form1.memo1.lines.clear;
+.Ll152:
+# [293] form1.memo1.lines.clear;
 	movq	U_$UNIT1_$$_FORM1(%rip),%rax
 	movq	1936(%rax),%rax
 	movq	1480(%rax),%rcx
@@ -1516,15 +1457,15 @@ UNIT1_$$_LOADXI$ANSISTRING$$LONGINT:
 	movq	1480(%rax),%rax
 	movq	(%rax),%rax
 	call	*368(%rax)
-.Ll155:
-# [295] form1.memo1.lines.add('Samples: '+inttostr(samplenum));
+.Ll153:
+# [294] form1.memo1.lines.add('Samples: '+inttostr(samplenum));
 	leaq	-968(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 	movzwl	-16(%rbp),%edx
 	leaq	-976(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$LONGINT$$ANSISTRING
 	movq	-976(%rbp),%r8
-	leaq	_$UNIT1$_Ld22(%rip),%rdx
+	leaq	_$UNIT1$_Ld20(%rip),%rdx
 	leaq	-968(%rbp),%rcx
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
@@ -1537,8 +1478,8 @@ UNIT1_$$_LOADXI$ANSISTRING$$LONGINT:
 	movq	1480(%rax),%rax
 	movq	(%rax),%rax
 	call	*328(%rax)
-.Ll156:
-# [296] form1.memo1.lines.add('');
+.Ll154:
+# [295] form1.memo1.lines.add('');
 	movq	U_$UNIT1_$$_FORM1(%rip),%rax
 	movq	1936(%rax),%rax
 	movq	1480(%rax),%rcx
@@ -1548,28 +1489,28 @@ UNIT1_$$_LOADXI$ANSISTRING$$LONGINT:
 	movq	1480(%rax),%rax
 	movq	(%rax),%rax
 	call	*328(%rax)
-.Ll157:
-# [297] for i:=0 to samplenum-1 do
+.Ll155:
+# [296] for i:=0 to samplenum-1 do
 	movzwl	-16(%rbp),%eax
 	leal	-1(%eax),%ebx
 	movl	$0,%esi
 	cmpl	%esi,%ebx
-	jl	.Lj1038
+	jl	.Lj962
 	subl	$1,%esi
 	.balign 8,0x90
-.Lj1039:
+.Lj963:
 	addl	$1,%esi
-.Ll158:
-# [299] s:='';
+.Ll156:
+# [298] s:='';
 	movq	$0,%rdx
 	leaq	-960(%rbp),%rcx
 	call	fpc_ansistr_assign
-.Ll159:
-# [300] for j:=0 to 21 do s+=sampleinfo[i].samplename[j];
+.Ll157:
+# [299] for j:=0 to 21 do s+=sampleinfo[i].samplename[j];
 	movl	$0,%edi
 	subl	$1,%edi
 	.balign 8,0x90
-.Lj1046:
+.Lj970:
 	addl	$1,%edi
 # PeepHole Optimization,var2a
 	movl	%esi,%eax
@@ -1587,12 +1528,60 @@ UNIT1_$$_LOADXI$ANSISTRING$$LONGINT:
 	movl	$0,%r9d
 	call	fpc_ansistr_concat
 	cmpl	$21,%edi
-	jl	.Lj1046
-.Ll160:
-# [302] form1.memo1.lines.add('Sample name: '+s);
+	jl	.Lj970
+.Ll158:
+# [301] form1.memo1.lines.add('Sample name: '+s);
 	leaq	-976(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 	movq	-960(%rbp),%r8
+	leaq	_$UNIT1$_Ld21(%rip),%rdx
+	leaq	-976(%rbp),%rcx
+	movl	$0,%r9d
+	call	fpc_ansistr_concat
+	movq	-976(%rbp),%rdx
+	movq	U_$UNIT1_$$_FORM1(%rip),%rax
+	movq	1936(%rax),%rax
+	movq	1480(%rax),%rcx
+	movq	U_$UNIT1_$$_FORM1(%rip),%rax
+	movq	1936(%rax),%rax
+	movq	1480(%rax),%rax
+	movq	(%rax),%rax
+	call	*328(%rax)
+.Ll159:
+# [302] form1.memo1.lines.add('Sample length: '+inttostr(sampleinfo[i].slen));
+	leaq	-976(%rbp),%rcx
+	call	fpc_ansistr_decr_ref
+# PeepHole Optimization,var2a
+	movl	%esi,%eax
+	imulq	$40,%rax,%rax
+	movl	-952(%rbp,%rax),%edx
+	leaq	-968(%rbp),%rcx
+	call	SYSUTILS_$$_INTTOSTR$QWORD$$ANSISTRING
+	movq	-968(%rbp),%r8
+	leaq	_$UNIT1$_Ld22(%rip),%rdx
+	leaq	-976(%rbp),%rcx
+	movl	$0,%r9d
+	call	fpc_ansistr_concat
+	movq	-976(%rbp),%rdx
+	movq	U_$UNIT1_$$_FORM1(%rip),%rax
+	movq	1936(%rax),%rax
+	movq	1480(%rax),%rcx
+	movq	U_$UNIT1_$$_FORM1(%rip),%rax
+	movq	1936(%rax),%rax
+	movq	1480(%rax),%rax
+	movq	(%rax),%rax
+	call	*328(%rax)
+.Ll160:
+# [303] form1.memo1.lines.add('Sample loop start: '+inttostr(sampleinfo[i].sls));
+	leaq	-976(%rbp),%rcx
+	call	fpc_ansistr_decr_ref
+# PeepHole Optimization,var2a
+	movl	%esi,%eax
+	imulq	$40,%rax,%rax
+	movl	-948(%rbp,%rax),%edx
+	leaq	-968(%rbp),%rcx
+	call	SYSUTILS_$$_INTTOSTR$QWORD$$ANSISTRING
+	movq	-968(%rbp),%r8
 	leaq	_$UNIT1$_Ld23(%rip),%rdx
 	leaq	-976(%rbp),%rcx
 	movl	$0,%r9d
@@ -1607,13 +1596,13 @@ UNIT1_$$_LOADXI$ANSISTRING$$LONGINT:
 	movq	(%rax),%rax
 	call	*328(%rax)
 .Ll161:
-# [303] form1.memo1.lines.add('Sample length: '+inttostr(sampleinfo[i].slen));
+# [304] form1.memo1.lines.add('Sample loop length: '+inttostr(sampleinfo[i].sll));
 	leaq	-976(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 # PeepHole Optimization,var2a
 	movl	%esi,%eax
 	imulq	$40,%rax,%rax
-	movl	-952(%rbp,%rax),%edx
+	movl	-944(%rbp,%rax),%edx
 	leaq	-968(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$QWORD$$ANSISTRING
 	movq	-968(%rbp),%r8
@@ -1631,15 +1620,16 @@ UNIT1_$$_LOADXI$ANSISTRING$$LONGINT:
 	movq	(%rax),%rax
 	call	*328(%rax)
 .Ll162:
-# [304] form1.memo1.lines.add('Sample loop start: '+inttostr(sampleinfo[i].sls));
+# [305] form1.memo1.lines.add('Sample type :'+inttohex(sampleinfo[i].sampletype,2));
 	leaq	-976(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 # PeepHole Optimization,var2a
 	movl	%esi,%eax
 	imulq	$40,%rax,%rax
-	movl	-948(%rbp,%rax),%edx
+	movzbl	-938(%rbp,%rax),%edx
 	leaq	-968(%rbp),%rcx
-	call	SYSUTILS_$$_INTTOSTR$QWORD$$ANSISTRING
+	movl	$2,%r8d
+	call	SYSUTILS_$$_INTTOHEX$LONGINT$LONGINT$$ANSISTRING
 	movq	-968(%rbp),%r8
 	leaq	_$UNIT1$_Ld25(%rip),%rdx
 	leaq	-976(%rbp),%rcx
@@ -1655,15 +1645,16 @@ UNIT1_$$_LOADXI$ANSISTRING$$LONGINT:
 	movq	(%rax),%rax
 	call	*328(%rax)
 .Ll163:
-# [305] form1.memo1.lines.add('Sample loop length: '+inttostr(sampleinfo[i].sll));
+# [306] form1.memo1.lines.add('finetune :'+inttohex(sampleinfo[i].finetune,2));
 	leaq	-976(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 # PeepHole Optimization,var2a
 	movl	%esi,%eax
 	imulq	$40,%rax,%rax
-	movl	-944(%rbp,%rax),%edx
+	movzbl	-939(%rbp,%rax),%edx
 	leaq	-968(%rbp),%rcx
-	call	SYSUTILS_$$_INTTOSTR$QWORD$$ANSISTRING
+	movl	$2,%r8d
+	call	SYSUTILS_$$_INTTOHEX$LONGINT$LONGINT$$ANSISTRING
 	movq	-968(%rbp),%r8
 	leaq	_$UNIT1$_Ld26(%rip),%rdx
 	leaq	-976(%rbp),%rcx
@@ -1679,13 +1670,13 @@ UNIT1_$$_LOADXI$ANSISTRING$$LONGINT:
 	movq	(%rax),%rax
 	call	*328(%rax)
 .Ll164:
-# [306] form1.memo1.lines.add('Sample type :'+inttohex(sampleinfo[i].sampletype,2));
+# [307] form1.memo1.lines.add('pan :'+inttohex(sampleinfo[i].pan,2));
 	leaq	-976(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 # PeepHole Optimization,var2a
 	movl	%esi,%eax
 	imulq	$40,%rax,%rax
-	movzbl	-938(%rbp,%rax),%edx
+	movzbl	-937(%rbp,%rax),%edx
 	leaq	-968(%rbp),%rcx
 	movl	$2,%r8d
 	call	SYSUTILS_$$_INTTOHEX$LONGINT$LONGINT$$ANSISTRING
@@ -1704,13 +1695,13 @@ UNIT1_$$_LOADXI$ANSISTRING$$LONGINT:
 	movq	(%rax),%rax
 	call	*328(%rax)
 .Ll165:
-# [307] form1.memo1.lines.add('finetune :'+inttohex(sampleinfo[i].finetune,2));
+# [308] form1.memo1.lines.add('relnote :'+inttohex(sampleinfo[i].relnote,2));
 	leaq	-976(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 # PeepHole Optimization,var2a
 	movl	%esi,%eax
 	imulq	$40,%rax,%rax
-	movzbl	-939(%rbp,%rax),%edx
+	movzbl	-936(%rbp,%rax),%edx
 	leaq	-968(%rbp),%rcx
 	movl	$2,%r8d
 	call	SYSUTILS_$$_INTTOHEX$LONGINT$LONGINT$$ANSISTRING
@@ -1729,13 +1720,13 @@ UNIT1_$$_LOADXI$ANSISTRING$$LONGINT:
 	movq	(%rax),%rax
 	call	*328(%rax)
 .Ll166:
-# [308] form1.memo1.lines.add('pan :'+inttohex(sampleinfo[i].pan,2));
+# [309] form1.memo1.lines.add('volume :'+inttohex(sampleinfo[i].vol,2));
 	leaq	-976(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
 # PeepHole Optimization,var2a
 	movl	%esi,%eax
 	imulq	$40,%rax,%rax
-	movzbl	-937(%rbp,%rax),%edx
+	movzbl	-940(%rbp,%rax),%edx
 	leaq	-968(%rbp),%rcx
 	movl	$2,%r8d
 	call	SYSUTILS_$$_INTTOHEX$LONGINT$LONGINT$$ANSISTRING
@@ -1754,57 +1745,7 @@ UNIT1_$$_LOADXI$ANSISTRING$$LONGINT:
 	movq	(%rax),%rax
 	call	*328(%rax)
 .Ll167:
-# [309] form1.memo1.lines.add('relnote :'+inttohex(sampleinfo[i].relnote,2));
-	leaq	-976(%rbp),%rcx
-	call	fpc_ansistr_decr_ref
-# PeepHole Optimization,var2a
-	movl	%esi,%eax
-	imulq	$40,%rax,%rax
-	movzbl	-936(%rbp,%rax),%edx
-	leaq	-968(%rbp),%rcx
-	movl	$2,%r8d
-	call	SYSUTILS_$$_INTTOHEX$LONGINT$LONGINT$$ANSISTRING
-	movq	-968(%rbp),%r8
-	leaq	_$UNIT1$_Ld30(%rip),%rdx
-	leaq	-976(%rbp),%rcx
-	movl	$0,%r9d
-	call	fpc_ansistr_concat
-	movq	-976(%rbp),%rdx
-	movq	U_$UNIT1_$$_FORM1(%rip),%rax
-	movq	1936(%rax),%rax
-	movq	1480(%rax),%rcx
-	movq	U_$UNIT1_$$_FORM1(%rip),%rax
-	movq	1936(%rax),%rax
-	movq	1480(%rax),%rax
-	movq	(%rax),%rax
-	call	*328(%rax)
-.Ll168:
-# [310] form1.memo1.lines.add('volume :'+inttohex(sampleinfo[i].vol,2));
-	leaq	-976(%rbp),%rcx
-	call	fpc_ansistr_decr_ref
-# PeepHole Optimization,var2a
-	movl	%esi,%eax
-	imulq	$40,%rax,%rax
-	movzbl	-940(%rbp,%rax),%edx
-	leaq	-968(%rbp),%rcx
-	movl	$2,%r8d
-	call	SYSUTILS_$$_INTTOHEX$LONGINT$LONGINT$$ANSISTRING
-	movq	-968(%rbp),%r8
-	leaq	_$UNIT1$_Ld31(%rip),%rdx
-	leaq	-976(%rbp),%rcx
-	movl	$0,%r9d
-	call	fpc_ansistr_concat
-	movq	-976(%rbp),%rdx
-	movq	U_$UNIT1_$$_FORM1(%rip),%rax
-	movq	1936(%rax),%rax
-	movq	1480(%rax),%rcx
-	movq	U_$UNIT1_$$_FORM1(%rip),%rax
-	movq	1936(%rax),%rax
-	movq	1480(%rax),%rax
-	movq	(%rax),%rax
-	call	*328(%rax)
-.Ll169:
-# [311] form1.memo1.lines.add('');
+# [310] form1.memo1.lines.add('');
 	movq	U_$UNIT1_$$_FORM1(%rip),%rax
 	movq	1936(%rax),%rax
 	movq	1480(%rax),%rcx
@@ -1814,18 +1755,18 @@ UNIT1_$$_LOADXI$ANSISTRING$$LONGINT:
 	movq	1480(%rax),%rax
 	movq	(%rax),%rax
 	call	*328(%rax)
-.Ll170:
+.Ll168:
 	cmpl	%esi,%ebx
-	jg	.Lj1039
-.Lj1038:
-.Lj1215:
-.Ll171:
+	jg	.Lj963
+.Lj962:
+.Lj1139:
+.Ll169:
 	nop
-.Lj972:
+.Lj896:
 	movq	%rbp,%rcx
 	call	UNIT1$_$LOADXI$ANSISTRING$$LONGINT_$$_fin$6
-.Ll172:
-# [330] end;
+.Ll170:
+# [329] end;
 	movl	%edx,%eax
 	movq	-1000(%rbp),%rbx
 	movq	-992(%rbp),%rdi
@@ -1837,15 +1778,15 @@ UNIT1_$$_LOADXI$ANSISTRING$$LONGINT:
 .seh_handlerdata
 	.long	1
 	.long	0
-	.rva	.Lj971
-	.rva	.Lj972
+	.rva	.Lj895
+	.rva	.Lj896
 	.rva	UNIT1$_$LOADXI$ANSISTRING$$LONGINT_$$_fin$6
 
 .section .text.n_unit1_$$_loadxi$ansistring$$longint,"x"
 .seh_endproc
 .Lc39:
 .Lt4:
-.Ll173:
+.Ll171:
 # End asmlist al_procedures
 # Begin asmlist al_globals
 
@@ -1905,10 +1846,10 @@ U_$UNIT1_$$_SC:
 VMT_$UNIT1_$$_TFORM1:
 	.quad	1984,-1984
 	.quad	VMT_$FORMS_$$_TFORM
-	.quad	.Ld32
+	.quad	.Ld30
 	.quad	0
-	.quad	.Ld33
-	.quad	.Ld40
+	.quad	.Ld31
+	.quad	.Ld38
 	.quad	RTTI_$UNIT1_$$_TFORM1
 	.quad	0,0,0,0
 	.quad	FORMS$_$TCUSTOMFORM_$__$$_DESTROY
@@ -2084,7 +2025,7 @@ VMT_$UNIT1_$$_TFORM1:
 	.quad	FORMS$_$TCUSTOMDESIGNCONTROL_$__$$_AUTOADJUSTLAYOUT$crc5F4A49A3
 	.quad	CONTROLS$_$TCONTROL_$__$$_SHOULDAUTOADJUST$BOOLEAN$BOOLEAN
 	.quad	CONTROLS$_$TCONTROL_$__$$_FIXDESIGNFONTSPPI$LONGINT
-	.quad	CONTROLS$_$TCONTROL_$__$$_SCALEFONTSPPI$DOUBLE
+	.quad	CONTROLS$_$TCONTROL_$__$$_SCALEFONTSPPI$LONGINT$DOUBLE
 	.quad	CONTROLS$_$TCONTROL_$__$$_EDITINGDONE
 	.quad	CONTROLS$_$TCONTROL_$__$$_EXECUTEDEFAULTACTION
 	.quad	CONTROLS$_$TCONTROL_$__$$_EXECUTECANCELACTION
@@ -2213,54 +2154,54 @@ VMT_$UNIT1_$$_TFORM1:
 	.quad	FORMS$_$TCUSTOMFORM_$__$$_GETMDICHILDREN$LONGINT$$TCUSTOMFORM
 	.quad	FORMS$_$TCUSTOMFORM_$__$$_MDICHILDCOUNT$$LONGINT
 	.quad	0
-# [335] 
+# [334] 
 	.balign 8
-.Ld32:
+.Ld30:
 	.byte	6
 	.ascii	"TForm1"
 	.balign 8
-.Ld33:
+.Ld31:
 	.long	6
-	.quad	.Ld34
+	.quad	.Ld32
 	.quad	UNIT1$_$TFORM1_$__$$_BUTTON1CLICK$TOBJECT
-	.quad	.Ld35
+	.quad	.Ld33
 	.quad	UNIT1$_$TFORM1_$__$$_BUTTON2CLICK$TOBJECT
-	.quad	.Ld36
+	.quad	.Ld34
 	.quad	UNIT1$_$TFORM1_$__$$_BUTTON3CLICK$TOBJECT
-	.quad	.Ld37
+	.quad	.Ld35
 	.quad	UNIT1$_$TFORM1_$__$$_FFT1GETDATA$LONGINT$TCOMPLEX
-	.quad	.Ld38
+	.quad	.Ld36
 	.quad	UNIT1$_$TFORM1_$__$$_FORMCLOSE$TOBJECT$TCLOSEACTION
-	.quad	.Ld39
+	.quad	.Ld37
 	.quad	UNIT1$_$TFORM1_$__$$_FORMCREATE$TOBJECT
 	.balign 8
-.Ld34:
+.Ld32:
 	.byte	12
 	.ascii	"Button1Click"
 	.balign 8
-.Ld35:
+.Ld33:
 	.byte	12
 	.ascii	"Button2Click"
 	.balign 8
-.Ld36:
+.Ld34:
 	.byte	12
 	.ascii	"Button3Click"
 	.balign 8
-.Ld37:
+.Ld35:
 	.byte	11
 	.ascii	"fft1GetData"
 	.balign 8
-.Ld38:
+.Ld36:
 	.byte	9
 	.ascii	"FormClose"
 	.balign 8
-.Ld39:
+.Ld37:
 	.byte	10
 	.ascii	"FormCreate"
 	.balign 8
-.Ld40:
+.Ld38:
 	.short	11
-	.quad	.Ld41
+	.quad	.Ld39
 	.quad	1896
 	.short	1
 	.byte	7
@@ -2306,7 +2247,7 @@ VMT_$UNIT1_$$_TFORM1:
 	.byte	12
 	.ascii	"RadioButton4"
 	.balign 8
-.Ld41:
+.Ld39:
 	.short	6
 	.quad	VMT_$STDCTRLS_$$_TBUTTON
 	.quad	VMT_$STDCTRLS_$$_TCHECKBOX
@@ -2382,62 +2323,66 @@ _$UNIT1$_Ld3:
 	.balign 8
 .globl	_$UNIT1$_Ld4
 _$UNIT1$_Ld4:
-# value: 0d+1.0000000000000000E+000
-	.byte	0,0,0,0,0,0,240,63
-
-.section .rodata.n__$UNIT1$_Ld5,"d"
-	.balign 8
-.globl	_$UNIT1$_Ld5
-_$UNIT1$_Ld5:
-# value: 0d+9.6000000000000000E+004
-	.byte	0,0,0,0,0,112,247,64
-
-.section .rodata.n__$UNIT1$_Ld6,"d"
-	.balign 8
-.globl	_$UNIT1$_Ld6
-_$UNIT1$_Ld6:
 # value: 0d+0.0000000000000000E+000
 	.byte	0,0,0,0,0,0,0,0
 
 .section .data.n_tc_$unit1$_$sidopen$longint_$$_defaultmagic,"d"
 TC_$UNIT1$_$SIDOPEN$LONGINT_$$_defaultmagic:
 	.byte	4
-# [194] magic:string[4]='    ';
+# [193] magic:string[4]='    ';
 	.ascii	"    "
-# [195] dump:word;
+# [194] dump:word;
+
+.section .rodata.n__$UNIT1$_Ld5,"d"
+	.balign 8
+.globl	_$UNIT1$_Ld5
+_$UNIT1$_Ld5:
+	.ascii	"                                 \000"
+
+.section .rodata.n__$UNIT1$_Ld6,"d"
+	.balign 8
+	.short	0,1
+	.long	0
+	.quad	-1,10
+.globl	_$UNIT1$_Ld6
+_$UNIT1$_Ld6:
+	.ascii	"type: PSID\000"
 
 .section .rodata.n__$UNIT1$_Ld7,"d"
 	.balign 8
+	.short	0,1
+	.long	0
+	.quad	-1,9
 .globl	_$UNIT1$_Ld7
 _$UNIT1$_Ld7:
-	.ascii	"                                 \000"
+	.ascii	"version: \000"
 
 .section .rodata.n__$UNIT1$_Ld8,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,10
+	.quad	-1,8
 .globl	_$UNIT1$_Ld8
 _$UNIT1$_Ld8:
-	.ascii	"type: PSID\000"
+	.ascii	"offset: \000"
 
 .section .rodata.n__$UNIT1$_Ld9,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,9
+	.quad	-1,6
 .globl	_$UNIT1$_Ld9
 _$UNIT1$_Ld9:
-	.ascii	"version: \000"
+	.ascii	"load: \000"
 
 .section .rodata.n__$UNIT1$_Ld10,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,8
+	.quad	-1,6
 .globl	_$UNIT1$_Ld10
 _$UNIT1$_Ld10:
-	.ascii	"offset: \000"
+	.ascii	"init: \000"
 
 .section .rodata.n__$UNIT1$_Ld11,"d"
 	.balign 8
@@ -2446,25 +2391,25 @@ _$UNIT1$_Ld10:
 	.quad	-1,6
 .globl	_$UNIT1$_Ld11
 _$UNIT1$_Ld11:
-	.ascii	"load: \000"
+	.ascii	"play: \000"
 
 .section .rodata.n__$UNIT1$_Ld12,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,6
+	.quad	-1,7
 .globl	_$UNIT1$_Ld12
 _$UNIT1$_Ld12:
-	.ascii	"init: \000"
+	.ascii	"songs: \000"
 
 .section .rodata.n__$UNIT1$_Ld13,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,6
+	.quad	-1,11
 .globl	_$UNIT1$_Ld13
 _$UNIT1$_Ld13:
-	.ascii	"play: \000"
+	.ascii	"startsong: \000"
 
 .section .rodata.n__$UNIT1$_Ld14,"d"
 	.balign 8
@@ -2473,159 +2418,141 @@ _$UNIT1$_Ld13:
 	.quad	-1,7
 .globl	_$UNIT1$_Ld14
 _$UNIT1$_Ld14:
-	.ascii	"songs: \000"
+	.ascii	"speed: \000"
 
 .section .rodata.n__$UNIT1$_Ld15,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,11
+	.quad	-1,7
 .globl	_$UNIT1$_Ld15
 _$UNIT1$_Ld15:
-	.ascii	"startsong: \000"
+	.ascii	"title: \000"
 
 .section .rodata.n__$UNIT1$_Ld16,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,7
+	.quad	-1,8
 .globl	_$UNIT1$_Ld16
 _$UNIT1$_Ld16:
-	.ascii	"speed: \000"
+	.ascii	"author: \000"
 
 .section .rodata.n__$UNIT1$_Ld17,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,7
+	.quad	-1,11
 .globl	_$UNIT1$_Ld17
 _$UNIT1$_Ld17:
-	.ascii	"title: \000"
+	.ascii	"copyright: \000"
 
 .section .rodata.n__$UNIT1$_Ld18,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,8
+	.quad	-1,7
 .globl	_$UNIT1$_Ld18
 _$UNIT1$_Ld18:
-	.ascii	"author: \000"
+	.ascii	"flags: \000"
 
 .section .rodata.n__$UNIT1$_Ld19,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,11
+	.quad	-1,5
 .globl	_$UNIT1$_Ld19
 _$UNIT1$_Ld19:
-	.ascii	"copyright: \000"
+	.ascii	"cia: \000"
 
 .section .rodata.n__$UNIT1$_Ld20,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,7
+	.quad	-1,9
 .globl	_$UNIT1$_Ld20
 _$UNIT1$_Ld20:
-	.ascii	"flags: \000"
+	.ascii	"Samples: \000"
 
 .section .rodata.n__$UNIT1$_Ld21,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,5
+	.quad	-1,13
 .globl	_$UNIT1$_Ld21
 _$UNIT1$_Ld21:
-	.ascii	"cia: \000"
+	.ascii	"Sample name: \000"
 
 .section .rodata.n__$UNIT1$_Ld22,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,9
+	.quad	-1,15
 .globl	_$UNIT1$_Ld22
 _$UNIT1$_Ld22:
-	.ascii	"Samples: \000"
+	.ascii	"Sample length: \000"
 
 .section .rodata.n__$UNIT1$_Ld23,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,13
+	.quad	-1,19
 .globl	_$UNIT1$_Ld23
 _$UNIT1$_Ld23:
-	.ascii	"Sample name: \000"
+	.ascii	"Sample loop start: \000"
 
 .section .rodata.n__$UNIT1$_Ld24,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,15
+	.quad	-1,20
 .globl	_$UNIT1$_Ld24
 _$UNIT1$_Ld24:
-	.ascii	"Sample length: \000"
+	.ascii	"Sample loop length: \000"
 
 .section .rodata.n__$UNIT1$_Ld25,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,19
+	.quad	-1,13
 .globl	_$UNIT1$_Ld25
 _$UNIT1$_Ld25:
-	.ascii	"Sample loop start: \000"
+	.ascii	"Sample type :\000"
 
 .section .rodata.n__$UNIT1$_Ld26,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,20
+	.quad	-1,10
 .globl	_$UNIT1$_Ld26
 _$UNIT1$_Ld26:
-	.ascii	"Sample loop length: \000"
+	.ascii	"finetune :\000"
 
 .section .rodata.n__$UNIT1$_Ld27,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,13
+	.quad	-1,5
 .globl	_$UNIT1$_Ld27
 _$UNIT1$_Ld27:
-	.ascii	"Sample type :\000"
+	.ascii	"pan :\000"
 
 .section .rodata.n__$UNIT1$_Ld28,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,10
+	.quad	-1,9
 .globl	_$UNIT1$_Ld28
 _$UNIT1$_Ld28:
-	.ascii	"finetune :\000"
+	.ascii	"relnote :\000"
 
 .section .rodata.n__$UNIT1$_Ld29,"d"
 	.balign 8
 	.short	0,1
 	.long	0
-	.quad	-1,5
+	.quad	-1,8
 .globl	_$UNIT1$_Ld29
 _$UNIT1$_Ld29:
-	.ascii	"pan :\000"
-
-.section .rodata.n__$UNIT1$_Ld30,"d"
-	.balign 8
-	.short	0,1
-	.long	0
-	.quad	-1,9
-.globl	_$UNIT1$_Ld30
-_$UNIT1$_Ld30:
-	.ascii	"relnote :\000"
-
-.section .rodata.n__$UNIT1$_Ld31,"d"
-	.balign 8
-	.short	0,1
-	.long	0
-	.quad	-1,8
-.globl	_$UNIT1$_Ld31
-_$UNIT1$_Ld31:
 	.ascii	"volume :\000"
 # End asmlist al_typedconsts
 # Begin asmlist al_rtti
@@ -2881,8 +2808,8 @@ RTTI_$UNIT1_$$_TFORM1:
 	.uleb128	1
 # [58] procedure sidopen (fh:integer);     forward;
 	.ascii	"unit1.pas\000"
-	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
-	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
+	.ascii	"D:/programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -15396,45 +15323,6 @@ RTTI_$UNIT1_$$_TFORM1:
 	.ascii	"ASCALED\000"
 	.long	.La55-.Ldebug_info0
 	.byte	0
-# Procdef AutoAdjustLayout(<TCustomDesignControl>;TLayoutAdjustmentPolicy;const LongInt;const LongInt;const LongInt;const LongInt);
-	.uleb128	21
-	.ascii	"AUTOADJUSTLAYOUT\000"
-	.byte	1
-	.byte	65
-	.byte	1
-	.byte	1
-	.byte	5
-	.byte	6
-	.byte	16
-	.uleb128	1456
-	.byte	34
-	.byte	2
-# Symbol this
-	.uleb128	27
-	.ascii	"this\000"
-	.byte	1
-	.long	.La248-.Ldebug_info0
-# Symbol AMODE
-	.uleb128	28
-	.ascii	"AMODE\000"
-	.long	.La489-.Ldebug_info0
-# Symbol AFROMPPI
-	.uleb128	28
-	.ascii	"AFROMPPI\000"
-	.long	.La6-.Ldebug_info0
-# Symbol ATOPPI
-	.uleb128	28
-	.ascii	"ATOPPI\000"
-	.long	.La6-.Ldebug_info0
-# Symbol AOLDFORMWIDTH
-	.uleb128	28
-	.ascii	"AOLDFORMWIDTH\000"
-	.long	.La6-.Ldebug_info0
-# Symbol ANEWFORMWIDTH
-	.uleb128	28
-	.ascii	"ANEWFORMWIDTH\000"
-	.long	.La6-.Ldebug_info0
-	.byte	0
 # Procdef DoAutoAdjustLayout(<TCustomDesignControl>;const TLayoutAdjustmentPolicy;const Double;const Double);
 	.uleb128	21
 	.ascii	"DOAUTOADJUSTLAYOUT\000"
@@ -15511,6 +15399,44 @@ RTTI_$UNIT1_$$_TFORM1:
 	.uleb128	28
 	.ascii	"THEOWNER\000"
 	.long	.La126-.Ldebug_info0
+	.byte	0
+# Procdef AutoAdjustLayout(<TCustomDesignControl>;TLayoutAdjustmentPolicy;const LongInt;const LongInt;const LongInt;const LongInt);
+	.uleb128	29
+	.ascii	"AUTOADJUSTLAYOUT\000"
+	.byte	1
+	.byte	65
+	.byte	1
+	.byte	1
+	.byte	5
+	.byte	6
+	.byte	16
+	.uleb128	1456
+	.byte	34
+# Symbol this
+	.uleb128	27
+	.ascii	"this\000"
+	.byte	1
+	.long	.La248-.Ldebug_info0
+# Symbol AMODE
+	.uleb128	28
+	.ascii	"AMODE\000"
+	.long	.La489-.Ldebug_info0
+# Symbol AFROMPPI
+	.uleb128	28
+	.ascii	"AFROMPPI\000"
+	.long	.La6-.Ldebug_info0
+# Symbol ATOPPI
+	.uleb128	28
+	.ascii	"ATOPPI\000"
+	.long	.La6-.Ldebug_info0
+# Symbol AOLDFORMWIDTH
+	.uleb128	28
+	.ascii	"AOLDFORMWIDTH\000"
+	.long	.La6-.Ldebug_info0
+# Symbol ANEWFORMWIDTH
+	.uleb128	28
+	.ascii	"ANEWFORMWIDTH\000"
+	.long	.La6-.Ldebug_info0
 	.byte	0
 	.byte	0
 .La249:
@@ -26553,7 +26479,7 @@ RTTI_$UNIT1_$$_TFORM1:
 	.ascii	"ADESIGNTIMEPPI\000"
 	.long	.La6-.Ldebug_info0
 	.byte	0
-# Procdef DoScaleFontPPI(<TControl>;const TFont;const Double);
+# Procdef DoScaleFontPPI(<TControl>;const TFont;const LongInt;const Double);
 	.uleb128	26
 	.ascii	"DOSCALEFONTPPI\000"
 	.byte	1
@@ -26569,6 +26495,10 @@ RTTI_$UNIT1_$$_TFORM1:
 	.uleb128	28
 	.ascii	"AFONT\000"
 	.long	.La607-.Ldebug_info0
+# Symbol ATOPPI
+	.uleb128	28
+	.ascii	"ATOPPI\000"
+	.long	.La6-.Ldebug_info0
 # Symbol APROPORTION
 	.uleb128	28
 	.ascii	"APROPORTION\000"
@@ -27737,7 +27667,7 @@ RTTI_$UNIT1_$$_TFORM1:
 	.ascii	"ADESIGNTIMEPPI\000"
 	.long	.La6-.Ldebug_info0
 	.byte	0
-# Procdef ScaleFontsPPI(<TControl>;const Double);
+# Procdef ScaleFontsPPI(<TControl>;const LongInt;const Double);
 	.uleb128	29
 	.ascii	"SCALEFONTSPPI\000"
 	.byte	1
@@ -27754,6 +27684,10 @@ RTTI_$UNIT1_$$_TFORM1:
 	.ascii	"this\000"
 	.byte	1
 	.long	.La254-.Ldebug_info0
+# Symbol ATOPPI
+	.uleb128	28
+	.ascii	"ATOPPI\000"
+	.long	.La6-.Ldebug_info0
 # Symbol APROPORTION
 	.uleb128	28
 	.ascii	"APROPORTION\000"
@@ -91104,847 +91038,835 @@ RTTI_$UNIT1_$$_TFORM1:
 	.byte	2
 	.uleb128	.Ll23-.Ll22
 	.byte	13
-# [110:3]
+# [111:14]
 	.byte	2
 	.uleb128	.Ll24-.Ll23
 	.byte	5
-	.uleb128	3
-	.byte	13
+	.uleb128	14
+	.byte	14
 # [112:14]
 	.byte	2
 	.uleb128	.Ll25-.Ll24
-	.byte	5
-	.uleb128	14
-	.byte	14
-# [113:14]
+	.byte	13
+# [116:7]
 	.byte	2
 	.uleb128	.Ll26-.Ll25
-	.byte	13
-# [114:11]
+	.byte	5
+	.uleb128	7
+	.byte	16
+# [118:5]
 	.byte	2
 	.uleb128	.Ll27-.Ll26
 	.byte	5
-	.uleb128	11
-	.byte	13
-# [117:7]
+	.uleb128	5
+	.byte	14
+# [119:18]
 	.byte	2
 	.uleb128	.Ll28-.Ll27
 	.byte	5
-	.uleb128	7
-	.byte	15
-# [119:5]
+	.uleb128	18
+	.byte	13
+# [120:5]
 	.byte	2
 	.uleb128	.Ll29-.Ll28
 	.byte	5
 	.uleb128	5
-	.byte	14
-# [120:18]
-	.byte	2
-	.uleb128	.Ll30-.Ll29
-	.byte	5
-	.uleb128	18
 	.byte	13
 # [121:5]
 	.byte	2
-	.uleb128	.Ll31-.Ll30
-	.byte	5
-	.uleb128	5
+	.uleb128	.Ll30-.Ll29
 	.byte	13
 # [122:5]
 	.byte	2
-	.uleb128	.Ll32-.Ll31
+	.uleb128	.Ll31-.Ll30
 	.byte	13
 # [123:5]
 	.byte	2
-	.uleb128	.Ll33-.Ll32
+	.uleb128	.Ll32-.Ll31
 	.byte	13
 # [124:5]
 	.byte	2
+	.uleb128	.Ll33-.Ll32
+	.byte	13
+# [125:20]
+	.byte	2
 	.uleb128	.Ll34-.Ll33
-	.byte	13
-# [125:5]
-	.byte	2
-	.uleb128	.Ll35-.Ll34
-	.byte	13
-# [126:20]
-	.byte	2
-	.uleb128	.Ll36-.Ll35
 	.byte	5
 	.uleb128	20
 	.byte	13
-# [127:19]
+# [126:19]
 	.byte	2
-	.uleb128	.Ll37-.Ll36
+	.uleb128	.Ll35-.Ll34
 	.byte	5
 	.uleb128	19
 	.byte	13
-# [128:5]
+# [127:5]
 	.byte	2
-	.uleb128	.Ll38-.Ll37
+	.uleb128	.Ll36-.Ll35
 	.byte	5
 	.uleb128	5
 	.byte	13
-# [129:5]
+# [128:5]
 	.byte	2
-	.uleb128	.Ll39-.Ll38
+	.uleb128	.Ll37-.Ll36
 	.byte	13
-# [132:8]
+# [131:8]
 	.byte	2
-	.uleb128	.Ll40-.Ll39
+	.uleb128	.Ll38-.Ll37
 	.byte	5
 	.uleb128	8
 	.byte	15
-# [134:5]
+# [133:5]
+	.byte	2
+	.uleb128	.Ll39-.Ll38
+	.byte	5
+	.uleb128	5
+	.byte	14
+# [134:18]
+	.byte	2
+	.uleb128	.Ll40-.Ll39
+	.byte	5
+	.uleb128	18
+	.byte	13
+# [135:5]
 	.byte	2
 	.uleb128	.Ll41-.Ll40
 	.byte	5
 	.uleb128	5
-	.byte	14
-# [135:18]
-	.byte	2
-	.uleb128	.Ll42-.Ll41
-	.byte	5
-	.uleb128	18
 	.byte	13
 # [136:5]
 	.byte	2
-	.uleb128	.Ll43-.Ll42
-	.byte	5
-	.uleb128	5
+	.uleb128	.Ll42-.Ll41
 	.byte	13
 # [137:5]
 	.byte	2
-	.uleb128	.Ll44-.Ll43
+	.uleb128	.Ll43-.Ll42
 	.byte	13
 # [138:5]
 	.byte	2
-	.uleb128	.Ll45-.Ll44
+	.uleb128	.Ll44-.Ll43
 	.byte	13
 # [139:5]
 	.byte	2
+	.uleb128	.Ll45-.Ll44
+	.byte	13
+# [140:20]
+	.byte	2
 	.uleb128	.Ll46-.Ll45
-	.byte	13
-# [140:5]
-	.byte	2
-	.uleb128	.Ll47-.Ll46
-	.byte	13
-# [141:20]
-	.byte	2
-	.uleb128	.Ll48-.Ll47
 	.byte	5
 	.uleb128	20
 	.byte	13
-# [142:19]
+# [141:19]
 	.byte	2
-	.uleb128	.Ll49-.Ll48
+	.uleb128	.Ll47-.Ll46
 	.byte	5
 	.uleb128	19
 	.byte	13
-# [143:5]
+# [142:5]
 	.byte	2
-	.uleb128	.Ll50-.Ll49
+	.uleb128	.Ll48-.Ll47
 	.byte	5
 	.uleb128	5
 	.byte	13
-# [144:5]
+# [143:5]
 	.byte	2
-	.uleb128	.Ll51-.Ll50
+	.uleb128	.Ll49-.Ll48
 	.byte	13
-# [147:3]
+# [146:3]
 	.byte	2
-	.uleb128	.Ll52-.Ll51
+	.uleb128	.Ll50-.Ll49
 	.byte	5
 	.uleb128	3
 	.byte	15
-# [148:53]
+# [147:53]
 	.byte	2
-	.uleb128	.Ll53-.Ll52
+	.uleb128	.Ll51-.Ll50
 	.byte	5
 	.uleb128	53
 	.byte	13
-# [149:1]
+# [148:1]
+	.byte	2
+	.uleb128	.Ll52-.Ll51
+	.byte	5
+	.uleb128	1
+	.byte	13
+# [149:13]
+	.byte	2
+	.uleb128	.Ll53-.Ll52
+	.byte	5
+	.uleb128	13
+	.byte	13
+# [150:1]
 	.byte	2
 	.uleb128	.Ll54-.Ll53
 	.byte	5
 	.uleb128	1
 	.byte	13
-# [150:13]
-	.byte	2
-	.uleb128	.Ll55-.Ll54
-	.byte	5
-	.uleb128	13
-	.byte	13
 # [151:1]
 	.byte	2
-	.uleb128	.Ll56-.Ll55
-	.byte	5
-	.uleb128	1
-	.byte	13
-# [152:1]
-	.byte	2
-	.uleb128	.Ll57-.Ll56
+	.uleb128	.Ll55-.Ll54
 	.byte	13
 # [78:1]
 	.byte	2
-	.uleb128	.Ll58-.Ll57
+	.uleb128	.Ll56-.Ll55
 	.byte	3
-	.sleb128	-74
+	.sleb128	-73
 	.byte	1
-# [153:1]
+# [152:1]
 	.byte	2
-	.uleb128	.Ll59-.Ll58
-	.byte	87
+	.uleb128	.Ll57-.Ll56
+	.byte	86
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll60
+	.quad	.Ll58
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT1$_$TFORM1_$__$$_BUTTON2CLICK$TOBJECT
-# [156:1]
+# [155:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll61
+	.quad	.Ll59
 	.byte	5
 	.uleb128	1
-	.byte	167
-# [157:16]
+	.byte	166
+# [156:16]
 	.byte	2
-	.uleb128	.Ll62-.Ll61
+	.uleb128	.Ll60-.Ll59
 	.byte	5
 	.uleb128	16
 	.byte	13
-# [158:1]
+# [157:1]
 	.byte	2
-	.uleb128	.Ll63-.Ll62
+	.uleb128	.Ll61-.Ll60
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll64
+	.quad	.Ll62
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT1$_$TFORM1_$__$$_BUTTON3CLICK$TOBJECT
-# [166:1]
+# [165:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll65
+	.quad	.Ll63
 	.byte	5
 	.uleb128	1
-	.byte	177
+	.byte	176
+# [166:1]
+	.byte	2
+	.uleb128	.Ll64-.Ll63
+	.byte	13
 # [167:1]
 	.byte	2
-	.uleb128	.Ll66-.Ll65
-	.byte	13
-# [168:1]
-	.byte	2
-	.uleb128	.Ll67-.Ll66
+	.uleb128	.Ll65-.Ll64
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll68
+	.quad	.Ll66
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT1$_$TFORM1_$__$$_FFT1GETDATA$LONGINT$TCOMPLEX
-# [171:1]
+# [170:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll69
+	.quad	.Ll67
 	.byte	5
 	.uleb128	1
-	.byte	182
-# [172:32]
+	.byte	181
+# [171:32]
 	.byte	2
-	.uleb128	.Ll70-.Ll69
+	.uleb128	.Ll68-.Ll67
 	.byte	5
 	.uleb128	32
 	.byte	13
-# [173:3]
+# [172:3]
 	.byte	2
-	.uleb128	.Ll71-.Ll70
+	.uleb128	.Ll69-.Ll68
 	.byte	5
 	.uleb128	3
 	.byte	13
-# [174:1]
+# [173:1]
 	.byte	2
-	.uleb128	.Ll72-.Ll71
+	.uleb128	.Ll70-.Ll69
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll73
+	.quad	.Ll71
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT1$_$TFORM1_$__$$_FORMCLOSE$TOBJECT$TCLOSEACTION
-# [178:1]
+# [177:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll74
+	.quad	.Ll72
 	.byte	5
 	.uleb128	1
-	.byte	189
-# [179:2]
+	.byte	188
+# [178:2]
 	.byte	2
-	.uleb128	.Ll75-.Ll74
+	.uleb128	.Ll73-.Ll72
 	.byte	5
 	.uleb128	2
 	.byte	13
-# [180:1]
+# [179:1]
 	.byte	2
-	.uleb128	.Ll76-.Ll75
+	.uleb128	.Ll74-.Ll73
 	.byte	5
 	.uleb128	1
 	.byte	13
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll77
+	.quad	.Ll75
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT1$_$TFORM1_$__$$_FORMCREATE$TOBJECT
-# [183:1]
+# [182:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll78
+	.quad	.Ll76
 	.byte	5
 	.uleb128	1
-	.byte	194
-# [184:2]
+	.byte	193
+# [183:2]
 	.byte	2
-	.uleb128	.Ll79-.Ll78
+	.uleb128	.Ll77-.Ll76
 	.byte	5
 	.uleb128	2
 	.byte	13
-# [186:1]
+# [185:1]
 	.byte	2
-	.uleb128	.Ll80-.Ll79
+	.uleb128	.Ll78-.Ll77
 	.byte	5
 	.uleb128	1
 	.byte	14
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll81
+	.quad	.Ll79
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT1$_$SIDOPEN$LONGINT_$$_fin$5
-# [198:1]
+# [197:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll82
+	.quad	.Ll80
 	.byte	5
 	.uleb128	1
-	.byte	209
-# [198:1]
+	.byte	208
+# [197:1]
 	.byte	2
-	.uleb128	.Ll83-.Ll82
+	.uleb128	.Ll81-.Ll80
 	.byte	1
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll84
+	.quad	.Ll82
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT1_$$_SIDOPEN$LONGINT
-# [198:1]
+# [197:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll85
+	.quad	.Ll83
 	.byte	5
 	.uleb128	1
-	.byte	209
-# [198:1]
+	.byte	208
+# [197:1]
 	.byte	2
-	.uleb128	.Ll86-.Ll85
+	.uleb128	.Ll84-.Ll83
 	.byte	1
-# [190:1]
+# [189:1]
 	.byte	2
-	.uleb128	.Ll87-.Ll86
+	.uleb128	.Ll85-.Ll84
 	.byte	3
 	.sleb128	-8
 	.byte	1
+# [198:1]
+	.byte	2
+	.uleb128	.Ll86-.Ll85
+	.byte	21
 # [199:1]
 	.byte	2
-	.uleb128	.Ll88-.Ll87
-	.byte	21
+	.uleb128	.Ll87-.Ll86
+	.byte	13
 # [200:1]
 	.byte	2
-	.uleb128	.Ll89-.Ll88
+	.uleb128	.Ll88-.Ll87
 	.byte	13
 # [201:1]
 	.byte	2
+	.uleb128	.Ll89-.Ll88
+	.byte	13
+# [206:14]
+	.byte	2
 	.uleb128	.Ll90-.Ll89
-	.byte	13
-# [202:1]
-	.byte	2
-	.uleb128	.Ll91-.Ll90
-	.byte	13
-# [207:14]
-	.byte	2
-	.uleb128	.Ll92-.Ll91
 	.byte	5
 	.uleb128	14
 	.byte	17
+# [207:14]
+	.byte	2
+	.uleb128	.Ll91-.Ll90
+	.byte	13
 # [208:14]
 	.byte	2
-	.uleb128	.Ll93-.Ll92
+	.uleb128	.Ll92-.Ll91
 	.byte	13
 # [209:14]
 	.byte	2
-	.uleb128	.Ll94-.Ll93
+	.uleb128	.Ll93-.Ll92
 	.byte	13
 # [210:14]
 	.byte	2
-	.uleb128	.Ll95-.Ll94
+	.uleb128	.Ll94-.Ll93
 	.byte	13
 # [211:14]
 	.byte	2
-	.uleb128	.Ll96-.Ll95
+	.uleb128	.Ll95-.Ll94
 	.byte	13
 # [212:14]
 	.byte	2
-	.uleb128	.Ll97-.Ll96
+	.uleb128	.Ll96-.Ll95
 	.byte	13
 # [213:14]
 	.byte	2
+	.uleb128	.Ll97-.Ll96
+	.byte	13
+# [197:1]
+	.byte	2
 	.uleb128	.Ll98-.Ll97
-	.byte	13
-# [214:14]
-	.byte	2
-	.uleb128	.Ll99-.Ll98
-	.byte	13
-# [198:1]
-	.byte	2
-	.uleb128	.Ll100-.Ll99
 	.byte	5
 	.uleb128	1
 	.byte	3
 	.sleb128	-16
 	.byte	1
-# [215:24]
+# [214:24]
 	.byte	2
-	.uleb128	.Ll101-.Ll100
+	.uleb128	.Ll99-.Ll98
 	.byte	5
 	.uleb128	24
 	.byte	29
-# [216:14]
+# [215:14]
 	.byte	2
-	.uleb128	.Ll102-.Ll101
+	.uleb128	.Ll100-.Ll99
 	.byte	5
 	.uleb128	14
+	.byte	13
+# [216:14]
+	.byte	2
+	.uleb128	.Ll101-.Ll100
 	.byte	13
 # [217:14]
 	.byte	2
+	.uleb128	.Ll102-.Ll101
+	.byte	13
+# [218:13]
+	.byte	2
 	.uleb128	.Ll103-.Ll102
-	.byte	13
-# [218:14]
-	.byte	2
-	.uleb128	.Ll104-.Ll103
-	.byte	13
-# [219:13]
-	.byte	2
-	.uleb128	.Ll105-.Ll104
 	.byte	5
 	.uleb128	13
 	.byte	13
-# [220:16]
+# [219:16]
 	.byte	2
-	.uleb128	.Ll106-.Ll105
+	.uleb128	.Ll104-.Ll103
 	.byte	5
 	.uleb128	16
 	.byte	13
+# [220:16]
+	.byte	2
+	.uleb128	.Ll105-.Ll104
+	.byte	13
 # [221:16]
 	.byte	2
+	.uleb128	.Ll106-.Ll105
+	.byte	13
+# [222:5]
+	.byte	2
 	.uleb128	.Ll107-.Ll106
-	.byte	13
-# [222:16]
-	.byte	2
-	.uleb128	.Ll108-.Ll107
-	.byte	13
-# [223:5]
-	.byte	2
-	.uleb128	.Ll109-.Ll108
 	.byte	5
 	.uleb128	5
 	.byte	13
-# [225:3]
+# [224:3]
 	.byte	2
-	.uleb128	.Ll110-.Ll109
+	.uleb128	.Ll108-.Ll107
 	.byte	5
 	.uleb128	3
 	.byte	14
+# [225:3]
+	.byte	2
+	.uleb128	.Ll109-.Ll108
+	.byte	13
 # [226:3]
 	.byte	2
-	.uleb128	.Ll111-.Ll110
+	.uleb128	.Ll110-.Ll109
 	.byte	13
 # [227:3]
 	.byte	2
-	.uleb128	.Ll112-.Ll111
+	.uleb128	.Ll111-.Ll110
 	.byte	13
 # [228:3]
 	.byte	2
-	.uleb128	.Ll113-.Ll112
+	.uleb128	.Ll112-.Ll111
 	.byte	13
 # [229:3]
 	.byte	2
-	.uleb128	.Ll114-.Ll113
+	.uleb128	.Ll113-.Ll112
 	.byte	13
 # [230:3]
 	.byte	2
-	.uleb128	.Ll115-.Ll114
+	.uleb128	.Ll114-.Ll113
 	.byte	13
 # [231:3]
 	.byte	2
-	.uleb128	.Ll116-.Ll115
+	.uleb128	.Ll115-.Ll114
 	.byte	13
 # [232:3]
 	.byte	2
-	.uleb128	.Ll117-.Ll116
+	.uleb128	.Ll116-.Ll115
 	.byte	13
 # [233:3]
 	.byte	2
-	.uleb128	.Ll118-.Ll117
+	.uleb128	.Ll117-.Ll116
 	.byte	13
 # [234:3]
 	.byte	2
-	.uleb128	.Ll119-.Ll118
+	.uleb128	.Ll118-.Ll117
 	.byte	13
 # [235:3]
 	.byte	2
-	.uleb128	.Ll120-.Ll119
+	.uleb128	.Ll119-.Ll118
 	.byte	13
 # [236:3]
 	.byte	2
-	.uleb128	.Ll121-.Ll120
+	.uleb128	.Ll120-.Ll119
 	.byte	13
 # [237:3]
 	.byte	2
-	.uleb128	.Ll122-.Ll121
+	.uleb128	.Ll121-.Ll120
 	.byte	13
 # [238:3]
 	.byte	2
-	.uleb128	.Ll123-.Ll122
+	.uleb128	.Ll122-.Ll121
 	.byte	13
 # [239:3]
 	.byte	2
+	.uleb128	.Ll123-.Ll122
+	.byte	13
+# [242:9]
+	.byte	2
 	.uleb128	.Ll124-.Ll123
-	.byte	13
-# [240:3]
-	.byte	2
-	.uleb128	.Ll125-.Ll124
-	.byte	13
-# [243:9]
-	.byte	2
-	.uleb128	.Ll126-.Ll125
 	.byte	5
 	.uleb128	9
 	.byte	15
-# [244:1]
+# [243:1]
 	.byte	2
-	.uleb128	.Ll127-.Ll126
+	.uleb128	.Ll125-.Ll124
 	.byte	5
 	.uleb128	1
 	.byte	13
-# [245:3]
+# [244:3]
 	.byte	2
-	.uleb128	.Ll128-.Ll127
+	.uleb128	.Ll126-.Ll125
 	.byte	5
 	.uleb128	3
+	.byte	13
+# [245:3]
+	.byte	2
+	.uleb128	.Ll127-.Ll126
 	.byte	13
 # [246:3]
 	.byte	2
+	.uleb128	.Ll128-.Ll127
+	.byte	13
+# [248:20]
+	.byte	2
 	.uleb128	.Ll129-.Ll128
-	.byte	13
-# [247:3]
-	.byte	2
-	.uleb128	.Ll130-.Ll129
-	.byte	13
-# [249:20]
-	.byte	2
-	.uleb128	.Ll131-.Ll130
 	.byte	5
 	.uleb128	20
 	.byte	14
-# [250:19]
+# [249:19]
 	.byte	2
-	.uleb128	.Ll132-.Ll131
+	.uleb128	.Ll130-.Ll129
 	.byte	5
 	.uleb128	19
 	.byte	13
-# [251:5]
+# [250:5]
 	.byte	2
-	.uleb128	.Ll133-.Ll132
+	.uleb128	.Ll131-.Ll130
 	.byte	5
 	.uleb128	5
 	.byte	13
-# [252:11]
+# [251:11]
 	.byte	2
-	.uleb128	.Ll134-.Ll133
+	.uleb128	.Ll132-.Ll131
 	.byte	5
 	.uleb128	11
 	.byte	13
-# [253:14]
+# [252:14]
 	.byte	2
-	.uleb128	.Ll135-.Ll134
+	.uleb128	.Ll133-.Ll132
 	.byte	5
 	.uleb128	14
 	.byte	13
-# [255:3]
+# [254:3]
 	.byte	2
-	.uleb128	.Ll136-.Ll135
+	.uleb128	.Ll134-.Ll133
 	.byte	5
 	.uleb128	3
 	.byte	14
-# [257:19]
+# [256:19]
 	.byte	2
-	.uleb128	.Ll137-.Ll136
+	.uleb128	.Ll135-.Ll134
 	.byte	5
 	.uleb128	19
 	.byte	14
-# [258:7]
+# [257:7]
 	.byte	2
-	.uleb128	.Ll138-.Ll137
+	.uleb128	.Ll136-.Ll135
 	.byte	5
 	.uleb128	7
 	.byte	13
-# [259:2]
+# [258:2]
 	.byte	2
-	.uleb128	.Ll139-.Ll138
+	.uleb128	.Ll137-.Ll136
 	.byte	5
 	.uleb128	2
 	.byte	13
-# [198:1]
+# [197:1]
 	.byte	2
-	.uleb128	.Ll140-.Ll139
+	.uleb128	.Ll138-.Ll137
 	.byte	5
 	.uleb128	1
 	.byte	3
 	.sleb128	-61
 	.byte	1
-# [263:1]
+# [262:1]
 	.byte	2
-	.uleb128	.Ll141-.Ll140
+	.uleb128	.Ll139-.Ll138
 	.byte	77
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll142
+	.quad	.Ll140
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT1$_$LOADXI$ANSISTRING$$LONGINT_$$_fin$6
-# [287:1]
+# [286:1]
+	.byte	0
+	.uleb128	9
+	.byte	2
+	.quad	.Ll141
+	.byte	5
+	.uleb128	1
+	.byte	3
+	.sleb128	285
+	.byte	1
+# [286:1]
+	.byte	2
+	.uleb128	.Ll142-.Ll141
+	.byte	1
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll143
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	286
-	.byte	1
-# [287:1]
-	.byte	2
-	.uleb128	.Ll144-.Ll143
-	.byte	1
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll145
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: UNIT1_$$_LOADXI$ANSISTRING$$LONGINT
-# [287:1]
+# [286:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll146
+	.quad	.Ll144
 	.byte	5
 	.uleb128	1
 	.byte	3
-	.sleb128	286
+	.sleb128	285
 	.byte	1
-# [287:1]
+# [286:1]
 	.byte	2
-	.uleb128	.Ll147-.Ll146
+	.uleb128	.Ll145-.Ll144
 	.byte	1
-# [288:5]
+# [287:5]
 	.byte	2
-	.uleb128	.Ll148-.Ll147
+	.uleb128	.Ll146-.Ll145
 	.byte	5
 	.uleb128	5
 	.byte	13
-# [289:12]
+# [288:12]
 	.byte	2
-	.uleb128	.Ll149-.Ll148
+	.uleb128	.Ll147-.Ll146
 	.byte	5
 	.uleb128	12
 	.byte	13
+# [289:12]
+	.byte	2
+	.uleb128	.Ll148-.Ll147
+	.byte	13
 # [290:12]
 	.byte	2
+	.uleb128	.Ll149-.Ll148
+	.byte	13
+# [291:13]
+	.byte	2
 	.uleb128	.Ll150-.Ll149
-	.byte	13
-# [291:12]
-	.byte	2
-	.uleb128	.Ll151-.Ll150
-	.byte	13
-# [292:13]
-	.byte	2
-	.uleb128	.Ll152-.Ll151
 	.byte	5
 	.uleb128	13
 	.byte	13
-# [293:13]
+# [292:13]
+	.byte	2
+	.uleb128	.Ll151-.Ll150
+	.byte	13
+# [293:12]
+	.byte	2
+	.uleb128	.Ll152-.Ll151
+	.byte	5
+	.uleb128	12
+	.byte	13
+# [294:54]
 	.byte	2
 	.uleb128	.Ll153-.Ll152
+	.byte	5
+	.uleb128	54
 	.byte	13
-# [294:12]
+# [295:12]
 	.byte	2
 	.uleb128	.Ll154-.Ll153
 	.byte	5
 	.uleb128	12
 	.byte	13
-# [295:54]
+# [296:13]
 	.byte	2
 	.uleb128	.Ll155-.Ll154
 	.byte	5
-	.uleb128	54
+	.uleb128	13
 	.byte	13
-# [296:12]
+# [298:3]
 	.byte	2
 	.uleb128	.Ll156-.Ll155
 	.byte	5
-	.uleb128	12
-	.byte	13
-# [297:13]
+	.uleb128	3
+	.byte	14
+# [299:3]
 	.byte	2
 	.uleb128	.Ll157-.Ll156
-	.byte	5
-	.uleb128	13
 	.byte	13
-# [299:3]
+# [301:42]
 	.byte	2
 	.uleb128	.Ll158-.Ll157
 	.byte	5
-	.uleb128	3
-	.byte	14
-# [300:3]
-	.byte	2
-	.uleb128	.Ll159-.Ll158
-	.byte	13
-# [302:42]
-	.byte	2
-	.uleb128	.Ll160-.Ll159
-	.byte	5
 	.uleb128	42
 	.byte	14
-# [303:71]
+# [302:71]
 	.byte	2
-	.uleb128	.Ll161-.Ll160
+	.uleb128	.Ll159-.Ll158
 	.byte	5
 	.uleb128	71
 	.byte	13
-# [304:74]
+# [303:74]
 	.byte	2
-	.uleb128	.Ll162-.Ll161
+	.uleb128	.Ll160-.Ll159
 	.byte	5
 	.uleb128	74
 	.byte	13
-# [305:75]
+# [304:75]
 	.byte	2
-	.uleb128	.Ll163-.Ll162
+	.uleb128	.Ll161-.Ll160
 	.byte	5
 	.uleb128	75
 	.byte	13
-# [306:77]
+# [305:77]
 	.byte	2
-	.uleb128	.Ll164-.Ll163
+	.uleb128	.Ll162-.Ll161
 	.byte	5
 	.uleb128	77
 	.byte	13
-# [307:72]
+# [306:72]
 	.byte	2
-	.uleb128	.Ll165-.Ll164
+	.uleb128	.Ll163-.Ll162
 	.byte	5
 	.uleb128	72
 	.byte	13
-# [308:62]
+# [307:62]
 	.byte	2
-	.uleb128	.Ll166-.Ll165
+	.uleb128	.Ll164-.Ll163
 	.byte	5
 	.uleb128	62
 	.byte	13
-# [309:70]
+# [308:70]
 	.byte	2
-	.uleb128	.Ll167-.Ll166
+	.uleb128	.Ll165-.Ll164
 	.byte	5
 	.uleb128	70
 	.byte	13
-# [310:65]
+# [309:65]
 	.byte	2
-	.uleb128	.Ll168-.Ll167
+	.uleb128	.Ll166-.Ll165
 	.byte	5
 	.uleb128	65
 	.byte	13
-# [311:14]
+# [310:14]
 	.byte	2
-	.uleb128	.Ll169-.Ll168
+	.uleb128	.Ll167-.Ll166
 	.byte	5
 	.uleb128	14
 	.byte	13
-# [297:5]
+# [296:5]
 	.byte	2
-	.uleb128	.Ll170-.Ll169
+	.uleb128	.Ll168-.Ll167
 	.byte	5
 	.uleb128	5
 	.byte	3
 	.sleb128	-14
 	.byte	1
-# [287:1]
+# [286:1]
 	.byte	2
-	.uleb128	.Ll171-.Ll170
+	.uleb128	.Ll169-.Ll168
 	.byte	5
 	.uleb128	1
 	.byte	3
 	.sleb128	-10
 	.byte	1
-# [330:1]
+# [329:1]
 	.byte	2
-	.uleb128	.Ll172-.Ll171
+	.uleb128	.Ll170-.Ll169
 	.byte	55
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll173
+	.quad	.Ll171
 	.byte	0
 	.byte	1
 	.byte	1

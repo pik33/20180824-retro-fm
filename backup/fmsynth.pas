@@ -400,13 +400,6 @@ result[0]:=a[0]*b;
 result[1]:=a[1]*b;
 end;
 
-operator +=(a:TSingleStereoSample;b:a:TSingleStereoSample):TSingleStereoSample; inline;
-
-begin
-result[0]:=a[0]+b[0];
-result[1]:=a[1]+b[1];
-end;
-
 constructor TFmOperator.create(mode:integer;outs:pointer);
 
 var q:myfloat;
@@ -489,10 +482,10 @@ adsrval:=0;
 ar1:=1/96;
 ar2:=-1/96000;
 ar3:=-1/960000;
-ar4:=-3/960000;
+ar4:=-1/96000;
 av1:=1;
 av2:=0.95;
-av3:=0.9;
+av3:=0.1;
 av4:=0.0;
 adsrbias:=0;
 vel:=1;
@@ -506,11 +499,13 @@ end;
 
 
 
-function TFmOperator.getsample:TStereoSample;
+function TFmOperator.getsample:TSingleSample;
 
 label p101,p999;
 
-var modulator:myfloat;
+var res64a:myfloat;
+    modulator:myfloat;
+    i,j:integer;
     sample:TSingleSample;
     freq2:myfloat;
     h1:myfloat;
@@ -600,8 +595,7 @@ sample:=sample*h1;
 //ftt:=gettime-ft;
 //if abs(sample)>1 then begin box(200,200,200,200,0); outtextxy(200,200,floattostr(sample),15); outtextxy(200,220,floattostr(pa2),15); outtextxy(200,240,floattostr(pa21),15); end;
 p999:
-result[0]:=sample*(1-pan);
-result[1]:=sample*(1+pan);
+result:=sample;
 
 end;
 

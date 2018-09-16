@@ -682,9 +682,19 @@ var
   b:integer;
   pi:^integer;
   i,j,k,l:integer;
+  q1,q2,q3,q4:integer;
 
+   ii:integer;
 
 begin
+//case peek($60000) mod 4 of
+//   0: begin q1:=$FF0000; q2:=$00FF00; q3:=$0000FF; end;
+//   1:
+//   2:
+//   3:
+//   end;
+
+
 buf:=buf shr 1;
 pi:=screen;
 b:=raml^[$18003];
@@ -693,12 +703,40 @@ for i:=0 to 39 do begin {if peek($70001)=0 then b:=lpeek($10000+4*((i div 4)+lpe
 k:=76800;
 for i:=40 to 1159 do
   begin
-  for j:=0 to 63 do begin {if peek($70001)=0 then b:=lpeek($10000+4*((i div 4)+lpeek($60000) ) mod 1024); } (pi+k)^:=b; k+=1; end;
-  for j:=0 to 1791 do begin
-  (pi+k)^:=raml^[$4000+ramw^[buf+l]]; k+=1; l+=1; end;
-  for j:=0 to 63 do begin (pi+k)^:=b; k+=1; end;
+
+
+
+  for j:=0 to 15 do begin (pi+k)^:=b; k+=1; (pi+k)^:=b; k+=1; (pi+k)^:=b; k+=1; (pi+k)^:=b; k+=1;end;
+//  if (i mod 2)=( peek($60000) mod 2) then
+
+  for j:=0 to {1791} 223 do begin
+  (pi+k)^:=raml^[$4000+ramw^[buf+l]]; k+=1; l+=1;
+  (pi+k)^:=raml^[$4000+ramw^[buf+l]]; k+=1; l+=1;
+  (pi+k)^:=raml^[$4000+ramw^[buf+l]]; k+=1; l+=1;
+  (pi+k)^:=raml^[$4000+ramw^[buf+l]]; k+=1; l+=1;
+  (pi+k)^:=raml^[$4000+ramw^[buf+l]]; k+=1; l+=1;
+  (pi+k)^:=raml^[$4000+ramw^[buf+l]]; k+=1; l+=1;
+  (pi+k)^:=raml^[$4000+ramw^[buf+l]]; k+=1; l+=1;
+  (pi+k)^:=raml^[$4000+ramw^[buf+l]]; k+=1; l+=1;
+  end;
+
+{  else
+
+  for j:=0 to {1791} 223 do begin
+  (pi+k)^:=$800000; k+=1; l+=1;
+  (pi+k)^:=$008000; k+=1; l+=1;
+  (pi+k)^:=$000080; k+=1; l+=1;
+  (pi+k)^:=$000000; k+=1; l+=1;
+  (pi+k)^:=$800000; k+=1; l+=1;
+  (pi+k)^:=$008000; k+=1; l+=1;
+  (pi+k)^:=$000080; k+=1; l+=1;
+  (pi+k)^:=$000000; k+=1; l+=1;
+  end ;
+ }
+  for j:=0 to 15 do begin (pi+k)^:=b; k+=1; (pi+k)^:=b; k+=1; (pi+k)^:=b; k+=1; (pi+k)^:=b; k+=1;end;
   end;
 for i:=1160 to 1199 do begin {if peek($70001)=0 then b:=lpeek($10000+4*((i div 4)+lpeek($60000) ) mod 1024); }for j:=0 to 1919  do (pi+i*1920+j)^:=b; end;
+
 
 end;
 

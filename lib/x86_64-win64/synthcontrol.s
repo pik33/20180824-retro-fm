@@ -23,7 +23,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_CREATE$BOOLEAN$$TSYNTHCTRL:
 .seh_proc SYNTHCONTROL$_$TSYNTHCTRL_$__$$_CREATE$BOOLEAN$$TSYNTHCTRL
 .Ll1:
 # [synthcontrol.pas]
-# [86] begin
+# [88] begin
 	pushq	%rbp
 .seh_pushreg %rbp
 .Lc3:
@@ -52,15 +52,15 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_CREATE$BOOLEAN$$TSYNTHCTRL:
 	je	.Lj3
 .Lj18:
 .Ll3:
-# [89] end;
+# [91] end;
 	nop
 .Lj17:
 .Ll4:
-# [87] FreeOnTerminate := True;
+# [89] FreeOnTerminate := True;
 	movq	-24(%rbp),%rax
 	movb	$1,17(%rax)
 .Ll5:
-# [88] inherited Create(CreateSuspended);
+# [90] inherited Create(CreateSuspended);
 	movzbl	-8(%rbp),%r8d
 	movq	-24(%rbp),%rcx
 	movq	$4194304,%r9
@@ -107,7 +107,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_CREATE$BOOLEAN$$TSYNTHCTRL:
 .section .text.n_synthcontrol$_$tsynthctrl_$__$$_create$boolean$$tsynthctrl,"x"
 .seh_endproc
 .Lc2:
-.Lt10:
+.Lt9:
 .Ll7:
 
 .section .text.n_synthcontrol_$$_deallocatechannel$longint,"x"
@@ -117,13 +117,13 @@ SYNTHCONTROL_$$_DEALLOCATECHANNEL$LONGINT:
 .Lc6:
 # Var channel located in register eax
 .Ll8:
-# [94] begin
+# [96] begin
 	movl	%ecx,%eax
 .Ll9:
 	leaq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%rdx
 # PeepHole Optimization,var2a
 .Ll10:
-# [95] channels[channel]:=-$7FFFFFFFFFFFFFFF+abs(channels[channel]);
+# [97] channels[channel]:=-$7FFFFFFFFFFFFFFF+abs(channels[channel]);
 	movl	%eax,%ecx
 	movq	(%rdx,%rcx,8),%r8
 	movq	%r8,%rcx
@@ -134,10 +134,10 @@ SYNTHCONTROL_$$_DEALLOCATECHANNEL$LONGINT:
 	andl	$4294967295,%eax
 	movq	%r8,(%rdx,%rax,8)
 .Ll11:
-# [96] end;
+# [98] end;
 	ret
 .Lc7:
-.Lt4:
+.Lt3:
 .Ll12:
 
 .section .text.n_synthcontrol$_$tsynthctrl_$_execute_$$_fin$0,"x"
@@ -146,7 +146,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$0:
 .Lc8:
 .seh_proc SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$0
 .Ll13:
-# [106] begin
+# [108] begin
 	pushq	%rbp
 .seh_pushreg %rbp
 .Lc10:
@@ -217,7 +217,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	nop
 .Lj52:
 .Ll18:
-# [107] for i:=0 to maxchannel-1 do channels[i]:=0;
+# [109] for i:=0 to maxchannel-1 do channels[i]:=0;
 	movl	$0,%ebx
 	subl	$1,%ebx
 	.balign 8,0x90
@@ -230,7 +230,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	cmpl	$29,%ebx
 	jl	.Lj59
 .Ll19:
-# [108] for j:=0 to 4 do for i:=0 to 127 do notes[i,j]:=maxchannel;
+# [110] for j:=0 to 4 do for i:=0 to 127 do notes[i,j]:=maxchannel;
 	movl	$0,%esi
 	subl	$1,%esi
 	.balign 8,0x90
@@ -256,11 +256,11 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	.balign 8,0x90
 .Lj70:
 .Ll20:
-# [112] key:=readkeybuffer;
+# [114] key:=readkeybuffer;
 	call	RETRO_$$_READKEYBUFFER$$LONGWORD
 	movl	%eax,%edi
 .Ll21:
-# [115] if key=32 then for i:=0 to 7 do voices[0].operators[i].adsrstate:=1;
+# [117] if key=32 then for i:=0 to 7 do voices[0].operators[i].adsrstate:=1;
 	cmpl	$32,%edi
 	jne	.Lj76
 	movl	$0,%ebx
@@ -277,7 +277,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	jl	.Lj79
 .Lj76:
 .Ll22:
-# [116] if key=32+$10000 then for i:=0 to 7 do voices[0].operators[i].adsrstate:=5;
+# [118] if key=32+$10000 then for i:=0 to 7 do voices[0].operators[i].adsrstate:=5;
 	cmpl	$65568,%edi
 	jne	.Lj83
 	movl	$0,%ebx
@@ -294,27 +294,27 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	jl	.Lj86
 .Lj83:
 .Ll23:
-# [117] if key<>$FFFFFFFF then
+# [119] if key<>$FFFFFFFF then
 	cmpl	$4294967295,%edi
 	je	.Lj90
 .Ll24:
-# [119] if key<$10000 then
+# [121] if key<$10000 then
 	cmpl	$65536,%edi
 	jnb	.Lj92
 .Ll25:
-# [121] key:=key and 255;
+# [123] key:=key and 255;
 	movl	%edi,%eax
 	andl	$255,%eax
 	movl	%eax,%edi
 # PeepHole Optimization,var2a
 .Ll26:
-# [125] key:=keymap2[key];
+# [127] key:=keymap2[key];
 	movl	%edi,%edx
 	leaq	TC_$SYNTHCONTROL_$$_KEYMAP2(%rip),%rax
 	movzbl	(%rax,%rdx,1),%eax
 	movl	%eax,%edi
 .Ll27:
-# [126] if key>0 then md:=144+key shl 8+$7F0000 else md:=$FFFFFFFF;
+# [128] if key>0 then md:=144+key shl 8+$7F0000 else md:=$FFFFFFFF;
 	cmpl	$0,%edi
 	jna	.Lj98
 	movl	%edi,%eax
@@ -328,19 +328,19 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	jmp	.Lj116
 .Lj92:
 .Ll28:
-# [133] key:=key and 255;
+# [135] key:=key and 255;
 	movl	%edi,%eax
 	andl	$255,%eax
 	movl	%eax,%edi
 # PeepHole Optimization,var2a
 .Ll29:
-# [134] key:=keymap2[key];
+# [136] key:=keymap2[key];
 	movl	%edi,%edx
 	leaq	TC_$SYNTHCONTROL_$$_KEYMAP2(%rip),%rax
 	movzbl	(%rax,%rdx,1),%eax
 	movl	%eax,%edi
 .Ll30:
-# [135] if key>0 then md:=144+key shl 8 else md:=$FFFFFFFF;
+# [137] if key>0 then md:=144+key shl 8 else md:=$FFFFFFFF;
 	cmpl	$0,%edi
 	jna	.Lj110
 	movl	%edi,%eax
@@ -351,42 +351,42 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 .Lj110:
 	movl	$4294967295,%r12d
 .Ll31:
-# [137] goto p101;
+# [139] goto p101;
 	jmp	.Lj116
 .Lj90:
 .Ll32:
-# [140] md:=readbuffer;
+# [142] md:=readbuffer;
 	call	MIDI_$$_READBUFFER$$LONGWORD
 	movl	%eax,%r12d
 .Lj116:
 .Ll33:
-# [143] if md<>$FFFFFFFF then
+# [145] if md<>$FFFFFFFF then
 	cmpl	$4294967295,%r12d
 	je	.Lj120
 .Ll34:
-# [145] aa:=md and $FF;
+# [147] aa:=md and $FF;
 	movl	%r12d,%eax
 	andl	$255,%eax
 	movl	%eax,%edx
 	movq	%rdx,-16(%rbp)
 .Ll35:
-# [146] aaa:=(md and $FF00) shr 8;
+# [148] aaa:=(md and $FF00) shr 8;
 	movl	%r12d,%eax
 	andl	$65280,%eax
 	shrl	$8,%eax
 	movl	%eax,%r15d
 .Ll36:
-# [147] aaaa:=(md and $FF0000) shr 16 ;
+# [149] aaaa:=(md and $FF0000) shr 16 ;
 	movl	%r12d,%eax
 	andl	$16711680,%eax
 	shrl	$16,%eax
 	movl	%eax,%r13d
 .Ll37:
-# [148] midireceived:=0;
+# [150] midireceived:=0;
 	movl	$0,U_$MIDI_$$_MIDIRECEIVED(%rip)
 # PeepHole Optimization,var2a
 .Ll38:
-# [149] f:=round(7492*power(2,(aaa-69)/12));
+# [151] f:=round(7492*power(2,(aaa-69)/12));
 	movl	%r15d,%eax
 	leaq	-69(%rax),%rax
 	cvtsi2sd	%rax,%xmm1
@@ -398,23 +398,23 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	movl	%eax,%edx
 	movq	%rdx,-24(%rbp)
 .Ll39:
-# [150] if (aa=144) and (aaaa>0) then
+# [152] if (aa=144) and (aaaa>0) then
 	movl	-16(%rbp),%eax
 	cmpl	$144,%eax
 	jne	.Lj136
 	cmpl	$0,%r13d
 	jna	.Lj136
 .Ll40:
-# [152] ch:=allocatechannel(1);
+# [154] ch:=allocatechannel(1);
 	movl	$1,%ecx
 	call	SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT
 	movl	%eax,%r14d
 .Ll41:
-# [153] if ch<maxchannel then
+# [155] if ch<maxchannel then
 	cmpl	$30,%r14d
 	jnl	.Lj143
 .Ll42:
-# [155] for i:=0 to 127 do if notes[i,0]=ch then notes[i,0]:=maxchannel;
+# [157] for i:=0 to 127 do if notes[i,0]=ch then notes[i,0]:=maxchannel;
 	movl	$0,%ebx
 	subl	$1,%ebx
 	.balign 8,0x90
@@ -437,13 +437,13 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	jl	.Lj146
 # PeepHole Optimization,var2a
 .Ll43:
-# [156] notes[aaa,0]:=ch;
+# [158] notes[aaa,0]:=ch;
 	movl	%r15d,%eax
 	imulq	$20,%rax,%rax
 	leaq	U_$SYNTHCONTROL_$$_NOTES(%rip),%rdx
 	movl	%r14d,(%rdx,%rax)
 .Ll44:
-# [157] noteon(ch,aaa,aaaa,0);
+# [159] noteon(ch,aaa,aaaa,0);
 	movl	%r13d,%eax
 	movl	%eax,%r8d
 	movl	%r15d,%eax
@@ -455,41 +455,41 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 .Lj143:
 .Lj136:
 .Ll45:
-# [160] if (aa=144) and (aaaa=0) then
+# [162] if (aa=144) and (aaaa=0) then
 	movl	-16(%rbp),%eax
 	cmpl	$144,%eax
 	jne	.Lj162
 	testl	%r13d,%r13d
 	jne	.Lj162
 .Ll46:
-# [162] i:=-1;
+# [164] i:=-1;
 	movl	$-1,%ebx
 # PeepHole Optimization,var2a
 .Ll47:
-# [163] ch:=notes[aaa,0];
+# [165] ch:=notes[aaa,0];
 	movl	%r15d,%eax
 	imulq	$20,%rax,%rax
 	leaq	U_$SYNTHCONTROL_$$_NOTES(%rip),%rdx
 	movl	(%rdx,%rax),%r14d
 .Ll48:
-# [164] noteoff(ch,aaa);
+# [166] noteoff(ch,aaa);
 	movl	%r15d,%edx
 	movl	%r14d,%ecx
 	call	SYNTHCONTROL_$$_NOTEOFF$LONGINT$LONGINT
 .Ll49:
-# [165] deallocatechannel(ch);
+# [167] deallocatechannel(ch);
 	movl	%r14d,%ecx
 	call	SYNTHCONTROL_$$_DEALLOCATECHANNEL$LONGINT
 # PeepHole Optimization,var2a
 .Ll50:
-# [166] notes[aaa,0]:=maxchannel;
+# [168] notes[aaa,0]:=maxchannel;
 	movl	%r15d,%eax
 	imulq	$20,%rax,%rax
 	leaq	U_$SYNTHCONTROL_$$_NOTES(%rip),%rdx
 	movl	$30,(%rdx,%rax)
 .Lj162:
 .Ll51:
-# [170] blit($F000000,900,916,$F000000,900,900,120,128,1792,1792);
+# [172] blit($F000000,900,916,$F000000,900,900,120,128,1792,1792);
 	movl	$1792,72(%rsp)
 	movl	$1792,64(%rsp)
 	movl	$128,56(%rsp)
@@ -503,7 +503,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	movl	%eax,%edx
 	call	RETRO_$$_BLIT$crc5A667533
 .Ll52:
-# [171] box(900,1028,120,16,33);
+# [173] box(900,1028,120,16,33);
 	movl	$33,32(%rsp)
 	movl	$16,%r9d
 	movl	$120,%r8d
@@ -512,7 +512,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	movl	%eax,%edx
 	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
 .Ll53:
-# [172] outtextxy(904,1028,inttostr(aa),15);
+# [174] outtextxy(904,1028,inttostr(aa),15);
 	movl	-16(%rbp),%eax
 # PeepHole Optimization,var2a
 	movl	%eax,%edx
@@ -526,7 +526,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	call	RETRO_$$_OUTTEXTXY$LONGINT$LONGINT$ANSISTRING$LONGINT
 # PeepHole Optimization,var2a
 .Ll54:
-# [173] outtextxy(944,1028,inttostr(aaa),15);
+# [175] outtextxy(944,1028,inttostr(aaa),15);
 	movl	%r15d,%edx
 	leaq	-8(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$QWORD$$ANSISTRING
@@ -538,7 +538,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	call	RETRO_$$_OUTTEXTXY$LONGINT$LONGINT$ANSISTRING$LONGINT
 # PeepHole Optimization,var2a
 .Ll55:
-# [174] outtextxy(984,1028,inttostr(aaaa),15);
+# [176] outtextxy(984,1028,inttostr(aaaa),15);
 	movl	%r13d,%edx
 	leaq	-8(%rbp),%rcx
 	call	SYSUTILS_$$_INTTOSTR$QWORD$$ANSISTRING
@@ -550,11 +550,11 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	call	RETRO_$$_OUTTEXTXY$LONGINT$LONGINT$ANSISTRING$LONGINT
 .Lj120:
 .Ll56:
-# [177] sleep(1)
+# [179] sleep(1)
 	movl	$1,%ecx
 	call	CLASSES$_$TTHREAD_$__$$_SLEEP$LONGWORD
 .Ll57:
-# [178] until terminated;
+# [180] until terminated;
 	movq	-32(%rbp),%rax
 	cmpb	$0,16(%rax)
 	je	.Lj70
@@ -565,7 +565,7 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 	movq	%rbp,%rcx
 	call	SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$0
 .Ll59:
-# [179] end;
+# [181] end;
 	movq	-104(%rbp),%rbx
 	movq	-96(%rbp),%rdi
 	movq	-88(%rbp),%rsi
@@ -587,246 +587,175 @@ SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE:
 .section .text.n_synthcontrol$_$tsynthctrl_$__$$_execute,"x"
 .seh_endproc
 .Lc14:
-.Lt9:
+.Lt8:
 .Ll60:
-
-.section .text.n_synthcontrol$_$allocatechannel$longint$$longint_$$_fin$1,"x"
-	.balign 16,0x90
-SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$1:
-.Lc18:
-.seh_proc SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$1
-.Ll61:
-# [193] begin
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc20:
-.Lc21:
-	movq	%rcx,%rbp
-.Lc22:
-	leaq	-32(%rsp),%rsp
-.seh_stackalloc 32
-# Var $parentfp located in register rbp
-.seh_endprologue
-.Ll62:
-	leaq	-8(%rbp),%rcx
-	call	fpc_ansistr_decr_ref
-	nop
-	leaq	32(%rsp),%rsp
-	popq	%rbp
-	ret
-.seh_endproc
-.Lc19:
-.Lt3:
-.Ll63:
 
 .section .text.n_synthcontrol_$$_allocatechannel$longint$$longint,"x"
 	.balign 16,0x90
 .globl	SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT
 SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT:
-.Lc23:
-# Temps allocated between rbp-48 and rbp+0
+.Lc18:
 .seh_proc SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT
-.Ll64:
-	pushq	%rbp
-.seh_pushreg %rbp
-.Lc25:
-.Lc26:
-	movq	%rsp,%rbp
-.Lc27:
-	leaq	-96(%rsp),%rsp
-.seh_stackalloc 96
+.Ll61:
+# [195] begin
+	pushq	%rbx
+.seh_pushreg %rbx
+	pushq	%rdi
+.seh_pushreg %rdi
+	pushq	%rsi
+.seh_pushreg %rsi
+	pushq	%r12
+.seh_pushreg %r12
+	pushq	%r13
+.seh_pushreg %r13
+	leaq	-32(%rsp),%rsp
+.Lc20:
+.seh_stackalloc 32
 # Var mode located in register ebx
 # Var $result located in register r13d
 # Var i located in register esi
 # Var q located in register edi
 # Var f located in register r12
-	movq	%rbx,-48(%rbp)
-	movq	%rdi,-40(%rbp)
-	movq	%rsi,-32(%rbp)
-	movq	%r12,-24(%rbp)
-	movq	%r13,-16(%rbp)
-.seh_savereg %rbx, 48
-.seh_savereg %rdi, 56
-.seh_savereg %rsi, 64
-.seh_savereg %r12, 72
-.seh_savereg %r13, 80
 .seh_endprologue
 	movl	%ecx,%ebx
-.Ll65:
-	movq	$0,-8(%rbp)
-.Lj255:
-	nop
-.Lj251:
-.Ll66:
-# [194] i:=0;
+# Var i located in register esi
+.Ll62:
+# [196] i:=0;
 	movl	$0,%esi
-.Ll67:
-# [195] while i<maxchannel do if channels[i]=0 then goto p101 else i+=1;
-	jmp	.Lj259
+.Ll63:
+# [197] while i<maxchannel do if channels[i]=0 then goto p101 else i+=1;
+	jmp	.Lj252
 	.balign 8,0x90
-.Lj258:
+.Lj251:
 # PeepHole Optimization,var2a
 	movl	%esi,%eax
 	leaq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%rdx
 	cmpq	$0,(%rdx,%rax,8)
-	je	.Lj263
+	je	.Lj256
 	leal	1(%esi),%eax
 	movl	%eax,%esi
-.Lj259:
+.Lj252:
 	cmpl	$30,%esi
-	jl	.Lj258
-.Ll68:
-# [196] while i<maxchannel do if channels[i]<0 then goto p101 else i+=1;
-	jmp	.Lj268
+	jl	.Lj251
+.Ll64:
+# [198] while i<maxchannel do if channels[i]<0 then goto p101 else i+=1;
+	jmp	.Lj261
 	.balign 8,0x90
-.Lj267:
+.Lj260:
 # PeepHole Optimization,var2a
 	movl	%esi,%eax
 	leaq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%rdx
 	cmpq	$0,(%rdx,%rax,8)
-	jl	.Lj263
+	jl	.Lj256
 	leal	1(%esi),%eax
 	movl	%eax,%esi
-.Lj268:
+.Lj261:
 	cmpl	$30,%esi
-	jl	.Lj267
-.Lj263:
-.Ll69:
-# [199] if i<maxchannel then
+	jl	.Lj260
+.Lj256:
+.Ll65:
+# [201] if i<maxchannel then
 	cmpl	$30,%esi
-	jnl	.Lj276
-.Ll70:
-# [201] result:=i;
+	jnl	.Lj269
+.Ll66:
+# [203] result:=i;
 	movl	%esi,%r13d
-.Ll71:
-# [202] channels[i]:=gettime;
+.Ll67:
+# [204] channels[i]:=gettime;
 	call	RETRO_$$_GETTIME$$INT64
 # PeepHole Optimization,var2a
 	movl	%esi,%edx
 	leaq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%rcx
 	movq	%rax,(%rcx,%rdx,8)
-	jmp	.Lj281
-.Lj276:
-.Ll72:
-# [204] else if (i=maxchannel) and (mode=0) then
+	jmp	.Lj274
+.Lj269:
+.Ll68:
+# [206] else if (i=maxchannel) and (mode=0) then
 	cmpl	$30,%esi
-	jne	.Lj283
+	jne	.Lj276
 	testl	%ebx,%ebx
-	jne	.Lj283
-.Ll73:
-# [206] result:=maxchannel;
+	jne	.Lj276
+.Ll69:
+# [208] result:=maxchannel;
 	movl	$30,%r13d
-	jmp	.Lj287
-.Lj283:
-.Ll74:
-# [210] i:=0;
+	jmp	.Lj280
+.Lj276:
+.Ll70:
+# [212] i:=0;
 	movl	$0,%esi
-.Ll75:
-# [211] f:=channels[0];
+.Ll71:
+# [213] f:=channels[0];
 	movq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%r12
-.Ll76:
-# [212] q:=0;
+.Ll72:
+# [214] q:=0;
 	movl	$0,%edi
-.Ll77:
-# [213] while i<maxchannel do
-	jmp	.Lj295
+.Ll73:
+# [215] while i<maxchannel do
+	jmp	.Lj288
 	.balign 8,0x90
-.Lj294:
+.Lj287:
 # PeepHole Optimization,var2a
-.Ll78:
-# [215] if channels[i]<f then
+.Ll74:
+# [217] if channels[i]<f then
 	movl	%esi,%eax
 	leaq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
 	cmpq	%r12,%rax
-	jnl	.Lj298
+	jnl	.Lj291
 # PeepHole Optimization,var2a
-.Ll79:
-# [217] f:=channels[i];
+.Ll75:
+# [219] f:=channels[i];
 	movl	%esi,%eax
 	leaq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%rdx
 	movq	(%rdx,%rax,8),%r12
-.Ll80:
-# [218] q:=i;
+.Ll76:
+# [220] q:=i;
 	movl	%esi,%edi
-.Lj298:
-.Ll81:
-# [220] i+=1;
+.Lj291:
+.Ll77:
+# [222] i+=1;
 	leal	1(%esi),%eax
 	movl	%eax,%esi
-.Lj295:
-.Ll82:
+.Lj288:
+.Ll78:
 	cmpl	$30,%esi
-	jl	.Lj294
-.Ll83:
-# [222] result:=q;
+	jl	.Lj287
+.Ll79:
+# [224] result:=q;
 	movl	%edi,%r13d
-.Ll84:
-# [223] channels[q]:=gettime;
+.Ll80:
+# [225] channels[q]:=gettime;
 	call	RETRO_$$_GETTIME$$INT64
 # PeepHole Optimization,var2a
 	movl	%edi,%edx
 	leaq	U_$SYNTHCONTROL_$$_CHANNELS(%rip),%rcx
 	movq	%rax,(%rcx,%rdx,8)
-.Lj287:
-.Lj281:
-.Ll85:
-# [225] box(1000,200,200,100,0); outtextxyz(1000,200,inttostr(result),15,2,2);
-	movl	$0,32(%rsp)
-	movl	$100,%r9d
-	movl	$200,%r8d
-	movl	$200,%edx
-	movl	$1000,%ecx
-	call	RETRO_$$_BOX$LONGINT$LONGINT$LONGINT$LONGINT$LONGINT
-	movl	$2,40(%rsp)
-	movl	$2,32(%rsp)
-	movl	%r13d,%edx
-	leaq	-8(%rbp),%rcx
-	call	SYSUTILS_$$_INTTOSTR$LONGINT$$ANSISTRING
-	movq	-8(%rbp),%r8
-	movl	$15,%r9d
-	movl	$200,%edx
-	movl	$1000,%ecx
-	call	RETRO_$$_OUTTEXTXYZ$LONGINT$LONGINT$ANSISTRING$LONGINT$LONGINT$LONGINT
-.Lj335:
-.Ll86:
-	nop
-.Lj252:
-	movq	%rbp,%rcx
-	call	SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$1
-.Ll87:
-# [226] end;
+.Lj280:
+.Lj274:
+.Ll81:
+# [228] end;
 	movl	%r13d,%eax
-	movq	-48(%rbp),%rbx
-	movq	-40(%rbp),%rdi
-	movq	-32(%rbp),%rsi
-	movq	-24(%rbp),%r12
-	movq	-16(%rbp),%r13
-	leaq	(%rbp),%rsp
-	popq	%rbp
+	nop
+	leaq	32(%rsp),%rsp
+	popq	%r13
+	popq	%r12
+	popq	%rsi
+	popq	%rdi
+	popq	%rbx
 	ret
-.seh_handler __FPC_specific_handler,@unwind
-.seh_handlerdata
-	.long	1
-	.long	0
-	.rva	.Lj251
-	.rva	.Lj252
-	.rva	SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$1
-
-.section .text.n_synthcontrol_$$_allocatechannel$longint$$longint,"x"
 .seh_endproc
-.Lc24:
+.Lc19:
 .Lt2:
-.Ll88:
+.Ll82:
 
 .section .text.n_synthcontrol_$$_noteon$longint$longint$longint$longint,"x"
 	.balign 16,0x90
 .globl	SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT
 SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
-.Lc28:
+.Lc21:
 .seh_proc SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT
-.Ll89:
-# [235] begin
+.Ll83:
+# [237] begin
 	pushq	%rbx
 .seh_pushreg %rbx
 	pushq	%rdi
@@ -842,7 +771,7 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	pushq	%r15
 .seh_pushreg %r15
 	leaq	-48(%rsp),%rsp
-.Lc30:
+.Lc23:
 .seh_stackalloc 48
 	movdqa	%xmm6,32(%rsp)
 # Var channel located in register ebx
@@ -857,32 +786,32 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movl	%edx,%esi
 	movl	%r8d,%edi
 	movl	%r9d,%r12d
-.Ll90:
-# [236] if (channel>=maxchannel) or (channel<0) then goto p999;
+.Ll84:
+# [238] if (channel>=maxchannel) or (channel<0) then goto p999;
 	cmpl	$30,%ebx
-	jge	.Lj343
+	jge	.Lj307
 	cmpl	$0,%ebx
-	jl	.Lj343
+	jl	.Lj307
 # PeepHole Optimization,var2a
-.Ll91:
-# [237] f:=fnotes[note] ;
+.Ll85:
+# [239] f:=fnotes[note] ;
 	movl	%esi,%eax
 	leaq	U_$FMSYNTH_$$_FNOTES(%rip),%rdx
 	movsd	(%rdx,%rax,8),%xmm6
-.Ll92:
-# [238] voices[channel].setfreq(0);
+.Ll86:
+# [240] voices[channel].setfreq(0);
 	movsd	_$SYNTHCONTROL$_Ld4(%rip),%xmm1
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rcx
 	call	FMSYNTH$_$TFMVOICE_$__$$_SETFREQ$DOUBLE
-.Ll93:
-# [239] for i:=0 to 7 do  voices[channel].operators[i].pa:=0;
+.Ll87:
+# [241] for i:=0 to 7 do  voices[channel].operators[i].pa:=0;
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj352:
+.Lj316:
 	addl	$1,%r13d
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
@@ -894,13 +823,13 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	_$SYNTHCONTROL$_Ld4(%rip),%rdx
 	movq	%rdx,288(%rax)
 	cmpl	$7,%r13d
-	jl	.Lj352
-.Ll94:
-# [240] for i:=0 to 7 do voices[channel].operators[i].vel:=flogtable[49152+128*velocity];
+	jl	.Lj316
+.Ll88:
+# [242] for i:=0 to 7 do voices[channel].operators[i].vel:=flogtable[49152+128*velocity];
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj357:
+.Lj321:
 	addl	$1,%r13d
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
@@ -915,77 +844,77 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	393216(%rdx,%rax,8),%rax
 	movq	%rax,264(%rcx)
 	cmpl	$7,%r13d
-	jl	.Lj357
+	jl	.Lj321
 # PeepHole Optimization,var2a
-.Ll95:
-# [242] voices[channel].outmuls[0]:=2;
+.Ll89:
+# [244] voices[channel].outmuls[0]:=1;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
 	movl	_$SYNTHCONTROL$_Ld5(%rip),%edx
 	movl	%edx,136(%rax)
 # PeepHole Optimization,var2a
-.Ll96:
-# [243] voices[channel].outmuls[1]:=0;
+.Ll90:
+# [245] voices[channel].outmuls[1]:=0;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
 	movl	_$SYNTHCONTROL$_Ld6(%rip),%edx
 	movl	%edx,140(%rax)
 # PeepHole Optimization,var2a
-.Ll97:
-# [244] voices[channel].outmuls[2]:=2;
+.Ll91:
+# [246] voices[channel].outmuls[2]:=1;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
 	movl	_$SYNTHCONTROL$_Ld5(%rip),%edx
 	movl	%edx,144(%rax)
 # PeepHole Optimization,var2a
-.Ll98:
-# [245] voices[channel].outmuls[3]:=0;
+.Ll92:
+# [247] voices[channel].outmuls[3]:=0;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rdx
 	movl	_$SYNTHCONTROL$_Ld6(%rip),%eax
 	movl	%eax,148(%rdx)
 # PeepHole Optimization,var2a
-.Ll99:
-# [246] voices[channel].outmuls[4]:=2;
+.Ll93:
+# [248] voices[channel].outmuls[4]:=1;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
 	movl	_$SYNTHCONTROL$_Ld5(%rip),%edx
 	movl	%edx,152(%rax)
 # PeepHole Optimization,var2a
-.Ll100:
-# [247] voices[channel].outmuls[5]:=0;
+.Ll94:
+# [249] voices[channel].outmuls[5]:=0;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
 	movl	_$SYNTHCONTROL$_Ld6(%rip),%edx
 	movl	%edx,156(%rax)
 # PeepHole Optimization,var2a
-.Ll101:
-# [248] voices[channel].outmuls[6]:=0;
+.Ll95:
+# [250] voices[channel].outmuls[6]:=0;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
 	movl	_$SYNTHCONTROL$_Ld6(%rip),%edx
 	movl	%edx,160(%rax)
 # PeepHole Optimization,var2a
-.Ll102:
-# [249] voices[channel].outmuls[7]:=0;
+.Ll96:
+# [251] voices[channel].outmuls[7]:=0;
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rax
 	movl	_$SYNTHCONTROL$_Ld6(%rip),%edx
 	movl	%edx,164(%rax)
-.Ll103:
-# [253] for i:=0 to 7 do  voices[channel].operators[i].wavemode:=1;
+.Ll97:
+# [255] for i:=0 to 7 do  voices[channel].operators[i].wavemode:=1;
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj378:
+.Lj342:
 	addl	$1,%r13d
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
@@ -996,13 +925,77 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	8(%rdx,%rax,8),%rax
 	movl	$1,332(%rax)
 	cmpl	$7,%r13d
-	jl	.Lj378
-.Ll104:
-# [254] for i:=0 to 7 do  voices[channel].operators[i].wptr:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].wave;
+	jl	.Lj342
+.Ll98:
+# [256] for i:=0 to 7 do  voices[channel].operators[i].wptr:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].wave;
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj383:
+.Lj347:
+	addl	$1,%r13d
+# PeepHole Optimization,var2a
+	movl	%ebx,%eax
+	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
+	movq	(%rdx,%rax,8),%rdx
+# PeepHole Optimization,var2a
+	movl	%r13d,%eax
+	movq	8(%rdx,%rax,8),%r8
+.Ll99:
+	leaq	U_$FMSYNTH_$$_SOUNDS(%rip),%rax
+	movl	TC_$FMSYNTH_$$_WAVEIDX(%rip),%ecx
+# PeepHole Optimization,var2a
+.Ll100:
+	movl	%ecx,%edx
+	imulq	$2824,%rdx,%r9
+	andl	$4294967295,%ecx
+	imulq	$2824,%rcx,%rcx
+	movslq	%esi,%rdx
+	leaq	2264(%rax,%rcx),%rcx
+	movl	(%rcx,%rdx,4),%ecx
+	leaq	8(%rax,%r9),%rdx
+	imulq	$48,%rcx,%rax
+	movq	32(%rdx,%rax),%rax
+	movq	%rax,136(%r8)
+	cmpl	$7,%r13d
+	jl	.Lj347
+.Ll101:
+# [257] for i:=0 to 7 do  voices[channel].operators[i].wlend:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].lend ;
+	movl	$0,%r13d
+	subl	$1,%r13d
+	.balign 8,0x90
+.Lj356:
+	addl	$1,%r13d
+# PeepHole Optimization,var2a
+	movl	%ebx,%eax
+	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
+	movq	(%rdx,%rax,8),%rdx
+# PeepHole Optimization,var2a
+	movl	%r13d,%eax
+	movq	8(%rdx,%rax,8),%r8
+.Ll102:
+	leaq	U_$FMSYNTH_$$_SOUNDS(%rip),%rax
+	movl	TC_$FMSYNTH_$$_WAVEIDX(%rip),%ecx
+# PeepHole Optimization,var2a
+.Ll103:
+	movl	%ecx,%edx
+	imulq	$2824,%rdx,%r9
+	andl	$4294967295,%ecx
+	imulq	$2824,%rcx,%rcx
+	movslq	%esi,%rdx
+	leaq	2264(%rax,%rcx),%rcx
+	movl	(%rcx,%rdx,4),%ecx
+	leaq	8(%rax,%r9),%rdx
+	imulq	$48,%rcx,%rax
+	cvtsi2sdl	16(%rdx,%rax),%xmm0
+	movsd	%xmm0,160(%r8)
+	cmpl	$7,%r13d
+	jl	.Lj356
+.Ll104:
+# [258] for i:=0 to 7 do  voices[channel].operators[i].wlstart:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].lstart;
+	movl	$0,%r13d
+	subl	$1,%r13d
+	.balign 8,0x90
+.Lj365:
 	addl	$1,%r13d
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
@@ -1025,16 +1018,16 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movl	(%rcx,%rdx,4),%ecx
 	leaq	8(%rax,%r9),%rdx
 	imulq	$48,%rcx,%rax
-	movq	32(%rdx,%rax),%rax
-	movq	%rax,136(%r8)
+	cvtsi2sdl	12(%rdx,%rax),%xmm0
+	movsd	%xmm0,152(%r8)
 	cmpl	$7,%r13d
-	jl	.Lj383
+	jl	.Lj365
 .Ll107:
-# [255] for i:=0 to 7 do  voices[channel].operators[i].wlend:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].lend ;
+# [259] for i:=0 to 7 do  voices[channel].operators[i].wlength:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].len;
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj392:
+.Lj374:
 	addl	$1,%r13d
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
@@ -1057,80 +1050,16 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movl	(%rcx,%rdx,4),%ecx
 	leaq	8(%rax,%r9),%rdx
 	imulq	$48,%rcx,%rax
-	cvtsi2sdl	16(%rdx,%rax),%xmm0
-	movsd	%xmm0,160(%r8)
-	cmpl	$7,%r13d
-	jl	.Lj392
-.Ll110:
-# [256] for i:=0 to 7 do  voices[channel].operators[i].wlstart:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].lstart;
-	movl	$0,%r13d
-	subl	$1,%r13d
-	.balign 8,0x90
-.Lj401:
-	addl	$1,%r13d
-# PeepHole Optimization,var2a
-	movl	%ebx,%eax
-	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
-	movq	(%rdx,%rax,8),%rdx
-# PeepHole Optimization,var2a
-	movl	%r13d,%eax
-	movq	8(%rdx,%rax,8),%r8
-.Ll111:
-	leaq	U_$FMSYNTH_$$_SOUNDS(%rip),%rax
-	movl	TC_$FMSYNTH_$$_WAVEIDX(%rip),%ecx
-# PeepHole Optimization,var2a
-.Ll112:
-	movl	%ecx,%edx
-	imulq	$2824,%rdx,%r9
-	andl	$4294967295,%ecx
-	imulq	$2824,%rcx,%rcx
-	movslq	%esi,%rdx
-	leaq	2264(%rax,%rcx),%rcx
-	movl	(%rcx,%rdx,4),%ecx
-	leaq	8(%rax,%r9),%rdx
-	imulq	$48,%rcx,%rax
-	cvtsi2sdl	12(%rdx,%rax),%xmm0
-	movsd	%xmm0,152(%r8)
-	cmpl	$7,%r13d
-	jl	.Lj401
-.Ll113:
-# [257] for i:=0 to 7 do  voices[channel].operators[i].wlength:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].len;
-	movl	$0,%r13d
-	subl	$1,%r13d
-	.balign 8,0x90
-.Lj410:
-	addl	$1,%r13d
-# PeepHole Optimization,var2a
-	movl	%ebx,%eax
-	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
-	movq	(%rdx,%rax,8),%rdx
-# PeepHole Optimization,var2a
-	movl	%r13d,%eax
-	movq	8(%rdx,%rax,8),%r8
-.Ll114:
-	leaq	U_$FMSYNTH_$$_SOUNDS(%rip),%rax
-	movl	TC_$FMSYNTH_$$_WAVEIDX(%rip),%ecx
-# PeepHole Optimization,var2a
-.Ll115:
-	movl	%ecx,%edx
-	imulq	$2824,%rdx,%r9
-	andl	$4294967295,%ecx
-	imulq	$2824,%rcx,%rcx
-	movslq	%esi,%rdx
-	leaq	2264(%rax,%rcx),%rcx
-	movl	(%rcx,%rdx,4),%ecx
-	leaq	8(%rax,%r9),%rdx
-	imulq	$48,%rcx,%rax
 	cvtsi2sdl	8(%rdx,%rax),%xmm0
 	movsd	%xmm0,144(%r8)
 	cmpl	$7,%r13d
-	jl	.Lj410
-.Ll116:
+	jl	.Lj374
+.Ll110:
 	leaq	U_$FMSYNTH_$$_SOUNDS(%rip),%rax
 	movl	TC_$FMSYNTH_$$_WAVEIDX(%rip),%ecx
 # PeepHole Optimization,var2a
-.Ll117:
-# [258] ss:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].name;
+.Ll111:
+# [260] ss1:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].name;
 	movl	%ecx,%edx
 	imulq	$2824,%rdx,%r8
 	andl	$4294967295,%ecx
@@ -1141,20 +1070,20 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	leaq	8(%rax,%r8),%rdx
 	imulq	$48,%rcx,%rax
 	movq	(%rdx,%rax),%rdx
-	leaq	U_$SYNTHCONTROL_$$_SS(%rip),%rcx
+	leaq	U_$SYNTHCONTROL_$$_SS1(%rip),%rcx
 	call	fpc_ansistr_assign
-.Ll118:
-# [259] for i:=0 to 7 do  voices[channel].operators[i].freqmod:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].speed*power(2,transpose);
+.Ll112:
+# [261] for i:=0 to 7 do  voices[channel].operators[i].freqmod:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].speed*power(2,transpose);
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj427:
+.Lj391:
 	addl	$1,%r13d
-.Ll119:
+.Ll113:
 	leaq	U_$FMSYNTH_$$_SOUNDS(%rip),%rax
 	movl	TC_$FMSYNTH_$$_WAVEIDX(%rip),%ecx
 # PeepHole Optimization,var2a
-.Ll120:
+.Ll114:
 	movl	%ecx,%edx
 	imulq	$2824,%rdx,%r8
 	andl	$4294967295,%ecx
@@ -1177,13 +1106,13 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	8(%rdx,%rax,8),%rax
 	movsd	%xmm0,304(%rax)
 	cmpl	$7,%r13d
-	jl	.Lj427
-.Ll121:
-# [261] for i:=0 to 7 do  voices[channel].operators[i].mul0:=0;
+	jl	.Lj391
+.Ll115:
+# [263] for i:=0 to 7 do  voices[channel].operators[i].mul0:=0;
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj440:
+.Lj404:
 	addl	$1,%r13d
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
@@ -1191,17 +1120,17 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	(%rdx,%rax,8),%rdx
 # PeepHole Optimization,var2a
 	movl	%r13d,%eax
-	movq	8(%rdx,%rax,8),%rax
-	movq	_$SYNTHCONTROL$_Ld4(%rip),%rdx
-	movq	%rdx,72(%rax)
+	movq	8(%rdx,%rax,8),%rdx
+	movq	_$SYNTHCONTROL$_Ld4(%rip),%rax
+	movq	%rax,72(%rdx)
 	cmpl	$7,%r13d
-	jl	.Lj440
-.Ll122:
-# [262] for i:=0 to 7 do  voices[channel].operators[i].mul1:=0;
+	jl	.Lj404
+.Ll116:
+# [264] for i:=0 to 7 do  voices[channel].operators[i].mul1:=0;
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj445:
+.Lj409:
 	addl	$1,%r13d
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
@@ -1213,13 +1142,13 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	_$SYNTHCONTROL$_Ld4(%rip),%rdx
 	movq	%rdx,80(%rax)
 	cmpl	$7,%r13d
-	jl	.Lj445
-.Ll123:
-# [263] for i:=0 to 7 do  voices[channel].operators[i].mul2:=0;
+	jl	.Lj409
+.Ll117:
+# [265] for i:=0 to 7 do  voices[channel].operators[i].mul2:=0;
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj450:
+.Lj414:
 	addl	$1,%r13d
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
@@ -1231,13 +1160,13 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	_$SYNTHCONTROL$_Ld4(%rip),%rdx
 	movq	%rdx,88(%rax)
 	cmpl	$7,%r13d
-	jl	.Lj450
-.Ll124:
-# [264] for i:=0 to 7 do  voices[channel].operators[i].mul3:=0;
+	jl	.Lj414
+.Ll118:
+# [266] for i:=0 to 7 do  voices[channel].operators[i].mul3:=0;
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj455:
+.Lj419:
 	addl	$1,%r13d
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
@@ -1249,13 +1178,13 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	_$SYNTHCONTROL$_Ld4(%rip),%rdx
 	movq	%rdx,96(%rax)
 	cmpl	$7,%r13d
-	jl	.Lj455
-.Ll125:
-# [265] for i:=0 to 7 do  voices[channel].operators[i].mul4:=0;
+	jl	.Lj419
+.Ll119:
+# [267] for i:=0 to 7 do  voices[channel].operators[i].mul4:=0;
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj460:
+.Lj424:
 	addl	$1,%r13d
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
@@ -1267,13 +1196,13 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	_$SYNTHCONTROL$_Ld4(%rip),%rax
 	movq	%rax,104(%rdx)
 	cmpl	$7,%r13d
-	jl	.Lj460
-.Ll126:
-# [266] for i:=0 to 7 do  voices[channel].operators[i].mul5:=0;
+	jl	.Lj424
+.Ll120:
+# [268] for i:=0 to 7 do  voices[channel].operators[i].mul5:=0;
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj465:
+.Lj429:
 	addl	$1,%r13d
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
@@ -1285,13 +1214,13 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	_$SYNTHCONTROL$_Ld4(%rip),%rdx
 	movq	%rdx,112(%rax)
 	cmpl	$7,%r13d
-	jl	.Lj465
-.Ll127:
-# [267] for i:=0 to 7 do  voices[channel].operators[i].mul6:=0;
+	jl	.Lj429
+.Ll121:
+# [269] for i:=0 to 7 do  voices[channel].operators[i].mul6:=0;
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj470:
+.Lj434:
 	addl	$1,%r13d
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
@@ -1303,13 +1232,13 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	_$SYNTHCONTROL$_Ld4(%rip),%rdx
 	movq	%rdx,120(%rax)
 	cmpl	$7,%r13d
-	jl	.Lj470
-.Ll128:
-# [268] for i:=0 to 7 do  voices[channel].operators[i].mul7:=0;
+	jl	.Lj434
+.Ll122:
+# [270] for i:=0 to 7 do  voices[channel].operators[i].mul7:=0;
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj475:
+.Lj439:
 	addl	$1,%r13d
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
@@ -1321,93 +1250,21 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	_$SYNTHCONTROL$_Ld4(%rip),%rdx
 	movq	%rdx,128(%rax)
 	cmpl	$7,%r13d
-	jl	.Lj475
-.Ll129:
-# [270] for i:=0 to 7 do  voices[channel].operators[i].ar2:=0;
-	movl	$0,%r13d
-	subl	$1,%r13d
-	.balign 8,0x90
-.Lj480:
-	addl	$1,%r13d
+	jl	.Lj439
 # PeepHole Optimization,var2a
-	movl	%ebx,%eax
-	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
-	movq	(%rdx,%rax,8),%rdx
-# PeepHole Optimization,var2a
-	movl	%r13d,%eax
-	movq	8(%rdx,%rax,8),%rax
-	movq	_$SYNTHCONTROL$_Ld4(%rip),%rdx
-	movq	%rdx,192(%rax)
-	cmpl	$7,%r13d
-	jl	.Lj480
-.Ll130:
-# [271] for i:=0 to 7 do  voices[channel].operators[i].ar3:=0;
-	movl	$0,%r13d
-	subl	$1,%r13d
-	.balign 8,0x90
-.Lj485:
-	addl	$1,%r13d
-# PeepHole Optimization,var2a
-	movl	%ebx,%eax
-	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
-	movq	(%rdx,%rax,8),%rdx
-# PeepHole Optimization,var2a
-	movl	%r13d,%eax
-	movq	8(%rdx,%rax,8),%rax
-	movq	_$SYNTHCONTROL$_Ld4(%rip),%rdx
-	movq	%rdx,208(%rax)
-	cmpl	$7,%r13d
-	jl	.Lj485
-.Ll131:
-# [272] for i:=0 to 7 do  voices[channel].operators[i].av2:=1;
-	movl	$0,%r13d
-	subl	$1,%r13d
-	.balign 8,0x90
-.Lj490:
-	addl	$1,%r13d
-# PeepHole Optimization,var2a
-	movl	%ebx,%eax
-	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
-	movq	(%rdx,%rax,8),%rdx
-# PeepHole Optimization,var2a
-	movl	%r13d,%eax
-	movq	8(%rdx,%rax,8),%rax
-	movq	_$SYNTHCONTROL$_Ld7(%rip),%rdx
-	movq	%rdx,200(%rax)
-	cmpl	$7,%r13d
-	jl	.Lj490
-.Ll132:
-# [273] for i:=0 to 7 do  voices[channel].operators[i].av3:=1;
-	movl	$0,%r13d
-	subl	$1,%r13d
-	.balign 8,0x90
-.Lj495:
-	addl	$1,%r13d
-# PeepHole Optimization,var2a
-	movl	%ebx,%eax
-	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
-	movq	(%rdx,%rax,8),%rdx
-# PeepHole Optimization,var2a
-	movl	%r13d,%eax
-	movq	8(%rdx,%rax,8),%rax
-	movq	_$SYNTHCONTROL$_Ld7(%rip),%rdx
-	movq	%rdx,216(%rax)
-	cmpl	$7,%r13d
-	jl	.Lj495
-# PeepHole Optimization,var2a
-.Ll133:
-# [276] voices[channel].setfreq(f);
+.Ll123:
+# [278] voices[channel].setfreq(f);
 	movl	%ebx,%eax
 	leaq	U_$FMSYNTH_$$_VOICES(%rip),%rdx
 	movq	(%rdx,%rax,8),%rcx
 	movapd	%xmm6,%xmm1
 	call	FMSYNTH$_$TFMVOICE_$__$$_SETFREQ$DOUBLE
-.Ll134:
-# [277] for i:=0 to 7 do  voices[channel].operators[i].pa:=0;
+.Ll124:
+# [279] for i:=0 to 7 do  voices[channel].operators[i].pa:=0;
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj504:
+.Lj448:
 	addl	$1,%r13d
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
@@ -1415,17 +1272,17 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	(%rdx,%rax,8),%rdx
 # PeepHole Optimization,var2a
 	movl	%r13d,%eax
-	movq	8(%rdx,%rax,8),%rax
-	movq	_$SYNTHCONTROL$_Ld4(%rip),%rdx
-	movq	%rdx,288(%rax)
+	movq	8(%rdx,%rax,8),%rdx
+	movq	_$SYNTHCONTROL$_Ld4(%rip),%rax
+	movq	%rax,288(%rdx)
 	cmpl	$7,%r13d
-	jl	.Lj504
-.Ll135:
-# [279] for i:=0 to 7 do  voices[channel].operators[i].ar1:=att;
+	jl	.Lj448
+.Ll125:
+# [281] for i:=0 to 7 do  voices[channel].operators[i].ar1:=att;
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj509:
+.Lj453:
 	addl	$1,%r13d
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
@@ -1437,13 +1294,13 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	TC_$FMSYNTH_$$_ATT(%rip),%rax
 	movq	%rax,176(%rdx)
 	cmpl	$7,%r13d
-	jl	.Lj509
-.Ll136:
-# [280] for i:=0 to 7 do voices[channel].operators[i].adsrstate:=1;
+	jl	.Lj453
+.Ll126:
+# [282] for i:=0 to 7 do voices[channel].operators[i].adsrstate:=1;
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj514:
+.Lj458:
 	addl	$1,%r13d
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
@@ -1454,13 +1311,13 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	8(%rdx,%rax,8),%rax
 	movl	$1,328(%rax)
 	cmpl	$7,%r13d
-	jl	.Lj514
-.Ll137:
-# [281] for i:=0 to 0 do voices[channel].operators[i].adsrval:=0;
+	jl	.Lj458
+.Ll127:
+# [283] for i:=0 to 0 do voices[channel].operators[i].adsrval:=0;
 	movl	$0,%r13d
 	subl	$1,%r13d
 	.balign 8,0x90
-.Lj519:
+.Lj463:
 	addl	$1,%r13d
 # PeepHole Optimization,var2a
 	movl	%ebx,%eax
@@ -1472,10 +1329,10 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	movq	_$SYNTHCONTROL$_Ld4(%rip),%rdx
 	movq	%rdx,168(%rax)
 	testl	%r13d,%r13d
-	jl	.Lj519
-.Lj343:
-.Ll138:
-# [287] end;
+	jl	.Lj463
+.Lj307:
+.Ll128:
+# [289] end;
 	nop
 	movdqa	32(%rsp),%xmm6
 	leaq	48(%rsp),%rsp
@@ -1488,27 +1345,27 @@ SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT:
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc29:
-.Lt5:
-.Ll139:
+.Lc22:
+.Lt4:
+.Ll129:
 
 .section .text.n_synthcontrol_$$_noteoff$longint$longint,"x"
 	.balign 16,0x90
 .globl	SYNTHCONTROL_$$_NOTEOFF$LONGINT$LONGINT
 SYNTHCONTROL_$$_NOTEOFF$LONGINT$LONGINT:
-.Lc31:
+.Lc24:
 # Var channel located in register ecx
 # Var note located in register edx
 # Var i located in register r8d
-# [297] begin
-.Ll140:
-# [298] if channel<maxchannel then for i:=0 to 7 do voices[channel].operators[i].adsrstate:=5;
+# [299] begin
+.Ll130:
+# [300] if channel<maxchannel then for i:=0 to 7 do voices[channel].operators[i].adsrstate:=5;
 	cmpl	$30,%ecx
-	jnl	.Lj525
+	jnl	.Lj469
 	movl	$0,%r8d
 	subl	$1,%r8d
 	.balign 8,0x90
-.Lj528:
+.Lj472:
 	addl	$1,%r8d
 # PeepHole Optimization,var2a
 	movl	%ecx,%eax
@@ -1519,14 +1376,14 @@ SYNTHCONTROL_$$_NOTEOFF$LONGINT$LONGINT:
 	movq	8(%r9,%rax,8),%rax
 	movl	$5,328(%rax)
 	cmpl	$7,%r8d
-	jl	.Lj528
-.Lj525:
-.Ll141:
-# [300] end;
+	jl	.Lj472
+.Lj469:
+.Ll131:
+# [302] end;
 	ret
-.Lc32:
-.Lt6:
-.Ll142:
+.Lc25:
+.Lt5:
+.Ll132:
 
 .section .text.n_synthcontrol_$$_init_implicit$,"x"
 	.balign 16,0x90
@@ -1534,19 +1391,19 @@ SYNTHCONTROL_$$_NOTEOFF$LONGINT$LONGINT:
 INIT$_$SYNTHCONTROL:
 .globl	SYNTHCONTROL_$$_init_implicit$
 SYNTHCONTROL_$$_init_implicit$:
-.Lc33:
+.Lc26:
 .seh_proc SYNTHCONTROL_$$_init_implicit$
 	leaq	-40(%rsp),%rsp
-.Lc35:
+.Lc28:
 .seh_stackalloc 40
 .seh_endprologue
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc34:
-.Lt7:
-.Ll143:
+.Lc27:
+.Lt6:
+.Ll133:
 
 .section .text.n_synthcontrol_$$_finalize_implicit$,"x"
 	.balign 16,0x90
@@ -1554,25 +1411,25 @@ SYNTHCONTROL_$$_init_implicit$:
 FINALIZE$_$SYNTHCONTROL:
 .globl	SYNTHCONTROL_$$_finalize_implicit$
 SYNTHCONTROL_$$_finalize_implicit$:
-.Lc36:
+.Lc29:
 .seh_proc SYNTHCONTROL_$$_finalize_implicit$
 	leaq	-40(%rsp),%rsp
-.Lc38:
+.Lc31:
 .seh_stackalloc 40
 .seh_endprologue
 	leaq	INIT_$SYNTHCONTROL_$$_DEF10(%rip),%rax
 	movq	%rax,%rdx
 	leaq	U_$SYNTHCONTROL_$$_INSTRUMENTS(%rip),%rcx
 	call	fpc_finalize
-	leaq	U_$SYNTHCONTROL_$$_SS(%rip),%rcx
+	leaq	U_$SYNTHCONTROL_$$_SS1(%rip),%rcx
 	call	fpc_ansistr_decr_ref
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc37:
-.Lt8:
-.Ll144:
+.Lc30:
+.Lt7:
+.Ll134:
 # End asmlist al_procedures
 # Begin asmlist al_globals
 
@@ -1600,10 +1457,41 @@ U_$SYNTHCONTROL_$$_INSTRUMENTS:
 
 .section .bss
 	.balign 8
-# [45] ss:string;
-	.globl U_$SYNTHCONTROL_$$_SS
-U_$SYNTHCONTROL_$$_SS:
+# [45] ss1:string;
+	.globl U_$SYNTHCONTROL_$$_SS1
+U_$SYNTHCONTROL_$$_SS1:
 	.zero 8
+
+.section .bss
+# [75] controls: array[0..255] of byte;
+	.globl U_$SYNTHCONTROL_$$_CONTROLS
+U_$SYNTHCONTROL_$$_CONTROLS:
+	.zero 256
+
+.section .bss
+	.balign 4
+# [76] cx1,cy1,cx2,cy2:array[0..255] of integer;
+	.globl U_$SYNTHCONTROL_$$_CX1
+U_$SYNTHCONTROL_$$_CX1:
+	.zero 1024
+
+.section .bss
+	.balign 4
+	.globl U_$SYNTHCONTROL_$$_CY1
+U_$SYNTHCONTROL_$$_CY1:
+	.zero 1024
+
+.section .bss
+	.balign 4
+	.globl U_$SYNTHCONTROL_$$_CX2
+U_$SYNTHCONTROL_$$_CX2:
+	.zero 1024
+
+.section .bss
+	.balign 4
+	.globl U_$SYNTHCONTROL_$$_CY2
+U_$SYNTHCONTROL_$$_CY2:
+	.zero 1024
 
 .section .data.n_VMT_$SYNTHCONTROL_$$_TSYNTHCTRL,"d"
 	.balign 8
@@ -1611,7 +1499,7 @@ U_$SYNTHCONTROL_$$_SS:
 VMT_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.quad	88,-88
 	.quad	VMT_$CLASSES_$$_TTHREAD
-	.quad	.Ld8
+	.quad	.Ld7
 	.quad	0,0,0
 	.quad	RTTI_$SYNTHCONTROL_$$_TSYNTHCTRL
 	.quad	0,0
@@ -1633,9 +1521,9 @@ VMT_$SYNTHCONTROL_$$_TSYNTHCTRL:
 	.quad	CLASSES$_$TTHREAD_$__$$_DOTERMINATE
 	.quad	SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE
 	.quad	0
-# [304] 
+# [306] 
 	.balign 8
-.Ld8:
+.Ld7:
 	.byte	10
 	.ascii	"TSynthCtrl"
 # End asmlist al_globals
@@ -1649,7 +1537,6 @@ TC_$SYNTHCONTROL_$$_KEYMAP2:
 	.byte	0,0,0,0,67,64,63,81,0,66,68,89,70,0,73,71,69,91,93,77,83,61,84,88,65,79,62,86,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 	.byte	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 	.byte	0,0,0,0,0,0,0,0,0,0,0,0,59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-# [76] function allocatechannel(mode:integer):integer;
 
 .section .rodata.n__$SYNTHCONTROL$_Ld1,"d"
 	.balign 8
@@ -1683,8 +1570,8 @@ _$SYNTHCONTROL$_Ld4:
 	.balign 4
 .globl	_$SYNTHCONTROL$_Ld5
 _$SYNTHCONTROL$_Ld5:
-# value: 0d+2.000000000E+00
-	.byte	0,0,0,64
+# value: 0d+1.000000000E+00
+	.byte	0,0,128,63
 
 .section .rodata.n__$SYNTHCONTROL$_Ld6,"d"
 	.balign 4
@@ -1692,13 +1579,6 @@ _$SYNTHCONTROL$_Ld5:
 _$SYNTHCONTROL$_Ld6:
 # value: 0d+0.000000000E+00
 	.byte	0,0,0,0
-
-.section .rodata.n__$SYNTHCONTROL$_Ld7,"d"
-	.balign 8
-.globl	_$SYNTHCONTROL$_Ld7
-_$SYNTHCONTROL$_Ld7:
-# value: 0d+1.0000000000000000E+000
-	.byte	0,0,0,0,0,0,240,63
 # End asmlist al_typedconsts
 # Begin asmlist al_rtti
 
@@ -1862,9 +1742,9 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 # Begin asmlist al_dwarf_frame
 
 .section .debug_frame
-.Lc39:
-	.long	.Lc41-.Lc40
-.Lc40:
+.Lc32:
+	.long	.Lc34-.Lc33
+.Lc33:
 	.long	-1
 	.byte	1
 	.byte	0
@@ -1878,10 +1758,10 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	16
 	.uleb128	2
 	.balign 4,0
-.Lc41:
-	.long	.Lc43-.Lc42
-.Lc42:
-	.secrel32	.Lc39
+.Lc34:
+	.long	.Lc36-.Lc35
+.Lc35:
+	.secrel32	.Lc32
 	.quad	.Lc1
 	.quad	.Lc2-.Lc1
 	.byte	4
@@ -1898,17 +1778,17 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc43:
-	.long	.Lc45-.Lc44
-.Lc44:
-	.secrel32	.Lc39
+.Lc36:
+	.long	.Lc38-.Lc37
+.Lc37:
+	.secrel32	.Lc32
 	.quad	.Lc6
 	.quad	.Lc7-.Lc6
 	.balign 4,0
-.Lc45:
-	.long	.Lc47-.Lc46
-.Lc46:
-	.secrel32	.Lc39
+.Lc38:
+	.long	.Lc40-.Lc39
+.Lc39:
+	.secrel32	.Lc32
 	.quad	.Lc8
 	.quad	.Lc9-.Lc8
 	.byte	4
@@ -1925,10 +1805,10 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc47:
-	.long	.Lc49-.Lc48
-.Lc48:
-	.secrel32	.Lc39
+.Lc40:
+	.long	.Lc42-.Lc41
+.Lc41:
+	.secrel32	.Lc32
 	.quad	.Lc13
 	.quad	.Lc14-.Lc13
 	.byte	4
@@ -1945,87 +1825,58 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc49:
-	.long	.Lc51-.Lc50
-.Lc50:
-	.secrel32	.Lc39
+.Lc42:
+	.long	.Lc44-.Lc43
+.Lc43:
+	.secrel32	.Lc32
 	.quad	.Lc18
 	.quad	.Lc19-.Lc18
 	.byte	4
 	.long	.Lc20-.Lc18
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc21-.Lc20
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc22-.Lc21
-	.byte	13
-	.uleb128	6
+	.uleb128	40
 	.balign 4,0
-.Lc51:
-	.long	.Lc53-.Lc52
-.Lc52:
-	.secrel32	.Lc39
-	.quad	.Lc23
-	.quad	.Lc24-.Lc23
+.Lc44:
+	.long	.Lc46-.Lc45
+.Lc45:
+	.secrel32	.Lc32
+	.quad	.Lc21
+	.quad	.Lc22-.Lc21
 	.byte	4
-	.long	.Lc25-.Lc23
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc26-.Lc25
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc27-.Lc26
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc53:
-	.long	.Lc55-.Lc54
-.Lc54:
-	.secrel32	.Lc39
-	.quad	.Lc28
-	.quad	.Lc29-.Lc28
-	.byte	4
-	.long	.Lc30-.Lc28
+	.long	.Lc23-.Lc21
 	.byte	14
 	.uleb128	56
 	.balign 4,0
-.Lc55:
-	.long	.Lc57-.Lc56
-.Lc56:
-	.secrel32	.Lc39
-	.quad	.Lc31
-	.quad	.Lc32-.Lc31
+.Lc46:
+	.long	.Lc48-.Lc47
+.Lc47:
+	.secrel32	.Lc32
+	.quad	.Lc24
+	.quad	.Lc25-.Lc24
 	.balign 4,0
-.Lc57:
-	.long	.Lc59-.Lc58
-.Lc58:
-	.secrel32	.Lc39
-	.quad	.Lc33
-	.quad	.Lc34-.Lc33
+.Lc48:
+	.long	.Lc50-.Lc49
+.Lc49:
+	.secrel32	.Lc32
+	.quad	.Lc26
+	.quad	.Lc27-.Lc26
 	.byte	4
-	.long	.Lc35-.Lc33
+	.long	.Lc28-.Lc26
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc59:
-	.long	.Lc61-.Lc60
-.Lc60:
-	.secrel32	.Lc39
-	.quad	.Lc36
-	.quad	.Lc37-.Lc36
+.Lc50:
+	.long	.Lc52-.Lc51
+.Lc51:
+	.secrel32	.Lc32
+	.quad	.Lc29
+	.quad	.Lc30-.Lc29
 	.byte	4
-	.long	.Lc38-.Lc36
+	.long	.Lc31-.Lc29
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc61:
+.Lc52:
 # End asmlist al_dwarf_frame
 # Begin asmlist al_dwarf_info
 
@@ -2037,10 +1888,10 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.secrel32	.Ldebug_abbrev0
 	.byte	8
 	.uleb128	1
-# [84] constructor TSynthCtrl.Create(CreateSuspended : boolean);
+# [86] constructor TSynthCtrl.Create(CreateSuspended : boolean);
 	.ascii	"synthcontrol.pas\000"
-	.ascii	"Free Pascal 3.0.4 2017/12/03\000"
-	.ascii	"D:/Programowanie/20180824 retro-fm/\000"
+	.ascii	"Free Pascal 3.0.4 2018/02/25\000"
+	.ascii	"D:/programowanie/20180824 retro-fm/\000"
 	.byte	9
 	.byte	3
 	.secrel32	.Ldebug_line0
@@ -2086,13 +1937,13 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	3
 	.quad	U_$SYNTHCONTROL_$$_INSTRUMENTS
 	.long	.La14-.Ldebug_info0
-# Symbol SS
+# Symbol SS1
 	.uleb128	3
-	.ascii	"SS\000"
+	.ascii	"SS1\000"
 	.byte	1
 	.byte	9
 	.byte	3
-	.quad	U_$SYNTHCONTROL_$$_SS
+	.quad	U_$SYNTHCONTROL_$$_SS1
 	.long	.La16-.Ldebug_info0
 # Symbol KEYMAP2
 	.uleb128	3
@@ -2102,6 +1953,46 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	3
 	.quad	TC_$SYNTHCONTROL_$$_KEYMAP2
 	.long	.La18-.Ldebug_info0
+# Symbol CONTROLS
+	.uleb128	3
+	.ascii	"CONTROLS\000"
+	.byte	1
+	.byte	9
+	.byte	3
+	.quad	U_$SYNTHCONTROL_$$_CONTROLS
+	.long	.La20-.Ldebug_info0
+# Symbol CX1
+	.uleb128	3
+	.ascii	"CX1\000"
+	.byte	1
+	.byte	9
+	.byte	3
+	.quad	U_$SYNTHCONTROL_$$_CX1
+	.long	.La22-.Ldebug_info0
+# Symbol CY1
+	.uleb128	3
+	.ascii	"CY1\000"
+	.byte	1
+	.byte	9
+	.byte	3
+	.quad	U_$SYNTHCONTROL_$$_CY1
+	.long	.La22-.Ldebug_info0
+# Symbol CX2
+	.uleb128	3
+	.ascii	"CX2\000"
+	.byte	1
+	.byte	9
+	.byte	3
+	.quad	U_$SYNTHCONTROL_$$_CX2
+	.long	.La22-.Ldebug_info0
+# Symbol CY2
+	.uleb128	3
+	.ascii	"CY2\000"
+	.byte	1
+	.byte	9
+	.byte	3
+	.quad	U_$SYNTHCONTROL_$$_CY2
+	.long	.La22-.Ldebug_info0
 # Symbol ALLOCATECHANNEL
 # Symbol DEALLOCATECHANNEL
 # Symbol NOTEON
@@ -2127,7 +2018,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	144
 	.uleb128	6
-	.long	.La20-.Ldebug_info0
+	.long	.La24-.Ldebug_info0
 	.byte	0
 # Procdef allocatechannel(LongInt):LongInt;
 	.uleb128	6
@@ -2135,7 +2026,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.quad	SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT
 	.quad	.Lt2
 # Symbol MODE
@@ -2144,28 +2035,28 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	144
 	.uleb128	3
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 # Symbol result
 	.uleb128	7
 	.ascii	"result\000"
 	.byte	2
 	.byte	144
 	.uleb128	13
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 # Symbol ALLOCATECHANNEL
 	.uleb128	7
 	.ascii	"ALLOCATECHANNEL\000"
 	.byte	2
 	.byte	144
 	.uleb128	13
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 # Symbol RESULT
 	.uleb128	7
 	.ascii	"RESULT\000"
 	.byte	2
 	.byte	144
 	.uleb128	13
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 # Symbol P101
 # Symbol I
 	.uleb128	7
@@ -2173,37 +2064,21 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	144
 	.uleb128	4
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 # Symbol Q
 	.uleb128	7
 	.ascii	"Q\000"
 	.byte	2
 	.byte	144
 	.uleb128	5
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 # Symbol F
 	.uleb128	7
 	.ascii	"F\000"
 	.byte	2
 	.byte	144
 	.uleb128	12
-	.long	.La24-.Ldebug_info0
-# Symbol fin$1
-	.byte	0
-# Procdef $fin$1(<^untyped>) is nested;
-	.uleb128	4
-	.ascii	"fin$1\000"
-	.byte	1
-	.byte	65
-	.quad	SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$1
-	.quad	.Lt3
-# Symbol parentfp
-	.uleb128	5
-	.ascii	"parentfp\000"
-	.byte	2
-	.byte	144
-	.uleb128	6
-	.long	.La20-.Ldebug_info0
+	.long	.La28-.Ldebug_info0
 	.byte	0
 # Procdef deallocatechannel(LongInt);
 	.uleb128	8
@@ -2212,14 +2087,14 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	65
 	.byte	1
 	.quad	SYNTHCONTROL_$$_DEALLOCATECHANNEL$LONGINT
-	.quad	.Lt4
+	.quad	.Lt3
 # Symbol CHANNEL
 	.uleb128	5
 	.ascii	"CHANNEL\000"
 	.byte	2
 	.byte	144
 	.uleb128	0
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.byte	0
 # Procdef noteon(LongInt;LongInt;LongInt;LongInt);
 	.uleb128	8
@@ -2228,35 +2103,35 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	65
 	.byte	1
 	.quad	SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT
-	.quad	.Lt5
+	.quad	.Lt4
 # Symbol CHANNEL
 	.uleb128	5
 	.ascii	"CHANNEL\000"
 	.byte	2
 	.byte	144
 	.uleb128	3
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 # Symbol NOTE
 	.uleb128	5
 	.ascii	"NOTE\000"
 	.byte	2
 	.byte	144
 	.uleb128	4
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 # Symbol VELOCITY
 	.uleb128	5
 	.ascii	"VELOCITY\000"
 	.byte	2
 	.byte	144
 	.uleb128	5
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 # Symbol PRESET
 	.uleb128	5
 	.ascii	"PRESET\000"
 	.byte	2
 	.byte	144
 	.uleb128	12
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 # Symbol P999
 # Symbol I
 	.uleb128	7
@@ -2264,14 +2139,14 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	144
 	.uleb128	13
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 # Symbol F
 	.uleb128	7
 	.ascii	"F\000"
 	.byte	2
 	.byte	144
 	.uleb128	23
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.byte	0
 # Procdef noteoff(LongInt;LongInt);
 	.uleb128	8
@@ -2280,21 +2155,21 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	65
 	.byte	1
 	.quad	SYNTHCONTROL_$$_NOTEOFF$LONGINT$LONGINT
-	.quad	.Lt6
+	.quad	.Lt5
 # Symbol CHANNEL
 	.uleb128	5
 	.ascii	"CHANNEL\000"
 	.byte	2
 	.byte	144
 	.uleb128	2
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 # Symbol NOTE
 	.uleb128	5
 	.ascii	"NOTE\000"
 	.byte	2
 	.byte	144
 	.uleb128	1
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 # Symbol P999
 # Symbol I
 	.uleb128	7
@@ -2302,7 +2177,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	144
 	.uleb128	8
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.byte	0
 # Procdef $SYNTHCONTROL_$$_init_implicit$; Register;
 	.uleb128	8
@@ -2311,7 +2186,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	65
 	.byte	1
 	.quad	SYNTHCONTROL_$$_init_implicit$
-	.quad	.Lt7
+	.quad	.Lt6
 	.byte	0
 # Procdef $SYNTHCONTROL_$$_finalize_implicit$; Register;
 	.uleb128	8
@@ -2320,15 +2195,15 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	65
 	.byte	1
 	.quad	SYNTHCONTROL_$$_finalize_implicit$
-	.quad	.Lt8
+	.quad	.Lt7
 	.byte	0
 # Defs - Begin unit SYSTEM has index 1
 # Definition ShortInt
 .La1:
 	.uleb128	9
 	.ascii	"SHORTINT\000"
-	.long	.La28-.Ldebug_info0
-.La28:
+	.long	.La32-.Ldebug_info0
+.La32:
 	.uleb128	10
 	.ascii	"SHORTINT\000"
 	.byte	5
@@ -2337,78 +2212,78 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	11
 	.long	.La1-.Ldebug_info0
 # Definition LongInt
-.La22:
+.La26:
 	.uleb128	9
 	.ascii	"LONGINT\000"
-	.long	.La29-.Ldebug_info0
-.La29:
+	.long	.La33-.Ldebug_info0
+.La33:
 	.uleb128	10
 	.ascii	"LONGINT\000"
 	.byte	5
 	.byte	4
-.La23:
+.La27:
 	.uleb128	11
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 # Definition Int64
-.La24:
+.La28:
 	.uleb128	9
 	.ascii	"INT64\000"
-	.long	.La30-.Ldebug_info0
-.La30:
+	.long	.La34-.Ldebug_info0
+.La34:
 	.uleb128	10
 	.ascii	"Int64\000"
 	.byte	5
 	.byte	8
-.La25:
+.La29:
 	.uleb128	11
-	.long	.La24-.Ldebug_info0
+	.long	.La28-.Ldebug_info0
 # Definition AnsiString
 .La16:
 	.uleb128	9
 	.ascii	"ANSISTRING\000"
-	.long	.La31-.Ldebug_info0
-.La31:
+	.long	.La35-.Ldebug_info0
+.La35:
 	.uleb128	12
-	.long	.La32-.Ldebug_info0
+	.long	.La36-.Ldebug_info0
 .La17:
 	.uleb128	11
 	.long	.La16-.Ldebug_info0
 # Definition Double
-.La26:
+.La30:
 	.uleb128	9
 	.ascii	"DOUBLE\000"
-	.long	.La34-.Ldebug_info0
-.La34:
+	.long	.La38-.Ldebug_info0
+.La38:
 	.uleb128	10
 	.ascii	"DOUBLE\000"
 	.byte	4
 	.byte	8
-.La27:
+.La31:
 	.uleb128	11
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 # Definition ^untyped
-.La20:
+.La24:
 	.uleb128	9
 	.ascii	"parentfp_void_pointer\000"
-	.long	.La35-.Ldebug_info0
-.La35:
+	.long	.La39-.Ldebug_info0
+.La39:
 	.uleb128	13
-.La21:
+.La25:
 	.uleb128	11
-	.long	.La20-.Ldebug_info0
+	.long	.La24-.Ldebug_info0
 # Definition Char
-.La32:
+.La36:
 	.uleb128	9
 	.ascii	"CHAR\000"
-	.long	.La36-.Ldebug_info0
-.La36:
+	.long	.La40-.Ldebug_info0
+.La40:
 	.uleb128	10
 	.ascii	"Char\000"
 	.byte	8
 	.byte	1
-.La33:
+.La37:
 	.uleb128	11
-	.long	.La32-.Ldebug_info0
+	.long	.La36-.Ldebug_info0
 # Defs - End unit SYSTEM has index 1
 # Defs - Begin unit OBJPAS has index 6
 # Defs - End unit OBJPAS has index 6
@@ -2780,15 +2655,13 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 # Defs - End unit WSDIALOGS has index 204
 # Defs - Begin unit DIALOGS has index 166
 # Defs - End unit DIALOGS has index 166
-# Defs - Begin unit UMAIN has index 11
-# Defs - End unit UMAIN has index 11
 # Defs - Begin unit SYNTHCONTROL has index 17
 # Definition TSynthCtrl
 .La3:
 	.uleb128	9
 	.ascii	"TSYNTHCTRL\000"
-	.long	.La37-.Ldebug_info0
-.La37:
+	.long	.La41-.Ldebug_info0
+.La41:
 	.uleb128	12
 	.long	.La5-.Ldebug_info0
 .La5:
@@ -2800,7 +2673,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La40-.Ldebug_info0
+	.long	.La44-.Ldebug_info0
 # Procdef Execute(<TSynthCtrl>);
 	.uleb128	16
 	.ascii	"EXECUTE\000"
@@ -2815,7 +2688,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	34
 	.byte	2
 	.quad	SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE
-	.quad	.Lt9
+	.quad	.Lt8
 # Symbol this
 	.uleb128	17
 	.ascii	"this\000"
@@ -2831,63 +2704,63 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	144
 	.uleb128	12
-	.long	.La41-.Ldebug_info0
+	.long	.La45-.Ldebug_info0
 # Symbol AA
 	.uleb128	7
 	.ascii	"AA\000"
 	.byte	2
 	.byte	144
 	.uleb128	0
-	.long	.La41-.Ldebug_info0
+	.long	.La45-.Ldebug_info0
 # Symbol AAA
 	.uleb128	7
 	.ascii	"AAA\000"
 	.byte	2
 	.byte	144
 	.uleb128	15
-	.long	.La41-.Ldebug_info0
+	.long	.La45-.Ldebug_info0
 # Symbol AAAA
 	.uleb128	7
 	.ascii	"AAAA\000"
 	.byte	2
 	.byte	144
 	.uleb128	13
-	.long	.La41-.Ldebug_info0
+	.long	.La45-.Ldebug_info0
 # Symbol F
 	.uleb128	7
 	.ascii	"F\000"
 	.byte	2
 	.byte	144
 	.uleb128	0
-	.long	.La41-.Ldebug_info0
+	.long	.La45-.Ldebug_info0
 # Symbol I
 	.uleb128	7
 	.ascii	"I\000"
 	.byte	2
 	.byte	144
 	.uleb128	3
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 # Symbol J
 	.uleb128	7
 	.ascii	"J\000"
 	.byte	2
 	.byte	144
 	.uleb128	4
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 # Symbol CH
 	.uleb128	7
 	.ascii	"CH\000"
 	.byte	2
 	.byte	144
 	.uleb128	14
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 # Symbol KEY
 	.uleb128	7
 	.ascii	"KEY\000"
 	.byte	2
 	.byte	144
 	.uleb128	5
-	.long	.La41-.Ldebug_info0
+	.long	.La45-.Ldebug_info0
 # Symbol fin$0
 	.byte	0
 # Procdef constructor Create(<TSynthCtrl>;<Pointer>;Boolean);
@@ -2898,7 +2771,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.long	.La3-.Ldebug_info0
 	.quad	SYNTHCONTROL$_$TSYNTHCTRL_$__$$_CREATE$BOOLEAN$$TSYNTHCTRL
-	.quad	.Lt10
+	.quad	.Lt9
 # Symbol this
 	.uleb128	17
 	.ascii	"this\000"
@@ -2913,14 +2786,14 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	118
 	.sleb128	-16
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 # Symbol CREATESUSPENDED
 	.uleb128	5
 	.ascii	"CREATESUSPENDED\000"
 	.byte	2
 	.byte	118
 	.sleb128	-8
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 	.byte	0
 	.byte	0
 .La4:
@@ -2930,8 +2803,8 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 .La6:
 	.uleb128	9
 	.ascii	"TOPERATORDESC\000"
-	.long	.La47-.Ldebug_info0
-.La47:
+	.long	.La51-.Ldebug_info0
+.La51:
 	.uleb128	18
 	.ascii	"TOPERATORDESC\000"
 	.uleb128	3008
@@ -2940,145 +2813,145 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"MUL0\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"MUL1\000"
 	.byte	2
 	.byte	35
 	.uleb128	16
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"MUL2\000"
 	.byte	2
 	.byte	35
 	.uleb128	24
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"MUL3\000"
 	.byte	2
 	.byte	35
 	.uleb128	32
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"MUL4\000"
 	.byte	2
 	.byte	35
 	.uleb128	40
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"MUL5\000"
 	.byte	2
 	.byte	35
 	.uleb128	48
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"MUL6\000"
 	.byte	2
 	.byte	35
 	.uleb128	56
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"MUL7\000"
 	.byte	2
 	.byte	35
 	.uleb128	64
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"WAVE\000"
 	.byte	2
 	.byte	35
 	.uleb128	72
-	.long	.La48-.Ldebug_info0
+	.long	.La52-.Ldebug_info0
 	.uleb128	19
 	.ascii	"WLENGTH\000"
 	.byte	3
 	.byte	35
 	.uleb128	2896
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"WLSTART\000"
 	.byte	3
 	.byte	35
 	.uleb128	2904
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"WLEND\000"
 	.byte	3
 	.byte	35
 	.uleb128	2912
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"AR1\000"
 	.byte	3
 	.byte	35
 	.uleb128	2920
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"AV1\000"
 	.byte	3
 	.byte	35
 	.uleb128	2928
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"AR2\000"
 	.byte	3
 	.byte	35
 	.uleb128	2936
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"AV2\000"
 	.byte	3
 	.byte	35
 	.uleb128	2944
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"AR3\000"
 	.byte	3
 	.byte	35
 	.uleb128	2952
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"AV3\000"
 	.byte	3
 	.byte	35
 	.uleb128	2960
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"AR4\000"
 	.byte	3
 	.byte	35
 	.uleb128	2968
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"AV4\000"
 	.byte	3
 	.byte	35
 	.uleb128	2976
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"ADSRBIAS\000"
 	.byte	3
 	.byte	35
 	.uleb128	2984
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"FREQMOD\000"
 	.byte	3
 	.byte	35
 	.uleb128	2992
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"PAN\000"
 	.byte	3
 	.byte	35
 	.uleb128	3000
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.byte	0
 .La7:
 	.uleb128	11
@@ -3087,8 +2960,8 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 .La8:
 	.uleb128	9
 	.ascii	"TINSTRDESC\000"
-	.long	.La50-.Ldebug_info0
-.La50:
+	.long	.La54-.Ldebug_info0
+.La54:
 	.uleb128	18
 	.ascii	"TINSTRDESC\000"
 	.uleb128	24136
@@ -3103,13 +2976,13 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La51-.Ldebug_info0
+	.long	.La55-.Ldebug_info0
 	.uleb128	19
 	.ascii	"OUTPUTTABLE\000"
 	.byte	4
 	.byte	35
 	.uleb128	24072
-	.long	.La53-.Ldebug_info0
+	.long	.La57-.Ldebug_info0
 	.byte	0
 .La9:
 	.uleb128	11
@@ -3118,7 +2991,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 .La10:
 	.uleb128	20
 	.uleb128	240
-	.long	.La24-.Ldebug_info0
+	.long	.La28-.Ldebug_info0
 	.uleb128	21
 	.sleb128	0
 	.sleb128	29
@@ -3132,7 +3005,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 .La12:
 	.uleb128	20
 	.uleb128	2560
-	.long	.La55-.Ldebug_info0
+	.long	.La59-.Ldebug_info0
 	.uleb128	21
 	.sleb128	0
 	.sleb128	127
@@ -3151,7 +3024,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.sleb128	0
 	.sleb128	192
 	.uleb128	24136
-	.long	.La57-.Ldebug_info0
+	.long	.La61-.Ldebug_info0
 	.byte	0
 .La15:
 	.uleb128	11
@@ -3160,26 +3033,56 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 .La18:
 	.uleb128	20
 	.uleb128	256
-	.long	.La57-.Ldebug_info0
+	.long	.La61-.Ldebug_info0
 	.uleb128	21
 	.sleb128	0
 	.sleb128	255
 	.uleb128	1
-	.long	.La57-.Ldebug_info0
+	.long	.La61-.Ldebug_info0
 	.byte	0
 .La19:
 	.uleb128	11
 	.long	.La18-.Ldebug_info0
+# Definition Array[0..255] Of Byte
+.La20:
+	.uleb128	20
+	.uleb128	256
+	.long	.La61-.Ldebug_info0
+	.uleb128	21
+	.sleb128	0
+	.sleb128	255
+	.uleb128	1
+	.long	.La61-.Ldebug_info0
+	.byte	0
+.La21:
+	.uleb128	11
+	.long	.La20-.Ldebug_info0
+# Definition Array[0..255] Of LongInt
+.La22:
+	.uleb128	20
+	.uleb128	1024
+	.long	.La26-.Ldebug_info0
+	.uleb128	21
+	.sleb128	0
+	.sleb128	255
+	.uleb128	4
+	.long	.La61-.Ldebug_info0
+	.byte	0
+.La23:
+	.uleb128	11
+	.long	.La22-.Ldebug_info0
 # Defs - End unit SYNTHCONTROL has index 17
+# Defs - Begin unit UMAIN has index 11
+# Defs - End unit UMAIN has index 11
 # Defs - Begin unit RETRO has index 12
 # Defs - End unit RETRO has index 12
 # Defs - Begin unit FMSYNTH has index 18
 # Definition TMultiSample
-.La48:
+.La52:
 	.uleb128	9
 	.ascii	"TMULTISAMPLE\000"
-	.long	.La59-.Ldebug_info0
-.La59:
+	.long	.La63-.Ldebug_info0
+.La63:
 	.uleb128	18
 	.ascii	"TMULTISAMPLE\000"
 	.uleb128	2824
@@ -3194,31 +3097,31 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La60-.Ldebug_info0
+	.long	.La64-.Ldebug_info0
 	.uleb128	19
 	.ascii	"NOTES\000"
 	.byte	3
 	.byte	35
 	.uleb128	2312
-	.long	.La62-.Ldebug_info0
+	.long	.La66-.Ldebug_info0
 	.byte	0
-.La49:
+.La53:
 	.uleb128	11
-	.long	.La48-.Ldebug_info0
+	.long	.La52-.Ldebug_info0
 # Defs - End unit FMSYNTH has index 18
 # Defs - Begin unit SYNTHCONTROL has index 17
 # Defs - End unit SYNTHCONTROL has index 17
 # Defs - Begin Staticsymtable
 # Defs - End Staticsymtable
 # Definition TThread
-.La38:
+.La42:
 	.uleb128	9
 	.ascii	"TTHREAD\000"
-	.long	.La64-.Ldebug_info0
-.La64:
+	.long	.La68-.Ldebug_info0
+.La68:
 	.uleb128	12
-	.long	.La40-.Ldebug_info0
-.La40:
+	.long	.La44-.Ldebug_info0
+.La44:
 	.uleb128	14
 	.ascii	"TTHREAD\000"
 	.uleb128	88
@@ -3227,154 +3130,154 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La67-.Ldebug_info0
+	.long	.La71-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FHANDLE\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
 	.byte	3
-	.long	.La68-.Ldebug_info0
+	.long	.La72-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FTERMINATED\000"
 	.byte	2
 	.byte	35
 	.uleb128	16
 	.byte	3
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FFREEONTERMINATE\000"
 	.byte	2
 	.byte	35
 	.uleb128	17
 	.byte	3
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FFINISHED\000"
 	.byte	2
 	.byte	35
 	.uleb128	18
 	.byte	3
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FSUSPENDED\000"
 	.byte	2
 	.byte	35
 	.uleb128	20
 	.byte	3
-	.long	.La70-.Ldebug_info0
+	.long	.La74-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FRETURNVALUE\000"
 	.byte	2
 	.byte	35
 	.uleb128	24
 	.byte	3
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FONTERMINATE\000"
 	.byte	2
 	.byte	35
 	.uleb128	32
 	.byte	3
-	.long	.La72-.Ldebug_info0
+	.long	.La76-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FFATALEXCEPTION\000"
 	.byte	2
 	.byte	35
 	.uleb128	48
 	.byte	3
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FEXTERNALTHREAD\000"
 	.byte	2
 	.byte	35
 	.uleb128	56
 	.byte	3
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FSYNCHRONIZEENTRY\000"
 	.byte	2
 	.byte	35
 	.uleb128	64
 	.byte	3
-	.long	.La74-.Ldebug_info0
+	.long	.La78-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FTHREADID\000"
 	.byte	2
 	.byte	35
 	.uleb128	72
 	.byte	2
-	.long	.La68-.Ldebug_info0
+	.long	.La72-.Ldebug_info0
 	.uleb128	22
 	.ascii	"RETURNVALUE\000"
 	.byte	2
 	.byte	35
 	.uleb128	24
 	.byte	3
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.uleb128	22
 	.ascii	"TERMINATED\000"
 	.byte	2
 	.byte	35
 	.uleb128	16
 	.byte	3
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FINITIALSUSPENDED\000"
 	.byte	2
 	.byte	35
 	.uleb128	80
 	.byte	3
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FREEONTERMINATE\000"
 	.byte	2
 	.byte	35
 	.uleb128	17
 	.byte	3
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 	.uleb128	22
 	.ascii	"HANDLE\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
 	.byte	3
-	.long	.La68-.Ldebug_info0
+	.long	.La72-.Ldebug_info0
 	.uleb128	22
 	.ascii	"EXTERNALTHREAD\000"
 	.byte	2
 	.byte	35
 	.uleb128	56
 	.byte	3
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FINISHED\000"
 	.byte	2
 	.byte	35
 	.uleb128	18
 	.byte	3
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 	.uleb128	22
 	.ascii	"THREADID\000"
 	.byte	2
 	.byte	35
 	.uleb128	72
 	.byte	2
-	.long	.La68-.Ldebug_info0
+	.long	.La72-.Ldebug_info0
 	.uleb128	22
 	.ascii	"ONTERMINATE\000"
 	.byte	2
 	.byte	35
 	.uleb128	32
 	.byte	3
-	.long	.La72-.Ldebug_info0
+	.long	.La76-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FATALEXCEPTION\000"
 	.byte	2
 	.byte	35
 	.uleb128	48
 	.byte	3
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 # Procdef class GetCurrentThread:TThread; Static;
 	.uleb128	23
 	.ascii	"GETCURRENTTHREAD\000"
@@ -3382,7 +3285,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	65
 	.byte	1
 	.byte	3
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 	.byte	0
 # Procdef class GetIsSingleProcessor:Boolean; Static;
 	.uleb128	23
@@ -3391,7 +3294,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	65
 	.byte	1
 	.byte	3
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 	.byte	0
 # Procdef CallOnTerminate(<TThread>);
 	.uleb128	24
@@ -3404,7 +3307,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 	.byte	0
 # Procdef GetPriority(<TThread>):<enumeration type>;
 	.uleb128	23
@@ -3413,12 +3316,12 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	65
 	.byte	1
 	.byte	3
-	.long	.La76-.Ldebug_info0
+	.long	.La80-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 	.byte	0
 # Procdef SetPriority(<TThread>;TThreadPriority);
 	.uleb128	24
@@ -3431,11 +3334,11 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 # Symbol VALUE
 	.uleb128	26
 	.ascii	"VALUE\000"
-	.long	.La76-.Ldebug_info0
+	.long	.La80-.Ldebug_info0
 	.byte	0
 # Procdef SetSuspended(<TThread>;Boolean);
 	.uleb128	24
@@ -3448,11 +3351,11 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 # Symbol VALUE
 	.uleb128	26
 	.ascii	"VALUE\000"
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 	.byte	0
 # Procdef GetSuspended(<TThread>):Boolean;
 	.uleb128	23
@@ -3461,12 +3364,12 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	65
 	.byte	1
 	.byte	3
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 	.byte	0
 # Procdef InitSynchronizeEvent(<TThread>);
 	.uleb128	24
@@ -3479,7 +3382,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 	.byte	0
 # Procdef DoneSynchronizeEvent(<TThread>);
 	.uleb128	24
@@ -3492,7 +3395,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 	.byte	0
 # Procdef SysCreate(<TThread>;Boolean;const QWord);
 	.uleb128	24
@@ -3505,15 +3408,15 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 # Symbol CREATESUSPENDED
 	.uleb128	26
 	.ascii	"CREATESUSPENDED\000"
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 # Symbol STACKSIZE
 	.uleb128	26
 	.ascii	"STACKSIZE\000"
-	.long	.La68-.Ldebug_info0
+	.long	.La72-.Ldebug_info0
 	.byte	0
 # Procdef SysDestroy(<TThread>);
 	.uleb128	24
@@ -3526,7 +3429,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 	.byte	0
 # Procdef DoTerminate(<TThread>);
 	.uleb128	27
@@ -3545,7 +3448,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 	.byte	0
 # Procdef Execute(<TThread>);
 	.uleb128	27
@@ -3564,7 +3467,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 	.byte	0
 # Procdef Synchronize(<TThread>;TThreadMethod);
 	.uleb128	24
@@ -3577,11 +3480,11 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 # Symbol AMETHOD
 	.uleb128	26
 	.ascii	"AMETHOD\000"
-	.long	.La78-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.byte	0
 # Procdef Queue(<TThread>;TThreadMethod);
 	.uleb128	24
@@ -3594,11 +3497,11 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 # Symbol AMETHOD
 	.uleb128	26
 	.ascii	"AMETHOD\000"
-	.long	.La78-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.byte	0
 # Procdef constructor Create(<TThread>;<Pointer>;Boolean;const QWord="4194304");
 	.uleb128	28
@@ -3606,24 +3509,24 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 # Symbol vmt
 	.uleb128	26
 	.ascii	"vmt\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 # Symbol CREATESUSPENDED
 	.uleb128	26
 	.ascii	"CREATESUSPENDED\000"
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 # Symbol STACKSIZE
 	.uleb128	26
 	.ascii	"STACKSIZE\000"
-	.long	.La68-.Ldebug_info0
+	.long	.La72-.Ldebug_info0
 	.byte	0
 # Procdef destructor Destroy(<TThread>;<Pointer>);
 	.uleb128	29
@@ -3641,11 +3544,11 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 # Symbol vmt
 	.uleb128	26
 	.ascii	"vmt\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.byte	0
 # Procdef class CreateAnonymousThread(TProcedure):TThread; Static;
 	.uleb128	28
@@ -3653,11 +3556,11 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 # Symbol APROC
 	.uleb128	26
 	.ascii	"APROC\000"
-	.long	.La80-.Ldebug_info0
+	.long	.La84-.Ldebug_info0
 	.byte	0
 # Procdef class NameThreadForDebugging(UnicodeString;QWord="18446744073709551615"); Static;
 	.uleb128	30
@@ -3668,11 +3571,11 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 # Symbol ATHREADNAME
 	.uleb128	26
 	.ascii	"ATHREADNAME\000"
-	.long	.La82-.Ldebug_info0
+	.long	.La86-.Ldebug_info0
 # Symbol ATHREADID
 	.uleb128	26
 	.ascii	"ATHREADID\000"
-	.long	.La68-.Ldebug_info0
+	.long	.La72-.Ldebug_info0
 	.byte	0
 # Procdef class NameThreadForDebugging(AnsiString;QWord="18446744073709551615"); Static;
 	.uleb128	30
@@ -3687,7 +3590,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 # Symbol ATHREADID
 	.uleb128	26
 	.ascii	"ATHREADID\000"
-	.long	.La68-.Ldebug_info0
+	.long	.La72-.Ldebug_info0
 	.byte	0
 # Procdef class SetReturnValue(LongInt); Static;
 	.uleb128	30
@@ -3698,7 +3601,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 # Symbol AVALUE
 	.uleb128	26
 	.ascii	"AVALUE\000"
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.byte	0
 # Procdef class CheckTerminated:Boolean; Static;
 	.uleb128	28
@@ -3706,7 +3609,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 	.byte	0
 # Procdef class Synchronize(<Class Of TThread>;TThread;TThreadMethod);
 	.uleb128	30
@@ -3718,15 +3621,15 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"self\000"
 	.byte	1
-	.long	.La84-.Ldebug_info0
+	.long	.La88-.Ldebug_info0
 # Symbol ATHREAD
 	.uleb128	26
 	.ascii	"ATHREAD\000"
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 # Symbol AMETHOD
 	.uleb128	26
 	.ascii	"AMETHOD\000"
-	.long	.La78-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.byte	0
 # Procdef class Queue(TThread;TThreadMethod); Static;
 	.uleb128	30
@@ -3737,11 +3640,11 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 # Symbol ATHREAD
 	.uleb128	26
 	.ascii	"ATHREAD\000"
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 # Symbol AMETHOD
 	.uleb128	26
 	.ascii	"AMETHOD\000"
-	.long	.La78-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.byte	0
 # Procdef class RemoveQueuedEvents(TThread;TThreadMethod); Static;
 	.uleb128	30
@@ -3752,11 +3655,11 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 # Symbol ATHREAD
 	.uleb128	26
 	.ascii	"ATHREAD\000"
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 # Symbol AMETHOD
 	.uleb128	26
 	.ascii	"AMETHOD\000"
-	.long	.La78-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.byte	0
 # Procdef class RemoveQueuedEvents(TThreadMethod); Static;
 	.uleb128	30
@@ -3767,7 +3670,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 # Symbol AMETHOD
 	.uleb128	26
 	.ascii	"AMETHOD\000"
-	.long	.La78-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.byte	0
 # Procdef class RemoveQueuedEvents(TThread); Static;
 	.uleb128	30
@@ -3778,7 +3681,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 # Symbol ATHREAD
 	.uleb128	26
 	.ascii	"ATHREAD\000"
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 	.byte	0
 # Procdef class SpinWait(LongWord); Static;
 	.uleb128	30
@@ -3789,7 +3692,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 # Symbol AITERATIONS
 	.uleb128	26
 	.ascii	"AITERATIONS\000"
-	.long	.La41-.Ldebug_info0
+	.long	.La45-.Ldebug_info0
 	.byte	0
 # Procdef class Sleep(LongWord); Static;
 	.uleb128	30
@@ -3800,7 +3703,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 # Symbol AMILLISECONDS
 	.uleb128	26
 	.ascii	"AMILLISECONDS\000"
-	.long	.La41-.Ldebug_info0
+	.long	.La45-.Ldebug_info0
 	.byte	0
 # Procdef class Yield; Static;
 	.uleb128	30
@@ -3818,7 +3721,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 # Symbol ASYSTEMTIMES
 	.uleb128	26
 	.ascii	"ASYSTEMTIMES\000"
-	.long	.La86-.Ldebug_info0
+	.long	.La90-.Ldebug_info0
 	.byte	0
 # Procdef class GetTickCount:DWord; Static;
 	.uleb128	28
@@ -3826,7 +3729,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La41-.Ldebug_info0
+	.long	.La45-.Ldebug_info0
 	.byte	0
 # Procdef class GetTickCount64:QWord; Static;
 	.uleb128	28
@@ -3834,7 +3737,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La68-.Ldebug_info0
+	.long	.La72-.Ldebug_info0
 	.byte	0
 # Procdef class ExecuteInThread(TThreadMethod;TNotifyEvent="nil"):TThread; Static;
 	.uleb128	28
@@ -3842,15 +3745,15 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 # Symbol AMETHOD
 	.uleb128	26
 	.ascii	"AMETHOD\000"
-	.long	.La78-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 # Symbol AONTERMINATE
 	.uleb128	26
 	.ascii	"AONTERMINATE\000"
-	.long	.La72-.Ldebug_info0
+	.long	.La76-.Ldebug_info0
 	.byte	0
 # Procdef class ExecuteInThread(TThreadExecuteStatusHandler;TThreadStatusNotifyEvent;TNotifyEvent="nil"):TThread; Static;
 	.uleb128	28
@@ -3858,19 +3761,19 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 # Symbol AMETHOD
 	.uleb128	26
 	.ascii	"AMETHOD\000"
-	.long	.La88-.Ldebug_info0
+	.long	.La92-.Ldebug_info0
 # Symbol AONSTATUS
 	.uleb128	26
 	.ascii	"AONSTATUS\000"
-	.long	.La90-.Ldebug_info0
+	.long	.La94-.Ldebug_info0
 # Symbol AONTERMINATE
 	.uleb128	26
 	.ascii	"AONTERMINATE\000"
-	.long	.La72-.Ldebug_info0
+	.long	.La76-.Ldebug_info0
 	.byte	0
 # Procdef class ExecuteInThread(TThreadExecuteCallBack;Pointer="nil";TNotifyCallBack="nil"):TThread; Static;
 	.uleb128	28
@@ -3878,19 +3781,19 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 # Symbol AMETHOD
 	.uleb128	26
 	.ascii	"AMETHOD\000"
-	.long	.La92-.Ldebug_info0
+	.long	.La96-.Ldebug_info0
 # Symbol ADATA
 	.uleb128	26
 	.ascii	"ADATA\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 # Symbol AONTERMINATE
 	.uleb128	26
 	.ascii	"AONTERMINATE\000"
-	.long	.La94-.Ldebug_info0
+	.long	.La98-.Ldebug_info0
 	.byte	0
 # Procdef class ExecuteInThread(TThreadExecuteStatusCallBack;TThreadStatusNotifyCallBack;Pointer="nil";TNotifyCallBack="nil"):TThread; Static;
 	.uleb128	28
@@ -3898,23 +3801,23 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 # Symbol AMETHOD
 	.uleb128	26
 	.ascii	"AMETHOD\000"
-	.long	.La96-.Ldebug_info0
+	.long	.La100-.Ldebug_info0
 # Symbol AONSTATUS
 	.uleb128	26
 	.ascii	"AONSTATUS\000"
-	.long	.La98-.Ldebug_info0
+	.long	.La102-.Ldebug_info0
 # Symbol ADATA
 	.uleb128	26
 	.ascii	"ADATA\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 # Symbol AONTERMINATE
 	.uleb128	26
 	.ascii	"AONTERMINATE\000"
-	.long	.La94-.Ldebug_info0
+	.long	.La98-.Ldebug_info0
 	.byte	0
 # Procdef AfterConstruction(<TThread>);
 	.uleb128	29
@@ -3932,7 +3835,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 	.byte	0
 # Procdef Start(<TThread>);
 	.uleb128	30
@@ -3944,7 +3847,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 	.byte	0
 # Procdef Resume(<TThread>);
 	.uleb128	30
@@ -3956,7 +3859,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 	.byte	0
 # Procdef Suspend(<TThread>);
 	.uleb128	30
@@ -3968,7 +3871,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 	.byte	0
 # Procdef Terminate(<TThread>);
 	.uleb128	30
@@ -3980,7 +3883,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 	.byte	0
 # Procdef WaitFor(<TThread>):LongInt;
 	.uleb128	28
@@ -3988,55 +3891,55 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 	.byte	0
 	.byte	0
-.La39:
+.La43:
 	.uleb128	11
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 # Definition LongWord
-.La41:
+.La45:
 	.uleb128	9
 	.ascii	"LONGWORD\000"
-	.long	.La100-.Ldebug_info0
-.La100:
+	.long	.La104-.Ldebug_info0
+.La104:
 	.uleb128	10
 	.ascii	"LONGWORD\000"
 	.byte	7
 	.byte	4
-.La42:
+.La46:
 	.uleb128	11
-	.long	.La41-.Ldebug_info0
+	.long	.La45-.Ldebug_info0
 # Definition Pointer
-.La43:
+.La47:
 	.uleb128	9
 	.ascii	"POINTER\000"
-	.long	.La101-.Ldebug_info0
-.La101:
+	.long	.La105-.Ldebug_info0
+.La105:
 	.uleb128	13
-.La44:
+.La48:
 	.uleb128	11
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 # Definition Boolean
-.La45:
+.La49:
 	.uleb128	9
 	.ascii	"BOOLEAN\000"
-	.long	.La102-.Ldebug_info0
-.La102:
+	.long	.La106-.Ldebug_info0
+.La106:
 	.uleb128	10
 	.ascii	"Boolean\000"
 	.byte	2
 	.byte	1
-.La46:
+.La50:
 	.uleb128	11
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 # Definition TInstrDesc.Array[0..7] Of TOperatorDesc
-.La51:
+.La55:
 	.uleb128	20
 	.uleb128	24064
 	.long	.La6-.Ldebug_info0
@@ -4046,87 +3949,87 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	3008
 	.long	.La1-.Ldebug_info0
 	.byte	0
-.La52:
+.La56:
 	.uleb128	11
-	.long	.La51-.Ldebug_info0
+	.long	.La55-.Ldebug_info0
 # Definition TInstrDesc.Array[0..7] Of Double
-.La53:
+.La57:
 	.uleb128	20
 	.uleb128	64
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	21
 	.sleb128	0
 	.sleb128	7
 	.uleb128	8
 	.long	.La1-.Ldebug_info0
 	.byte	0
-.La54:
+.La58:
 	.uleb128	11
-	.long	.La53-.Ldebug_info0
+	.long	.La57-.Ldebug_info0
 # Definition Array[0..4] Of LongInt
-.La55:
+.La59:
 	.uleb128	20
 	.uleb128	20
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.uleb128	21
 	.sleb128	0
 	.sleb128	4
 	.uleb128	4
 	.long	.La1-.Ldebug_info0
 	.byte	0
-.La56:
+.La60:
 	.uleb128	11
-	.long	.La55-.Ldebug_info0
+	.long	.La59-.Ldebug_info0
 # Definition Byte
-.La57:
+.La61:
 	.uleb128	9
 	.ascii	"BYTE\000"
-	.long	.La103-.Ldebug_info0
-.La103:
+	.long	.La107-.Ldebug_info0
+.La107:
 	.uleb128	10
 	.ascii	"BYTE\000"
 	.byte	7
 	.byte	1
-.La58:
+.La62:
 	.uleb128	11
-	.long	.La57-.Ldebug_info0
+	.long	.La61-.Ldebug_info0
 # Definition TMultiSample.Array[0..47] Of TWaveSample1
-.La60:
+.La64:
 	.uleb128	20
 	.uleb128	2304
-	.long	.La104-.Ldebug_info0
+	.long	.La108-.Ldebug_info0
 	.uleb128	21
 	.sleb128	0
 	.sleb128	47
 	.uleb128	48
 	.long	.La1-.Ldebug_info0
 	.byte	0
-.La61:
+.La65:
 	.uleb128	11
-	.long	.La60-.Ldebug_info0
+	.long	.La64-.Ldebug_info0
 # Definition TMultiSample.Array[0..127] Of LongInt
-.La62:
+.La66:
 	.uleb128	20
 	.uleb128	512
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.uleb128	21
 	.sleb128	0
 	.sleb128	127
 	.uleb128	4
 	.long	.La1-.Ldebug_info0
 	.byte	0
-.La63:
+.La67:
 	.uleb128	11
-	.long	.La62-.Ldebug_info0
+	.long	.La66-.Ldebug_info0
 # Definition TObject
-.La65:
+.La69:
 	.uleb128	9
 	.ascii	"TOBJECT\000"
-	.long	.La106-.Ldebug_info0
-.La106:
+	.long	.La110-.Ldebug_info0
+.La110:
 	.uleb128	12
-	.long	.La67-.Ldebug_info0
-.La67:
+	.long	.La71-.Ldebug_info0
+.La71:
 	.uleb128	14
 	.ascii	"TOBJECT\000"
 	.uleb128	8
@@ -4136,23 +4039,23 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 # Procdef constructor Create(<TObject>;<Pointer>);
 	.uleb128	28
 	.ascii	"CREATE\000"
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 # Symbol vmt
 	.uleb128	26
 	.ascii	"vmt\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.byte	0
 # Procdef destructor Destroy(<TObject>;<Pointer>);
 	.uleb128	29
@@ -4170,11 +4073,11 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 # Symbol vmt
 	.uleb128	26
 	.ascii	"vmt\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.byte	0
 # Procdef class newinstance(<Class Of TObject>):TObject;
 	.uleb128	32
@@ -4188,12 +4091,12 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	16
 	.uleb128	104
 	.byte	34
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 # Symbol self
 	.uleb128	25
 	.ascii	"self\000"
 	.byte	1
-	.long	.La107-.Ldebug_info0
+	.long	.La111-.Ldebug_info0
 	.byte	0
 # Procdef FreeInstance(<TObject>);
 	.uleb128	29
@@ -4211,7 +4114,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 	.byte	0
 # Procdef SafeCallException(<TObject>;TObject;Pointer):LongInt;
 	.uleb128	32
@@ -4225,20 +4128,20 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	16
 	.uleb128	120
 	.byte	34
-	.long	.La109-.Ldebug_info0
+	.long	.La113-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 # Symbol EXCEPTOBJECT
 	.uleb128	26
 	.ascii	"EXCEPTOBJECT\000"
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 # Symbol EXCEPTADDR
 	.uleb128	26
 	.ascii	"EXCEPTADDR\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.byte	0
 # Procdef DefaultHandler(<TObject>;var <Formal type>);
 	.uleb128	29
@@ -4256,11 +4159,11 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 # Symbol MESSAGE
 	.uleb128	26
 	.ascii	"MESSAGE\000"
-	.long	.La111-.Ldebug_info0
+	.long	.La115-.Ldebug_info0
 	.byte	0
 # Procdef Free(<TObject>);
 	.uleb128	30
@@ -4272,7 +4175,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 	.byte	0
 # Procdef class InitInstance(<Class Of TObject>;Pointer):TObject;
 	.uleb128	28
@@ -4280,16 +4183,16 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 # Symbol self
 	.uleb128	25
 	.ascii	"self\000"
 	.byte	1
-	.long	.La113-.Ldebug_info0
+	.long	.La117-.Ldebug_info0
 # Symbol INSTANCE
 	.uleb128	26
 	.ascii	"INSTANCE\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.byte	0
 # Procdef CleanupInstance(<TObject>);
 	.uleb128	30
@@ -4301,7 +4204,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 	.byte	0
 # Procdef class ClassType(<Class Of TObject>):Class Of TObject;
 	.uleb128	28
@@ -4309,12 +4212,12 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La115-.Ldebug_info0
+	.long	.La119-.Ldebug_info0
 # Symbol self
 	.uleb128	25
 	.ascii	"self\000"
 	.byte	1
-	.long	.La117-.Ldebug_info0
+	.long	.La121-.Ldebug_info0
 	.byte	0
 # Procdef class ClassInfo(<Class Of TObject>):^untyped;
 	.uleb128	28
@@ -4322,12 +4225,12 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 # Symbol self
 	.uleb128	25
 	.ascii	"self\000"
 	.byte	1
-	.long	.La119-.Ldebug_info0
+	.long	.La123-.Ldebug_info0
 	.byte	0
 # Procdef class ClassName(<Class Of TObject>;<var ShortString>):ShortString;
 	.uleb128	28
@@ -4335,16 +4238,16 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La125-.Ldebug_info0
 # Symbol self
 	.uleb128	25
 	.ascii	"self\000"
 	.byte	1
-	.long	.La123-.Ldebug_info0
+	.long	.La127-.Ldebug_info0
 # Symbol result
 	.uleb128	33
 	.ascii	"result\000"
-	.long	.La121-.Ldebug_info0
+	.long	.La125-.Ldebug_info0
 	.byte	0
 # Procdef class ClassNameIs(<Class Of TObject>;const ShortString):Boolean;
 	.uleb128	28
@@ -4352,16 +4255,16 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 # Symbol self
 	.uleb128	25
 	.ascii	"self\000"
 	.byte	1
-	.long	.La125-.Ldebug_info0
+	.long	.La129-.Ldebug_info0
 # Symbol NAME
 	.uleb128	26
 	.ascii	"NAME\000"
-	.long	.La121-.Ldebug_info0
+	.long	.La125-.Ldebug_info0
 	.byte	0
 # Procdef class ClassParent(<Class Of TObject>):Class Of TObject;
 	.uleb128	28
@@ -4369,12 +4272,12 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La115-.Ldebug_info0
+	.long	.La119-.Ldebug_info0
 # Symbol self
 	.uleb128	25
 	.ascii	"self\000"
 	.byte	1
-	.long	.La127-.Ldebug_info0
+	.long	.La131-.Ldebug_info0
 	.byte	0
 # Procdef class InstanceSize(<Class Of TObject>):Int64;
 	.uleb128	28
@@ -4382,12 +4285,12 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La24-.Ldebug_info0
+	.long	.La28-.Ldebug_info0
 # Symbol self
 	.uleb128	25
 	.ascii	"self\000"
 	.byte	1
-	.long	.La129-.Ldebug_info0
+	.long	.La133-.Ldebug_info0
 	.byte	0
 # Procdef class InheritsFrom(<Class Of TObject>;TClass):Boolean;
 	.uleb128	28
@@ -4395,16 +4298,16 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 # Symbol self
 	.uleb128	25
 	.ascii	"self\000"
 	.byte	1
-	.long	.La131-.Ldebug_info0
+	.long	.La135-.Ldebug_info0
 # Symbol ACLASS
 	.uleb128	26
 	.ascii	"ACLASS\000"
-	.long	.La115-.Ldebug_info0
+	.long	.La119-.Ldebug_info0
 	.byte	0
 # Procdef class StringMessageTable(<Class Of TObject>):^TStringMessageTable;
 	.uleb128	28
@@ -4412,12 +4315,12 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La133-.Ldebug_info0
+	.long	.La137-.Ldebug_info0
 # Symbol self
 	.uleb128	25
 	.ascii	"self\000"
 	.byte	1
-	.long	.La135-.Ldebug_info0
+	.long	.La139-.Ldebug_info0
 	.byte	0
 # Procdef class MethodAddress(<Class Of TObject>;const ShortString):^untyped;
 	.uleb128	28
@@ -4425,16 +4328,16 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 # Symbol self
 	.uleb128	25
 	.ascii	"self\000"
 	.byte	1
-	.long	.La137-.Ldebug_info0
+	.long	.La141-.Ldebug_info0
 # Symbol NAME
 	.uleb128	26
 	.ascii	"NAME\000"
-	.long	.La121-.Ldebug_info0
+	.long	.La125-.Ldebug_info0
 	.byte	0
 # Procdef class MethodName(<Class Of TObject>;<var ShortString>;Pointer):ShortString;
 	.uleb128	28
@@ -4442,20 +4345,20 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La121-.Ldebug_info0
+	.long	.La125-.Ldebug_info0
 # Symbol self
 	.uleb128	25
 	.ascii	"self\000"
 	.byte	1
-	.long	.La139-.Ldebug_info0
+	.long	.La143-.Ldebug_info0
 # Symbol result
 	.uleb128	33
 	.ascii	"result\000"
-	.long	.La121-.Ldebug_info0
+	.long	.La125-.Ldebug_info0
 # Symbol ADDRESS
 	.uleb128	26
 	.ascii	"ADDRESS\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.byte	0
 # Procdef FieldAddress(<TObject>;const ShortString):^untyped;
 	.uleb128	28
@@ -4463,16 +4366,16 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 # Symbol NAME
 	.uleb128	26
 	.ascii	"NAME\000"
-	.long	.La121-.Ldebug_info0
+	.long	.La125-.Ldebug_info0
 	.byte	0
 # Procdef AfterConstruction(<TObject>);
 	.uleb128	29
@@ -4490,7 +4393,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 	.byte	0
 # Procdef BeforeDestruction(<TObject>);
 	.uleb128	29
@@ -4508,7 +4411,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 	.byte	0
 # Procdef DefaultHandlerStr(<TObject>;var <Formal type>);
 	.uleb128	29
@@ -4526,11 +4429,11 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 # Symbol MESSAGE
 	.uleb128	26
 	.ascii	"MESSAGE\000"
-	.long	.La111-.Ldebug_info0
+	.long	.La115-.Ldebug_info0
 	.byte	0
 # Procdef Dispatch(<TObject>;var <Formal type>);
 	.uleb128	29
@@ -4548,11 +4451,11 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 # Symbol MESSAGE
 	.uleb128	26
 	.ascii	"MESSAGE\000"
-	.long	.La111-.Ldebug_info0
+	.long	.La115-.Ldebug_info0
 	.byte	0
 # Procdef DispatchStr(<TObject>;var <Formal type>);
 	.uleb128	29
@@ -4570,11 +4473,11 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 # Symbol MESSAGE
 	.uleb128	26
 	.ascii	"MESSAGE\000"
-	.long	.La111-.Ldebug_info0
+	.long	.La115-.Ldebug_info0
 	.byte	0
 # Procdef GetInterface(<TObject>;const TGuid;out <Formal type>):Boolean;
 	.uleb128	28
@@ -4582,20 +4485,20 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 # Symbol IID
 	.uleb128	26
 	.ascii	"IID\000"
-	.long	.La141-.Ldebug_info0
+	.long	.La145-.Ldebug_info0
 # Symbol OBJ
 	.uleb128	26
 	.ascii	"OBJ\000"
-	.long	.La111-.Ldebug_info0
+	.long	.La115-.Ldebug_info0
 	.byte	0
 # Procdef GetInterface(<TObject>;const ShortString;out <Formal type>):Boolean;
 	.uleb128	28
@@ -4603,20 +4506,20 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 # Symbol IIDSTR
 	.uleb128	26
 	.ascii	"IIDSTR\000"
-	.long	.La121-.Ldebug_info0
+	.long	.La125-.Ldebug_info0
 # Symbol OBJ
 	.uleb128	26
 	.ascii	"OBJ\000"
-	.long	.La111-.Ldebug_info0
+	.long	.La115-.Ldebug_info0
 	.byte	0
 # Procdef GetInterfaceByStr(<TObject>;const ShortString;out <Formal type>):Boolean;
 	.uleb128	28
@@ -4624,20 +4527,20 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 # Symbol IIDSTR
 	.uleb128	26
 	.ascii	"IIDSTR\000"
-	.long	.La121-.Ldebug_info0
+	.long	.La125-.Ldebug_info0
 # Symbol OBJ
 	.uleb128	26
 	.ascii	"OBJ\000"
-	.long	.La111-.Ldebug_info0
+	.long	.La115-.Ldebug_info0
 	.byte	0
 # Procdef GetInterfaceWeak(<TObject>;const TGuid;out <Formal type>):Boolean;
 	.uleb128	28
@@ -4645,20 +4548,20 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 # Symbol IID
 	.uleb128	26
 	.ascii	"IID\000"
-	.long	.La141-.Ldebug_info0
+	.long	.La145-.Ldebug_info0
 # Symbol OBJ
 	.uleb128	26
 	.ascii	"OBJ\000"
-	.long	.La111-.Ldebug_info0
+	.long	.La115-.Ldebug_info0
 	.byte	0
 # Procdef class GetInterfaceEntry(<Class Of TObject>;const TGuid):^tinterfaceentry;
 	.uleb128	28
@@ -4666,16 +4569,16 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La143-.Ldebug_info0
+	.long	.La147-.Ldebug_info0
 # Symbol self
 	.uleb128	25
 	.ascii	"self\000"
 	.byte	1
-	.long	.La145-.Ldebug_info0
+	.long	.La149-.Ldebug_info0
 # Symbol IID
 	.uleb128	26
 	.ascii	"IID\000"
-	.long	.La141-.Ldebug_info0
+	.long	.La145-.Ldebug_info0
 	.byte	0
 # Procdef class GetInterfaceEntryByStr(<Class Of TObject>;const ShortString):^tinterfaceentry;
 	.uleb128	28
@@ -4683,16 +4586,16 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La143-.Ldebug_info0
+	.long	.La147-.Ldebug_info0
 # Symbol self
 	.uleb128	25
 	.ascii	"self\000"
 	.byte	1
-	.long	.La147-.Ldebug_info0
+	.long	.La151-.Ldebug_info0
 # Symbol IIDSTR
 	.uleb128	26
 	.ascii	"IIDSTR\000"
-	.long	.La121-.Ldebug_info0
+	.long	.La125-.Ldebug_info0
 	.byte	0
 # Procdef class GetInterfaceTable(<Class Of TObject>):^tinterfacetable;
 	.uleb128	28
@@ -4700,12 +4603,12 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La149-.Ldebug_info0
+	.long	.La153-.Ldebug_info0
 # Symbol self
 	.uleb128	25
 	.ascii	"self\000"
 	.byte	1
-	.long	.La151-.Ldebug_info0
+	.long	.La155-.Ldebug_info0
 	.byte	0
 # Procdef class UnitName(<Class Of TObject>;<var AnsiString>):AnsiString;
 	.uleb128	28
@@ -4718,7 +4621,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"self\000"
 	.byte	1
-	.long	.La153-.Ldebug_info0
+	.long	.La157-.Ldebug_info0
 # Symbol result
 	.uleb128	33
 	.ascii	"result\000"
@@ -4736,16 +4639,16 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	16
 	.uleb128	176
 	.byte	34
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 # Symbol OBJ
 	.uleb128	26
 	.ascii	"OBJ\000"
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 	.byte	0
 # Procdef GetHashCode(<TObject>):Int64;
 	.uleb128	32
@@ -4759,12 +4662,12 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	16
 	.uleb128	184
 	.byte	34
-	.long	.La24-.Ldebug_info0
+	.long	.La28-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 	.byte	0
 # Procdef ToString(<TObject>;<var AnsiString>):AnsiString;
 	.uleb128	32
@@ -4783,48 +4686,48 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 # Symbol result
 	.uleb128	33
 	.ascii	"result\000"
 	.long	.La16-.Ldebug_info0
 	.byte	0
 	.byte	0
-.La66:
+.La70:
 	.uleb128	11
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 # Definition QWord
-.La68:
+.La72:
 	.uleb128	9
 	.ascii	"QWORD\000"
-	.long	.La155-.Ldebug_info0
-.La155:
+	.long	.La159-.Ldebug_info0
+.La159:
 	.uleb128	10
 	.ascii	"QWord\000"
 	.byte	7
 	.byte	8
-.La69:
+.La73:
 	.uleb128	11
-	.long	.La68-.Ldebug_info0
+	.long	.La72-.Ldebug_info0
 # Definition LongBool
-.La70:
+.La74:
 	.uleb128	9
 	.ascii	"LONGBOOL\000"
-	.long	.La156-.Ldebug_info0
-.La156:
+	.long	.La160-.Ldebug_info0
+.La160:
 	.uleb128	10
 	.ascii	"LongBool\000"
 	.byte	2
 	.byte	4
-.La71:
+.La75:
 	.uleb128	11
-	.long	.La70-.Ldebug_info0
+	.long	.La74-.Ldebug_info0
 # Definition <procedure variable type of procedure(TObject) of object;Register>
-.La72:
+.La76:
 	.uleb128	9
 	.ascii	"TNOTIFYEVENT\000"
-	.long	.La157-.Ldebug_info0
-.La157:
+	.long	.La161-.Ldebug_info0
+.La161:
 	.uleb128	34
 	.byte	16
 	.uleb128	19
@@ -4832,45 +4735,45 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La158-.Ldebug_info0
+	.long	.La162-.Ldebug_info0
 	.uleb128	19
 	.ascii	"Self\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 	.byte	0
-.La158:
+.La162:
 	.uleb128	35
 	.ascii	"TNOTIFYEVENT\000"
 	.byte	1
 	.uleb128	26
 	.ascii	"this\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.uleb128	26
 	.ascii	"SENDER\000"
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 	.byte	0
-.La73:
+.La77:
 	.uleb128	11
-	.long	.La72-.Ldebug_info0
+	.long	.La76-.Ldebug_info0
 # Definition TThread.PThreadQueueEntry
-.La74:
+.La78:
 	.uleb128	9
 	.ascii	"PTHREADQUEUEENTRY\000"
-	.long	.La159-.Ldebug_info0
-.La159:
+	.long	.La163-.Ldebug_info0
+.La163:
 	.uleb128	12
-	.long	.La160-.Ldebug_info0
-.La75:
+	.long	.La164-.Ldebug_info0
+.La79:
 	.uleb128	11
-	.long	.La74-.Ldebug_info0
+	.long	.La78-.Ldebug_info0
 # Definition TThreadPriority
-.La76:
+.La80:
 	.uleb128	9
 	.ascii	"TTHREADPRIORITY\000"
-	.long	.La162-.Ldebug_info0
-.La162:
+	.long	.La166-.Ldebug_info0
+.La166:
 	.uleb128	36
 	.ascii	"TTHREADPRIORITY\000"
 	.byte	4
@@ -4896,15 +4799,15 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.ascii	"TPTIMECRITICAL\000"
 	.long	6
 	.byte	0
-.La77:
+.La81:
 	.uleb128	11
-	.long	.La76-.Ldebug_info0
+	.long	.La80-.Ldebug_info0
 # Definition <procedure variable type of procedure of object;Register>
-.La78:
+.La82:
 	.uleb128	9
 	.ascii	"TTHREADMETHOD\000"
-	.long	.La163-.Ldebug_info0
-.La163:
+	.long	.La167-.Ldebug_info0
+.La167:
 	.uleb128	34
 	.byte	16
 	.uleb128	19
@@ -4912,62 +4815,62 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La164-.Ldebug_info0
+	.long	.La168-.Ldebug_info0
 	.uleb128	19
 	.ascii	"Self\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 	.byte	0
-.La164:
+.La168:
 	.uleb128	35
 	.ascii	"TTHREADMETHOD\000"
 	.byte	1
 	.uleb128	26
 	.ascii	"this\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.byte	0
-.La79:
+.La83:
 	.uleb128	11
-	.long	.La78-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 # Definition <procedure variable type of procedure;Register>
-.La80:
+.La84:
 	.uleb128	9
 	.ascii	"TPROCEDURE\000"
-	.long	.La165-.Ldebug_info0
-.La165:
+	.long	.La169-.Ldebug_info0
+.La169:
 	.uleb128	35
 	.ascii	"TPROCEDURE\000"
 	.byte	1
 	.byte	0
-.La81:
-	.uleb128	11
-	.long	.La80-.Ldebug_info0
-# Definition UnicodeString
-.La82:
-	.uleb128	9
-	.ascii	"UNICODESTRING\000"
-	.long	.La166-.Ldebug_info0
-.La166:
-	.uleb128	12
-	.long	.La167-.Ldebug_info0
-.La83:
-	.uleb128	11
-	.long	.La82-.Ldebug_info0
-# Definition TThread.Class Of TThread
-.La84:
-	.uleb128	12
-	.long	.La169-.Ldebug_info0
 .La85:
 	.uleb128	11
 	.long	.La84-.Ldebug_info0
-# Definition TThread.TSystemTimes
+# Definition UnicodeString
 .La86:
 	.uleb128	9
-	.ascii	"TSYSTEMTIMES\000"
+	.ascii	"UNICODESTRING\000"
+	.long	.La170-.Ldebug_info0
+.La170:
+	.uleb128	12
 	.long	.La171-.Ldebug_info0
-.La171:
+.La87:
+	.uleb128	11
+	.long	.La86-.Ldebug_info0
+# Definition TThread.Class Of TThread
+.La88:
+	.uleb128	12
+	.long	.La173-.Ldebug_info0
+.La89:
+	.uleb128	11
+	.long	.La88-.Ldebug_info0
+# Definition TThread.TSystemTimes
+.La90:
+	.uleb128	9
+	.ascii	"TSYSTEMTIMES\000"
+	.long	.La175-.Ldebug_info0
+.La175:
 	.uleb128	18
 	.ascii	"TSYSTEMTIMES\000"
 	.uleb128	32
@@ -4976,68 +4879,33 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La68-.Ldebug_info0
+	.long	.La72-.Ldebug_info0
 	.uleb128	19
 	.ascii	"USERTIME\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La68-.Ldebug_info0
+	.long	.La72-.Ldebug_info0
 	.uleb128	19
 	.ascii	"KERNELTIME\000"
 	.byte	2
 	.byte	35
 	.uleb128	16
-	.long	.La68-.Ldebug_info0
+	.long	.La72-.Ldebug_info0
 	.uleb128	19
 	.ascii	"NICETIME\000"
 	.byte	2
 	.byte	35
 	.uleb128	24
-	.long	.La68-.Ldebug_info0
+	.long	.La72-.Ldebug_info0
 	.byte	0
-.La87:
+.La91:
 	.uleb128	11
-	.long	.La86-.Ldebug_info0
+	.long	.La90-.Ldebug_info0
 # Definition <procedure variable type of procedure(TThreadReportStatus) of object;Register>
-.La88:
+.La92:
 	.uleb128	9
 	.ascii	"TTHREADEXECUTESTATUSHANDLER\000"
-	.long	.La172-.Ldebug_info0
-.La172:
-	.uleb128	34
-	.byte	16
-	.uleb128	19
-	.ascii	"Proc\000"
-	.byte	2
-	.byte	35
-	.uleb128	0
-	.long	.La173-.Ldebug_info0
-	.uleb128	19
-	.ascii	"Self\000"
-	.byte	2
-	.byte	35
-	.uleb128	8
-	.long	.La65-.Ldebug_info0
-	.byte	0
-.La173:
-	.uleb128	35
-	.ascii	"TTHREADEXECUTESTATUSHANDLER\000"
-	.byte	1
-	.uleb128	26
-	.ascii	"this\000"
-	.long	.La43-.Ldebug_info0
-	.uleb128	26
-	.ascii	"REPORTSTATUS\000"
-	.long	.La174-.Ldebug_info0
-	.byte	0
-.La89:
-	.uleb128	11
-	.long	.La88-.Ldebug_info0
-# Definition <procedure variable type of procedure(TThread;const AnsiString) of object;Register>
-.La90:
-	.uleb128	9
-	.ascii	"TTHREADSTATUSNOTIFYEVENT\000"
 	.long	.La176-.Ldebug_info0
 .La176:
 	.uleb128	34
@@ -5053,107 +4921,142 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 	.byte	0
 .La177:
+	.uleb128	35
+	.ascii	"TTHREADEXECUTESTATUSHANDLER\000"
+	.byte	1
+	.uleb128	26
+	.ascii	"this\000"
+	.long	.La47-.Ldebug_info0
+	.uleb128	26
+	.ascii	"REPORTSTATUS\000"
+	.long	.La178-.Ldebug_info0
+	.byte	0
+.La93:
+	.uleb128	11
+	.long	.La92-.Ldebug_info0
+# Definition <procedure variable type of procedure(TThread;const AnsiString) of object;Register>
+.La94:
+	.uleb128	9
+	.ascii	"TTHREADSTATUSNOTIFYEVENT\000"
+	.long	.La180-.Ldebug_info0
+.La180:
+	.uleb128	34
+	.byte	16
+	.uleb128	19
+	.ascii	"Proc\000"
+	.byte	2
+	.byte	35
+	.uleb128	0
+	.long	.La181-.Ldebug_info0
+	.uleb128	19
+	.ascii	"Self\000"
+	.byte	2
+	.byte	35
+	.uleb128	8
+	.long	.La69-.Ldebug_info0
+	.byte	0
+.La181:
 	.uleb128	35
 	.ascii	"TTHREADSTATUSNOTIFYEVENT\000"
 	.byte	1
 	.uleb128	26
 	.ascii	"this\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.uleb128	26
 	.ascii	"SENDER\000"
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 	.uleb128	26
 	.ascii	"STATUS\000"
 	.long	.La16-.Ldebug_info0
-	.byte	0
-.La91:
-	.uleb128	11
-	.long	.La90-.Ldebug_info0
-# Definition <procedure variable type of procedure(Pointer);Register>
-.La92:
-	.uleb128	9
-	.ascii	"TTHREADEXECUTECALLBACK\000"
-	.long	.La178-.Ldebug_info0
-.La178:
-	.uleb128	35
-	.ascii	"TTHREADEXECUTECALLBACK\000"
-	.byte	1
-	.uleb128	26
-	.ascii	"ADATA\000"
-	.long	.La43-.Ldebug_info0
-	.byte	0
-.La93:
-	.uleb128	11
-	.long	.La92-.Ldebug_info0
-# Definition <procedure variable type of procedure(TObject;Pointer);Register>
-.La94:
-	.uleb128	9
-	.ascii	"TNOTIFYCALLBACK\000"
-	.long	.La179-.Ldebug_info0
-.La179:
-	.uleb128	35
-	.ascii	"TNOTIFYCALLBACK\000"
-	.byte	1
-	.uleb128	26
-	.ascii	"SENDER\000"
-	.long	.La65-.Ldebug_info0
-	.uleb128	26
-	.ascii	"ADATA\000"
-	.long	.La43-.Ldebug_info0
 	.byte	0
 .La95:
 	.uleb128	11
 	.long	.La94-.Ldebug_info0
-# Definition <procedure variable type of procedure(Pointer;TThreadReportStatus);Register>
+# Definition <procedure variable type of procedure(Pointer);Register>
 .La96:
 	.uleb128	9
+	.ascii	"TTHREADEXECUTECALLBACK\000"
+	.long	.La182-.Ldebug_info0
+.La182:
+	.uleb128	35
+	.ascii	"TTHREADEXECUTECALLBACK\000"
+	.byte	1
+	.uleb128	26
+	.ascii	"ADATA\000"
+	.long	.La47-.Ldebug_info0
+	.byte	0
+.La97:
+	.uleb128	11
+	.long	.La96-.Ldebug_info0
+# Definition <procedure variable type of procedure(TObject;Pointer);Register>
+.La98:
+	.uleb128	9
+	.ascii	"TNOTIFYCALLBACK\000"
+	.long	.La183-.Ldebug_info0
+.La183:
+	.uleb128	35
+	.ascii	"TNOTIFYCALLBACK\000"
+	.byte	1
+	.uleb128	26
+	.ascii	"SENDER\000"
+	.long	.La69-.Ldebug_info0
+	.uleb128	26
+	.ascii	"ADATA\000"
+	.long	.La47-.Ldebug_info0
+	.byte	0
+.La99:
+	.uleb128	11
+	.long	.La98-.Ldebug_info0
+# Definition <procedure variable type of procedure(Pointer;TThreadReportStatus);Register>
+.La100:
+	.uleb128	9
 	.ascii	"TTHREADEXECUTESTATUSCALLBACK\000"
-	.long	.La180-.Ldebug_info0
-.La180:
+	.long	.La184-.Ldebug_info0
+.La184:
 	.uleb128	35
 	.ascii	"TTHREADEXECUTESTATUSCALLBACK\000"
 	.byte	1
 	.uleb128	26
 	.ascii	"ADATA\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.uleb128	26
 	.ascii	"REPORTSTATUS\000"
-	.long	.La174-.Ldebug_info0
+	.long	.La178-.Ldebug_info0
 	.byte	0
-.La97:
+.La101:
 	.uleb128	11
-	.long	.La96-.Ldebug_info0
+	.long	.La100-.Ldebug_info0
 # Definition <procedure variable type of procedure(TThread;Pointer;const AnsiString);Register>
-.La98:
+.La102:
 	.uleb128	9
 	.ascii	"TTHREADSTATUSNOTIFYCALLBACK\000"
-	.long	.La181-.Ldebug_info0
-.La181:
+	.long	.La185-.Ldebug_info0
+.La185:
 	.uleb128	35
 	.ascii	"TTHREADSTATUSNOTIFYCALLBACK\000"
 	.byte	1
 	.uleb128	26
 	.ascii	"SENDER\000"
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 	.uleb128	26
 	.ascii	"ADATA\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.uleb128	26
 	.ascii	"STATUS\000"
 	.long	.La16-.Ldebug_info0
 	.byte	0
-.La99:
+.La103:
 	.uleb128	11
-	.long	.La98-.Ldebug_info0
+	.long	.La102-.Ldebug_info0
 # Definition TWaveSample1
-.La104:
+.La108:
 	.uleb128	9
 	.ascii	"TWAVESAMPLE1\000"
-	.long	.La182-.Ldebug_info0
-.La182:
+	.long	.La186-.Ldebug_info0
+.La186:
 	.uleb128	18
 	.ascii	"TWAVESAMPLE1\000"
 	.uleb128	48
@@ -5168,118 +5071,118 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.uleb128	19
 	.ascii	"LSTART\000"
 	.byte	2
 	.byte	35
 	.uleb128	12
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.uleb128	19
 	.ascii	"LEND\000"
 	.byte	2
 	.byte	35
 	.uleb128	16
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.uleb128	19
 	.ascii	"SPEED\000"
 	.byte	2
 	.byte	35
 	.uleb128	24
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"WAVE\000"
 	.byte	2
 	.byte	35
 	.uleb128	32
-	.long	.La183-.Ldebug_info0
+	.long	.La187-.Ldebug_info0
 	.uleb128	19
 	.ascii	"NOTE\000"
 	.byte	2
 	.byte	35
 	.uleb128	40
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.uleb128	19
 	.ascii	"FINETUNE\000"
 	.byte	2
 	.byte	35
 	.uleb128	44
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.byte	0
-.La105:
-	.uleb128	11
-	.long	.La104-.Ldebug_info0
-# Definition TObject.Class Of TObject
-.La107:
-	.uleb128	12
-	.long	.La169-.Ldebug_info0
-.La108:
-	.uleb128	11
-	.long	.La107-.Ldebug_info0
-# Definition HRESULT
 .La109:
+	.uleb128	11
+	.long	.La108-.Ldebug_info0
+# Definition TObject.Class Of TObject
+.La111:
+	.uleb128	12
+	.long	.La173-.Ldebug_info0
+.La112:
+	.uleb128	11
+	.long	.La111-.Ldebug_info0
+# Definition HRESULT
+.La113:
 	.uleb128	9
 	.ascii	"HRESULT\000"
-	.long	.La185-.Ldebug_info0
-.La185:
+	.long	.La189-.Ldebug_info0
+.La189:
 	.uleb128	10
 	.ascii	"HRESULT\000"
 	.byte	5
 	.byte	4
-.La110:
+.La114:
 	.uleb128	11
-	.long	.La109-.Ldebug_info0
+	.long	.La113-.Ldebug_info0
 # Definition <Formal type>
-.La111:
+.La115:
 	.uleb128	9
 	.ascii	"formal\000"
-	.long	.La186-.Ldebug_info0
-.La186:
+	.long	.La190-.Ldebug_info0
+.La190:
 	.uleb128	10
 	.ascii	"FormalDef\000"
 	.byte	7
 	.byte	0
-.La112:
-	.uleb128	11
-	.long	.La111-.Ldebug_info0
-# Definition TObject.Class Of TObject
-.La113:
-	.uleb128	12
-	.long	.La169-.Ldebug_info0
-.La114:
-	.uleb128	11
-	.long	.La113-.Ldebug_info0
-# Definition TClass
-.La115:
-	.uleb128	9
-	.ascii	"TCLASS\000"
-	.long	.La187-.Ldebug_info0
-.La187:
-	.uleb128	12
-	.long	.La169-.Ldebug_info0
 .La116:
 	.uleb128	11
 	.long	.La115-.Ldebug_info0
 # Definition TObject.Class Of TObject
 .La117:
 	.uleb128	12
-	.long	.La169-.Ldebug_info0
+	.long	.La173-.Ldebug_info0
 .La118:
 	.uleb128	11
 	.long	.La117-.Ldebug_info0
-# Definition TObject.Class Of TObject
+# Definition TClass
 .La119:
+	.uleb128	9
+	.ascii	"TCLASS\000"
+	.long	.La191-.Ldebug_info0
+.La191:
 	.uleb128	12
-	.long	.La169-.Ldebug_info0
+	.long	.La173-.Ldebug_info0
 .La120:
 	.uleb128	11
 	.long	.La119-.Ldebug_info0
-# Definition ShortString
+# Definition TObject.Class Of TObject
 .La121:
+	.uleb128	12
+	.long	.La173-.Ldebug_info0
+.La122:
+	.uleb128	11
+	.long	.La121-.Ldebug_info0
+# Definition TObject.Class Of TObject
+.La123:
+	.uleb128	12
+	.long	.La173-.Ldebug_info0
+.La124:
+	.uleb128	11
+	.long	.La123-.Ldebug_info0
+# Definition ShortString
+.La125:
 	.uleb128	9
 	.ascii	"SHORTSTRING\000"
-	.long	.La188-.Ldebug_info0
-.La188:
+	.long	.La192-.Ldebug_info0
+.La192:
 	.uleb128	18
 	.ascii	"ShortString\000"
 	.uleb128	256
@@ -5288,100 +5191,100 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La57-.Ldebug_info0
+	.long	.La61-.Ldebug_info0
 	.uleb128	19
 	.ascii	"st\000"
 	.byte	2
 	.byte	35
 	.uleb128	1
-	.long	.La189-.Ldebug_info0
+	.long	.La193-.Ldebug_info0
 	.byte	0
-.La189:
+.La193:
 	.uleb128	38
 	.uleb128	256
 	.uleb128	1
-	.long	.La32-.Ldebug_info0
+	.long	.La36-.Ldebug_info0
 	.uleb128	39
 	.uleb128	1
 	.uleb128	255
-	.long	.La57-.Ldebug_info0
+	.long	.La61-.Ldebug_info0
 	.byte	0
-.La122:
-	.uleb128	11
-	.long	.La121-.Ldebug_info0
-# Definition TObject.Class Of TObject
-.La123:
-	.uleb128	12
-	.long	.La169-.Ldebug_info0
-.La124:
-	.uleb128	11
-	.long	.La123-.Ldebug_info0
-# Definition TObject.Class Of TObject
-.La125:
-	.uleb128	12
-	.long	.La169-.Ldebug_info0
 .La126:
 	.uleb128	11
 	.long	.La125-.Ldebug_info0
 # Definition TObject.Class Of TObject
 .La127:
 	.uleb128	12
-	.long	.La169-.Ldebug_info0
+	.long	.La173-.Ldebug_info0
 .La128:
 	.uleb128	11
 	.long	.La127-.Ldebug_info0
 # Definition TObject.Class Of TObject
 .La129:
 	.uleb128	12
-	.long	.La169-.Ldebug_info0
+	.long	.La173-.Ldebug_info0
 .La130:
 	.uleb128	11
 	.long	.La129-.Ldebug_info0
 # Definition TObject.Class Of TObject
 .La131:
 	.uleb128	12
-	.long	.La169-.Ldebug_info0
+	.long	.La173-.Ldebug_info0
 .La132:
 	.uleb128	11
 	.long	.La131-.Ldebug_info0
-# Definition pstringmessagetable
+# Definition TObject.Class Of TObject
 .La133:
-	.uleb128	9
-	.ascii	"PSTRINGMESSAGETABLE\000"
-	.long	.La190-.Ldebug_info0
-.La190:
 	.uleb128	12
-	.long	.La191-.Ldebug_info0
+	.long	.La173-.Ldebug_info0
 .La134:
 	.uleb128	11
 	.long	.La133-.Ldebug_info0
 # Definition TObject.Class Of TObject
 .La135:
 	.uleb128	12
-	.long	.La169-.Ldebug_info0
+	.long	.La173-.Ldebug_info0
 .La136:
 	.uleb128	11
 	.long	.La135-.Ldebug_info0
-# Definition TObject.Class Of TObject
+# Definition pstringmessagetable
 .La137:
+	.uleb128	9
+	.ascii	"PSTRINGMESSAGETABLE\000"
+	.long	.La194-.Ldebug_info0
+.La194:
 	.uleb128	12
-	.long	.La169-.Ldebug_info0
+	.long	.La195-.Ldebug_info0
 .La138:
 	.uleb128	11
 	.long	.La137-.Ldebug_info0
 # Definition TObject.Class Of TObject
 .La139:
 	.uleb128	12
-	.long	.La169-.Ldebug_info0
+	.long	.La173-.Ldebug_info0
 .La140:
 	.uleb128	11
 	.long	.La139-.Ldebug_info0
-# Definition TGuid
+# Definition TObject.Class Of TObject
 .La141:
+	.uleb128	12
+	.long	.La173-.Ldebug_info0
+.La142:
+	.uleb128	11
+	.long	.La141-.Ldebug_info0
+# Definition TObject.Class Of TObject
+.La143:
+	.uleb128	12
+	.long	.La173-.Ldebug_info0
+.La144:
+	.uleb128	11
+	.long	.La143-.Ldebug_info0
+# Definition TGuid
+.La145:
 	.uleb128	9
 	.ascii	"TGUID\000"
-	.long	.La193-.Ldebug_info0
-.La193:
+	.long	.La197-.Ldebug_info0
+.La197:
 	.uleb128	18
 	.ascii	"TGUID\000"
 	.uleb128	16
@@ -5390,145 +5293,145 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La41-.Ldebug_info0
+	.long	.La45-.Ldebug_info0
 	.uleb128	19
 	.ascii	"DATA2\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La194-.Ldebug_info0
+	.long	.La198-.Ldebug_info0
 	.uleb128	19
 	.ascii	"DATA3\000"
 	.byte	2
 	.byte	35
 	.uleb128	6
-	.long	.La194-.Ldebug_info0
+	.long	.La198-.Ldebug_info0
 	.uleb128	19
 	.ascii	"DATA4\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La196-.Ldebug_info0
+	.long	.La200-.Ldebug_info0
 	.uleb128	19
 	.ascii	"D1\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La41-.Ldebug_info0
+	.long	.La45-.Ldebug_info0
 	.uleb128	19
 	.ascii	"D2\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La194-.Ldebug_info0
+	.long	.La198-.Ldebug_info0
 	.uleb128	19
 	.ascii	"D3\000"
 	.byte	2
 	.byte	35
 	.uleb128	6
-	.long	.La194-.Ldebug_info0
+	.long	.La198-.Ldebug_info0
 	.uleb128	19
 	.ascii	"D4\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La198-.Ldebug_info0
+	.long	.La202-.Ldebug_info0
 	.uleb128	19
 	.ascii	"TIME_LOW\000"
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La41-.Ldebug_info0
+	.long	.La45-.Ldebug_info0
 	.uleb128	19
 	.ascii	"TIME_MID\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La194-.Ldebug_info0
+	.long	.La198-.Ldebug_info0
 	.uleb128	19
 	.ascii	"TIME_HI_AND_VERSION\000"
 	.byte	2
 	.byte	35
 	.uleb128	6
-	.long	.La194-.Ldebug_info0
+	.long	.La198-.Ldebug_info0
 	.uleb128	19
 	.ascii	"CLOCK_SEQ_HI_AND_RESERVED\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La57-.Ldebug_info0
+	.long	.La61-.Ldebug_info0
 	.uleb128	19
 	.ascii	"CLOCK_SEQ_LOW\000"
 	.byte	2
 	.byte	35
 	.uleb128	9
-	.long	.La57-.Ldebug_info0
+	.long	.La61-.Ldebug_info0
 	.uleb128	19
 	.ascii	"NODE\000"
 	.byte	2
 	.byte	35
 	.uleb128	10
-	.long	.La200-.Ldebug_info0
+	.long	.La204-.Ldebug_info0
 	.byte	0
-.La142:
-	.uleb128	11
-	.long	.La141-.Ldebug_info0
-# Definition pinterfaceentry
-.La143:
-	.uleb128	9
-	.ascii	"PINTERFACEENTRY\000"
-	.long	.La202-.Ldebug_info0
-.La202:
-	.uleb128	12
-	.long	.La203-.Ldebug_info0
-.La144:
-	.uleb128	11
-	.long	.La143-.Ldebug_info0
-# Definition TObject.Class Of TObject
-.La145:
-	.uleb128	12
-	.long	.La169-.Ldebug_info0
 .La146:
 	.uleb128	11
 	.long	.La145-.Ldebug_info0
-# Definition TObject.Class Of TObject
+# Definition pinterfaceentry
 .La147:
+	.uleb128	9
+	.ascii	"PINTERFACEENTRY\000"
+	.long	.La206-.Ldebug_info0
+.La206:
 	.uleb128	12
-	.long	.La169-.Ldebug_info0
+	.long	.La207-.Ldebug_info0
 .La148:
 	.uleb128	11
 	.long	.La147-.Ldebug_info0
-# Definition pinterfacetable
+# Definition TObject.Class Of TObject
 .La149:
-	.uleb128	9
-	.ascii	"PINTERFACETABLE\000"
-	.long	.La205-.Ldebug_info0
-.La205:
 	.uleb128	12
-	.long	.La206-.Ldebug_info0
+	.long	.La173-.Ldebug_info0
 .La150:
 	.uleb128	11
 	.long	.La149-.Ldebug_info0
 # Definition TObject.Class Of TObject
 .La151:
 	.uleb128	12
-	.long	.La169-.Ldebug_info0
+	.long	.La173-.Ldebug_info0
 .La152:
 	.uleb128	11
 	.long	.La151-.Ldebug_info0
-# Definition TObject.Class Of TObject
+# Definition pinterfacetable
 .La153:
+	.uleb128	9
+	.ascii	"PINTERFACETABLE\000"
+	.long	.La209-.Ldebug_info0
+.La209:
 	.uleb128	12
-	.long	.La169-.Ldebug_info0
+	.long	.La210-.Ldebug_info0
 .La154:
 	.uleb128	11
 	.long	.La153-.Ldebug_info0
+# Definition TObject.Class Of TObject
+.La155:
+	.uleb128	12
+	.long	.La173-.Ldebug_info0
+.La156:
+	.uleb128	11
+	.long	.La155-.Ldebug_info0
+# Definition TObject.Class Of TObject
+.La157:
+	.uleb128	12
+	.long	.La173-.Ldebug_info0
+.La158:
+	.uleb128	11
+	.long	.La157-.Ldebug_info0
 # Definition TThread.TThreadQueueEntry
-.La160:
+.La164:
 	.uleb128	9
 	.ascii	"TTHREADQUEUEENTRY\000"
-	.long	.La208-.Ldebug_info0
-.La208:
+	.long	.La212-.Ldebug_info0
+.La212:
 	.uleb128	18
 	.ascii	"TTHREADQUEUEENTRY\000"
 	.uleb128	48
@@ -5537,66 +5440,66 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La78-.Ldebug_info0
+	.long	.La82-.Ldebug_info0
 	.uleb128	19
 	.ascii	"THREAD\000"
 	.byte	2
 	.byte	35
 	.uleb128	16
-	.long	.La38-.Ldebug_info0
+	.long	.La42-.Ldebug_info0
 	.uleb128	19
 	.ascii	"EXCEPTION\000"
 	.byte	2
 	.byte	35
 	.uleb128	24
-	.long	.La209-.Ldebug_info0
+	.long	.La213-.Ldebug_info0
 	.uleb128	19
 	.ascii	"SYNCEVENT\000"
 	.byte	2
 	.byte	35
 	.uleb128	32
-	.long	.La212-.Ldebug_info0
+	.long	.La216-.Ldebug_info0
 	.uleb128	19
 	.ascii	"NEXT\000"
 	.byte	2
 	.byte	35
 	.uleb128	40
-	.long	.La74-.Ldebug_info0
+	.long	.La78-.Ldebug_info0
 	.byte	0
-.La161:
+.La165:
 	.uleb128	11
-	.long	.La160-.Ldebug_info0
+	.long	.La164-.Ldebug_info0
 # Definition WideChar
-.La167:
+.La171:
 	.uleb128	9
 	.ascii	"WIDECHAR\000"
-	.long	.La214-.Ldebug_info0
-.La214:
+	.long	.La218-.Ldebug_info0
+.La218:
 	.uleb128	10
 	.ascii	"WideChar\000"
 	.byte	8
 	.byte	2
-.La168:
+.La172:
 	.uleb128	11
-	.long	.La167-.Ldebug_info0
+	.long	.La171-.Ldebug_info0
 # Definition <record type>
-.La169:
+.La173:
 	.uleb128	9
 	.ascii	"__vtbl_ptr_type\000"
-	.long	.La215-.Ldebug_info0
-.La215:
+	.long	.La219-.Ldebug_info0
+.La219:
 	.uleb128	40
 	.uleb128	40
 	.byte	0
-.La170:
-	.uleb128	11
-	.long	.La169-.Ldebug_info0
-# Definition <procedure variable type of procedure(const AnsiString) of object;Register>
 .La174:
+	.uleb128	11
+	.long	.La173-.Ldebug_info0
+# Definition <procedure variable type of procedure(const AnsiString) of object;Register>
+.La178:
 	.uleb128	9
 	.ascii	"TTHREADREPORTSTATUS\000"
-	.long	.La216-.Ldebug_info0
-.La216:
+	.long	.La220-.Ldebug_info0
+.La220:
 	.uleb128	34
 	.byte	16
 	.uleb128	19
@@ -5604,41 +5507,41 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La217-.Ldebug_info0
+	.long	.La221-.Ldebug_info0
 	.uleb128	19
 	.ascii	"Self\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 	.byte	0
-.La217:
+.La221:
 	.uleb128	35
 	.ascii	"TTHREADREPORTSTATUS\000"
 	.byte	1
 	.uleb128	26
 	.ascii	"this\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.uleb128	26
 	.ascii	"STATUS\000"
 	.long	.La16-.Ldebug_info0
 	.byte	0
-.La175:
+.La179:
 	.uleb128	11
-	.long	.La174-.Ldebug_info0
+	.long	.La178-.Ldebug_info0
 # Definition TWaveSample1.^Double
-.La183:
+.La187:
 	.uleb128	12
-	.long	.La26-.Ldebug_info0
-.La184:
+	.long	.La30-.Ldebug_info0
+.La188:
 	.uleb128	11
-	.long	.La183-.Ldebug_info0
+	.long	.La187-.Ldebug_info0
 # Definition TStringMessageTable
-.La191:
+.La195:
 	.uleb128	9
 	.ascii	"TSTRINGMESSAGETABLE\000"
-	.long	.La218-.Ldebug_info0
-.La218:
+	.long	.La222-.Ldebug_info0
+.La222:
 	.uleb128	18
 	.ascii	"TSTRINGMESSAGETABLE\000"
 	.uleb128	24
@@ -5647,78 +5550,78 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.uleb128	19
 	.ascii	"MSGSTRTABLE\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La219-.Ldebug_info0
+	.long	.La223-.Ldebug_info0
 	.byte	0
-.La192:
+.La196:
 	.uleb128	11
-	.long	.La191-.Ldebug_info0
+	.long	.La195-.Ldebug_info0
 # Definition Word
-.La194:
+.La198:
 	.uleb128	9
 	.ascii	"WORD\000"
-	.long	.La221-.Ldebug_info0
-.La221:
+	.long	.La225-.Ldebug_info0
+.La225:
 	.uleb128	10
 	.ascii	"WORD\000"
 	.byte	7
 	.byte	2
-.La195:
-	.uleb128	11
-	.long	.La194-.Ldebug_info0
-# Definition TGuid.Array[0..7] Of Byte
-.La196:
-	.uleb128	20
-	.uleb128	8
-	.long	.La57-.Ldebug_info0
-	.uleb128	21
-	.sleb128	0
-	.sleb128	7
-	.uleb128	1
-	.long	.La1-.Ldebug_info0
-	.byte	0
-.La197:
-	.uleb128	11
-	.long	.La196-.Ldebug_info0
-# Definition TGuid.Array[0..7] Of Byte
-.La198:
-	.uleb128	20
-	.uleb128	8
-	.long	.La57-.Ldebug_info0
-	.uleb128	21
-	.sleb128	0
-	.sleb128	7
-	.uleb128	1
-	.long	.La1-.Ldebug_info0
-	.byte	0
 .La199:
 	.uleb128	11
 	.long	.La198-.Ldebug_info0
-# Definition TGuid.Array[0..5] Of Byte
+# Definition TGuid.Array[0..7] Of Byte
 .La200:
 	.uleb128	20
-	.uleb128	6
-	.long	.La57-.Ldebug_info0
+	.uleb128	8
+	.long	.La61-.Ldebug_info0
 	.uleb128	21
 	.sleb128	0
-	.sleb128	5
+	.sleb128	7
 	.uleb128	1
 	.long	.La1-.Ldebug_info0
 	.byte	0
 .La201:
 	.uleb128	11
 	.long	.La200-.Ldebug_info0
-# Definition tinterfaceentry
+# Definition TGuid.Array[0..7] Of Byte
+.La202:
+	.uleb128	20
+	.uleb128	8
+	.long	.La61-.Ldebug_info0
+	.uleb128	21
+	.sleb128	0
+	.sleb128	7
+	.uleb128	1
+	.long	.La1-.Ldebug_info0
+	.byte	0
 .La203:
+	.uleb128	11
+	.long	.La202-.Ldebug_info0
+# Definition TGuid.Array[0..5] Of Byte
+.La204:
+	.uleb128	20
+	.uleb128	6
+	.long	.La61-.Ldebug_info0
+	.uleb128	21
+	.sleb128	0
+	.sleb128	5
+	.uleb128	1
+	.long	.La1-.Ldebug_info0
+	.byte	0
+.La205:
+	.uleb128	11
+	.long	.La204-.Ldebug_info0
+# Definition tinterfaceentry
+.La207:
 	.uleb128	9
 	.ascii	"TINTERFACEENTRY\000"
-	.long	.La222-.Ldebug_info0
-.La222:
+	.long	.La226-.Ldebug_info0
+.La226:
 	.uleb128	18
 	.ascii	"TINTERFACEENTRY\000"
 	.uleb128	40
@@ -5727,47 +5630,47 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La223-.Ldebug_info0
+	.long	.La227-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VTABLE\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.uleb128	19
 	.ascii	"IOFFSET\000"
 	.byte	2
 	.byte	35
 	.uleb128	16
-	.long	.La68-.Ldebug_info0
+	.long	.La72-.Ldebug_info0
 	.uleb128	19
 	.ascii	"IIDSTR\000"
 	.byte	2
 	.byte	35
 	.uleb128	24
-	.long	.La225-.Ldebug_info0
+	.long	.La229-.Ldebug_info0
 	.uleb128	19
 	.ascii	"ITYPE\000"
 	.byte	2
 	.byte	35
 	.uleb128	32
-	.long	.La227-.Ldebug_info0
+	.long	.La231-.Ldebug_info0
 	.uleb128	19
 	.ascii	"__PAD_DUMMY\000"
 	.byte	2
 	.byte	35
 	.uleb128	32
-	.long	.La24-.Ldebug_info0
+	.long	.La28-.Ldebug_info0
 	.byte	0
-.La204:
+.La208:
 	.uleb128	11
-	.long	.La203-.Ldebug_info0
+	.long	.La207-.Ldebug_info0
 # Definition tinterfacetable
-.La206:
+.La210:
 	.uleb128	9
 	.ascii	"TINTERFACETABLE\000"
-	.long	.La229-.Ldebug_info0
-.La229:
+	.long	.La233-.Ldebug_info0
+.La233:
 	.uleb128	18
 	.ascii	"TINTERFACETABLE\000"
 	.uleb128	48
@@ -5776,26 +5679,26 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La68-.Ldebug_info0
+	.long	.La72-.Ldebug_info0
 	.uleb128	19
 	.ascii	"ENTRIES\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La230-.Ldebug_info0
+	.long	.La234-.Ldebug_info0
 	.byte	0
-.La207:
+.La211:
 	.uleb128	11
-	.long	.La206-.Ldebug_info0
+	.long	.La210-.Ldebug_info0
 # Definition Exception
-.La209:
+.La213:
 	.uleb128	9
 	.ascii	"EXCEPTION\000"
-	.long	.La232-.Ldebug_info0
-.La232:
+	.long	.La236-.Ldebug_info0
+.La236:
 	.uleb128	12
-	.long	.La211-.Ldebug_info0
-.La211:
+	.long	.La215-.Ldebug_info0
+.La215:
 	.uleb128	14
 	.ascii	"EXCEPTION\000"
 	.uleb128	24
@@ -5804,7 +5707,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La67-.Ldebug_info0
+	.long	.La71-.Ldebug_info0
 	.uleb128	22
 	.ascii	"FMESSAGE\000"
 	.byte	2
@@ -5818,14 +5721,14 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	35
 	.uleb128	16
 	.byte	3
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.uleb128	22
 	.ascii	"HELPCONTEXT\000"
 	.byte	2
 	.byte	35
 	.uleb128	16
 	.byte	3
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.uleb128	22
 	.ascii	"MESSAGE\000"
 	.byte	2
@@ -5839,16 +5742,16 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La209-.Ldebug_info0
+	.long	.La213-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La209-.Ldebug_info0
+	.long	.La213-.Ldebug_info0
 # Symbol vmt
 	.uleb128	26
 	.ascii	"vmt\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 # Symbol MSG
 	.uleb128	26
 	.ascii	"MSG\000"
@@ -5860,16 +5763,16 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La209-.Ldebug_info0
+	.long	.La213-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La209-.Ldebug_info0
+	.long	.La213-.Ldebug_info0
 # Symbol vmt
 	.uleb128	26
 	.ascii	"vmt\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 # Symbol MSG
 	.uleb128	26
 	.ascii	"MSG\000"
@@ -5877,23 +5780,23 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 # Symbol ARGS
 	.uleb128	26
 	.ascii	"ARGS\000"
-	.long	.La233-.Ldebug_info0
+	.long	.La237-.Ldebug_info0
 # Symbol highARGS
 	.uleb128	26
 	.ascii	"highARGS\000"
-	.long	.La24-.Ldebug_info0
+	.long	.La28-.Ldebug_info0
 # Definition Array Of Const
-.La233:
+.La237:
 	.uleb128	41
-	.long	.La235-.Ldebug_info0
+	.long	.La239-.Ldebug_info0
 	.uleb128	42
 	.sleb128	0
 	.uleb128	16
-	.long	.La24-.Ldebug_info0
+	.long	.La28-.Ldebug_info0
 	.byte	0
-.La234:
+.La238:
 	.uleb128	11
-	.long	.La233-.Ldebug_info0
+	.long	.La237-.Ldebug_info0
 	.byte	0
 # Procdef constructor CreateRes(<Exception>;<Pointer>;PAnsiString);
 	.uleb128	28
@@ -5901,20 +5804,20 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La209-.Ldebug_info0
+	.long	.La213-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La209-.Ldebug_info0
+	.long	.La213-.Ldebug_info0
 # Symbol vmt
 	.uleb128	26
 	.ascii	"vmt\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 # Symbol RESSTRING
 	.uleb128	26
 	.ascii	"RESSTRING\000"
-	.long	.La237-.Ldebug_info0
+	.long	.La241-.Ldebug_info0
 	.byte	0
 # Procdef constructor CreateResFmt(<Exception>;<Pointer>;PAnsiString;const Array Of Const;<const Int64>);
 	.uleb128	28
@@ -5922,40 +5825,40 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La209-.Ldebug_info0
+	.long	.La213-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La209-.Ldebug_info0
+	.long	.La213-.Ldebug_info0
 # Symbol vmt
 	.uleb128	26
 	.ascii	"vmt\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 # Symbol RESSTRING
 	.uleb128	26
 	.ascii	"RESSTRING\000"
-	.long	.La237-.Ldebug_info0
+	.long	.La241-.Ldebug_info0
 # Symbol ARGS
 	.uleb128	26
 	.ascii	"ARGS\000"
-	.long	.La239-.Ldebug_info0
+	.long	.La243-.Ldebug_info0
 # Symbol highARGS
 	.uleb128	26
 	.ascii	"highARGS\000"
-	.long	.La24-.Ldebug_info0
+	.long	.La28-.Ldebug_info0
 # Definition Array Of Const
-.La239:
+.La243:
 	.uleb128	41
-	.long	.La235-.Ldebug_info0
+	.long	.La239-.Ldebug_info0
 	.uleb128	42
 	.sleb128	0
 	.uleb128	16
-	.long	.La24-.Ldebug_info0
+	.long	.La28-.Ldebug_info0
 	.byte	0
-.La240:
+.La244:
 	.uleb128	11
-	.long	.La239-.Ldebug_info0
+	.long	.La243-.Ldebug_info0
 	.byte	0
 # Procdef constructor CreateHelp(<Exception>;<Pointer>;const AnsiString;LongInt);
 	.uleb128	28
@@ -5963,16 +5866,16 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La209-.Ldebug_info0
+	.long	.La213-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La209-.Ldebug_info0
+	.long	.La213-.Ldebug_info0
 # Symbol vmt
 	.uleb128	26
 	.ascii	"vmt\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 # Symbol MSG
 	.uleb128	26
 	.ascii	"MSG\000"
@@ -5980,7 +5883,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 # Symbol AHELPCONTEXT
 	.uleb128	26
 	.ascii	"AHELPCONTEXT\000"
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.byte	0
 # Procdef constructor CreateFmtHelp(<Exception>;<Pointer>;const AnsiString;const Array Of Const;<const Int64>;LongInt);
 	.uleb128	28
@@ -5988,16 +5891,16 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La209-.Ldebug_info0
+	.long	.La213-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La209-.Ldebug_info0
+	.long	.La213-.Ldebug_info0
 # Symbol vmt
 	.uleb128	26
 	.ascii	"vmt\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 # Symbol MSG
 	.uleb128	26
 	.ascii	"MSG\000"
@@ -6005,27 +5908,27 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 # Symbol ARGS
 	.uleb128	26
 	.ascii	"ARGS\000"
-	.long	.La241-.Ldebug_info0
+	.long	.La245-.Ldebug_info0
 # Symbol highARGS
 	.uleb128	26
 	.ascii	"highARGS\000"
-	.long	.La24-.Ldebug_info0
+	.long	.La28-.Ldebug_info0
 # Symbol AHELPCONTEXT
 	.uleb128	26
 	.ascii	"AHELPCONTEXT\000"
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 # Definition Array Of Const
-.La241:
+.La245:
 	.uleb128	41
-	.long	.La235-.Ldebug_info0
+	.long	.La239-.Ldebug_info0
 	.uleb128	42
 	.sleb128	0
 	.uleb128	16
-	.long	.La24-.Ldebug_info0
+	.long	.La28-.Ldebug_info0
 	.byte	0
-.La242:
+.La246:
 	.uleb128	11
-	.long	.La241-.Ldebug_info0
+	.long	.La245-.Ldebug_info0
 	.byte	0
 # Procdef constructor CreateResHelp(<Exception>;<Pointer>;PAnsiString;LongInt);
 	.uleb128	28
@@ -6033,24 +5936,24 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La209-.Ldebug_info0
+	.long	.La213-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La209-.Ldebug_info0
+	.long	.La213-.Ldebug_info0
 # Symbol vmt
 	.uleb128	26
 	.ascii	"vmt\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 # Symbol RESSTRING
 	.uleb128	26
 	.ascii	"RESSTRING\000"
-	.long	.La237-.Ldebug_info0
+	.long	.La241-.Ldebug_info0
 # Symbol AHELPCONTEXT
 	.uleb128	26
 	.ascii	"AHELPCONTEXT\000"
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.byte	0
 # Procdef constructor CreateResFmtHelp(<Exception>;<Pointer>;PAnsiString;const Array Of Const;<const Int64>;LongInt);
 	.uleb128	28
@@ -6058,44 +5961,44 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	65
 	.byte	1
-	.long	.La209-.Ldebug_info0
+	.long	.La213-.Ldebug_info0
 # Symbol this
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La209-.Ldebug_info0
+	.long	.La213-.Ldebug_info0
 # Symbol vmt
 	.uleb128	26
 	.ascii	"vmt\000"
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 # Symbol RESSTRING
 	.uleb128	26
 	.ascii	"RESSTRING\000"
-	.long	.La237-.Ldebug_info0
+	.long	.La241-.Ldebug_info0
 # Symbol ARGS
 	.uleb128	26
 	.ascii	"ARGS\000"
-	.long	.La243-.Ldebug_info0
+	.long	.La247-.Ldebug_info0
 # Symbol highARGS
 	.uleb128	26
 	.ascii	"highARGS\000"
-	.long	.La24-.Ldebug_info0
+	.long	.La28-.Ldebug_info0
 # Symbol AHELPCONTEXT
 	.uleb128	26
 	.ascii	"AHELPCONTEXT\000"
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 # Definition Array Of Const
-.La243:
+.La247:
 	.uleb128	41
-	.long	.La235-.Ldebug_info0
+	.long	.La239-.Ldebug_info0
 	.uleb128	42
 	.sleb128	0
 	.uleb128	16
-	.long	.La24-.Ldebug_info0
+	.long	.La28-.Ldebug_info0
 	.byte	0
-.La244:
+.La248:
 	.uleb128	11
-	.long	.La243-.Ldebug_info0
+	.long	.La247-.Ldebug_info0
 	.byte	0
 # Procdef ToString(<Exception>;<var AnsiString>):AnsiString;
 	.uleb128	32
@@ -6114,68 +6017,68 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.uleb128	25
 	.ascii	"this\000"
 	.byte	1
-	.long	.La209-.Ldebug_info0
+	.long	.La213-.Ldebug_info0
 # Symbol result
 	.uleb128	33
 	.ascii	"result\000"
 	.long	.La16-.Ldebug_info0
 	.byte	0
 	.byte	0
-.La210:
+.La214:
 	.uleb128	11
-	.long	.La209-.Ldebug_info0
+	.long	.La213-.Ldebug_info0
 # Definition PRTLEvent
-.La212:
+.La216:
 	.uleb128	9
 	.ascii	"PRTLEVENT\000"
-	.long	.La245-.Ldebug_info0
-.La245:
+	.long	.La249-.Ldebug_info0
+.La249:
 	.uleb128	13
-.La213:
+.La217:
 	.uleb128	11
-	.long	.La212-.Ldebug_info0
+	.long	.La216-.Ldebug_info0
 # Definition TStringMessageTable.Array[0..0] Of TMsgStrTable
-.La219:
+.La223:
 	.uleb128	20
 	.uleb128	16
-	.long	.La246-.Ldebug_info0
+	.long	.La250-.Ldebug_info0
 	.uleb128	21
 	.sleb128	0
 	.sleb128	0
 	.uleb128	16
 	.long	.La1-.Ldebug_info0
 	.byte	0
-.La220:
-	.uleb128	11
-	.long	.La219-.Ldebug_info0
-# Definition PGuid
-.La223:
-	.uleb128	9
-	.ascii	"PGUID\000"
-	.long	.La248-.Ldebug_info0
-.La248:
-	.uleb128	12
-	.long	.La141-.Ldebug_info0
 .La224:
 	.uleb128	11
 	.long	.La223-.Ldebug_info0
-# Definition PShortString
-.La225:
-	.uleb128	9
-	.ascii	"PSHORTSTRING\000"
-	.long	.La249-.Ldebug_info0
-.La249:
-	.uleb128	12
-	.long	.La121-.Ldebug_info0
-.La226:
-	.uleb128	11
-	.long	.La225-.Ldebug_info0
-# Definition tinterfaceentrytype
+# Definition PGuid
 .La227:
 	.uleb128	9
+	.ascii	"PGUID\000"
+	.long	.La252-.Ldebug_info0
+.La252:
+	.uleb128	12
+	.long	.La145-.Ldebug_info0
+.La228:
+	.uleb128	11
+	.long	.La227-.Ldebug_info0
+# Definition PShortString
+.La229:
+	.uleb128	9
+	.ascii	"PSHORTSTRING\000"
+	.long	.La253-.Ldebug_info0
+.La253:
+	.uleb128	12
+	.long	.La125-.Ldebug_info0
+.La230:
+	.uleb128	11
+	.long	.La229-.Ldebug_info0
+# Definition tinterfaceentrytype
+.La231:
+	.uleb128	9
 	.ascii	"TINTERFACEENTRYTYPE\000"
-	.long	.La250-.Ldebug_info0
-.La250:
+	.long	.La254-.Ldebug_info0
+.La254:
 	.uleb128	36
 	.ascii	"TINTERFACEENTRYTYPE\000"
 	.byte	4
@@ -6201,29 +6104,29 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.ascii	"ETFIELDVALUECLASS\000"
 	.long	6
 	.byte	0
-.La228:
+.La232:
 	.uleb128	11
-	.long	.La227-.Ldebug_info0
+	.long	.La231-.Ldebug_info0
 # Definition tinterfacetable.Array[0..0] Of tinterfaceentry
-.La230:
+.La234:
 	.uleb128	20
 	.uleb128	40
-	.long	.La203-.Ldebug_info0
+	.long	.La207-.Ldebug_info0
 	.uleb128	21
 	.sleb128	0
 	.sleb128	0
 	.uleb128	40
 	.long	.La1-.Ldebug_info0
 	.byte	0
-.La231:
-	.uleb128	11
-	.long	.La230-.Ldebug_info0
-# Definition TVarRec
 .La235:
+	.uleb128	11
+	.long	.La234-.Ldebug_info0
+# Definition TVarRec
+.La239:
 	.uleb128	9
 	.ascii	"TVARREC\000"
-	.long	.La251-.Ldebug_info0
-.La251:
+	.long	.La255-.Ldebug_info0
+.La255:
 	.uleb128	18
 	.ascii	"TVARREC\000"
 	.uleb128	16
@@ -6232,142 +6135,142 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La24-.Ldebug_info0
+	.long	.La28-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VINTEGER\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VBOOLEAN\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La45-.Ldebug_info0
+	.long	.La49-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VCHAR\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La32-.Ldebug_info0
+	.long	.La36-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VWIDECHAR\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La167-.Ldebug_info0
+	.long	.La171-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VEXTENDED\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La252-.Ldebug_info0
+	.long	.La256-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VSTRING\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La225-.Ldebug_info0
+	.long	.La229-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VPOINTER\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VPCHAR\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La254-.Ldebug_info0
+	.long	.La258-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VOBJECT\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La65-.Ldebug_info0
+	.long	.La69-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VCLASS\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La115-.Ldebug_info0
+	.long	.La119-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VPWIDECHAR\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La256-.Ldebug_info0
+	.long	.La260-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VANSISTRING\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VCURRENCY\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La258-.Ldebug_info0
+	.long	.La262-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VVARIANT\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La260-.Ldebug_info0
+	.long	.La264-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VINTERFACE\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VWIDESTRING\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VINT64\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La262-.Ldebug_info0
+	.long	.La266-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VUNICODESTRING\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VQWORD\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La264-.Ldebug_info0
+	.long	.La268-.Ldebug_info0
 	.byte	0
-.La236:
+.La240:
 	.uleb128	11
-	.long	.La235-.Ldebug_info0
+	.long	.La239-.Ldebug_info0
 # Definition PAnsiString
-.La237:
+.La241:
 	.uleb128	9
 	.ascii	"PANSISTRING\000"
-	.long	.La266-.Ldebug_info0
-.La266:
+	.long	.La270-.Ldebug_info0
+.La270:
 	.uleb128	12
 	.long	.La16-.Ldebug_info0
-.La238:
+.La242:
 	.uleb128	11
-	.long	.La237-.Ldebug_info0
+	.long	.La241-.Ldebug_info0
 # Definition TMsgStrTable
-.La246:
+.La250:
 	.uleb128	9
 	.ascii	"TMSGSTRTABLE\000"
-	.long	.La267-.Ldebug_info0
-.La267:
+	.long	.La271-.Ldebug_info0
+.La271:
 	.uleb128	18
 	.ascii	"TMSGSTRTABLE\000"
 	.uleb128	16
@@ -6376,113 +6279,113 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La225-.Ldebug_info0
+	.long	.La229-.Ldebug_info0
 	.uleb128	19
 	.ascii	"METHOD\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.byte	0
-.La247:
+.La251:
 	.uleb128	11
-	.long	.La246-.Ldebug_info0
+	.long	.La250-.Ldebug_info0
 # Definition PExtended
-.La252:
-	.uleb128	9
-	.ascii	"PEXTENDED\000"
-	.long	.La268-.Ldebug_info0
-.La268:
-	.uleb128	12
-	.long	.La26-.Ldebug_info0
-.La253:
-	.uleb128	11
-	.long	.La252-.Ldebug_info0
-# Definition PChar
-.La254:
-	.uleb128	9
-	.ascii	"PCHAR\000"
-	.long	.La269-.Ldebug_info0
-.La269:
-	.uleb128	12
-	.long	.La32-.Ldebug_info0
-.La255:
-	.uleb128	11
-	.long	.La254-.Ldebug_info0
-# Definition PWideChar
 .La256:
 	.uleb128	9
-	.ascii	"PWIDECHAR\000"
-	.long	.La270-.Ldebug_info0
-.La270:
+	.ascii	"PEXTENDED\000"
+	.long	.La272-.Ldebug_info0
+.La272:
 	.uleb128	12
-	.long	.La167-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 .La257:
 	.uleb128	11
 	.long	.La256-.Ldebug_info0
-# Definition PCurrency
+# Definition PChar
 .La258:
 	.uleb128	9
-	.ascii	"PCURRENCY\000"
-	.long	.La271-.Ldebug_info0
-.La271:
+	.ascii	"PCHAR\000"
+	.long	.La273-.Ldebug_info0
+.La273:
 	.uleb128	12
-	.long	.La272-.Ldebug_info0
+	.long	.La36-.Ldebug_info0
 .La259:
 	.uleb128	11
 	.long	.La258-.Ldebug_info0
-# Definition PVariant
+# Definition PWideChar
 .La260:
 	.uleb128	9
-	.ascii	"PVARIANT\000"
+	.ascii	"PWIDECHAR\000"
 	.long	.La274-.Ldebug_info0
 .La274:
 	.uleb128	12
-	.long	.La275-.Ldebug_info0
+	.long	.La171-.Ldebug_info0
 .La261:
 	.uleb128	11
 	.long	.La260-.Ldebug_info0
-# Definition PInt64
+# Definition PCurrency
 .La262:
 	.uleb128	9
-	.ascii	"PINT64\000"
-	.long	.La277-.Ldebug_info0
-.La277:
+	.ascii	"PCURRENCY\000"
+	.long	.La275-.Ldebug_info0
+.La275:
 	.uleb128	12
-	.long	.La24-.Ldebug_info0
+	.long	.La276-.Ldebug_info0
 .La263:
 	.uleb128	11
 	.long	.La262-.Ldebug_info0
-# Definition PQWord
+# Definition PVariant
 .La264:
 	.uleb128	9
-	.ascii	"PQWORD\000"
+	.ascii	"PVARIANT\000"
 	.long	.La278-.Ldebug_info0
 .La278:
 	.uleb128	12
-	.long	.La68-.Ldebug_info0
+	.long	.La279-.Ldebug_info0
 .La265:
 	.uleb128	11
 	.long	.La264-.Ldebug_info0
+# Definition PInt64
+.La266:
+	.uleb128	9
+	.ascii	"PINT64\000"
+	.long	.La281-.Ldebug_info0
+.La281:
+	.uleb128	12
+	.long	.La28-.Ldebug_info0
+.La267:
+	.uleb128	11
+	.long	.La266-.Ldebug_info0
+# Definition PQWord
+.La268:
+	.uleb128	9
+	.ascii	"PQWORD\000"
+	.long	.La282-.Ldebug_info0
+.La282:
+	.uleb128	12
+	.long	.La72-.Ldebug_info0
+.La269:
+	.uleb128	11
+	.long	.La268-.Ldebug_info0
 # Definition Currency
-.La272:
+.La276:
 	.uleb128	9
 	.ascii	"CURRENCY\000"
-	.long	.La279-.Ldebug_info0
-.La279:
+	.long	.La283-.Ldebug_info0
+.La283:
 	.uleb128	10
 	.ascii	"Currency\000"
 	.byte	5
 	.byte	8
-.La273:
+.La277:
 	.uleb128	11
-	.long	.La272-.Ldebug_info0
+	.long	.La276-.Ldebug_info0
 # Definition Variant
-.La275:
+.La279:
 	.uleb128	9
 	.ascii	"VARIANT\000"
-	.long	.La280-.Ldebug_info0
-.La280:
+	.long	.La284-.Ldebug_info0
+.La284:
 	.uleb128	18
 	.ascii	"Variant\000"
 	.uleb128	24
@@ -6491,91 +6394,91 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La194-.Ldebug_info0
+	.long	.La198-.Ldebug_info0
 	.uleb128	19
 	.ascii	"RES1\000"
 	.byte	2
 	.byte	35
 	.uleb128	2
-	.long	.La194-.Ldebug_info0
+	.long	.La198-.Ldebug_info0
 	.uleb128	19
 	.ascii	"RES2\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La194-.Ldebug_info0
+	.long	.La198-.Ldebug_info0
 	.uleb128	19
 	.ascii	"RES3\000"
 	.byte	2
 	.byte	35
 	.uleb128	6
-	.long	.La194-.Ldebug_info0
+	.long	.La198-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VSMALLINT\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La281-.Ldebug_info0
+	.long	.La285-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VINTEGER\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VSINGLE\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La283-.Ldebug_info0
+	.long	.La287-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VDOUBLE\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La26-.Ldebug_info0
+	.long	.La30-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VDATE\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La285-.Ldebug_info0
+	.long	.La289-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VCURRENCY\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La272-.Ldebug_info0
+	.long	.La276-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VOLESTR\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La256-.Ldebug_info0
+	.long	.La260-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VDISPATCH\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VERROR\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La109-.Ldebug_info0
+	.long	.La113-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VBOOLEAN\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La287-.Ldebug_info0
+	.long	.La291-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VUNKNOWN\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VSHORTINT\000"
 	.byte	2
@@ -6587,206 +6490,206 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La57-.Ldebug_info0
+	.long	.La61-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VWORD\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La194-.Ldebug_info0
+	.long	.La198-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VLONGWORD\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La41-.Ldebug_info0
+	.long	.La45-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VINT64\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La24-.Ldebug_info0
+	.long	.La28-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VQWORD\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La68-.Ldebug_info0
+	.long	.La72-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VWORD64\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La68-.Ldebug_info0
+	.long	.La72-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VSTRING\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VANY\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VARRAY\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La289-.Ldebug_info0
+	.long	.La293-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VPOINTER\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VRECORD\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.uleb128	19
 	.ascii	"PRECINFO\000"
 	.byte	2
 	.byte	35
 	.uleb128	16
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VLONGS\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La291-.Ldebug_info0
+	.long	.La295-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VWORDS\000"
 	.byte	2
 	.byte	35
 	.uleb128	2
-	.long	.La293-.Ldebug_info0
+	.long	.La297-.Ldebug_info0
 	.uleb128	19
 	.ascii	"VBYTES\000"
 	.byte	2
 	.byte	35
 	.uleb128	2
-	.long	.La295-.Ldebug_info0
+	.long	.La299-.Ldebug_info0
 	.byte	0
-.La276:
+.La280:
 	.uleb128	11
-	.long	.La275-.Ldebug_info0
+	.long	.La279-.Ldebug_info0
 # Definition SmallInt
-.La281:
+.La285:
 	.uleb128	9
 	.ascii	"SMALLINT\000"
-	.long	.La297-.Ldebug_info0
-.La297:
+	.long	.La301-.Ldebug_info0
+.La301:
 	.uleb128	10
 	.ascii	"SMALLINT\000"
 	.byte	5
 	.byte	2
-.La282:
+.La286:
 	.uleb128	11
-	.long	.La281-.Ldebug_info0
+	.long	.La285-.Ldebug_info0
 # Definition Single
-.La283:
+.La287:
 	.uleb128	9
 	.ascii	"SINGLE\000"
-	.long	.La298-.Ldebug_info0
-.La298:
+	.long	.La302-.Ldebug_info0
+.La302:
 	.uleb128	10
 	.ascii	"SINGLE\000"
 	.byte	4
 	.byte	4
-.La284:
+.La288:
 	.uleb128	11
-	.long	.La283-.Ldebug_info0
+	.long	.La287-.Ldebug_info0
 # Definition TDateTime
-.La285:
+.La289:
 	.uleb128	9
 	.ascii	"TDATETIME\000"
-	.long	.La299-.Ldebug_info0
-.La299:
+	.long	.La303-.Ldebug_info0
+.La303:
 	.uleb128	10
 	.ascii	"TDATETIME\000"
 	.byte	4
 	.byte	8
-.La286:
+.La290:
 	.uleb128	11
-	.long	.La285-.Ldebug_info0
+	.long	.La289-.Ldebug_info0
 # Definition WordBool
-.La287:
+.La291:
 	.uleb128	9
 	.ascii	"WORDBOOL\000"
-	.long	.La300-.Ldebug_info0
-.La300:
+	.long	.La304-.Ldebug_info0
+.La304:
 	.uleb128	10
 	.ascii	"WordBool\000"
 	.byte	2
 	.byte	2
-.La288:
+.La292:
 	.uleb128	11
-	.long	.La287-.Ldebug_info0
+	.long	.La291-.Ldebug_info0
 # Definition pvararray
-.La289:
+.La293:
 	.uleb128	9
 	.ascii	"PVARARRAY\000"
-	.long	.La301-.Ldebug_info0
-.La301:
+	.long	.La305-.Ldebug_info0
+.La305:
 	.uleb128	12
-	.long	.La302-.Ldebug_info0
-.La290:
+	.long	.La306-.Ldebug_info0
+.La294:
 	.uleb128	11
-	.long	.La289-.Ldebug_info0
+	.long	.La293-.Ldebug_info0
 # Definition tvardata.Array[0..2] Of LongInt
-.La291:
+.La295:
 	.uleb128	20
 	.uleb128	12
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.uleb128	21
 	.sleb128	0
 	.sleb128	2
 	.uleb128	4
 	.long	.La1-.Ldebug_info0
 	.byte	0
-.La292:
+.La296:
 	.uleb128	11
-	.long	.La291-.Ldebug_info0
+	.long	.La295-.Ldebug_info0
 # Definition tvardata.Array[0..6] Of Word
-.La293:
+.La297:
 	.uleb128	20
 	.uleb128	14
-	.long	.La194-.Ldebug_info0
+	.long	.La198-.Ldebug_info0
 	.uleb128	21
 	.sleb128	0
 	.sleb128	6
 	.uleb128	2
 	.long	.La1-.Ldebug_info0
 	.byte	0
-.La294:
+.La298:
 	.uleb128	11
-	.long	.La293-.Ldebug_info0
+	.long	.La297-.Ldebug_info0
 # Definition tvardata.Array[0..13] Of Byte
-.La295:
+.La299:
 	.uleb128	20
 	.uleb128	14
-	.long	.La57-.Ldebug_info0
+	.long	.La61-.Ldebug_info0
 	.uleb128	21
 	.sleb128	0
 	.sleb128	13
 	.uleb128	1
 	.long	.La1-.Ldebug_info0
 	.byte	0
-.La296:
+.La300:
 	.uleb128	11
-	.long	.La295-.Ldebug_info0
+	.long	.La299-.Ldebug_info0
 # Definition tvararray
-.La302:
+.La306:
 	.uleb128	9
 	.ascii	"TVARARRAY\000"
-	.long	.La304-.Ldebug_info0
-.La304:
+	.long	.La308-.Ldebug_info0
+.La308:
 	.uleb128	18
 	.ascii	"TVARARRAY\000"
 	.uleb128	32
@@ -6795,66 +6698,66 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La194-.Ldebug_info0
+	.long	.La198-.Ldebug_info0
 	.uleb128	19
 	.ascii	"FLAGS\000"
 	.byte	2
 	.byte	35
 	.uleb128	2
-	.long	.La194-.Ldebug_info0
+	.long	.La198-.Ldebug_info0
 	.uleb128	19
 	.ascii	"ELEMENTSIZE\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.uleb128	19
 	.ascii	"LOCKCOUNT\000"
 	.byte	2
 	.byte	35
 	.uleb128	8
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.uleb128	19
 	.ascii	"DATA\000"
 	.byte	2
 	.byte	35
 	.uleb128	16
-	.long	.La43-.Ldebug_info0
+	.long	.La47-.Ldebug_info0
 	.uleb128	19
 	.ascii	"BOUNDS\000"
 	.byte	2
 	.byte	35
 	.uleb128	24
-	.long	.La305-.Ldebug_info0
+	.long	.La309-.Ldebug_info0
 	.byte	0
-.La303:
+.La307:
 	.uleb128	11
-	.long	.La302-.Ldebug_info0
+	.long	.La306-.Ldebug_info0
 # Definition tvararrayboundarray
-.La305:
+.La309:
 	.uleb128	9
 	.ascii	"TVARARRAYBOUNDARRAY\000"
-	.long	.La307-.Ldebug_info0
-.La307:
+	.long	.La311-.Ldebug_info0
+.La311:
 	.uleb128	43
 	.ascii	"TVARARRAYBOUNDARRAY\000"
 	.uleb128	8
-	.long	.La308-.Ldebug_info0
+	.long	.La312-.Ldebug_info0
 	.uleb128	21
 	.sleb128	0
 	.sleb128	0
 	.uleb128	8
 	.long	.La1-.Ldebug_info0
 	.byte	0
-.La306:
+.La310:
 	.uleb128	11
-	.long	.La305-.Ldebug_info0
+	.long	.La309-.Ldebug_info0
 # Definition tvararraybound
-.La308:
+.La312:
 	.uleb128	9
 	.ascii	"TVARARRAYBOUND\000"
-	.long	.La310-.Ldebug_info0
-.La310:
+	.long	.La314-.Ldebug_info0
+.La314:
 	.uleb128	18
 	.ascii	"TVARARRAYBOUND\000"
 	.uleb128	8
@@ -6863,17 +6766,17 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	2
 	.byte	35
 	.uleb128	0
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.uleb128	19
 	.ascii	"LOWBOUND\000"
 	.byte	2
 	.byte	35
 	.uleb128	4
-	.long	.La22-.Ldebug_info0
+	.long	.La26-.Ldebug_info0
 	.byte	0
-.La309:
+.La313:
 	.uleb128	11
-	.long	.La308-.Ldebug_info0
+	.long	.La312-.Ldebug_info0
 	.byte	0
 .Ledebug_info0:
 # End asmlist al_dwarf_info
@@ -7479,23 +7382,23 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 .Lehdebug_line0:
 # === header end ===
 # function: SYNTHCONTROL$_$TSYNTHCTRL_$__$$_CREATE$BOOLEAN$$TSYNTHCTRL
-# [86:1]
+# [88:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll1
 	.byte	5
 	.uleb128	1
-	.byte	97
-# [86:1]
+	.byte	99
+# [88:1]
 	.byte	2
 	.uleb128	.Ll2-.Ll1
 	.byte	1
-# [89:1]
+# [91:1]
 	.byte	2
 	.uleb128	.Ll3-.Ll2
 	.byte	15
-# [87:19]
+# [89:19]
 	.byte	2
 	.uleb128	.Ll4-.Ll3
 	.byte	5
@@ -7503,13 +7406,13 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	3
 	.sleb128	-2
 	.byte	1
-# [88:3]
+# [90:3]
 	.byte	2
 	.uleb128	.Ll5-.Ll4
 	.byte	5
 	.uleb128	3
 	.byte	13
-# [89:1]
+# [91:1]
 	.byte	2
 	.uleb128	.Ll6-.Ll5
 	.byte	5
@@ -7524,25 +7427,25 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 # ###################
 # function: SYNTHCONTROL_$$_DEALLOCATECHANNEL$LONGINT
-# [94:1]
+# [96:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll8
 	.byte	5
 	.uleb128	1
-	.byte	105
-# [94:1]
+	.byte	107
+# [96:1]
 	.byte	2
 	.uleb128	.Ll9-.Ll8
 	.byte	1
-# [95:52]
+# [97:52]
 	.byte	2
 	.uleb128	.Ll10-.Ll9
 	.byte	5
 	.uleb128	52
 	.byte	13
-# [96:1]
+# [98:1]
 	.byte	2
 	.uleb128	.Ll11-.Ll10
 	.byte	5
@@ -7557,15 +7460,15 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 # ###################
 # function: SYNTHCONTROL$_$TSYNTHCTRL_$_EXECUTE_$$_fin$0
-# [106:1]
+# [108:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll13
 	.byte	5
 	.uleb128	1
-	.byte	117
-# [106:1]
+	.byte	119
+# [108:1]
 	.byte	2
 	.uleb128	.Ll14-.Ll13
 	.byte	1
@@ -7578,249 +7481,249 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 # ###################
 # function: SYNTHCONTROL$_$TSYNTHCTRL_$__$$_EXECUTE
-# [106:1]
+# [108:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll16
 	.byte	5
 	.uleb128	1
-	.byte	117
-# [106:1]
+	.byte	119
+# [108:1]
 	.byte	2
 	.uleb128	.Ll17-.Ll16
 	.byte	1
-# [107:1]
+# [109:1]
 	.byte	2
 	.uleb128	.Ll18-.Ll17
 	.byte	13
-# [108:1]
+# [110:1]
 	.byte	2
 	.uleb128	.Ll19-.Ll18
 	.byte	13
-# [112:6]
+# [114:6]
 	.byte	2
 	.uleb128	.Ll20-.Ll19
 	.byte	5
 	.uleb128	6
 	.byte	16
-# [115:7]
+# [117:7]
 	.byte	2
 	.uleb128	.Ll21-.Ll20
 	.byte	5
 	.uleb128	7
 	.byte	15
-# [116:7]
+# [118:7]
 	.byte	2
 	.uleb128	.Ll22-.Ll21
 	.byte	13
-# [117:7]
+# [119:7]
 	.byte	2
 	.uleb128	.Ll23-.Ll22
 	.byte	13
-# [119:9]
+# [121:9]
 	.byte	2
 	.uleb128	.Ll24-.Ll23
 	.byte	5
 	.uleb128	9
 	.byte	14
-# [121:14]
+# [123:14]
 	.byte	2
 	.uleb128	.Ll25-.Ll24
 	.byte	5
 	.uleb128	14
 	.byte	14
-# [125:17]
+# [127:17]
 	.byte	2
 	.uleb128	.Ll26-.Ll25
 	.byte	5
 	.uleb128	17
 	.byte	16
-# [126:11]
+# [128:11]
 	.byte	2
 	.uleb128	.Ll27-.Ll26
 	.byte	5
 	.uleb128	11
 	.byte	13
-# [133:14]
+# [135:14]
 	.byte	2
 	.uleb128	.Ll28-.Ll27
 	.byte	5
 	.uleb128	14
 	.byte	19
-# [134:17]
+# [136:17]
 	.byte	2
 	.uleb128	.Ll29-.Ll28
 	.byte	5
 	.uleb128	17
 	.byte	13
-# [135:11]
+# [137:11]
 	.byte	2
 	.uleb128	.Ll30-.Ll29
 	.byte	5
 	.uleb128	11
 	.byte	13
-# [137:3]
+# [139:3]
 	.byte	2
 	.uleb128	.Ll31-.Ll30
 	.byte	5
 	.uleb128	3
 	.byte	14
-# [140:5]
+# [142:5]
 	.byte	2
 	.uleb128	.Ll32-.Ll31
 	.byte	5
 	.uleb128	5
 	.byte	15
-# [143:6]
+# [145:6]
 	.byte	2
 	.uleb128	.Ll33-.Ll32
 	.byte	5
 	.uleb128	6
 	.byte	15
-# [145:10]
+# [147:10]
 	.byte	2
 	.uleb128	.Ll34-.Ll33
 	.byte	5
 	.uleb128	10
 	.byte	14
-# [146:8]
+# [148:8]
 	.byte	2
 	.uleb128	.Ll35-.Ll34
 	.byte	5
 	.uleb128	8
 	.byte	13
-# [147:9]
+# [149:9]
 	.byte	2
 	.uleb128	.Ll36-.Ll35
 	.byte	5
 	.uleb128	9
 	.byte	13
-# [148:3]
+# [150:3]
 	.byte	2
 	.uleb128	.Ll37-.Ll36
 	.byte	5
 	.uleb128	3
 	.byte	13
-# [149:26]
+# [151:26]
 	.byte	2
 	.uleb128	.Ll38-.Ll37
 	.byte	5
 	.uleb128	26
 	.byte	13
-# [150:6]
+# [152:6]
 	.byte	2
 	.uleb128	.Ll39-.Ll38
 	.byte	5
 	.uleb128	6
 	.byte	13
-# [152:9]
+# [154:9]
 	.byte	2
 	.uleb128	.Ll40-.Ll39
 	.byte	5
 	.uleb128	9
 	.byte	14
-# [153:10]
+# [155:10]
 	.byte	2
 	.uleb128	.Ll41-.Ll40
 	.byte	5
 	.uleb128	10
 	.byte	13
-# [155:7]
+# [157:7]
 	.byte	2
 	.uleb128	.Ll42-.Ll41
 	.byte	5
 	.uleb128	7
 	.byte	14
-# [156:16]
+# [158:16]
 	.byte	2
 	.uleb128	.Ll43-.Ll42
 	.byte	5
 	.uleb128	16
 	.byte	13
-# [157:25]
+# [159:25]
 	.byte	2
 	.uleb128	.Ll44-.Ll43
 	.byte	5
 	.uleb128	25
 	.byte	13
-# [160:6]
+# [162:6]
 	.byte	2
 	.uleb128	.Ll45-.Ll44
 	.byte	5
 	.uleb128	6
 	.byte	15
-# [162:5]
+# [164:5]
 	.byte	2
 	.uleb128	.Ll46-.Ll45
 	.byte	5
 	.uleb128	5
 	.byte	14
-# [163:18]
+# [165:18]
 	.byte	2
 	.uleb128	.Ll47-.Ll46
 	.byte	5
 	.uleb128	18
 	.byte	13
-# [164:19]
+# [166:19]
 	.byte	2
 	.uleb128	.Ll48-.Ll47
 	.byte	5
 	.uleb128	19
 	.byte	13
-# [165:5]
+# [167:5]
 	.byte	2
 	.uleb128	.Ll49-.Ll48
 	.byte	5
 	.uleb128	5
 	.byte	13
-# [166:14]
+# [168:14]
 	.byte	2
 	.uleb128	.Ll50-.Ll49
 	.byte	5
 	.uleb128	14
 	.byte	13
-# [170:3]
+# [172:3]
 	.byte	2
 	.uleb128	.Ll51-.Ll50
 	.byte	5
 	.uleb128	3
 	.byte	16
-# [171:3]
+# [173:3]
 	.byte	2
 	.uleb128	.Ll52-.Ll51
 	.byte	13
-# [172:33]
+# [174:33]
 	.byte	2
 	.uleb128	.Ll53-.Ll52
 	.byte	5
 	.uleb128	33
 	.byte	13
-# [173:34]
+# [175:34]
 	.byte	2
 	.uleb128	.Ll54-.Ll53
 	.byte	5
 	.uleb128	34
 	.byte	13
-# [174:35]
+# [176:35]
 	.byte	2
 	.uleb128	.Ll55-.Ll54
 	.byte	5
 	.uleb128	35
 	.byte	13
-# [177:1]
+# [179:1]
 	.byte	2
 	.uleb128	.Ll56-.Ll55
 	.byte	5
 	.uleb128	1
 	.byte	15
-# [178:7]
+# [180:7]
 	.byte	2
 	.uleb128	.Ll57-.Ll56
 	.byte	5
 	.uleb128	7
 	.byte	13
-# [106:1]
+# [108:1]
 	.byte	2
 	.uleb128	.Ll58-.Ll57
 	.byte	5
@@ -7828,7 +7731,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	3
 	.sleb128	-72
 	.byte	1
-# [179:1]
+# [181:1]
 	.byte	2
 	.uleb128	.Ll59-.Ll58
 	.byte	85
@@ -7840,452 +7743,399 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	1
 	.byte	1
 # ###################
-# function: SYNTHCONTROL$_$ALLOCATECHANNEL$LONGINT$$LONGINT_$$_fin$1
-# [193:1]
+# function: SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT
+# [195:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
 	.quad	.Ll61
 	.byte	5
 	.uleb128	1
-	.byte	204
-# [193:1]
-	.byte	2
-	.uleb128	.Ll62-.Ll61
-	.byte	1
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll63
-	.byte	0
-	.byte	1
-	.byte	1
-# ###################
-# function: SYNTHCONTROL_$$_ALLOCATECHANNEL$LONGINT$$LONGINT
-# [193:1]
-	.byte	0
-	.uleb128	9
-	.byte	2
-	.quad	.Ll64
-	.byte	5
-	.uleb128	1
-	.byte	204
-# [193:1]
-	.byte	2
-	.uleb128	.Ll65-.Ll64
-	.byte	1
-# [194:1]
-	.byte	2
-	.uleb128	.Ll66-.Ll65
-	.byte	13
-# [195:1]
-	.byte	2
-	.uleb128	.Ll67-.Ll66
-	.byte	13
+	.byte	206
 # [196:1]
 	.byte	2
-	.uleb128	.Ll68-.Ll67
+	.uleb128	.Ll62-.Ll61
 	.byte	13
-# [199:5]
+# [197:1]
 	.byte	2
-	.uleb128	.Ll69-.Ll68
+	.uleb128	.Ll63-.Ll62
+	.byte	13
+# [198:1]
+	.byte	2
+	.uleb128	.Ll64-.Ll63
+	.byte	13
+# [201:5]
+	.byte	2
+	.uleb128	.Ll65-.Ll64
 	.byte	5
 	.uleb128	5
 	.byte	15
-# [201:3]
+# [203:3]
 	.byte	2
-	.uleb128	.Ll70-.Ll69
+	.uleb128	.Ll66-.Ll65
 	.byte	5
 	.uleb128	3
 	.byte	14
-# [202:16]
+# [204:16]
 	.byte	2
-	.uleb128	.Ll71-.Ll70
+	.uleb128	.Ll67-.Ll66
 	.byte	5
 	.uleb128	16
 	.byte	13
-# [204:9]
+# [206:9]
 	.byte	2
-	.uleb128	.Ll72-.Ll71
+	.uleb128	.Ll68-.Ll67
 	.byte	5
 	.uleb128	9
 	.byte	14
-# [206:3]
+# [208:3]
 	.byte	2
-	.uleb128	.Ll73-.Ll72
+	.uleb128	.Ll69-.Ll68
 	.byte	5
 	.uleb128	3
 	.byte	14
-# [210:3]
-	.byte	2
-	.uleb128	.Ll74-.Ll73
-	.byte	16
-# [211:3]
-	.byte	2
-	.uleb128	.Ll75-.Ll74
-	.byte	13
 # [212:3]
 	.byte	2
-	.uleb128	.Ll76-.Ll75
-	.byte	13
+	.uleb128	.Ll70-.Ll69
+	.byte	16
 # [213:3]
 	.byte	2
-	.uleb128	.Ll77-.Ll76
+	.uleb128	.Ll71-.Ll70
 	.byte	13
-# [215:17]
+# [214:3]
 	.byte	2
-	.uleb128	.Ll78-.Ll77
+	.uleb128	.Ll72-.Ll71
+	.byte	13
+# [215:3]
+	.byte	2
+	.uleb128	.Ll73-.Ll72
+	.byte	13
+# [217:17]
+	.byte	2
+	.uleb128	.Ll74-.Ll73
 	.byte	5
 	.uleb128	17
 	.byte	14
-# [217:19]
+# [219:19]
 	.byte	2
-	.uleb128	.Ll79-.Ll78
+	.uleb128	.Ll75-.Ll74
 	.byte	5
 	.uleb128	19
 	.byte	14
-# [218:7]
+# [220:7]
 	.byte	2
-	.uleb128	.Ll80-.Ll79
+	.uleb128	.Ll76-.Ll75
 	.byte	5
 	.uleb128	7
 	.byte	13
-# [220:9]
+# [222:9]
 	.byte	2
-	.uleb128	.Ll81-.Ll80
+	.uleb128	.Ll77-.Ll76
 	.byte	5
 	.uleb128	9
 	.byte	14
-# [213:10]
+# [215:10]
 	.byte	2
-	.uleb128	.Ll82-.Ll81
+	.uleb128	.Ll78-.Ll77
 	.byte	5
 	.uleb128	10
 	.byte	3
 	.sleb128	-7
 	.byte	1
-# [222:3]
+# [224:3]
 	.byte	2
-	.uleb128	.Ll83-.Ll82
+	.uleb128	.Ll79-.Ll78
 	.byte	5
 	.uleb128	3
 	.byte	21
-# [223:16]
+# [225:16]
 	.byte	2
-	.uleb128	.Ll84-.Ll83
+	.uleb128	.Ll80-.Ll79
 	.byte	5
 	.uleb128	16
 	.byte	13
-# [225:5]
+# [228:1]
 	.byte	2
-	.uleb128	.Ll85-.Ll84
-	.byte	5
-	.uleb128	5
-	.byte	14
-# [193:1]
-	.byte	2
-	.uleb128	.Ll86-.Ll85
+	.uleb128	.Ll81-.Ll80
 	.byte	5
 	.uleb128	1
-	.byte	3
-	.sleb128	-32
-	.byte	1
-# [226:1]
-	.byte	2
-	.uleb128	.Ll87-.Ll86
-	.byte	45
+	.byte	15
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll88
+	.quad	.Ll82
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: SYNTHCONTROL_$$_NOTEON$LONGINT$LONGINT$LONGINT$LONGINT
-# [235:1]
+# [237:1]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll89
+	.quad	.Ll83
 	.byte	5
 	.uleb128	1
-	.byte	246
-# [236:4]
+	.byte	248
+# [238:4]
 	.byte	2
-	.uleb128	.Ll90-.Ll89
+	.uleb128	.Ll84-.Ll83
 	.byte	5
 	.uleb128	4
 	.byte	13
-# [237:11]
+# [239:11]
 	.byte	2
-	.uleb128	.Ll91-.Ll90
+	.uleb128	.Ll85-.Ll84
 	.byte	5
 	.uleb128	11
 	.byte	13
-# [238:1]
+# [240:1]
 	.byte	2
-	.uleb128	.Ll92-.Ll91
+	.uleb128	.Ll86-.Ll85
 	.byte	5
 	.uleb128	1
 	.byte	13
-# [239:1]
+# [241:1]
 	.byte	2
-	.uleb128	.Ll93-.Ll92
+	.uleb128	.Ll87-.Ll86
 	.byte	13
-# [240:1]
+# [242:1]
 	.byte	2
-	.uleb128	.Ll94-.Ll93
-	.byte	13
-# [242:8]
-	.byte	2
-	.uleb128	.Ll95-.Ll94
-	.byte	5
-	.uleb128	8
-	.byte	14
-# [243:8]
-	.byte	2
-	.uleb128	.Ll96-.Ll95
+	.uleb128	.Ll88-.Ll87
 	.byte	13
 # [244:8]
 	.byte	2
-	.uleb128	.Ll97-.Ll96
-	.byte	13
+	.uleb128	.Ll89-.Ll88
+	.byte	5
+	.uleb128	8
+	.byte	14
 # [245:8]
 	.byte	2
-	.uleb128	.Ll98-.Ll97
+	.uleb128	.Ll90-.Ll89
 	.byte	13
 # [246:8]
 	.byte	2
-	.uleb128	.Ll99-.Ll98
+	.uleb128	.Ll91-.Ll90
 	.byte	13
 # [247:8]
 	.byte	2
-	.uleb128	.Ll100-.Ll99
+	.uleb128	.Ll92-.Ll91
 	.byte	13
 # [248:8]
 	.byte	2
-	.uleb128	.Ll101-.Ll100
+	.uleb128	.Ll93-.Ll92
 	.byte	13
 # [249:8]
 	.byte	2
-	.uleb128	.Ll102-.Ll101
+	.uleb128	.Ll94-.Ll93
 	.byte	13
-# [253:1]
+# [250:8]
 	.byte	2
-	.uleb128	.Ll103-.Ll102
+	.uleb128	.Ll95-.Ll94
+	.byte	13
+# [251:8]
+	.byte	2
+	.uleb128	.Ll96-.Ll95
+	.byte	13
+# [255:1]
+	.byte	2
+	.uleb128	.Ll97-.Ll96
 	.byte	5
 	.uleb128	1
 	.byte	16
-# [254:1]
+# [256:1]
 	.byte	2
-	.uleb128	.Ll104-.Ll103
+	.uleb128	.Ll98-.Ll97
 	.byte	13
-# [235:1]
+# [237:1]
 	.byte	2
-	.uleb128	.Ll105-.Ll104
+	.uleb128	.Ll99-.Ll98
 	.byte	3
 	.sleb128	-19
 	.byte	1
-# [254:68]
+# [256:68]
 	.byte	2
-	.uleb128	.Ll106-.Ll105
+	.uleb128	.Ll100-.Ll99
 	.byte	5
 	.uleb128	68
 	.byte	31
-# [255:1]
+# [257:1]
+	.byte	2
+	.uleb128	.Ll101-.Ll100
+	.byte	5
+	.uleb128	1
+	.byte	13
+# [237:1]
+	.byte	2
+	.uleb128	.Ll102-.Ll101
+	.byte	3
+	.sleb128	-20
+	.byte	1
+# [257:69]
+	.byte	2
+	.uleb128	.Ll103-.Ll102
+	.byte	5
+	.uleb128	69
+	.byte	32
+# [258:1]
+	.byte	2
+	.uleb128	.Ll104-.Ll103
+	.byte	5
+	.uleb128	1
+	.byte	13
+# [237:1]
+	.byte	2
+	.uleb128	.Ll105-.Ll104
+	.byte	3
+	.sleb128	-21
+	.byte	1
+# [258:71]
+	.byte	2
+	.uleb128	.Ll106-.Ll105
+	.byte	5
+	.uleb128	71
+	.byte	33
+# [259:1]
 	.byte	2
 	.uleb128	.Ll107-.Ll106
 	.byte	5
 	.uleb128	1
 	.byte	13
-# [235:1]
+# [237:1]
 	.byte	2
 	.uleb128	.Ll108-.Ll107
 	.byte	3
-	.sleb128	-20
+	.sleb128	-22
 	.byte	1
-# [255:69]
+# [259:71]
 	.byte	2
 	.uleb128	.Ll109-.Ll108
 	.byte	5
-	.uleb128	69
-	.byte	32
-# [256:1]
+	.uleb128	71
+	.byte	34
+# [237:1]
 	.byte	2
 	.uleb128	.Ll110-.Ll109
 	.byte	5
 	.uleb128	1
-	.byte	13
-# [235:1]
+	.byte	3
+	.sleb128	-22
+	.byte	1
+# [260:20]
 	.byte	2
 	.uleb128	.Ll111-.Ll110
-	.byte	3
-	.sleb128	-21
-	.byte	1
-# [256:71]
+	.byte	5
+	.uleb128	20
+	.byte	35
+# [261:1]
 	.byte	2
 	.uleb128	.Ll112-.Ll111
 	.byte	5
-	.uleb128	71
-	.byte	33
-# [257:1]
+	.uleb128	1
+	.byte	13
+# [237:1]
 	.byte	2
 	.uleb128	.Ll113-.Ll112
-	.byte	5
-	.uleb128	1
-	.byte	13
-# [235:1]
-	.byte	2
-	.uleb128	.Ll114-.Ll113
-	.byte	3
-	.sleb128	-22
-	.byte	1
-# [257:71]
-	.byte	2
-	.uleb128	.Ll115-.Ll114
-	.byte	5
-	.uleb128	71
-	.byte	34
-# [235:1]
-	.byte	2
-	.uleb128	.Ll116-.Ll115
-	.byte	5
-	.uleb128	1
-	.byte	3
-	.sleb128	-22
-	.byte	1
-# [258:19]
-	.byte	2
-	.uleb128	.Ll117-.Ll116
-	.byte	5
-	.uleb128	19
-	.byte	35
-# [259:1]
-	.byte	2
-	.uleb128	.Ll118-.Ll117
-	.byte	5
-	.uleb128	1
-	.byte	13
-# [235:1]
-	.byte	2
-	.uleb128	.Ll119-.Ll118
 	.byte	3
 	.sleb128	-24
 	.byte	1
-# [259:71]
+# [261:71]
 	.byte	2
-	.uleb128	.Ll120-.Ll119
+	.uleb128	.Ll114-.Ll113
 	.byte	5
 	.uleb128	71
 	.byte	36
-# [261:1]
+# [263:1]
 	.byte	2
-	.uleb128	.Ll121-.Ll120
+	.uleb128	.Ll115-.Ll114
 	.byte	5
 	.uleb128	1
 	.byte	14
-# [262:1]
-	.byte	2
-	.uleb128	.Ll122-.Ll121
-	.byte	13
-# [263:1]
-	.byte	2
-	.uleb128	.Ll123-.Ll122
-	.byte	13
 # [264:1]
 	.byte	2
-	.uleb128	.Ll124-.Ll123
+	.uleb128	.Ll116-.Ll115
 	.byte	13
 # [265:1]
 	.byte	2
-	.uleb128	.Ll125-.Ll124
+	.uleb128	.Ll117-.Ll116
 	.byte	13
 # [266:1]
 	.byte	2
-	.uleb128	.Ll126-.Ll125
+	.uleb128	.Ll118-.Ll117
 	.byte	13
 # [267:1]
 	.byte	2
-	.uleb128	.Ll127-.Ll126
+	.uleb128	.Ll119-.Ll118
 	.byte	13
 # [268:1]
 	.byte	2
-	.uleb128	.Ll128-.Ll127
+	.uleb128	.Ll120-.Ll119
+	.byte	13
+# [269:1]
+	.byte	2
+	.uleb128	.Ll121-.Ll120
 	.byte	13
 # [270:1]
 	.byte	2
-	.uleb128	.Ll129-.Ll128
-	.byte	14
-# [271:1]
-	.byte	2
-	.uleb128	.Ll130-.Ll129
+	.uleb128	.Ll122-.Ll121
 	.byte	13
-# [272:1]
+# [278:8]
 	.byte	2
-	.uleb128	.Ll131-.Ll130
-	.byte	13
-# [273:1]
-	.byte	2
-	.uleb128	.Ll132-.Ll131
-	.byte	13
-# [276:8]
-	.byte	2
-	.uleb128	.Ll133-.Ll132
+	.uleb128	.Ll123-.Ll122
 	.byte	5
 	.uleb128	8
-	.byte	15
-# [277:1]
+	.byte	20
+# [279:1]
 	.byte	2
-	.uleb128	.Ll134-.Ll133
+	.uleb128	.Ll124-.Ll123
 	.byte	5
 	.uleb128	1
 	.byte	13
-# [279:1]
-	.byte	2
-	.uleb128	.Ll135-.Ll134
-	.byte	14
-# [280:1]
-	.byte	2
-	.uleb128	.Ll136-.Ll135
-	.byte	13
 # [281:1]
 	.byte	2
-	.uleb128	.Ll137-.Ll136
-	.byte	13
-# [287:1]
+	.uleb128	.Ll125-.Ll124
+	.byte	14
+# [282:1]
 	.byte	2
-	.uleb128	.Ll138-.Ll137
+	.uleb128	.Ll126-.Ll125
+	.byte	13
+# [283:1]
+	.byte	2
+	.uleb128	.Ll127-.Ll126
+	.byte	13
+# [289:1]
+	.byte	2
+	.uleb128	.Ll128-.Ll127
 	.byte	18
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll139
+	.quad	.Ll129
 	.byte	0
 	.byte	1
 	.byte	1
 # ###################
 # function: SYNTHCONTROL_$$_NOTEOFF$LONGINT$LONGINT
-# [298:11]
+# [300:11]
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll140
+	.quad	.Ll130
 	.byte	5
 	.uleb128	11
 	.byte	3
-	.sleb128	297
+	.sleb128	299
 	.byte	1
-# [300:1]
+# [302:1]
 	.byte	2
-	.uleb128	.Ll141-.Ll140
+	.uleb128	.Ll131-.Ll130
 	.byte	5
 	.uleb128	1
 	.byte	14
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll142
+	.quad	.Ll132
 	.byte	0
 	.byte	1
 	.byte	1
@@ -8295,7 +8145,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll143
+	.quad	.Ll133
 	.byte	0
 	.byte	1
 	.byte	1
@@ -8305,7 +8155,7 @@ INIT_$SYNTHCONTROL_$$_DEF10:
 	.byte	0
 	.uleb128	9
 	.byte	2
-	.quad	.Ll144
+	.quad	.Ll134
 	.byte	0
 	.byte	1
 	.byte	1
