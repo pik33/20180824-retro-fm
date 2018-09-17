@@ -8,9 +8,8 @@
       <Unit0>
         <Filename Value="project1.lpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <CursorPos X="31" Y="10"/>
+        <CursorPos X="105" Y="11"/>
         <UsageCount Value="198"/>
         <Loaded Value="True"/>
       </Unit0>
@@ -30,9 +29,10 @@
       <Unit2>
         <Filename Value="umain.pas"/>
         <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
-        <TopLine Value="141"/>
-        <CursorPos X="106" Y="163"/>
+        <TopLine Value="174"/>
+        <CursorPos X="44" Y="205"/>
         <UsageCount Value="198"/>
         <Loaded Value="True"/>
       </Unit2>

@@ -175,7 +175,7 @@ for i:=0 to 3 do
     box(370+qx,400+qy,16,32,29+qc); outtextxyz(370+qx,70+330+qy,'C',19+qc,2,2);
     box(390+qx,400+qy,16,32,29+qc); outtextxyz(390+qx,70+330+qy,'P',19+qc,2,2);
 
-    outtextxyz(20+qx,70+qy,'Mods',28+qc,2,2);
+    outtextxyz(20+qx,70+qy,'Mods',28+qc,2,1);
     outtextxyz(20+qx,110+qy,'0',28+qc,2,2);  box(40+qx,110+qy,64,32,21+qc); outtextxyz(48+qx,110+qy,inttostr2(controls[qn+0],3),30+qc,2,2);
     outtextxyz(20+qx,150+qy,'1',28+qc,2,2);  box(40+qx,150+qy,64,32,21+qc); outtextxyz(48+qx,150+qy,inttostr2(controls[qn+1],3),30+qc,2,2);
     outtextxyz(20+qx,190+qy,'2',28+qc,2,2);  box(40+qx,190+qy,64,32,21+qc); outtextxyz(48+qx,190+qy,inttostr2(controls[qn+2],3),30+qc,2,2);
@@ -185,7 +185,7 @@ for i:=0 to 3 do
     outtextxyz(20+qx,350+qy,'6',28+qc,2,2);  box(40+qx,350+qy,64,32,21+qc); outtextxyz(48+qx,350+qy,inttostr2(controls[qn+6],3),30+qc,2,2);
     outtextxyz(20+qx,390+qy,'7',28+qc,2,2);  box(40+qx,390+qy,64,32,21+qc); outtextxyz(48+qx,390+qy,inttostr2(controls[qn+7],3),30+qc,2,2);
 
-    outtextxyz(120+qx,70+qy,'ADSR',28+qc,2,2);
+    outtextxyz(120+qx,70+qy,'ADSR',28+qc,2,1);
     outtextxyz(120+qx,110+qy,'R1',28+qc,2,2);  box(160+qx,110+qy,64,32,21+qc); outtextxyz(168+qx,110+qy,inttostr2(controls[qn+8],3),30+qc,2,2);
     outtextxyz(120+qx,150+qy,'R2',28+qc,2,2);  box(160+qx,150+qy,64,32,21+qc); outtextxyz(168+qx,150+qy,inttostr2(controls[qn+9],3),30+qc,2,2);
     outtextxyz(120+qx,190+qy,'R3',28+qc,2,2);  box(160+qx,190+qy,64,32,21+qc); outtextxyz(168+qx,190+qy,inttostr2(controls[qn+10],3),30+qc,2,2);
@@ -202,7 +202,7 @@ for i:=0 to 3 do
 
 
     // A min velocity B max velocity C curve 0 lin 1 inv lin 2 U 3 n
-    outtextxyz(350+qx,70+qy,'Vel',28+qc,2,2);
+    outtextxyz(350+qx,70+qy,'Vel',28+qc,2,1);
     outtextxyz(350+qx,110+qy,'A',28+qc,2,2);  box(370+qx,110+qy,64,32,21+qc); outtextxyz(378+qx,110+qy,'127',30+qc,2,2);
     outtextxyz(350+qx,150+qy,'B',28+qc,2,2);  box(370+qx,150+qy,64,32,21+qc); outtextxyz(378+qx,150+qy,'127',30+qc,2,2);
     outtextxyz(350+qx,190+qy,'C',28+qc,2,2);  box(370+qx,190+qy,64,32,21+qc); outtextxyz(378+qx,190+qy,'127',30+qc,2,2);
