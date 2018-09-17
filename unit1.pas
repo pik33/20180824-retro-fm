@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  umain,retro,sdl2,unit6502,windows, midi,synthcontrol, fft;
+  umain,retro,sdl2,windows, midi,synthcontrol, fft;
 
 type
 
@@ -55,7 +55,7 @@ implementation
 uses unit2,fmsynth;
 
 {$R *.lfm}
-procedure sidopen (fh:integer);     forward;
+
 function loadxi(filename:string):integer;   forward;
 { TForm1 }
 
@@ -182,83 +182,6 @@ procedure TForm1.FormCreate(Sender: TObject);
 begin
  DefaultFormatSettings.DecimalSeparator := '.';
 // button1.click;
-end;
-
-procedure sidopen (fh:integer);
-
-var i:integer;
-  speed:cardinal;
-  version,offset,load,startsong,flags:word;
-
-  magic:string[4]='    ';
-  dump:word;
-  il,b:byte;
-
-begin
-reset6502;
-title:='                                ';
-author:='                                ';
-copyright:='                                ';
-
-
-
-
-  fileread(fh,version,2); version:=(version shl 8) or (version shr 8);
-  fileread(fh,offset,2); offset:=(offset shl 8) or (offset shr 8);
-  fileread(fh,load,2); load:=(load shl 8) or (load shr 8);
-  fileread(fh,init,2); init:=(init shl 8) or (init shr 8);
-  fileread(fh,play,2);  play:=(play shl 8) or (play shr 8);
-  fileread(fh,songs,2); songs:=(songs shl 8) or (songs shr 8);
-  fileread(fh,startsong,2); startsong:=(startsong shl 8) or (startsong shr 8);
-  fileread(fh,speed,4);
-  speed:=speed shr 24+((speed shr 8) and $0000FF00) + ((speed shl 8) and $00FF0000) + (speed shl 24);
-  fileread(fh,title[1],32);
-  fileread(fh,author[1],32);
-  fileread(fh,copyright[1],32);
-  if version>1 then begin
-    fileread(fh,flags,2); flags:=(flags shl 8) or (flags shr 8);
-    fileread(fh,dump,2);
-    fileread(fh,dump,2);
-    b:=0; if load=0 then begin b:=1; fileread(fh,load,2); end;
-  end;
-  for i:=1 to 32 do if byte(title[i])=$F1 then title[i]:=char(26);
-  for i:=1 to 32 do if byte(author[i])=$F1 then author[i]:=char(26);
-  box(18,132,800,600,178);
-  outtextxyz(18,132,'type: PSID',188,2,2);
-  outtextxyz(18,164,'version: '+inttostr(version),188,2,2);
-  outtextxyz(18,196,'offset: ' +inttohex(offset,4),188,2,2);
-  outtextxyz(18,228,'load: '+inttohex(load,4),188-144*b,2,2);
-  outtextxyz(18,260,'init: '+inttohex(init,4),188,2,2);
-  outtextxyz(18,292,'play: '+inttohex(play,4),188,2,2);
-  outtextxyz(18,324,'songs: '+inttostr(songs),188,2,2);
-  outtextxyz(18,356,'startsong: '+inttostr(startsong),188,2,2);
-  outtextxyz(18,388,'speed: '+inttohex(speed,8),188,2,2);
-  outtextxyz(18,420,'title: '+title,188,2,2);
-  outtextxyz(18,452,'author: '+author,188,2,2);
-  outtextxyz(18,484,'copyright: '+copyright,188,2,2);
-  outtextxyz(18,516,'flags: '+inttohex(flags,4),188,2,2);
-//  if (flags and 1)<>0 then memo1.lines.add('Sidplayer MUS file') else memo1.lines.add('Standard SID file');
-//  if (flags and 2)<>0 then memo1.lines.add('PSID') else memo1.lines.add('C64');
-  song:=startsong-1;
-fuck:=0;
-  for i:=0 to 100000000 do begin end;
-  reset6502;
-  for i:=0 to 65535 do write6502(i,0);
-  repeat
-    il:=fileread(fh,b,1);
-    write6502(load,b);
-    load+=1;
-  until il<>1;
-  fileseek(fh,0,fsfrombeginning);
-
-  reset6502;
- // a:=1;
- jsr6502(song,init);
- cia:=read6502($dc04)+256*read6502($dc05);
- outtextxyz(18,578,'cia: '+inttohex(read6502($dc04)+256*read6502($dc05),4),188,2,2);
-
-//  fileclose(fh);
-
 end;
 
 function loadxi(filename:string):integer;

@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, Unit1, umain, retro, unit6502, unit65032, midi, Unit2, synthcontrol,
+  Forms, Unit1, umain, retro, midi, Unit2, synthcontrol,
   fmsynth, fft1;
   { you can add units after this }
 

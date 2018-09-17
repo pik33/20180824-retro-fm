@@ -1,5 +1,8 @@
 *.s
 *.S
-*.dll
 *.ppu
+*.dbg
+*.bak
 lib/
+backup/
+dll/

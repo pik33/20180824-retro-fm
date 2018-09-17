@@ -50,7 +50,7 @@ unit retro;
 
 interface
 
-uses sdl2,sysutils,crt,classes,windows,unit6502,midi,fmsynth;
+uses sdl2,sysutils,crt,classes,windows,midi,fmsynth;
 
 type tram=array[0..67108863] of integer;
      tramw=array[0..134217727] of word;
