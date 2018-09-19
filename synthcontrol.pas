@@ -279,7 +279,7 @@ voices[channel].setfreq(f);
 for i:=0 to 7 do  voices[channel].operators[i].pa:=0;
 
 for i:=0 to 7 do  voices[channel].operators[i].ar1:=att;
-for i:=0 to 7 do voices[channel].operators[i].adsrstate:=1;
+for i:=0 to 2 do voices[channel].operators[2*i].adsrstate:=1;
 for i:=0 to 0 do voices[channel].operators[i].adsrval:=0;
 
 //box(200,200,600,600,0);
