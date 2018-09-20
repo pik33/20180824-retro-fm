@@ -144,7 +144,7 @@ repeat
     end;
 
   application.processmessages;
-until {(peek($6002b)<>0) and (peek($60028)=27) or} (peek($70004)=1);
+until {(peek($6002b)<>0) and (peek($60028)=27) or}(dpeek ($60028)=16453) or (peek($70004)=1);
 timer1:=-1;
 fileclose(fh);
 stopmachine;

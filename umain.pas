@@ -61,6 +61,11 @@ result:=s2;
 end;
 
 procedure main1 ;
+
+
+const sx:integer=12;
+      sy:integer=70;
+
 var  t:int64;
      i:integer;
 
@@ -144,60 +149,64 @@ for i:=0 to 3 do
       begin
       qx:=443*i; qy:=388*j;
       qn:=32*(i+4*j);
-      controls[qn+0]:=qn+0; cx1[qn+0]:=40+qx; cx2[qn+0]:=103+qx; cy1[qn+0]:=110; cy2[qn+0]:=141; // mod0
-      controls[qn+1]:=qn+1; cx1[qn+1]:=40+qx; cx2[qn+1]:=103+qx; cy1[qn+1]:=150; cy2[qn+1]:=181; // mod1
-      controls[qn+2]:=qn+2; cx1[qn+2]:=40+qx; cx2[qn+2]:=103+qx; cy1[qn+2]:=190; cy2[qn+2]:=221; // mod2
-      controls[qn+3]:=qn+3; cx1[qn+3]:=40+qx; cx2[qn+3]:=103+qx; cy1[qn+3]:=230; cy2[qn+3]:=261; // mod3
-      controls[qn+4]:=qn+4; cx1[qn+4]:=40+qx; cx2[qn+4]:=103+qx; cy1[qn+4]:=270; cy2[qn+4]:=301; // mod4
-      controls[qn+5]:=qn+5; cx1[qn+5]:=40+qx; cx2[qn+5]:=103+qx; cy1[qn+5]:=310; cy2[qn+5]:=341; // mod5
-      controls[qn+6]:=qn+6; cx1[qn+6]:=40+qx; cx2[qn+6]:=103+qx; cy1[qn+6]:=350; cy2[qn+6]:=841; // mod6
-      controls[qn+7]:=qn+7; cx1[qn+7]:=40+qx; cx2[qn+7]:=103+qx; cy1[qn+7]:=390; cy2[qn+7]:=421; // mod7
+      controls[qn+0]:=qn+0; cx1[qn+0]:=28; cx2[qn+0]:=91; cy1[qn+0]:=30; cy2[qn+0]:=49; // mod0
+      controls[qn+1]:=qn+1; cx1[qn+1]:=28; cx2[qn+1]:=91; cy1[qn+1]:=60; cy2[qn+1]:=79; // mod1
+      controls[qn+2]:=qn+2; cx1[qn+2]:=28; cx2[qn+2]:=91; cy1[qn+2]:=90; cy2[qn+2]:=109; // mod2
+      controls[qn+3]:=qn+3; cx1[qn+3]:=28; cx2[qn+3]:=91; cy1[qn+3]:=120; cy2[qn+3]:=139; // mod3
+      controls[qn+4]:=qn+4; cx1[qn+4]:=28; cx2[qn+4]:=91; cy1[qn+4]:=150; cy2[qn+4]:=169; // mod4
+      controls[qn+5]:=qn+5; cx1[qn+5]:=28; cx2[qn+5]:=91; cy1[qn+5]:=180; cy2[qn+5]:=199; // mod5
+      controls[qn+6]:=qn+6; cx1[qn+6]:=28; cx2[qn+6]:=93; cy1[qn+6]:=210; cy2[qn+6]:=229; // mod6
+      controls[qn+7]:=qn+7; cx1[qn+7]:=28; cx2[qn+7]:=91; cy1[qn+7]:=240; cy2[qn+7]:=259; // mod7
 
-      controls[qn+8]:=qn+8; cx1[qn+0]:=160+qx; cx2[qn+0]:=223+qx; cy1[qn+0]:=110; cy2[qn+0]:=141; // r1
-      controls[qn+9]:=qn+9; cx1[qn+1]:=160+qx; cx2[qn+1]:=223+qx; cy1[qn+1]:=150; cy2[qn+1]:=181; // r2
-      controls[qn+10]:=qn+10; cx1[qn+2]:=160+qx; cx2[qn+2]:=223+qx; cy1[qn+2]:=190; cy2[qn+2]:=221; // r3
-      controls[qn+11]:=qn+11; cx1[qn+3]:=160+qx; cx2[qn+3]:=223+qx; cy1[qn+3]:=230; cy2[qn+3]:=261; // r4
-      controls[qn+12]:=qn+12; cx1[qn+4]:=270+qx; cx2[qn+4]:=333+qx; cy1[qn+4]:=110; cy2[qn+4]:=141; // l1
-      controls[qn+13]:=qn+13; cx1[qn+5]:=270+qx; cx2[qn+5]:=333+qx; cy1[qn+5]:=150; cy2[qn+5]:=181; // l2
-      controls[qn+14]:=qn+14; cx1[qn+6]:=270+qx; cx2[qn+6]:=333+qx; cy1[qn+6]:=190; cy2[qn+6]:=221; // l3
-      controls[qn+15]:=qn+15; cx1[qn+7]:=270+qx; cx2[qn+7]:=333+qx; cy1[qn+7]:=230; cy2[qn+7]:=261; // l4
+      controls[qn+8]:=qn+8; cx1[qn+8]:=148; cx2[qn+8]:=211; cy1[qn+8]:=20; cy2[qn+8]:=51; // r1
+      controls[qn+9]:=qn+9; cx1[qn+9]:=148; cx2[qn+9]:=211; cy1[qn+9]:=45; cy2[qn+9]:=91; // r2
+      controls[qn+10]:=qn+10; cx1[qn+10]:=148; cx2[qn+10]:=211; cy1[qn+10]:=70; cy2[qn+10]:=131; // r3
+      controls[qn+11]:=qn+11; cx1[qn+11]:=148; cx2[qn+11]:=211; cy1[qn+11]:=95; cy2[qn+11]:=171; // r4
+      controls[qn+12]:=qn+12; cx1[qn+12]:=258; cx2[qn+12]:=321; cy1[qn+12]:=20; cy2[qn+12]:=51; // l1
+      controls[qn+13]:=qn+13; cx1[qn+13]:=258; cx2[qn+13]:=321; cy1[qn+13]:=45; cy2[qn+13]:=91; // l2
+      controls[qn+14]:=qn+14; cx1[qn+14]:=258; cx2[qn+14]:=321; cy1[qn+14]:=70; cy2[qn+14]:=131; // l3
+      controls[qn+15]:=qn+15; cx1[qn+15]:=258; cx2[qn+15]:=321; cy1[qn+15]:=95; cy2[qn+15]:=171; // l4
 
       end;
   end;
-
+  // freq+, freq*, lfo1 - c3,lfo2-c4, c5,c6,c7 (pan)
 for i:=0 to 3 do
   begin
   for j:=0 to 1 do
     begin
     qx:=443*i; qy:=388*j ; qc:=16*i+64*j; qn:=32*(i+4*j);
-    box(12+qx,70+qy,440,384,18+qc);
-    box(420+qx,400+qy,24,48,29+qc); outtextxyz(420+qx,70+330+qy,inttostr(i+4*j),19+qc,3,3);
-    box(370+qx,400+qy,16,32,29+qc); outtextxyz(370+qx,70+330+qy,'C',19+qc,2,2);
-    box(390+qx,400+qy,16,32,29+qc); outtextxyz(390+qx,70+330+qy,'P',19+qc,2,2);
+    box(sx+qx,sy+qy,440,384,18+qc);
+    box(sx+408+qx,sy+320+qy,24,48,29+qc); outtextxyz(sx+408+qx,sy+320+qy,inttostr(i+4*j),19+qc,3,3);
+    box(sx+358+qx,sy+320+qy,16,32,29+qc); outtextxyz(sx+358+qx,sy+320+qy,'C',19+qc,2,2);
+    box(sx+378+qx,sy+320+qy,16,32,29+qc); outtextxyz(sx+378+qx,sy+320+qy,'P',19+qc,2,2);
 
-    outtextxyz(20+qx,70+qy,'Mods',28+qc,2,1);
-    outtextxyz(20+qx,110+qy,'0',28+qc,2,2);  box(40+qx,110+qy,64,32,21+qc); outtextxyz(48+qx,110+qy,inttostr2(controls[qn+0],3),30+qc,2,2);
-    outtextxyz(20+qx,150+qy,'1',28+qc,2,2);  box(40+qx,150+qy,64,32,21+qc); outtextxyz(48+qx,150+qy,inttostr2(controls[qn+1],3),30+qc,2,2);
-    outtextxyz(20+qx,190+qy,'2',28+qc,2,2);  box(40+qx,190+qy,64,32,21+qc); outtextxyz(48+qx,190+qy,inttostr2(controls[qn+2],3),30+qc,2,2);
-    outtextxyz(20+qx,230+qy,'3',28+qc,2,2);  box(40+qx,230+qy,64,32,21+qc); outtextxyz(48+qx,230+qy,inttostr2(controls[qn+3],3),30+qc,2,2);
-    outtextxyz(20+qx,270+qy,'4',28+qc,2,2);  box(40+qx,270+qy,64,32,21+qc); outtextxyz(48+qx,270+qy,inttostr2(controls[qn+4],3),30+qc,2,2);
-    outtextxyz(20+qx,310+qy,'5',28+qc,2,2);  box(40+qx,310+qy,64,32,21+qc); outtextxyz(48+qx,310+qy,inttostr2(controls[qn+5],3),30+qc,2,2);
-    outtextxyz(20+qx,350+qy,'6',28+qc,2,2);  box(40+qx,350+qy,64,32,21+qc); outtextxyz(48+qx,350+qy,inttostr2(controls[qn+6],3),30+qc,2,2);
-    outtextxyz(20+qx,390+qy,'7',28+qc,2,2);  box(40+qx,390+qy,64,32,21+qc); outtextxyz(48+qx,390+qy,inttostr2(controls[qn+7],3),30+qc,2,2);
+    outtextxyz(8+sx+qx,sy+qy,'Mods',28+qc,2,1);
+    if (i=1) and (j=0) then outtextxy(1600,000,inttostr(cx1[qn+0]),15);
+    if (i=1) and (j=0) then  outtextxy(1600,16,inttostr(cy1[qn+0]),15);
+    if (i=1) and (j=0) then  outtextxy(1600,32,inttostr(qn),15);
+    outtextxyz(cx1[qn+0]+sx+qx-20,cy1[qn+0]+sy+qy+2,'0',28+qc,2,1);  box2(cx1[qn+0]+qx+sx,cy1[qn+0]+qy+sy,cx2[qn+0]+qx+sx,cy2[qn+0]+qy+sy,21+qc); outtextxyz(cx1[qn+0]+8+qx+sx,cy1[qn+0]+qy+sy+2,inttostr2(controls[qn+0],3),30+qc,2,1);
+    outtextxyz(cx1[qn+1]+sx+qx-20,cy1[qn+1]+sy+qy+2,'1',28+qc,2,1);  box2(cx1[qn+1]+qx+sx,cy1[qn+1]+qy+sy,cx2[qn+1]+qx+sx,cy2[qn+1]+qy+sy,21+qc); outtextxyz(cx1[qn+1]+8+qx+sx,cy1[qn+1]+qy+sy+2,inttostr2(controls[qn+1],3),30+qc,2,1);
+    outtextxyz(cx1[qn+2]+sx+qx-20,cy1[qn+2]+sy+qy+2,'2',28+qc,2,1);  box2(cx1[qn+2]+qx+sx,cy1[qn+2]+qy+sy,cx2[qn+2]+qx+sx,cy2[qn+2]+qy+sy,21+qc); outtextxyz(cx1[qn+2]+8+qx+sx,cy1[qn+2]+qy+sy+2,inttostr2(controls[qn+2],3),30+qc,2,1);
+    outtextxyz(cx1[qn+3]+sx+qx-20,cy1[qn+3]+sy+qy+2,'3',28+qc,2,1);  box2(cx1[qn+3]+qx+sx,cy1[qn+3]+qy+sy,cx2[qn+3]+qx+sx,cy2[qn+3]+qy+sy,21+qc); outtextxyz(cx1[qn+3]+8+qx+sx,cy1[qn+3]+qy+sy+2,inttostr2(controls[qn+3],3),30+qc,2,1);
+    outtextxyz(cx1[qn+4]+sx+qx-20,cy1[qn+4]+sy+qy+2,'4',28+qc,2,1);  box2(cx1[qn+4]+qx+sx,cy1[qn+4]+qy+sy,cx2[qn+4]+qx+sx,cy2[qn+4]+qy+sy,21+qc); outtextxyz(cx1[qn+4]+8+qx+sx,cy1[qn+4]+qy+sy+2,inttostr2(controls[qn+4],3),30+qc,2,1);
+    outtextxyz(cx1[qn+5]+sx+qx-20,cy1[qn+5]+sy+qy+2,'5',28+qc,2,1);  box2(cx1[qn+5]+qx+sx,cy1[qn+5]+qy+sy,cx2[qn+5]+qx+sx,cy2[qn+5]+qy+sy,21+qc); outtextxyz(cx1[qn+5]+8+qx+sx,cy1[qn+5]+qy+sy+2,inttostr2(controls[qn+5],3),30+qc,2,1);
+    outtextxyz(cx1[qn+6]+sx+qx-20,cy1[qn+6]+sy+qy+2,'6',28+qc,2,1);  box2(cx1[qn+6]+qx+sx,cy1[qn+6]+qy+sy,cx2[qn+6]+qx+sx,cy2[qn+6]+qy+sy,21+qc); outtextxyz(cx1[qn+6]+8+qx+sx,cy1[qn+6]+qy+sy+2,inttostr2(controls[qn+6],3),30+qc,2,1);
+    outtextxyz(cx1[qn+7]+sx+qx-20,cy1[qn+7]+sy+qy+2,'7',28+qc,2,1);  box2(cx1[qn+7]+qx+sx,cy1[qn+7]+qy+sy,cx2[qn+7]+qx+sx,cy2[qn+7]+qy+sy,21+qc); outtextxyz(cx1[qn+7]+8+qx+sx,cy1[qn+7]+qy+sy+2,inttostr2(controls[qn+7],3),30+qc,2,1);
+
 
     outtextxyz(120+qx,70+qy,'ADSR',28+qc,2,1);
-    outtextxyz(120+qx,110+qy,'R1',28+qc,2,2);  box(160+qx,110+qy,64,32,21+qc); outtextxyz(168+qx,110+qy,inttostr2(controls[qn+8],3),30+qc,2,2);
-    outtextxyz(120+qx,150+qy,'R2',28+qc,2,2);  box(160+qx,150+qy,64,32,21+qc); outtextxyz(168+qx,150+qy,inttostr2(controls[qn+9],3),30+qc,2,2);
-    outtextxyz(120+qx,190+qy,'R3',28+qc,2,2);  box(160+qx,190+qy,64,32,21+qc); outtextxyz(168+qx,190+qy,inttostr2(controls[qn+10],3),30+qc,2,2);
-    outtextxyz(120+qx,230+qy,'R4',28+qc,2,2);  box(160+qx,230+qy,64,32,21+qc); outtextxyz(168+qx,230+qy,inttostr2(controls[qn+11],3),30+qc,2,2);
-    outtextxyz(230+qx,110+qy,'L1',28+qc,2,2);  box(270+qx,110+qy,64,32,21+qc); outtextxyz(278+qx,110+qy,inttostr2(controls[qn+12],3),30+qc,2,2);
-    outtextxyz(230+qx,150+qy,'L2',28+qc,2,2);  box(270+qx,150+qy,64,32,21+qc); outtextxyz(278+qx,150+qy,inttostr2(controls[qn+13],3),30+qc,2,2);
-    outtextxyz(230+qx,190+qy,'L3',28+qc,2,2);  box(270+qx,190+qy,64,32,21+qc); outtextxyz(278+qx,190+qy,inttostr2(controls[qn+14],3),30+qc,2,2);
-    outtextxyz(230+qx,230+qy,'L4',28+qc,2,2);  box(270+qx,230+qy,64,32,21+qc); outtextxyz(278+qx,230+qy,inttostr2(controls[qn+15],3),30+qc,2,2);
+    outtextxyz(120+qx,90+qy,'R1',28+qc,2,2);  box(160+qx,110+qy,64,32,21+qc); outtextxyz(168+qx,110+qy,inttostr2(controls[qn+8],3),30+qc,2,2);
+    outtextxyz(120+qx,110+qy,'R2',28+qc,2,2);  box(160+qx,150+qy,64,32,21+qc); outtextxyz(168+qx,150+qy,inttostr2(controls[qn+9],3),30+qc,2,2);
+    outtextxyz(120+qx,150+qy,'R3',28+qc,2,2);  box(160+qx,190+qy,64,32,21+qc); outtextxyz(168+qx,190+qy,inttostr2(controls[qn+10],3),30+qc,2,2);
+    outtextxyz(120+qx,190+qy,'R4',28+qc,2,2);  box(160+qx,230+qy,64,32,21+qc); outtextxyz(168+qx,230+qy,inttostr2(controls[qn+11],3),30+qc,2,2);
+    outtextxyz(230+qx,090+qy,'L1',28+qc,2,2);  box(270+qx,110+qy,64,32,21+qc); outtextxyz(278+qx,110+qy,inttostr2(controls[qn+12],3),30+qc,2,2);
+    outtextxyz(230+qx,130+qy,'L2',28+qc,2,2);  box(270+qx,150+qy,64,32,21+qc); outtextxyz(278+qx,150+qy,inttostr2(controls[qn+13],3),30+qc,2,2);
+    outtextxyz(230+qx,170+qy,'L3',28+qc,2,2);  box(270+qx,110+qy,64,32,21+qc); outtextxyz(278+qx,190+qy,inttostr2(controls[qn+14],3),30+qc,2,2);
+    outtextxyz(230+qx,210+qy,'L4',28+qc,2,2);  box(270+qx,210+qy,64,32,21+qc); outtextxyz(278+qx,230+qy,inttostr2(controls[qn+15],3),30+qc,2,2);
 
     outtextxyz(120+qx,270+qy,'ADSR Bias',28+qc,2,2);  box(270+qx,270+qy,64,32,21+qc); outtextxyz(278+qx,270+qy,'127',30+qc,2,2);
     outtextxyz(120+qx,310+qy,'ADSR Key',28+qc,2,2);  box(270+qx,310+qy,64,32,21+qc); outtextxyz(278+qx,310+qy,'127',30+qc,2,2);
-    outtextxyz(120+qx,350+qy,'Wave',28+qc,2,2);  box(200+qx,350+qy,234,32,21+qc); outtextxyz(208+qx,350+qy,'A long wave name',30+qc,1,2);
+    outtextxyz(120+qx,350+qy,'Wave',28+qc,2,2);  box(8+qx+sx,360+qy+sy,23*16,20,21+qc); outtextxyz(16+qx+sx,362+qy+sy,'A long wave name 22 ch',30+qc,2,1);
     outtextxyz(120+qx,390+qy,'Output',28+qc,2,2);  box(270+qx,390+qy,64,32,21+qc); outtextxyz(278+qx,390+qy,'127',30+qc,2,2);
 
 
