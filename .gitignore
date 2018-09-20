@@ -3,6 +3,7 @@
 *.ppu
 *.dbg
 *.bak
+*.exe
 lib/
 backup/
 dll/
