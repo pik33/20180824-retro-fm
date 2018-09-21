@@ -158,14 +158,26 @@ for i:=0 to 3 do
       controls[qn+6]:=qn+6; cx1[qn+6]:=28; cx2[qn+6]:=93; cy1[qn+6]:=210; cy2[qn+6]:=229; // mod6
       controls[qn+7]:=qn+7; cx1[qn+7]:=28; cx2[qn+7]:=91; cy1[qn+7]:=240; cy2[qn+7]:=259; // mod7
 
-      controls[qn+8]:=qn+8; cx1[qn+8]:=148; cx2[qn+8]:=211; cy1[qn+8]:=20; cy2[qn+8]:=51; // r1
-      controls[qn+9]:=qn+9; cx1[qn+9]:=148; cx2[qn+9]:=211; cy1[qn+9]:=45; cy2[qn+9]:=91; // r2
-      controls[qn+10]:=qn+10; cx1[qn+10]:=148; cx2[qn+10]:=211; cy1[qn+10]:=70; cy2[qn+10]:=131; // r3
-      controls[qn+11]:=qn+11; cx1[qn+11]:=148; cx2[qn+11]:=211; cy1[qn+11]:=95; cy2[qn+11]:=171; // r4
-      controls[qn+12]:=qn+12; cx1[qn+12]:=258; cx2[qn+12]:=321; cy1[qn+12]:=20; cy2[qn+12]:=51; // l1
-      controls[qn+13]:=qn+13; cx1[qn+13]:=258; cx2[qn+13]:=321; cy1[qn+13]:=45; cy2[qn+13]:=91; // l2
-      controls[qn+14]:=qn+14; cx1[qn+14]:=258; cx2[qn+14]:=321; cy1[qn+14]:=70; cy2[qn+14]:=131; // l3
-      controls[qn+15]:=qn+15; cx1[qn+15]:=258; cx2[qn+15]:=321; cy1[qn+15]:=95; cy2[qn+15]:=171; // l4
+      controls[qn+8]:=qn+8; cx1[qn+8]:=148; cx2[qn+8]:=211; cy1[qn+8]:=30; cy2[qn+8]:=49; // r1
+      controls[qn+9]:=qn+9; cx1[qn+9]:=148; cx2[qn+9]:=211; cy1[qn+9]:=60; cy2[qn+9]:=79; // r2
+      controls[qn+10]:=qn+10; cx1[qn+10]:=148; cx2[qn+10]:=211; cy1[qn+10]:=90; cy2[qn+10]:=109; // r3
+      controls[qn+11]:=qn+11; cx1[qn+11]:=148; cx2[qn+11]:=211; cy1[qn+11]:=120; cy2[qn+11]:=139; // r4
+      controls[qn+12]:=qn+12; cx1[qn+12]:=258; cx2[qn+12]:=321; cy1[qn+12]:=30; cy2[qn+12]:=49; // l1
+      controls[qn+13]:=qn+13; cx1[qn+13]:=258; cx2[qn+13]:=321; cy1[qn+13]:=60; cy2[qn+13]:=79; // l2
+      controls[qn+14]:=qn+14; cx1[qn+14]:=258; cx2[qn+14]:=321; cy1[qn+14]:=90; cy2[qn+14]:=109; // l3
+      controls[qn+15]:=qn+15; cx1[qn+15]:=258; cx2[qn+15]:=321; cy1[qn+15]:=120; cy2[qn+15]:=139; // l4
+
+      controls[qn+16]:=qn+16; cx1[qn+16]:=258; cx2[qn+16]:=321; cy1[qn+16]:=150; cy2[qn+16]:=169; // adsr bias
+      controls[qn+17]:=qn+17; cx1[qn+17]:=258; cx2[qn+17]:=321; cy1[qn+17]:=180; cy2[qn+17]:=199; // adsr key adjust
+      controls[qn+18]:=qn+18; cx1[qn+18]:=258; cx2[qn+18]:=321; cy1[qn+18]:=210; cy2[qn+18]:=229; // output level
+
+      controls[qn+19]:=qn+19; cx1[qn+19]:=358; cx2[qn+19]:=421; cy1[qn+19]:=30; cy2[qn+19]:=49; // adsr bias
+      controls[qn+20]:=qn+20; cx1[qn+20]:=358; cx2[qn+20]:=421; cy1[qn+20]:=60; cy2[qn+20]:=79; // adsr key adjust
+      controls[qn+21]:=qn+21; cx1[qn+21]:=358; cx2[qn+21]:=421; cy1[qn+21]:=90; cy2[qn+21]:=109; // output level
+
+      controls[qn+22]:=qn+22; cx1[qn+22]:=358; cx2[qn+22]:=421; cy1[qn+22]:=150; cy2[qn+22]:=169; // adsr key adjust
+      controls[qn+23]:=qn+23; cx1[qn+23]:=358; cx2[qn+23]:=421; cy1[qn+23]:=180; cy2[qn+23]:=199; // output level
+
 
       end;
   end;
@@ -180,10 +192,7 @@ for i:=0 to 3 do
     box(sx+358+qx,sy+320+qy,16,32,29+qc); outtextxyz(sx+358+qx,sy+320+qy,'C',19+qc,2,2);
     box(sx+378+qx,sy+320+qy,16,32,29+qc); outtextxyz(sx+378+qx,sy+320+qy,'P',19+qc,2,2);
 
-    outtextxyz(8+sx+qx,sy+qy,'Mods',28+qc,2,1);
-    if (i=1) and (j=0) then outtextxy(1600,000,inttostr(cx1[qn+0]),15);
-    if (i=1) and (j=0) then  outtextxy(1600,16,inttostr(cy1[qn+0]),15);
-    if (i=1) and (j=0) then  outtextxy(1600,32,inttostr(qn),15);
+    outtextxyz(8+sx+qx,2+sy+qy,'Mods',28+qc,2,1);
     outtextxyz(cx1[qn+0]+sx+qx-20,cy1[qn+0]+sy+qy+2,'0',28+qc,2,1);  box2(cx1[qn+0]+qx+sx,cy1[qn+0]+qy+sy,cx2[qn+0]+qx+sx,cy2[qn+0]+qy+sy,21+qc); outtextxyz(cx1[qn+0]+8+qx+sx,cy1[qn+0]+qy+sy+2,inttostr2(controls[qn+0],3),30+qc,2,1);
     outtextxyz(cx1[qn+1]+sx+qx-20,cy1[qn+1]+sy+qy+2,'1',28+qc,2,1);  box2(cx1[qn+1]+qx+sx,cy1[qn+1]+qy+sy,cx2[qn+1]+qx+sx,cy2[qn+1]+qy+sy,21+qc); outtextxyz(cx1[qn+1]+8+qx+sx,cy1[qn+1]+qy+sy+2,inttostr2(controls[qn+1],3),30+qc,2,1);
     outtextxyz(cx1[qn+2]+sx+qx-20,cy1[qn+2]+sy+qy+2,'2',28+qc,2,1);  box2(cx1[qn+2]+qx+sx,cy1[qn+2]+qy+sy,cx2[qn+2]+qx+sx,cy2[qn+2]+qy+sy,21+qc); outtextxyz(cx1[qn+2]+8+qx+sx,cy1[qn+2]+qy+sy+2,inttostr2(controls[qn+2],3),30+qc,2,1);
@@ -194,30 +203,42 @@ for i:=0 to 3 do
     outtextxyz(cx1[qn+7]+sx+qx-20,cy1[qn+7]+sy+qy+2,'7',28+qc,2,1);  box2(cx1[qn+7]+qx+sx,cy1[qn+7]+qy+sy,cx2[qn+7]+qx+sx,cy2[qn+7]+qy+sy,21+qc); outtextxyz(cx1[qn+7]+8+qx+sx,cy1[qn+7]+qy+sy+2,inttostr2(controls[qn+7],3),30+qc,2,1);
 
 
-    outtextxyz(120+qx,70+qy,'ADSR',28+qc,2,1);
-    outtextxyz(120+qx,90+qy,'R1',28+qc,2,2);  box(160+qx,110+qy,64,32,21+qc); outtextxyz(168+qx,110+qy,inttostr2(controls[qn+8],3),30+qc,2,2);
-    outtextxyz(120+qx,110+qy,'R2',28+qc,2,2);  box(160+qx,150+qy,64,32,21+qc); outtextxyz(168+qx,150+qy,inttostr2(controls[qn+9],3),30+qc,2,2);
-    outtextxyz(120+qx,150+qy,'R3',28+qc,2,2);  box(160+qx,190+qy,64,32,21+qc); outtextxyz(168+qx,190+qy,inttostr2(controls[qn+10],3),30+qc,2,2);
-    outtextxyz(120+qx,190+qy,'R4',28+qc,2,2);  box(160+qx,230+qy,64,32,21+qc); outtextxyz(168+qx,230+qy,inttostr2(controls[qn+11],3),30+qc,2,2);
-    outtextxyz(230+qx,090+qy,'L1',28+qc,2,2);  box(270+qx,110+qy,64,32,21+qc); outtextxyz(278+qx,110+qy,inttostr2(controls[qn+12],3),30+qc,2,2);
-    outtextxyz(230+qx,130+qy,'L2',28+qc,2,2);  box(270+qx,150+qy,64,32,21+qc); outtextxyz(278+qx,150+qy,inttostr2(controls[qn+13],3),30+qc,2,2);
-    outtextxyz(230+qx,170+qy,'L3',28+qc,2,2);  box(270+qx,110+qy,64,32,21+qc); outtextxyz(278+qx,190+qy,inttostr2(controls[qn+14],3),30+qc,2,2);
-    outtextxyz(230+qx,210+qy,'L4',28+qc,2,2);  box(270+qx,210+qy,64,32,21+qc); outtextxyz(278+qx,230+qy,inttostr2(controls[qn+15],3),30+qc,2,2);
+    outtextxyz(108+qx+sx,2+qy+sy,'ADSR',28+qc,2,1);
 
-    outtextxyz(120+qx,270+qy,'ADSR Bias',28+qc,2,2);  box(270+qx,270+qy,64,32,21+qc); outtextxyz(278+qx,270+qy,'127',30+qc,2,2);
-    outtextxyz(120+qx,310+qy,'ADSR Key',28+qc,2,2);  box(270+qx,310+qy,64,32,21+qc); outtextxyz(278+qx,310+qy,'127',30+qc,2,2);
-    outtextxyz(120+qx,350+qy,'Wave',28+qc,2,2);  box(8+qx+sx,360+qy+sy,23*16,20,21+qc); outtextxyz(16+qx+sx,362+qy+sy,'A long wave name 22 ch',30+qc,2,1);
-    outtextxyz(120+qx,390+qy,'Output',28+qc,2,2);  box(270+qx,390+qy,64,32,21+qc); outtextxyz(278+qx,390+qy,'127',30+qc,2,2);
+    outtextxyz(cx1[qn+8]+sx+qx-40,cy1[qn+8]+sy+qy+2,'R1',28+qc,2,1);  box2(cx1[qn+8]+qx+sx,cy1[qn+8]+qy+sy,cx2[qn+8]+qx+sx,cy2[qn+8]+qy+sy,21+qc); outtextxyz(cx1[qn+8]+8+qx+sx,cy1[qn+8]+qy+sy+2,inttostr2(controls[qn+8],3),30+qc,2,1);
+    outtextxyz(cx1[qn+9]+sx+qx-40,cy1[qn+9]+sy+qy+2,'R2',28+qc,2,1);  box2(cx1[qn+9]+qx+sx,cy1[qn+9]+qy+sy,cx2[qn+9]+qx+sx,cy2[qn+9]+qy+sy,21+qc); outtextxyz(cx1[qn+9]+8+qx+sx,cy1[qn+9]+qy+sy+2,inttostr2(controls[qn+9],3),30+qc,2,1);
+    outtextxyz(cx1[qn+10]+sx+qx-40,cy1[qn+10]+sy+qy+2,'R3',28+qc,2,1);  box2(cx1[qn+10]+qx+sx,cy1[qn+10]+qy+sy,cx2[qn+10]+qx+sx,cy2[qn+10]+qy+sy,21+qc); outtextxyz(cx1[qn+10]+8+qx+sx,cy1[qn+10]+qy+sy+2,inttostr2(controls[qn+10],3),30+qc,2,1);
+    outtextxyz(cx1[qn+11]+sx+qx-40,cy1[qn+11]+sy+qy+2,'R4',28+qc,2,1);  box2(cx1[qn+11]+qx+sx,cy1[qn+11]+qy+sy,cx2[qn+11]+qx+sx,cy2[qn+11]+qy+sy,21+qc); outtextxyz(cx1[qn+11]+8+qx+sx,cy1[qn+11]+qy+sy+2,inttostr2(controls[qn+11],3),30+qc,2,1);
+
+    outtextxyz(cx1[qn+12]+sx+qx-40,cy1[qn+12]+sy+qy+2,'L1',28+qc,2,1);  box2(cx1[qn+12]+qx+sx,cy1[qn+12]+qy+sy,cx2[qn+12]+qx+sx,cy2[qn+12]+qy+sy,21+qc); outtextxyz(cx1[qn+12]+8+qx+sx,cy1[qn+12]+qy+sy+2,inttostr2(controls[qn+12],3),30+qc,2,1);
+    outtextxyz(cx1[qn+13]+sx+qx-40,cy1[qn+13]+sy+qy+2,'L2',28+qc,2,1);  box2(cx1[qn+13]+qx+sx,cy1[qn+13]+qy+sy,cx2[qn+13]+qx+sx,cy2[qn+13]+qy+sy,21+qc); outtextxyz(cx1[qn+13]+8+qx+sx,cy1[qn+13]+qy+sy+2,inttostr2(controls[qn+13],3),30+qc,2,1);
+    outtextxyz(cx1[qn+14]+sx+qx-40,cy1[qn+14]+sy+qy+2,'L3',28+qc,2,1);  box2(cx1[qn+14]+qx+sx,cy1[qn+14]+qy+sy,cx2[qn+14]+qx+sx,cy2[qn+14]+qy+sy,21+qc); outtextxyz(cx1[qn+14]+8+qx+sx,cy1[qn+14]+qy+sy+2,inttostr2(controls[qn+14],3),30+qc,2,1);
+    outtextxyz(cx1[qn+15]+sx+qx-40,cy1[qn+15]+sy+qy+2,'L4',28+qc,2,1);  box2(cx1[qn+15]+qx+sx,cy1[qn+15]+qy+sy,cx2[qn+15]+qx+sx,cy2[qn+15]+qy+sy,21+qc); outtextxyz(cx1[qn+15]+8+qx+sx,cy1[qn+15]+qy+sy+2,inttostr2(controls[qn+15],3),30+qc,2,1);
+
+    outtextxyz(cx1[qn+16]+sx+qx-150,cy1[qn+16]+sy+qy+2,'ADSR Bias',28+qc,2,1);  box2(cx1[qn+16]+qx+sx,cy1[qn+16]+qy+sy,cx2[qn+16]+qx+sx,cy2[qn+16]+qy+sy,21+qc); outtextxyz(cx1[qn+16]+8+qx+sx,cy1[qn+16]+qy+sy+2,inttostr2(controls[qn+16],3),30+qc,2,1);
+    outtextxyz(cx1[qn+17]+sx+qx-150,cy1[qn+17]+sy+qy+2,'ADSR Key',28+qc,2,1);  box2(cx1[qn+17]+qx+sx,cy1[qn+17]+qy+sy,cx2[qn+17]+qx+sx,cy2[qn+17]+qy+sy,21+qc); outtextxyz(cx1[qn+17]+8+qx+sx,cy1[qn+17]+qy+sy+2,inttostr2(controls[qn+17],3),30+qc,2,1);
+    outtextxyz(cx1[qn+18]+sx+qx-150,cy1[qn+18]+sy+qy+2,'Output',28+qc,2,1);  box2(cx1[qn+18]+qx+sx,cy1[qn+18]+qy+sy,cx2[qn+18]+qx+sx,cy2[qn+18]+qy+sy,21+qc); outtextxyz(cx1[qn+18]+8+qx+sx,cy1[qn+18]+qy+sy+2,inttostr2(controls[qn+18],3),30+qc,2,1);
+
+    outtextxyz(8+qx+sx,340+qy+sy,'Wave',28+qc,2,1);  box(8+qx+sx,360+qy+sy,23*16,20,21+qc); outtextxyz(16+qx+sx,362+qy+sy,'A long wave name 22 ch',30+qc,2,1);
+
 
 
     // A min velocity B max velocity C curve 0 lin 1 inv lin 2 U 3 n
-    outtextxyz(350+qx,70+qy,'Vel',28+qc,2,1);
-    outtextxyz(350+qx,110+qy,'A',28+qc,2,2);  box(370+qx,110+qy,64,32,21+qc); outtextxyz(378+qx,110+qy,'127',30+qc,2,2);
-    outtextxyz(350+qx,150+qy,'B',28+qc,2,2);  box(370+qx,150+qy,64,32,21+qc); outtextxyz(378+qx,150+qy,'127',30+qc,2,2);
-    outtextxyz(350+qx,190+qy,'C',28+qc,2,2);  box(370+qx,190+qy,64,32,21+qc); outtextxyz(378+qx,190+qy,'127',30+qc,2,2);
-    outtextxyz(350+qx,230+qy,'Key S',28+qc,2,2);
-    outtextxyz(350+qx,270+qy,'K',28+qc,2,2);  box(370+qx,270+qy,64,32,21+qc); outtextxyz(378+qx,270+qy,'127',30+qc,2,2);
-    outtextxyz(350+qx,310+qy,'C',28+qc,2,2);  box(370+qx,310+qy,64,32,21+qc); outtextxyz(378+qx,310+qy,'127',30+qc,2,2);
+
+
+    outtextxyz(336+sx+qx,2+sy+qy,'Vel',28+qc,2,1);
+
+    outtextxyz(cx1[qn+19]+sx+qx-20,cy1[qn+19]+sy+qy+2,'A',28+qc,2,1);  box2(cx1[qn+19]+qx+sx,cy1[qn+19]+qy+sy,cx2[qn+19]+qx+sx,cy2[qn+19]+qy+sy,21+qc); outtextxyz(cx1[qn+19]+8+qx+sx,cy1[qn+19]+qy+sy+2,inttostr2(controls[qn+19],3),30+qc,2,1);
+    outtextxyz(cx1[qn+20]+sx+qx-20,cy1[qn+20]+sy+qy+2,'B',28+qc,2,1);  box2(cx1[qn+20]+qx+sx,cy1[qn+20]+qy+sy,cx2[qn+20]+qx+sx,cy2[qn+20]+qy+sy,21+qc); outtextxyz(cx1[qn+20]+8+qx+sx,cy1[qn+20]+qy+sy+2,inttostr2(controls[qn+20],3),30+qc,2,1);
+    outtextxyz(cx1[qn+21]+sx+qx-20,cy1[qn+21]+sy+qy+2,'C',28+qc,2,1);  box2(cx1[qn+21]+qx+sx,cy1[qn+21]+qy+sy,cx2[qn+21]+qx+sx,cy2[qn+21]+qy+sy,21+qc); outtextxyz(cx1[qn+21]+8+qx+sx,cy1[qn+21]+qy+sy+2,inttostr2(controls[qn+21],3),30+qc,2,1);
+
+
+//    outtextxyz(350+qx,110+qy,'A',28+qc,2,2);  box(370+qx,110+qy,64,32,21+qc); outtextxyz(378+qx,110+qy,'127',30+qc,2,2);
+//    outtextxyz(350+qx,150+qy,'B',28+qc,2,2);  box(370+qx,150+qy,64,32,21+qc); outtextxyz(378+qx,150+qy,'127',30+qc,2,2);
+//    outtextxyz(350+qx,190+qy,'C',28+qc,2,2);  box(370+qx,190+qy,64,32,21+qc); outtextxyz(378+qx,190+qy,'127',30+qc,2,2);
+//    outtextxyz(350+qx,230+qy,'Key S',28+qc,2,2);
+//    outtextxyz(350+qx,270+qy,'K',28+qc,2,2);  box(370+qx,270+qy,64,32,21+qc); outtextxyz(378+qx,270+qy,'127',30+qc,2,2);
+//    outtextxyz(350+qx,310+qy,'C',28+qc,2,2);  box(370+qx,310+qy,64,32,21+qc); outtextxyz(378+qx,310+qy,'127',30+qc,2,2);
 
 
 

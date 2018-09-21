@@ -31,8 +31,8 @@
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
-        <TopLine Value="168"/>
-        <CursorPos X="24" Y="181"/>
+        <TopLine Value="217"/>
+        <CursorPos X="26" Y="222"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit2>
@@ -74,7 +74,7 @@
       <Unit7>
         <Filename Value="synthcontrol.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="34"/>
+        <TopLine Value="45"/>
         <CursorPos X="37" Y="50"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
