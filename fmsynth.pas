@@ -90,6 +90,7 @@ const
      c03=16.351597831287416763959505349330137242/2; //C-4
 
 var flogtable:array[0..65540] of myfloat;
+    flogtable1:array[0..127] of myfloat;
     foutputtable:array[0..8191] of myfloat;
     fnotes:array[0..127] of myfloat;
     fsinetable:array[-655360..655360] of myfloat;
@@ -375,6 +376,8 @@ for i:=65540 downto 0 do
     end;
   end;
 flogtable[0]:=0;
+for i:=0 to 127 do flogtable1[i]:=flogtable[512+512*i];
+flogtable1[0]:=0;
 end;
 
 procedure initfsinetable ;
@@ -584,7 +587,7 @@ p101:
 h1:=((1-adsrbias)*adsrval)+adsrbias;
 if adsrstate<>0 then sample:=sample*flogtable[round(65535*h1)] else sample:=0;
 
-//sample:=sample*c5*lfo3;
+sample:=sample*c5*lfo3;
 h1:=1.000-keysense;
 h1:=h1+vel*keysense;
 h1:=h1*c6*expr;

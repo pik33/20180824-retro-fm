@@ -8,7 +8,7 @@ uses
   Classes, SysUtils,math,fmsynth;
 
 
-const maxchannel=30; //
+const maxchannel=24;
 
 
 type TSynthCtrl = class(TThread)
@@ -36,6 +36,8 @@ type TSynthCtrl = class(TThread)
      operators:array[0..7] of TOperatorDesc;
      outputtable:array[0..7] of myfloat;
      end;
+
+ type controlarray=array[0..511] of integer;
 
 
 var channels:array[0..maxchannel-1] of int64;
@@ -72,8 +74,10 @@ var channels:array[0..maxchannel-1] of int64;
      000,000,000,000,000,000,000,000,000,000, // 240
      000,000,000,000,000,000);                // 250
 
-     controls: array[0..255] of byte;
-     cx1,cy1,cx2,cy2:array[0..255] of integer;
+     controls: controlarray;
+     cx1,cy1,cx2,cy2,ct,cs:array[0..511] of integer;
+
+     presets: array[0..1023] of controlarray;
 
 function allocatechannel(mode:integer):integer;
 procedure deallocatechannel(channel:integer);
@@ -241,14 +245,14 @@ voices[channel].setfreq(0);
 for i:=0 to 7 do  voices[channel].operators[i].pa:=0;
 for i:=0 to 7 do voices[channel].operators[i].vel:=flogtable[49152+128*velocity];
 
-voices[channel].outmuls[0]:=1;
-voices[channel].outmuls[1]:=0;
-voices[channel].outmuls[2]:=1;
-voices[channel].outmuls[3]:=0;
-voices[channel].outmuls[4]:=1;
-voices[channel].outmuls[5]:=0;
-voices[channel].outmuls[6]:=0;
-voices[channel].outmuls[7]:=0;
+voices[channel].outmuls[0]:=flogtable1[controls[18]];
+voices[channel].outmuls[1]:=flogtable1[controls[64+18]];
+voices[channel].outmuls[2]:=flogtable1[controls[128+18]];
+voices[channel].outmuls[3]:=flogtable1[controls[192+18]];
+voices[channel].outmuls[4]:=flogtable1[controls[256+18]];
+voices[channel].outmuls[5]:=flogtable1[controls[320+18]];
+voices[channel].outmuls[6]:=flogtable1[controls[384+18]];
+voices[channel].outmuls[7]:=flogtable1[controls[448+18]];
 
 //for i:=0 to 7 do  voices[channel].operators[i].init;
 
@@ -278,8 +282,37 @@ for i:=0 to 7 do  voices[channel].operators[i].mul7:=0;
 voices[channel].setfreq(f);
 for i:=0 to 7 do  voices[channel].operators[i].pa:=0;
 
-for i:=0 to 7 do  voices[channel].operators[i].ar1:=att;
-for i:=0 to 2 do voices[channel].operators[2*i].adsrstate:=1;
+for i:=0 to 7 do      begin
+   if i=0 then att:=sqr(flogtable1[controls[8+64*i]])*sqrt(flogtable1[controls[8+64*i]]);
+   voices[channel].operators[i].av1:=controls[12+64*i]/127;
+   voices[channel].operators[i].av2:=controls[13+64*i]/127;
+   voices[channel].operators[i].av3:=controls[14+64*i]/127;
+   voices[channel].operators[i].av4:=controls[15+64*i]/127;
+   voices[channel].operators[i].ar1:=sqr(flogtable1[controls[8+64*i]])*sqrt(flogtable1[controls[8+64*i]]);
+   voices[channel].operators[i].ar2:=sqr(flogtable1[controls[9+64*i]])*sqrt(flogtable1[controls[9*64*i]]);
+   voices[channel].operators[i].ar3:=sqr(flogtable1[controls[10+64*i]])*sqrt(flogtable1[controls[10+64*i]]);
+   voices[channel].operators[i].ar4:=sqr(flogtable1[controls[11+64*i]])*sqrt(flogtable1[controls[11+64*i]]);
+   if voices[channel].operators[i].av2 < voices[channel].operators[i].av1 then voices[channel].operators[i].ar2*=-1;
+   if voices[channel].operators[i].av3 < voices[channel].operators[i].av2 then voices[channel].operators[i].ar3*=-1;
+   if voices[channel].operators[i].av4 < voices[channel].operators[i].av3 then voices[channel].operators[i].ar4*=-1;
+   voices[channel].operators[i].mul0:=voices[channel].operators[i].freqmod*flogtable1[controls[0+64*i]];
+   voices[channel].operators[i].mul1:=voices[channel].operators[i].freqmod*flogtable1[controls[1+64*i]];
+   voices[channel].operators[i].mul2:=voices[channel].operators[i].freqmod*flogtable1[controls[2+64*i]];
+   voices[channel].operators[i].mul3:=voices[channel].operators[i].freqmod*flogtable1[controls[3+64*i]];
+   voices[channel].operators[i].mul4:=voices[channel].operators[i].freqmod*flogtable1[controls[4+64*i]];
+   voices[channel].operators[i].mul5:=voices[channel].operators[i].freqmod*flogtable1[controls[5+64*i]];
+   voices[channel].operators[i].mul6:=voices[channel].operators[i].freqmod*flogtable1[controls[6+64*i]];
+   voices[channel].operators[i].mul7:=voices[channel].operators[i].freqmod*flogtable1[controls[7+64*i]];
+   end;
+//for i:=0 to 7 do  voices[channel].operators[i].ar2:=1;
+//for i:=0 to 7 do  voices[channel].operators[i].ar3:=1;
+//for i:=0 to 7 do  voices[channel].operators[i].ar4:=att;
+//for i:=0 to 7 do  voices[channel].operators[i].av1:=1;
+//for i:=0 to 7 do  voices[channel].operators[i].av2:=1;
+
+//for i:=0 to 7 do  voices[channel].operators[i].av3:=1;
+//for i:=0 to 7 do  voices[channel].operators[i].av4:=0;
+for i:=0 to 7 do voices[channel].operators[i].adsrstate:=1;
 for i:=0 to 0 do voices[channel].operators[i].adsrval:=0;
 
 //box(200,200,600,600,0);

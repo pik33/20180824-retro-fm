@@ -559,7 +559,7 @@ repeat
 //    if x>1855 then x:=1855;
 //    if y<40 then y:=40;
 //    if y>1159 then y:=1159;
-    ramb^[$60032]:=y;
+    poke($60032,y); poke($60032,peek($60032)+128); //rpi comptibility // ramb^[$60032]:=y;
     end
   else if (qq<>0) and (event.type_=sdl_mousebuttondown)  then
     begin
