@@ -186,8 +186,8 @@ for i:=0 to 3 do
 
       controls[qn+8]:=76;     cx1[qn+8]:=148;  cx2[qn+8]:=211;  cy1[qn+8]:=30;   cy2[qn+8]:=49;   ct[qn+8]:=1;  // r1
       controls[qn+9]:=59;     cx1[qn+9]:=148;  cx2[qn+9]:=211;  cy1[qn+9]:=60;   cy2[qn+9]:=79;   ct[qn+9]:=1;  // r2
-      controls[qn+10]:=25;    cx1[qn+10]:=148; cx2[qn+10]:=211; cy1[qn+10]:=90;  cy2[qn+10]:=109; ct[qn+10]:=1; // r3
-      controls[qn+11]:=25;    cx1[qn+11]:=148; cx2[qn+11]:=211; cy1[qn+11]:=120; cy2[qn+11]:=139; ct[qn+11]:=1; // r4
+      controls[qn+10]:=35;    cx1[qn+10]:=148; cx2[qn+10]:=211; cy1[qn+10]:=90;  cy2[qn+10]:=109; ct[qn+10]:=1; // r3
+      controls[qn+11]:=35;    cx1[qn+11]:=148; cx2[qn+11]:=211; cy1[qn+11]:=120; cy2[qn+11]:=139; ct[qn+11]:=1; // r4
       controls[qn+12]:=127;   cx1[qn+12]:=258; cx2[qn+12]:=321; cy1[qn+12]:=30;  cy2[qn+12]:=49;  ct[qn+12]:=1; // l1
       controls[qn+13]:=120;   cx1[qn+13]:=258; cx2[qn+13]:=321; cy1[qn+13]:=60;  cy2[qn+13]:=79;  ct[qn+13]:=1; // l2
       controls[qn+14]:=64;    cx1[qn+14]:=258; cx2[qn+14]:=321; cy1[qn+14]:=90;  cy2[qn+14]:=109; ct[qn+14]:=1; // l3
@@ -204,8 +204,8 @@ for i:=0 to 3 do
       controls[qn+22]:=qn+22; cx1[qn+22]:=358; cx2[qn+22]:=421; cy1[qn+22]:=150; cy2[qn+22]:=169; ct[qn+22]:=1; // key sense key
       controls[qn+23]:=qn+23; cx1[qn+23]:=358; cx2[qn+23]:=421; cy1[qn+23]:=180; cy2[qn+23]:=199; ct[qn+23]:=1; // key sense curve
 
-      controls[qn+24]:=qn+24; cx1[qn+24]:=108; cx2[qn+24]:=204; cy1[qn+24]:=300; cy2[qn+24]:=319; ct[qn+24]:=2; // freq* (s1)
-      controls[qn+25]:=qn+25; cx1[qn+25]:=224; cx2[qn+25]:=320; cy1[qn+25]:=300; cy2[qn+25]:=319; ct[qn+25]:=4; // freq+ (s2)
+      controls[qn+24]:=1000;  cx1[qn+24]:=108; cx2[qn+24]:=204; cy1[qn+24]:=300; cy2[qn+24]:=319; ct[qn+24]:=2; // freq* (s1)
+      controls[qn+25]:=0;     cx1[qn+25]:=224; cx2[qn+25]:=320; cy1[qn+25]:=300; cy2[qn+25]:=319; ct[qn+25]:=4; // freq+ (s2)
 
       controls[qn+26]:=qn+26; cx1[qn+26]:=258; cx2[qn+26]:=321; cy1[qn+26]:=240; cy2[qn+26]:=259; ct[qn+26]:=1; // pan
 
@@ -411,7 +411,7 @@ for i:=0 to 511 do
     if ct[i]=3 then outtextxyz(cx1[i]+8+qx+sx,cy1[i]+qy+sy+2,sounds[controls[i]].name,20+qc,2,1);
     end;
 
-  if (ct[i]>0) and (mousex>=sx+qx+cx1[i]) and (mousex<=sx+qx+cx2[i]) and (mousey>=sy+qy+cy1[i]) and (mousey<=sy+qy+cy2[i]) and (cs[i]=1) and (peek($60032)=127) then // mouse on selected control and wheelup
+  if (ct[i]>0) and (mousex>=sx+qx+cx1[i]+24) and (mousex<=sx+qx+cx2[i]) and (mousey>=sy+qy+cy1[i]) and (mousey<=sy+qy+cy2[i]) and (cs[i]=1) and (peek($60032)=127) then // mouse on selected control and wheelup
     begin
     poke($60032,0);
     cs[i]:=1;
@@ -425,6 +425,29 @@ for i:=0 to 511 do
       controls[i]-=1;
       if controls[i]<-9999 then controls[i]:=-9999;
       end;
+ 
+    box2(cx1[i]+qx+sx,cy1[i]+qy+sy,cx2[i]+qx+sx,cy2[i]+qy+sy,28+qc);
+    if ct[i]=1 then outtextxyz(cx1[i]+8+qx+sx,cy1[i]+qy+sy+2,inttostr2(controls[i],3),20+qc,2,1);
+    if ct[i]=2 then outtextxyz(cx1[i]+8+qx+sx,cy1[i]+qy+sy+2,inttostr3(controls[i],5),20+qc,2,1);
+    if ct[i]=4 then outtextxyz(cx1[i]+8+qx+sx,cy1[i]+qy+sy+2,inttostr3(controls[i],5),20+qc,2,1);
+    if ct[i]=4 then begin box2(cx1[i]+qx+sx-15,cy1[i]+qy+sy,cx1[i]+qx+sx-1,cy2[i]+qy+sy,18+qc); if controls[i]>=0 then outtextxyz(207+qx+sx,302+qy+sy,'+',27+qc,2,1) else outtextxyz(207+qx+sx,302+qy+sy,'-',27+qc,2,1);end;
+    if ct[i]=3 then outtextxyz(cx1[i]+8+qx+sx,cy1[i]+qy+sy+2,sounds[controls[i]].name,20+qc,2,1);
+    end;
+
+    if (ct[i]>0) and (mousex>=sx+qx+cx1[i]) and (mousex<sx+qx+cx1[i]+24) and (mousey>=sy+qy+cy1[i]) and (mousey<=sy+qy+cy2[i]) and (cs[i]=1) and (peek($60032)=127) then // mouse on selected control and wheelup
+      begin
+      poke($60032,0);
+      cs[i]:=1;
+      if (ct[i]=1) or (ct[i]=3) then
+        begin
+        controls[i]-=10;
+        if controls[i]<0 then controls[i]:=0;
+        end;
+      if (ct[i]=4) or (ct[i]=2)  then
+        begin
+        controls[i]-=1000;
+        if controls[i]<-9999 then controls[i]:=-9999;
+        end;
 
 
     box2(cx1[i]+qx+sx,cy1[i]+qy+sy,cx2[i]+qx+sx,cy2[i]+qy+sy,28+qc);
@@ -435,33 +458,61 @@ for i:=0 to 511 do
     if ct[i]=3 then outtextxyz(cx1[i]+8+qx+sx,cy1[i]+qy+sy+2,sounds[controls[i]].name,20+qc,2,1);
     end;
 
-  if (ct[i]>0) and (mousex>=sx+qx+cx1[i]) and (mousex<=sx+qx+cx2[i]) and (mousey>=sy+qy+cy1[i]) and (mousey<=sy+qy+cy2[i]) and (cs[i]=1) and (peek($60032)=129) then // mouse on selected control and wheelup
-    begin
-    poke($60032,0);
-    cs[i]:=1;
-    if (ct[i]=1) then
+    if (ct[i]>0) and (mousex>=sx+qx+cx1[i]+24) and (mousex<=sx+qx+cx2[i]) and (mousey>=sy+qy+cy1[i]) and (mousey<=sy+qy+cy2[i]) and (cs[i]=1) and (peek($60032)=129) then // mouse on selected control and wheelup
       begin
-      controls[i]+=1;
-      if controls[i]>127 then controls[i]:=127;
-      end;
-    if (ct[i]=4) or (ct[i]=2) then
-      begin
-      controls[i]+=1;
-      if controls[i]>9999 then controls[i]:=9999;
-      end;
-    if (ct[i]=3) then
-      begin
-      controls[i]+=1;
-      if controls[i]>=soundindex then controls[i]:=soundindex-1;
+      poke($60032,0);
+      cs[i]:=1;
+      if (ct[i]=1) then
+        begin
+        controls[i]+=1;
+        if controls[i]>127 then controls[i]:=127;
+        end;
+      if (ct[i]=4) or (ct[i]=2) then
+        begin
+        controls[i]+=1;
+        if controls[i]>9999 then controls[i]:=9999;
+        end;
+      if (ct[i]=3) then
+        begin
+        controls[i]+=1;
+        if controls[i]>=soundindex then controls[i]:=soundindex-1;
+        end;
+
+      box2(cx1[i]+qx+sx,cy1[i]+qy+sy,cx2[i]+qx+sx,cy2[i]+qy+sy,28+qc);
+      if ct[i]=1 then outtextxyz(cx1[i]+8+qx+sx,cy1[i]+qy+sy+2,inttostr2(controls[i],3),20+qc,2,1);
+      if ct[i]=2 then outtextxyz(cx1[i]+8+qx+sx,cy1[i]+qy+sy+2,inttostr3(controls[i],5),20+qc,2,1);
+      if ct[i]=4 then outtextxyz(cx1[i]+8+qx+sx,cy1[i]+qy+sy+2,inttostr3(controls[i],5),20+qc,2,1);
+      if ct[i]=4 then begin box2(cx1[i]+qx+sx-15,cy1[i]+qy+sy,cx1[i]+qx+sx-1,cy2[i]+qy+sy,18+qc); if controls[i]>=0 then outtextxyz(207+qx+sx,302+qy+sy,'+',27+qc,2,1) else outtextxyz(207+qx+sx,302+qy+sy,'-',27+qc,2,1);end;
+      if ct[i]=3 then outtextxyz(cx1[i]+8+qx+sx,cy1[i]+qy+sy+2,sounds[controls[i]].name,20+qc,2,1);
       end;
 
-    box2(cx1[i]+qx+sx,cy1[i]+qy+sy,cx2[i]+qx+sx,cy2[i]+qy+sy,28+qc);
-    if ct[i]=1 then outtextxyz(cx1[i]+8+qx+sx,cy1[i]+qy+sy+2,inttostr2(controls[i],3),20+qc,2,1);
-    if ct[i]=2 then outtextxyz(cx1[i]+8+qx+sx,cy1[i]+qy+sy+2,inttostr3(controls[i],5),20+qc,2,1);
-    if ct[i]=4 then outtextxyz(cx1[i]+8+qx+sx,cy1[i]+qy+sy+2,inttostr3(controls[i],5),20+qc,2,1);
-    if ct[i]=4 then begin box2(cx1[i]+qx+sx-15,cy1[i]+qy+sy,cx1[i]+qx+sx-1,cy2[i]+qy+sy,18+qc); if controls[i]>=0 then outtextxyz(207+qx+sx,302+qy+sy,'+',27+qc,2,1) else outtextxyz(207+qx+sx,302+qy+sy,'-',27+qc,2,1);end;
-    if ct[i]=3 then outtextxyz(cx1[i]+8+qx+sx,cy1[i]+qy+sy+2,sounds[controls[i]].name,20+qc,2,1);
-    end;
+    if (ct[i]>0) and (mousex>=sx+qx+cx1[i]) and (mousex<sx+qx+cx1[i]+24) and (mousey>=sy+qy+cy1[i]) and (mousey<=sy+qy+cy2[i]) and (cs[i]=1) and (peek($60032)=129) then // mouse on selected control and wheelup
+      begin
+      poke($60032,0);
+      cs[i]:=1;
+      if (ct[i]=1) then
+        begin
+        controls[i]+=10;
+        if controls[i]>127 then controls[i]:=127;
+        end;
+      if (ct[i]=4) or (ct[i]=2) then
+        begin
+        controls[i]+=1000;
+        if controls[i]>9999 then controls[i]:=9999;
+        end;
+      if (ct[i]=3) then
+        begin
+        controls[i]+=10;
+        if controls[i]>=soundindex then controls[i]:=soundindex-1;
+        end;
+
+      box2(cx1[i]+qx+sx,cy1[i]+qy+sy,cx2[i]+qx+sx,cy2[i]+qy+sy,28+qc);
+      if ct[i]=1 then outtextxyz(cx1[i]+8+qx+sx,cy1[i]+qy+sy+2,inttostr2(controls[i],3),20+qc,2,1);
+      if ct[i]=2 then outtextxyz(cx1[i]+8+qx+sx,cy1[i]+qy+sy+2,inttostr3(controls[i],5),20+qc,2,1);
+      if ct[i]=4 then outtextxyz(cx1[i]+8+qx+sx,cy1[i]+qy+sy+2,inttostr3(controls[i],5),20+qc,2,1);
+      if ct[i]=4 then begin box2(cx1[i]+qx+sx-15,cy1[i]+qy+sy,cx1[i]+qx+sx-1,cy2[i]+qy+sy,18+qc); if controls[i]>=0 then outtextxyz(207+qx+sx,302+qy+sy,'+',27+qc,2,1) else outtextxyz(207+qx+sx,302+qy+sy,'-',27+qc,2,1);end;
+      if ct[i]=3 then outtextxyz(cx1[i]+8+qx+sx,cy1[i]+qy+sy+2,sounds[controls[i]].name,20+qc,2,1);
+      end;
 
 
 

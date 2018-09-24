@@ -441,15 +441,6 @@ var i:integer;
 begin
 for i:=0 to 7 do operators[i].setfreq(afreq);
 // test
-operators[1].setfreq(1.0043*afreq);
-operators[2].setfreq(1.006*afreq);
-operators[3].setfreq(1.0017*afreq);
-operators[4].setfreq(0.995*afreq);
-operators[5].setfreq(0.991*afreq);
-operators[6].setfreq(0.9939*afreq);
-operators[7].setfreq(0.9961*afreq);
-
-
 end;
 
 procedure TFmOperator.setfreq(afreq:myfloat);
@@ -561,25 +552,25 @@ case adsrstate of
     5:   // release
          begin
          adsrval:=adsrval+ar4;
-         if ar4<0 then begin if adsrval<av4 then begin adsrval:=av4; adsrstate:=6; end; end
+         if av4<av3 then begin if adsrval<av4 then begin adsrval:=av4; adsrstate:=6; end; end
                else begin if adsrval>av4 then begin adsrval:=av4; adsrstate:=6; end; end;
          end;
     3:   // decay2
           begin
           adsrval:=adsrval+ar3;
-          if ar3<0 then begin if adsrval<av3 then begin adsrval:=av3; adsrstate:=4; end; end
+          if av3<av2 then begin if adsrval<av3 then begin adsrval:=av3; adsrstate:=4; end; end
                  else begin if adsrval>av3 then begin adsrval:=av3; adsrstate:=4; end; end;
           end;
     2:   // decay
           begin
            adsrval:=adsrval+ar2;
-          if ar2<0 then begin if adsrval<av2 then begin adsrval:=av2; adsrstate:=3; end; end
+          if av2<av1 then begin if adsrval<av2 then begin adsrval:=av2; adsrstate:=3; end; end
                  else begin if adsrval>av2 then begin adsrval:=av2; adsrstate:=3; end; end;
           end;
     1:  // attack
           begin
           adsrval:=adsrval+ar1;
-          if ar1<0 then begin if adsrval<av1 then begin adsrval:=av1; adsrstate:=2; end; end
+          if av1<av4 then begin if adsrval<av1 then begin adsrval:=av1; adsrstate:=2; end; end
                   else begin if adsrval>av1 then begin  adsrval:=av1; adsrstate:=2; end;  end;
          end;
     end;
