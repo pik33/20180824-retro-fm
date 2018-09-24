@@ -193,8 +193,8 @@ for i:=0 to 3 do
       controls[qn+14]:=64;    cx1[qn+14]:=258; cx2[qn+14]:=321; cy1[qn+14]:=90;  cy2[qn+14]:=109; ct[qn+14]:=1; // l3
       controls[qn+15]:=0;     cx1[qn+15]:=258; cx2[qn+15]:=321; cy1[qn+15]:=120; cy2[qn+15]:=139; ct[qn+15]:=1; // l4
 
-      controls[qn+16]:=qn+16; cx1[qn+16]:=258; cx2[qn+16]:=321; cy1[qn+16]:=150; cy2[qn+16]:=169; ct[qn+16]:=1; // adsr bias
-      controls[qn+17]:=qn+17; cx1[qn+17]:=258; cx2[qn+17]:=321; cy1[qn+17]:=180; cy2[qn+17]:=199; ct[qn+17]:=1; // adsr key adjust
+      controls[qn+16]:=0;     cx1[qn+16]:=258; cx2[qn+16]:=321; cy1[qn+16]:=150; cy2[qn+16]:=169; ct[qn+16]:=1; // adsr bias
+      controls[qn+17]:=0;     cx1[qn+17]:=258; cx2[qn+17]:=321; cy1[qn+17]:=180; cy2[qn+17]:=199; ct[qn+17]:=1; // adsr key adjust
       controls[qn+18]:=0;     cx1[qn+18]:=258; cx2[qn+18]:=321; cy1[qn+18]:=210; cy2[qn+18]:=229; ct[qn+18]:=1; // output level
 
       controls[qn+19]:=qn+19; cx1[qn+19]:=358; cx2[qn+19]:=421; cy1[qn+19]:=30;  cy2[qn+19]:=49;  ct[qn+19]:=1; // velocity start value

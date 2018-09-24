@@ -29,10 +29,9 @@
       <Unit2>
         <Filename Value="umain.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
         <TopLine Value="177"/>
-        <CursorPos X="25" Y="190"/>
+        <CursorPos X="31" Y="197"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit2>
@@ -74,8 +73,9 @@
       <Unit7>
         <Filename Value="synthcontrol.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="266"/>
-        <CursorPos X="42" Y="298"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="243"/>
+        <CursorPos X="119" Y="276"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit7>
@@ -83,7 +83,7 @@
         <Filename Value="fmsynth.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="4"/>
-        <TopLine Value="528"/>
+        <TopLine Value="525"/>
         <CursorPos X="14" Y="555"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>

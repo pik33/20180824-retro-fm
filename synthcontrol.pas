@@ -236,7 +236,7 @@ procedure noteon(channel,note,velocity,preset:integer);
 
 label p999;
 var i:integer;
-    f:double;
+    f,m:double;
         test:double;
 
 begin
@@ -266,7 +266,7 @@ ss1:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].name;
 for i:=0 to 7 do  voices[channel].operators[i].freqmod:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].speed;
 
 
-for i:=0 to 7 do voices[channel].operators[i].setfreq(f*power(2,transpose)*controls[24+64*i]/1000+controls[25]/1000);
+for i:=0 to 7 do voices[channel].operators[i].setfreq(f*power(2,transpose)*controls[24+64*i]/1000+controls[25+64*i]/1000);
 for i:=0 to 7 do  voices[channel].operators[i].pa:=0;
 
 for i:=0 to 7 do      begin
@@ -275,14 +275,18 @@ for i:=0 to 7 do      begin
 
    voices[channel].operators[i].av1:=controls[12+64*i]/127;
    voices[channel].operators[i].av2:=controls[13+64*i]/127;
+
+
    voices[channel].operators[i].av3:=controls[14+64*i]/127;
    voices[channel].operators[i].av4:=controls[15+64*i]/127;
 
-   voices[channel].operators[i].ar1:=sqr(flogtable1[controls[8+64*i]])*sqrt(flogtable1[controls[8+64*i]]);
+  m:=power(2,(controls[17+64*i]/64)*(note-60)/12);
 
-   voices[channel].operators[i].ar2:=sqr(flogtable1[controls[9+64*i]])*sqrt(flogtable1[controls[9+64*i]]);
-   voices[channel].operators[i].ar3:=sqr(flogtable1[controls[10+64*i]])*sqrt(flogtable1[controls[10+64*i]]);
-   voices[channel].operators[i].ar4:=sqr(flogtable1[controls[11+64*i]])*sqrt(flogtable1[controls[11+64*i]]);
+   voices[channel].operators[i].ar1:=sqr(flogtable1[controls[8+64*i]])*sqrt(flogtable1[controls[8+64*i]])*m;
+
+   voices[channel].operators[i].ar2:=sqr(flogtable1[controls[9+64*i]])*sqrt(flogtable1[controls[9+64*i]])*m;
+   voices[channel].operators[i].ar3:=sqr(flogtable1[controls[10+64*i]])*sqrt(flogtable1[controls[10+64*i]])*m;
+   voices[channel].operators[i].ar4:=sqr(flogtable1[controls[11+64*i]])*sqrt(flogtable1[controls[11+64*i]])*m;
 
    if voices[channel].operators[i].av2 < voices[channel].operators[i].av1 then voices[channel].operators[i].ar2*=-1;
    if voices[channel].operators[i].av3 < voices[channel].operators[i].av2 then voices[channel].operators[i].ar3*=-1;
@@ -296,6 +300,10 @@ for i:=0 to 7 do      begin
    voices[channel].operators[i].mul5:=15*voices[channel].operators[i].freqmod*flogtable1[controls[5+64*i]];
    voices[channel].operators[i].mul6:=15*voices[channel].operators[i].freqmod*flogtable1[controls[6+64*i]];
    voices[channel].operators[i].mul7:=15*voices[channel].operators[i].freqmod*flogtable1[controls[7+64*i]];
+
+   voices[channel].operators[i].adsrbias:=controls[16+64*i]/127;
+
+
    end;
 
 for i:=0 to 7 do voices[channel].operators[i].adsrstate:=1;
