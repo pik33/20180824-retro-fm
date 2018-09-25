@@ -220,7 +220,8 @@ for i:=0 to 3 do
       controls[18]:=127; // operator 0 output
       end;
   end;
-controls[512]:=0; cx1[512]:=1124;  cx2[512]:=1187; cy1[512]:=862; cy2[512]:=881; ct[512]:=5;
+controls[512]:=0; cx1[512]:=1124;  cx2[512]:=1203; cy1[512]:=862; cy2[512]:=881; ct[512]:=5;  // preset number
+controls[513]:=0; cx1[513]:=1284;  cx2[513]:=1635; cy1[513]:=862; cy2[513]:=881; ct[513]:=6;  // preset name
 
   //  lfo1 - c3,lfo2-c4, c5,c6,c7 (pan)
 for i:=0 to 3 do
@@ -301,7 +302,8 @@ for i:=0 to 3 do
     end;
   end;
 qc+=16;
-outtextxyz(cx1[512]-100,cy1[512]+2,'Preset',27+qc,2,1);  box2(cx1[512],cy1[512],cx2[512],cy2[512],20+qc); outtextxyz(cx1[512]+8,cy1[512]+2,inttostr2(controls[512],3),28+qc,2,1);
+outtextxyz(cx1[512]-100,cy1[512]+2,'Preset',27+qc,2,1);  box2(cx1[512],cy1[512],cx2[512],cy2[512],20+qc); outtextxyz(cx1[512]+8,cy1[512]+2,inttostr2(controls[512],4),28+qc,2,1);
+outtextxyz(cx1[513]-68, cy1[513]+2,'Name',  27+qc,2,1);  box2(cx1[513],cy1[513],cx2[513],cy2[513],20+qc); outtextxyz(cx1[513]+8,cy1[513]+2,presetnames[controls[513]],28+qc,2,1);
 
 
 //outtextxyz(220,270,'4',107,2,2);  box(240,270,64,32,101); outtextxyz(248,270,'127',110,2,2);
