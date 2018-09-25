@@ -37,7 +37,7 @@ type TSynthCtrl = class(TThread)
      outputtable:array[0..7] of myfloat;
      end;
 
- type controlarray=array[0..511] of integer;
+ type controlarray=array[0..527] of integer;
 
 
 var channels:array[0..maxchannel-1] of int64;
@@ -75,9 +75,11 @@ var channels:array[0..maxchannel-1] of int64;
      000,000,000,000,000,000);                // 250
 
      controls: controlarray;
-     cx1,cy1,cx2,cy2,ct,cs:array[0..511] of integer;
+     cx1,cy1,cx2,cy2,ct,cs:array[0..527] of integer;
 
      presets: array[0..1023] of controlarray;
+     presetnames:array[0..1023] of string[31];
+
 
 function allocatechannel(mode:integer):integer;
 procedure deallocatechannel(channel:integer);
@@ -258,12 +260,12 @@ voices[channel].outmuls[7]:=flogtable1[controls[448+18]];
 //for i:=0 to 7 do  voices[channel].operators[i].init;
 
 for i:=0 to 7 do  voices[channel].operators[i].wavemode:=1;
-for i:=0 to 7 do  voices[channel].operators[i].wptr:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].wave;
-for i:=0 to 7 do  voices[channel].operators[i].wlend:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].lend ;
-for i:=0 to 7 do  voices[channel].operators[i].wlstart:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].lstart;
-for i:=0 to 7 do  voices[channel].operators[i].wlength:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].len;
-ss1:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].name;
-for i:=0 to 7 do  voices[channel].operators[i].freqmod:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].speed;
+for i:=0 to 7 do  voices[channel].operators[i].wptr:=sounds[controls[64*i+32]].samples[sounds[controls[64*i+32]].notes[note-12]].wave;
+for i:=0 to 7 do  voices[channel].operators[i].wlend:=sounds[controls[64*i+32]].samples[sounds[controls[64*i+32]].notes[note-12]].lend ;
+for i:=0 to 7 do  voices[channel].operators[i].wlstart:=sounds[controls[64*i+32]].samples[sounds[controls[64*i+32]].notes[note-12]].lstart;
+for i:=0 to 7 do  voices[channel].operators[i].wlength:=sounds[controls[64*i+32]].samples[sounds[controls[64*i+32]].notes[note-12]].len;
+//ss1:=sounds[waveidx].samples[sounds[waveidx].notes[note-12]].name;
+for i:=0 to 7 do  voices[channel].operators[i].freqmod:=sounds[controls[64*i+32]].samples[sounds[controls[64*i+32]].notes[note-12]].speed;
 
 
 for i:=0 to 7 do voices[channel].operators[i].setfreq(f*power(2,transpose)*controls[24+64*i]/1000+controls[25+64*i]/1000);

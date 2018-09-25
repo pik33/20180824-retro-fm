@@ -197,9 +197,9 @@ for i:=0 to 3 do
       controls[qn+17]:=0;     cx1[qn+17]:=258; cx2[qn+17]:=321; cy1[qn+17]:=180; cy2[qn+17]:=199; ct[qn+17]:=1; // adsr key adjust
       controls[qn+18]:=0;     cx1[qn+18]:=258; cx2[qn+18]:=321; cy1[qn+18]:=210; cy2[qn+18]:=229; ct[qn+18]:=1; // output level
 
-      controls[qn+19]:=qn+19; cx1[qn+19]:=358; cx2[qn+19]:=421; cy1[qn+19]:=30;  cy2[qn+19]:=49;  ct[qn+19]:=1; // velocity start value
-      controls[qn+20]:=qn+20; cx1[qn+20]:=358; cx2[qn+20]:=421; cy1[qn+20]:=60;  cy2[qn+20]:=79;  ct[qn+20]:=1; // velocity end value
-      controls[qn+21]:=qn+21; cx1[qn+21]:=358; cx2[qn+21]:=421; cy1[qn+21]:=90;  cy2[qn+21]:=109; ct[qn+21]:=1; // velocity curve
+      controls[qn+19]:=0;     cx1[qn+19]:=358; cx2[qn+19]:=421; cy1[qn+19]:=30;  cy2[qn+19]:=49;  ct[qn+19]:=1; // velocity start value
+      controls[qn+20]:=127;   cx1[qn+20]:=358; cx2[qn+20]:=421; cy1[qn+20]:=60;  cy2[qn+20]:=79;  ct[qn+20]:=1; // velocity end value
+      controls[qn+21]:=0;     cx1[qn+21]:=358; cx2[qn+21]:=421; cy1[qn+21]:=90;  cy2[qn+21]:=109; ct[qn+21]:=1; // velocity curve
 
       controls[qn+22]:=qn+22; cx1[qn+22]:=358; cx2[qn+22]:=421; cy1[qn+22]:=150; cy2[qn+22]:=169; ct[qn+22]:=1; // key sense key
       controls[qn+23]:=qn+23; cx1[qn+23]:=358; cx2[qn+23]:=421; cy1[qn+23]:=180; cy2[qn+23]:=199; ct[qn+23]:=1; // key sense curve
@@ -215,11 +215,13 @@ for i:=0 to 3 do
       controls[qn+30]:=qn+30; cx1[qn+30]:=200; cx2[qn+30]:=295; cy1[qn+30]:=360; cy2[qn+30]:=379; ct[qn+30]:=2; // C6 (expr)
       controls[qn+31]:=qn+31; cx1[qn+31]:=358; cx2[qn+31]:=421; cy1[qn+31]:=240; cy2[qn+31]:=259; ct[qn+31]:=1; // C7 (pan LFO)
 
-      controls[qn+32]:=0;     cx1[qn+32]:=58;  cx2[qn+32]:=425; cy1[qn+32]:=270; cy2[qn+32]:=289; ct[qn+32]:=3;// wavename
+      controls[qn+32]:=0;     cx1[qn+32]:=58;  cx2[qn+32]:=425; cy1[qn+32]:=270; cy2[qn+32]:=289; ct[qn+32]:=3; // wavename
 
       controls[18]:=127; // operator 0 output
       end;
   end;
+controls[512]:=0; cx1[512]:=1124;  cx2[512]:=1187; cy1[512]:=862; cy2[512]:=881; ct[512]:=5;
+
   //  lfo1 - c3,lfo2-c4, c5,c6,c7 (pan)
 for i:=0 to 3 do
   begin
@@ -298,7 +300,8 @@ for i:=0 to 3 do
 
     end;
   end;
-
+qc+=16;
+outtextxyz(cx1[512]-100,cy1[512]+2,'Preset',27+qc,2,1);  box2(cx1[512],cy1[512],cx2[512],cy2[512],20+qc); outtextxyz(cx1[512]+8,cy1[512]+2,inttostr2(controls[512],3),28+qc,2,1);
 
 
 //outtextxyz(220,270,'4',107,2,2);  box(240,270,64,32,101); outtextxyz(248,270,'127',110,2,2);
@@ -383,9 +386,9 @@ for j:=20 to 840 do if abs(scope[j])<46000 then box(24+j,950-scope[j] div 512,2,
 raml^[$1801e]:=raml^[$1800B];
 mousex:=dpeek($6002c)-64;
 mousey:=dpeek($6002e)-40;
-box(1040,860,400,120,0); outtextxyz(1040,860,sounds[waveidx].name,15,2,2);  outtextxyz(1040,940,floattostr(transpose),15,2,2);   outtextxyz(1040,900,ss1,15,2,2);
-box(1400,860,380,50,0);  outtextxyz(1400,860,floattostr(1/(96000*att)),15,2,2);
-box(1400,900,300,100,0); outtextxyz(1400,900,floattostr(att),42,2,2);
+//box(1040,860,400,120,0); outtextxyz(1040,860,sounds[waveidx].name,15,2,2);  outtextxyz(1040,940,floattostr(transpose),15,2,2);   outtextxyz(1040,900,ss1,15,2,2);
+//box(1400,860,380,50,0);  outtextxyz(1400,860,floattostr(1/(96000*att)),15,2,2);
+//box(1400,900,300,100,0); outtextxyz(1400,900,floattostr(att),42,2,2);
 
 
 for i:=0 to 511 do
