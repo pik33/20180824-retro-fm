@@ -186,8 +186,8 @@ for i:=0 to 3 do
 
       controls[qn+8]:=76;     cx1[qn+8]:=148;  cx2[qn+8]:=211;  cy1[qn+8]:=30;   cy2[qn+8]:=49;   ct[qn+8]:=1;  // r1
       controls[qn+9]:=59;     cx1[qn+9]:=148;  cx2[qn+9]:=211;  cy1[qn+9]:=60;   cy2[qn+9]:=79;   ct[qn+9]:=1;  // r2
-      controls[qn+10]:=35;    cx1[qn+10]:=148; cx2[qn+10]:=211; cy1[qn+10]:=90;  cy2[qn+10]:=109; ct[qn+10]:=1; // r3
-      controls[qn+11]:=35;    cx1[qn+11]:=148; cx2[qn+11]:=211; cy1[qn+11]:=120; cy2[qn+11]:=139; ct[qn+11]:=1; // r4
+      controls[qn+10]:=32;    cx1[qn+10]:=148; cx2[qn+10]:=211; cy1[qn+10]:=90;  cy2[qn+10]:=109; ct[qn+10]:=1; // r3
+      controls[qn+11]:=32;    cx1[qn+11]:=148; cx2[qn+11]:=211; cy1[qn+11]:=120; cy2[qn+11]:=139; ct[qn+11]:=1; // r4
       controls[qn+12]:=127;   cx1[qn+12]:=258; cx2[qn+12]:=321; cy1[qn+12]:=30;  cy2[qn+12]:=49;  ct[qn+12]:=1; // l1
       controls[qn+13]:=120;   cx1[qn+13]:=258; cx2[qn+13]:=321; cy1[qn+13]:=60;  cy2[qn+13]:=79;  ct[qn+13]:=1; // l2
       controls[qn+14]:=64;    cx1[qn+14]:=258; cx2[qn+14]:=321; cy1[qn+14]:=90;  cy2[qn+14]:=109; ct[qn+14]:=1; // l3
@@ -218,6 +218,12 @@ for i:=0 to 3 do
       controls[qn+32]:=0;     cx1[qn+32]:=58;  cx2[qn+32]:=425; cy1[qn+32]:=270; cy2[qn+32]:=289; ct[qn+32]:=3; // wavename
 
       controls[18]:=127; // operator 0 output
+      controls[64+18]:=127; // operator 0 output
+      controls[128+18]:=127; // operator 0 output
+      controls[64+24]:=1006; // operator 0 output
+      controls[128+24]:=994; // operator 0 output
+
+
       end;
   end;
 controls[512]:=0; cx1[512]:=1124;  cx2[512]:=1203; cy1[512]:=862; cy2[512]:=881; ct[512]:=5;  // preset number
@@ -350,13 +356,7 @@ until raml^[$18000]>k;
 //
 //SDL_GetDisplayBounds(0,@rect) ;
 c:=c+1;
-if time6502>0 then c6+=1;
-ss:=(songtime div 1000000) mod 60;
-mm:=(songtime div 60000000) mod 60;
-hh:=(songtime div 3600000000);
-sss:=inttostr(ss); if ss<10 then sss:='0'+sss;
-mms:=inttostr(mm); if mm<10 then mms:='0'+mms;
-hhs:=inttostr(hh); if hh<10 then hhs:='0'+hhs;
+sss:=timetostr(now);
 songfreq:=1000000 div siddelay;
 
 //avsid:=sidtime;
@@ -373,15 +373,17 @@ box2(10,1062,1782,1110,118);
 outtextxyz(32,1070,'Avg screen time: '+inttostr(round(avsct/c))+' us',76,2,2);
 outtextxyz(438,1070,'Avg sprite time: '+inttostr(round(avspt/c))+' us',186,2,2);
 outtextxyz(828,1070,'Avg FM time: '+inttostr(avsid)+' us',233,2,2);
+outtextxyz(1500,1070,sss,248,2,2);
 
 
-
+//oscilloscope
 
 box2(12,860,896,1047,178);
 box2(14,950,894,951,40);
 box2(14,1014,894,1015,40);
 box2(14,886,894,887,40);
 for j:=20 to 840 do if abs(scope[j])<46000 then box(24+j,950-scope[j] div 512,2,2,190);
+
 //scj:=0;
 
 
