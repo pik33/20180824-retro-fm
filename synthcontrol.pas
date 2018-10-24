@@ -89,6 +89,47 @@ procedure noteoff(channel, note:integer);
 implementation
 uses retro,midi;
 
+procedure arpeggiator(md:integer);
+
+// a simple arpeggio test
+
+const aa:cardinal=0;
+const aaa:cardinal=0;
+const aaaa:cardinal=0;
+const n1:cardinal=0;
+const n2:cardinal=0;
+const n3:cardinal=0;
+const l:cardinal=0;
+const ttt:int64=0;
+
+
+begin
+
+if md<>0 then
+  begin
+  aa:=md and $FF;
+  aaa:=(md and $FF00) shr 8;
+  aaaa:=(md and $FF0000) shr 16 ;
+  end;
+
+
+if (aa=144) and (aaaa>0) then
+  begin n1:=aaa; n2:=aaa+4; n3:=aaa+7; ttt:=gettime; end;
+if (aa=144) and (aaaa=0) and (aaa=n1) then
+  begin n1:=0; n2:=0; n3:=0; end;
+box(0,0,100,100,0); outtextxy(0,0,inttostr(ttt),42);
+if (n1>0) and (gettime>ttt+20000) then
+  begin
+  l+=1; if l>3 then l:=1;
+  if l=1 then writebuffer(aa+(n2 shl 8) + (aaaa shl 16))
+  else if l=2 then writebuffer(aa+(n3 shl 8) + (aaaa shl 16))
+  else if l=3 then writebuffer(aa+(n1 shl 8) + (aaaa shl 16));
+  ttt+=20000;
+
+  end;
+
+end;
+
 constructor TSynthCtrl.Create(CreateSuspended : boolean);
 
 begin
@@ -118,8 +159,6 @@ for j:=0 to 4 do for i:=0 to 127 do notes[i,j]:=maxchannel;
 repeat
 
 key:=readkeybuffer;
-//if key=32 then testoperator.adsrstate:=1;
-//if key=32+$10000 then testoperator.adsrstate:=5;
 if key=32 then for i:=0 to 7 do voices[0].operators[i].adsrstate:=1;
 if key=32+$10000 then for i:=0 to 7 do voices[0].operators[i].adsrstate:=5;
 if key<>$FFFFFFFF then
@@ -127,17 +166,11 @@ if key<>$FFFFFFFF then
   if key<$10000 then
     begin
     key:=key and 255;
-//    blit($F000000,100,432,$F000000,100,400,100,160,1792,1792);
-//    box(100,560,100,32,0);
-//    outtextxyz (100,560,inttostr(key),15,2,2);
     key:=keymap2[key];
     if key>0 then md:=144+key shl 8+$7F0000 else md:=$FFFFFFFF;
     end
   else
     begin
-//    blit($F000000,100,432,$F000000,100,400,100,160,1792,1792);
-//    box(100,560,100,32,0);
-//    outtextxyz (100,560,inttostr(key),15,2,2);
     key:=key and 255;
     key:=keymap2[key];
     if key>0 then md:=144+key shl 8 else md:=$FFFFFFFF;
@@ -146,10 +179,13 @@ if key<>$FFFFFFFF then
   end;
 
 md:=readbuffer;
+arpeggiator(0);
+
 
 p101:
 if md<>$FFFFFFFF then
   begin
+  arpeggiator(md);
   aa:=md and $FF;
   aaa:=(md and $FF00) shr 8;
   aaaa:=(md and $FF0000) shr 16 ;
