@@ -117,7 +117,7 @@ if (aa=144) and (aaaa>0) then
   begin n1:=aaa; n2:=aaa+4; n3:=aaa+7; ttt:=gettime; end;
 if (aa=144) and (aaaa=0) and (aaa=n1) then
   begin n1:=0; n2:=0; n3:=0; end;
-box(0,0,100,100,0); outtextxy(0,0,inttostr(ttt),42);
+//box(0,0,100,100,0); outtextxy(0,0,inttostr(ttt),42);
 if (n1>0) and (gettime>ttt+20000) then
   begin
   l+=1; if l>3 then l:=1;
@@ -179,13 +179,13 @@ if key<>$FFFFFFFF then
   end;
 
 md:=readbuffer;
-arpeggiator(0);
+// arpeggiator(0);
 
 
 p101:
 if md<>$FFFFFFFF then
   begin
-  arpeggiator(md);
+//  arpeggiator(md);
   aa:=md and $FF;
   aaa:=(md and $FF00) shr 8;
   aaaa:=(md and $FF0000) shr 16 ;

@@ -228,6 +228,7 @@ for i:=0 to 3 do
   end;
 controls[512]:=0; cx1[512]:=1124;  cx2[512]:=1203; cy1[512]:=862; cy2[512]:=881; ct[512]:=5;  // preset number
 controls[513]:=0; cx1[513]:=1284;  cx2[513]:=1635; cy1[513]:=862; cy2[513]:=881; ct[513]:=6;  // preset name
+controls[514]:=0; cx1[514]:=1652;  cx2[514]:=1731; cy1[514]:=862; cy2[514]:=881; ct[514]:=7;  // preset name
 
   //  lfo1 - c3,lfo2-c4, c5,c6,c7 (pan)
 for i:=0 to 3 do
@@ -310,6 +311,7 @@ for i:=0 to 3 do
 qc+=16;
 outtextxyz(cx1[512]-100,cy1[512]+2,'Preset',27+qc,2,1);  box2(cx1[512],cy1[512],cx2[512],cy2[512],20+qc); outtextxyz(cx1[512]+8,cy1[512]+2,inttostr2(controls[512],4),28+qc,2,1);
 outtextxyz(cx1[513]-68, cy1[513]+2,'Name',  27+qc,2,1);  box2(cx1[513],cy1[513],cx2[513],cy2[513],20+qc); outtextxyz(cx1[513]+8,cy1[513]+2,presetnames[controls[513]],28+qc,2,1);
+box2(cx1[514],cy1[514],cx2[514],cy2[514],20+qc); outtextxyz(cx1[514]+8,cy1[514]+2,'Save',28+qc,2,1);
 
 
 //outtextxyz(220,270,'4',107,2,2);  box(240,270,64,32,101); outtextxyz(248,270,'127',110,2,2);
@@ -395,7 +397,7 @@ mousey:=dpeek($6002e)-40;
 //box(1400,900,300,100,0); outtextxyz(1400,900,floattostr(att),42,2,2);
 
 
-for i:=0 to 511 do
+for i:=0 to 514 do
   begin
   qx:=443*((i div 64) mod 4);
   qy:=388*(i div 256);
@@ -450,10 +452,15 @@ for i:=0 to 511 do
         controls[i]-=10;
         if controls[i]<0 then controls[i]:=0;
         end;
-      if (ct[i]=4) or (ct[i]=2)  then
+      if (ct[i]=4) then
         begin
-        controls[i]-=1000;
+        controls[i]-=100;
         if controls[i]<-9999 then controls[i]:=-9999;
+        end;
+      if (ct[i]=2)  then
+        begin
+        controls[i]-=100;
+        if controls[i]<0 then controls[i]:=0;
         end;
 
 
@@ -504,7 +511,7 @@ for i:=0 to 511 do
         end;
       if (ct[i]=4) or (ct[i]=2) then
         begin
-        controls[i]+=1000;
+        controls[i]+=100;
         if controls[i]>9999 then controls[i]:=9999;
         end;
       if (ct[i]=3) then
