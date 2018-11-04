@@ -545,14 +545,14 @@ sample:=(1-d)*sample+d*s2;
 
 // adsrstates: 0 idle, 1 attack,2 decay1, 3 decay2, 4 sustain, 5 release 6 end
 
-if adsrstate=4 then goto p101;
+if adsrstate=4 then goto p101;    // todo: release can start from A1 or A2, not only S!
 
 case adsrstate of
     6: if adsrval=0 then adsrstate:=0;
     5:   // release
          begin
          adsrval:=adsrval+ar4;
-         if av4<av3 then begin if adsrval<av4 then begin adsrval:=av4; adsrstate:=6; end; end
+         if av4<=av3 then begin if adsrval<av4 then begin adsrval:=av4; adsrstate:=6; end; end
                else begin if adsrval>av4 then begin adsrval:=av4; adsrstate:=6; end; end;
          end;
     3:   // decay2

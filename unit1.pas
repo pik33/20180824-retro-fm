@@ -66,6 +66,8 @@ label p101;
 var s,currentdir,currentdir2:string;
     sr:tsearchrec;
     filenames:array[0..1000,0..1] of string;
+    filename:string;
+    fh:integer;
     directories:array[0..1000] of string;
     l,i,j,ilf,ild,ild2,ild3:integer;
     sel:integer=0;
@@ -146,6 +148,12 @@ repeat
   application.processmessages;
 until {(peek($6002b)<>0) and (peek($60028)=27) or}(dpeek ($60028)=16453) or (peek($70004)=1);
 timer1:=-1;
+
+i:=acontrols[512];
+presets[i]:=acontrols;
+filename:=getuserdir+'retrofm.cfg';
+fh:=filecreate(filename,$40);
+filewrite(fh,presets,sizeof(presets));
 fileclose(fh);
 stopmachine;
 halt;
