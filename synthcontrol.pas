@@ -284,15 +284,23 @@ procedure noteon(channel,note,velocity,preset:integer);
 label p999;
 var i:integer;
     f,m:double;
-        test:double;
+    test:double;
+    vel:integer;
 
 begin
 if (channel>=maxchannel) or (channel<0) then goto p999;
 f:=fnotes[note] ;
 voices[channel].setfreq(0);
 for i:=0 to 7 do  voices[channel].operators[i].pa:=0;
-for i:=0 to 7 do voices[channel].operators[i].vel:=flogtable[49152+128*velocity];
 
+for i:=0 to 7 do
+  begin
+
+  if acontrols[64*i+19]>acontrols[64*i+20] then
+    vel:=128*acontrols[64*i+20]+((128*velocity*(acontrols[64*i+19]-acontrols[64*i+20])) div 127)
+  else vel:=128*velocity;
+  voices[channel].operators[i].vel:=flogtable[49152+vel];
+  end;
 voices[channel].outmuls[0]:=flogtable1[acontrols[18]];
 voices[channel].outmuls[1]:=flogtable1[acontrols[64+18]];
 voices[channel].outmuls[2]:=flogtable1[acontrols[128+18]];
