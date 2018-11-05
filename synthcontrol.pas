@@ -293,13 +293,26 @@ f:=fnotes[note] ;
 voices[channel].setfreq(0);
 for i:=0 to 7 do  voices[channel].operators[i].pa:=0;
 
+// controls[19] - velocity start
+// controls[20] - velocity end
+// controls[21] - velocity curve
+// 0 - lin; 1 - log1 2 - log2 3 - u 4 - n 5 - v 6- ^
+// if [20] < [19] vel=0 -> [20]; vel=127 ->[19]
+// else if vel<[19] then vel=0; if vel>[20] then vel=127
+
+
 for i:=0 to 7 do
   begin
 
   if acontrols[64*i+19]>acontrols[64*i+20] then
     vel:=128*acontrols[64*i+20]+((128*velocity*(acontrols[64*i+19]-acontrols[64*i+20])) div 127)
   else vel:=128*velocity;
-  voices[channel].operators[i].vel:=flogtable[49152+vel];
+  case acontrols[64*i+21] of
+    0:  voices[channel].operators[i].vel:=vel/(128*127);
+    1:  voices[channel].operators[i].vel:=flogtable[49152+vel];
+    2:  voices[channel].operators[i].vel:=flogtable[4*vel];
+    end;
+
   end;
 voices[channel].outmuls[0]:=flogtable1[acontrols[18]];
 voices[channel].outmuls[1]:=flogtable1[acontrols[64+18]];
