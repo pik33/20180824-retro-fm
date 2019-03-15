@@ -246,6 +246,7 @@ var i,q:integer;
 begin
 i:=0;
 while i<maxchannel do if channels[i]=0 then goto p101 else i+=1;
+//i:=0;
 while i<maxchannel do if channels[i]<0 then goto p101 else i+=1;
 
 p101:
@@ -275,7 +276,7 @@ else
   result:=q;
   channels[q]:=gettime;
   end;
-//    box(1000,200,200,100,0); outtextxyz(1000,200,inttostr(result),15,2,2);
+//    box(1000,200,600,100,0); outtextxyz(1000,200,inttostr(result),15,2,2);     outtextxyz(1000,240,inttohex((gettime),16),15,2,2);
 end;
 
 procedure noteon(channel,note,velocity,preset:integer);

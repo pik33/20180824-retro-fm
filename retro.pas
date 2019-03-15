@@ -487,11 +487,13 @@ end;
 function gettime:int64;
 
 var pf,tm:int64;
-
+    d:double;
 begin
 QueryPerformanceFrequency(pf);
 QueryPerformanceCounter(tm);
-gettime:=round(1000000*tm/pf);
+d:=(tm/pf)*1000000;
+gettime:=round(d);
+//box(0,0,1000,120,0); outtextxyz(0,0,inttohex(pf,16),15,2,2);   outtextxyz(0,40,inttohex(tm,16),15,2,2);   outtextxyz(0,80,inttohex(gettime,16),15,2,2);
 end;
 
 function readkeybuffer:cardinal;
