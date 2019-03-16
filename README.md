@@ -1,2 +1,5 @@
 FM Synth in Retromachine environment
+
 Now at very alpha stage, contains a lot of unneeded stuff to clean
+
+![Screenshot](https://github.com/pik33/20180824-retro-fm/img/synth.jpg)
