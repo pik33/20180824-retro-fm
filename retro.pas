@@ -1814,7 +1814,7 @@ begin
 Result:=0;
 desired.freq := 96000;                                     // sample rate
 desired.format := AUDIO_S16;                               // 16-bit samples
-desired.samples := 960;                                    // samples for 1 callback
+desired.samples := 480;                                    // samples for 1 callback
 desired.channels := 2;                                     // stereo
 desired.callback := @AudioCallback;
 desired.userdata := nil;
@@ -1844,7 +1844,7 @@ begin
 audio2:=psmallint(audio);
 t:=gettime;
 
-for i:=0 to 959 do
+for i:=0 to 479 do
   begin
  gain:=gain*1.0000002;
 if gain>1 then gain:=1;
