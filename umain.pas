@@ -372,7 +372,7 @@ outtextxyz(32,1070,'Avg screen time: '+inttostr(round(avsct/c))+' us',76,2,2);
 outtextxyz(438,1070,'Avg sprite time: '+inttostr(round(avspt/c))+' us',186,2,2);
 outtextxyz(828,1070,'Avg FM time: '+inttostr(avsid)+' us',233,2,2);
 outtextxyz(1500,1070,sss,248,2,2);
-
+if ns then outtextxyz(1200,1070,'natural',204,2,2) else outtextxyz(1200,1070,'tempered',44,2,2);
 
 //oscilloscope
 

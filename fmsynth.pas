@@ -87,12 +87,14 @@ type TSampleinfo=record
 const
 
      a212=1.0594630943592953098431053149397484958; //2^1/12
-     c03=16.351597831287416763959505349330137242/2; //C-4
+     c03=16.351597831287416763959505349330137242/2; //C-1
+
 
 var flogtable:array[0..65540] of myfloat;
     flogtable1:array[0..127] of myfloat;
     foutputtable:array[0..8191] of myfloat;
     fnotes:array[0..127] of myfloat;
+    fnotesn:array[0..127] of myfloat;
     fsinetable:array[-655360..655360] of myfloat;
 //    fopdata:array[0..65535] of single;
     fmoperator:TFmOperator;
@@ -107,6 +109,7 @@ var flogtable:array[0..65540] of myfloat;
     waveidx:integer=0;
     fftwave:^double;
     transpose:integer=0;
+    natural:array[0..11] of double=(8.25,8.8,9.28125,9.9,10.3125,11,11.6015625,12.375,13.2,13.75,14.85,15.46875);
 
 procedure initvoices;
 procedure initsamples0;
@@ -596,7 +599,7 @@ end;
 
 procedure initnotes;
 
-var i:integer;
+var i,j:integer;
     q:myfloat;
 
 begin
@@ -606,6 +609,10 @@ for i:=0 to 127 do
   fnotes[i]:=q;
   q:=q*a212;
   end;
+for i:=0 to 10 do
+  for j:=0 to 11 do
+    if (12*i+j)<128 then fnotesn[12*i+j]:=natural[j]*power(2,i);
+
 end;
 
 

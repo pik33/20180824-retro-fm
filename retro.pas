@@ -124,6 +124,7 @@ var fh,filetype:integer;
    sc:integer=0;
    edelay:boolean=false;
    ereverb:boolean=false;
+   ns:boolean=false;
    gain:myfloat=1.0;
 
    keymap2:array[0..127] of byte=(

@@ -290,7 +290,7 @@ var i:integer;
 
 begin
 if (channel>=maxchannel) or (channel<0) then goto p999;
-f:=fnotes[note] ;
+if ns then f:=fnotesn[note] else f:=fnotes[note] ;
 voices[channel].setfreq(0);
 for i:=0 to 7 do  voices[channel].operators[i].pa:=0;
 

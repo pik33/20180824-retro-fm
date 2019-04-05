@@ -105,13 +105,14 @@ repeat
 //  if peek($60028)=ord('p') then begin poke ($60028,0); pause:=not pause; if pause then sdl_pauseaudio(1) else sdl_pauseaudio(0); end;
 
   if dpeek($60028)=16446 then begin edelay:=not edelay; dpoke($60028,0); end;  //f4=delay
-  if dpeek($60028)=16442 then begin waveidx+=1; if waveidx>=soundindex then waveidx:=soundindex-1;  dpoke($60028,0); end;  //f4=delay
-  if dpeek($60028)=16443 then begin waveidx-=1; if waveidx<0 then waveidx:=0;  dpoke($60028,0); end;  //f4=delay
+  if dpeek($60028)=16447 then begin ns:=not ns; dpoke($60028,0); end;  //f6=scale
+ // if dpeek($60028)=16442 then begin waveidx+=1; if waveidx>=soundindex then waveidx:=soundindex-1;  dpoke($60028,0); end;  //f4=delay
+//  if dpeek($60028)=16443 then begin waveidx-=1; if waveidx<0 then waveidx:=0;  dpoke($60028,0); end;  //f4=delay
   if dpeek($60028)=16444 then begin transpose+=1; dpoke($60028,0); end;  //f4=delay
   if dpeek($60028)=16445 then begin transpose-=1; dpoke($60028,0); end;  //f4=delay
           // adsr test
-          if dpeek($60028)=16447 then begin att:=att*1.1; dpoke($60028,0); end; //f5=reverb
-          if dpeek($60028)=16448 then begin att:=att/1.1; ereverb:=not ereverb; dpoke($60028,0); end; //f5=reverb
+//          if dpeek($60028)=16447 then begin att:=att*1.1; dpoke($60028,0); end; //f5=reverb
+ //         if dpeek($60028)=16448 then begin att:=att/1.1; ereverb:=not ereverb; dpoke($60028,0); end; //f5=reverb
 
           // end adsr test
 
